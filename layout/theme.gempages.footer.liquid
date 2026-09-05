@@ -26,8 +26,8 @@
     {{ content_for_header }}
   {%- render 'foxify-head' -%}</head>
 
-  <body>{% sections 'foxify-header-group' %}
-    {% sections 'header-group' %}
+  <body><div style="display:none"> {% sections 'foxify-header-group' %} </div>
+    <div style="display:none"> {% sections 'header-group' %} </div>
 
     {{ content_for_layout }}
 
