@@ -10,8 +10,6 @@
       "image": "{{ logo_url | remove: '\' }}",
       "logo": "{{ logo_url | remove: '\' }}",
     {%- else -%}
-      "image": "https:{{ 'logo.png' | asset_url }}",
-      "logo": "https:{{ 'logo.png' | asset_url }}",
     {%- endunless -%}
     "address": {
       "@type": "PostalAddress",
@@ -92,10 +90,9 @@
     "description": {{ product.description | strip_html | json }},
     "url": "{{ shop.secure_url }}{{ product.url }}",
     {%- if product.featured_image -%}
-    {%- assign image_size = product.featured_image.width | append: 'x' -%}
-    "image": "https:{{ product.featured_image.src | img_url: image_size }}",
+    "image": "{{ product.featured_image | image_url: width: product.featured_image.width }}",
     {%- else -%}
-    "image": "https:{{ product.images[0].src | img_url }}",
+    "image": "{{ product.images[0] | image_url: width: 1200 }}",
     {%- endif -%}
     "itemCondition": "https://schema.org/NewCondition",
     "offers": [
@@ -329,13 +326,13 @@
       {% endif %}
 
     {%- elsif prs == 'judgeme' -%}
-      {%- assign reviewRating = product.metafields.judgeme.badge | split: "data-average-rating='" | last | split: "'" |first | plus: 0 -%}
-      {%- assign reviewCount = product.metafields.judgeme.badge | split: "data-number-of-reviews='" | last | split: "'" |first | plus: 0 -%}
-      {% if reviewCount > 0 %}
+      {%- assign review_rating = product.metafields.judgeme.badge | split: "data-average-rating='" | last | split: "'" |first | plus: 0 -%}
+      {%- assign review_count = product.metafields.judgeme.badge | split: "data-number-of-reviews='" | last | split: "'" |first | plus: 0 -%}
+      {% if review_count > 0 %}
         ,"aggregateRating": {
         "@type": "AggregateRating",
-        "ratingCount": {{ reviewCount }},
-        "ratingValue": {{ reviewRating }}
+        "ratingCount": {{ review_count }},
+        "ratingValue": {{ review_rating }}
         },
         "review": {
         "@type": "Review",
@@ -446,12 +443,11 @@
     "name": {{ article.title | json }},
     "publisher": {
       "@type": "Organization",
-      "logo": {"@type": "ImageObject","url": "https:{{ 'logo.png' | asset_url }}"},
       "name": {{ shop.name | json }}
     },
     "headline": {{ article.title | json }},
     {%- if article.image -%}
-      "image": {"@type": "ImageObject","width": 1024,"height": 1024,"url": "https:{{ article | img_url: '1024x1024' }}"},
+      "image": {"@type": "ImageObject","width": 1024,"height": 1024,"url": "{{ article.image | image_url: width: 1024 }}"},
     {%- else -%}
       "image": {"@type": "ImageObject","width": 1024,"height": 1024,"url": "https://cdn.shopify.com/s/images/admin/no-image-grande.gif"},
     {%- endif -%}
