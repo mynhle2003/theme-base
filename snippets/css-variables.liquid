@@ -1,3 +1,14 @@
+{% liquid
+  assign default_color_scheme = settings.default_color_scheme
+  assign active_background = settings.background_color
+  assign active_foreground = settings.foreground_color
+
+  if default_color_scheme != blank
+    assign active_background = default_color_scheme.settings.background
+    assign active_foreground = default_color_scheme.settings.text
+  endif
+%}
+
 {% style %}
   {% # Loads all font variantions with display: swap %}
   {{ settings.type_primary_font | font_face: font_display: 'swap' }}
@@ -11,8 +22,37 @@
     --font-primary--weight: {{ settings.type_primary_font.weight }};
     --page-width: {{ settings.max_page_width }};
     --page-margin: {{ settings.min_page_margin }}px;
-    --color-background: {{ settings.background_color }};
-    --color-foreground: {{ settings.foreground_color }};
+    --color-background: {{ active_background }};
+    --gradient-background: {{ default_color_scheme.settings.background_gradient | default: active_background }};
+    --color-foreground: {{ active_foreground }};
+    --color-heading: {{ default_color_scheme.settings.heading | default: active_foreground }};
+    --color-text: {{ default_color_scheme.settings.text | default: active_foreground }};
+    --color-border: {{ default_color_scheme.settings.border | default: '#E5E5E5' }};
+    --color-primary-button: {{ default_color_scheme.settings.primary_button | default: active_foreground }};
+    --color-primary-button-label: {{ default_color_scheme.settings.primary_button_label | default: active_background }};
+    --color-primary-button-border: {{ default_color_scheme.settings.primary_button_border | default: active_foreground }};
+    --color-secondary-button: {{ default_color_scheme.settings.secondary_button | default: active_background }};
+    --color-secondary-button-label: {{ default_color_scheme.settings.secondary_button_label | default: active_foreground }};
+    --color-secondary-button-border: {{ default_color_scheme.settings.secondary_button_border | default: active_foreground }};
+    --color-shadow: {{ default_color_scheme.settings.shadow | default: '#000000' }};
     --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
   }
+
+  {% for scheme in settings.color_schemes %}
+    .color-{{ scheme.id }} {
+      --color-background: {{ scheme.settings.background }};
+      --gradient-background: {{ scheme.settings.background_gradient | default: scheme.settings.background }};
+      --color-heading: {{ scheme.settings.heading }};
+      --color-text: {{ scheme.settings.text }};
+      --color-foreground: {{ scheme.settings.text }};
+      --color-border: {{ scheme.settings.border }};
+      --color-primary-button: {{ scheme.settings.primary_button }};
+      --color-primary-button-label: {{ scheme.settings.primary_button_label }};
+      --color-primary-button-border: {{ scheme.settings.primary_button_border }};
+      --color-secondary-button: {{ scheme.settings.secondary_button }};
+      --color-secondary-button-label: {{ scheme.settings.secondary_button_label }};
+      --color-secondary-button-border: {{ scheme.settings.secondary_button_border }};
+      --color-shadow: {{ scheme.settings.shadow }};
+    }
+  {% endfor %}
 {% endstyle %}

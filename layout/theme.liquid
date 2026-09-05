@@ -27,7 +27,7 @@
     {{ content_for_header }}
   </head>
 
-  <body>
+  <body class="color-{{ settings.default_color_scheme.id | default: 'scheme-1' }}">
     {% sections 'header-group' %}
 
     {{ content_for_layout }}

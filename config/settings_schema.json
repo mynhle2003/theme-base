@@ -112,6 +112,104 @@
         "label": "t:labels.foreground"
       },
       {
+        "type": "color_scheme_group",
+        "id": "color_schemes",
+        "definition": [
+          {
+            "type": "color",
+            "id": "background",
+            "label": "t:labels.background",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color_background",
+            "id": "background_gradient",
+            "label": "t:labels.background_gradient"
+          },
+          {
+            "type": "color",
+            "id": "heading",
+            "label": "t:labels.heading",
+            "default": "#333333"
+          },
+          {
+            "type": "color",
+            "id": "text",
+            "label": "t:labels.text",
+            "default": "#333333"
+          },
+          {
+            "type": "color",
+            "id": "border",
+            "label": "t:labels.border",
+            "default": "#E5E5E5"
+          },
+          {
+            "type": "color",
+            "id": "primary_button",
+            "label": "t:labels.primary_button",
+            "default": "#333333"
+          },
+          {
+            "type": "color",
+            "id": "primary_button_label",
+            "label": "t:labels.primary_button_label",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "id": "primary_button_border",
+            "label": "t:labels.primary_button_border",
+            "default": "#333333"
+          },
+          {
+            "type": "color",
+            "id": "secondary_button",
+            "label": "t:labels.secondary_button",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "id": "secondary_button_label",
+            "label": "t:labels.secondary_button_label",
+            "default": "#333333"
+          },
+          {
+            "type": "color",
+            "id": "secondary_button_border",
+            "label": "t:labels.secondary_button_border",
+            "default": "#333333"
+          },
+          {
+            "type": "color",
+            "id": "shadow",
+            "label": "t:labels.shadow",
+            "default": "#000000"
+          }
+        ],
+        "role": {
+          "text": "text",
+          "background": {
+            "solid": "background",
+            "gradient": "background_gradient"
+          },
+          "links": "secondary_button_label",
+          "icons": "heading",
+          "primary_button": "primary_button",
+          "on_primary_button": "primary_button_label",
+          "primary_button_border": "primary_button_border",
+          "secondary_button": "secondary_button",
+          "on_secondary_button": "secondary_button_label",
+          "secondary_button_border": "secondary_button_border"
+        }
+      },
+      {
+        "type": "color_scheme",
+        "id": "default_color_scheme",
+        "default": "scheme-1",
+        "label": "t:labels.default_color_scheme"
+      },
+      {
         "type": "range",
         "id": "input_corner_radius",
         "min": 0,
