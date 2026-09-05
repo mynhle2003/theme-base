@@ -1,0 +1,30 @@
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+  width: var(--logo-width);
+  max-width: 100%;
+}
+
+.site-logo__image {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.site-logo__text {
+  color: inherit; 
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 749px) {
+  .site-logo {
+    width: var(--logo-width-mobile);
+  }
+
+  .site-logo__image {
+    width: 100%;
+  }
+}
