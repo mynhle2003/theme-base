@@ -8,25 +8,12 @@
 {% liquid
   assign button_label = block.settings.button_label | default: 'Button'
   assign button_style = block.settings.button_style | default: 'primary'
-  assign button_classes = 'btn btn--' | append: button_style
   assign button_alignment = 'flex-start'
   assign button_alignment_mobile = 'flex-start'
   assign button_padding_top_mobile = block.settings.padding_top
   assign button_padding_bottom_mobile = block.settings.padding_bottom
   assign button_padding_left_mobile = block.settings.padding_left
   assign button_padding_right_mobile = block.settings.padding_right
-
-  if block.settings.width == 'fill'
-    assign button_classes = button_classes | append: ' btn--fill'
-  endif
-
-  if block.settings.customize_mobile_alignment
-    if block.settings.width_mobile == 'fill'
-      assign button_classes = button_classes | append: ' btn--fill-mobile'
-    else
-      assign button_classes = button_classes | append: ' btn--fit-mobile'
-    endif
-  endif
 
   if block.settings.alignment == 'center'
     assign button_alignment = 'center'
@@ -59,35 +46,25 @@
   style="--button-alignment: {{ button_alignment }}; --button-padding-top: {{ block.settings.padding_top }}px; --button-padding-bottom: {{ block.settings.padding_bottom }}px; --button-padding-left: {{ block.settings.padding_left }}px; --button-padding-right: {{ block.settings.padding_right }}px; --button-alignment-mobile: {{ button_alignment_mobile }}; --button-padding-top-mobile: {{ button_padding_top_mobile }}px; --button-padding-bottom-mobile: {{ button_padding_bottom_mobile }}px; --button-padding-left-mobile: {{ button_padding_left_mobile }}px; --button-padding-right-mobile: {{ button_padding_right_mobile }}px;"
   {{ block.shopify_attributes }}
 >
-  {% if block.settings.button_link != blank %}
-    <a class="{{ button_classes }}" href="{{ block.settings.button_link }}"{% if block.settings.button_open_in_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
-  {% else %}
-    <button class="{{ button_classes }} btn--disabled" type="button" disabled>
-  {% endif %}
-      {% if block.settings.show_icon and block.settings.icon_position == 'before' %}
-        <span class="btn__icon" aria-hidden="true"{% if block.settings.icon_size == 'custom' %} style="--icon-size: {{ block.settings.custom_icon_size }}px"{% endif %}>{% case block.settings.icon %}{% when 'arrow' %}→{% when 'chevron' %}›{% when 'plus' %}+{% endcase %}</span>
-      {% endif %}
-      <span class="btn__label">{{ button_label | escape }}</span>
-      {% if block.settings.show_icon and block.settings.icon_position == 'after' %}
-        <span class="btn__icon" aria-hidden="true"{% if block.settings.icon_size == 'custom' %} style="--icon-size: {{ block.settings.custom_icon_size }}px"{% endif %}>{% case block.settings.icon %}{% when 'arrow' %}→{% when 'chevron' %}›{% when 'plus' %}+{% endcase %}</span>
-      {% endif %}
-  {% if block.settings.button_link != blank %}</a>{% else %}</button>{% endif %}
+  {% render 'button',
+    label: button_label,
+    url: block.settings.button_link,
+    style: button_style,
+    open_in_new_tab: block.settings.button_open_in_new_tab,
+    show_icon: block.settings.show_icon,
+    icon: block.settings.icon,
+    icon_position: block.settings.icon_position,
+    icon_size: block.settings.icon_size,
+    custom_icon_size: block.settings.custom_icon_size,
+    width: block.settings.width,
+    customize_mobile_alignment: block.settings.customize_mobile_alignment,
+    width_mobile: block.settings.width_mobile
+  %}
 </div>
 
 {% stylesheet %}
   .button-block { display: flex; justify-content: var(--button-alignment); min-width: 0; padding-block: var(--button-padding-top) var(--button-padding-bottom); padding-inline: var(--button-padding-left) var(--button-padding-right); width: 100%; }
-  .btn { align-items: center; border: var(--button-border-width, 1px) solid transparent; border-radius: var(--button-radius); cursor: pointer; display: inline-flex; font: inherit; font-family: var(--font-body-family); font-size: var(--font-body-md); gap: 0.5rem; justify-content: center; line-height: 1.2; max-width: 100%; min-height: var(--button-height, 2.75rem); padding: 0.75rem 1.25rem; text-align: center; text-decoration: none; transition: background-color var(--motion-duration) var(--motion-ease), border-color var(--motion-duration) var(--motion-ease), color var(--motion-duration) var(--motion-ease), opacity var(--motion-duration) var(--motion-ease); }
-  .btn--fill { width: 100%; }
-  .btn--primary { background: var(--color-primary-button); border-color: var(--color-primary-button-border); color: var(--color-primary-button-label); }
-  .btn--secondary { background: var(--color-secondary-button); border-color: var(--color-secondary-button-border); color: var(--color-secondary-button-label); }
-  .btn--tertiary { background: transparent; border-color: var(--color-secondary-button-border); color: var(--color-secondary-button-label); }
-  .btn:hover { filter: brightness(0.92); }
-  .btn:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
-  .btn:disabled, .btn--disabled { cursor: not-allowed; opacity: 0.5; pointer-events: none; }
-  .btn[aria-busy='true'] { cursor: progress; opacity: 0.7; }
-  .btn__icon { display: inline-flex; flex: 0 0 var(--icon-size, 1em); font-size: var(--icon-size, 1em); line-height: 1; }
-  .btn__label { overflow-wrap: anywhere; }
-  @media screen and (max-width: 767.98px) { .button-block { justify-content: var(--button-alignment-mobile); padding-block: var(--button-padding-top-mobile) var(--button-padding-bottom-mobile); padding-inline: var(--button-padding-left-mobile) var(--button-padding-right-mobile); } .btn--fill-mobile { width: 100%; } .btn--fit-mobile { width: auto; } }
+  @media screen and (max-width: 767.98px) { .button-block { justify-content: var(--button-alignment-mobile); padding-block: var(--button-padding-top-mobile) var(--button-padding-bottom-mobile); padding-inline: var(--button-padding-left-mobile) var(--button-padding-right-mobile); } }
 {% endstylesheet %}
 
 {% schema %}

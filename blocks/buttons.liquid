@@ -76,16 +76,10 @@
   {{ block.shopify_attributes }}
 >
   {% if button_1_valid %}
-    <a class="btn btn--{{ block.settings.button_1_style | default: 'primary' }}" href="{{ block.settings.button_1_link }}"{% if block.settings.button_1_open_in_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
-      <span class="btn__label">{{ block.settings.button_1_label | escape }}</span>
-      {% if block.settings.button_1_show_icon %}<span class="btn__icon" aria-hidden="true">→</span>{% endif %}
-    </a>
+    {% render 'button', label: block.settings.button_1_label, url: block.settings.button_1_link, style: block.settings.button_1_style, open_in_new_tab: block.settings.button_1_open_in_new_tab, show_icon: block.settings.button_1_show_icon, icon: 'arrow', icon_position: 'after', icon_size: 'inherit' %}
   {% endif %}
   {% if button_2_valid %}
-    <a class="btn btn--{{ block.settings.button_2_style | default: 'secondary' }}" href="{{ block.settings.button_2_link }}"{% if block.settings.button_2_open_in_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
-      <span class="btn__label">{{ block.settings.button_2_label | escape }}</span>
-      {% if block.settings.button_2_show_icon %}<span class="btn__icon" aria-hidden="true">→</span>{% endif %}
-    </a>
+    {% render 'button', label: block.settings.button_2_label, url: block.settings.button_2_link, style: block.settings.button_2_style, open_in_new_tab: block.settings.button_2_open_in_new_tab, show_icon: block.settings.button_2_show_icon, icon: 'arrow', icon_position: 'after', icon_size: 'inherit' %}
   {% endif %}
 </div>
 {% endif %}
@@ -106,35 +100,6 @@
   .buttons-block--stack {
     flex-direction: column;
   }
-
-  .buttons-block .btn {
-    align-items: center;
-    border: var(--button-border-width, 1px) solid transparent;
-    border-radius: var(--button-radius);
-    cursor: pointer;
-    display: inline-flex;
-    flex: 0 1 auto;
-    font: inherit;
-    font-family: var(--font-body-family);
-    font-size: var(--font-body-md);
-    gap: 0.5rem;
-    justify-content: center;
-    line-height: 1.2;
-    max-width: 100%;
-    min-height: var(--button-height, 2.75rem);
-    padding: 0.75rem 1.25rem;
-    text-align: center;
-    text-decoration: none;
-    transition: background-color var(--motion-duration) var(--motion-ease), border-color var(--motion-duration) var(--motion-ease), color var(--motion-duration) var(--motion-ease), opacity var(--motion-duration) var(--motion-ease);
-  }
-
-  .buttons-block .btn--primary { background: var(--color-primary-button); border-color: var(--color-primary-button-border); color: var(--color-primary-button-label); }
-  .buttons-block .btn--secondary { background: var(--color-secondary-button); border-color: var(--color-secondary-button-border); color: var(--color-secondary-button-label); }
-  .buttons-block .btn--tertiary { background: transparent; border-color: var(--color-secondary-button-border); color: var(--color-secondary-button-label); }
-  .buttons-block .btn:hover { filter: brightness(0.92); }
-  .buttons-block .btn:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
-  .buttons-block .btn__icon { display: inline-flex; flex: 0 0 1em; line-height: 1; }
-  .buttons-block .btn__label { overflow-wrap: anywhere; }
 
   @media screen and (max-width: 767.98px) {
     .buttons-block {

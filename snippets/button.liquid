@@ -1,0 +1,55 @@
+{% doc %}
+  Renders the shared button primitive used by single and compound button blocks.
+
+  @param {string} label - Visible button label
+  @param {string} [url] - Optional destination URL
+  @param {string} [style] - Button style: primary, secondary, or tertiary
+  @param {boolean} [open_in_new_tab] - Whether the link opens in a new tab
+  @param {boolean} [show_icon] - Whether to render the icon
+  @param {string} [icon] - Icon name: arrow, chevron, or plus
+  @param {string} [icon_position] - Icon position: before or after
+  @param {string} [icon_size] - Icon size mode: inherit or custom
+  @param {number} [custom_icon_size] - Custom icon size in pixels
+  @param {string} [width] - Optional button width: fit or fill
+  @param {boolean} [customize_mobile_alignment] - Whether mobile width is customized
+  @param {string} [width_mobile] - Optional mobile button width: fit or fill
+{% enddoc %}
+
+{% liquid
+  assign button_style = style | default: 'primary'
+  assign button_icon = icon | default: 'arrow'
+  assign button_icon_position = icon_position | default: 'after'
+  assign button_icon_size = icon_size | default: 'inherit'
+  assign button_custom_icon_size = custom_icon_size | default: 16
+  assign button_classes = 'btn btn--' | append: button_style
+
+  if url == blank
+    assign button_classes = button_classes | append: ' btn--disabled'
+  endif
+
+  if width == 'fill'
+    assign button_classes = button_classes | append: ' btn--fill'
+  endif
+
+  if customize_mobile_alignment
+    if width_mobile == 'fill'
+      assign button_classes = button_classes | append: ' btn--fill-mobile'
+    else
+      assign button_classes = button_classes | append: ' btn--fit-mobile'
+    endif
+  endif
+%}
+
+{% if url != blank %}
+  <a class="{{ button_classes }}" href="{{ url | escape }}"{% if open_in_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+{% else %}
+  <button class="{{ button_classes }}" type="button" disabled>
+{% endif %}
+    {% if show_icon and button_icon_position == 'before' %}
+      <span class="btn__icon" aria-hidden="true"{% if button_icon_size == 'custom' %} style="--icon-size: {{ button_custom_icon_size }}px"{% endif %}>{% case button_icon %}{% when 'arrow' %}→{% when 'chevron' %}›{% when 'plus' %}+{% endcase %}</span>
+    {% endif %}
+    <span class="btn__label">{{ label | escape }}</span>
+    {% if show_icon and button_icon_position == 'after' %}
+      <span class="btn__icon" aria-hidden="true"{% if button_icon_size == 'custom' %} style="--icon-size: {{ button_custom_icon_size }}px"{% endif %}>{% case button_icon %}{% when 'arrow' %}→{% when 'chevron' %}›{% when 'plus' %}+{% endcase %}</span>
+    {% endif %}
+{% if url != blank %}</a>{% else %}</button>{% endif %}

@@ -54,6 +54,44 @@
 .body-xl { font-size: var(--font-body-xl); }
 .body-xxl { font-size: var(--font-body-xxl); }
 
+/* Button Foundation: shared by single and compound button blocks. */
+.btn {
+  align-items: center;
+  border: var(--button-border-width, 1px) solid transparent;
+  border-radius: var(--button-radius);
+  cursor: pointer;
+  display: inline-flex;
+  flex: 0 1 auto;
+  font: inherit;
+  font-family: var(--font-body-family);
+  font-size: var(--font-body-md);
+  gap: 0.5rem;
+  justify-content: center;
+  line-height: 1.2;
+  max-width: 100%;
+  min-height: var(--button-height, 2.75rem);
+  padding: 0.75rem 1.25rem;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color var(--motion-duration) var(--motion-ease), border-color var(--motion-duration) var(--motion-ease), color var(--motion-duration) var(--motion-ease), opacity var(--motion-duration) var(--motion-ease);
+}
+
+.btn--fill { width: 100%; }
+.btn--primary { background: var(--color-primary-button); border-color: var(--color-primary-button-border); color: var(--color-primary-button-label); }
+.btn--secondary { background: var(--color-secondary-button); border-color: var(--color-secondary-button-border); color: var(--color-secondary-button-label); }
+.btn--tertiary { background: transparent; border-color: var(--color-secondary-button-border); color: var(--color-secondary-button-label); }
+.btn:hover { filter: brightness(0.92); }
+.btn:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.btn:disabled, .btn--disabled { cursor: not-allowed; opacity: 0.5; pointer-events: none; }
+.btn[aria-busy='true'] { cursor: progress; opacity: 0.7; }
+.btn__icon { display: inline-flex; flex: 0 0 var(--icon-size, 1em); font-size: var(--icon-size, 1em); line-height: 1; }
+.btn__label { overflow-wrap: anywhere; }
+
+@media screen and (max-width: 767.98px) {
+  .btn--fill-mobile { width: 100%; }
+  .btn--fit-mobile { width: auto; }
+}
+
 /* Form Foundation: shared control sizing, states and responsive behavior. */
 .form__wrapper,
 .form__fields,
