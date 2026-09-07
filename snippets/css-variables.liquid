@@ -92,7 +92,8 @@
     --badge-custom-background: {{ settings.badge_custom_background | default: '#333333' }};
     --badge-custom-color: {{ settings.badge_custom_color | default: '#FFFFFF' }};
     --sale-price-color: {{ settings.sale_price_color | default: '#B42318' }};
-    --icon-thickness: 1.5px;
+    --icon-size: {{ settings.global_icon_size | default: 32 }}px;
+    --icon-stroke-width: {{ settings.global_icon_stroke_width | default: 1.5 }}px;
     --motion-duration-fast: 120ms;
     --motion-duration: {% case settings.motion_duration %}{% when 'fast' %}120ms{% when 'slow' %}360ms{% else %}220ms{% endcase %};
     --motion-ease: cubic-bezier(0.2, 0.65, 0.3, 1);
