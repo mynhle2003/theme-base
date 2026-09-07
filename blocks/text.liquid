@@ -1,36 +1,98 @@
 {% doc %}
-  Renders a text block.
+  Renders a body text kernel with rich text, responsive layout, and padding controls.
+
+  The Text kernel owns body content, body typography, local color, width,
+  alignment, and padding. Parent blocks own composition order and gap.
 
   @example
   {% content_for 'block', type: 'text', id: 'text' %}
 {% enddoc %}
 
 {% liquid
-  assign typography_class = 'body-text body-md'
+  assign text_content = block.settings.text
+  assign text_plain = text_content | strip_html | strip
+  assign text_size = block.settings.text_size | default: 'md'
+  assign text_width = 'fit-content'
+  assign text_width_mobile = 'fit-content'
+  assign text_alignment = 'start'
+  assign text_alignment_mobile = 'start'
+  assign text_padding_top_mobile = block.settings.padding_top
+  assign text_padding_bottom_mobile = block.settings.padding_bottom
+  assign text_padding_left_mobile = block.settings.padding_left
+  assign text_padding_right_mobile = block.settings.padding_right
 
-  case block.settings.text_style
-    when 'text--title'
-      assign typography_class = 'heading-text heading-lg'
-    when 'text--subtitle'
-      assign typography_class = 'body-text body-lg'
-  endcase
+  if block.settings.width == 'fill'
+    assign text_width = '100%'
+  endif
+
+  if block.settings.width_mobile == 'fill'
+    assign text_width_mobile = '100%'
+  endif
+
+  if block.settings.alignment == 'center'
+    assign text_alignment = 'center'
+  elsif block.settings.alignment == 'end'
+    assign text_alignment = 'end'
+  endif
+
+  if block.settings.customize_mobile_alignment
+    if block.settings.alignment_mobile == 'center'
+      assign text_alignment_mobile = 'center'
+    elsif block.settings.alignment_mobile == 'end'
+      assign text_alignment_mobile = 'end'
+    else
+      assign text_alignment_mobile = 'start'
+    endif
+  else
+    assign text_alignment_mobile = text_alignment
+  endif
+
+  if block.settings.customize_mobile_padding
+    assign text_padding_top_mobile = block.settings.padding_top_mobile
+    assign text_padding_bottom_mobile = block.settings.padding_bottom_mobile
+    assign text_padding_left_mobile = block.settings.padding_left_mobile
+    assign text_padding_right_mobile = block.settings.padding_right_mobile
+  endif
 %}
 
 <div
-  class="text {{ block.settings.text_style }} {{ typography_class }}"
-  style="--text-align: {{ block.settings.alignment }}"
+  class="text-block body-text body-{{ text_size }}"
+  style="--text-width: {{ text_width }}; --text-width-mobile: {{ text_width_mobile }}; --text-align: {{ text_alignment }}; --text-align-mobile: {{ text_alignment_mobile }}; --text-padding-top: {{ block.settings.padding_top }}px; --text-padding-bottom: {{ block.settings.padding_bottom }}px; --text-padding-left: {{ block.settings.padding_left }}px; --text-padding-right: {{ block.settings.padding_right }}px; --text-padding-top-mobile: {{ text_padding_top_mobile }}px; --text-padding-bottom-mobile: {{ text_padding_bottom_mobile }}px; --text-padding-left-mobile: {{ text_padding_left_mobile }}px; --text-padding-right-mobile: {{ text_padding_right_mobile }}px;{% if block.settings.text_color != blank %} --text-color: {{ block.settings.text_color }};{% endif %}"
   {{ block.shopify_attributes }}
 >
-  {{ block.settings.text }}
+  {% if text_plain != blank %}
+    {{ text_content }}
+  {% endif %}
 </div>
 
 {% stylesheet %}
-  .text {
+  .text-block {
+    color: var(--text-color, var(--color-text));
+    max-width: 100%;
+    min-width: 0;
+    padding-block: var(--text-padding-top) var(--text-padding-bottom);
+    padding-inline: var(--text-padding-left) var(--text-padding-right);
     text-align: var(--text-align);
+    width: var(--text-width);
   }
-  .text--title { font-family: var(--font-heading-family); font-size: var(--font-heading-lg); }
-  .text--subtitle { font-family: var(--font-body-family); font-size: var(--font-body-lg); }
-  .text--normal { font-family: var(--font-body-family); font-size: var(--font-body-md); }
+
+  .text-block :where(p, ul, ol) {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .text-block :where(a) {
+    color: inherit;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .text-block {
+      padding-block: var(--text-padding-top-mobile) var(--text-padding-bottom-mobile);
+      padding-inline: var(--text-padding-left-mobile) var(--text-padding-right-mobile);
+      text-align: var(--text-align-mobile);
+      width: var(--text-width-mobile);
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -38,29 +100,180 @@
   "name": "t:general.text",
   "settings": [
     {
-      "type": "text",
+      "type": "richtext",
       "id": "text",
       "label": "t:labels.text",
-      "default": "Text"
+      "default": "<p>Text</p>"
     },
     {
       "type": "select",
-      "id": "text_style",
-      "label": "t:labels.text_style",
+      "id": "text_size",
+      "label": "t:labels.text_size",
       "options": [
-        { "value": "text--title", "label": "t:options.text_style.title" },
-        { "value": "text--subtitle", "label": "t:options.text_style.subtitle" },
-        { "value": "text--normal", "label": "t:options.text_style.normal" }
+        { "value": "xs", "label": "t:options.text_size.xs" },
+        { "value": "sm", "label": "t:options.text_size.sm" },
+        { "value": "md", "label": "t:options.text_size.md" },
+        { "value": "lg", "label": "t:options.text_size.lg" },
+        { "value": "xl", "label": "t:options.text_size.xl" },
+        { "value": "xxl", "label": "t:options.text_size.xxl" }
       ],
-      "default": "text--title"
+      "default": "md"
     },
     {
-      "type": "text_alignment",
+      "type": "color",
+      "id": "text_color",
+      "label": "t:labels.text_color",
+      "info": "t:info.text_color"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:labels.width",
+      "options": [
+        { "value": "fit", "label": "t:options.width.fit" },
+        { "value": "fill", "label": "t:options.width.fill" }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:labels.width_mobile",
+      "options": [
+        { "value": "fit", "label": "t:options.width.fit" },
+        { "value": "fill", "label": "t:options.width.fill" }
+      ],
+      "default": "fill"
+    },
+    {
+      "visible_if": "{{ block.settings.width == 'fill' }}",
+      "type": "select",
       "id": "alignment",
       "label": "t:labels.alignment",
-      "default": "left"
+      "options": [
+        { "value": "start", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "end", "label": "t:options.alignment.right" }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_alignment",
+      "label": "t:labels.customize_mobile_alignment",
+      "default": false
+    },
+    {
+      "visible_if": "{{ block.settings.customize_mobile_alignment and block.settings.width_mobile == 'fill' }}",
+      "type": "select",
+      "id": "alignment_mobile",
+      "label": "t:labels.alignment_mobile",
+      "options": [
+        { "value": "start", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "end", "label": "t:options.alignment.right" }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "header",
+      "content": "t:general.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:labels.padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:labels.padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "t:labels.padding_left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "t:labels.padding_right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.customize_mobile_padding",
+      "default": false
+    },
+    {
+      "visible_if": "{{ block.settings.customize_mobile_padding }}",
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "visible_if": "{{ block.settings.customize_mobile_padding }}",
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "visible_if": "{{ block.settings.customize_mobile_padding }}",
+      "type": "range",
+      "id": "padding_left_mobile",
+      "label": "t:labels.padding_left_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "visible_if": "{{ block.settings.customize_mobile_padding }}",
+      "type": "range",
+      "id": "padding_right_mobile",
+      "label": "t:labels.padding_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
     }
   ],
-  "presets": [{ "name": "t:general.text" }]
+  "presets": [
+    {
+      "name": "t:general.text"
+    }
+  ]
 }
 {% endschema %}
