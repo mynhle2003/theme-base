@@ -59,25 +59,25 @@
       },
       {
         "type": "font_picker",
-        "id": "type_primary_font",
+        "id": "font_body_family",
         "default": "work_sans_n4",
         "label": "t:labels.body_font"
       },
       {
         "type": "font_picker",
-        "id": "type_heading_font",
+        "id": "font_heading_family",
         "default": "work_sans_n4",
         "label": "t:labels.heading_font"
       },
       {
         "type": "font_picker",
-        "id": "type_accent_font",
+        "id": "font_accent_family",
         "default": "work_sans_n4",
         "label": "t:labels.accent_font"
       },
       {
         "type": "range",
-        "id": "font_heading_base_size",
+        "id": "heading_base_size",
         "min": 28,
         "max": 72,
         "step": 1,
@@ -87,7 +87,17 @@
       },
       {
         "type": "range",
-        "id": "font_body_base_size",
+        "id": "heading_base_size_mobile",
+        "min": 24,
+        "max": 60,
+        "step": 1,
+        "unit": "px",
+        "default": 36,
+        "label": "t:labels.heading_base_size_mobile"
+      },
+      {
+        "type": "range",
+        "id": "body_base_size",
         "min": 14,
         "max": 20,
         "step": 1,
@@ -96,8 +106,18 @@
         "label": "t:labels.body_base_size"
       },
       {
+        "type": "range",
+        "id": "body_base_size_mobile",
+        "min": 14,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "default": 16,
+        "label": "t:labels.body_base_size_mobile"
+      },
+      {
         "type": "select",
-        "id": "font_body_line_height",
+        "id": "body_line_height",
         "label": "t:labels.body_line_height",
         "options": [
           { "value": "normal", "label": "t:options.line_height.normal" },
@@ -108,7 +128,7 @@
       },
       {
         "type": "select",
-        "id": "font_heading_line_height",
+        "id": "heading_line_height",
         "label": "t:labels.heading_line_height",
         "options": [
           { "value": "tight", "label": "t:options.line_height.tight" },
@@ -119,8 +139,41 @@
       },
       {
         "type": "select",
-        "id": "font_heading_text_case",
+        "id": "heading_text_case",
         "label": "t:labels.heading_text_case",
+        "options": [
+          { "value": "original", "label": "t:options.text_case.original" },
+          { "value": "uppercase", "label": "t:options.text_case.uppercase" },
+          { "value": "capitalize", "label": "t:options.text_case.capitalize" }
+        ],
+        "default": "original"
+      },
+      {
+        "type": "select",
+        "id": "heading_letter_spacing",
+        "label": "t:labels.heading_letter_spacing",
+        "options": [
+          { "value": "tight", "label": "t:options.letter_spacing.tight" },
+          { "value": "normal", "label": "t:options.letter_spacing.normal" },
+          { "value": "relaxed", "label": "t:options.letter_spacing.relaxed" }
+        ],
+        "default": "normal"
+      },
+      {
+        "type": "select",
+        "id": "body_letter_spacing",
+        "label": "t:labels.body_letter_spacing",
+        "options": [
+          { "value": "tight", "label": "t:options.letter_spacing.tight" },
+          { "value": "normal", "label": "t:options.letter_spacing.normal" },
+          { "value": "relaxed", "label": "t:options.letter_spacing.relaxed" }
+        ],
+        "default": "normal"
+      },
+      {
+        "type": "select",
+        "id": "body_text_case",
+        "label": "t:labels.body_text_case",
         "options": [
           { "value": "original", "label": "t:options.text_case.original" },
           { "value": "uppercase", "label": "t:options.text_case.uppercase" },

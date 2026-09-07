@@ -2,9 +2,9 @@
   assign default_color_scheme = settings.default_color_scheme
   assign active_background = settings.background_color
   assign active_foreground = settings.foreground_color
-  assign body_font = settings.type_primary_font
-  assign heading_font = settings.type_heading_font | default: body_font
-  assign accent_font = settings.type_accent_font | default: body_font
+  assign body_font = settings.font_body_family
+  assign heading_font = settings.font_heading_family | default: body_font
+  assign accent_font = settings.font_accent_family | default: body_font
 
   if default_color_scheme != blank
     assign active_background = default_color_scheme.settings.background
@@ -27,8 +27,10 @@
     --font-body-style: {{ body_font.style }};
     --font-body-weight: {{ body_font.weight }};
     --font-heading-weight: {{ heading_font.weight }};
-    --font-heading-base: {{ settings.font_heading_base_size | default: 44 }}px;
-    --font-body-md: {{ settings.font_body_base_size | default: 18 }}px;
+    --font-heading-base: {{ settings.heading_base_size | default: 44 }}px;
+    --font-heading-base-mobile: {{ settings.heading_base_size_mobile | default: 36 }}px;
+    --font-body-md: {{ settings.body_base_size | default: 18 }}px;
+    --font-body-md-mobile: {{ settings.body_base_size_mobile | default: 16 }}px;
     --font-body-xs: calc(var(--font-body-md) * 5 / 7);
     --font-body-sm: calc(var(--font-body-md) * 6 / 7);
     --font-body-lg: calc(var(--font-body-md) * 8 / 7);
@@ -40,9 +42,12 @@
     --font-heading-lg: clamp(2rem, var(--font-heading-base), 4.5rem);
     --font-heading-xl: clamp(2.5rem, calc(var(--font-heading-base) * 1.2), 5.5rem);
     --font-heading-display: clamp(3rem, calc(var(--font-heading-base) * 1.5), 7rem);
-    --font-heading-line-height: {% case settings.font_heading_line_height %}{% when 'normal' %}1.3{% when 'relaxed' %}1.5{% else %}1.1{% endcase %};
-    --font-body-line-height: {% case settings.font_body_line_height %}{% when 'normal' %}1.5{% when 'loose' %}1.8{% else %}1.65{% endcase %};
-    --font-heading-text-transform: {% case settings.font_heading_text_case %}{% when 'uppercase' %}uppercase{% when 'capitalize' %}capitalize{% else %}none{% endcase %};
+    --font-heading-line-height: {% case settings.heading_line_height %}{% when 'normal' %}1.3{% when 'relaxed' %}1.5{% else %}1.1{% endcase %};
+    --font-heading-letter-spacing: {% case settings.heading_letter_spacing %}{% when 'tight' %}-0.02em{% when 'relaxed' %}0.02em{% else %}0{% endcase %};
+    --font-body-line-height: {% case settings.body_line_height %}{% when 'normal' %}1.5{% when 'loose' %}1.8{% else %}1.65{% endcase %};
+    --font-body-letter-spacing: {% case settings.body_letter_spacing %}{% when 'tight' %}-0.01em{% when 'relaxed' %}0.02em{% else %}0{% endcase %};
+    --font-heading-text-transform: {% case settings.heading_text_case %}{% when 'uppercase' %}uppercase{% when 'capitalize' %}capitalize{% else %}none{% endcase %};
+    --font-body-text-transform: {% case settings.body_text_case %}{% when 'uppercase' %}uppercase{% when 'capitalize' %}capitalize{% else %}none{% endcase %};
     --page-width: {{ settings.max_page_width }};
     --page-margin: max({{ settings.min_page_margin }}px, {{ settings.page_margin_mobile }}px);
     --section-spacing: {{ settings.section_spacing }}px;
@@ -107,6 +112,13 @@
     --motion-ease: cubic-bezier(0.2, 0.65, 0.3, 1);
     --card-radius: {{ settings.card_corner_radius | default: 8 }}px;
     --media-radius: {{ settings.media_corner_radius | default: 8 }}px;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    :root {
+      --font-heading-base: var(--font-heading-base-mobile);
+      --font-body-md: var(--font-body-md-mobile);
+    }
   }
 
   {% for scheme in settings.color_schemes %}
