@@ -1,0 +1,102 @@
+{% doc %}
+  Renders the Header compound block with an ordered stack of one optional
+  Eyebrow, Heading, and Text child.
+
+  Header owns child composition, width, gap, and outer padding. Child blocks
+  continue to own their content, semantics, typography, and local appearance.
+
+  @example
+  {% content_for 'block', type: 'header', id: 'header' %}
+{% enddoc %}
+
+{% liquid
+  assign header_max_width = 'none'
+  assign header_gap_mobile = block.settings.gap_desktop
+  assign header_padding_top_mobile = block.settings.padding_top
+  assign header_padding_bottom_mobile = block.settings.padding_bottom
+  assign header_padding_left_mobile = block.settings.padding_left
+  assign header_padding_right_mobile = block.settings.padding_right
+
+  if block.settings.limit_width
+    assign header_max_width = block.settings.max_width | append: 'px'
+  endif
+
+  if block.settings.customize_mobile_padding
+    assign header_gap_mobile = block.settings.gap_mobile
+    assign header_padding_top_mobile = block.settings.padding_top_mobile
+    assign header_padding_bottom_mobile = block.settings.padding_bottom_mobile
+    assign header_padding_left_mobile = block.settings.padding_left_mobile
+    assign header_padding_right_mobile = block.settings.padding_right_mobile
+  endif
+%}
+
+<div
+  class="block-header"
+  style="--header-max-width: {{ header_max_width }}; --header-gap: {{ block.settings.gap_desktop }}px; --header-gap-mobile: {{ header_gap_mobile }}px; --header-padding-top: {{ block.settings.padding_top }}px; --header-padding-bottom: {{ block.settings.padding_bottom }}px; --header-padding-left: {{ block.settings.padding_left }}px; --header-padding-right: {{ block.settings.padding_right }}px; --header-padding-top-mobile: {{ header_padding_top_mobile }}px; --header-padding-bottom-mobile: {{ header_padding_bottom_mobile }}px; --header-padding-left-mobile: {{ header_padding_left_mobile }}px; --header-padding-right-mobile: {{ header_padding_right_mobile }}px;"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+</div>
+
+{% stylesheet %}
+  .block-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--header-gap);
+    max-width: var(--header-max-width);
+    min-width: 0;
+    padding-block: var(--header-padding-top) var(--header-padding-bottom);
+    padding-inline: var(--header-padding-left) var(--header-padding-right);
+    width: 100%;
+  }
+
+  .block-header > * {
+    min-width: 0;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .block-header {
+      gap: var(--header-gap-mobile);
+      padding-block: var(--header-padding-top-mobile) var(--header-padding-bottom-mobile);
+      padding-inline: var(--header-padding-left-mobile) var(--header-padding-right-mobile);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.header",
+  "blocks": [
+    { "type": "eyebrow" },
+    { "type": "heading" },
+    { "type": "text" }
+  ],
+  "settings": [
+    { "type": "header", "content": "t:general.layout" },
+    { "type": "checkbox", "id": "limit_width", "label": "t:labels.limit_width", "default": false },
+    { "visible_if": "{{ block.settings.limit_width }}", "type": "range", "id": "max_width", "label": "t:labels.max_width", "min": 320, "max": 1200, "step": 10, "unit": "px", "default": 750 },
+    { "type": "range", "id": "gap_desktop", "label": "t:labels.gap_desktop", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "gap_mobile", "label": "t:labels.gap_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 8 },
+    { "type": "header", "content": "t:general.padding" },
+    { "type": "range", "id": "padding_top", "label": "t:labels.padding_top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "t:labels.padding_bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_left", "label": "t:labels.padding_left", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_right", "label": "t:labels.padding_right", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "checkbox", "id": "customize_mobile_padding", "label": "t:labels.customize_mobile", "default": false },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_top_mobile", "label": "t:labels.padding_top_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_bottom_mobile", "label": "t:labels.padding_bottom_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_left_mobile", "label": "t:labels.padding_left_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_right_mobile", "label": "t:labels.padding_right_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
+  ],
+  "presets": [
+    {
+      "name": "t:general.header",
+      "blocks": [
+        { "type": "eyebrow" },
+        { "type": "heading" },
+        { "type": "text" }
+      ]
+    }
+  ]
+}
+{% endschema %}
