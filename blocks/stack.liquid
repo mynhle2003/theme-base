@@ -1,0 +1,109 @@
+{% doc %}
+  Renders a vertical stack of editable theme blocks with configurable spacing,
+  alignment, and padding.
+
+  Stack owns only the internal composition of its children. Child blocks own
+  their content and presentation. An empty stack keeps its editor-aware root
+  so merchants can add children from the Theme Editor.
+
+  @example
+  {% content_for 'block', type: 'stack', id: 'stack' %}
+{% enddoc %}
+
+<div
+  class="stack"
+  style="--stack-gap: {{ block.settings.gap | default: 16 }}px; --stack-alignment: {{ block.settings.alignment | default: 'flex-start' }}; --stack-content-alignment: {{ block.settings.content_alignment | default: 'flex-start' }}; --stack-padding: {{ block.settings.padding | default: 0 }}px;"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+</div>
+
+{% stylesheet %}
+  .stack {
+    align-items: var(--stack-alignment);
+    display: flex;
+    flex-direction: column;
+    gap: var(--stack-gap);
+    justify-content: var(--stack-content-alignment);
+    min-width: 0;
+    padding: var(--stack-padding);
+    width: 100%;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.stack",
+  "blocks": [
+    { "type": "@theme" },
+    { "type": "heading" },
+    { "type": "text" },
+    { "type": "image" },
+    { "type": "video" },
+    { "type": "icon" },
+    { "type": "button" },
+    { "type": "buttons" },
+    { "type": "group" },
+    { "type": "stack" }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "default": "flex-start",
+      "options": [
+        { "value": "flex-start", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "flex-end", "label": "t:options.alignment.right" },
+        { "value": "stretch", "label": "t:options.alignment.stretch" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "t:labels.content_alignment",
+      "default": "flex-start",
+      "options": [
+        { "value": "flex-start", "label": "t:options.alignment.top" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "flex-end", "label": "t:options.alignment.bottom" },
+        { "value": "space-between", "label": "t:options.alignment.space_between" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "t:labels.gap",
+      "default": 16,
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "t:labels.padding",
+      "default": 0,
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.stack",
+      "category": "t:general.layout",
+      "settings": {
+        "alignment": "stretch",
+        "content_alignment": "flex-start",
+        "gap": 16,
+        "padding": 0
+      },
+      "blocks": [{ "type": "text" }, { "type": "text" }]
+    }
+  ]
+}
+{% endschema %}
