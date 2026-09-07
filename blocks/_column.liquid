@@ -1,0 +1,29 @@
+{% doc %}
+  Renders one private content slot for the Columns composition.
+
+  This block is intentionally hidden from generic Theme Editor pickers. It is
+  only created by the Columns preset and keeps a stable Left/Right slot wrapper.
+
+  @example
+  {% content_for 'block', type: '_column', id: 'column-left' %}
+{% enddoc %}
+
+<div class="block-columns__slot" {{ block.shopify_attributes }}>
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "t:general.column",
+  "blocks": [
+    { "type": "heading" },
+    { "type": "eyebrow" },
+    { "type": "text" },
+    { "type": "button" },
+    { "type": "buttons" },
+    { "type": "image" },
+    { "type": "video" },
+    { "type": "icon" }
+  ]
+}
+{% endschema %}
