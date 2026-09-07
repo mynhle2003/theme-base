@@ -64,6 +64,23 @@
 - Localization: product option labels and empty-state copy use Liquid/product translation context; picker presentation remains controlled by global Variant Picker/Swatch settings.
 - Runtime: existing component JavaScript is guarded by custom-element registration and per-instance initialization; no new block-level listeners are added.
 
+## Quantity Selector
+
+- Type: `quantity-selector`
+- Category: Commerce/Form Composition
+- Role: control the submitted quantity for the current variant inside a parent product form.
+- Resource owner: the parent product section/form supplies product and variant context; the block never owns a product picker, product loop or product form.
+- Capabilities: localized label, numeric quantity input, optional stepper buttons, variant quantity rules (`min`, `max`, `increment`) and unavailable-variant disabling.
+- Content owner: the shared `quantity-selector` component owns the fixed control markup; merchants cannot add, remove or reorder arbitrary children.
+- Composition policy: leaf form block; no child blocks, nested sections or resource selection.
+- Component boundary: `snippets/quantity-selector.liquid` owns control markup, keyboard/button interaction, normalization and variant-rule synchronization; the block owns context binding, editor settings, stable wrapper and empty state.
+- Form boundary: the parent product form owns submission; the component emits native input/change events for the `quantity` field and never submits or creates a form.
+- Output: `.quantity-selector-block` wrapping a `<quantity-selector>` control with `name="quantity"`.
+- States: missing context, unavailable variant, min/max boundaries, increment normalization, keyboard focus and variant changes are handled explicitly.
+- Accessibility: label is associated with the input, buttons have localized accessible names, buttons are keyboard operable and boundary-disabled, and missing context uses `role="status"`.
+- Localization: label, button names and empty-state copy use translation keys.
+- Runtime: custom-element lifecycle is guarded per instance; variant-change listeners attach to the parent form and do not create a form-level submission side effect.
+
 ## Divider
 
 - Type: `divider`

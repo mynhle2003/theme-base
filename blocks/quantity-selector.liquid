@@ -1,0 +1,52 @@
+{% doc %}
+  Renders a controlled quantity selector for the product context supplied by
+  its parent product form. The block never owns the product form or product
+  source.
+
+  @example
+  {% content_for 'block', type: 'quantity-selector', id: 'quantity-selector' %}
+{% enddoc %}
+
+{% liquid
+  assign quantity_product = product
+  assign quantity_variant = quantity_product.selected_or_first_available_variant
+%}
+
+<div class="quantity-selector-block" {{ block.shopify_attributes }}>
+  {% if quantity_product != blank and quantity_variant != blank %}
+    {% render 'quantity-selector',
+      variant: quantity_variant,
+      show_label: block.settings.show_label,
+      show_stepper: block.settings.show_stepper
+    %}
+  {% else %}
+    <p class="quantity-selector-block__empty" role="status">
+      {{ 'blocks.quantity_selector.empty' | t }}
+    </p>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .quantity-selector-block {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .quantity-selector-block__empty {
+    color: var(--color-text);
+    font-size: var(--font-body-sm);
+    margin: 0;
+    opacity: 0.75;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.quantity_selector",
+  "settings": [
+    { "type": "checkbox", "id": "show_label", "label": "t:labels.quantity_selector_show_label", "default": true },
+    { "type": "checkbox", "id": "show_stepper", "label": "t:labels.quantity_selector_show_stepper", "default": true }
+  ],
+  "presets": [{ "name": "t:general.quantity_selector" }]
+}
+{% endschema %}
