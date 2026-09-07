@@ -2,21 +2,20 @@
   Renders a group of blocks with configurable layout direction, gap and
   alignment.
 
-  All settings apply to only one dimension to reduce configuration complexity.
+  The Group block owns only child composition: direction, cross-axis alignment,
+  main-axis content alignment, gap, and padding. Child blocks own their own
+  content and presentation.
 
-  This component is a wrapper concerned only with rendering its children in
-  the specified layout direction with appropriate padding and alignment.
+  An empty group intentionally renders its editor-aware wrapper so merchants
+  can add or restore children from the Theme Editor.
 
   @example
   {% content_for 'block', type: 'group', id: 'group' %}
 {% enddoc %}
 
 <div
-  class="group {{ block.settings.layout_direction }}"
-  style="
-    --padding: {{ block.settings.padding }}px;
-    --alignment: {{ block.settings.alignment }};
-  "
+  class="group {{ block.settings.layout_direction | default: 'group--vertical' }}"
+  style="--group-gap: {{ block.settings.gap | default: 16 }}px; --group-padding: {{ block.settings.padding | default: 0 }}px; --group-alignment: {{ block.settings.alignment | default: 'flex-start' }}; --group-content-alignment: {{ block.settings.content_alignment | default: 'flex-start' }};"
   {{ block.shopify_attributes }}
 >
   {% content_for 'blocks' %}
@@ -25,29 +24,39 @@
 {% stylesheet %}
   .group {
     display: flex;
-    flex-wrap: nowrap;
-    overflow: hidden;
+    align-items: var(--group-alignment);
+    flex-wrap: wrap;
+    gap: var(--group-gap);
+    justify-content: var(--group-content-alignment);
+    min-width: 0;
     width: 100%;
   }
 
   .group--horizontal {
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 var(--padding);
+    padding-inline: var(--group-padding);
   }
 
   .group--vertical {
     flex-direction: column;
-    align-items: var(--alignment);
-    padding: var(--padding) 0;
+    padding-block: var(--group-padding);
   }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.group",
-  "blocks": [{ "type": "@theme" }],
+  "blocks": [
+    { "type": "@theme" },
+    { "type": "heading" },
+    { "type": "text" },
+    { "type": "image" },
+    { "type": "video" },
+    { "type": "icon" },
+    { "type": "button" },
+    { "type": "buttons" },
+    { "type": "group" }
+  ],
   "settings": [
     {
       "type": "select",
@@ -60,7 +69,6 @@
       ]
     },
     {
-      "visible_if": "{{ block.settings.layout_direction == 'group--vertical' }}",
       "type": "select",
       "id": "alignment",
       "label": "t:labels.alignment",
@@ -70,6 +78,28 @@
         { "value": "center", "label": "t:options.alignment.center" },
         { "value": "flex-end", "label": "t:options.alignment.right" }
       ]
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "t:labels.content_alignment",
+      "default": "flex-start",
+      "options": [
+        { "value": "flex-start", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "flex-end", "label": "t:options.alignment.right" },
+        { "value": "space-between", "label": "t:options.alignment.space_between" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "t:labels.gap",
+      "default": 16,
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px"
     },
     {
       "type": "range",
@@ -84,21 +114,40 @@
   ],
   "presets": [
     {
+      "name": "t:general.group",
+      "category": "t:general.layout",
+      "settings": {
+        "layout_direction": "group--vertical",
+        "alignment": "flex-start",
+        "content_alignment": "flex-start",
+        "gap": 16,
+        "padding": 0
+      },
+      "blocks": [{ "type": "text" }]
+    },
+    {
       "name": "t:general.column",
       "category": "t:general.layout",
       "settings": {
         "layout_direction": "group--vertical",
         "alignment": "flex-start",
+        "content_alignment": "flex-start",
+        "gap": 16,
         "padding": 0
-      }
+      },
+      "blocks": [{ "type": "text" }, { "type": "text" }]
     },
     {
       "name": "t:general.row",
       "category": "t:general.layout",
       "settings": {
         "layout_direction": "group--horizontal",
+        "alignment": "center",
+        "content_alignment": "space-between",
+        "gap": 16,
         "padding": 0
-      }
+      },
+      "blocks": [{ "type": "text" }, { "type": "text" }]
     }
   ]
 }
