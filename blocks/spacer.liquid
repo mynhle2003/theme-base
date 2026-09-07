@@ -1,0 +1,155 @@
+{% doc %}
+  Renders intentional vertical space within a block composition.
+
+  Spacer owns only its own block-size. It does not render text, interactive
+  content, or margins that affect adjacent blocks. Percentage sizing resolves
+  when the parent has a definite block-size and safely produces no space when
+  that reference is indefinite.
+
+  @example
+  {% content_for 'block', type: 'spacer', id: 'spacer' %}
+{% enddoc %}
+
+{% liquid
+  assign spacer_unit_desktop = block.settings.unit_desktop | default: 'pixel'
+  assign spacer_size_desktop = block.settings.size_desktop_px | default: 100
+  assign spacer_unit_mobile = block.settings.unit_mobile | default: 'pixel'
+  assign spacer_size_mobile = block.settings.size_mobile_px | default: 52
+  assign spacer_mobile_display = 'block'
+
+  if spacer_unit_desktop == 'percent'
+    assign spacer_size_desktop = block.settings.size_desktop_percent | default: 25
+    assign spacer_size_desktop_value = spacer_size_desktop | append: '%'
+  else
+    assign spacer_size_desktop_value = spacer_size_desktop | append: 'px'
+  endif
+
+  if spacer_unit_mobile == 'percent'
+    assign spacer_size_mobile = block.settings.size_mobile_percent | default: 25
+    assign spacer_size_mobile_value = spacer_size_mobile | append: '%'
+  else
+    assign spacer_size_mobile_value = spacer_size_mobile | append: 'px'
+  endif
+
+  if block.settings.show_on_mobile == false
+    assign spacer_mobile_display = 'none'
+  endif
+%}
+
+<div
+  class="block-spacer{% if block.settings.custom_spacing %} block-spacer--custom-spacing{% endif %}"
+  style="--spacer-size-desktop: {{ spacer_size_desktop_value }}; --spacer-size-mobile: {{ spacer_size_mobile_value }}; --spacer-mobile-display: {{ spacer_mobile_display }};"
+  aria-hidden="true"
+  {{ block.shopify_attributes }}
+></div>
+
+{% stylesheet %}
+  .block-spacer {
+    block-size: var(--spacer-size-desktop);
+    display: block;
+    flex: 0 0 auto;
+    inline-size: 100%;
+    min-block-size: 0;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .block-spacer--custom-spacing {
+    display: flow-root;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .block-spacer {
+      block-size: var(--spacer-size-mobile);
+      display: var(--spacer-mobile-display);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.spacer",
+  "settings": [
+    { "type": "header", "content": "t:general.desktop" },
+    {
+      "type": "select",
+      "id": "unit_desktop",
+      "label": "t:labels.unit_desktop",
+      "options": [
+        { "value": "pixel", "label": "t:options.spacer_unit.pixel" },
+        { "value": "percent", "label": "t:options.spacer_unit.percent" }
+      ],
+      "default": "pixel"
+    },
+    {
+      "type": "range",
+      "visible_if": "{{ block.settings.unit_desktop == 'pixel' }}",
+      "id": "size_desktop_px",
+      "label": "t:labels.size_desktop",
+      "min": 0,
+      "max": 400,
+      "step": 4,
+      "default": 100
+    },
+    {
+      "visible_if": "{{ block.settings.unit_desktop == 'percent' }}",
+      "type": "range",
+      "id": "size_desktop_percent",
+      "label": "t:labels.size_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 25
+    },
+    { "type": "header", "content": "t:general.mobile" },
+    { "type": "checkbox", "id": "show_on_mobile", "label": "t:labels.show_on_mobile", "default": true },
+    {
+      "visible_if": "{{ block.settings.show_on_mobile }}",
+      "type": "select",
+      "id": "unit_mobile",
+      "label": "t:labels.unit_mobile",
+      "options": [
+        { "value": "pixel", "label": "t:options.spacer_unit.pixel" },
+        { "value": "percent", "label": "t:options.spacer_unit.percent" }
+      ],
+      "default": "pixel"
+    },
+    {
+      "type": "range",
+      "visible_if": "{{ block.settings.show_on_mobile and block.settings.unit_mobile == 'pixel' }}",
+      "id": "size_mobile_px",
+      "label": "t:labels.size_mobile",
+      "min": 0,
+      "max": 400,
+      "step": 4,
+      "default": 52
+    },
+    {
+      "visible_if": "{{ block.settings.show_on_mobile and block.settings.unit_mobile == 'percent' }}",
+      "type": "range",
+      "id": "size_mobile_percent",
+      "label": "t:labels.size_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 25
+    },
+    { "type": "header", "content": "t:general.appearance" },
+    { "type": "checkbox", "id": "custom_spacing", "label": "t:labels.custom_spacing", "default": false }
+  ],
+  "presets": [
+    {
+      "name": "t:general.spacer",
+      "category": "t:general.layout",
+      "settings": {
+        "unit_desktop": "pixel",
+        "size_desktop_px": 100,
+        "show_on_mobile": true,
+        "unit_mobile": "pixel",
+        "size_mobile_px": 52,
+        "custom_spacing": false
+      }
+    }
+  ]
+}
+{% endschema %}
