@@ -1,0 +1,220 @@
+{% doc %}
+  Renders up to two related call-to-action buttons with shared layout
+  controls, spacing, responsive stacking, and local padding.
+
+  Buttons owns the fixed two-slot composition. Each slot owns only its
+  label, link, target behavior, style, and optional standard icon.
+
+  @example
+  {% content_for 'block', type: 'buttons', id: 'buttons' %}
+{% enddoc %}
+
+{% liquid
+  assign button_1_valid = false
+  assign button_2_valid = false
+  assign buttons_gap_mobile = block.settings.gap
+  assign buttons_alignment = 'flex-start'
+  assign buttons_alignment_mobile = 'flex-start'
+  assign buttons_direction_class = 'buttons-block--row'
+  assign buttons_mobile_direction_class = 'buttons-block--mobile-stack'
+  assign buttons_width = 'fit-content'
+  assign buttons_padding_top_mobile = block.settings.padding_top
+  assign buttons_padding_bottom_mobile = block.settings.padding_bottom
+  assign buttons_padding_left_mobile = block.settings.padding_left
+  assign buttons_padding_right_mobile = block.settings.padding_right
+
+  if block.settings.button_1_label != blank and block.settings.button_1_link != blank
+    assign button_1_valid = true
+  endif
+
+  if block.settings.button_2_label != blank and block.settings.button_2_link != blank
+    assign button_2_valid = true
+  endif
+
+  if block.settings.direction == 'stack'
+    assign buttons_direction_class = 'buttons-block--stack'
+  endif
+
+  if block.settings.mobile_stacking == 'row'
+    assign buttons_mobile_direction_class = 'buttons-block--mobile-row'
+  endif
+
+  if block.settings.width == 'fill'
+    assign buttons_width = '100%'
+    if block.settings.alignment == 'center'
+      assign buttons_alignment = 'center'
+    elsif block.settings.alignment == 'end'
+      assign buttons_alignment = 'flex-end'
+    endif
+  endif
+
+  if block.settings.customize_mobile_alignment
+    if block.settings.alignment_mobile == 'center'
+      assign buttons_alignment_mobile = 'center'
+    elsif block.settings.alignment_mobile == 'end'
+      assign buttons_alignment_mobile = 'flex-end'
+    else
+      assign buttons_alignment_mobile = 'flex-start'
+    endif
+  else
+    assign buttons_alignment_mobile = buttons_alignment
+  endif
+
+  if block.settings.customize_mobile_padding
+    assign buttons_gap_mobile = block.settings.gap_mobile
+    assign buttons_padding_top_mobile = block.settings.padding_top_mobile
+    assign buttons_padding_bottom_mobile = block.settings.padding_bottom_mobile
+    assign buttons_padding_left_mobile = block.settings.padding_left_mobile
+    assign buttons_padding_right_mobile = block.settings.padding_right_mobile
+  endif
+%}
+
+{% if button_1_valid or button_2_valid %}
+<div
+  class="buttons-block {{ buttons_direction_class }} {{ buttons_mobile_direction_class }}"
+  style="--buttons-gap: {{ block.settings.gap }}px; --buttons-gap-mobile: {{ buttons_gap_mobile }}px; --buttons-width: {{ buttons_width }}; --buttons-alignment: {{ buttons_alignment }}; --buttons-alignment-mobile: {{ buttons_alignment_mobile }}; --buttons-padding-top: {{ block.settings.padding_top }}px; --buttons-padding-bottom: {{ block.settings.padding_bottom }}px; --buttons-padding-left: {{ block.settings.padding_left }}px; --buttons-padding-right: {{ block.settings.padding_right }}px; --buttons-padding-top-mobile: {{ buttons_padding_top_mobile }}px; --buttons-padding-bottom-mobile: {{ buttons_padding_bottom_mobile }}px; --buttons-padding-left-mobile: {{ buttons_padding_left_mobile }}px; --buttons-padding-right-mobile: {{ buttons_padding_right_mobile }}px;"
+  {{ block.shopify_attributes }}
+>
+  {% if button_1_valid %}
+    <a class="btn btn--{{ block.settings.button_1_style | default: 'primary' }}" href="{{ block.settings.button_1_link }}"{% if block.settings.button_1_open_in_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+      <span class="btn__label">{{ block.settings.button_1_label | escape }}</span>
+      {% if block.settings.button_1_show_icon %}<span class="btn__icon" aria-hidden="true">→</span>{% endif %}
+    </a>
+  {% endif %}
+  {% if button_2_valid %}
+    <a class="btn btn--{{ block.settings.button_2_style | default: 'secondary' }}" href="{{ block.settings.button_2_link }}"{% if block.settings.button_2_open_in_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+      <span class="btn__label">{{ block.settings.button_2_label | escape }}</span>
+      {% if block.settings.button_2_show_icon %}<span class="btn__icon" aria-hidden="true">→</span>{% endif %}
+    </a>
+  {% endif %}
+</div>
+{% endif %}
+
+{% stylesheet %}
+  .buttons-block {
+    align-items: center;
+    display: flex;
+    gap: var(--buttons-gap);
+    justify-content: var(--buttons-alignment);
+    max-width: 100%;
+    min-width: 0;
+    padding-block: var(--buttons-padding-top) var(--buttons-padding-bottom);
+    padding-inline: var(--buttons-padding-left) var(--buttons-padding-right);
+    width: var(--buttons-width);
+  }
+
+  .buttons-block--stack {
+    flex-direction: column;
+  }
+
+  .buttons-block .btn {
+    align-items: center;
+    border: var(--button-border-width, 1px) solid transparent;
+    border-radius: var(--button-radius);
+    cursor: pointer;
+    display: inline-flex;
+    flex: 0 1 auto;
+    font: inherit;
+    font-family: var(--font-body-family);
+    font-size: var(--font-body-md);
+    gap: 0.5rem;
+    justify-content: center;
+    line-height: 1.2;
+    max-width: 100%;
+    min-height: var(--button-height, 2.75rem);
+    padding: 0.75rem 1.25rem;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color var(--motion-duration) var(--motion-ease), border-color var(--motion-duration) var(--motion-ease), color var(--motion-duration) var(--motion-ease), opacity var(--motion-duration) var(--motion-ease);
+  }
+
+  .buttons-block .btn--primary { background: var(--color-primary-button); border-color: var(--color-primary-button-border); color: var(--color-primary-button-label); }
+  .buttons-block .btn--secondary { background: var(--color-secondary-button); border-color: var(--color-secondary-button-border); color: var(--color-secondary-button-label); }
+  .buttons-block .btn--tertiary { background: transparent; border-color: var(--color-secondary-button-border); color: var(--color-secondary-button-label); }
+  .buttons-block .btn:hover { filter: brightness(0.92); }
+  .buttons-block .btn:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .buttons-block .btn__icon { display: inline-flex; flex: 0 0 1em; line-height: 1; }
+  .buttons-block .btn__label { overflow-wrap: anywhere; }
+
+  @media screen and (max-width: 767.98px) {
+    .buttons-block {
+      gap: var(--buttons-gap-mobile);
+      justify-content: var(--buttons-alignment-mobile);
+      padding-block: var(--buttons-padding-top-mobile) var(--buttons-padding-bottom-mobile);
+      padding-inline: var(--buttons-padding-left-mobile) var(--buttons-padding-right-mobile);
+    }
+
+    .buttons-block--mobile-stack {
+      flex-direction: column;
+    }
+
+    .buttons-block--mobile-row {
+      flex-direction: row;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.buttons",
+  "settings": [
+    { "type": "header", "content": "t:general.button_1" },
+    { "type": "text", "id": "button_1_label", "label": "t:labels.button_label", "default": "Button 1" },
+    { "type": "url", "id": "button_1_link", "label": "t:labels.button_link", "default": "/" },
+    { "type": "checkbox", "id": "button_1_open_in_new_tab", "label": "t:labels.button_open_in_new_tab", "default": false },
+    { "type": "select", "id": "button_1_style", "label": "t:labels.button_style", "options": [
+      { "value": "primary", "label": "t:options.button_style.primary" },
+      { "value": "secondary", "label": "t:options.button_style.secondary" },
+      { "value": "tertiary", "label": "t:options.button_style.tertiary" }
+    ], "default": "primary" },
+    { "type": "checkbox", "id": "button_1_show_icon", "label": "t:labels.show_icon", "default": false },
+    { "type": "header", "content": "t:general.button_2" },
+    { "type": "text", "id": "button_2_label", "label": "t:labels.button_label", "default": "Button 2" },
+    { "type": "url", "id": "button_2_link", "label": "t:labels.button_link", "default": "/" },
+    { "type": "checkbox", "id": "button_2_open_in_new_tab", "label": "t:labels.button_open_in_new_tab", "default": false },
+    { "type": "select", "id": "button_2_style", "label": "t:labels.button_style", "options": [
+      { "value": "primary", "label": "t:options.button_style.primary" },
+      { "value": "secondary", "label": "t:options.button_style.secondary" },
+      { "value": "tertiary", "label": "t:options.button_style.tertiary" }
+    ], "default": "secondary" },
+    { "type": "checkbox", "id": "button_2_show_icon", "label": "t:labels.show_icon", "default": false },
+    { "type": "header", "content": "t:general.layout" },
+    { "type": "select", "id": "direction", "label": "t:labels.direction", "options": [
+      { "value": "row", "label": "t:options.buttons_direction.row" },
+      { "value": "stack", "label": "t:options.buttons_direction.stack" }
+    ], "default": "row" },
+    { "type": "range", "id": "gap", "label": "t:labels.gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 16 },
+    { "type": "select", "id": "width", "label": "t:labels.width", "options": [
+      { "value": "fit", "label": "t:options.width.fit" },
+      { "value": "fill", "label": "t:options.width.fill" }
+    ], "default": "fit" },
+    { "visible_if": "{{ block.settings.width == 'fill' }}", "type": "select", "id": "alignment", "label": "t:labels.alignment", "options": [
+      { "value": "start", "label": "t:options.alignment.left" },
+      { "value": "center", "label": "t:options.alignment.center" },
+      { "value": "end", "label": "t:options.alignment.right" }
+    ], "default": "start" },
+    { "type": "select", "id": "mobile_stacking", "label": "t:labels.mobile_stacking", "options": [
+      { "value": "row", "label": "t:options.mobile_stacking.row" },
+      { "value": "stack", "label": "t:options.mobile_stacking.stack" }
+    ], "default": "stack" },
+    { "type": "checkbox", "id": "customize_mobile_alignment", "label": "t:labels.customize_mobile", "default": false },
+    { "visible_if": "{{ block.settings.customize_mobile_alignment and block.settings.width == 'fill' }}", "type": "select", "id": "alignment_mobile", "label": "t:labels.alignment_mobile", "options": [
+      { "value": "start", "label": "t:options.alignment.left" },
+      { "value": "center", "label": "t:options.alignment.center" },
+      { "value": "end", "label": "t:options.alignment.right" }
+    ], "default": "start" },
+    { "type": "header", "content": "t:general.padding" },
+    { "type": "range", "id": "padding_top", "label": "t:labels.padding_top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "t:labels.padding_bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_left", "label": "t:labels.padding_left", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_right", "label": "t:labels.padding_right", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "checkbox", "id": "customize_mobile_padding", "label": "t:labels.customize_mobile", "default": false },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "gap_mobile", "label": "t:labels.gap_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 12 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_top_mobile", "label": "t:labels.padding_top_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_bottom_mobile", "label": "t:labels.padding_bottom_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_left_mobile", "label": "t:labels.padding_left_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_right_mobile", "label": "t:labels.padding_right_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
+  ],
+  "presets": [{ "name": "t:general.buttons" }]
+}
+{% endschema %}
