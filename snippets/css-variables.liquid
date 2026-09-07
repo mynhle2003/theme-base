@@ -94,6 +94,14 @@
     --sale-price-color: {{ settings.sale_price_color | default: '#B42318' }};
     --icon-size: {{ settings.global_icon_size | default: 32 }}px;
     --icon-stroke-width: {{ settings.global_icon_stroke_width | default: 1.5 }}px;
+    --overlay-color: {{ settings.overlay_color | default: '#000000' }};
+    --overlay-opacity: {{ settings.overlay_opacity | default: 45 | divided_by: 100.0 }};
+    --overlay-blur: {{ settings.overlay_blur | default: 0 }}px;
+    --z-index-header: 20;
+    --z-index-dropdown: 30;
+    --z-index-overlay: 40;
+    --z-index-modal: 50;
+    --z-index-toast: 60;
     --motion-duration-fast: 120ms;
     --motion-duration: {% case settings.motion_duration %}{% when 'fast' %}120ms{% when 'slow' %}360ms{% else %}220ms{% endcase %};
     --motion-ease: cubic-bezier(0.2, 0.65, 0.3, 1);

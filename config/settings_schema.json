@@ -696,5 +696,13 @@
       { "type": "range", "id": "global_icon_size", "label": "t:labels.global_icon_size", "min": 16, "max": 48, "step": 1, "unit": "px", "default": 32 },
       { "type": "range", "id": "global_icon_stroke_width", "label": "t:labels.global_icon_stroke_width", "min": 1, "max": 3, "step": 0.5, "unit": "px", "default": 1.5 }
     ]
+  },
+  {
+    "name": "t:general.overlay_layering",
+    "settings": [
+      { "type": "color", "id": "overlay_color", "label": "t:labels.overlay_color", "default": "#000000" },
+      { "type": "range", "id": "overlay_opacity", "label": "t:labels.overlay_opacity", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 45 },
+      { "type": "range", "id": "overlay_blur", "label": "t:labels.overlay_blur", "min": 0, "max": 20, "step": 1, "unit": "px", "default": 0 }
+    ]
   }
 ]

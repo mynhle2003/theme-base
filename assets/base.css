@@ -144,6 +144,18 @@ textarea[readonly] {
   color: var(--input-success-color);
 }
 
+/* Overlay Foundation: shared backdrop appearance and layering contract. */
+dialog::backdrop,
+.overlay-backdrop {
+  background: color-mix(in srgb, var(--overlay-color) calc(var(--overlay-opacity) * 100%), transparent);
+  backdrop-filter: blur(var(--overlay-blur));
+  z-index: var(--z-index-overlay);
+}
+
+dialog {
+  z-index: var(--z-index-modal);
+}
+
 /* Motion Foundation: global opt-out and OS reduced-motion support. */
 .motion--disabled *,
 .motion--disabled *::before,
