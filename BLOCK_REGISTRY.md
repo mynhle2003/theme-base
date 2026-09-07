@@ -16,6 +16,19 @@
 - Accessibility: preserves DOM order; mobile order is a deliberate visual reorder only and is limited to the two slots.
 - Runtime: CSS-only; no JavaScript lifecycle owner is required.
 
+## Divider
+
+- Type: `divider`
+- Category: Layout
+- Role: visual separation between content groups or items.
+- Capabilities: solid/dashed/dotted style, thin/medium/custom thickness, scheme/muted/custom color, responsive width and spacing.
+- Layout owner: Divider owns only its line presentation and local top/bottom spacing; parent owns the surrounding composition.
+- Content owner: none; Divider renders no text or interactive content.
+- Composition policy: leaf block; no child blocks and no nested sections.
+- Output: `.block-divider` containing a border-based `.block-divider__line`; never a character or image.
+- Accessibility: exposes a horizontal separator role without adding interactive controls.
+- Runtime: CSS-only; no JavaScript lifecycle owner is required.
+
 ## Spacer
 
 - Type: `spacer`

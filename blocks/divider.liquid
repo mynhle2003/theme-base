@@ -1,0 +1,153 @@
+{% doc %}
+  Renders a configurable visual divider between groups of content.
+
+  Divider owns its line style, thickness, color, width, alignment, and local
+  responsive spacing. It renders no text or interactive content and uses a
+  border token rather than a character or image.
+
+  @example
+  {% content_for 'block', type: 'divider', id: 'divider' %}
+{% enddoc %}
+
+{% liquid
+  assign divider_style = block.settings.divider_style | default: 'solid'
+  assign divider_thickness = block.settings.divider_thickness | default: 'thin'
+  assign divider_color = block.settings.divider_color | default: 'scheme'
+  assign divider_width = block.settings.divider_width | default: 'full'
+  assign divider_alignment = block.settings.alignment | default: 'start'
+  assign divider_custom_thickness = block.settings.custom_divider_thickness | default: 1
+  assign divider_custom_width = block.settings.custom_divider_width | default: 100
+  assign divider_spacing_top = block.settings.spacing_top | default: 24
+  assign divider_spacing_bottom = block.settings.spacing_bottom | default: 24
+  assign divider_spacing_top_mobile = block.settings.spacing_top_mobile | default: divider_spacing_top
+  assign divider_spacing_bottom_mobile = block.settings.spacing_bottom_mobile | default: divider_spacing_bottom
+
+  if divider_color == 'custom'
+    assign divider_color_value = block.settings.custom_divider_color | default: 'var(--color-border)'
+  elsif divider_color == 'muted'
+    assign divider_color_value = 'color-mix(in srgb, var(--color-border) 65%, transparent)'
+  else
+    assign divider_color_value = 'var(--color-border)'
+  endif
+%}
+
+<div
+  class="block-divider block-divider--{{ divider_style }} block-divider--thickness-{{ divider_thickness }} block-divider--width-{{ divider_width }} block-divider--align-{{ divider_alignment }}"
+  style="--divider-color: {{ divider_color_value }}; --divider-custom-thickness: {{ divider_custom_thickness }}px; --divider-custom-width: {{ divider_custom_width }}%; --divider-spacing-top: {{ divider_spacing_top }}px; --divider-spacing-bottom: {{ divider_spacing_bottom }}px; --divider-spacing-top-mobile: {{ divider_spacing_top_mobile }}px; --divider-spacing-bottom-mobile: {{ divider_spacing_bottom_mobile }}px;"
+  role="separator"
+  aria-orientation="horizontal"
+  {{ block.shopify_attributes }}
+>
+  <span class="block-divider__line"></span>
+</div>
+
+{% stylesheet %}
+  .block-divider {
+    align-items: center;
+    display: flex;
+    padding-block: var(--divider-spacing-top) var(--divider-spacing-bottom);
+    width: 100%;
+  }
+
+  .block-divider__line {
+    border-block-start-color: var(--divider-color);
+    border-block-start-style: solid;
+    border-block-start-width: 1px;
+    display: block;
+    width: 100%;
+  }
+
+  .block-divider--dashed .block-divider__line { border-block-start-style: dashed; }
+  .block-divider--dotted .block-divider__line { border-block-start-style: dotted; }
+  .block-divider--thickness-medium .block-divider__line { border-block-start-width: 2px; }
+  .block-divider--thickness-custom .block-divider__line { border-block-start-width: var(--divider-custom-thickness); }
+  .block-divider--width-content .block-divider__line { width: min(100%, 40rem); }
+  .block-divider--width-custom .block-divider__line { width: var(--divider-custom-width); }
+  .block-divider--align-start { justify-content: flex-start; }
+  .block-divider--align-center { justify-content: center; }
+  .block-divider--align-end { justify-content: flex-end; }
+
+  @media screen and (max-width: 767.98px) {
+    .block-divider {
+      padding-block: var(--divider-spacing-top-mobile) var(--divider-spacing-bottom-mobile);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.divider",
+  "settings": [
+    {
+      "type": "select",
+      "id": "divider_style",
+      "label": "t:labels.divider_style",
+      "options": [
+        { "value": "solid", "label": "t:options.divider_style.solid" },
+        { "value": "dashed", "label": "t:options.divider_style.dashed" },
+        { "value": "dotted", "label": "t:options.divider_style.dotted" }
+      ],
+      "default": "solid"
+    },
+    {
+      "type": "select",
+      "id": "divider_thickness",
+      "label": "t:labels.divider_thickness",
+      "options": [
+        { "value": "thin", "label": "t:options.divider_thickness.thin" },
+        { "value": "medium", "label": "t:options.divider_thickness.medium" },
+        { "value": "custom", "label": "t:options.divider_thickness.custom" }
+      ],
+      "default": "thin"
+    },
+    { "visible_if": "{{ block.settings.divider_thickness == 'custom' }}", "type": "range", "id": "custom_divider_thickness", "label": "t:labels.custom_divider_thickness", "min": 1, "max": 8, "step": 1, "unit": "px", "default": 1 },
+    {
+      "type": "select",
+      "id": "divider_color",
+      "label": "t:labels.divider_color",
+      "options": [
+        { "value": "scheme", "label": "t:options.divider_color.scheme" },
+        { "value": "muted", "label": "t:options.divider_color.muted" },
+        { "value": "custom", "label": "t:options.divider_color.custom" }
+      ],
+      "default": "scheme"
+    },
+    { "visible_if": "{{ block.settings.divider_color == 'custom' }}", "type": "color", "id": "custom_divider_color", "label": "t:labels.custom_divider_color", "default": "#E5E5E5" },
+    {
+      "type": "select",
+      "id": "divider_width",
+      "label": "t:labels.divider_width",
+      "options": [
+        { "value": "full", "label": "t:options.divider_width.full" },
+        { "value": "content", "label": "t:options.divider_width.content" },
+        { "value": "custom", "label": "t:options.divider_width.custom" }
+      ],
+      "default": "full"
+    },
+    { "visible_if": "{{ block.settings.divider_width == 'custom' }}", "type": "range", "id": "custom_divider_width", "label": "t:labels.custom_divider_width", "min": 1, "max": 100, "step": 1, "unit": "%", "default": 100 },
+    { "visible_if": "{{ block.settings.divider_width != 'full' }}", "type": "select", "id": "alignment", "label": "t:labels.alignment", "options": [{ "value": "start", "label": "t:options.alignment.left" }, { "value": "center", "label": "t:options.alignment.center" }, { "value": "end", "label": "t:options.alignment.right" }], "default": "start" },
+    { "type": "header", "content": "t:general.desktop" },
+    { "type": "range", "id": "spacing_top", "label": "t:labels.spacing_top", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 24 },
+    { "type": "range", "id": "spacing_bottom", "label": "t:labels.spacing_bottom", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 24 },
+    { "type": "header", "content": "t:general.mobile" },
+    { "type": "range", "id": "spacing_top_mobile", "label": "t:labels.spacing_top_mobile", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "spacing_bottom_mobile", "label": "t:labels.spacing_bottom_mobile", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 16 }
+  ],
+  "presets": [
+    {
+      "name": "t:general.divider",
+      "category": "t:general.layout",
+      "settings": {
+        "divider_style": "solid",
+        "divider_thickness": "thin",
+        "divider_color": "scheme",
+        "divider_width": "full",
+        "spacing_top": 24,
+        "spacing_bottom": 24,
+        "spacing_top_mobile": 16,
+        "spacing_bottom_mobile": 16
+      }
+    }
+  ]
+}
+{% endschema %}
