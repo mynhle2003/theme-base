@@ -86,17 +86,12 @@
     {% if block.settings.image_link != blank %}
       <a class="image-block__link" href="{{ block.settings.image_link }}"{% if block.settings.open_in_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
     {% endif %}
-      <picture class="image-block__media">
-        {% if block.settings.mobile_image != blank %}
-          <source media="(max-width: 767.98px)" srcset="{{ block.settings.mobile_image | image_url: width: 1600 }}">
-        {% endif %}
-        {{ image_source | image_url: width: 2400 | image_tag: alt: image_alt, loading: 'lazy', class: 'image-block__asset' }}
-      </picture>
+      {% render 'media', media_type: 'image', image: image_source, mobile_image: block.settings.mobile_image, alt: image_alt, image_class: 'image-block__asset', image_wrapper_class: 'image-block__media', placeholder_class: 'image-block__placeholder' %}
     {% if block.settings.image_link != blank %}
       </a>
     {% endif %}
   {% else %}
-    <div class="image-block__placeholder" aria-hidden="true">{{ 'image' | placeholder_svg_tag }}</div>
+    {% render 'media', media_type: 'image', placeholder_class: 'image-block__placeholder' %}
   {% endif %}
 </div>
 

@@ -97,13 +97,7 @@
   {{ block.shopify_attributes }}
 >
   <div class="video-block__media{% if block.settings.aspect_ratio == 'original' or block.settings.aspect_ratio == blank %} video-block__media--original{% endif %}{% unless video_has_media %} video-block__media--placeholder{% endunless %}{% if block.settings.cover_image != blank %} video-block__media--has-cover{% endif %}"{% if video_cover_style != blank %} style="{{ video_cover_style }}"{% endif %}>
-    {% if block.settings.video_source == 'uploaded' and block.settings.video != blank %}
-      {{ block.settings.video | video_tag: autoplay: block.settings.autoplay, loop: block.settings.loop_video, muted: block.settings.autoplay, controls: true, loading: 'lazy' }}
-    {% elsif block.settings.video_source == 'external_url' and block.settings.external_video_url != blank %}
-      {{ block.settings.external_video_url | external_video_tag }}
-    {% else %}
-      <div class="video-block__placeholder" aria-hidden="true">{{ 'image' | placeholder_svg_tag }}</div>
-    {% endif %}
+    {% render 'media', media_type: 'video', video: block.settings.video, external_video_url: block.settings.external_video_url, video_source: block.settings.video_source, autoplay: block.settings.autoplay, loop: block.settings.loop_video, controls: true, placeholder_class: 'video-block__placeholder' %}
   </div>
 </div>
 

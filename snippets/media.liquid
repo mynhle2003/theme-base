@@ -1,0 +1,42 @@
+{% doc %}
+  Renders shared image or video media markup for media blocks.
+
+  The caller owns layout geometry, links, aspect ratio, and visual wrapper
+  styles. This renderer owns responsive image sources, native video output,
+  and empty media placeholders.
+
+  @param {string} media_type - Media type: image or video
+  @param {image} [image] - Desktop image source
+  @param {image} [mobile_image] - Optional mobile image source
+  @param {string} [alt] - Image alternative text
+  @param {string} [image_class] - Image element class
+  @param {string} [image_wrapper_class] - Picture wrapper class
+  @param {object} [video] - Uploaded video source
+  @param {string} [external_video_url] - External video URL
+  @param {string} [video_source] - Video source: uploaded or external_url
+  @param {boolean} [autoplay] - Whether uploaded video autoplays
+  @param {boolean} [loop] - Whether uploaded video loops
+  @param {boolean} [controls] - Whether uploaded video shows native controls
+  @param {string} [placeholder_class] - Empty media placeholder class
+{% enddoc %}
+
+{% if media_type == 'image' %}
+  {% if image != blank %}
+    <picture class="{{ image_wrapper_class }}">
+      {% if mobile_image != blank %}
+        <source media="(max-width: 767.98px)" srcset="{{ mobile_image | image_url: width: 1600 }}">
+      {% endif %}
+      {{ image | image_url: width: 2400 | image_tag: alt: alt, loading: 'lazy', class: image_class }}
+    </picture>
+  {% else %}
+    <div class="{{ placeholder_class }}" aria-hidden="true">{{ 'image' | placeholder_svg_tag }}</div>
+  {% endif %}
+{% elsif media_type == 'video' %}
+  {% if video_source == 'uploaded' and video != blank %}
+    {{ video | video_tag: autoplay: autoplay, loop: loop, muted: autoplay, controls: controls, loading: 'lazy' }}
+  {% elsif video_source == 'external_url' and external_video_url != blank %}
+    {{ external_video_url | external_video_tag }}
+  {% else %}
+    <div class="{{ placeholder_class }}" aria-hidden="true">{{ 'image' | placeholder_svg_tag }}</div>
+  {% endif %}
+{% endif %}
