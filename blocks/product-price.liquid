@@ -1,0 +1,50 @@
+{% doc %}
+  Renders a controlled product price block for the product context supplied by
+  its parent resource surface. Price formatting and global price policies are
+  delegated to the shared price snippet.
+
+  @example
+  {% content_for 'block', type: 'product-price', id: 'product-price' %}
+{% enddoc %}
+
+{% liquid
+  assign price_product = product
+%}
+
+<div class="product-price-block" {{ block.shopify_attributes }}>
+  {% if price_product != blank %}
+    {% render 'price', item: price_product, show_from: block.settings.show_from %}
+  {% else %}
+    <span class="product-price-block__empty" role="status">
+      {{ 'blocks.product_price.empty' | t }}
+    </span>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .product-price-block {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .product-price-block .price {
+    max-width: 100%;
+  }
+
+  .product-price-block__empty {
+    color: var(--color-text);
+    display: inline-block;
+    font-size: var(--font-body-sm);
+    opacity: 0.75;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.product_price",
+  "settings": [
+    { "type": "checkbox", "id": "show_from", "label": "t:labels.product_price_show_from", "default": true }
+  ],
+  "presets": [{ "name": "t:general.product_price" }]
+}
+{% endschema %}

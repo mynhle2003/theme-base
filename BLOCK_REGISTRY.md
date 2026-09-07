@@ -31,6 +31,22 @@
 - Localization: visible action, sold-out and empty-selection copy use translation keys; rating metadata is announced as an accessible label.
 - Runtime: Liquid form state only; no JavaScript lifecycle owner is required.
 
+## Product Price
+
+- Type: `product-price`
+- Category: Commerce Composition
+- Role: render the current product price using the shared price component.
+- Resource owner: the parent section/resource surface supplies the product context; the block never owns a product picker, variant source or product loop.
+- Capabilities: optional `From` label for variable products; currency, compare-at, unit-price and sale-order policy remain owned by global Theme Settings and the shared price snippet.
+- Content owner: Product Price owns no child content; merchants cannot add, remove or reorder price sub-elements.
+- Composition policy: leaf commerce block; no child blocks, nested sections or resource selection.
+- Component boundary: `snippets/price.liquid` owns money formatting, sale comparison, unit price and price accessibility markup; this block owns only the editor-facing wrapper and controlled `show_from` setting.
+- Output: `.product-price-block` wrapping the shared `.price` component.
+- States: missing product context renders an editor-safe empty state; product sale, compare-at, unit-price and variable-price states are delegated to the shared component.
+- Accessibility: preserves the shared price `aria-label` and exposes the missing-context state with `role="status"`.
+- Localization: all visible price labels and empty-state copy use translation keys or shared settings.
+- Runtime: Liquid-only; no JavaScript lifecycle owner is required until a parent variant lifecycle is defined.
+
 ## Divider
 
 - Type: `divider`
