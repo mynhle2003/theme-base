@@ -606,5 +606,44 @@
         "default": 5
       }
     ]
+  },
+  {
+    "name": "t:general.badges",
+    "settings": [
+      { "type": "checkbox", "id": "badge_enabled", "label": "t:labels.badge_enabled", "default": true },
+      { "type": "select", "id": "badge_position", "label": "t:labels.badge_position", "options": [
+        { "value": "top-left", "label": "t:options.badge_position.top_left" },
+        { "value": "top-right", "label": "t:options.badge_position.top_right" },
+        { "value": "bottom-left", "label": "t:options.badge_position.bottom_left" },
+        { "value": "bottom-right", "label": "t:options.badge_position.bottom_right" }
+      ], "default": "top-left" },
+      { "type": "range", "id": "badge_font_size", "label": "t:labels.badge_font_size", "min": 10, "max": 18, "step": 1, "unit": "px", "default": 12 },
+      { "type": "range", "id": "badge_radius", "label": "t:labels.badge_radius", "min": 0, "max": 20, "step": 1, "unit": "px", "default": 4 },
+      { "type": "range", "id": "badge_padding", "label": "t:labels.badge_padding", "min": 2, "max": 16, "step": 1, "unit": "px", "default": 4 },
+      { "type": "range", "id": "badge_letter_spacing", "label": "t:labels.badge_letter_spacing", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 0 },
+      { "type": "checkbox", "id": "sale_badge_enabled", "label": "t:labels.sale_badge_enabled", "default": true },
+      { "type": "text", "id": "sale_badge_text", "label": "t:labels.sale_badge_text", "default": "Sale" },
+      { "type": "select", "id": "sale_badge_style", "label": "t:labels.sale_badge_style", "options": [
+        { "value": "text", "label": "t:options.sale_badge_style.text" },
+        { "value": "percentage", "label": "t:options.sale_badge_style.percentage" },
+        { "value": "percentage_only", "label": "t:options.sale_badge_style.percentage_only" },
+        { "value": "amount_saved", "label": "t:options.sale_badge_style.amount_saved" }
+      ], "default": "text" },
+      { "type": "checkbox", "id": "sold_out_badge_enabled", "label": "t:labels.sold_out_badge_enabled", "default": true },
+      { "type": "text", "id": "sold_out_badge_text", "label": "t:labels.sold_out_badge_text", "default": "Sold out" },
+      { "type": "checkbox", "id": "collection_badge_enabled", "label": "t:labels.collection_badge_enabled", "default": false },
+      { "type": "text", "id": "collection_badge_label", "label": "t:labels.collection_badge_label", "default": "Collection" },
+      { "type": "collection_list", "id": "badge_collections", "label": "t:labels.badge_collections", "limit": 10 },
+      { "type": "checkbox", "id": "badge_custom_enabled", "label": "t:labels.badge_custom_enabled", "default": false },
+      { "type": "text", "id": "badge_custom_metafield_key", "label": "t:labels.badge_custom_metafield_key", "default": "badge" },
+      { "type": "color", "id": "badge_sale_background", "label": "t:labels.badge_sale_background", "default": "#333333" },
+      { "type": "color", "id": "badge_sale_color", "label": "t:labels.badge_sale_color", "default": "#FFFFFF" },
+      { "type": "color", "id": "badge_sold_out_background", "label": "t:labels.badge_sold_out_background", "default": "#E5E5E5" },
+      { "type": "color", "id": "badge_sold_out_color", "label": "t:labels.badge_sold_out_color", "default": "#333333" },
+      { "type": "color", "id": "badge_collection_background", "label": "t:labels.badge_collection_background", "default": "#F5F5F5" },
+      { "type": "color", "id": "badge_collection_color", "label": "t:labels.badge_collection_color", "default": "#333333" },
+      { "type": "color", "id": "badge_custom_background", "label": "t:labels.badge_custom_background", "default": "#333333" },
+      { "type": "color", "id": "badge_custom_color", "label": "t:labels.badge_custom_color", "default": "#FFFFFF" }
+    ]
   }
 ]

@@ -42,11 +42,7 @@
       {{ 'product-1' | placeholder_svg_tag: 'product-card__image product-card__image--placeholder' }}
     {% endif %}
 
-    {% if has_sale %}
-      <span class="product-badge product-badge--sale">{{ 'products.product.on_sale' | t }}</span>
-    {% elsif product.available == false %}
-      <span class="product-badge product-badge--sold-out">{{ 'products.product.sold_out' | t }}</span>
-    {% endif %}
+    {% render 'product-badge', product: product %}
   </a>
 
   <div class="product-card__content">
@@ -213,18 +209,6 @@
 
   .price__sale { color: var(--sale-price-color, var(--color-text)); }
   .price__compare { color: var(--color-text); opacity: 0.7; }
-
-  .product-badge {
-    background: var(--color-heading);
-    bottom: 0.75rem;
-    color: var(--color-background);
-    font-size: var(--font-body-xs);
-    left: 0.75rem;
-    padding: 0.25rem 0.5rem;
-    position: absolute;
-  }
-
-  .product-badge--sold-out { background: var(--color-border); color: var(--color-text); }
 
   .product-card__quick-add-button {
     background: var(--color-primary-button);

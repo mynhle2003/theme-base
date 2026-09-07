@@ -1,0 +1,108 @@
+{% doc %}
+  Renders product badges from centralized status and merchandising settings.
+
+  @param {product} product - The product whose badges should be evaluated.
+
+  @example
+  {% render 'product-badge', product: product %}
+{% enddoc %}
+
+{% liquid
+  assign has_sale = false
+  if product.compare_at_price > product.price
+    assign has_sale = true
+  endif
+
+  assign custom_badge_label = blank
+  if settings.badge_custom_enabled and settings.badge_custom_metafield_key != blank
+    assign custom_badge = product.metafields.custom[settings.badge_custom_metafield_key]
+    if custom_badge != blank
+      assign custom_badge_label = custom_badge.value | default: custom_badge
+    endif
+  endif
+
+  assign sale_badge_label = settings.sale_badge_text
+  if has_sale
+    assign savings = product.compare_at_price | minus: product.price
+    case settings.sale_badge_style
+      when 'percentage'
+        assign discount = savings | times: 100 | divided_by: product.compare_at_price | round
+        assign sale_badge_label = 'products.product.discount_percentage' | t: discount: discount
+      when 'percentage_only'
+        assign discount = savings | times: 100 | divided_by: product.compare_at_price | round
+        assign sale_badge_label = 'products.product.discount_percentage_only' | t: discount: discount
+      when 'amount_saved'
+        assign savings_money = savings | money
+        assign sale_badge_label = 'products.product.discount_amount' | t: amount: savings_money
+    endcase
+  endif
+%}
+
+{% if settings.badge_enabled %}
+  <div
+    class="product-badges product-badges--{{ settings.badge_position }}"
+    style="--badge-radius: {{ settings.badge_radius | default: 4 }}px; --badge-padding-block: {{ settings.badge_padding | default: 4 }}px; --badge-padding-inline: calc({{ settings.badge_padding | default: 4 }}px * 1.5); --badge-font-size: {{ settings.badge_font_size | default: 12 }}px; --badge-letter-spacing: {{ settings.badge_letter_spacing | default: 0 }}px;"
+  >
+    {% if custom_badge_label != blank %}
+      <span class="product-badge product-badge--custom">{{ custom_badge_label | escape }}</span>
+    {% endif %}
+
+    {% if product.available == false and settings.sold_out_badge_enabled and settings.sold_out_badge_text != blank %}
+      <span class="product-badge product-badge--sold-out">{{ settings.sold_out_badge_text | escape }}</span>
+    {% elsif has_sale and settings.sale_badge_enabled and sale_badge_label != blank %}
+      <span class="product-badge product-badge--sale">{{ sale_badge_label }}</span>
+    {% endif %}
+
+    {% if settings.collection_badge_enabled and settings.badge_collections != blank %}
+      {% assign matched_collection = blank %}
+      {% for configured_collection in settings.badge_collections %}
+        {% for product_collection in product.collections %}
+          {% if configured_collection.handle == product_collection.handle %}
+            {% assign matched_collection = product_collection %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+        {% if matched_collection != blank %}{% break %}{% endif %}
+      {% endfor %}
+
+      {% if matched_collection != blank and settings.collection_badge_label != blank %}
+        <span class="product-badge product-badge--collection">
+          {{ settings.collection_badge_label | escape }}: {{ matched_collection.title | escape }}
+        </span>
+      {% endif %}
+    {% endif %}
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .product-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .product-badges--top-left { left: 0.75rem; top: 0.75rem; }
+  .product-badges--top-right { right: 0.75rem; top: 0.75rem; }
+  .product-badges--bottom-left { bottom: 0.75rem; left: 0.75rem; }
+  .product-badges--bottom-right { bottom: 0.75rem; right: 0.75rem; }
+
+  .product-badge {
+    background: var(--badge-background);
+    border-radius: var(--badge-radius);
+    color: var(--badge-color);
+    font-size: var(--badge-font-size);
+    letter-spacing: var(--badge-letter-spacing);
+    line-height: 1.2;
+    max-width: min(16rem, 80vw);
+    overflow-wrap: anywhere;
+    padding: var(--badge-padding-block) var(--badge-padding-inline);
+    text-align: center;
+  }
+
+  .product-badge--sale { --badge-background: var(--badge-sale-background); --badge-color: var(--badge-sale-color); }
+  .product-badge--sold-out { --badge-background: var(--badge-sold-out-background); --badge-color: var(--badge-sold-out-color); }
+  .product-badge--collection { --badge-background: var(--badge-collection-background); --badge-color: var(--badge-collection-color); }
+  .product-badge--custom { --badge-background: var(--badge-custom-background); --badge-color: var(--badge-custom-color); }
+{% endstylesheet %}
