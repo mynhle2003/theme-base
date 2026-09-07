@@ -512,5 +512,99 @@
         "default": true
       }
     ]
+  },
+  {
+    "name": "t:general.swatches",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "swatch_enabled",
+        "label": "t:labels.swatch_enabled",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "swatch_option_name",
+        "label": "t:labels.swatch_option_name",
+        "default": "Color"
+      },
+      {
+        "type": "select",
+        "id": "swatch_style",
+        "label": "t:labels.swatch_style",
+        "options": [
+          { "value": "color", "label": "t:options.swatch_style.color" },
+          { "value": "variant_image", "label": "t:options.swatch_style.variant_image" },
+          { "value": "button", "label": "t:options.swatch_style.button" },
+          { "value": "dropdown", "label": "t:options.swatch_style.dropdown" }
+        ],
+        "default": "color"
+      },
+      {
+        "type": "range",
+        "id": "swatch_width",
+        "label": "t:labels.swatch_width",
+        "min": 24,
+        "max": 64,
+        "step": 4,
+        "unit": "px",
+        "default": 32
+      },
+      {
+        "type": "range",
+        "id": "swatch_width_mobile",
+        "label": "t:labels.swatch_width_mobile",
+        "min": 28,
+        "max": 72,
+        "step": 4,
+        "unit": "px",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "swatch_height_ratio",
+        "label": "t:labels.swatch_height_ratio",
+        "min": 0.5,
+        "max": 2,
+        "step": 0.1,
+        "default": 1
+      },
+      {
+        "type": "select",
+        "id": "swatch_shape",
+        "label": "t:labels.swatch_shape",
+        "options": [
+          { "value": "square", "label": "t:options.swatch_shape.square" },
+          { "value": "round", "label": "t:options.swatch_shape.round" },
+          { "value": "pill", "label": "t:options.swatch_shape.pill" }
+        ],
+        "default": "round"
+      },
+      {
+        "type": "select",
+        "id": "swatch_selected_style",
+        "label": "t:labels.swatch_selected_style",
+        "options": [
+          { "value": "outline", "label": "t:options.swatch_selected_style.outline" },
+          { "value": "ring", "label": "t:options.swatch_selected_style.ring" }
+        ],
+        "default": "outline"
+      },
+      {
+        "type": "checkbox",
+        "id": "swatch_show_on_product_card",
+        "label": "t:labels.swatch_show_on_product_card",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "swatch_product_card_limit",
+        "label": "t:labels.swatch_product_card_limit",
+        "min": 1,
+        "max": 8,
+        "step": 1,
+        "default": 5
+      }
+    ]
   }
 ]

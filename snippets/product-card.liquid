@@ -71,6 +71,39 @@
           <span class="price__regular">{{ product.price | money }}</span>
         {% endif %}
       </div>
+
+      {% if settings.swatch_enabled and settings.swatch_show_on_product_card %}
+        {% assign swatch_option_name = settings.swatch_option_name | downcase | strip %}
+        {% for option in product.options_with_values %}
+          {% assign current_option_name = option.name | downcase | strip %}
+          {% if current_option_name == swatch_option_name %}
+            {% assign option_index = option.position | minus: 1 %}
+            <div class="product-card__swatches" aria-label="{{ option.name | escape }}">
+              {% for value in option.values limit: settings.swatch_product_card_limit %}
+                {% assign value_label = value.label | default: value %}
+                {% assign swatch_variant = blank %}
+                {% for variant in product.variants %}
+                  {% if variant.options[option_index] == value_label and variant.available %}
+                    {% assign swatch_variant = variant %}
+                    {% break %}
+                  {% endif %}
+                {% endfor %}
+                {% if swatch_variant == blank %}
+                  {% for variant in product.variants %}
+                    {% if variant.options[option_index] == value_label %}
+                      {% assign swatch_variant = variant %}
+                      {% break %}
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+                <a href="{{ product.url }}?variant={{ swatch_variant.id }}" aria-label="{{ value_label | escape }}">
+                  {% render 'swatch', label: value_label, swatch: value.swatch, variant_image: swatch_variant.featured_image %}
+                </a>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
     </div>
 
     {% if show_quick_add and settings.product_card_show_quick_add %}
@@ -158,6 +191,24 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+  }
+
+  .product-card__swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .product-card__swatches a {
+    border-radius: var(--swatch-radius);
+    display: inline-flex;
+  }
+
+  .variant-option__button-label--swatch {
+    background: transparent;
+    border: 0;
+    min-height: auto;
+    padding: 0.25rem;
   }
 
   .price__sale { color: var(--sale-price-color, var(--color-text)); }

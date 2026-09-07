@@ -1,0 +1,96 @@
+{% doc %}
+  Renders a swatch visual with a color, image or accessible text fallback.
+
+  @param {string} label - Accessible label and fallback text.
+  @param {object} [swatch] - Shopify native swatch data.
+  @param {image} [variant_image] - Variant image fallback.
+  @param {boolean} [selected] - Whether the swatch is selected.
+  @param {boolean} [disabled] - Whether the swatch is unavailable.
+
+  @example
+  {% render 'swatch', label: value.label, swatch: value.swatch %}
+{% enddoc %}
+
+{% liquid
+  assign swatch_color = swatch.color
+  assign swatch_image = swatch.image | default: variant_image
+%}
+
+<span
+  class="swatch{% if selected %} swatch--selected swatch--selected-{{ settings.swatch_selected_style }}{% endif %}{% if disabled %} swatch--unavailable{% endif %}"
+  aria-hidden="true"
+  {% if swatch_color %}style="--swatch-color: {{ swatch_color }}"{% endif %}
+>
+  {% if settings.swatch_style == 'variant_image' and swatch_image %}
+    {{ swatch_image | image_url: width: 96, height: 96, crop: 'center' | image_tag: loading: 'lazy' }}
+  {% elsif settings.swatch_style == 'color' and swatch_color %}
+    <span class="swatch__color"></span>
+  {% else %}
+    <span class="swatch__label">{{ label | escape }}</span>
+  {% endif %}
+</span>
+
+{% stylesheet %}
+  .swatch {
+    align-items: center;
+    background: var(--swatch-color, var(--color-background));
+    border: var(--input-border-width) solid var(--color-border);
+    border-radius: var(--swatch-radius);
+    display: inline-flex;
+    height: calc(var(--swatch-width) * var(--swatch-height-ratio));
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    width: var(--swatch-width);
+  }
+
+  .swatch__color {
+    background: var(--swatch-color, var(--color-background));
+    inset: 0;
+    position: absolute;
+  }
+
+  .swatch img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .swatch__label {
+    font-size: var(--font-body-xs);
+    line-height: 1;
+    overflow: hidden;
+    padding: 0.125rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .swatch--selected {
+    outline-offset: 2px;
+  }
+
+  .swatch--selected-outline { outline: 2px solid var(--color-heading); }
+  .swatch--selected-ring { box-shadow: inset 0 0 0 2px var(--color-background), 0 0 0 2px var(--color-heading); }
+
+  .swatch--unavailable {
+    opacity: 0.45;
+  }
+
+  .swatch--unavailable::after {
+    background: var(--color-heading);
+    content: '';
+    height: 1px;
+    left: 8%;
+    position: absolute;
+    top: 50%;
+    transform: rotate(-45deg);
+    width: 84%;
+  }
+
+  @media screen and (max-width: 749px) {
+    .swatch {
+      height: calc(var(--swatch-width-mobile) * var(--swatch-height-ratio));
+      width: var(--swatch-width-mobile);
+    }
+  }
+{% endstylesheet %}
