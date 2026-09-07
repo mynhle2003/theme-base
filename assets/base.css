@@ -1,0 +1,201 @@
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+  width: var(--logo-width);
+  max-width: 100%;
+}
+
+.site-logo__image {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.site-logo__text {
+  color: inherit; 
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Typography Foundation: visual scale is independent from semantic HTML. */
+.heading-text {
+  font-family: var(--font-heading-family);
+  letter-spacing: var(--font-heading-letter-spacing);
+  font-weight: var(--font-heading-weight);
+  line-height: var(--font-heading-line-height);
+  text-transform: var(--font-heading-text-transform);
+}
+
+.body-text {
+  font-family: var(--font-body-family);
+  letter-spacing: var(--font-body-letter-spacing);
+  line-height: var(--font-body-line-height);
+  text-transform: var(--font-body-text-transform);
+}
+
+.accent-text,
+.eyebrow-text {
+  font-family: var(--font-accent-family);
+}
+
+.heading-xs { font-size: var(--font-heading-xs); }
+.heading-sm { font-size: var(--font-heading-sm); }
+.heading-md { font-size: var(--font-heading-md); }
+.heading-lg { font-size: var(--font-heading-lg); }
+.heading-xl { font-size: var(--font-heading-xl); }
+.heading-display { font-size: var(--font-heading-display); }
+
+.body-xs { font-size: var(--font-body-xs); }
+.body-sm { font-size: var(--font-body-sm); }
+.body-md { font-size: var(--font-body-md); }
+.body-lg { font-size: var(--font-body-lg); }
+.body-xl { font-size: var(--font-body-xl); }
+.body-xxl { font-size: var(--font-body-xxl); }
+
+/* Form Foundation: shared control sizing, states and responsive behavior. */
+.form__wrapper,
+.form__fields,
+.form__field {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.form__fields {
+  gap: 1rem;
+}
+
+.form__control,
+input:not([type='checkbox']):not([type='radio']):not([type='submit']):not([type='button']):not([type='reset']),
+select,
+textarea {
+  appearance: none;
+  background: var(--input-background-color);
+  border: var(--input-border-width) solid var(--input-border-color);
+  border-radius: var(--input-radius);
+  color: var(--color-text);
+  font: inherit;
+  min-height: var(--input-height);
+  padding: 0.625rem 0.875rem;
+  width: 100%;
+}
+
+textarea {
+  min-height: calc(var(--input-height) * 2.5);
+  resize: vertical;
+}
+
+select {
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 1rem) 50%, calc(100% - 0.7rem) 50%;
+  background-repeat: no-repeat;
+  background-size: 0.3rem 0.3rem, 0.3rem 0.3rem;
+  padding-inline-end: 2.5rem;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: var(--input-focus-color);
+  min-height: 1.125rem;
+  min-width: 1.125rem;
+}
+
+.form__control:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  border-color: var(--input-focus-color);
+  outline: 2px solid var(--input-focus-color);
+  outline-offset: 2px;
+}
+
+.form__control:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background-color: color-mix(in srgb, var(--input-border-color) 12%, transparent);
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.form__control[readonly],
+input[readonly],
+textarea[readonly] {
+  background-color: color-mix(in srgb, var(--input-border-color) 8%, transparent);
+}
+
+.form__field--error .form__control,
+.form__field--error input,
+.form__field--error select,
+.form__field--error textarea {
+  border-color: var(--input-error-color);
+}
+
+.form__field--success .form__control,
+.form__field--success input,
+.form__field--success select,
+.form__field--success textarea {
+  border-color: var(--input-success-color);
+}
+
+.form__error {
+  color: var(--input-error-color);
+}
+
+.form__success {
+  color: var(--input-success-color);
+}
+
+/* Overlay Foundation: shared backdrop appearance and layering contract. */
+dialog::backdrop,
+.overlay-backdrop {
+  background: color-mix(in srgb, var(--overlay-color) calc(var(--overlay-opacity) * 100%), transparent);
+  backdrop-filter: blur(var(--overlay-blur));
+  z-index: var(--z-index-overlay);
+}
+
+dialog {
+  z-index: var(--z-index-modal);
+}
+
+/* Motion Foundation: global opt-out and OS reduced-motion support. */
+.motion--disabled *,
+.motion--disabled *::before,
+.motion--disabled *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 0.01ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .form__control,
+  input:not([type='checkbox']):not([type='radio']):not([type='submit']):not([type='button']):not([type='reset']),
+  select {
+    min-height: var(--input-height-mobile);
+  }
+
+  textarea {
+    min-height: calc(var(--input-height-mobile) * 2.5);
+  }
+
+  .site-logo {
+    width: var(--logo-width-mobile);
+  }
+
+  .site-logo__image {
+    width: 100%;
+  }
+}

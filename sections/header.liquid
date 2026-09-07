@@ -1,7 +1,5 @@
 <header>
-  <h2 class="header__title">
-    {{ shop.name | link_to: routes.root_url }}
-  </h2>
+  {% render 'site-logo' %}
 
   <div class="header__menu">
     {% for link in section.settings.menu.links %}
@@ -32,6 +30,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+    z-index: var(--z-index-header);
   }
   header a {
     position: relative;
@@ -48,7 +48,8 @@
     max-width: var(--page-margin);
   }
   header svg {
-    width: 2rem;
+    height: var(--icon-size);
+    width: var(--icon-size);
   }
   header .header__menu,
   header .header__icons {

@@ -1,123 +1,139 @@
 {% doc %}
-  Renders a body text kernel with rich text, responsive layout, and padding controls.
+  Renders a heading kernel with inline rich text, semantic HTML, responsive
+  layout, and padding controls.
 
-  The Text kernel owns body content, body typography, local color, width,
-  alignment, and padding. Parent blocks own composition order and gap.
+  The Heading kernel owns heading content, heading typography, local color,
+  semantic tag, width, alignment, and padding. Parent blocks own composition
+  order and gap.
 
   @example
-  {% content_for 'block', type: 'text', id: 'text' %}
+  {% content_for 'block', type: 'heading', id: 'heading' %}
 {% enddoc %}
 
 {% liquid
-  assign text_content = block.settings.text
-  assign text_plain = text_content | strip_html | strip
-  assign text_size = block.settings.text_size | default: 'md'
-  assign text_width = 'fit-content'
-  assign text_width_mobile = 'fit-content'
-  assign text_alignment = 'start'
-  assign text_alignment_mobile = 'start'
-  assign text_padding_top_mobile = block.settings.padding_top
-  assign text_padding_bottom_mobile = block.settings.padding_bottom
-  assign text_padding_left_mobile = block.settings.padding_left
-  assign text_padding_right_mobile = block.settings.padding_right
+  assign heading_content = block.settings.heading
+  assign heading_plain = heading_content | strip_html | strip
+  assign heading_size = block.settings.heading_size | default: 'lg'
+  assign heading_tag = block.settings.html_tag | default: 'h2'
+  assign heading_width = 'fit-content'
+  assign heading_width_mobile = 'fit-content'
+  assign heading_alignment = 'start'
+  assign heading_alignment_mobile = 'start'
+  assign heading_padding_top_mobile = block.settings.padding_top
+  assign heading_padding_bottom_mobile = block.settings.padding_bottom
+  assign heading_padding_left_mobile = block.settings.padding_left
+  assign heading_padding_right_mobile = block.settings.padding_right
 
   if block.settings.width == 'fill'
-    assign text_width = '100%'
+    assign heading_width = '100%'
   endif
 
   if block.settings.width_mobile == 'fill'
-    assign text_width_mobile = '100%'
+    assign heading_width_mobile = '100%'
   endif
 
   if block.settings.alignment == 'center'
-    assign text_alignment = 'center'
+    assign heading_alignment = 'center'
   elsif block.settings.alignment == 'end'
-    assign text_alignment = 'end'
+    assign heading_alignment = 'end'
   endif
 
   if block.settings.customize_mobile_alignment
     if block.settings.alignment_mobile == 'center'
-      assign text_alignment_mobile = 'center'
+      assign heading_alignment_mobile = 'center'
     elsif block.settings.alignment_mobile == 'end'
-      assign text_alignment_mobile = 'end'
+      assign heading_alignment_mobile = 'end'
     else
-      assign text_alignment_mobile = 'start'
+      assign heading_alignment_mobile = 'start'
     endif
   else
-    assign text_alignment_mobile = text_alignment
+    assign heading_alignment_mobile = heading_alignment
   endif
 
   if block.settings.customize_mobile_padding
-    assign text_padding_top_mobile = block.settings.padding_top_mobile
-    assign text_padding_bottom_mobile = block.settings.padding_bottom_mobile
-    assign text_padding_left_mobile = block.settings.padding_left_mobile
-    assign text_padding_right_mobile = block.settings.padding_right_mobile
+    assign heading_padding_top_mobile = block.settings.padding_top_mobile
+    assign heading_padding_bottom_mobile = block.settings.padding_bottom_mobile
+    assign heading_padding_left_mobile = block.settings.padding_left_mobile
+    assign heading_padding_right_mobile = block.settings.padding_right_mobile
   endif
 %}
 
 <div
-  class="text-block body-text body-{{ text_size }}"
-  style="--text-width: {{ text_width }}; --text-width-mobile: {{ text_width_mobile }}; --text-align: {{ text_alignment }}; --text-align-mobile: {{ text_alignment_mobile }}; --text-padding-top: {{ block.settings.padding_top }}px; --text-padding-bottom: {{ block.settings.padding_bottom }}px; --text-padding-left: {{ block.settings.padding_left }}px; --text-padding-right: {{ block.settings.padding_right }}px; --text-padding-top-mobile: {{ text_padding_top_mobile }}px; --text-padding-bottom-mobile: {{ text_padding_bottom_mobile }}px; --text-padding-left-mobile: {{ text_padding_left_mobile }}px; --text-padding-right-mobile: {{ text_padding_right_mobile }}px;{% if block.settings.text_color != blank %} --text-color: {{ block.settings.text_color }};{% endif %}"
+  class="heading-block heading-text heading-{{ heading_size }}"
+  style="--heading-width: {{ heading_width }}; --heading-width-mobile: {{ heading_width_mobile }}; --heading-align: {{ heading_alignment }}; --heading-align-mobile: {{ heading_alignment_mobile }}; --heading-padding-top: {{ block.settings.padding_top }}px; --heading-padding-bottom: {{ block.settings.padding_bottom }}px; --heading-padding-left: {{ block.settings.padding_left }}px; --heading-padding-right: {{ block.settings.padding_right }}px; --heading-padding-top-mobile: {{ heading_padding_top_mobile }}px; --heading-padding-bottom-mobile: {{ heading_padding_bottom_mobile }}px; --heading-padding-left-mobile: {{ heading_padding_left_mobile }}px; --heading-padding-right-mobile: {{ heading_padding_right_mobile }}px;{% if block.settings.text_color != blank %} --heading-color: {{ block.settings.text_color }};{% endif %}"
   {{ block.shopify_attributes }}
 >
-  {% if text_plain != blank %}
-    {{ text_content }}
+  {% if heading_plain != blank %}
+    <{{ heading_tag }} class="heading-block__content">{{ heading_content }}</{{ heading_tag }}>
   {% endif %}
 </div>
 
 {% stylesheet %}
-  .text-block {
-    color: var(--text-color, var(--color-text));
+  .heading-block {
+    color: var(--heading-color, var(--color-heading));
     max-width: 100%;
     min-width: 0;
-    padding-block: var(--text-padding-top) var(--text-padding-bottom);
-    padding-inline: var(--text-padding-left) var(--text-padding-right);
-    text-align: var(--text-align);
-    width: var(--text-width);
+    padding-block: var(--heading-padding-top) var(--heading-padding-bottom);
+    padding-inline: var(--heading-padding-left) var(--heading-padding-right);
+    text-align: var(--heading-align);
+    width: var(--heading-width);
   }
 
-  .text-block :where(p, ul, ol) {
+  .heading-block__content {
+    color: inherit;
     max-width: 100%;
     overflow-wrap: anywhere;
   }
 
-  .text-block :where(a) {
-    color: inherit;
-  }
-
   @media screen and (max-width: 767.98px) {
-    .text-block {
-      padding-block: var(--text-padding-top-mobile) var(--text-padding-bottom-mobile);
-      padding-inline: var(--text-padding-left-mobile) var(--text-padding-right-mobile);
-      text-align: var(--text-align-mobile);
-      width: var(--text-width-mobile);
+    .heading-block {
+      padding-block: var(--heading-padding-top-mobile) var(--heading-padding-bottom-mobile);
+      padding-inline: var(--heading-padding-left-mobile) var(--heading-padding-right-mobile);
+      text-align: var(--heading-align-mobile);
+      width: var(--heading-width-mobile);
     }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:general.text",
+  "name": "t:general.heading",
   "settings": [
     {
-      "type": "richtext",
-      "id": "text",
-      "label": "t:labels.text",
-      "default": "<p>Text</p>"
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Heading"
     },
     {
       "type": "select",
-      "id": "text_size",
-      "label": "t:labels.text_size",
+      "id": "heading_size",
+      "label": "t:labels.heading_size",
       "options": [
-        { "value": "xs", "label": "t:options.text_size.xs" },
-        { "value": "sm", "label": "t:options.text_size.sm" },
-        { "value": "md", "label": "t:options.text_size.md" },
-        { "value": "lg", "label": "t:options.text_size.lg" },
-        { "value": "xl", "label": "t:options.text_size.xl" },
-        { "value": "xxl", "label": "t:options.text_size.xxl" }
+        { "value": "xs", "label": "t:options.heading_size.xs" },
+        { "value": "sm", "label": "t:options.heading_size.sm" },
+        { "value": "md", "label": "t:options.heading_size.md" },
+        { "value": "lg", "label": "t:options.heading_size.lg" },
+        { "value": "xl", "label": "t:options.heading_size.xl" },
+        { "value": "display", "label": "t:options.heading_size.display" }
       ],
-      "default": "md"
+      "default": "lg"
+    },
+    {
+      "type": "select",
+      "id": "html_tag",
+      "label": "t:labels.html_tag",
+      "info": "t:info.html_tag",
+      "options": [
+        { "value": "div", "label": "t:options.html_tag.div" },
+        { "value": "h1", "label": "t:options.html_tag.h1" },
+        { "value": "h2", "label": "t:options.html_tag.h2" },
+        { "value": "h3", "label": "t:options.html_tag.h3" },
+        { "value": "h4", "label": "t:options.html_tag.h4" },
+        { "value": "h5", "label": "t:options.html_tag.h5" },
+        { "value": "h6", "label": "t:options.html_tag.h6" }
+      ],
+      "default": "h2"
     },
     {
       "type": "color",
@@ -272,7 +288,7 @@
   ],
   "presets": [
     {
-      "name": "t:general.text"
+      "name": "t:general.heading"
     }
   ]
 }

@@ -1,0 +1,60 @@
+{% doc %}
+  Renders a reusable price component for products and variants.
+
+  @param {object} item - A product or variant-like object with price data.
+  @param {boolean} [show_from] - Whether to show a From label for variable products.
+
+  @example
+  {% render 'price', item: product, show_from: true %}
+{% enddoc %}
+
+{% liquid
+  assign price_value = item.price
+  assign compare_at_price = item.compare_at_price
+  assign is_sale = false
+  if compare_at_price > price_value
+    assign is_sale = true
+  endif
+%}
+
+<div class="price{% if is_sale %} price--sale{% endif %}" data-price aria-label="{{ 'products.product.price' | t }}">
+  {% if show_from and settings.price_show_from and item.price_varies %}
+    <span class="price__from-label">{{ 'products.product.from' | t }}</span>
+  {% endif %}
+
+  {% if settings.price_sale_order == 'compare_first' %}
+    <s class="price__compare" data-price-compare{% unless is_sale %} hidden{% endunless %}>
+      {% if is_sale %}{% if settings.price_show_currency_code %}{{ compare_at_price | money_with_currency }}{% else %}{{ compare_at_price | money }}{% endif %}{% endif %}
+    </s>
+  {% endif %}
+
+  <span class="price__current{% if is_sale %} price__current--sale{% endif %}" data-price-current>
+    {% if settings.price_show_currency_code %}{{ price_value | money_with_currency }}{% else %}{{ price_value | money }}{% endif %}
+  </span>
+
+  {% if settings.price_sale_order != 'compare_first' %}
+    <s class="price__compare" data-price-compare{% unless is_sale %} hidden{% endunless %}>
+      {% if is_sale %}{% if settings.price_show_currency_code %}{{ compare_at_price | money_with_currency }}{% else %}{{ compare_at_price | money }}{% endif %}{% endif %}
+    </s>
+  {% endif %}
+
+  {% if settings.price_show_unit_price and item.unit_price and item.unit_price_measurement %}
+    <span class="price__unit" data-price-unit>
+      {{ item.unit_price | unit_price_with_measurement: item.unit_price_measurement }}
+    </span>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .price {
+    align-items: baseline;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .price__current--sale { color: var(--sale-price-color, var(--color-text)); }
+  .price__compare { color: var(--color-text); opacity: 0.7; }
+  .price__unit,
+  .price__from-label { color: var(--color-text); font-size: var(--font-body-sm); }
+{% endstylesheet %}

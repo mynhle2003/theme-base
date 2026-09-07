@@ -1,0 +1,105 @@
+{% doc %}
+  Renders a configurable call-to-action button with an optional icon.
+
+  @example
+  {% content_for 'block', type: 'button', id: 'button' %}
+{% enddoc %}
+
+{% liquid
+  assign button_label = block.settings.button_label | default: 'Button'
+  assign button_classes = 'button button--' | append: block.settings.button_style
+  assign button_alignment = 'flex-start'
+  assign button_alignment_mobile = 'flex-start'
+
+  if block.settings.width == 'fill'
+    assign button_classes = button_classes | append: ' button--fill'
+  endif
+
+  if block.settings.width_mobile == 'fill'
+    assign button_classes = button_classes | append: ' button--fill-mobile'
+  endif
+
+  if block.settings.alignment == 'center'
+    assign button_alignment = 'center'
+  elsif block.settings.alignment == 'end'
+    assign button_alignment = 'flex-end'
+  endif
+
+  if block.settings.alignment_mobile == 'center'
+    assign button_alignment_mobile = 'center'
+  elsif block.settings.alignment_mobile == 'end'
+    assign button_alignment_mobile = 'flex-end'
+  endif
+%}
+
+<div
+  class="button-block"
+  style="--button-alignment: {{ button_alignment }}; --button-padding-top: {{ block.settings.padding_top }}px; --button-padding-bottom: {{ block.settings.padding_bottom }}px; --button-padding-left: {{ block.settings.padding_left }}px; --button-padding-right: {{ block.settings.padding_right }}px; --button-alignment-mobile: {{ button_alignment_mobile }}; --button-padding-top-mobile: {{ block.settings.padding_top_mobile }}px; --button-padding-bottom-mobile: {{ block.settings.padding_bottom_mobile }}px; --button-padding-left-mobile: {{ block.settings.padding_left_mobile }}px; --button-padding-right-mobile: {{ block.settings.padding_right_mobile }}px;"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.button_link != blank %}
+    <a class="{{ button_classes }}" href="{{ block.settings.button_link }}"{% if block.settings.button_open_in_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+  {% else %}
+    <span class="{{ button_classes }} button--disabled" aria-disabled="true">
+  {% endif %}
+      {% if block.settings.show_icon and block.settings.icon_position == 'before' %}
+        <span class="button__icon" aria-hidden="true"{% if block.settings.icon_size == 'custom' %} style="--icon-size: {{ block.settings.custom_icon_size }}px"{% endif %}>{% case block.settings.icon %}{% when 'arrow' %}→{% when 'chevron' %}›{% when 'plus' %}+{% endcase %}</span>
+      {% endif %}
+      <span class="button__label">{{ button_label | escape }}</span>
+      {% if block.settings.show_icon and block.settings.icon_position == 'after' %}
+        <span class="button__icon" aria-hidden="true"{% if block.settings.icon_size == 'custom' %} style="--icon-size: {{ block.settings.custom_icon_size }}px"{% endif %}>{% case block.settings.icon %}{% when 'arrow' %}→{% when 'chevron' %}›{% when 'plus' %}+{% endcase %}</span>
+      {% endif %}
+  {% if block.settings.button_link != blank %}</a>{% else %}</span>{% endif %}
+</div>
+
+{% stylesheet %}
+  .button-block { display: flex; justify-content: var(--button-alignment); width: 100%; padding-block: var(--button-padding-top) var(--button-padding-bottom); padding-inline: var(--button-padding-left) var(--button-padding-right); }
+  .button { align-items: center; border: 1px solid transparent; border-radius: var(--button-radius); cursor: pointer; display: inline-flex; font: inherit; font-family: var(--font-body-family); font-size: var(--font-body-md); gap: 0.5rem; justify-content: center; line-height: 1.2; max-width: 100%; min-height: 2.75rem; padding: 0.75rem 1.25rem; text-align: center; text-decoration: none; transition: background-color var(--motion-duration) var(--motion-ease), border-color var(--motion-duration) var(--motion-ease), color var(--motion-duration) var(--motion-ease), opacity var(--motion-duration) var(--motion-ease); }
+  .button--fill { width: 100%; }
+  .button--fill-mobile { width: auto; }
+  .button--primary { background: var(--color-primary-button); border-color: var(--color-primary-button-border); color: var(--color-primary-button-label); }
+  .button--secondary { background: var(--color-secondary-button); border-color: var(--color-secondary-button-border); color: var(--color-secondary-button-label); }
+  .button--tertiary { background: transparent; border-color: var(--color-secondary-button-border); color: var(--color-secondary-button-label); }
+  .button:hover { filter: brightness(0.92); }
+  .button:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .button:disabled, .button--disabled { cursor: not-allowed; opacity: 0.5; pointer-events: none; }
+  .button[aria-busy='true'] { cursor: progress; opacity: 0.7; }
+  .button__icon { display: inline-flex; flex: 0 0 var(--icon-size, 1em); font-size: var(--icon-size, 1em); line-height: 1; }
+  .button__label { overflow-wrap: anywhere; }
+  @media screen and (max-width: 749px) { .button-block { justify-content: var(--button-alignment-mobile); padding-block: var(--button-padding-top-mobile) var(--button-padding-bottom-mobile); padding-inline: var(--button-padding-left-mobile) var(--button-padding-right-mobile); } .button--fill-mobile { width: 100%; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.button",
+  "settings": [
+    { "type": "text", "id": "button_label", "label": "t:labels.button_label", "default": "Button" },
+    { "type": "url", "id": "button_link", "label": "t:labels.button_link" },
+    { "type": "select", "id": "button_style", "label": "t:labels.button_style", "options": [{ "value": "primary", "label": "t:options.button_style.primary" }, { "value": "secondary", "label": "t:options.button_style.secondary" }, { "value": "tertiary", "label": "t:options.button_style.tertiary" }], "default": "primary" },
+    { "type": "checkbox", "id": "button_open_in_new_tab", "label": "t:labels.button_open_in_new_tab", "default": false },
+    { "type": "header", "content": "t:general.icons" },
+    { "type": "checkbox", "id": "show_icon", "label": "t:labels.show_icon", "default": false },
+    { "visible_if": "{{ block.settings.show_icon }}", "type": "select", "id": "icon", "label": "t:labels.icon", "options": [{ "value": "arrow", "label": "t:options.icon.arrow" }, { "value": "chevron", "label": "t:options.icon.chevron" }, { "value": "plus", "label": "t:options.icon.plus" }], "default": "arrow" },
+    { "visible_if": "{{ block.settings.show_icon }}", "type": "select", "id": "icon_position", "label": "t:labels.icon_position", "options": [{ "value": "before", "label": "t:options.icon_position.before" }, { "value": "after", "label": "t:options.icon_position.after" }], "default": "after" },
+    { "visible_if": "{{ block.settings.show_icon }}", "type": "select", "id": "icon_size", "label": "t:labels.icon_size", "options": [{ "value": "inherit", "label": "t:options.icon_size.inherit" }, { "value": "custom", "label": "t:options.icon_size.custom" }], "default": "inherit" },
+    { "visible_if": "{{ block.settings.show_icon and block.settings.icon_size == 'custom' }}", "type": "range", "id": "custom_icon_size", "label": "t:labels.custom_icon_size", "min": 8, "max": 48, "step": 2, "unit": "px", "default": 16 },
+    { "type": "header", "content": "t:general.layout" },
+    { "type": "select", "id": "width", "label": "t:labels.width", "options": [{ "value": "fit", "label": "t:options.width.fit" }, { "value": "fill", "label": "t:options.width.fill" }], "default": "fit" },
+    { "type": "select", "id": "width_mobile", "label": "t:labels.width_mobile", "options": [{ "value": "fit", "label": "t:options.width.fit" }, { "value": "fill", "label": "t:options.width.fill" }], "default": "fit" },
+    { "visible_if": "{{ block.settings.width == 'fill' }}", "type": "select", "id": "alignment", "label": "t:labels.alignment", "options": [{ "value": "start", "label": "t:options.alignment.left" }, { "value": "center", "label": "t:options.alignment.center" }, { "value": "end", "label": "t:options.alignment.right" }], "default": "start" },
+    { "type": "checkbox", "id": "customize_mobile_alignment", "label": "t:labels.customize_mobile_alignment", "default": false },
+    { "visible_if": "{{ block.settings.customize_mobile_alignment and block.settings.width_mobile == 'fill' }}", "type": "select", "id": "alignment_mobile", "label": "t:labels.alignment_mobile", "options": [{ "value": "start", "label": "t:options.alignment.left" }, { "value": "center", "label": "t:options.alignment.center" }, { "value": "end", "label": "t:options.alignment.right" }], "default": "start" },
+    { "type": "header", "content": "t:general.padding" },
+    { "type": "range", "id": "padding_top", "label": "t:labels.padding_top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "t:labels.padding_bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_left", "label": "t:labels.padding_left", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_right", "label": "t:labels.padding_right", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "checkbox", "id": "customize_mobile_padding", "label": "t:labels.customize_mobile_padding", "default": false },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_top_mobile", "label": "t:labels.padding_top_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_bottom_mobile", "label": "t:labels.padding_bottom_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_left_mobile", "label": "t:labels.padding_left_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_right_mobile", "label": "t:labels.padding_right_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
+  ],
+  "presets": [{ "name": "t:general.button" }]
+}
+{% endschema %}

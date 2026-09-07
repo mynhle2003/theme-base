@@ -1,0 +1,37 @@
+{% doc %}
+  Renders the store logo with transparent-header fallback support.
+
+  @param {boolean} [transparent] - Whether to use the transparent-header logo
+{% enddoc %}
+
+{% liquid
+  assign logo = settings.logo
+
+  if transparent and settings.logo_transparent != blank
+    assign logo = settings.logo_transparent
+  endif
+%}
+
+<a
+  class="site-logo"
+  href="{{ routes.root_url }}"
+  aria-label="{{ shop.name | escape }}"
+  style="
+    --logo-width: {{ settings.logo_width }}px;
+    --logo-width-mobile: {{ settings.logo_width_mobile }}px;
+  "
+>
+  {% if logo != blank %}
+    {{ logo
+      | image_url: width: 600
+      | image_tag:
+        class: 'site-logo__image',
+        alt: shop.name,
+        loading: 'eager'
+    }}
+  {% else %}
+    <span class="site-logo__text">
+      {{ shop.name | escape }}
+    </span>
+  {% endif %}
+</a>

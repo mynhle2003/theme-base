@@ -10,11 +10,11 @@
       2. Preload only the critical font variant (base weight)
       3. Additional variants load on-demand via @font-face
     {% endcomment %}
-    {% unless settings.type_primary_font.system? %}
+    {% unless settings.font_body_family.system? %}
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
 
       {% comment %} Preload the base font variant for initial page render {% endcomment %}
-      {{ settings.type_primary_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
+      {{ settings.font_body_family | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
     {% endunless %}
 
     {% # Load and preload the critical CSS %}
@@ -24,13 +24,13 @@
     {% render 'meta-tags' %}
 
     {{ content_for_header }}
-  {%- render 'foxify-head' -%}</head>
+  </head>
 
-  <body><div style="display:none"> {% sections 'foxify-header-group' %} </div>
+  <body>
     <div style="display:none"> {% sections 'header-group' %} </div>
 
     {{ content_for_layout }}
 
     {% sections 'footer-group' %}
-  {%- render 'foxify-footer' -%}{% sections 'foxify-footer-group' %}</body>
+  </body>
 </html>

@@ -1,0 +1,231 @@
+{% doc %}
+  Renders product option controls and keeps the selected variant in sync with a product form.
+
+  @param {product} product - The product whose options should be rendered.
+
+  @example
+  {% render 'variant-picker', product: product %}
+{% enddoc %}
+
+<variant-picker
+  class="variant-picker"
+  data-variant-picker
+  data-update-media="{{ settings.variant_picker_update_media }}"
+>
+  {% for option in product.options_with_values %}
+    {% assign option_index = option.position | minus: 1 %}
+    {% assign selected_value = product.selected_or_first_available_variant.options[option_index] %}
+    {% assign swatch_option_name = settings.swatch_option_name | downcase | strip %}
+    {% assign current_option_name = option.name | downcase | strip %}
+    {% assign is_swatch_option = false %}
+    {% if settings.swatch_enabled and current_option_name == swatch_option_name %}
+      {% assign is_swatch_option = true %}
+    {% endif %}
+
+    <fieldset class="variant-option" data-variant-option-group="{{ option.position }}">
+      <legend class="variant-option__label">{{ option.name | escape }}</legend>
+
+      {% if settings.variant_picker_style == 'dropdown' or is_swatch_option and settings.swatch_style == 'dropdown' %}
+        <select
+          class="variant-option__control"
+          name="option{{ option.position }}"
+          data-variant-option="{{ option.position }}"
+          aria-label="{{ option.name | escape }}"
+        >
+          {% for value in option.values %}
+            {% assign value_label = value.label | default: value %}
+            <option value="{{ value_label | escape }}"{% if value_label == selected_value %} selected{% endif %}>{{ value_label | escape }}</option>
+          {% endfor %}
+        </select>
+      {% else %}
+        <div class="variant-option__values">
+          {% for value in option.values %}
+            {% assign value_label = value.label | default: value %}
+            {% assign input_id = 'variant-' | append: option.position | append: '-' | append: value_label | handleize %}
+            {% assign value_variant_image = blank %}
+            {% assign value_selected = false %}
+            {% if value_label == selected_value %}
+              {% assign value_selected = true %}
+            {% endif %}
+            {% for variant in product.variants %}
+              {% if variant.options[option_index] == value_label and variant.featured_image %}
+                {% assign value_variant_image = variant.featured_image %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+            <input
+              class="variant-option__input"
+              type="radio"
+              id="{{ input_id }}"
+              name="option{{ option.position }}"
+              value="{{ value_label | escape }}"
+              data-variant-option="{{ option.position }}"
+              {% if value == selected_value %}checked{% endif %}
+            >
+            <label class="variant-option__button-label{% if is_swatch_option %} variant-option__button-label--swatch{% endif %}" for="{{ input_id }}">
+              {% if is_swatch_option %}
+                {% render 'swatch', label: value_label, swatch: value.swatch, variant_image: value_variant_image, selected: value_selected %}
+              {% else %}
+                {{ value_label | escape }}
+              {% endif %}
+            </label>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </fieldset>
+  {% endfor %}
+
+  <script type="application/json" data-variant-picker-data>
+    {{ product.variants | json }}
+  </script>
+</variant-picker>
+
+{% stylesheet %}
+  .variant-picker {
+    display: grid;
+    gap: var(--variant-group-gap);
+  }
+
+  .variant-option {
+    border: 0;
+    display: grid;
+    gap: var(--variant-label-spacing);
+    margin: 0;
+    min-width: 0;
+    padding: 0;
+  }
+
+  .variant-option__label {
+    font: inherit;
+    font-weight: 600;
+  }
+
+  .variant-option__values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--variant-gap);
+  }
+
+  .variant-option__input {
+    height: 1px;
+    opacity: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .variant-option__button-label {
+    align-items: center;
+    background: var(--color-background);
+    border: var(--input-border-width) solid var(--color-border);
+    border-radius: var(--variant-radius);
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    min-height: var(--variant-height);
+    padding: 0.5rem 0.875rem;
+  }
+
+  .variant-option__input:checked + .variant-option__button-label {
+    background: var(--color-heading);
+    border-color: var(--color-heading);
+    color: var(--color-background);
+  }
+
+  .variant-option__input:focus-visible + .variant-option__button-label,
+  .variant-option__control:focus-visible {
+    outline: 2px solid var(--input-focus-color);
+    outline-offset: 2px;
+  }
+
+  .variant-option__button-label.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+    text-decoration: line-through;
+  }
+
+  .variant-option__control {
+    min-height: var(--variant-height);
+  }
+
+  @media screen and (max-width: 749px) {
+    .variant-option__button-label,
+    .variant-option__control {
+      min-height: var(--variant-height-mobile);
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  class VariantPicker extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.initialized === 'true') return;
+
+      this.dataset.initialized = 'true';
+      this.form = this.closest('form');
+      this.variants = JSON.parse(this.querySelector('[data-variant-picker-data]').textContent);
+      this.idInput = this.form?.querySelector('input[name="id"]');
+      this.submitButton = this.form?.querySelector('[type="submit"]');
+
+      this.addEventListener('change', () => this.update());
+      this.update();
+    }
+
+    getSelections() {
+      return [...this.querySelectorAll('[data-variant-option]')]
+        .filter((control) => control.type !== 'radio' || control.checked)
+        .reduce((selections, control) => {
+          selections[Number(control.dataset.variantOption) - 1] = control.value;
+          return selections;
+        }, []);
+    }
+
+    getVariant(selections) {
+      return this.variants.find((variant) => variant.options.every((value, index) => value === selections[index]));
+    }
+
+    updateAvailability(selections) {
+      this.querySelectorAll('[data-variant-option-group]').forEach((group) => {
+        const position = Number(group.dataset.variantOptionGroup) - 1;
+
+        group.querySelectorAll('[data-variant-option]').forEach((control) => {
+          const candidate = [...selections];
+          candidate[position] = control.value;
+          const available = this.variants.some((variant) => {
+            if (!variant.available || variant.options[position] !== control.value) return false;
+            return variant.options.every((value, index) => index === position || !selections[index] || value === selections[index]);
+          });
+
+          control.disabled = !available;
+          if (control.tagName === 'OPTION') return;
+
+          const label = this.querySelector(`label[for="${control.id}"]`);
+          label?.classList.toggle('is-disabled', !available);
+          label?.setAttribute('aria-disabled', String(!available));
+        });
+      });
+    }
+
+    updateMedia(variant) {
+      if (this.dataset.updateMedia !== 'true') return;
+
+      const section = this.closest('.shopify-section');
+      const mediaId = variant?.featured_media?.id;
+      section?.querySelectorAll('[data-product-media]').forEach((media) => {
+        media.hidden = Boolean(mediaId) && media.dataset.mediaId !== String(mediaId);
+      });
+    }
+
+    update() {
+      const selections = this.getSelections();
+      const variant = this.getVariant(selections);
+      this.updateAvailability(selections);
+
+      if (this.idInput && variant) this.idInput.value = variant.id;
+      if (this.submitButton) this.submitButton.disabled = !variant || !variant.available;
+      this.updateMedia(variant);
+      this.dispatchEvent(new CustomEvent('variant:change', { bubbles: true, detail: { variant } }));
+    }
+  }
+
+  if (!customElements.get('variant-picker')) customElements.define('variant-picker', VariantPicker);
+{% endjavascript %}
