@@ -1,0 +1,356 @@
+{% doc %}
+  Renders a short introductory eyebrow label with Accent typography,
+  optional decorative icon, optional background surface, responsive width
+  and alignment, and local padding controls.
+
+  The Eyebrow kernel owns its content and local appearance. Parent blocks own
+  composition order and gap. This block does not own business data or children.
+
+  @example
+  {% content_for 'block', type: 'eyebrow', id: 'eyebrow' %}
+{% enddoc %}
+
+{% liquid
+  assign eyebrow_content = block.settings.text
+  assign eyebrow_plain = eyebrow_content | strip_html | strip
+  assign eyebrow_width = 'fit-content'
+  assign eyebrow_width_mobile = 'fit-content'
+  assign eyebrow_alignment = 'start'
+  assign eyebrow_alignment_mobile = 'start'
+  assign eyebrow_justify = 'flex-start'
+  assign eyebrow_justify_mobile = 'flex-start'
+  assign eyebrow_padding_top_mobile = block.settings.padding_top
+  assign eyebrow_padding_bottom_mobile = block.settings.padding_bottom
+  assign eyebrow_padding_left_mobile = block.settings.padding_left
+  assign eyebrow_padding_right_mobile = block.settings.padding_right
+
+  if block.settings.width == 'fill'
+    assign eyebrow_width = '100%'
+  endif
+
+  if block.settings.customize_mobile_alignment
+    if block.settings.width_mobile == 'fill'
+      assign eyebrow_width_mobile = '100%'
+    endif
+  else
+    assign eyebrow_width_mobile = eyebrow_width
+  endif
+
+  if block.settings.alignment == 'center'
+    assign eyebrow_alignment = 'center'
+  elsif block.settings.alignment == 'end'
+    assign eyebrow_alignment = 'end'
+  endif
+
+  if block.settings.alignment == 'center'
+    assign eyebrow_justify = 'center'
+  elsif block.settings.alignment == 'end'
+    assign eyebrow_justify = 'flex-end'
+  endif
+
+  if block.settings.customize_mobile_alignment
+    if block.settings.alignment_mobile == 'center'
+      assign eyebrow_alignment_mobile = 'center'
+    elsif block.settings.alignment_mobile == 'end'
+      assign eyebrow_alignment_mobile = 'end'
+    endif
+    if block.settings.alignment_mobile == 'center'
+      assign eyebrow_justify_mobile = 'center'
+    elsif block.settings.alignment_mobile == 'end'
+      assign eyebrow_justify_mobile = 'flex-end'
+    endif
+  else
+    assign eyebrow_alignment_mobile = eyebrow_alignment
+    assign eyebrow_justify_mobile = eyebrow_justify
+  endif
+
+  if block.settings.customize_mobile_padding
+    assign eyebrow_padding_top_mobile = block.settings.padding_top_mobile
+    assign eyebrow_padding_bottom_mobile = block.settings.padding_bottom_mobile
+    assign eyebrow_padding_left_mobile = block.settings.padding_left_mobile
+    assign eyebrow_padding_right_mobile = block.settings.padding_right_mobile
+  endif
+%}
+
+{% if eyebrow_plain != blank %}
+  <div
+    class="eyebrow-block eyebrow-text{% if block.settings.show_background %} eyebrow-block--surface color-{{ block.settings.color_scheme }}{% endif %}"
+    style="--eyebrow-width: {{ eyebrow_width }}; --eyebrow-width-mobile: {{ eyebrow_width_mobile }}; --eyebrow-align: {{ eyebrow_alignment }}; --eyebrow-align-mobile: {{ eyebrow_alignment_mobile }}; --eyebrow-justify: {{ eyebrow_justify }}; --eyebrow-justify-mobile: {{ eyebrow_justify_mobile }}; --eyebrow-padding-top: {{ block.settings.padding_top }}px; --eyebrow-padding-bottom: {{ block.settings.padding_bottom }}px; --eyebrow-padding-left: {{ block.settings.padding_left }}px; --eyebrow-padding-right: {{ block.settings.padding_right }}px; --eyebrow-padding-top-mobile: {{ eyebrow_padding_top_mobile }}px; --eyebrow-padding-bottom-mobile: {{ eyebrow_padding_bottom_mobile }}px; --eyebrow-padding-left-mobile: {{ eyebrow_padding_left_mobile }}px; --eyebrow-padding-right-mobile: {{ eyebrow_padding_right_mobile }}px; --eyebrow-border-width: {{ block.settings.border_thickness }}px; --eyebrow-radius: {{ block.settings.corner_radius }}px;{% if block.settings.color != blank %} --eyebrow-color: {{ block.settings.color }};{% endif %}"
+    {{ block.shopify_attributes }}
+  >
+    {% if block.settings.show_icon %}
+      <span class="eyebrow-block__icon" aria-hidden="true"></span>
+    {% endif %}
+    <span class="eyebrow-block__content">{{ eyebrow_content }}</span>
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .eyebrow-block {
+    align-items: center;
+    color: var(--eyebrow-color, var(--color-accent, var(--color-text)));
+    display: inline-flex;
+    gap: 0.5em;
+    justify-content: var(--eyebrow-justify);
+    max-width: 100%;
+    min-width: 0;
+    padding-block: var(--eyebrow-padding-top) var(--eyebrow-padding-bottom);
+    padding-inline: var(--eyebrow-padding-left) var(--eyebrow-padding-right);
+    text-align: var(--eyebrow-align);
+    width: var(--eyebrow-width);
+  }
+
+  .eyebrow-block--surface {
+    background: var(--color-background);
+    border: var(--eyebrow-border-width) solid var(--color-border);
+    border-radius: var(--eyebrow-radius);
+  }
+
+  .eyebrow-block__content {
+    color: inherit;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .eyebrow-block__content :where(p) {
+    margin: 0;
+  }
+
+  .eyebrow-block__content :where(a) {
+    color: inherit;
+  }
+
+  .eyebrow-block__icon {
+    border: var(--icon-thickness, var(--icon-stroke-width)) solid currentColor;
+    border-radius: 50%;
+    flex: 0 0 0.65em;
+    height: 0.65em;
+    width: 0.65em;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .eyebrow-block {
+      padding-block: var(--eyebrow-padding-top-mobile) var(--eyebrow-padding-bottom-mobile);
+      padding-inline: var(--eyebrow-padding-left-mobile) var(--eyebrow-padding-right-mobile);
+      text-align: var(--eyebrow-align-mobile);
+      justify-content: var(--eyebrow-justify-mobile);
+      width: var(--eyebrow-width-mobile);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.eyebrow",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:labels.eyebrow_text",
+      "default": "<p>Eyebrow</p>"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "t:labels.eyebrow_color",
+      "info": "t:info.eyebrow_color"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_background",
+      "label": "t:labels.show_background",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "t:labels.show_icon",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:general.appearance"
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "label": "t:labels.border_thickness",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "t:labels.corner_radius",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:general.layout"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:labels.width",
+      "options": [
+        { "value": "fit", "label": "t:options.width.fit" },
+        { "value": "fill", "label": "t:options.width.fill" }
+      ],
+      "default": "fit"
+    },
+    {
+      "visible_if": "{{ block.settings.width == 'fill' }}",
+      "type": "select",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "options": [
+        { "value": "start", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "end", "label": "t:options.alignment.right" }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_alignment",
+      "label": "t:labels.customize_mobile",
+      "default": false
+    },
+    {
+      "visible_if": "{{ block.settings.customize_mobile_alignment }}",
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:labels.width_mobile",
+      "options": [
+        { "value": "fit", "label": "t:options.width.fit" },
+        { "value": "fill", "label": "t:options.width.fill" }
+      ],
+      "default": "fit"
+    },
+    {
+      "visible_if": "{{ block.settings.customize_mobile_alignment and block.settings.width_mobile == 'fill' }}",
+      "type": "select",
+      "id": "alignment_mobile",
+      "label": "t:labels.alignment_mobile",
+      "options": [
+        { "value": "start", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "end", "label": "t:options.alignment.right" }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "header",
+      "content": "t:general.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:labels.padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:labels.padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "t:labels.padding_left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "t:labels.padding_right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.customize_mobile_padding",
+      "default": false
+    },
+    {
+      "visible_if": "{{ block.settings.customize_mobile_padding }}",
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "visible_if": "{{ block.settings.customize_mobile_padding }}",
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "visible_if": "{{ block.settings.customize_mobile_padding }}",
+      "type": "range",
+      "id": "padding_left_mobile",
+      "label": "t:labels.padding_left_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "visible_if": "{{ block.settings.customize_mobile_padding }}",
+      "type": "range",
+      "id": "padding_right_mobile",
+      "label": "t:labels.padding_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.eyebrow"
+    }
+  ]
+}
+{% endschema %}

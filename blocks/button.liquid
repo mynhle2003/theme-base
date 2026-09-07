@@ -15,8 +15,10 @@
     assign button_classes = button_classes | append: ' button--fill'
   endif
 
-  if block.settings.width_mobile == 'fill'
-    assign button_classes = button_classes | append: ' button--fill-mobile'
+  if block.settings.customize_mobile_alignment
+    if block.settings.width_mobile == 'fill'
+      assign button_classes = button_classes | append: ' button--fill-mobile'
+    endif
   endif
 
   if block.settings.alignment == 'center'
@@ -25,10 +27,16 @@
     assign button_alignment = 'flex-end'
   endif
 
-  if block.settings.alignment_mobile == 'center'
-    assign button_alignment_mobile = 'center'
-  elsif block.settings.alignment_mobile == 'end'
-    assign button_alignment_mobile = 'flex-end'
+  if block.settings.customize_mobile_alignment
+    if block.settings.alignment_mobile == 'center'
+      assign button_alignment_mobile = 'center'
+    elsif block.settings.alignment_mobile == 'end'
+      assign button_alignment_mobile = 'flex-end'
+    else
+      assign button_alignment_mobile = button_alignment
+    endif
+  else
+    assign button_alignment_mobile = button_alignment
   endif
 %}
 
@@ -85,9 +93,9 @@
     { "visible_if": "{{ block.settings.show_icon and block.settings.icon_size == 'custom' }}", "type": "range", "id": "custom_icon_size", "label": "t:labels.custom_icon_size", "min": 8, "max": 48, "step": 2, "unit": "px", "default": 16 },
     { "type": "header", "content": "t:general.layout" },
     { "type": "select", "id": "width", "label": "t:labels.width", "options": [{ "value": "fit", "label": "t:options.width.fit" }, { "value": "fill", "label": "t:options.width.fill" }], "default": "fit" },
-    { "type": "select", "id": "width_mobile", "label": "t:labels.width_mobile", "options": [{ "value": "fit", "label": "t:options.width.fit" }, { "value": "fill", "label": "t:options.width.fill" }], "default": "fit" },
     { "visible_if": "{{ block.settings.width == 'fill' }}", "type": "select", "id": "alignment", "label": "t:labels.alignment", "options": [{ "value": "start", "label": "t:options.alignment.left" }, { "value": "center", "label": "t:options.alignment.center" }, { "value": "end", "label": "t:options.alignment.right" }], "default": "start" },
-    { "type": "checkbox", "id": "customize_mobile_alignment", "label": "t:labels.customize_mobile_alignment", "default": false },
+    { "type": "checkbox", "id": "customize_mobile_alignment", "label": "t:labels.customize_mobile", "default": false },
+    { "visible_if": "{{ block.settings.customize_mobile_alignment }}", "type": "select", "id": "width_mobile", "label": "t:labels.width_mobile", "options": [{ "value": "fit", "label": "t:options.width.fit" }, { "value": "fill", "label": "t:options.width.fill" }], "default": "fit" },
     { "visible_if": "{{ block.settings.customize_mobile_alignment and block.settings.width_mobile == 'fill' }}", "type": "select", "id": "alignment_mobile", "label": "t:labels.alignment_mobile", "options": [{ "value": "start", "label": "t:options.alignment.left" }, { "value": "center", "label": "t:options.alignment.center" }, { "value": "end", "label": "t:options.alignment.right" }], "default": "start" },
     { "type": "header", "content": "t:general.padding" },
     { "type": "range", "id": "padding_top", "label": "t:labels.padding_top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },

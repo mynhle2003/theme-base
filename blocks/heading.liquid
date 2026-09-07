@@ -28,8 +28,12 @@
     assign heading_width = '100%'
   endif
 
-  if block.settings.width_mobile == 'fill'
-    assign heading_width_mobile = '100%'
+  if block.settings.customize_mobile_alignment
+    if block.settings.width_mobile == 'fill'
+      assign heading_width_mobile = '100%'
+    endif
+  else
+    assign heading_width_mobile = heading_width
   endif
 
   if block.settings.alignment == 'center'
@@ -152,16 +156,6 @@
       "default": "fill"
     },
     {
-      "type": "select",
-      "id": "width_mobile",
-      "label": "t:labels.width_mobile",
-      "options": [
-        { "value": "fit", "label": "t:options.width.fit" },
-        { "value": "fill", "label": "t:options.width.fill" }
-      ],
-      "default": "fill"
-    },
-    {
       "visible_if": "{{ block.settings.width == 'fill' }}",
       "type": "select",
       "id": "alignment",
@@ -176,8 +170,19 @@
     {
       "type": "checkbox",
       "id": "customize_mobile_alignment",
-      "label": "t:labels.customize_mobile_alignment",
+      "label": "t:labels.customize_mobile",
       "default": false
+    },
+    {
+      "visible_if": "{{ block.settings.customize_mobile_alignment }}",
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:labels.width_mobile",
+      "options": [
+        { "value": "fit", "label": "t:options.width.fit" },
+        { "value": "fill", "label": "t:options.width.fill" }
+      ],
+      "default": "fill"
     },
     {
       "visible_if": "{{ block.settings.customize_mobile_alignment and block.settings.width_mobile == 'fill' }}",
