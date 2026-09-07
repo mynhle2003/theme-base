@@ -1,0 +1,112 @@
+{% doc %}
+  Renders a responsive grid of editable theme blocks with configurable column
+  count, spacing, and padding.
+
+  Grid owns the outer composition of its children. Child blocks own their
+  content and presentation. An empty grid keeps its editor-aware root so
+  merchants can add children from the Theme Editor.
+
+  @example
+  {% content_for 'block', type: 'grid', id: 'grid' %}
+{% enddoc %}
+
+<div
+  class="grid-block"
+  style="--grid-columns: {{ block.settings.columns | default: 3 }}; --grid-columns-mobile: {{ block.settings.columns_mobile | default: 1 }}; --grid-gap: {{ block.settings.gap | default: 16 }}px; --grid-padding: {{ block.settings.padding | default: 0 }}px;"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+</div>
+
+{% stylesheet %}
+  .grid-block {
+    display: grid;
+    gap: var(--grid-gap);
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    min-width: 0;
+    padding: var(--grid-padding);
+    width: 100%;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .grid-block {
+      grid-template-columns: repeat(var(--grid-columns-mobile), minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.grid",
+  "blocks": [
+    { "type": "@theme" },
+    { "type": "heading" },
+    { "type": "text" },
+    { "type": "image" },
+    { "type": "video" },
+    { "type": "icon" },
+    { "type": "button" },
+    { "type": "buttons" },
+    { "type": "group" },
+    { "type": "stack" },
+    { "type": "grid" }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "t:labels.grid_columns",
+      "default": "3",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "t:labels.grid_columns_mobile",
+      "default": "1",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "t:labels.grid_gap",
+      "default": 16,
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "t:labels.padding",
+      "default": 0,
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.grid",
+      "category": "t:general.layout",
+      "settings": {
+        "columns": "3",
+        "columns_mobile": "1",
+        "gap": 16,
+        "padding": 0
+      },
+      "blocks": [{ "type": "text" }, { "type": "text" }, { "type": "text" }]
+    }
+  ]
+}
+{% endschema %}
