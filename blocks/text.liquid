@@ -5,8 +5,19 @@
   {% content_for 'block', type: 'text', id: 'text' %}
 {% enddoc %}
 
+{% liquid
+  assign typography_class = 'body-text body-md'
+
+  case block.settings.text_style
+    when 'text--title'
+      assign typography_class = 'heading-text heading-lg'
+    when 'text--subtitle'
+      assign typography_class = 'body-text body-lg'
+  endcase
+%}
+
 <div
-  class="text {{ block.settings.text_style }}"
+  class="text {{ block.settings.text_style }} {{ typography_class }}"
   style="--text-align: {{ block.settings.alignment }}"
   {{ block.shopify_attributes }}
 >
@@ -17,13 +28,9 @@
   .text {
     text-align: var(--text-align);
   }
-  .text--title {
-    font-size: 2rem;
-    font-weight: 700;
-  }
-  .text--subtitle {
-    font-size: 1.5rem;
-  }
+  .text--title { font-family: var(--font-heading-family); font-size: var(--font-heading-lg); }
+  .text--subtitle { font-family: var(--font-body-family); font-size: var(--font-body-lg); }
+  .text--normal { font-family: var(--font-body-family); font-size: var(--font-body-md); }
 {% endstylesheet %}
 
 {% schema %}

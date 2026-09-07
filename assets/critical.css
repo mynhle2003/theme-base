@@ -73,9 +73,23 @@ p:empty {
 
 /** Theme styles below */
 body {
-  font-family: var(--font-primary--family);
+  font-family: var(--font-body-family);
+  font-size: var(--font-body-md);
+  line-height: var(--font-body-line-height);
   background: var(--gradient-background, var(--color-background));
   color: var(--color-foreground);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  line-height: var(--font-heading-line-height);
+  text-transform: var(--font-heading-text-transform);
 }
 
 /** Section layout utilities */
@@ -114,4 +128,8 @@ body {
 /* Child elements that use the full-width utility class span the entire viewport. */
 .shopify-section > .full-width {
   grid-column: 1 / -1;
+}
+
+.shopify-section + .shopify-section {
+  margin-block-start: var(--section-spacing);
 }

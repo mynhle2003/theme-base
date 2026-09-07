@@ -19,6 +19,38 @@
   text-decoration: none;
 }
 
+/* Typography Foundation: visual scale is independent from semantic HTML. */
+.heading-text {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  line-height: var(--font-heading-line-height);
+  text-transform: var(--font-heading-text-transform);
+}
+
+.body-text {
+  font-family: var(--font-body-family);
+  line-height: var(--font-body-line-height);
+}
+
+.accent-text,
+.eyebrow-text {
+  font-family: var(--font-accent-family);
+}
+
+.heading-xs { font-size: var(--font-heading-xs); }
+.heading-sm { font-size: var(--font-heading-sm); }
+.heading-md { font-size: var(--font-heading-md); }
+.heading-lg { font-size: var(--font-heading-lg); }
+.heading-xl { font-size: var(--font-heading-xl); }
+.heading-display { font-size: var(--font-heading-display); }
+
+.body-xs { font-size: var(--font-body-xs); }
+.body-sm { font-size: var(--font-body-sm); }
+.body-md { font-size: var(--font-body-md); }
+.body-lg { font-size: var(--font-body-lg); }
+.body-xl { font-size: var(--font-body-xl); }
+.body-xxl { font-size: var(--font-body-xxl); }
+
 @media screen and (max-width: 749px) {
   .site-logo {
     width: var(--logo-width-mobile);
