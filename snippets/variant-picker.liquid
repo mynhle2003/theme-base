@@ -60,7 +60,7 @@
               name="option{{ option.position }}"
               value="{{ value_label | escape }}"
               data-variant-option="{{ option.position }}"
-              {% if value == selected_value %}checked{% endif %}
+              {% if value_label == selected_value %}checked{% endif %}
             >
             <label class="variant-option__button-label{% if is_swatch_option %} variant-option__button-label--swatch{% endif %}" for="{{ input_id }}">
               {% if is_swatch_option %}

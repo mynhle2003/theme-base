@@ -1,0 +1,45 @@
+{% doc %}
+  Renders the shared variant picker for the product context supplied by its
+  parent product surface. The shared snippet owns option controls,
+  availability and variant-change runtime state; the parent product form owns
+  submission state.
+
+  @example
+  {% content_for 'block', type: 'variant-picker', id: 'variant-picker' %}
+{% enddoc %}
+
+{% liquid
+  assign picker_product = product
+%}
+
+<div class="variant-picker-block" {{ block.shopify_attributes }}>
+  {% if picker_product != blank %}
+    {% render 'variant-picker', product: picker_product %}
+  {% else %}
+    <p class="variant-picker-block__empty" role="status">
+      {{ 'blocks.variant_picker.empty' | t }}
+    </p>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .variant-picker-block {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .variant-picker-block__empty {
+    color: var(--color-text);
+    font-size: var(--font-body-sm);
+    margin: 0;
+    opacity: 0.75;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.variant_picker",
+  "settings": [],
+  "presets": [{ "name": "t:general.variant_picker" }]
+}
+{% endschema %}

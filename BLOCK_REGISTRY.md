@@ -47,6 +47,23 @@
 - Localization: all visible price labels and empty-state copy use translation keys or shared settings.
 - Runtime: Liquid-only; no JavaScript lifecycle owner is required until a parent variant lifecycle is defined.
 
+## Variant Picker
+
+- Type: `variant-picker`
+- Category: Commerce/Form Composition
+- Role: expose product option controls and synchronize the selected variant with the parent product form.
+- Resource owner: the parent product section/form supplies the product context; the block never owns a product picker, variant source or product loop.
+- Capabilities: option controls, dropdown/button presentation, swatch integration, availability filtering and optional product-media synchronization through existing Theme Settings.
+- Content owner: the shared `variant-picker` component owns option control markup; merchants cannot add, remove or reorder arbitrary option children from this block.
+- Composition policy: leaf commerce/form block; no child blocks, nested sections or resource selection.
+- Component boundary: `snippets/variant-picker.liquid` owns option rendering, serialized variant data, availability state and `variant:change` events; the block owns only context binding, stable wrapper and empty state.
+- Form boundary: the parent product form owns hidden variant ID submission and submit-button state; Variant Picker updates those controls through the shared component when a form is present.
+- Output: `.variant-picker-block` wrapping the shared `<variant-picker>` custom element.
+- States: missing product context, selected option, unavailable option, unavailable variant, keyboard focus and media update state are handled by the wrapper/component contract.
+- Accessibility: fieldsets and legends label option groups, controls retain visible focus, unavailable values expose disabled/aria-disabled state, and missing context uses `role="status"`.
+- Localization: product option labels and empty-state copy use Liquid/product translation context; picker presentation remains controlled by global Variant Picker/Swatch settings.
+- Runtime: existing component JavaScript is guarded by custom-element registration and per-instance initialization; no new block-level listeners are added.
+
 ## Divider
 
 - Type: `divider`
