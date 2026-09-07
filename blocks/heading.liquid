@@ -1,0 +1,97 @@
+{% doc %}
+  Renders a semantic heading with an independent visual size.
+
+  This kernel owns heading content, semantic level, visual scale, alignment,
+  and an optional color override. Parent blocks own flow and spacing.
+
+  @example
+  {% content_for 'block', type: 'heading', id: 'heading' %}
+{% enddoc %}
+
+{% liquid
+  assign heading_text = block.settings.text | strip
+  assign heading_tag = block.settings.level | default: 'h2'
+  assign heading_size = block.settings.size | default: 'heading-lg'
+%}
+
+<div
+  class="heading-block"
+  style="--heading-align: {{ block.settings.alignment }};{% if block.settings.color != blank %} --heading-color: {{ block.settings.color }};{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  {% if heading_text != blank %}
+    <{{ heading_tag }} class="heading-text {{ heading_size }}">{{ heading_text | escape }}</{{ heading_tag }}>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .heading-block {
+    min-width: 0;
+    text-align: var(--heading-align);
+  }
+
+  .heading-block .heading-text {
+    color: var(--heading-color, var(--color-heading));
+    overflow-wrap: anywhere;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.heading",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:labels.heading_text",
+      "default": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "level",
+      "label": "t:labels.heading_level",
+      "info": "t:info.heading_level",
+      "options": [
+        { "value": "h1", "label": "t:options.heading_level.h1" },
+        { "value": "h2", "label": "t:options.heading_level.h2" },
+        { "value": "h3", "label": "t:options.heading_level.h3" },
+        { "value": "h4", "label": "t:options.heading_level.h4" },
+        { "value": "h5", "label": "t:options.heading_level.h5" },
+        { "value": "h6", "label": "t:options.heading_level.h6" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "t:labels.heading_size",
+      "options": [
+        { "value": "heading-xs", "label": "t:options.heading_size.xs" },
+        { "value": "heading-sm", "label": "t:options.heading_size.sm" },
+        { "value": "heading-md", "label": "t:options.heading_size.md" },
+        { "value": "heading-lg", "label": "t:options.heading_size.lg" },
+        { "value": "heading-xl", "label": "t:options.heading_size.xl" },
+        { "value": "heading-display", "label": "t:options.heading_size.display" }
+      ],
+      "default": "heading-lg"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "default": "left"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "t:labels.heading_color",
+      "info": "t:info.heading_color"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.heading"
+    }
+  ]
+}
+{% endschema %}
