@@ -117,6 +117,7 @@
     display: block;
     overflow: hidden;
     position: relative;
+    border-radius: var(--media-radius);
     text-decoration: none;
   }
 
@@ -191,7 +192,7 @@
   .product-card__quick-add-button {
     background: var(--color-primary-button);
     border: 1px solid var(--color-primary-button-border);
-    border-radius: var(--input-radius);
+    border-radius: var(--button-radius);
     color: var(--color-primary-button-label);
     cursor: pointer;
     font: inherit;
@@ -205,5 +206,5 @@
     outline-offset: 3px;
   }
 
-  .product-card--card { background: var(--color-background); padding: var(--pcard-gap); }
+  .product-card--card { background: var(--color-background); border-radius: var(--card-radius); padding: var(--pcard-gap); }
 {% endstylesheet %}
