@@ -1,0 +1,154 @@
+{% doc %}
+  Renders a controlled commerce product card for the product context supplied
+  by its parent resource surface. The block owns presentation toggles only;
+  it never selects or loops over products.
+
+  @example
+  {% content_for 'block', type: 'product-card', id: 'product-card' %}
+{% enddoc %}
+
+{% liquid
+  assign card_product = product
+  assign card_image_ratio = block.settings.image_ratio | default: 'square'
+  assign card_image_height = 800
+  assign card_aspect_ratio = '1 / 1'
+  if card_image_ratio == 'portrait'
+    assign card_image_height = 1000
+    assign card_aspect_ratio = '4 / 5'
+  elsif card_image_ratio == 'landscape'
+    assign card_image_height = 600
+    assign card_aspect_ratio = '4 / 3'
+  endif
+  assign selected_variant = card_product.selected_or_first_available_variant
+  assign rating_value = card_product.metafields.reviews.rating.value | default: card_product.metafields.reviews.rating
+  assign rating_count = card_product.metafields.reviews.rating_count.value | default: card_product.metafields.reviews.rating_count
+  capture rating_label
+    echo 'products.product.rating' | t: rating: rating_value
+    if rating_count != blank
+      echo ', '
+      echo 'products.product.reviews' | t: count: rating_count
+    endif
+  endcapture
+%}
+
+<article class="product-card-block" style="--product-card-aspect-ratio: {{ card_aspect_ratio }};" {{ block.shopify_attributes }}>
+  {% if card_product != blank %}
+    <a class="product-card-block__media" href="{{ card_product.url }}" aria-label="{{ card_product.title | escape }}">
+      {% if block.settings.show_image %}
+        {% if card_product.featured_image %}
+          {{ card_product.featured_image | image_url: width: 800, height: card_image_height, crop: 'center' | image_tag: class: 'product-card-block__image', loading: 'lazy' }}
+        {% else %}
+          {{ 'product-1' | placeholder_svg_tag: 'product-card-block__image product-card-block__image--placeholder' }}
+        {% endif %}
+      {% endif %}
+
+      {% if block.settings.show_badge %}
+        {% render 'product-badge', product: card_product %}
+      {% endif %}
+    </a>
+
+    <div class="product-card-block__content">
+      <h3 class="product-card-block__title body-text body-md">
+        <a href="{{ card_product.url }}">{{ card_product.title | escape }}</a>
+      </h3>
+
+      {% if block.settings.show_rating and rating_value != blank %}
+        <div class="product-card-block__rating" aria-label="{{ rating_label | escape }}">
+          <span aria-hidden="true">{{ rating_value }} / 5</span>
+          {% if rating_count != blank %}<span>({{ rating_count }})</span>{% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.show_price %}
+        {% render 'price', item: card_product, show_from: true %}
+      {% endif %}
+
+      {% if block.settings.show_button %}
+        {% if card_product.available and selected_variant != blank %}
+          {% form 'product', card_product, class: 'product-card-block__form' %}
+            <input type="hidden" name="id" value="{{ selected_variant.id }}">
+            <button class="btn btn--primary btn--fill product-card-block__button" type="submit">
+              {{ 'products.product.add_to_cart' | t }}
+            </button>
+            {% if form.errors %}
+              <p class="product-card-block__form-error form__error" role="alert">{{ form.errors | default_errors }}</p>
+            {% endif %}
+          {% endform %}
+        {% else %}
+          <button class="btn btn--primary btn--fill product-card-block__button" type="button" disabled>
+            {{ 'products.product.sold_out' | t }}
+          </button>
+        {% endif %}
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="product-card-block__empty" role="status">
+      {{ 'blocks.product_card.empty' | t }}
+    </div>
+  {% endif %}
+</article>
+
+{% stylesheet %}
+  .product-card-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .product-card-block__media {
+    aspect-ratio: var(--product-card-aspect-ratio, 1 / 1);
+    background: var(--color-background);
+    color: inherit;
+    display: block;
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+  }
+
+  .product-card-block__image {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .product-card-block__image--placeholder { padding: 1rem; }
+
+  .product-card-block__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  .product-card-block__title,
+  .product-card-block__rating,
+  .product-card-block__form-error { margin: 0; }
+
+  .product-card-block__rating { color: var(--color-text); opacity: 0.78; }
+
+  .product-card-block__title { overflow-wrap: anywhere; }
+  .product-card-block__title a { color: inherit; text-decoration: none; }
+  .product-card-block__title a:focus-visible,
+  .product-card-block__media:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .product-card-block__form { display: grid; gap: 0.5rem; }
+  .product-card-block__empty { border: 1px dashed var(--input-border-color); padding: 1rem; text-align: center; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.product_card",
+  "settings": [
+    { "type": "header", "content": "t:general.appearance" },
+    { "type": "checkbox", "id": "show_image", "label": "t:labels.product_card_show_image", "default": true },
+    { "visible_if": "{{ block.settings.show_image }}", "type": "select", "id": "image_ratio", "label": "t:labels.product_card_image_ratio", "options": [{ "value": "square", "label": "t:options.product_card_image_ratio.square" }, { "value": "portrait", "label": "t:options.product_card_image_ratio.portrait" }, { "value": "landscape", "label": "t:options.product_card_image_ratio.landscape" }], "default": "square" },
+    { "type": "checkbox", "id": "show_badge", "label": "t:labels.product_card_show_badge", "default": true },
+    { "type": "checkbox", "id": "show_rating", "label": "t:labels.product_card_show_rating", "default": false },
+    { "type": "checkbox", "id": "show_price", "label": "t:labels.product_card_show_price", "default": true },
+    { "type": "checkbox", "id": "show_button", "label": "t:labels.product_card_show_button", "default": true }
+  ],
+  "presets": [{ "name": "t:general.product_card" }]
+}
+{% endschema %}

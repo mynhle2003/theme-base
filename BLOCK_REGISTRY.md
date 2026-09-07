@@ -16,6 +16,21 @@
 - Accessibility: preserves DOM order; mobile order is a deliberate visual reorder only and is limited to the two slots.
 - Runtime: CSS-only; no JavaScript lifecycle owner is required.
 
+## Product Card
+
+- Type: `product-card`
+- Category: Commerce Composition
+- Role: controlled product presentation with optional availability-aware add-to-cart form.
+- Resource owner: the parent section/resource loop supplies the product context; the card never owns a product picker, collection or product loop.
+- Capabilities: image, badge, rating, price and button visibility; image ratio.
+- Content owner: Product Card owns only these controlled presentation slots; merchants cannot add, remove, reorder or nest arbitrary child blocks.
+- Composition policy: leaf commerce block; no child blocks, nested sections or product-source loop.
+- Output: `.product-card-block` with a media link, product metadata and optional product form.
+- States: missing product context, missing image placeholder, sold out disabled button and product-form error alert.
+- Accessibility: product link has an accessible name, interactive elements retain visible focus, sold out action is disabled, form errors use `role="alert"`.
+- Localization: visible action, sold-out and empty-selection copy use translation keys; rating metadata is announced as an accessible label.
+- Runtime: Liquid form state only; no JavaScript lifecycle owner is required.
+
 ## Divider
 
 - Type: `divider`
