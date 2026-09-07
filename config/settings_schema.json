@@ -441,5 +441,76 @@
         "default": true
       }
     ]
+  },
+  {
+    "name": "t:general.variant_pickers",
+    "settings": [
+      {
+        "type": "select",
+        "id": "variant_picker_style",
+        "label": "t:labels.variant_picker_style",
+        "options": [
+          { "value": "button", "label": "t:options.variant_picker_style.button" },
+          { "value": "dropdown", "label": "t:options.variant_picker_style.dropdown" }
+        ],
+        "default": "button"
+      },
+      {
+        "type": "range",
+        "id": "variant_height",
+        "label": "t:labels.variant_height",
+        "min": 36,
+        "max": 64,
+        "step": 2,
+        "unit": "px",
+        "default": 44
+      },
+      {
+        "type": "range",
+        "id": "variant_height_mobile",
+        "label": "t:labels.variant_height_mobile",
+        "min": 36,
+        "max": 60,
+        "step": 2,
+        "unit": "px",
+        "default": 44
+      },
+      {
+        "type": "range",
+        "id": "variant_group_gap",
+        "label": "t:labels.variant_group_gap",
+        "min": 8,
+        "max": 32,
+        "step": 4,
+        "unit": "px",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "variant_label_spacing",
+        "label": "t:labels.variant_label_spacing",
+        "min": 4,
+        "max": 16,
+        "step": 2,
+        "unit": "px",
+        "default": 8
+      },
+      {
+        "type": "range",
+        "id": "variant_gap",
+        "label": "t:labels.variant_gap",
+        "min": 4,
+        "max": 20,
+        "step": 2,
+        "unit": "px",
+        "default": 8
+      },
+      {
+        "type": "checkbox",
+        "id": "variant_picker_update_media",
+        "label": "t:labels.variant_picker_update_media",
+        "default": true
+      }
+    ]
   }
 ]

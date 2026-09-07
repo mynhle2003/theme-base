@@ -69,6 +69,12 @@
     --input-focus-color: var(--color-heading);
     --input-error-color: {{ settings.form_error_color | default: '#B42318' }};
     --input-success-color: {{ settings.form_success_color | default: '#1F7A4D' }};
+    --variant-height: {{ settings.variant_height | default: 44 }}px;
+    --variant-height-mobile: {{ settings.variant_height_mobile | default: 44 }}px;
+    --variant-radius: var(--input-radius);
+    --variant-group-gap: {{ settings.variant_group_gap | default: 20 }}px;
+    --variant-label-spacing: {{ settings.variant_label_spacing | default: 8 }}px;
+    --variant-gap: {{ settings.variant_gap | default: 8 }}px;
     --icon-thickness: 1.5px;
   }
 
