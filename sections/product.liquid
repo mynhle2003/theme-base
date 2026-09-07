@@ -15,7 +15,7 @@
 
 <div class="product-info">
   <h1>{{ product.title }}</h1>
-  <p>{{ product.price | money }}</p>
+  {% render 'price', item: product, show_from: true %}
   <p>{{ product.description }}</p>
 </div>
 
@@ -78,6 +78,41 @@
     outline-offset: 3px;
   }
 {% endstylesheet %}
+
+{% javascript %}
+  document.querySelectorAll('.product-form').forEach((productForm) => {
+    if (productForm.dataset.priceInitialized === 'true') return;
+    productForm.dataset.priceInitialized = 'true';
+
+    const picker = productForm.querySelector('[data-variant-picker]');
+    const priceBlock = productForm.parentElement?.previousElementSibling?.querySelector('[data-price]');
+    if (!picker || !priceBlock) return;
+
+    const formatMoney = (cents) => {
+      if (window.Shopify?.formatMoney) return window.Shopify.formatMoney(cents);
+      const currency = window.Shopify?.currency?.active;
+      if (!currency) return String(cents);
+      return new Intl.NumberFormat(document.documentElement.lang, { style: 'currency', currency }).format(cents / 100);
+    };
+
+    picker.addEventListener('variant:change', (event) => {
+      const variant = event.detail.variant;
+      const currentPrice = priceBlock.querySelector('[data-price-current]');
+      const comparePrice = priceBlock.querySelector('[data-price-compare]');
+      if (!variant || !currentPrice) return;
+
+      currentPrice.textContent = formatMoney(variant.price);
+      currentPrice.classList.toggle('price__current--sale', variant.compare_at_price > variant.price);
+
+      if (comparePrice) {
+        comparePrice.hidden = !(variant.compare_at_price > variant.price);
+        comparePrice.textContent = formatMoney(variant.compare_at_price);
+      }
+
+      priceBlock.classList.toggle('price--sale', variant.compare_at_price > variant.price);
+    });
+  });
+{% endjavascript %}
 
 {% schema %}
 {

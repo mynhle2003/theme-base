@@ -645,5 +645,18 @@
       { "type": "color", "id": "badge_custom_background", "label": "t:labels.badge_custom_background", "default": "#333333" },
       { "type": "color", "id": "badge_custom_color", "label": "t:labels.badge_custom_color", "default": "#FFFFFF" }
     ]
+  },
+  {
+    "name": "t:general.prices",
+    "settings": [
+      { "type": "select", "id": "price_sale_order", "label": "t:labels.price_sale_order", "options": [
+        { "value": "sale_first", "label": "t:options.price_sale_order.sale_first" },
+        { "value": "compare_first", "label": "t:options.price_sale_order.compare_first" }
+      ], "default": "sale_first" },
+      { "type": "checkbox", "id": "price_show_currency_code", "label": "t:labels.price_show_currency_code", "default": false },
+      { "type": "checkbox", "id": "price_show_unit_price", "label": "t:labels.price_show_unit_price", "default": true },
+      { "type": "checkbox", "id": "price_show_from", "label": "t:labels.price_show_from", "default": true },
+      { "type": "color", "id": "sale_price_color", "label": "t:labels.sale_price_color", "default": "#B42318" }
+    ]
   }
 ]
