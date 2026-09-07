@@ -14,6 +14,8 @@
   assign heading_content = block.settings.heading
   assign heading_plain = heading_content | strip_html | strip
   assign heading_size = block.settings.heading_size | default: 'lg'
+  assign heading_class = 'heading-' | append: heading_size
+  assign heading_custom_size = block.settings.custom_heading_size | default: 32
   assign heading_tag = block.settings.html_tag | default: 'h2'
   assign heading_width = 'fit-content'
   assign heading_width_mobile = 'fit-content'
@@ -60,11 +62,15 @@
     assign heading_padding_left_mobile = block.settings.padding_left_mobile
     assign heading_padding_right_mobile = block.settings.padding_right_mobile
   endif
+
+  if heading_size == 'custom'
+    assign heading_class = 'heading-custom'
+  endif
 %}
 
 <div
-  class="heading-block heading-text heading-{{ heading_size }}"
-  style="--heading-width: {{ heading_width }}; --heading-width-mobile: {{ heading_width_mobile }}; --heading-align: {{ heading_alignment }}; --heading-align-mobile: {{ heading_alignment_mobile }}; --heading-padding-top: {{ block.settings.padding_top }}px; --heading-padding-bottom: {{ block.settings.padding_bottom }}px; --heading-padding-left: {{ block.settings.padding_left }}px; --heading-padding-right: {{ block.settings.padding_right }}px; --heading-padding-top-mobile: {{ heading_padding_top_mobile }}px; --heading-padding-bottom-mobile: {{ heading_padding_bottom_mobile }}px; --heading-padding-left-mobile: {{ heading_padding_left_mobile }}px; --heading-padding-right-mobile: {{ heading_padding_right_mobile }}px;{% if block.settings.text_color != blank %} --heading-color: {{ block.settings.text_color }};{% endif %}"
+  class="heading-block heading-text {{ heading_class }}"
+  style="--heading-width: {{ heading_width }}; --heading-width-mobile: {{ heading_width_mobile }}; --heading-align: {{ heading_alignment }}; --heading-align-mobile: {{ heading_alignment_mobile }}; --heading-padding-top: {{ block.settings.padding_top }}px; --heading-padding-bottom: {{ block.settings.padding_bottom }}px; --heading-padding-left: {{ block.settings.padding_left }}px; --heading-padding-right: {{ block.settings.padding_right }}px; --heading-padding-top-mobile: {{ heading_padding_top_mobile }}px; --heading-padding-bottom-mobile: {{ heading_padding_bottom_mobile }}px; --heading-padding-left-mobile: {{ heading_padding_left_mobile }}px; --heading-padding-right-mobile: {{ heading_padding_right_mobile }}px;{% if heading_size == 'custom' %} --heading-font-size: {{ heading_custom_size }}px;{% endif %}{% if block.settings.text_color != blank %} --heading-color: {{ block.settings.text_color }};{% endif %}"
   {{ block.shopify_attributes }}
 >
   {% if heading_plain != blank %}
@@ -87,6 +93,10 @@
     color: inherit;
     max-width: 100%;
     overflow-wrap: anywhere;
+  }
+
+  .heading-custom {
+    font-size: var(--heading-font-size);
   }
 
   @media screen and (max-width: 767.98px) {
@@ -119,9 +129,21 @@
         { "value": "md", "label": "t:options.heading_size.md" },
         { "value": "lg", "label": "t:options.heading_size.lg" },
         { "value": "xl", "label": "t:options.heading_size.xl" },
-        { "value": "display", "label": "t:options.heading_size.display" }
+        { "value": "display", "label": "t:options.heading_size.display" },
+        { "value": "custom", "label": "t:options.heading_size.custom" }
       ],
       "default": "lg"
+    },
+    {
+      "visible_if": "{{ block.settings.heading_size == 'custom' }}",
+      "type": "range",
+      "id": "custom_heading_size",
+      "label": "t:labels.custom_heading_size",
+      "min": 12,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 32
     },
     {
       "type": "select",
