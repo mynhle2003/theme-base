@@ -372,5 +372,74 @@
         "default": "#1F7A4D"
       }
     ]
+  },
+  {
+    "name": "t:general.product_cards",
+    "settings": [
+      {
+        "type": "select",
+        "id": "product_card_style",
+        "label": "t:labels.product_card_style",
+        "options": [
+          { "value": "standard", "label": "t:options.product_card_style.standard" },
+          { "value": "card", "label": "t:options.product_card_style.card" }
+        ],
+        "default": "standard"
+      },
+      {
+        "type": "select",
+        "id": "product_card_image_ratio",
+        "label": "t:labels.product_card_image_ratio",
+        "options": [
+          { "value": "square", "label": "t:options.product_card_image_ratio.square" },
+          { "value": "portrait", "label": "t:options.product_card_image_ratio.portrait" },
+          { "value": "landscape", "label": "t:options.product_card_image_ratio.landscape" }
+        ],
+        "default": "square"
+      },
+      {
+        "type": "range",
+        "id": "product_card_gap",
+        "label": "t:labels.product_card_gap",
+        "min": 8,
+        "max": 32,
+        "step": 4,
+        "unit": "px",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "product_card_title_lines",
+        "label": "t:labels.product_card_title_lines",
+        "min": 1,
+        "max": 4,
+        "step": 1,
+        "default": 2
+      },
+      {
+        "type": "checkbox",
+        "id": "product_card_show_vendor",
+        "label": "t:labels.product_card_show_vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "product_card_show_product_type",
+        "label": "t:labels.product_card_show_product_type",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "product_card_show_second_image",
+        "label": "t:labels.product_card_show_second_image",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "product_card_show_quick_add",
+        "label": "t:labels.product_card_show_quick_add",
+        "default": true
+      }
+    ]
   }
 ]
