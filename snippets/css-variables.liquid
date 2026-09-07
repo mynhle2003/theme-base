@@ -60,6 +60,15 @@
     --color-secondary-button-border: {{ default_color_scheme.settings.secondary_button_border | default: active_foreground }};
     --color-shadow: {{ default_color_scheme.settings.shadow | default: '#000000' }};
     --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
+    --input-height: {{ settings.input_height | default: 48 }}px;
+    --input-height-mobile: {{ settings.input_height_mobile | default: 44 }}px;
+    --input-border-width: {{ settings.input_border_width | default: 1 }}px;
+    --input-radius: var(--style-border-radius-inputs);
+    --input-background-color: {% if settings.input_style == 'outline' %}transparent{% else %}var(--color-background){% endif %};
+    --input-border-color: var(--color-border);
+    --input-focus-color: var(--color-heading);
+    --input-error-color: {{ settings.form_error_color | default: '#B42318' }};
+    --input-success-color: {{ settings.form_success_color | default: '#1F7A4D' }};
     --icon-thickness: 1.5px;
   }
 

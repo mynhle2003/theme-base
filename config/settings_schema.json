@@ -315,5 +315,62 @@
         "default": 4
       }
     ]
+  },
+  {
+    "name": "t:general.forms",
+    "settings": [
+      {
+        "type": "select",
+        "id": "input_style",
+        "label": "t:labels.input_style",
+        "options": [
+          { "value": "solid", "label": "t:options.input_style.solid" },
+          { "value": "outline", "label": "t:options.input_style.outline" }
+        ],
+        "default": "solid"
+      },
+      {
+        "type": "range",
+        "id": "input_height",
+        "min": 40,
+        "max": 64,
+        "step": 2,
+        "unit": "px",
+        "label": "t:labels.input_height",
+        "default": 48
+      },
+      {
+        "type": "range",
+        "id": "input_height_mobile",
+        "min": 36,
+        "max": 60,
+        "step": 2,
+        "unit": "px",
+        "label": "t:labels.input_height_mobile",
+        "default": 44
+      },
+      {
+        "type": "range",
+        "id": "input_border_width",
+        "min": 0,
+        "max": 3,
+        "step": 1,
+        "unit": "px",
+        "label": "t:labels.input_border_width",
+        "default": 1
+      },
+      {
+        "type": "color",
+        "id": "form_error_color",
+        "label": "t:labels.form_error_color",
+        "default": "#B42318"
+      },
+      {
+        "type": "color",
+        "id": "form_success_color",
+        "label": "t:labels.form_success_color",
+        "default": "#1F7A4D"
+      }
+    ]
   }
 ]
