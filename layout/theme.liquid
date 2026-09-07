@@ -27,7 +27,7 @@
     {{ content_for_header }}
   </head>
 
-  <body class="color-{{ settings.default_color_scheme.id | default: 'scheme-1' }}">
+  <body class="color-{{ settings.default_color_scheme.id | default: 'scheme-1' }}{% unless settings.motion_enabled %} motion--disabled{% endunless %}">
     {% sections 'header-group' %}
 
     {{ content_for_layout }}

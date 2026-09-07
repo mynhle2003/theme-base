@@ -144,6 +144,27 @@ textarea[readonly] {
   color: var(--input-success-color);
 }
 
+/* Motion Foundation: global opt-out and OS reduced-motion support. */
+.motion--disabled *,
+.motion--disabled *::before,
+.motion--disabled *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 0.01ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 @media screen and (max-width: 749px) {
   .form__control,
   input:not([type='checkbox']):not([type='radio']):not([type='submit']):not([type='button']):not([type='reset']),

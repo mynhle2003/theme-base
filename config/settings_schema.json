@@ -670,5 +670,16 @@
       { "type": "url", "id": "social_pinterest_url", "label": "t:labels.social_pinterest_url" },
       { "type": "checkbox", "id": "social_media_show_labels", "label": "t:labels.social_media_show_labels", "default": false }
     ]
+  },
+  {
+    "name": "t:general.motion",
+    "settings": [
+      { "type": "checkbox", "id": "motion_enabled", "label": "t:labels.motion_enabled", "default": true },
+      { "type": "select", "id": "motion_duration", "label": "t:labels.motion_duration", "options": [
+        { "value": "fast", "label": "t:options.motion_duration.fast" },
+        { "value": "normal", "label": "t:options.motion_duration.normal" },
+        { "value": "slow", "label": "t:options.motion_duration.slow" }
+      ], "default": "normal" }
+    ]
   }
 ]
