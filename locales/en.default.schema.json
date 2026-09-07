@@ -38,6 +38,7 @@
     "eyebrow": "Eyebrow",
     "image": "Image",
     "video": "Video",
+    "icon": "Icon",
     "desktop": "Desktop",
     "mobile": "Mobile",
     "appearance": "Appearance",
@@ -227,6 +228,14 @@
     ,"custom_width": "Custom width"
     ,"limit_width": "Limit width"
     ,"max_width": "Max width"
+    ,"icon_source": "Icon source"
+    ,"custom_icon": "Custom icon"
+    ,"icon_link": "Icon link"
+    ,"accessible_label": "Accessible label"
+    ,"icon_width": "Icon width"
+    ,"icon_padding": "Icon padding"
+    ,"icon_width_mobile": "Icon width on mobile"
+    ,"icon_padding_mobile": "Icon padding on mobile"
     ,"video_source": "Video source"
     ,"video": "Video"
     ,"external_video_url": "External video URL"
@@ -247,6 +256,8 @@
     "text_color": "Leave blank to inherit the current color scheme."
     ,"eyebrow_color": "Leave blank to inherit the Accent color from the current color scheme."
     ,"alt_text": "Leave blank to use the image alt text. Leave both blank for a decorative image."
+    ,"custom_icon": "Use sanitized SVG markup only."
+    ,"accessible_label": "Add a label for informative or linked icons. Leave blank for decorative icons."
   },
   "options": {
     "alignment": {
@@ -303,6 +314,10 @@
     },
     "icon_size": {
       "inherit": "Inherit",
+      "custom": "Custom"
+    },
+    "icon_source": {
+      "library": "Library",
       "custom": "Custom"
     },
     "heading_level": {

@@ -1,0 +1,129 @@
+{% doc %}
+  Renders a library or sanitized custom SVG icon with an optional link,
+  responsive local sizing, and accessible labeling.
+
+  The Icon kernel owns icon presentation only. It does not own business data
+  or nested blocks. Custom icon markup must be sanitized before it is entered.
+
+  @example
+  {% content_for 'block', type: 'icon', id: 'icon' %}
+{% enddoc %}
+
+{% liquid
+  assign icon_width_mobile = block.settings.icon_width
+  assign icon_padding_mobile = block.settings.icon_padding
+  assign icon_is_informative = false
+
+  if block.settings.accessible_label != blank
+    assign icon_is_informative = true
+  endif
+
+  if block.settings.custom_mobile
+    assign icon_width_mobile = block.settings.icon_width_mobile
+    assign icon_padding_mobile = block.settings.icon_padding_mobile
+  endif
+%}
+
+<div
+  class="icon-block"
+  style="--icon-width: {{ block.settings.icon_width }}px; --icon-padding: {{ block.settings.icon_padding }}px; --icon-width-mobile: {{ icon_width_mobile }}px; --icon-padding-mobile: {{ icon_padding_mobile }}px;"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.icon_link != blank and icon_is_informative %}
+    <a class="icon-block__link" href="{{ block.settings.icon_link }}"{% if block.settings.open_in_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %} aria-label="{{ block.settings.accessible_label | escape }}">
+  {% endif %}
+      <span class="icon-block__icon"{% if icon_is_informative and block.settings.icon_link == blank %} role="img" aria-label="{{ block.settings.accessible_label | escape }}"{% else %} aria-hidden="true"{% endif %}>
+        {% if block.settings.source == 'custom' %}
+          {{ block.settings.custom_icon }}
+        {% else %}
+          {% case block.settings.icon %}
+            {% when 'arrow' %}
+              <svg class="icon-block__svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            {% when 'chevron' %}
+              <svg class="icon-block__svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6" /></svg>
+            {% when 'plus' %}
+              <svg class="icon-block__svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14" /></svg>
+          {% endcase %}
+        {% endif %}
+      </span>
+  {% if block.settings.icon_link != blank and icon_is_informative %}
+    </a>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .icon-block {
+    display: block;
+    max-width: 100%;
+    min-width: 0;
+    padding: var(--icon-padding);
+    width: fit-content;
+  }
+
+  .icon-block__link,
+  .icon-block__icon {
+    color: inherit;
+    display: block;
+    max-width: 100%;
+    width: var(--icon-width);
+  }
+
+  .icon-block__link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  .icon-block__svg,
+  .icon-block__icon > svg {
+    display: block;
+    height: auto;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .icon-block__svg path {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: var(--icon-stroke-width, 1.5px);
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .icon-block {
+      padding: var(--icon-padding-mobile);
+    }
+
+    .icon-block__link,
+    .icon-block__icon {
+      width: var(--icon-width-mobile);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.icon",
+  "settings": [
+    { "type": "select", "id": "source", "label": "t:labels.icon_source", "options": [
+      { "value": "library", "label": "t:options.icon_source.library" },
+      { "value": "custom", "label": "t:options.icon_source.custom" }
+    ], "default": "library" },
+    { "visible_if": "{{ block.settings.source == 'library' }}", "type": "select", "id": "icon", "label": "t:labels.icon", "options": [
+      { "value": "arrow", "label": "t:options.icon.arrow" },
+      { "value": "chevron", "label": "t:options.icon.chevron" },
+      { "value": "plus", "label": "t:options.icon.plus" }
+    ], "default": "arrow" },
+    { "visible_if": "{{ block.settings.source == 'custom' }}", "type": "html", "id": "custom_icon", "label": "t:labels.custom_icon", "info": "t:info.custom_icon" },
+    { "type": "url", "id": "icon_link", "label": "t:labels.icon_link" },
+    { "type": "checkbox", "id": "open_in_new_tab", "label": "t:labels.open_in_new_tab", "default": false },
+    { "type": "text", "id": "accessible_label", "label": "t:labels.accessible_label", "info": "t:info.accessible_label" },
+    { "type": "range", "id": "icon_width", "label": "t:labels.icon_width", "min": 8, "max": 100, "step": 1, "unit": "px", "default": 24 },
+    { "type": "range", "id": "icon_padding", "label": "t:labels.icon_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "checkbox", "id": "custom_mobile", "label": "t:labels.customize_mobile", "default": false },
+    { "visible_if": "{{ block.settings.custom_mobile }}", "type": "range", "id": "icon_width_mobile", "label": "t:labels.icon_width_mobile", "min": 8, "max": 100, "step": 1, "unit": "px", "default": 24 },
+    { "visible_if": "{{ block.settings.custom_mobile }}", "type": "range", "id": "icon_padding_mobile", "label": "t:labels.icon_padding_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
+  ],
+  "presets": [{ "name": "t:general.icon" }]
+}
+{% endschema %}
