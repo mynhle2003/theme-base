@@ -68,9 +68,12 @@
     --font-heading-line-height: var(--font-heading-h3-line-height);
     --font-heading-text-transform: var(--font-heading-h3-text-transform);
     --font-body-text-transform: {% case settings.body_text_case %}{% when 'uppercase' %}uppercase{% when 'capitalize' %}capitalize{% else %}none{% endcase %};
-    --page-width: {{ settings.max_page_width }};
-    --page-margin: max({{ settings.min_page_margin }}px, {{ settings.page_margin_mobile }}px);
-    --section-spacing: {{ settings.section_spacing }}px;
+    --page-width: {{ settings.page_width | default: 1600 }}px;
+    --page-margin-min: {{ settings.page_margin_min | default: 16 }}px;
+    --page-margin-mobile: {{ settings.page_margin_mobile | default: 16 }}px;
+    --page-margin-tablet: {{ settings.page_margin_tablet | default: 30 }}px;
+    --page-margin-desktop: {{ settings.page_margin_desktop | default: 48 }}px;
+    --page-margin: max(var(--page-margin-min), var(--page-margin-mobile));
     --color-background: {{ active_background }};
     --gradient-background: {{ default_color_scheme.settings.background_gradient | default: active_background }};
     --color-foreground: {{ active_foreground }};
@@ -201,9 +204,15 @@
     }
   {% endfor %}
 
-  @media screen and (min-width: 750px) {
+  @media screen and (min-width: 750px) and (max-width: 989.98px) {
     :root {
-      --page-margin: max({{ settings.min_page_margin }}px, {{ settings.page_margin_desktop }}px);
+      --page-margin: max(var(--page-margin-min), var(--page-margin-tablet));
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    :root {
+      --page-margin: max(var(--page-margin-min), var(--page-margin-desktop));
     }
   }
 {% endstyle %}

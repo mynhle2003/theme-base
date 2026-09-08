@@ -120,6 +120,13 @@ h6 {
   width: 100%;
 }
 
+/* Shared page container for sections and standalone page content. */
+.page-width {
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+}
+
 /* Child elements, by default, are constrained to the central column of the grid. */
 .shopify-section > * {
   grid-column: 2;
@@ -131,5 +138,5 @@ h6 {
 }
 
 .shopify-section + .shopify-section {
-  margin-block-start: var(--section-spacing);
+  margin-block-start: var(--section-spacing, 48px);
 }

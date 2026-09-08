@@ -227,60 +227,54 @@
     "name": "t:general.layout",
     "settings": [
       {
-        "type": "select",
-        "id": "max_page_width",
+        "type": "range",
+        "id": "page_width",
+        "min": 1200,
+        "max": 2000,
+        "step": 10,
+        "unit": "px",
         "label": "t:labels.page_width",
-        "options": [
-          {
-            "value": "90rem",
-            "label": "t:options.page_width.narrow"
-          },
-          {
-            "value": "110rem",
-            "label": "t:options.page_width.wide"
-          }
-        ],
-        "default": "90rem"
+        "default": 1600
       },
       {
         "type": "range",
-        "id": "min_page_margin",
-        "min": 10,
-        "max": 100,
+        "id": "page_margin_min",
+        "min": 0,
+        "max": 64,
         "step": 1,
         "unit": "px",
-        "label": "t:labels.minimum_page_margin",
-        "default": 20
-      },
-      {
-        "type": "range",
-        "id": "page_margin_mobile",
-        "min": 10,
-        "max": 60,
-        "step": 1,
-        "unit": "px",
-        "label": "t:labels.page_margin_mobile",
+        "label": "t:labels.page_margin_min",
         "default": 16
       },
       {
         "type": "range",
         "id": "page_margin_desktop",
-        "min": 10,
-        "max": 110,
+        "min": 16,
+        "max": 96,
         "step": 1,
         "unit": "px",
         "label": "t:labels.page_margin_desktop",
-        "default": 24
+        "default": 48
       },
       {
         "type": "range",
-        "id": "section_spacing",
-        "min": 0,
-        "max": 120,
-        "step": 4,
+        "id": "page_margin_tablet",
+        "min": 16,
+        "max": 80,
+        "step": 1,
         "unit": "px",
-        "label": "t:labels.section_spacing",
-        "default": 48
+        "label": "t:labels.page_margin_tablet",
+        "default": 30
+      },
+      {
+        "type": "range",
+        "id": "page_margin_mobile",
+        "min": 12,
+        "max": 48,
+        "step": 1,
+        "unit": "px",
+        "label": "t:labels.page_margin_mobile",
+        "default": 16
       }
     ]
   },
