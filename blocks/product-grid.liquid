@@ -1,0 +1,110 @@
+{% doc %}
+  Renders the controlled Product Grid commerce block for the collection context
+  supplied by its parent section or resource surface.
+
+  The parent owns resource selection. This block owns only product iteration,
+  pagination, grid layout, responsive columns and the empty state. Product
+  presentation is delegated to the shared product-card snippet, so products
+  cannot be added, removed, reordered or selected as block children.
+
+  @param {collection} [collection] - The collection supplied by the parent surface.
+
+  @example
+  {% content_for 'block', type: 'product-grid', id: 'product-grid' %}
+{% enddoc %}
+
+{% liquid
+  assign grid_collection = collection
+  assign grid_columns = block.settings.columns
+  assign grid_columns_mobile = block.settings.columns_mobile
+  assign products_per_page = block.settings.products_per_page
+  assign grid_gap = block.settings.gap
+%}
+
+<div
+  class="product-grid-block"
+  style="--product-grid-columns: {{ grid_columns }}; --product-grid-columns-mobile: {{ grid_columns_mobile }}; --product-grid-gap: {{ grid_gap }}px;"
+  {{ block.shopify_attributes }}
+>
+  {% if grid_collection != blank %}
+    {% paginate grid_collection.products by products_per_page %}
+      <div class="product-grid-block__items">
+        {% for grid_product in grid_collection.products %}
+          {% render 'product-card', product: grid_product, show_quick_add: true %}
+        {% else %}
+          <p class="product-grid-block__empty" role="status" aria-live="polite">
+            {{ 'blocks.product_grid.no_products' | t }}
+          </p>
+        {% endfor %}
+      </div>
+
+      {% if block.settings.show_pagination and paginate.pages > 1 %}
+        <nav class="product-grid-block__pagination" aria-label="{{ 'general.pagination' | t }}">
+          {{ paginate | default_pagination }}
+        </nav>
+      {% endif %}
+    {% endpaginate %}
+  {% else %}
+    <p class="product-grid-block__empty" role="status" aria-live="polite">
+      {{ 'blocks.product_grid.missing_context' | t }}
+    </p>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .product-grid-block {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .product-grid-block__items {
+    display: grid;
+    gap: var(--product-grid-gap);
+    grid-template-columns: repeat(var(--product-grid-columns), minmax(0, 1fr));
+    min-width: 0;
+  }
+
+  .product-grid-block__empty {
+    color: var(--color-text);
+    grid-column: 1 / -1;
+    margin: 0;
+    opacity: 0.75;
+  }
+
+  .product-grid-block__pagination {
+    margin-block-start: var(--product-grid-gap);
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .product-grid-block__items {
+      grid-template-columns: repeat(var(--product-grid-columns-mobile), minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.product_grid",
+  "settings": [
+    { "type": "header", "content": "t:general.layout" },
+    { "type": "select", "id": "columns", "label": "t:labels.product_grid_columns", "options": [{ "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" }, { "value": "5", "label": "5" }, { "value": "6", "label": "6" }], "default": "4" },
+    { "type": "select", "id": "columns_mobile", "label": "t:labels.product_grid_columns_mobile", "options": [{ "value": "1", "label": "1" }, { "value": "2", "label": "2" }], "default": "2" },
+    { "type": "range", "id": "gap", "label": "t:labels.product_grid_gap", "min": 0, "max": 100, "step": 2, "unit": "px", "default": 24 },
+    { "type": "range", "id": "products_per_page", "label": "t:labels.product_grid_products_per_page", "min": 4, "max": 50, "step": 1, "default": 12 },
+    { "type": "checkbox", "id": "show_pagination", "label": "t:labels.product_grid_show_pagination", "default": true }
+  ],
+  "presets": [
+    {
+      "name": "t:general.product_grid",
+      "category": "t:general.commerce",
+      "settings": {
+        "columns": "4",
+        "columns_mobile": "2",
+        "gap": 24,
+        "products_per_page": 12,
+        "show_pagination": true
+      }
+    }
+  ]
+}
+{% endschema %}

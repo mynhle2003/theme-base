@@ -81,6 +81,23 @@
 - Localization: label, button names and empty-state copy use translation keys.
 - Runtime: custom-element lifecycle is guarded per instance; variant-change listeners attach to the parent form and do not create a form-level submission side effect.
 
+## Product Grid
+
+- Type: `product-grid`
+- Category: Commerce Composition
+- Role: own a collection resource loop and render products in a responsive grid.
+- Resource owner: the parent section/resource surface supplies the collection context; Product Grid owns pagination and product iteration; Product Card owns neither the collection nor the loop.
+- Capabilities: product count per page, desktop/mobile columns, gap and pagination visibility. Collection selection is intentionally not a block setting because Section owns resource pickers.
+- Content owner: Product Grid owns grid layout and resource iteration; each product presentation is delegated to the shared `snippets/product-card.liquid` component.
+- Composition policy: controlled commerce loop; no child blocks, nested sections or arbitrary merchant-reordered product children.
+- Component boundary: Product Grid owns collection/pagination/grid orchestration; Product Card snippet owns individual product presentation and uses existing badge, price and form primitives.
+- Output: `.product-grid-block` with stable `.product-grid-block__items` and optional pagination navigation.
+- States: missing collection context, empty collection, paginated collection and responsive desktop/mobile grid are explicit states. Loading/error are not owned because this render path is synchronous Liquid without a client data lifecycle.
+- Accessibility: empty state uses `role="status"`, pagination is a labeled navigation landmark, and card-level links/forms retain the shared Product Card accessibility contract.
+- Localization: collection empty-state and pagination labels use translation keys; product content remains delegated to the shared card component.
+- Runtime: Liquid pagination and CSS-only responsive layout; no JavaScript lifecycle owner is required.
+- Migration: integrate this block only through a parent section/resource surface that supplies `collection`, then migrate the legacy `sections/collection.liquid` product loop to this render path; do not add a second collection picker to Product Card.
+
 ## Divider
 
 - Type: `divider`

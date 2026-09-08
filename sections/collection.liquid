@@ -8,22 +8,8 @@
 <h1>{{ collection.title }}</h1>
 
 <div class="collection-products">
-  {% paginate collection.products by 20 %}
-    {% for product in collection.products %}
-      {% render 'product-card', product: product, show_quick_add: true %}
-    {% endfor %}
-
-    {{ paginate | default_pagination }}
-  {% endpaginate %}
+  {% content_for 'block', type: 'product-grid', id: 'collection-product-grid' %}
 </div>
-
-{% stylesheet %}
-  .collection-products {
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
