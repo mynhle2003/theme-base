@@ -156,6 +156,21 @@
 - Accessibility: preserves the DOM order and child semantics; text alignment and visual mobile ordering do not add or remove semantic content.
 - Runtime: Liquid and CSS only; no JavaScript lifecycle owner is required.
 
+## Grid
+
+- Type: `grid`
+- Category: Layout / Composition
+- Role: responsive multi-column wrapper for arranging editable theme blocks.
+- Capabilities: desktop/tablet/mobile columns, column/row gaps, item alignment, equal-height rows, responsive collapse and padding.
+- Composition owner: Grid owns the column structure, gaps, item alignment, row sizing and responsive behavior; child blocks retain their own content and presentation.
+- Allowed children: any registered theme block through `@theme`; Grid does not own content, resource loops or business data.
+- Composition policy: compound layout block; no nested sections or arbitrary HTML controls.
+- Settings modules: Columns (`desktop_columns`, `tablet_columns`, `mobile_columns`), Gap (`column_gap`, `row_gap`, `mobile_gap`), Alignment (`item_alignment`, `item_height`), Responsive (`collapse_breakpoint`, `stacking_behavior`) and Padding (`padding_top`, `padding_bottom`, `padding_left`, `padding_right`).
+- Output: `.grid-block` editor wrapper using CSS Grid with explicit desktop/tablet/mobile column tracks and local CSS custom properties.
+- Empty state: retain the editor-aware wrapper so merchants can add children from the Theme Editor; no placeholder content is rendered.
+- Accessibility: preserves child DOM order and semantics; responsive layout changes visual placement without duplicating content.
+- Runtime: Liquid and CSS only; no JavaScript lifecycle owner is required.
+
 ## Product Card
 
 - Type: `product-card`
