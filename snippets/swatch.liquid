@@ -23,7 +23,7 @@
   assign selected_style_value = selected_style | default: settings.swatch_selected_style
   assign swatch_width_value = width | default: settings.swatch_width
   assign swatch_width_mobile_value = width_mobile | default: settings.swatch_width_mobile
-  assign swatch_height_ratio_value = height_ratio | default: settings.swatch_height_ratio
+  assign swatch_height_ratio_value = height_ratio | default: settings.swatch_height_ratio_preset
   assign swatch_height_ratio_css = swatch_height_ratio_value
   if swatch_height_ratio_value == '1:1'
     assign swatch_height_ratio_css = 1

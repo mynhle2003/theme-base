@@ -136,7 +136,7 @@
     --variant-item-gap: {{ settings.variant_gap | default: 8 }}px;
     --swatch-width: {{ settings.swatch_width | default: 40 }}px;
     --swatch-width-mobile: {{ settings.swatch_width_mobile | default: 40 }}px;
-    --swatch-height-ratio: {% if settings.swatch_height_ratio == '3:2' %}0.6667{% elsif settings.swatch_height_ratio == '2:1' %}0.5{% elsif settings.swatch_height_ratio == '3:1' %}0.3333{% else %}1{% endif %};
+    --swatch-height-ratio: {% if settings.swatch_height_ratio_preset == '3:2' %}0.6667{% elsif settings.swatch_height_ratio_preset == '2:1' %}0.5{% elsif settings.swatch_height_ratio_preset == '3:1' %}0.3333{% else %}1{% endif %};
     --swatch-radius: var(--input-radius);
     --badge-font-size: {{ settings.badge_font_size | default: 12 }}px;
     --badge-radius: {{ settings.badge_radius | default: 4 }}px;
