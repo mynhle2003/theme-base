@@ -55,6 +55,24 @@
 - Accessibility: preserves native anchor/button semantics, visible focus, safe new-tab relationship, non-interactive decorative icon markup and long-label wrapping; no nested interactive elements are introduced.
 - Runtime: Liquid and CSS only; no JavaScript lifecycle owner is required.
 
+## Image
+
+- Type: `image`
+- Category: Basic / Media Kernel
+- Role: render one responsive image or safe placeholder, optionally linked, with independent desktop/mobile geometry.
+- Capabilities: media, accessibility, responsive source, ratio, width, max width, radius, spacing.
+- Content owner: Image owns the selected desktop image, optional mobile replacement and alt text; it does not own business data, resource loops or parent composition.
+- Media owner: the shared media renderer owns responsive image markup, CDN image transformation and placeholder output; the block owns source selection, ratio/crop geometry and local wrapper styles.
+- Link owner: Image owns the optional destination and new-tab behavior; a linked image renders one semantic anchor with safe `target="_blank"` relationship.
+- Layout owner: Image owns independent desktop/mobile Fit, Fill or Custom width, ratio, optional max width and outer padding; the parent owns composition order and gap.
+- Allowed children: none (`children: false` is internal registry metadata).
+- Composition policy: leaf Media Kernel; no nested blocks, nested sections, business data, arbitrary HTML or resource selection.
+- Settings modules: Content (`image`, `mobile_image`, `show_image_first_mobile`, `image_link`, `open_in_new_tab`, `alt_text`), Size (`image_ratio_desktop`, `image_ratio_custom_desktop`, `width_desktop`, `width_custom_desktop`, `limit_width_desktop`, `max_width_desktop`, and independent mobile equivalents), Border (`corner_radius`) and optional Padding (`padding_top`, `padding_bottom`, `padding_left`, `padding_right`, `customize_mobile_padding`, plus mobile values).
+- Output: `.image-block` editor wrapper containing shared responsive media markup or a safe placeholder, with local ratio/width/max-width/radius custom properties.
+- Empty state: retain the editor-aware wrapper and render a non-interactive placeholder when the image source is empty; the mobile source falls back to the desktop image.
+- Accessibility: custom alt text overrides the file alt, blank alt falls back to the file alt or an empty decorative alt, linked images use a semantic anchor, and placeholders are hidden from assistive technology.
+- Runtime: Liquid and CSS only; no JavaScript lifecycle owner is required.
+
 ## Columns
 
 - Type: `columns`

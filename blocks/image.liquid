@@ -1,9 +1,10 @@
 {% doc %}
-  Renders a responsive image with an optional mobile source, link, aspect
+  Renders an Image content kernel with an optional mobile source, link, aspect
   ratio, width, max-width, radius, and padding.
 
-  The Image kernel owns media content and accessibility. Parent blocks own
-  composition order and gap. This block has no business data or children.
+  Image owns media content, image accessibility, link behavior, and local
+  geometry. Parent blocks own composition order and gap. This block has no
+  business data or children.
 
   @example
   {% content_for 'block', type: 'image', id: 'image' %}
@@ -35,7 +36,7 @@
     when 'wide'
       assign image_ratio_desktop = '16 / 9'
     when 'custom'
-      assign image_ratio_desktop = '1 / ' | append: block.settings.image_ratio_custom_desktop
+      assign image_ratio_desktop = block.settings.image_ratio_custom_desktop | default: 1 | append: ' / 1'
   endcase
 
   case block.settings.image_ratio_mobile
@@ -48,7 +49,7 @@
     when 'wide'
       assign image_ratio_mobile = '16 / 9'
     when 'custom'
-      assign image_ratio_mobile = '1 / ' | append: block.settings.image_ratio_custom_mobile
+      assign image_ratio_mobile = block.settings.image_ratio_custom_mobile | default: 1 | append: ' / 1'
   endcase
 
   if block.settings.width_desktop == 'fill'
@@ -92,7 +93,7 @@
 >
   {% if image_source != blank %}
     {% if block.settings.image_link != blank %}
-      <a class="image-block__link" href="{{ block.settings.image_link }}"{% if block.settings.open_in_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+      <a class="image-block__link" href="{{ block.settings.image_link | escape }}"{% if block.settings.open_in_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
     {% endif %}
       {% render 'media', media_type: 'image', image: image_source, mobile_image: block.settings.mobile_image, alt: image_alt, image_class: 'image-block__asset', image_wrapper_class: 'image-block__media', placeholder_class: 'image-block__placeholder' %}
     {% if block.settings.image_link != blank %}
@@ -119,6 +120,11 @@
     max-width: var(--image-max-width-desktop);
     overflow: hidden;
     width: 100%;
+  }
+
+  .image-block__link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
   }
 
   .image-block__media,
@@ -193,7 +199,7 @@
     ], "default": "fill" },
     { "visible_if": "{{ block.settings.width_desktop == 'custom' }}", "type": "range", "id": "width_custom_desktop", "label": "t:labels.custom_width", "min": 1, "max": 100, "step": 1, "unit": "%", "default": 100 },
     { "type": "checkbox", "id": "limit_width_desktop", "label": "t:labels.limit_width", "default": false },
-    { "visible_if": "{{ block.settings.limit_width_desktop }}", "type": "range", "id": "max_width_desktop", "label": "t:labels.max_width", "min": 0, "max": 1600, "step": 16, "unit": "px", "default": 1600 },
+    { "visible_if": "{{ block.settings.limit_width_desktop }}", "type": "range", "id": "max_width_desktop", "label": "t:labels.max_width", "min": 0, "max": 1600, "step": 8, "unit": "px", "default": 1600 },
     { "type": "header", "content": "t:general.mobile" },
     { "type": "select", "id": "image_ratio_mobile", "label": "t:labels.image_ratio", "options": [
       { "value": "auto", "label": "t:options.image_ratio.auto" },
@@ -204,14 +210,14 @@
       { "value": "custom", "label": "t:options.image_ratio.custom" }
     ], "default": "auto" },
     { "visible_if": "{{ block.settings.image_ratio_mobile == 'custom' }}", "type": "range", "id": "image_ratio_custom_mobile", "label": "t:labels.custom_image_ratio", "min": 0.3, "max": 3, "step": 0.1, "default": 1 },
-    { "type": "select", "id": "width_mobile", "label": "t:labels.width", "options": [
+    { "type": "select", "id": "width_mobile", "label": "t:labels.width_mobile", "options": [
       { "value": "fit", "label": "t:options.width.fit" },
       { "value": "fill", "label": "t:options.width.fill" },
       { "value": "custom", "label": "t:options.width.custom" }
     ], "default": "fill" },
     { "visible_if": "{{ block.settings.width_mobile == 'custom' }}", "type": "range", "id": "width_custom_mobile", "label": "t:labels.custom_width", "min": 1, "max": 100, "step": 1, "unit": "%", "default": 100 },
     { "type": "checkbox", "id": "limit_width_mobile", "label": "t:labels.limit_width", "default": false },
-    { "visible_if": "{{ block.settings.limit_width_mobile }}", "type": "range", "id": "max_width_mobile", "label": "t:labels.max_width", "min": 0, "max": 1600, "step": 16, "unit": "px", "default": 1600 },
+    { "visible_if": "{{ block.settings.limit_width_mobile }}", "type": "range", "id": "max_width_mobile", "label": "t:labels.max_width", "min": 0, "max": 1600, "step": 8, "unit": "px", "default": 1600 },
     { "type": "header", "content": "t:general.border" },
     { "type": "range", "id": "corner_radius", "label": "t:labels.corner_radius", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
     { "type": "header", "content": "t:general.padding" },

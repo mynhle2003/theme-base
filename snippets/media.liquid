@@ -24,7 +24,7 @@
   {% if image != blank %}
     <picture class="{{ image_wrapper_class }}">
       {% if mobile_image != blank %}
-        <source media="(max-width: 767.98px)" srcset="{{ mobile_image | image_url: width: 1600 }}">
+        <source media="(max-width: 767.98px)" srcset="{{ mobile_image | image_url: width: 1600 | escape }}">
       {% endif %}
       {{ image | image_url: width: 2400 | image_tag: alt: alt, loading: 'lazy', class: image_class }}
     </picture>
