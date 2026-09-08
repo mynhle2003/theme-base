@@ -6,6 +6,11 @@
   @param {image} [variant_image] - Variant image fallback.
   @param {boolean} [selected] - Whether the swatch is selected.
   @param {boolean} [disabled] - Whether the swatch is unavailable.
+  @param {string} [swatch_type] - Optional swatch type override.
+  @param {string} [selected_style] - Optional selected style override.
+  @param {number} [width] - Optional desktop width in pixels.
+  @param {number} [width_mobile] - Optional mobile width in pixels.
+  @param {number} [height_ratio] - Optional height ratio override.
 
   @example
   {% render 'swatch', label: value.label, swatch: value.swatch %}
@@ -14,16 +19,21 @@
 {% liquid
   assign swatch_color = swatch.color
   assign swatch_image = swatch.image | default: variant_image
+  assign swatch_type_value = swatch_type | default: settings.swatch_style
+  assign selected_style_value = selected_style | default: settings.swatch_selected_style
+  assign swatch_width_value = width | default: settings.swatch_width
+  assign swatch_width_mobile_value = width_mobile | default: settings.swatch_width_mobile
+  assign swatch_height_ratio_value = height_ratio | default: settings.swatch_height_ratio
 %}
 
 <span
-  class="swatch{% if selected %} swatch--selected swatch--selected-{{ settings.swatch_selected_style }}{% endif %}{% if disabled %} swatch--unavailable{% endif %}"
+  class="swatch{% if selected %} swatch--selected swatch--selected-{{ selected_style_value }}{% endif %}{% if disabled %} swatch--unavailable{% endif %}"
   aria-hidden="true"
-  {% if swatch_color %}style="--swatch-color: {{ swatch_color }}"{% endif %}
+  style="--swatch-width: {{ swatch_width_value | default: 32 }}px; --swatch-width-mobile: {{ swatch_width_mobile_value | default: 36 }}px; --swatch-height-ratio: {{ swatch_height_ratio_value | default: 1 }};{% if swatch_color %} --swatch-color: {{ swatch_color }};{% endif %}"
 >
-  {% if settings.swatch_style == 'variant_image' and swatch_image %}
+  {% if swatch_type_value == 'variant_image' and swatch_image %}
     {{ swatch_image | image_url: width: 96, height: 96, crop: 'center' | image_tag: loading: 'lazy' }}
-  {% elsif settings.swatch_style == 'color' and swatch_color %}
+  {% elsif swatch_type_value == 'color' and swatch_color %}
     <span class="swatch__color"></span>
   {% else %}
     <span class="swatch__label">{{ label | escape }}</span>
@@ -71,6 +81,8 @@
 
   .swatch--selected-outline { outline: 2px solid var(--color-heading); }
   .swatch--selected-ring { box-shadow: inset 0 0 0 2px var(--color-background), 0 0 0 2px var(--color-heading); }
+  .swatch--selected-border { border-color: var(--color-heading); border-width: 2px; }
+  .swatch--selected-underline { border-bottom: 2px solid var(--color-heading); }
 
   .swatch--unavailable {
     opacity: 0.45;

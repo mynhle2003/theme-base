@@ -2,6 +2,8 @@
   Renders product badges from centralized status and merchandising settings.
 
   @param {product} product - The product whose badges should be evaluated.
+  @param {boolean} [show_sale_badge] - Whether to show the sale badge in this context.
+  @param {boolean} [show_sold_out_badge] - Whether to show the sold-out badge in this context.
 
   @example
   {% render 'product-badge', product: product %}
@@ -47,9 +49,9 @@
       <span class="product-badge product-badge--custom">{{ custom_badge_label | escape }}</span>
     {% endif %}
 
-    {% if product.available == false and settings.sold_out_badge_enabled and settings.sold_out_badge_text != blank %}
+    {% if product.available == false and settings.sold_out_badge_enabled and settings.sold_out_badge_text != blank and show_sold_out_badge != false %}
       <span class="product-badge product-badge--sold-out">{{ settings.sold_out_badge_text | escape }}</span>
-    {% elsif has_sale and settings.sale_badge_enabled and sale_badge_label != blank %}
+    {% elsif has_sale and settings.sale_badge_enabled and sale_badge_label != blank and show_sale_badge != false %}
       <span class="product-badge product-badge--sale">{{ sale_badge_label }}</span>
     {% endif %}
 
