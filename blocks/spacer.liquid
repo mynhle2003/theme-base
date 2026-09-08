@@ -16,17 +16,21 @@
   assign spacer_unit_mobile = block.settings.unit_mobile | default: 'pixel'
   assign spacer_size_mobile = block.settings.size_mobile_px | default: 52
   assign spacer_mobile_display = 'block'
+  assign spacer_padding_desktop = '0px'
+  assign spacer_padding_mobile = '0px'
 
   if spacer_unit_desktop == 'percent'
     assign spacer_size_desktop = block.settings.size_desktop_percent | default: 25
-    assign spacer_size_desktop_value = spacer_size_desktop | append: '%'
+    assign spacer_size_desktop_value = '0px'
+    assign spacer_padding_desktop = spacer_size_desktop | append: '%'
   else
     assign spacer_size_desktop_value = spacer_size_desktop | append: 'px'
   endif
 
   if spacer_unit_mobile == 'percent'
     assign spacer_size_mobile = block.settings.size_mobile_percent | default: 25
-    assign spacer_size_mobile_value = spacer_size_mobile | append: '%'
+    assign spacer_size_mobile_value = '0px'
+    assign spacer_padding_mobile = spacer_size_mobile | append: '%'
   else
     assign spacer_size_mobile_value = spacer_size_mobile | append: 'px'
   endif
@@ -38,7 +42,7 @@
 
 <div
   class="block-spacer{% if block.settings.custom_spacing %} block-spacer--custom-spacing{% endif %}"
-  style="--spacer-size-desktop: {{ spacer_size_desktop_value }}; --spacer-size-mobile: {{ spacer_size_mobile_value }}; --spacer-mobile-display: {{ spacer_mobile_display }};"
+  style="--spacer-size-desktop: {{ spacer_size_desktop_value }}; --spacer-size-mobile: {{ spacer_size_mobile_value }}; --spacer-padding-desktop: {{ spacer_padding_desktop }}; --spacer-padding-mobile: {{ spacer_padding_mobile }}; --spacer-mobile-display: {{ spacer_mobile_display }};"
   aria-hidden="true"
   {{ block.shopify_attributes }}
 ></div>
@@ -46,10 +50,12 @@
 {% stylesheet %}
   .block-spacer {
     block-size: var(--spacer-size-desktop);
+    box-sizing: content-box;
     display: block;
     flex: 0 0 auto;
     inline-size: 100%;
     min-block-size: 0;
+    padding-block-start: var(--spacer-padding-desktop);
     pointer-events: none;
     user-select: none;
   }
@@ -62,6 +68,7 @@
     .block-spacer {
       block-size: var(--spacer-size-mobile);
       display: var(--spacer-mobile-display);
+      padding-block-start: var(--spacer-padding-mobile);
     }
   }
 {% endstylesheet %}
@@ -74,7 +81,7 @@
     {
       "type": "select",
       "id": "unit_desktop",
-      "label": "t:labels.unit_desktop",
+      "label": "t:labels.unit",
       "options": [
         { "value": "pixel", "label": "t:options.spacer_unit.pixel" },
         { "value": "percent", "label": "t:options.spacer_unit.percent" }
@@ -85,7 +92,7 @@
       "type": "range",
       "visible_if": "{{ block.settings.unit_desktop == 'pixel' }}",
       "id": "size_desktop_px",
-      "label": "t:labels.size_desktop",
+      "label": "t:labels.size",
       "min": 0,
       "max": 400,
       "step": 4,
@@ -95,7 +102,7 @@
       "visible_if": "{{ block.settings.unit_desktop == 'percent' }}",
       "type": "range",
       "id": "size_desktop_percent",
-      "label": "t:labels.size_desktop",
+      "label": "t:labels.size",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -107,7 +114,7 @@
       "visible_if": "{{ block.settings.show_on_mobile }}",
       "type": "select",
       "id": "unit_mobile",
-      "label": "t:labels.unit_mobile",
+      "label": "t:labels.unit",
       "options": [
         { "value": "pixel", "label": "t:options.spacer_unit.pixel" },
         { "value": "percent", "label": "t:options.spacer_unit.percent" }
@@ -118,7 +125,7 @@
       "type": "range",
       "visible_if": "{{ block.settings.show_on_mobile and block.settings.unit_mobile == 'pixel' }}",
       "id": "size_mobile_px",
-      "label": "t:labels.size_mobile",
+      "label": "t:labels.size",
       "min": 0,
       "max": 400,
       "step": 4,
@@ -128,13 +135,13 @@
       "visible_if": "{{ block.settings.show_on_mobile and block.settings.unit_mobile == 'percent' }}",
       "type": "range",
       "id": "size_mobile_percent",
-      "label": "t:labels.size_mobile",
+      "label": "t:labels.size",
       "min": 0,
       "max": 100,
       "step": 1,
       "default": 25
     },
-    { "type": "header", "content": "t:general.appearance" },
+    { "type": "header", "content": "t:general.advanced_settings" },
     { "type": "checkbox", "id": "custom_spacing", "label": "t:labels.custom_spacing", "default": false }
   ],
   "presets": [

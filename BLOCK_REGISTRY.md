@@ -278,6 +278,6 @@
 - Settings contract: desktop `unit_desktop` plus `size_desktop_px`/`size_desktop_percent`, mobile `show_on_mobile`/`unit_mobile` plus `size_mobile_px`/`size_mobile_percent`, and advanced `custom_spacing`.
 - Composition policy: leaf block; no child blocks, nested sections, or layout ownership beyond its own space.
 - Output: `.block-spacer`; uses `block-size`, never external margins, and carries `aria-hidden="true"`.
-- Percentage safety: percentage block-size resolves against a definite parent block-size; an indefinite parent safely results in zero space.
+- Percentage behavior: percentage spacing resolves against the containing block's inline size through logical padding, so it remains useful when the parent has an auto block-size.
 - Mobile behavior: `show_on_mobile = false` sets the mobile display to `none` without changing desktop sizing.
 - Runtime: CSS-only; no JavaScript lifecycle owner is required.
