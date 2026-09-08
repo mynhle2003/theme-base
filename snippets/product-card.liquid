@@ -4,13 +4,21 @@
   @param {product} product - The product to render.
   @param {string} [class] - Optional class for the card wrapper.
   @param {boolean} [show_quick_add] - Whether to render the progressive-enhancement add form.
+  @param {boolean} [show_ranking] - Whether to render the product rating.
+  @param {color_scheme} [color_scheme] - Optional local color scheme override.
+  @param {boolean} [use_theme_color] - Whether to use the global product-card color scheme when no local override is supplied.
 
   @example
   {% render 'product-card', product: product %}
 {% enddoc %}
 
 {% liquid
-  assign card_class = 'product-card product-card--' | append: settings.product_card_style | append: ' color-' | append: settings.product_card_color_scheme | append: ' ' | append: class
+  assign card_class = 'product-card product-card--' | append: settings.product_card_style | append: ' ' | append: class
+  if color_scheme != blank
+    assign card_class = card_class | append: ' color-' | append: color_scheme
+  elsif use_theme_color != false
+    assign card_class = card_class | append: ' color-' | append: settings.product_card_color_scheme
+  endif
   assign image_width = 800
   assign image_height = 800
   assign image_ratio = 'auto'
@@ -18,6 +26,15 @@
   assign card_shadow = 'none'
   assign card_swatch_height_ratio = 1
   assign product_card_swatch_limit = settings.product_card_swatch_limit | default: 3
+  assign rating_value = product.metafields.reviews.rating.value | default: product.metafields.reviews.rating
+  assign rating_count = product.metafields.reviews.rating_count.value | default: product.metafields.reviews.rating_count
+  capture rating_label
+    echo 'products.product.rating' | t: rating: rating_value
+    if rating_count != blank
+      echo ', '
+      echo 'products.product.reviews' | t: count: rating_count
+    endif
+  endcapture
 
   if settings.product_card_title_font == 'body'
     assign title_font_family = 'var(--font-body-family)'
@@ -93,6 +110,13 @@
         <a href="{{ product.url }}">{{ product.title | escape }}</a>
       </h3>
 
+      {% if show_ranking and rating_value != blank %}
+        <div class="product-card__rating" aria-label="{{ rating_label | escape }}">
+          <span aria-hidden="true">{{ rating_value }} / 5</span>
+          {% if rating_count != blank %}<span>({{ rating_count }})</span>{% endif %}
+        </div>
+      {% endif %}
+
       {% render 'price', item: product, show_from: true, context: 'product_card' %}
 
       {% if settings.product_card_show_swatches %}
@@ -141,7 +165,14 @@
               {{ 'products.product.add_to_cart' | t }}
             {% endif %}
           </button>
+          {% if form.errors %}
+            <p class="product-card__form-error form__error" role="alert">{{ form.errors | default_errors }}</p>
+          {% endif %}
         {% endform %}
+      {% else %}
+        <button class="product-card__quick-add-button{% if settings.product_card_quick_add_full_width %} product-card__quick-add-button--full-width{% endif %}" type="button" disabled>
+          {{ 'products.product.sold_out' | t }}
+        </button>
       {% endif %}
     {% endif %}
   </div>
@@ -231,6 +262,13 @@
     color: inherit;
     text-decoration: none;
   }
+
+  .product-card__rating {
+    color: var(--color-text);
+    opacity: 0.78;
+  }
+
+  .product-card__form-error { margin: 0; }
 
   .product-card__swatches {
     display: flex;

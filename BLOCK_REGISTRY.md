@@ -178,10 +178,11 @@
 - Category: Commerce Composition
 - Role: controlled product presentation with optional availability-aware add-to-cart form.
 - Resource owner: the parent section/resource loop supplies the product context; the card never owns a product picker, collection or product loop.
-- Capabilities: image, badge, rating, price and button visibility; image ratio.
+- Capabilities: delegates image, badge, price and button presentation to the shared Product Card primitive; optionally exposes product ranking and a local color-scheme override.
 - Content owner: Product Card owns only these controlled presentation slots; merchants cannot add, remove, reorder or nest arbitrary child blocks.
 - Composition policy: leaf commerce block; no child blocks, nested sections or product-source loop.
-- Output: `.product-card-block` with a media link, product metadata and optional product form.
+- Settings modules: Display (`show_ranking`) and Color (`color_type`, optional `color_scheme`). Global Product Card settings remain the default when the block inherits.
+- Output: `.product-card-block` wrapping the shared Product Card primitive with a media link, product metadata and optional product form.
 - States: missing product context, missing image placeholder, sold out disabled button and product-form error alert.
 - Accessibility: product link has an accessible name, interactive elements retain visible focus, sold out action is disabled, form errors use `role="alert"`.
 - Localization: visible action, sold-out and empty-selection copy use translation keys; rating metadata is announced as an accessible label.
