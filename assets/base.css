@@ -70,31 +70,33 @@
   display: inline-flex;
   flex: 0 1 auto;
   font: inherit;
-  font-family: var(--font-body-family);
-  font-size: var(--font-body-md);
+  font-family: var(--button-font-family, var(--font-body-family));
+  font-size: var(--button-font-size, var(--font-body-md));
   gap: 0.5rem;
   justify-content: center;
   line-height: 1.2;
   max-width: 100%;
+  letter-spacing: var(--button-letter-spacing, 0);
   min-height: var(--button-height, 2.75rem);
-  padding: 0.75rem 1.25rem;
+  padding: 0.75rem var(--button-padding-inline, 1.25rem);
   text-align: center;
   text-decoration: none;
   transition: background-color var(--motion-duration) var(--motion-ease), border-color var(--motion-duration) var(--motion-ease), color var(--motion-duration) var(--motion-ease), opacity var(--motion-duration) var(--motion-ease);
 }
 
 .btn--fill { width: 100%; }
-.btn--primary { background: var(--color-primary-button); border-color: var(--color-primary-button-border); color: var(--color-primary-button-label); }
-.btn--secondary { background: var(--color-secondary-button); border-color: var(--color-secondary-button-border); color: var(--color-secondary-button-label); }
-.btn--tertiary { background: transparent; border-color: var(--color-secondary-button-border); color: var(--color-secondary-button-label); }
+.btn--primary { --button-border-width: var(--button-primary-border-width, 1px); --button-font-family: var(--button-primary-font-family); background: var(--color-primary-button); border-color: var(--color-primary-button-border); color: var(--color-primary-button-label); text-transform: var(--button-primary-text-transform, uppercase); }
+.btn--secondary { --button-border-width: var(--button-secondary-border-width, 1px); --button-font-family: var(--button-secondary-font-family); background: var(--color-secondary-button); border-color: var(--color-secondary-button-border); color: var(--color-secondary-button-label); text-transform: var(--button-secondary-text-transform, uppercase); }
+.btn--tertiary { --button-font-family: var(--button-tertiary-font-family); background: transparent; border-color: transparent; color: var(--color-secondary-button-label); text-decoration: var(--button-tertiary-text-decoration, underline); text-underline-offset: var(--button-tertiary-underline-offset, 3px); text-transform: var(--button-tertiary-text-transform, uppercase); }
 .btn:hover { filter: brightness(0.92); }
 .btn:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
-.btn:disabled, .btn--disabled { cursor: not-allowed; opacity: 0.5; pointer-events: none; }
+.btn:disabled, .btn--disabled { cursor: not-allowed; opacity: var(--button-disabled-opacity, 0.6); pointer-events: none; }
 .btn[aria-busy='true'] { cursor: progress; opacity: 0.7; }
 .btn__icon { display: inline-flex; flex: 0 0 var(--icon-size, 1em); font-size: var(--icon-size, 1em); line-height: 1; }
 .btn__label { overflow-wrap: anywhere; }
 
 @media screen and (max-width: 767.98px) {
+  .btn { min-height: var(--button-height-mobile, var(--button-height, 2.75rem)); padding-inline: var(--button-padding-inline-mobile, var(--button-padding-inline, 1.25rem)); }
   .btn--fill-mobile { width: 100%; }
   .btn--fit-mobile { width: auto; }
 }
