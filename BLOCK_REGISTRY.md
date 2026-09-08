@@ -259,10 +259,11 @@
 - Type: `divider`
 - Category: Layout
 - Role: visual separation between content groups or items.
-- Capabilities: solid/dashed/dotted style, thin/medium/custom thickness, scheme/muted/custom color, responsive width and spacing.
-- Layout owner: Divider owns only its line presentation and local top/bottom spacing; parent owns the surrounding composition.
+- Capabilities: solid/dashed/dotted style, thin/medium/custom thickness, scheme/muted/custom color, full/content/custom width, alignment and responsive spacing.
+- Layout owner: Divider owns only its line presentation, width, alignment and local responsive spacing; parent owns the surrounding composition.
 - Content owner: none; Divider renders no text or interactive content.
 - Composition policy: leaf block; no child blocks and no nested sections.
+- Settings modules: Appearance (`style`, `thickness`, `custom_thickness`, `color`, `custom_color`), Layout (`width`, `custom_width`, `alignment`) and Spacing (`desktop_spacing`, `mobile_spacing`).
 - Output: `.block-divider` containing a border-based `.block-divider__line`; never a character or image.
 - Accessibility: exposes a horizontal separator role without adding interactive controls.
 - Runtime: CSS-only; no JavaScript lifecycle owner is required.
