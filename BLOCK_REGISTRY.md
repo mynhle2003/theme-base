@@ -73,6 +73,23 @@
 - Accessibility: preserves native anchor/button semantics, visible focus, safe new-tab relationships, decorative icon markup and readable long-label wrapping; no nested interactive elements are introduced.
 - Runtime: Liquid and CSS only; no JavaScript lifecycle owner is required.
 
+## Header
+
+- Type: `header`
+- Category: Basic / Composition
+- Role: compose one optional Eyebrow, Heading and Text block into a reusable content hierarchy.
+- Capabilities: composition, layout, responsive spacing, max width and padding.
+- Composition owner: Header owns only child order, vertical flow, gap and container width; Eyebrow, Heading and Text retain their own content, typography, semantic HTML and local appearance.
+- Content owner: child blocks own all content; Header does not own business data, typography fields, text color or HTML tag settings.
+- Layout owner: Header owns `limit_width`, `max_width`, desktop/mobile gap and outer padding; the parent owns placement and larger composition.
+- Allowed children: Eyebrow, Heading and Text; maximum one useful child of each type by contract; Header cannot nest itself.
+- Composition policy: compound Basic block with a constrained allow-list and recommended DOM order Eyebrow → Heading → Text; no arbitrary children, nested sections or business-data source.
+- Settings modules: Layout (`limit_width`, `max_width`), Gap (`gap_desktop`, `gap_mobile`) and Padding (`padding_top`, `padding_bottom`, `padding_left`, `padding_right`, `customize_mobile_padding`, plus mobile values).
+- Output: `.block-header` editor wrapper using a vertical flow, local width/gap/padding custom properties and `{% content_for 'blocks' %}` child rendering.
+- Empty state: removed or empty children produce no extra gap; an empty Header remains editor-aware so merchants can add allowed children.
+- Accessibility: preserves child semantic and keyboard contracts and the DOM order selected in the editor; Header does not introduce a heading or interactive element.
+- Runtime: Liquid and CSS only; no JavaScript lifecycle owner is required.
+
 ## Image
 
 - Type: `image`

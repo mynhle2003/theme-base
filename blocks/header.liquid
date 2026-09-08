@@ -11,7 +11,7 @@
 
 {% liquid
   assign header_max_width = 'none'
-  assign header_gap_mobile = block.settings.gap_desktop
+  assign header_gap_mobile = block.settings.gap_mobile
   assign header_padding_top_mobile = block.settings.padding_top
   assign header_padding_bottom_mobile = block.settings.padding_bottom
   assign header_padding_left_mobile = block.settings.padding_left
@@ -22,7 +22,6 @@
   endif
 
   if block.settings.customize_mobile_padding
-    assign header_gap_mobile = block.settings.gap_mobile
     assign header_padding_top_mobile = block.settings.padding_top_mobile
     assign header_padding_bottom_mobile = block.settings.padding_bottom_mobile
     assign header_padding_left_mobile = block.settings.padding_left_mobile
