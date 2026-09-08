@@ -1366,7 +1366,7 @@
       {
         "type": "select",
         "id": "variant_picker_style",
-        "label": "t:labels.variant_picker_style",
+        "label": "t:general.type",
         "options": [
           {
             "value": "button",
@@ -1380,9 +1380,13 @@
         "default": "button"
       },
       {
+        "type": "header",
+        "content": "t:general.item_height"
+      },
+      {
         "type": "range",
         "id": "variant_height",
-        "label": "t:labels.variant_height",
+        "label": "t:general.desktop",
         "min": 36,
         "max": 64,
         "step": 2,
@@ -1392,7 +1396,7 @@
       {
         "type": "range",
         "id": "variant_height_mobile",
-        "label": "t:labels.variant_height_mobile",
+        "label": "t:general.mobile",
         "min": 36,
         "max": 60,
         "step": 2,
@@ -1400,9 +1404,13 @@
         "default": 44
       },
       {
+        "type": "header",
+        "content": "t:general.gap"
+      },
+      {
         "type": "range",
         "id": "variant_group_gap",
-        "label": "t:labels.variant_group_gap",
+        "label": "t:labels.group_gap",
         "min": 8,
         "max": 32,
         "step": 4,
@@ -1412,17 +1420,17 @@
       {
         "type": "range",
         "id": "variant_label_spacing",
-        "label": "t:labels.variant_label_spacing",
+        "label": "t:labels.label_spacing",
         "min": 4,
         "max": 16,
         "step": 2,
         "unit": "px",
-        "default": 8
+        "default": 12
       },
       {
         "type": "range",
         "id": "variant_gap",
-        "label": "t:labels.variant_gap",
+        "label": "t:labels.item_gap",
         "min": 4,
         "max": 20,
         "step": 2,
@@ -1430,10 +1438,18 @@
         "default": 8
       },
       {
+        "type": "header",
+        "content": "t:general.media"
+      },
+      {
         "type": "checkbox",
         "id": "variant_picker_update_media",
-        "label": "t:labels.variant_picker_update_media",
-        "default": true
+        "label": "t:labels.only_show_selected_variant_media",
+        "default": false
+      },
+      {
+        "type": "paragraph",
+        "content": "t:info.variant_multiple_images"
       }
     ]
   },
