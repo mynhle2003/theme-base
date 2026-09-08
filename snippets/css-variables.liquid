@@ -72,7 +72,7 @@
     --page-margin: max({{ settings.min_page_margin }}px, {{ settings.page_margin_mobile }}px);
     --section-spacing: {{ settings.section_spacing }}px;
     --color-background: {{ active_background }};
-    --gradient-background: {{ default_color_scheme.settings.background_gradient | default: active_background }};
+    --gradient-background: {{ default_color_scheme.settings.background | default: active_background }};
     --color-foreground: {{ active_foreground }};
     --color-heading: {{ default_color_scheme.settings.heading | default: active_foreground }};
     --color-heading-highlight: {{ default_color_scheme.settings.heading_highlight | default: active_foreground }};
@@ -176,7 +176,7 @@
   {% for scheme in settings.color_schemes %}
     .color-{{ scheme.id }} {
       --color-background: {{ scheme.settings.background }};
-      --gradient-background: {{ scheme.settings.background_gradient | default: scheme.settings.background }};
+      --gradient-background: {{ scheme.settings.background }};
       --color-heading: {{ scheme.settings.heading }};
       --color-heading-highlight: {{ scheme.settings.heading_highlight | default: scheme.settings.heading }};
       --color-text: {{ scheme.settings.text }};
