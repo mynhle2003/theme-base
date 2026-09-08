@@ -158,8 +158,8 @@
     --badge-custom-background: {{ settings.badge_custom_background | default: '#5E6504' }};
     --badge-custom-color: {{ settings.badge_custom_color | default: '#FFFFFF' }};
     --sale-price-color: var(--badge-sale-price);
-    --icon-size: {{ settings.global_icon_size | default: 32 }}px;
-    --icon-stroke-width: {{ settings.global_icon_stroke_width | default: 1.5 }}px;
+    --icon-thickness: {{ settings.icon_thickness | default: 120 | times: 0.0125 }}px;
+    --icon-stroke-width: {{ settings.icon_thickness | default: 120 | times: 0.0125 }};
     --overlay-color: {{ settings.overlay_color | default: '#000000' }};
     --overlay-opacity: {{ settings.overlay_opacity | default: 45 | divided_by: 100.0 }};
     --overlay-blur: {{ settings.overlay_blur | default: 0 }}px;
