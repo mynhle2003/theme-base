@@ -96,7 +96,12 @@
     --color-secondary-button-hover-label: {{ default_color_scheme.settings.secondary_button_hover_label | default: default_color_scheme.settings.secondary_button_label | default: active_foreground }};
     --color-tertiary-button-label: {{ default_color_scheme.settings.tertiary_button_label | default: active_foreground }};
     --color-shadow: {{ default_color_scheme.settings.shadow | default: active_foreground }};
-    --button-radius: {% case settings.button_radius_style %}{% when 'rounded' %}8px{% when 'pill' %}999px{% else %}0px{% endcase %};
+    --radius-square: 0px;
+    --radius-slight: 4px;
+    --radius-rounded: 8px;
+    --radius-pill: 999px;
+    --radius-extra: 16px;
+    --button-radius: {% case settings.button_radius_style %}{% when 'slightly_rounded' %}var(--radius-slight){% when 'rounded' %}var(--radius-rounded){% when 'pill' %}var(--radius-pill){% else %}var(--radius-square){% endcase %};
     --button-height: {{ settings.button_height_desktop | default: 48 }}px;
     --button-height-mobile: {{ settings.button_height_mobile | default: 44 }}px;
     --button-padding-inline-desktop: {{ settings.button_padding_inline_desktop | default: 28 }}px;
@@ -130,16 +135,16 @@
     --form-error-text-font-family: {% case settings.form_error_text_font %}{% when 'heading' %}var(--font-heading-family){% when 'accent' %}var(--font-accent-family){% else %}var(--font-body-family){% endcase %};
     --variant-height: {{ settings.variant_height | default: 44 }}px;
     --variant-height-mobile: {{ settings.variant_height_mobile | default: 44 }}px;
-    --variant-radius: var(--input-radius);
+    --variant-radius: {% case settings.variant_picker_radius_style %}{% when 'slightly_rounded' %}var(--radius-slight){% when 'rounded' %}var(--radius-rounded){% when 'pill' %}var(--radius-pill){% else %}var(--radius-square){% endcase %};
     --variant-group-gap: {{ settings.variant_group_gap | default: 20 }}px;
     --variant-label-spacing: {{ settings.variant_label_spacing | default: 12 }}px;
     --variant-item-gap: {{ settings.variant_gap | default: 8 }}px;
     --swatch-width: {{ settings.swatch_width | default: 40 }}px;
     --swatch-width-mobile: {{ settings.swatch_width_mobile | default: 40 }}px;
     --swatch-height-ratio: {% if settings.swatch_height_ratio_preset == '3:2' %}0.6667{% elsif settings.swatch_height_ratio_preset == '2:1' %}0.5{% elsif settings.swatch_height_ratio_preset == '3:1' %}0.3333{% else %}1{% endif %};
-    --swatch-radius: var(--input-radius);
+    --swatch-radius: {% case settings.swatch_radius_style %}{% when 'slightly_rounded' %}var(--radius-slight){% when 'rounded' %}var(--radius-rounded){% when 'pill' %}var(--radius-pill){% else %}var(--radius-square){% endcase %};
     --badge-font-size: 12px;
-    --badge-radius: {% if settings.badge_radius_style == 'rounded' %}8px{% elsif settings.badge_radius_style == 'pill' %}999px{% else %}0px{% endif %};
+    --badge-radius: {% case settings.badge_radius_style %}{% when 'slightly_rounded' %}var(--radius-slight){% when 'rounded' %}var(--radius-rounded){% when 'pill' %}var(--radius-pill){% else %}var(--radius-square){% endcase %};
     --badge-padding-block: 4px;
     --badge-padding-inline: 6px;
     --badge-letter-spacing: 0;
@@ -158,6 +163,11 @@
     --overlay-color: {{ settings.overlay_color | default: '#000000' }};
     --overlay-opacity: {{ settings.overlay_opacity | default: 45 | divided_by: 100.0 }};
     --overlay-blur: {{ settings.overlay_blur | default: 0 }}px;
+    --navigation-radius: {% case settings.navigation_radius_style %}{% when 'slightly_rounded' %}var(--radius-slight){% when 'rounded' %}var(--radius-rounded){% when 'pill' %}var(--radius-pill){% else %}var(--radius-square){% endcase %};
+    --tag-radius: {% case settings.tag_radius_style %}{% when 'slightly_rounded' %}var(--radius-slight){% when 'rounded' %}var(--radius-rounded){% when 'pill' %}var(--radius-pill){% else %}var(--radius-square){% endcase %};
+    --drawer-radius: {% case settings.drawer_radius_style %}{% when 'slightly_rounded' %}var(--radius-slight){% when 'rounded' %}var(--radius-rounded){% when 'extra_rounded' %}var(--radius-extra){% else %}var(--radius-square){% endcase %};
+    --bottom-sheet-radius: {% case settings.bottom_sheet_radius_style %}{% when 'slightly_rounded' %}var(--radius-slight){% when 'rounded' %}var(--radius-rounded){% when 'extra_rounded' %}var(--radius-extra){% else %}var(--radius-square){% endcase %};
+    --overlay-radius: var(--drawer-radius);
     --z-index-header: 20;
     --z-index-dropdown: 30;
     --z-index-overlay: 40;
@@ -168,8 +178,8 @@
     --motion-ease: cubic-bezier(0.2, 0.65, 0.3, 1);
     --motion-distance-sm: 4px;
     --motion-distance-md: 8px;
-    --card-radius: {{ settings.card_corner_radius | default: 8 }}px;
-    --media-radius: {{ settings.media_corner_radius | default: 8 }}px;
+    --card-radius: {% case settings.media_container_radius_style %}{% when 'slightly_rounded' %}var(--radius-slight){% when 'rounded' %}var(--radius-rounded){% when 'extra_rounded' %}var(--radius-extra){% else %}var(--radius-square){% endcase %};
+    --media-radius: var(--card-radius);
   }
 
   @media screen and (max-width: 767.98px) {

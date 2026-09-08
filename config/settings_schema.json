@@ -1512,17 +1512,6 @@
     "name": "t:general.badges",
     "settings": [
       {
-        "type": "select",
-        "id": "badge_radius_style",
-        "label": "t:labels.corner_radius",
-        "options": [
-          { "value": "square", "label": "t:options.badge_radius_style.square" },
-          { "value": "rounded", "label": "t:options.badge_radius_style.rounded" },
-          { "value": "pill", "label": "t:options.badge_radius_style.pill" }
-        ],
-        "default": "square"
-      },
-      {
         "type": "header",
         "content": "t:general.product_status"
       },
@@ -1775,24 +1764,106 @@
     "name": "t:general.radius_shape",
     "settings": [
       {
-        "type": "range",
-        "id": "card_corner_radius",
-        "label": "t:labels.card_corner_radius",
-        "min": 0,
-        "max": 32,
-        "step": 1,
-        "unit": "px",
-        "default": 8
+        "type": "select",
+        "id": "badge_radius_style",
+        "label": "t:labels.badges_and_subheadings",
+        "options": [
+          { "value": "square", "label": "t:options.radius_style.square" },
+          { "value": "slightly_rounded", "label": "t:options.radius_style.slightly_rounded" },
+          { "value": "rounded", "label": "t:options.radius_style.rounded" },
+          { "value": "pill", "label": "t:options.radius_style.pill" }
+        ],
+        "default": "square"
       },
       {
-        "type": "range",
-        "id": "media_corner_radius",
-        "label": "t:labels.media_corner_radius",
-        "min": 0,
-        "max": 32,
-        "step": 1,
-        "unit": "px",
-        "default": 8
+        "type": "select",
+        "id": "variant_picker_radius_style",
+        "label": "t:labels.variant_pickers_radius",
+        "options": [
+          { "value": "square", "label": "t:options.radius_style.square" },
+          { "value": "slightly_rounded", "label": "t:options.radius_style.slightly_rounded" },
+          { "value": "rounded", "label": "t:options.radius_style.rounded" },
+          { "value": "pill", "label": "t:options.radius_style.pill" }
+        ],
+        "default": "square"
+      },
+      {
+        "type": "select",
+        "id": "swatch_radius_style",
+        "label": "t:labels.swatches_radius",
+        "options": [
+          { "value": "square", "label": "t:options.radius_style.square" },
+          { "value": "slightly_rounded", "label": "t:options.radius_style.slightly_rounded" },
+          { "value": "rounded", "label": "t:options.radius_style.rounded" },
+          { "value": "pill", "label": "t:options.radius_style.pill" }
+        ],
+        "default": "square"
+      },
+      {
+        "type": "select",
+        "id": "navigation_radius_style",
+        "label": "t:labels.navigation_radius",
+        "options": [
+          { "value": "square", "label": "t:options.radius_style.square" },
+          { "value": "slightly_rounded", "label": "t:options.radius_style.slightly_rounded" },
+          { "value": "rounded", "label": "t:options.radius_style.rounded" },
+          { "value": "pill", "label": "t:options.radius_style.pill" }
+        ],
+        "default": "pill"
+      },
+      {
+        "type": "select",
+        "id": "media_container_radius_style",
+        "label": "t:labels.media_and_containers",
+        "options": [
+          { "value": "square", "label": "t:options.radius_style.square" },
+          { "value": "slightly_rounded", "label": "t:options.radius_style.slightly_rounded" },
+          { "value": "rounded", "label": "t:options.radius_style.rounded" },
+          { "value": "extra_rounded", "label": "t:options.radius_style.extra_rounded" }
+        ],
+        "default": "square",
+        "info": "t:info.media_and_containers_radius"
+      },
+      {
+        "type": "select",
+        "id": "tag_radius_style",
+        "label": "t:labels.tags",
+        "options": [
+          { "value": "square", "label": "t:options.radius_style.square" },
+          { "value": "slightly_rounded", "label": "t:options.radius_style.slightly_rounded" },
+          { "value": "rounded", "label": "t:options.radius_style.rounded" },
+          { "value": "pill", "label": "t:options.radius_style.pill" }
+        ],
+        "default": "square",
+        "info": "t:info.tags_radius"
+      },
+      {
+        "type": "header",
+        "content": "t:general.overlay"
+      },
+      {
+        "type": "select",
+        "id": "drawer_radius_style",
+        "label": "t:labels.drawers",
+        "options": [
+          { "value": "square", "label": "t:options.radius_style.square" },
+          { "value": "slightly_rounded", "label": "t:options.radius_style.slightly_rounded" },
+          { "value": "rounded", "label": "t:options.radius_style.rounded" },
+          { "value": "extra_rounded", "label": "t:options.radius_style.extra_rounded" }
+        ],
+        "default": "square"
+      },
+      {
+        "type": "select",
+        "id": "bottom_sheet_radius_style",
+        "label": "t:labels.bottom_sheets",
+        "options": [
+          { "value": "square", "label": "t:options.radius_style.square" },
+          { "value": "slightly_rounded", "label": "t:options.radius_style.slightly_rounded" },
+          { "value": "rounded", "label": "t:options.radius_style.rounded" },
+          { "value": "extra_rounded", "label": "t:options.radius_style.extra_rounded" }
+        ],
+        "default": "slightly_rounded"
       }
     ]
   },
