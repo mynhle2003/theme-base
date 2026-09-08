@@ -31,6 +31,7 @@
     "group": "Group",
     "header": "Header",
     "layout": "Layout",
+    "responsive": "Responsive",
     "page": "Page",
     "password": "Password",
     "product": "Product",
@@ -46,6 +47,7 @@
     "typography": "Typography",
     "button": "Button",
     "buttons": "Buttons",
+    "basic": "Basic",
     "gap": "Gap",
     "type": "Type",
     "item_height": "Item height",
@@ -281,6 +283,12 @@
     "html_tag": "HTML tag",
     "text_size": "Text size",
     "text_color": "Text color"
+    ,"layout_mode": "Layout mode"
+    ,"horizontal_alignment": "Horizontal alignment"
+    ,"text_alignment": "Text alignment"
+    ,"wrap": "Wrap"
+    ,"stack_on_mobile": "Stack on mobile"
+    ,"background_scheme": "Background scheme"
     ,"unit_desktop": "Desktop unit"
     ,"size_desktop": "Desktop size"
     ,"show_on_mobile": "Show on mobile"
@@ -319,6 +327,8 @@
     ,"gap": "Gap"
     ,"gap_mobile": "Mobile gap"
     ,"gap_desktop": "Desktop gap"
+    ,"desktop_gap": "Desktop gap"
+    ,"mobile_gap": "Mobile gap"
     ,"mobile_stacking": "Mobile stacking"
     ,"icon_source": "Icon source"
     ,"custom_icon": "Custom icon"
@@ -363,8 +373,10 @@
   "options": {
     "alignment": {
       "left": "Left",
+      "start": "Start",
       "center": "Center",
       "right": "Right",
+      "end": "End",
       "space_between": "Space between",
       "stretch": "Stretch",
       "top": "Top",
@@ -373,6 +385,19 @@
     "direction": {
       "horizontal": "Horizontal",
       "vertical": "Vertical"
+    },
+    "layout_mode": {
+      "stack": "Stack",
+      "row": "Row",
+      "grid": "Grid"
+    },
+    "text_alignment": {
+      "left": "Left",
+      "center": "Center",
+      "right": "Right"
+    },
+    "background_scheme": {
+      "inherit": "Inherit"
     },
     "buttons_direction": {
       "row": "Row",
@@ -394,6 +419,8 @@
       "none": "Never"
     },
     "mobile_order": {
+      "default": "Default",
+      "reverse": "Reverse",
       "left_first": "Left first",
       "right_first": "Right first"
     },
@@ -555,8 +582,11 @@
       "xxl": "Extra extra large"
     },
     "width": {
+      "auto": "Auto",
       "fit": "Fit",
       "fill": "Fill",
+      "full": "Full",
+      "content": "Content",
       "custom": "Custom"
     },
     "image_ratio": {

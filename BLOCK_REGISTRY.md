@@ -141,6 +141,21 @@
 - Accessibility: preserves DOM order; mobile order is a deliberate visual reorder only and is limited to the two slots.
 - Runtime: CSS-only; no JavaScript lifecycle owner is required.
 
+## Group
+
+- Type: `group`
+- Category: Layout / Composition
+- Role: composable wrapper for arranging editable theme blocks as a Stack, Row or Grid.
+- Capabilities: layout mode, width, alignment, responsive flow, background scheme, border, radius and padding.
+- Composition owner: Group owns child order as configured by the editor, flow direction, gap, alignment and container presentation; child blocks retain their own content and local presentation.
+- Allowed children: any registered theme block through `@theme`; Group does not introduce a second content or resource model.
+- Composition policy: compound layout block; no nested sections, resource loops or arbitrary HTML controls.
+- Settings modules: Layout (`layout_mode`, `width`, `max_width`, `desktop_gap`, `mobile_gap`, `horizontal_alignment`, `vertical_alignment`, `text_alignment`), Responsive (`wrap`, `stack_on_mobile`, `mobile_order`), Appearance (`background_scheme`, `border`, `corner_radius`) and Padding (`padding_top`, `padding_bottom`, `padding_left`, `padding_right`, `customize_mobile`, plus mobile values).
+- Output: `.group-block` editor wrapper with a responsive flex/grid layout and local CSS custom properties.
+- Empty state: retain the editor-aware wrapper so merchants can add children from the Theme Editor; no placeholder content is rendered.
+- Accessibility: preserves the DOM order and child semantics; text alignment and visual mobile ordering do not add or remove semantic content.
+- Runtime: Liquid and CSS only; no JavaScript lifecycle owner is required.
+
 ## Product Card
 
 - Type: `product-card`

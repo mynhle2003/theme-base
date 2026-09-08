@@ -1,156 +1,256 @@
 {% doc %}
-  Renders a group of blocks with configurable layout direction, gap and
-  alignment.
+  Renders a composable group of editable theme blocks.
 
-  The Group block owns only child composition: direction, cross-axis alignment,
-  main-axis content alignment, gap, and padding. Child blocks own their own
-  content and presentation.
-
-  An empty group intentionally renders its editor-aware wrapper so merchants
-  can add or restore children from the Theme Editor.
+  Group owns the child flow, responsive behavior, container presentation and
+  spacing. Child blocks own their content and local presentation.
 
   @example
   {% content_for 'block', type: 'group', id: 'group' %}
 {% enddoc %}
 
+{% liquid
+  assign group_layout_mode = block.settings.layout_mode | default: 'stack'
+  assign group_width = block.settings.width | default: 'auto'
+  assign group_max_width = block.settings.max_width | default: 960
+  assign group_horizontal_alignment = block.settings.horizontal_alignment | default: 'start'
+  assign group_vertical_alignment = block.settings.vertical_alignment | default: 'start'
+  assign group_text_alignment = block.settings.text_alignment | default: 'left'
+  assign group_mobile_order = block.settings.mobile_order | default: 'default'
+  assign group_padding_top_mobile = block.settings.padding_top
+  assign group_padding_bottom_mobile = block.settings.padding_bottom
+  assign group_padding_left_mobile = block.settings.padding_left
+  assign group_padding_right_mobile = block.settings.padding_right
+
+  if block.settings.customize_mobile
+    assign group_padding_top_mobile = block.settings.padding_top_mobile
+    assign group_padding_bottom_mobile = block.settings.padding_bottom_mobile
+    assign group_padding_left_mobile = block.settings.padding_left_mobile
+    assign group_padding_right_mobile = block.settings.padding_right_mobile
+  endif
+%}
+
 <div
-  class="group {{ block.settings.layout_direction | default: 'group--vertical' }}"
-  style="--group-gap: {{ block.settings.gap | default: 16 }}px; --group-padding: {{ block.settings.padding | default: 0 }}px; --group-alignment: {{ block.settings.alignment | default: 'flex-start' }}; --group-content-alignment: {{ block.settings.content_alignment | default: 'flex-start' }};"
+  class="group-block group-block--{{ group_layout_mode }} group-block--width-{{ group_width }}{% if block.settings.wrap %} group-block--wrap{% endif %}{% if block.settings.stack_on_mobile %} group-block--stack-mobile{% endif %}{% if group_mobile_order == 'reverse' %} group-block--reverse-mobile{% endif %}{% if block.settings.background_scheme != blank and block.settings.background_scheme != 'inherit' %} color-{{ block.settings.background_scheme }}{% endif %}"
+  style="--group-max-width: {{ group_max_width }}px; --group-desktop-gap: {{ block.settings.desktop_gap | default: 16 }}px; --group-mobile-gap: {{ block.settings.mobile_gap | default: 12 }}px; --group-horizontal-alignment: {{ group_horizontal_alignment }}; --group-vertical-alignment: {{ group_vertical_alignment }}; --group-text-alignment: {{ group_text_alignment }}; --group-border-width: {{ block.settings.border | default: 0 }}px; --group-radius: {{ block.settings.corner_radius | default: 0 }}px; --group-padding-top: {{ block.settings.padding_top | default: 0 }}px; --group-padding-bottom: {{ block.settings.padding_bottom | default: 0 }}px; --group-padding-left: {{ block.settings.padding_left | default: 0 }}px; --group-padding-right: {{ block.settings.padding_right | default: 0 }}px; --group-padding-top-mobile: {{ group_padding_top_mobile | default: 0 }}px; --group-padding-bottom-mobile: {{ group_padding_bottom_mobile | default: 0 }}px; --group-padding-left-mobile: {{ group_padding_left_mobile | default: 0 }}px; --group-padding-right-mobile: {{ group_padding_right_mobile | default: 0 }}px;"
   {{ block.shopify_attributes }}
 >
   {% content_for 'blocks' %}
 </div>
 
 {% stylesheet %}
-  .group {
+  .group-block {
+    align-items: var(--group-vertical-alignment);
+    background: var(--group-background, transparent);
+    border: var(--group-border-width) solid var(--color-border);
+    border-radius: var(--group-radius);
     display: flex;
-    align-items: var(--group-alignment);
-    flex-wrap: wrap;
-    gap: var(--group-gap);
-    justify-content: var(--group-content-alignment);
+    gap: var(--group-desktop-gap);
+    justify-content: var(--group-horizontal-alignment);
     min-width: 0;
+    padding-block: var(--group-padding-top) var(--group-padding-bottom);
+    padding-inline: var(--group-padding-left) var(--group-padding-right);
+    text-align: var(--group-text-alignment);
+  }
+
+  .group-block[class*='color-'] {
+    --group-background: var(--gradient-background, var(--color-background));
+  }
+
+  .group-block--stack {
+    flex-direction: column;
+  }
+
+  .group-block--row {
+    flex-direction: row;
+  }
+
+  .group-block--grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  }
+
+  .group-block--width-auto {
+    width: auto;
+  }
+
+  .group-block--width-full {
     width: 100%;
   }
 
-  .group--horizontal {
-    flex-direction: row;
-    padding-inline: var(--group-padding);
+  .group-block--width-content {
+    max-width: var(--page-width, 1600px);
+    width: 100%;
   }
 
-  .group--vertical {
-    flex-direction: column;
-    padding-block: var(--group-padding);
+  .group-block--width-custom {
+    max-width: var(--group-max-width);
+    width: 100%;
+  }
+
+  .group-block:not(.group-block--wrap) {
+    flex-wrap: nowrap;
+  }
+
+  .group-block--wrap {
+    flex-wrap: wrap;
+  }
+
+  .group-block > * {
+    min-width: 0;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .group-block {
+      gap: var(--group-mobile-gap);
+      padding-block: var(--group-padding-top-mobile) var(--group-padding-bottom-mobile);
+      padding-inline: var(--group-padding-left-mobile) var(--group-padding-right-mobile);
+    }
+
+    .group-block--stack-mobile {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .group-block--reverse-mobile > * {
+      order: 1;
+    }
+
+    .group-block--reverse-mobile > *:first-child {
+      order: 999;
+    }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.group",
-  "blocks": [
-    { "type": "@theme" },
-    { "type": "heading" },
-    { "type": "text" },
-    { "type": "image" },
-    { "type": "video" },
-    { "type": "icon" },
-    { "type": "button" },
-    { "type": "buttons" },
-    { "type": "group" },
-    { "type": "columns" },
-    { "type": "spacer" },
-    { "type": "divider" }
-  ],
+  "blocks": [{ "type": "@theme" }],
   "settings": [
+    { "type": "header", "content": "t:general.layout" },
     {
       "type": "select",
-      "id": "layout_direction",
-      "label": "t:labels.layout_direction",
-      "default": "group--vertical",
+      "id": "layout_mode",
+      "label": "t:labels.layout_mode",
       "options": [
-        { "value": "group--horizontal", "label": "t:options.direction.horizontal" },
-        { "value": "group--vertical", "label": "t:options.direction.vertical" }
-      ]
+        { "value": "stack", "label": "t:options.layout_mode.stack" },
+        { "value": "row", "label": "t:options.layout_mode.row" },
+        { "value": "grid", "label": "t:options.layout_mode.grid" }
+      ],
+      "default": "stack"
     },
     {
       "type": "select",
-      "id": "alignment",
-      "label": "t:labels.alignment",
-      "default": "flex-start",
+      "id": "width",
+      "label": "t:labels.width",
       "options": [
-        { "value": "flex-start", "label": "t:options.alignment.left" },
+        { "value": "auto", "label": "t:options.width.auto" },
+        { "value": "full", "label": "t:options.width.full" },
+        { "value": "content", "label": "t:options.width.content" },
+        { "value": "custom", "label": "t:options.width.custom" }
+      ],
+      "default": "auto"
+    },
+    {
+      "visible_if": "{{ block.settings.width == 'custom' }}",
+      "type": "range",
+      "id": "max_width",
+      "label": "t:labels.max_width",
+      "min": 320,
+      "max": 1600,
+      "step": 16,
+      "unit": "px",
+      "default": 960
+    },
+    { "type": "range", "id": "desktop_gap", "label": "t:labels.desktop_gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "mobile_gap", "label": "t:labels.mobile_gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 12 },
+    {
+      "type": "select",
+      "id": "horizontal_alignment",
+      "label": "t:labels.horizontal_alignment",
+      "options": [
+        { "value": "start", "label": "t:options.alignment.start" },
         { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "flex-end", "label": "t:options.alignment.right" }
-      ]
+        { "value": "end", "label": "t:options.alignment.end" },
+        { "value": "stretch", "label": "t:options.alignment.stretch" }
+      ],
+      "default": "start"
     },
     {
       "type": "select",
-      "id": "content_alignment",
-      "label": "t:labels.content_alignment",
-      "default": "flex-start",
+      "id": "vertical_alignment",
+      "label": "t:labels.vertical_alignment",
       "options": [
-        { "value": "flex-start", "label": "t:options.alignment.left" },
+        { "value": "start", "label": "t:options.alignment.start" },
         { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "flex-end", "label": "t:options.alignment.right" },
+        { "value": "end", "label": "t:options.alignment.end" },
         { "value": "space-between", "label": "t:options.alignment.space_between" }
-      ]
+      ],
+      "default": "start"
     },
     {
-      "type": "range",
-      "id": "gap",
-      "label": "t:labels.gap",
-      "default": 16,
-      "min": 0,
-      "max": 100,
-      "step": 2,
-      "unit": "px"
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:labels.text_alignment",
+      "options": [
+        { "value": "left", "label": "t:options.text_alignment.left" },
+        { "value": "center", "label": "t:options.text_alignment.center" },
+        { "value": "right", "label": "t:options.text_alignment.right" }
+      ],
+      "default": "left"
     },
+    { "type": "header", "content": "t:general.responsive" },
+    { "type": "checkbox", "id": "wrap", "label": "t:labels.wrap", "default": false },
+    { "type": "checkbox", "id": "stack_on_mobile", "label": "t:labels.stack_on_mobile", "default": false },
     {
-      "type": "range",
-      "id": "padding",
-      "label": "t:labels.padding",
-      "default": 0,
-      "min": 0,
-      "max": 200,
-      "step": 2,
-      "unit": "px"
-    }
+      "type": "select",
+      "id": "mobile_order",
+      "label": "t:labels.mobile_order",
+      "options": [
+        { "value": "default", "label": "t:options.mobile_order.default" },
+        { "value": "reverse", "label": "t:options.mobile_order.reverse" }
+      ],
+      "default": "default"
+    },
+    { "type": "header", "content": "t:general.appearance" },
+    {
+      "type": "color_scheme",
+      "id": "background_scheme",
+      "label": "t:labels.background_scheme",
+      "default": "scheme-1"
+    },
+    { "type": "range", "id": "border", "label": "t:labels.border", "min": 0, "max": 20, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "corner_radius", "label": "t:labels.corner_radius", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "header", "content": "t:general.padding" },
+    { "type": "range", "id": "padding_top", "label": "t:labels.padding_top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "t:labels.padding_bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_left", "label": "t:labels.padding_left", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_right", "label": "t:labels.padding_right", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "checkbox", "id": "customize_mobile", "label": "t:labels.customize_mobile", "default": false },
+    { "visible_if": "{{ block.settings.customize_mobile }}", "type": "range", "id": "padding_top_mobile", "label": "t:labels.padding_top_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile }}", "type": "range", "id": "padding_bottom_mobile", "label": "t:labels.padding_bottom_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile }}", "type": "range", "id": "padding_left_mobile", "label": "t:labels.padding_left_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile }}", "type": "range", "id": "padding_right_mobile", "label": "t:labels.padding_right_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
   ],
   "presets": [
     {
       "name": "t:general.group",
       "category": "t:general.layout",
       "settings": {
-        "layout_direction": "group--vertical",
-        "alignment": "flex-start",
-        "content_alignment": "flex-start",
-        "gap": 16,
-        "padding": 0
+        "layout_mode": "stack",
+        "width": "auto",
+        "desktop_gap": 16,
+        "mobile_gap": 12,
+        "horizontal_alignment": "start",
+        "vertical_alignment": "start",
+        "text_alignment": "left",
+        "wrap": false,
+        "stack_on_mobile": false,
+        "mobile_order": "default",
+        "background_scheme": "scheme-1",
+        "border": 0,
+        "corner_radius": 0
       },
       "blocks": [{ "type": "text" }]
-    },
-    {
-      "name": "t:general.column",
-      "category": "t:general.layout",
-      "settings": {
-        "layout_direction": "group--vertical",
-        "alignment": "flex-start",
-        "content_alignment": "flex-start",
-        "gap": 16,
-        "padding": 0
-      },
-      "blocks": [{ "type": "text" }, { "type": "text" }]
-    },
-    {
-      "name": "t:general.row",
-      "category": "t:general.layout",
-      "settings": {
-        "layout_direction": "group--horizontal",
-        "alignment": "center",
-        "content_alignment": "space-between",
-        "gap": 16,
-        "padding": 0
-      },
-      "blocks": [{ "type": "text" }, { "type": "text" }]
     }
   ]
 }
