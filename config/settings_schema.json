@@ -891,7 +891,7 @@
         "max": 64,
         "step": 2,
         "unit": "px",
-        "label": "t:labels.input_height",
+        "label": "t:labels.desktop_height",
         "default": 48
       },
       {
@@ -901,8 +901,18 @@
         "max": 60,
         "step": 2,
         "unit": "px",
-        "label": "t:labels.input_height_mobile",
+        "label": "t:labels.mobile_height",
         "default": 44
+      },
+      {
+        "type": "range",
+        "id": "input_border_radius",
+        "min": 0,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "t:labels.border_radius",
+        "default": 8
       },
       {
         "type": "range",
@@ -911,20 +921,62 @@
         "max": 3,
         "step": 1,
         "unit": "px",
-        "label": "t:labels.input_border_width",
+        "label": "t:labels.border_width",
         "default": 1
       },
       {
         "type": "color",
-        "id": "form_error_color",
-        "label": "t:labels.form_error_color",
-        "default": "#B42318"
+        "id": "input_background_color",
+        "label": "t:labels.background_color",
+        "default": "#FFFFFF"
       },
       {
-        "type": "color",
-        "id": "form_success_color",
-        "label": "t:labels.form_success_color",
-        "default": "#1F7A4D"
+        "type": "header",
+        "content": "t:general.typography"
+      },
+      {
+        "type": "select",
+        "id": "form_label_font",
+        "label": "t:labels.form_label",
+        "options": [
+          { "value": "body", "label": "t:options.form_font.body" },
+          { "value": "heading", "label": "t:options.form_font.heading" },
+          { "value": "accent", "label": "t:options.form_font.accent" }
+        ],
+        "default": "body"
+      },
+      {
+        "type": "select",
+        "id": "form_input_font",
+        "label": "t:labels.form_input",
+        "options": [
+          { "value": "body", "label": "t:options.form_font.body" },
+          { "value": "heading", "label": "t:options.form_font.heading" },
+          { "value": "accent", "label": "t:options.form_font.accent" }
+        ],
+        "default": "body"
+      },
+      {
+        "type": "select",
+        "id": "form_helper_text_font",
+        "label": "t:labels.form_helper_text",
+        "options": [
+          { "value": "body", "label": "t:options.form_font.body" },
+          { "value": "heading", "label": "t:options.form_font.heading" },
+          { "value": "accent", "label": "t:options.form_font.accent" }
+        ],
+        "default": "body"
+      },
+      {
+        "type": "select",
+        "id": "form_error_text_font",
+        "label": "t:labels.form_error_text",
+        "options": [
+          { "value": "body", "label": "t:options.form_font.body" },
+          { "value": "heading", "label": "t:options.form_font.heading" },
+          { "value": "accent", "label": "t:options.form_font.accent" }
+        ],
+        "default": "body"
       }
     ]
   },

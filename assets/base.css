@@ -123,10 +123,26 @@ textarea {
   border: var(--input-border-width) solid var(--input-border-color);
   border-radius: var(--input-radius);
   color: var(--color-text);
-  font: inherit;
+  font-family: var(--form-input-font-family, inherit);
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  line-height: inherit;
   min-height: var(--input-height);
   padding: 0.625rem 0.875rem;
   width: 100%;
+}
+
+.form__field > span,
+.form__label,
+.quantity-selector__label,
+label[for] {
+  font-family: var(--form-label-font-family, inherit);
+}
+
+.form__helper,
+.form__help {
+  font-family: var(--form-helper-text-font-family, inherit);
 }
 
 textarea {
@@ -189,6 +205,7 @@ textarea[readonly] {
 
 .form__error {
   color: var(--input-error-color);
+  font-family: var(--form-error-text-font-family, inherit);
 }
 
 .form__success {
