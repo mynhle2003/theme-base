@@ -58,7 +58,7 @@
         "id": "color_schemes",
         "definition": [
           {
-            "type": "color_background",
+            "type": "color",
             "id": "background",
             "label": "t:labels.background",
             "default": "#FFFFFF"
@@ -192,13 +192,18 @@
             "id": "tertiary_button_label",
             "label": "t:labels.tertiary_button_label",
             "default": "#1C1B1A"
+          },
+          {
+            "type": "color_background",
+            "id": "background_gradient",
+            "label": "t:labels.background_gradient"
           }
         ],
         "role": {
           "text": "text",
           "background": {
             "solid": "background",
-            "gradient": "background"
+            "gradient": "background_gradient"
           },
           "links": "secondary_button_label",
           "icons": "heading",
