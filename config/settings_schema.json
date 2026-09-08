@@ -54,18 +54,6 @@
     "name": "t:general.colors",
     "settings": [
       {
-        "type": "color",
-        "id": "background_color",
-        "default": "#FFFFFF",
-        "label": "t:labels.background"
-      },
-      {
-        "type": "color",
-        "id": "foreground_color",
-        "default": "#333333",
-        "label": "t:labels.foreground"
-      },
-      {
         "type": "color_scheme_group",
         "id": "color_schemes",
         "definition": [
@@ -84,25 +72,49 @@
             "type": "color",
             "id": "heading",
             "label": "t:labels.heading",
-            "default": "#333333"
+            "default": "#1C1B1A"
+          },
+          {
+            "type": "color",
+            "id": "heading_highlight",
+            "label": "t:labels.heading_highlight",
+            "default": "#A67C52"
           },
           {
             "type": "color",
             "id": "text",
             "label": "t:labels.text",
-            "default": "#333333"
+            "default": "#1C1B1A"
+          },
+          {
+            "type": "color",
+            "id": "accent",
+            "label": "t:labels.accent_eyebrow_text",
+            "default": "#1C1B1A"
           },
           {
             "type": "color",
             "id": "border",
             "label": "t:labels.border",
-            "default": "#E5E5E5"
+            "default": "#1C1B1A"
+          },
+          {
+            "type": "color",
+            "id": "shadow",
+            "label": "t:labels.shadow",
+            "default": "#1C1B1A"
+          },
+          {
+            "type": "color",
+            "id": "sale_price",
+            "label": "t:labels.sale_price",
+            "default": "#9A3D32"
           },
           {
             "type": "color",
             "id": "primary_button",
             "label": "t:labels.primary_button",
-            "default": "#333333"
+            "default": "#1C1B1A"
           },
           {
             "type": "color",
@@ -114,7 +126,24 @@
             "type": "color",
             "id": "primary_button_border",
             "label": "t:labels.primary_button_border",
-            "default": "#333333"
+            "default": "#1C1B1A"
+          },
+          {
+            "type": "color",
+            "id": "primary_button_hover_border",
+            "label": "t:labels.primary_button_hover_border",
+            "default": "#1C1B1A"
+          },
+          {
+            "type": "color",
+            "id": "primary_button_hover_background",
+            "label": "t:labels.primary_button_hover_background"
+          },
+          {
+            "type": "color",
+            "id": "primary_button_hover_label",
+            "label": "t:labels.primary_button_hover_label",
+            "default": "#1C1B1A"
           },
           {
             "type": "color",
@@ -126,19 +155,36 @@
             "type": "color",
             "id": "secondary_button_label",
             "label": "t:labels.secondary_button_label",
-            "default": "#333333"
+            "default": "#1C1B1A"
           },
           {
             "type": "color",
             "id": "secondary_button_border",
             "label": "t:labels.secondary_button_border",
-            "default": "#333333"
+            "default": "#1C1B1A"
           },
           {
             "type": "color",
-            "id": "shadow",
-            "label": "t:labels.shadow",
-            "default": "#000000"
+            "id": "secondary_button_hover_border",
+            "label": "t:labels.secondary_button_hover_border",
+            "default": "#1C1B1A"
+          },
+          {
+            "type": "color",
+            "id": "secondary_button_hover_background",
+            "label": "t:labels.secondary_button_hover_background"
+          },
+          {
+            "type": "color",
+            "id": "secondary_button_hover_label",
+            "label": "t:labels.secondary_button_hover_label",
+            "default": "#1C1B1A"
+          },
+          {
+            "type": "color",
+            "id": "tertiary_button_label",
+            "label": "t:labels.tertiary_button_label",
+            "default": "#1C1B1A"
           }
         ],
         "role": {
@@ -154,7 +200,8 @@
           "primary_button_border": "primary_button_border",
           "secondary_button": "secondary_button",
           "on_secondary_button": "secondary_button_label",
-          "secondary_button_border": "secondary_button_border"
+          "secondary_button_border": "secondary_button_border",
+          "tertiary_button": "tertiary_button_label"
         }
       },
       {

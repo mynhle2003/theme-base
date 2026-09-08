@@ -86,9 +86,10 @@
 
 .btn--fill { width: 100%; }
 .btn--primary { --button-border-width: var(--button-primary-border-width, 1px); --button-font-family: var(--button-primary-font-family); background: var(--color-primary-button); border-color: var(--color-primary-button-border); color: var(--color-primary-button-label); text-transform: var(--button-primary-text-transform, uppercase); }
+.btn--primary:hover { background: var(--color-primary-button-hover-background, var(--color-primary-button)); border-color: var(--color-primary-button-hover-border, var(--color-primary-button-border)); color: var(--color-primary-button-hover-label, var(--color-primary-button-label)); }
 .btn--secondary { --button-border-width: var(--button-secondary-border-width, 1px); --button-font-family: var(--button-secondary-font-family); background: var(--color-secondary-button); border-color: var(--color-secondary-button-border); color: var(--color-secondary-button-label); text-transform: var(--button-secondary-text-transform, uppercase); }
-.btn--tertiary { --button-font-family: var(--button-tertiary-font-family); background: transparent; border-color: transparent; color: var(--color-secondary-button-label); text-decoration: var(--button-tertiary-text-decoration, underline); text-underline-offset: var(--button-tertiary-underline-offset, 3px); text-transform: var(--button-tertiary-text-transform, uppercase); }
-.btn:hover { filter: brightness(0.92); }
+.btn--secondary:hover { background: var(--color-secondary-button-hover-background, var(--color-secondary-button)); border-color: var(--color-secondary-button-hover-border, var(--color-secondary-button-border)); color: var(--color-secondary-button-hover-label, var(--color-secondary-button-label)); }
+.btn--tertiary { --button-font-family: var(--button-tertiary-font-family); background: transparent; border-color: transparent; color: var(--color-tertiary-button-label, var(--color-secondary-button-label)); text-decoration: var(--button-tertiary-text-decoration, underline); text-underline-offset: var(--button-tertiary-underline-offset, 3px); text-transform: var(--button-tertiary-text-transform, uppercase); }
 .btn:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 .btn:disabled, .btn--disabled { cursor: not-allowed; opacity: var(--button-disabled-opacity, 0.6); pointer-events: none; }
 .btn[aria-busy='true'] { cursor: progress; opacity: 0.7; }

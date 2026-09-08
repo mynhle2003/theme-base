@@ -1,7 +1,7 @@
 {% liquid
   assign default_color_scheme = settings.default_color_scheme
-  assign active_background = settings.background_color
-  assign active_foreground = settings.foreground_color
+  assign active_background = '#FFFFFF'
+  assign active_foreground = '#1C1B1A'
   assign body_font = settings.font_body_family
   assign heading_font = settings.font_heading_family | default: body_font
   assign accent_font = settings.font_accent_family | default: body_font
@@ -75,7 +75,9 @@
     --gradient-background: {{ default_color_scheme.settings.background_gradient | default: active_background }};
     --color-foreground: {{ active_foreground }};
     --color-heading: {{ default_color_scheme.settings.heading | default: active_foreground }};
+    --color-heading-highlight: {{ default_color_scheme.settings.heading_highlight | default: active_foreground }};
     --color-text: {{ default_color_scheme.settings.text | default: active_foreground }};
+    --color-accent: {{ default_color_scheme.settings.accent | default: active_foreground }};
     --color-border: {{ default_color_scheme.settings.border | default: '#E5E5E5' }};
     --color-primary-button: {{ default_color_scheme.settings.primary_button | default: active_foreground }};
     --color-primary-button-label: {{ default_color_scheme.settings.primary_button_label | default: active_background }};
@@ -83,7 +85,14 @@
     --color-secondary-button: {{ default_color_scheme.settings.secondary_button | default: active_background }};
     --color-secondary-button-label: {{ default_color_scheme.settings.secondary_button_label | default: active_foreground }};
     --color-secondary-button-border: {{ default_color_scheme.settings.secondary_button_border | default: active_foreground }};
-    --color-shadow: {{ default_color_scheme.settings.shadow | default: '#000000' }};
+    --color-primary-button-hover-border: {{ default_color_scheme.settings.primary_button_hover_border | default: default_color_scheme.settings.primary_button_border | default: active_foreground }};
+    --color-primary-button-hover-background: {{ default_color_scheme.settings.primary_button_hover_background | default: 'transparent' }};
+    --color-primary-button-hover-label: {{ default_color_scheme.settings.primary_button_hover_label | default: default_color_scheme.settings.primary_button_label | default: active_background }};
+    --color-secondary-button-hover-border: {{ default_color_scheme.settings.secondary_button_hover_border | default: default_color_scheme.settings.secondary_button_border | default: active_foreground }};
+    --color-secondary-button-hover-background: {{ default_color_scheme.settings.secondary_button_hover_background | default: 'transparent' }};
+    --color-secondary-button-hover-label: {{ default_color_scheme.settings.secondary_button_hover_label | default: default_color_scheme.settings.secondary_button_label | default: active_foreground }};
+    --color-tertiary-button-label: {{ default_color_scheme.settings.tertiary_button_label | default: active_foreground }};
+    --color-shadow: {{ default_color_scheme.settings.shadow | default: active_foreground }};
     --button-radius: {% case settings.button_radius_style %}{% when 'rounded' %}8px{% when 'pill' %}999px{% else %}0px{% endcase %};
     --button-height: {{ settings.button_height_desktop | default: 48 }}px;
     --button-height-mobile: {{ settings.button_height_mobile | default: 44 }}px;
@@ -134,7 +143,7 @@
     --badge-collection-color: {{ settings.badge_collection_color | default: '#333333' }};
     --badge-custom-background: {{ settings.badge_custom_background | default: '#333333' }};
     --badge-custom-color: {{ settings.badge_custom_color | default: '#FFFFFF' }};
-    --sale-price-color: {{ settings.sale_price_color | default: '#B42318' }};
+    --sale-price-color: {{ default_color_scheme.settings.sale_price | default: settings.sale_price_color | default: '#9A3D32' }};
     --icon-size: {{ settings.global_icon_size | default: 32 }}px;
     --icon-stroke-width: {{ settings.global_icon_stroke_width | default: 1.5 }}px;
     --overlay-color: {{ settings.overlay_color | default: '#000000' }};
@@ -169,7 +178,9 @@
       --color-background: {{ scheme.settings.background }};
       --gradient-background: {{ scheme.settings.background_gradient | default: scheme.settings.background }};
       --color-heading: {{ scheme.settings.heading }};
+      --color-heading-highlight: {{ scheme.settings.heading_highlight | default: scheme.settings.heading }};
       --color-text: {{ scheme.settings.text }};
+      --color-accent: {{ scheme.settings.accent | default: scheme.settings.text }};
       --color-foreground: {{ scheme.settings.text }};
       --color-border: {{ scheme.settings.border }};
       --color-primary-button: {{ scheme.settings.primary_button }};
@@ -178,6 +189,14 @@
       --color-secondary-button: {{ scheme.settings.secondary_button }};
       --color-secondary-button-label: {{ scheme.settings.secondary_button_label }};
       --color-secondary-button-border: {{ scheme.settings.secondary_button_border }};
+      --color-primary-button-hover-border: {{ scheme.settings.primary_button_hover_border | default: scheme.settings.primary_button_border }};
+      --color-primary-button-hover-background: {{ scheme.settings.primary_button_hover_background | default: 'transparent' }};
+      --color-primary-button-hover-label: {{ scheme.settings.primary_button_hover_label | default: scheme.settings.primary_button_label }};
+      --color-secondary-button-hover-border: {{ scheme.settings.secondary_button_hover_border | default: scheme.settings.secondary_button_border }};
+      --color-secondary-button-hover-background: {{ scheme.settings.secondary_button_hover_background | default: 'transparent' }};
+      --color-secondary-button-hover-label: {{ scheme.settings.secondary_button_hover_label | default: scheme.settings.secondary_button_label }};
+      --color-tertiary-button-label: {{ scheme.settings.tertiary_button_label | default: scheme.settings.text }};
+      --sale-price-color: {{ scheme.settings.sale_price | default: scheme.settings.text }};
       --color-shadow: {{ scheme.settings.shadow }};
     }
   {% endfor %}
