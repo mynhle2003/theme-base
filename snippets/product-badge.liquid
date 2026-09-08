@@ -16,17 +16,17 @@
   endif
 
   assign custom_badge_label = blank
-  if settings.badge_custom_enabled and settings.badge_custom_metafield_key != blank
-    assign custom_badge = product.metafields.custom[settings.badge_custom_metafield_key]
+  if settings.badge_custom_enabled
+    assign custom_badge = product.metafields.custom.badge
     if custom_badge != blank
       assign custom_badge_label = custom_badge.value | default: custom_badge
     endif
   endif
 
-  assign sale_badge_label = settings.sale_badge_text
+  assign sale_badge_label = 'products.product.on_sale' | t
   if has_sale
     assign savings = product.compare_at_price | minus: product.price
-    case settings.sale_badge_style
+    case settings.badge_sale_type
       when 'percentage'
         assign discount = savings | times: 100 | divided_by: product.compare_at_price | round
         assign sale_badge_label = 'products.product.discount_percentage' | t: discount: discount
@@ -38,40 +38,116 @@
         assign sale_badge_label = 'products.product.discount_amount' | t: amount: savings_money
     endcase
   endif
+
+  assign matched_collection_label = blank
+  assign matched_collection_title = blank
+  for collection_slot in (1..3)
+    case collection_slot
+      when 1
+        assign configured_collection_label = settings.badge_collection_1_label
+        assign configured_collections = settings.badge_collection_1_collections
+      when 2
+        assign configured_collection_label = settings.badge_collection_2_label
+        assign configured_collections = settings.badge_collection_2_collections
+      when 3
+        assign configured_collection_label = settings.badge_collection_3_label
+        assign configured_collections = settings.badge_collection_3_collections
+    endcase
+
+    if configured_collection_label != blank and configured_collections != blank
+      for configured_collection in configured_collections
+        for product_collection in product.collections
+          if configured_collection.handle == product_collection.handle
+            assign matched_collection_label = configured_collection_label
+            assign matched_collection_title = product_collection.title
+            break
+          endif
+        endfor
+        if matched_collection_title != blank
+          break
+        endif
+      endfor
+    endif
+
+    if matched_collection_title != blank
+      break
+    endif
+  endfor
+
+  assign tag_badge_label = blank
+  assign tag_badge_background = blank
+  assign tag_badge_color = blank
+  assign tag_badge_modifier = blank
+  assign tag_badge_priority = 999
+
+  for product_tag in product.tags
+    assign normalized_product_tag = product_tag | downcase | strip
+
+    if settings.badge_tag_new_product_tag != blank
+      assign configured_new_tag = settings.badge_tag_new_product_tag | downcase | strip
+      if normalized_product_tag == configured_new_tag
+        assign new_priority = settings.badge_tag_new_priority | plus: 0
+        if new_priority < tag_badge_priority and settings.badge_tag_new_label != blank
+          assign tag_badge_label = settings.badge_tag_new_label
+          assign tag_badge_background = settings.badge_tag_new_background
+          assign tag_badge_color = settings.badge_tag_new_color
+          assign tag_badge_modifier = 'new'
+          assign tag_badge_priority = new_priority
+        endif
+      endif
+    endif
+
+    if settings.badge_tag_bestseller_product_tag != blank
+      assign configured_bestseller_tag = settings.badge_tag_bestseller_product_tag | downcase | strip
+      if normalized_product_tag == configured_bestseller_tag
+        assign bestseller_priority = settings.badge_tag_bestseller_priority | plus: 0
+        if bestseller_priority < tag_badge_priority and settings.badge_tag_bestseller_label != blank
+          assign tag_badge_label = settings.badge_tag_bestseller_label
+          assign tag_badge_background = settings.badge_tag_bestseller_background
+          assign tag_badge_color = settings.badge_tag_bestseller_color
+          assign tag_badge_modifier = 'bestseller'
+          assign tag_badge_priority = bestseller_priority
+        endif
+      endif
+    endif
+  endfor
+
+  assign should_render_badges = false
+  if custom_badge_label != blank
+    assign should_render_badges = true
+  elsif tag_badge_label != blank
+    assign should_render_badges = true
+  elsif matched_collection_title != blank
+    assign should_render_badges = true
+  elsif product.available == false and show_sold_out_badge != false
+    assign should_render_badges = true
+  elsif has_sale and show_sale_badge != false
+    assign should_render_badges = true
+  endif
 %}
 
-{% if settings.badge_enabled %}
+{% if should_render_badges %}
   <div
-    class="product-badges product-badges--{{ settings.badge_position }}"
-    style="--badge-radius: {{ settings.badge_radius | default: 4 }}px; --badge-padding-block: {{ settings.badge_padding | default: 4 }}px; --badge-padding-inline: calc({{ settings.badge_padding | default: 4 }}px * 1.5); --badge-font-size: {{ settings.badge_font_size | default: 12 }}px; --badge-letter-spacing: {{ settings.badge_letter_spacing | default: 0 }}px;"
+    class="product-badges product-badges--top-left"
   >
+    {% if product.available == false and show_sold_out_badge != false %}
+      <span class="product-badge product-badge--sold-out">{{ 'products.product.sold_out' | t }}</span>
+    {% elsif has_sale and sale_badge_label != blank and show_sale_badge != false %}
+      <span class="product-badge product-badge--sale">{{ sale_badge_label }}</span>
+    {% endif %}
+
+    {% if matched_collection_title != blank %}
+      <span class="product-badge product-badge--collection">
+        {{ matched_collection_label | escape }}: {{ matched_collection_title | escape }}
+      </span>
+    {% endif %}
+
     {% if custom_badge_label != blank %}
       <span class="product-badge product-badge--custom">{{ custom_badge_label | escape }}</span>
     {% endif %}
 
-    {% if product.available == false and settings.sold_out_badge_enabled and settings.sold_out_badge_text != blank and show_sold_out_badge != false %}
-      <span class="product-badge product-badge--sold-out">{{ settings.sold_out_badge_text | escape }}</span>
-    {% elsif has_sale and settings.sale_badge_enabled and sale_badge_label != blank and show_sale_badge != false %}
-      <span class="product-badge product-badge--sale">{{ sale_badge_label }}</span>
-    {% endif %}
-
-    {% if settings.collection_badge_enabled and settings.badge_collections != blank %}
-      {% assign matched_collection = blank %}
-      {% for configured_collection in settings.badge_collections %}
-        {% for product_collection in product.collections %}
-          {% if configured_collection.handle == product_collection.handle %}
-            {% assign matched_collection = product_collection %}
-            {% break %}
-          {% endif %}
-        {% endfor %}
-        {% if matched_collection != blank %}{% break %}{% endif %}
-      {% endfor %}
-
-      {% if matched_collection != blank and settings.collection_badge_label != blank %}
-        <span class="product-badge product-badge--collection">
-          {{ settings.collection_badge_label | escape }}: {{ matched_collection.title | escape }}
-        </span>
-      {% endif %}
+    {% if tag_badge_label != blank %}
+      <span class="product-badge product-badge--tag product-badge--{{ tag_badge_modifier }}" style="--badge-background: {{ tag_badge_background }}; --badge-color: {{ tag_badge_color }};">{{ tag_badge_label | escape }}</span>
     {% endif %}
   </div>
 {% endif %}

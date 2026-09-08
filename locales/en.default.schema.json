@@ -73,6 +73,15 @@
     "variant_pickers": "Variant pickers",
     "swatches": "Swatches",
     "badges": "Badges",
+    "product_status": "Product status",
+    "sale_badge": "Sale badge",
+    "collection_badge_1": "Collection badge 1",
+    "collection_badge_2": "Collection badge 2",
+    "collection_badge_3": "Collection badge 3",
+    "custom_badge": "Custom badge",
+    "custom_product_card_tags": "Custom product-card tags",
+    "new_tag": "New",
+    "bestseller_tag": "Bestseller",
     "prices": "Prices",
     "social_media": "Social media",
     "motion": "Motion & reduced motion",
@@ -125,30 +134,15 @@
     "label_spacing": "Label spacing",
     "only_show_selected_variant_media": "Only show media of the selected variant",
     "swatch_style": "Swatch style",
-    "badge_enabled": "Enable badges",
-    "badge_position": "Badge position",
-    "badge_font_size": "Badge font size",
-    "badge_radius": "Badge radius",
-    "badge_padding": "Badge padding",
-    "badge_letter_spacing": "Badge letter spacing",
-    "sale_badge_enabled": "Enable sale badge",
-    "sale_badge_text": "Sale badge text",
-    "sale_badge_style": "Sale badge style",
-    "sold_out_badge_enabled": "Enable sold-out badge",
-    "sold_out_badge_text": "Sold-out badge text",
-    "collection_badge_enabled": "Enable collection badge",
-    "collection_badge_label": "Collection badge label",
-    "badge_collections": "Badge collections",
-    "badge_custom_enabled": "Enable custom badge",
-    "badge_custom_metafield_key": "Custom badge metafield key",
+    "badge_type": "Badge type",
     "badge_sale_background": "Sale badge background",
-    "badge_sale_color": "Sale badge text color",
-    "badge_sold_out_background": "Sold-out badge background",
-    "badge_sold_out_color": "Sold-out badge text color",
-    "badge_collection_background": "Collection badge background",
-    "badge_collection_color": "Collection badge text color",
-    "badge_custom_background": "Custom badge background",
-    "badge_custom_color": "Custom badge text color",
+    "badge_sale_text": "Sale badge text",
+    "sold_out_badge_background": "Sold-out badge background",
+    "sold_out_badge_text": "Sold-out badge text",
+    "enable_custom_badge": "Enable custom badge",
+    "collections": "Collections",
+    "product_tag": "Product tag",
+    "priority": "Priority",
     "price_sale_order": "Sale price order",
     "price_show_currency_code": "Show currency code",
     "price_show_unit_price": "Show unit price",
@@ -344,6 +338,7 @@
     ,"accessible_label": "Add a label for informative or linked icons. Leave blank for decorative icons."
     ,"variant_multiple_images": "[Learn how to set up multiple variant images](https://help.shopify.com/en/manual/products/product-media/add-images-variants)"
     ,"configure_product_card_swatches": "[Configure swatches for product cards](https://help.shopify.com/en/manual/online-store/themes/theme-structure/theme-settings)"
+    ,"custom_badge_setup": "[Learn how to set up a custom badge](https://shopify.dev/docs/storefronts/themes/architecture/settings/input-settings)"
   },
   "options": {
     "alignment": {
@@ -574,17 +569,16 @@
       "color": "Color",
       "variant_image": "Variant image"
     },
-    "badge_position": {
-      "top_left": "Top left",
-      "top_right": "Top right",
-      "bottom_left": "Bottom left",
-      "bottom_right": "Bottom right"
+    "badge_radius_style": {
+      "square": "Square",
+      "rounded": "Rounded",
+      "pill": "Pill"
     },
-    "sale_badge_style": {
-      "text": "Text",
-      "percentage": "Percentage",
-      "percentage_only": "Percentage only",
-      "amount_saved": "Amount saved"
+    "badge_sale_type": {
+      "text": "Text (eg: Sale)",
+      "percentage": "Percentage (eg: 25% off)",
+      "percentage_only": "Percentage only (eg: -25%)",
+      "amount_saved": "Amount saved (eg: Save $10)"
     },
     "price_sale_order": {
       "sale_first": "Sale price first",
