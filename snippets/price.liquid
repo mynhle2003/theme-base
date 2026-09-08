@@ -3,6 +3,7 @@
 
   @param {object} item - A product or variant-like object with price data.
   @param {boolean} [show_from] - Whether to show a From label for variable products.
+  @param {string} [context] - Price context: product_card or product_page.
 
   @example
   {% render 'price', item: product, show_from: true %}
@@ -15,30 +16,36 @@
   if compare_at_price > price_value
     assign is_sale = true
   endif
+  assign show_currency_code = false
+  if context == 'product_card'
+    assign show_currency_code = settings.price_show_currency_code_product_cards
+  elsif context == 'product_page'
+    assign show_currency_code = settings.price_show_currency_code_product_pages
+  endif
 %}
 
 <div class="price{% if is_sale %} price--sale{% endif %}" data-price aria-label="{{ 'products.product.price' | t }}">
-  {% if show_from and settings.price_show_from and item.price_varies %}
+  {% if show_from and item.price_varies %}
     <span class="price__from-label">{{ 'products.product.from' | t }}</span>
   {% endif %}
 
-  {% if settings.price_sale_order == 'compare_first' %}
+  {% if settings.price_show_sale_first == false %}
     <s class="price__compare" data-price-compare{% unless is_sale %} hidden{% endunless %}>
-      {% if is_sale %}{% if settings.price_show_currency_code %}{{ compare_at_price | money_with_currency }}{% else %}{{ compare_at_price | money }}{% endif %}{% endif %}
+      {% if is_sale %}{% if show_currency_code %}{{ compare_at_price | money_with_currency }}{% else %}{{ compare_at_price | money }}{% endif %}{% endif %}
     </s>
   {% endif %}
 
   <span class="price__current{% if is_sale %} price__current--sale{% endif %}" data-price-current>
-    {% if settings.price_show_currency_code %}{{ price_value | money_with_currency }}{% else %}{{ price_value | money }}{% endif %}
+    {% if show_currency_code %}{{ price_value | money_with_currency }}{% else %}{{ price_value | money }}{% endif %}
   </span>
 
-  {% if settings.price_sale_order != 'compare_first' %}
+  {% if settings.price_show_sale_first != false %}
     <s class="price__compare" data-price-compare{% unless is_sale %} hidden{% endunless %}>
-      {% if is_sale %}{% if settings.price_show_currency_code %}{{ compare_at_price | money_with_currency }}{% else %}{{ compare_at_price | money }}{% endif %}{% endif %}
+      {% if is_sale %}{% if show_currency_code %}{{ compare_at_price | money_with_currency }}{% else %}{{ compare_at_price | money }}{% endif %}{% endif %}
     </s>
   {% endif %}
 
-  {% if settings.price_show_unit_price and item.unit_price and item.unit_price_measurement %}
+  {% if item.unit_price and item.unit_price_measurement %}
     <span class="price__unit" data-price-unit>
       {{ item.unit_price | unit_price_with_measurement: item.unit_price_measurement }}
     </span>

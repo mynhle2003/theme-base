@@ -93,7 +93,7 @@
         <a href="{{ product.url }}">{{ product.title | escape }}</a>
       </h3>
 
-      {% render 'price', item: product, show_from: true %}
+      {% render 'price', item: product, show_from: true, context: 'product_card' %}
 
       {% if settings.product_card_show_swatches %}
         {% assign swatch_option_name = 'color' %}

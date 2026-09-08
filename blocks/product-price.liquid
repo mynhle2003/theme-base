@@ -13,7 +13,7 @@
 
 <div class="product-price-block" {{ block.shopify_attributes }}>
   {% if price_product != blank %}
-    {% render 'price', item: price_product, show_from: block.settings.show_from %}
+    {% render 'price', item: price_product, show_from: block.settings.show_from, context: 'product_page' %}
   {% else %}
     <span class="product-price-block__empty" role="status">
       {{ 'blocks.product_price.empty' | t }}

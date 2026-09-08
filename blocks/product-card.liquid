@@ -60,7 +60,7 @@
       {% endif %}
 
       {% if block.settings.show_price %}
-        {% render 'price', item: card_product, show_from: true %}
+        {% render 'price', item: card_product, show_from: true, context: 'product_card' %}
       {% endif %}
 
       {% if block.settings.show_button %}

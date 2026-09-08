@@ -15,7 +15,7 @@
 
 <div class="product-info">
   <h1>{{ product.title }}</h1>
-  {% render 'price', item: product, show_from: true %}
+  {% render 'price', item: product, show_from: true, context: 'product_page' %}
   <p>{{ product.description }}</p>
 </div>
 
