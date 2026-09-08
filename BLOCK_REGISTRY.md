@@ -1,5 +1,23 @@
 # Block Registry
 
+## Heading
+
+- Type: `heading`
+- Category: Basic / Content Kernel
+- Role: render one short heading with semantic HTML independent from its visual typography scale.
+- Capabilities: content, typography, appearance, layout, responsive, spacing.
+- Content owner: Heading owns its inline rich text content; it does not own body copy, business data or parent composition.
+- Typography owner: Theme Settings owns the Heading font family, scale tokens, line height, letter spacing and text case; the block selects only the registered visual scale.
+- Layout owner: Heading owns its own width, alignment and optional outer padding; the parent owns composition order, flow and gap.
+- Appearance owner: the optional `text_color` override is local to the block; an omitted value inherits the nearest scheme `--color-heading` token.
+- Allowed children: none (`children: false` is internal registry metadata).
+- Composition policy: leaf Kernel; no nested blocks, nested sections, resource selection or arbitrary CSS controls.
+- Settings modules: Content (`heading`), Typography (`heading_size`, `html_tag`), Appearance (`text_color`), Layout (`width`, `width_mobile`, `alignment`, `customize_mobile_alignment`, `alignment_mobile`) and optional Padding (`padding_top`, `padding_bottom`, `padding_left`, `padding_right`, `customize_mobile_padding`, plus mobile values).
+- Output: `.heading-block` editor wrapper containing one `.heading-text` element with one registered `.heading-*` visual scale class.
+- Empty state: retain the editor-aware wrapper but render no heading element when the inline content is empty.
+- Accessibility: semantic tag is independently selectable from visual scale; the `html_tag` info guides heading order and the block does not create an extra heading when content is empty.
+- Runtime: Liquid and CSS only; no JavaScript lifecycle owner is required.
+
 ## Columns
 
 - Type: `columns`
