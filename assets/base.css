@@ -224,10 +224,10 @@ dialog {
   z-index: var(--z-index-modal);
 }
 
-/* Motion Foundation: global opt-out and OS reduced-motion support. */
-.motion--disabled *,
-.motion--disabled *::before,
-.motion--disabled *::after {
+/* Motion Foundation: block animation opt-out and OS reduced-motion support. */
+.motion--block-animations-disabled *,
+.motion--block-animations-disabled *::before,
+.motion--block-animations-disabled *::after {
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
   scroll-behavior: auto !important;

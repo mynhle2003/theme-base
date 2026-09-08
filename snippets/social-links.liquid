@@ -5,24 +5,29 @@
   {% render 'social-links' %}
 {% enddoc %}
 
-{% assign social_platforms = 'facebook,instagram,x,youtube,tiktok,pinterest' | split: ',' %}
+{% assign social_platforms = 'facebook,instagram,youtube,tiktok,x,threads,linkedin,bluesky,snapchat,pinterest,tumblr,vimeo' | split: ',' %}
 
-<nav class="social-links" aria-label="{{ 'general.social.links' | t }}">
+<ul class="social-links" aria-label="{{ 'general.social.links' | t }}">
   {% for platform in social_platforms %}
     {% assign setting_id = 'social_' | append: platform | append: '_url' %}
     {% assign social_url = settings[setting_id] %}
     {% if social_url != blank %}
-      <a class="social-links__link" href="{{ social_url | escape }}" target="_blank" rel="noopener noreferrer">
-        <span class="social-links__icon" aria-hidden="true">{{ platform | slice: 0, 1 | upcase }}</span>
-        <span class="social-links__label{% unless settings.social_media_show_labels %} visually-hidden{% endunless %}">{{ platform | capitalize }}</span>
-      </a>
+      {% assign social_label_key = 'general.social.' | append: platform %}
+      {% assign social_icon_key = platform %}
+      <li class="social-links__item">
+        <a class="social-links__link" href="{{ social_url | escape }}" target="_blank" rel="noopener noreferrer" aria-label="{{ social_label_key | t }}">
+          <span class="social-links__icon" data-social-icon="{{ social_icon_key }}" aria-hidden="true">{{ platform | slice: 0, 1 | upcase }}</span>
+          <span class="social-links__label visually-hidden">{{ social_label_key | t }}</span>
+        </a>
+      </li>
     {% endif %}
   {% endfor %}
-</nav>
+</ul>
 
 {% stylesheet %}
-  .social-links { align-items: center; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .social-links { align-items: center; display: flex; flex-wrap: wrap; gap: 0.75rem; list-style: none; margin: 0; padding: 0; }
   .social-links:empty { display: none; }
+  .social-links__item { display: inline-flex; }
   .social-links__link { align-items: center; color: var(--color-foreground); display: inline-flex; gap: 0.35rem; text-decoration: none; }
   .social-links__link:hover { text-decoration: underline; text-underline-offset: 0.2em; }
   .social-links__link:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }

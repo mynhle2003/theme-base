@@ -1751,61 +1751,23 @@
     ]
   },
   {
-    "name": "t:general.social_media",
-    "settings": [
-      {
-        "type": "url",
-        "id": "social_facebook_url",
-        "label": "t:labels.social_facebook_url"
-      },
-      {
-        "type": "url",
-        "id": "social_instagram_url",
-        "label": "t:labels.social_instagram_url"
-      },
-      { "type": "url", "id": "social_x_url", "label": "t:labels.social_x_url" },
-      {
-        "type": "url",
-        "id": "social_youtube_url",
-        "label": "t:labels.social_youtube_url"
-      },
-      {
-        "type": "url",
-        "id": "social_tiktok_url",
-        "label": "t:labels.social_tiktok_url"
-      },
-      {
-        "type": "url",
-        "id": "social_pinterest_url",
-        "label": "t:labels.social_pinterest_url"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_media_show_labels",
-        "label": "t:labels.social_media_show_labels",
-        "default": false
-      }
-    ]
-  },
-  {
     "name": "t:general.motion",
     "settings": [
       {
         "type": "checkbox",
-        "id": "motion_enabled",
-        "label": "t:labels.motion_enabled",
+        "id": "motion_image_zoom_on_hover",
+        "label": "t:labels.motion_image_zoom_on_hover",
         "default": true
       },
       {
-        "type": "select",
-        "id": "motion_duration",
-        "label": "t:labels.motion_duration",
-        "options": [
-          { "value": "fast", "label": "t:options.motion_duration.fast" },
-          { "value": "normal", "label": "t:options.motion_duration.normal" },
-          { "value": "slow", "label": "t:options.motion_duration.slow" }
-        ],
-        "default": "normal"
+        "type": "checkbox",
+        "id": "motion_block_animations",
+        "label": "t:labels.motion_block_animations",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "t:info.motion_reduced_automatically"
       }
     ]
   },
@@ -1887,6 +1849,71 @@
         "step": 1,
         "unit": "px",
         "default": 0
+      }
+    ]
+  },
+  {
+    "name": "t:general.social_media",
+    "settings": [
+      {
+        "type": "url",
+        "id": "social_facebook_url",
+        "label": "t:labels.social_facebook"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram_url",
+        "label": "t:labels.social_instagram"
+      },
+      {
+        "type": "url",
+        "id": "social_youtube_url",
+        "label": "t:labels.social_youtube"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok_url",
+        "label": "t:labels.social_tiktok"
+      },
+      {
+        "type": "url",
+        "id": "social_x_url",
+        "label": "t:labels.social_x"
+      },
+      {
+        "type": "url",
+        "id": "social_threads_url",
+        "label": "t:labels.social_threads"
+      },
+      {
+        "type": "url",
+        "id": "social_linkedin_url",
+        "label": "t:labels.social_linkedin"
+      },
+      {
+        "type": "url",
+        "id": "social_bluesky_url",
+        "label": "t:labels.social_bluesky"
+      },
+      {
+        "type": "url",
+        "id": "social_snapchat_url",
+        "label": "t:labels.social_snapchat"
+      },
+      {
+        "type": "url",
+        "id": "social_pinterest_url",
+        "label": "t:labels.social_pinterest"
+      },
+      {
+        "type": "url",
+        "id": "social_tumblr_url",
+        "label": "t:labels.social_tumblr"
+      },
+      {
+        "type": "url",
+        "id": "social_vimeo_url",
+        "label": "t:labels.social_vimeo"
       }
     ]
   }
