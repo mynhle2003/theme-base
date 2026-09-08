@@ -55,6 +55,24 @@
 - Accessibility: preserves native anchor/button semantics, visible focus, safe new-tab relationship, non-interactive decorative icon markup and long-label wrapping; no nested interactive elements are introduced.
 - Runtime: Liquid and CSS only; no JavaScript lifecycle owner is required.
 
+## Buttons
+
+- Type: `buttons`
+- Category: Basic / Content Kernel
+- Role: render up to two related CTA buttons with a fixed, editor-friendly composition.
+- Capabilities: content, action, variant, icon, layout, responsive, spacing.
+- Composition owner: Buttons owns the two stable button slots, their order, direction, gap and group alignment; each slot delegates its label, destination, target behavior, style and optional standard arrow icon to the shared Button Foundation.
+- Content owner: Buttons owns only the two CTA configurations; it does not own business data, forms, submit behavior or arbitrary child blocks.
+- Layout owner: Buttons owns row/stack direction, desktop/mobile alignment, desktop/mobile gap, Fit/Fill group width and optional outer padding; parent blocks own composition order outside the group.
+- Icon policy: each slot can enable the shared Button Foundation's standard arrow icon; icon rendering remains decorative and does not replace the visible label.
+- Allowed children: none (`children: false` is internal registry metadata).
+- Composition policy: fixed compound Kernel; no nested blocks, nested sections, resource selection or arbitrary CSS controls.
+- Settings modules: Content/Actions (two label, link, new-tab, style and show-icon slot configurations), Layout (`direction`, `gap`, `width`, `alignment`, `mobile_stacking`, optional mobile alignment and gap) and optional Padding (`padding_top`, `padding_bottom`, `padding_left`, `padding_right`, `customize_mobile_padding`, plus mobile values).
+- Output: `.buttons-block` editor wrapper containing zero, one or two shared `.btn` primitives with local group layout custom properties.
+- Empty state: retain the editor-aware wrapper and render no interactive element when both labels are empty; a non-empty label without a link delegates to the shared disabled `button type="button"` state.
+- Accessibility: preserves native anchor/button semantics, visible focus, safe new-tab relationships, decorative icon markup and readable long-label wrapping; no nested interactive elements are introduced.
+- Runtime: Liquid and CSS only; no JavaScript lifecycle owner is required.
+
 ## Image
 
 - Type: `image`

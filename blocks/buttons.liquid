@@ -10,8 +10,8 @@
 {% enddoc %}
 
 {% liquid
-  assign button_1_valid = false
-  assign button_2_valid = false
+  assign button_1_has_content = false
+  assign button_2_has_content = false
   assign buttons_gap_mobile = block.settings.gap
   assign buttons_alignment = 'flex-start'
   assign buttons_alignment_mobile = 'flex-start'
@@ -25,12 +25,12 @@
   assign buttons_padding_left_mobile = block.settings.padding_left
   assign buttons_padding_right_mobile = block.settings.padding_right
 
-  if block.settings.button_1_label != blank and block.settings.button_1_link != blank
-    assign button_1_valid = true
+  if block.settings.button_1_label != blank
+    assign button_1_has_content = true
   endif
 
-  if block.settings.button_2_label != blank and block.settings.button_2_link != blank
-    assign button_2_valid = true
+  if block.settings.button_2_label != blank
+    assign button_2_has_content = true
   endif
 
   if block.settings.direction == 'stack'
@@ -53,6 +53,7 @@
   endif
 
   if block.settings.customize_mobile_alignment
+    assign buttons_gap_mobile = block.settings.gap_mobile
     if block.settings.alignment_mobile == 'center'
       assign buttons_alignment_mobile = 'center'
     elsif block.settings.alignment_mobile == 'end'
@@ -71,9 +72,8 @@
     assign buttons_padding_left_mobile = block.settings.padding_left_mobile
     assign buttons_padding_right_mobile = block.settings.padding_right_mobile
   endif
-%}
 
-{% if button_1_valid or button_2_valid %}
+%}
 <div
   class="buttons-block {{ buttons_direction_class }} {{ buttons_mobile_direction_class }}"
   data-block-width="{{ buttons_width_mode }}"
@@ -81,21 +81,38 @@
   style="--buttons-gap: {{ block.settings.gap }}px; --buttons-gap-mobile: {{ buttons_gap_mobile }}px; --buttons-width: {{ buttons_width }}; --buttons-alignment: {{ buttons_alignment }}; --buttons-alignment-mobile: {{ buttons_alignment_mobile }}; --buttons-padding-top: {{ block.settings.padding_top }}px; --buttons-padding-bottom: {{ block.settings.padding_bottom }}px; --buttons-padding-left: {{ block.settings.padding_left }}px; --buttons-padding-right: {{ block.settings.padding_right }}px; --buttons-padding-top-mobile: {{ buttons_padding_top_mobile }}px; --buttons-padding-bottom-mobile: {{ buttons_padding_bottom_mobile }}px; --buttons-padding-left-mobile: {{ buttons_padding_left_mobile }}px; --buttons-padding-right-mobile: {{ buttons_padding_right_mobile }}px;"
   {{ block.shopify_attributes }}
 >
-  {% if button_1_valid %}
-    {% render 'button', label: block.settings.button_1_label, url: block.settings.button_1_link, style: block.settings.button_1_style, open_in_new_tab: block.settings.button_1_open_in_new_tab, show_icon: block.settings.button_1_show_icon, icon: 'arrow', icon_position: 'after', icon_size: 'inherit' %}
+  {% if button_1_has_content %}
+    {% render 'button',
+      label: block.settings.button_1_label,
+      url: block.settings.button_1_link,
+      style: block.settings.button_1_style,
+      open_in_new_tab: block.settings.button_1_open_in_new_tab,
+      show_icon: block.settings.button_1_show_icon,
+      icon: 'arrow',
+      icon_position: 'after',
+      icon_size: 'inherit'
+    %}
   {% endif %}
-  {% if button_2_valid %}
-    {% render 'button', label: block.settings.button_2_label, url: block.settings.button_2_link, style: block.settings.button_2_style, open_in_new_tab: block.settings.button_2_open_in_new_tab, show_icon: block.settings.button_2_show_icon, icon: 'arrow', icon_position: 'after', icon_size: 'inherit' %}
+  {% if button_2_has_content %}
+    {% render 'button',
+      label: block.settings.button_2_label,
+      url: block.settings.button_2_link,
+      style: block.settings.button_2_style,
+      open_in_new_tab: block.settings.button_2_open_in_new_tab,
+      show_icon: block.settings.button_2_show_icon,
+      icon: 'arrow',
+      icon_position: 'after',
+      icon_size: 'inherit'
+    %}
   {% endif %}
 </div>
-{% endif %}
 
 {% stylesheet %}
   .buttons-block {
     align-items: center;
     display: flex;
     gap: var(--buttons-gap);
-    justify-content: var(--buttons-alignment);
+    justify-content: flex-start;
     max-width: 100%;
     min-width: 0;
     padding-block: var(--buttons-padding-top) var(--buttons-padding-bottom);
@@ -103,8 +120,14 @@
     width: var(--buttons-width);
   }
 
+  .buttons-block--row {
+    justify-content: var(--buttons-alignment);
+  }
+
   .buttons-block--stack {
+    align-items: var(--buttons-alignment);
     flex-direction: column;
+    justify-content: flex-start;
   }
 
   @media screen and (max-width: 767.98px) {
@@ -116,11 +139,15 @@
     }
 
     .buttons-block--mobile-stack {
+      align-items: var(--buttons-alignment-mobile);
       flex-direction: column;
+      justify-content: flex-start;
     }
 
     .buttons-block--mobile-row {
+      align-items: center;
       flex-direction: row;
+      justify-content: var(--buttons-alignment-mobile);
     }
   }
 {% endstylesheet %}
@@ -169,6 +196,7 @@
       { "value": "stack", "label": "t:options.mobile_stacking.stack" }
     ], "default": "stack" },
     { "type": "checkbox", "id": "customize_mobile_alignment", "label": "t:labels.customize_mobile", "default": false },
+    { "visible_if": "{{ block.settings.customize_mobile_alignment }}", "type": "range", "id": "gap_mobile", "label": "t:labels.gap_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 12 },
     { "visible_if": "{{ block.settings.customize_mobile_alignment and block.settings.width == 'fill' }}", "type": "select", "id": "alignment_mobile", "label": "t:labels.alignment_mobile", "options": [
       { "value": "start", "label": "t:options.alignment.left" },
       { "value": "center", "label": "t:options.alignment.center" },
@@ -180,7 +208,6 @@
     { "type": "range", "id": "padding_left", "label": "t:labels.padding_left", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
     { "type": "range", "id": "padding_right", "label": "t:labels.padding_right", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
     { "type": "checkbox", "id": "customize_mobile_padding", "label": "t:labels.customize_mobile", "default": false },
-    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "gap_mobile", "label": "t:labels.gap_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 12 },
     { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_top_mobile", "label": "t:labels.padding_top_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
     { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_bottom_mobile", "label": "t:labels.padding_bottom_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
     { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_left_mobile", "label": "t:labels.padding_left_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
