@@ -18,6 +18,43 @@
 - Accessibility: semantic tag is independently selectable from visual scale; the `html_tag` info guides heading order and the block does not create an extra heading when content is empty.
 - Runtime: Liquid and CSS only; no JavaScript lifecycle owner is required.
 
+## Text
+
+- Type: `text`
+- Category: Basic / Content Kernel
+- Role: render body copy, descriptions or longer rich text content without owning composition or business data.
+- Capabilities: content, typography, appearance, layout, responsive, spacing.
+- Content owner: Text owns its richtext content, including paragraph, link, emphasis and body list structure; the parent owns composition order and gap.
+- Typography owner: Theme Settings owns the Body font family, base size, line height, letter spacing and text case; the block selects only the registered `body-*` visual scale.
+- Layout owner: Text owns its own width, alignment and optional outer padding; it does not own parent flow or inter-block spacing.
+- Appearance owner: the optional `text_color` override is local to the block; an omitted value inherits the nearest scheme Body token (`--body-color`, with the current Foundation fallback `--color-text`).
+- Allowed children: none (`children: false` is internal registry metadata).
+- Composition policy: leaf Kernel; no `html_tag`, font selector, resource selection, nested blocks or arbitrary CSS controls.
+- Settings modules: Content (`text`), Typography (`text_size`), Appearance (`text_color`), Layout (`width`, `width_mobile`, `alignment`, `customize_mobile_alignment`, `alignment_mobile`) and optional Padding (`padding_top`, `padding_bottom`, `padding_left`, `padding_right`, `customize_mobile_padding`, plus mobile values).
+- Output: `.text-block` containing `.body-text` and one registered `.body-*` visual scale class around the richtext output.
+- Empty state: retain the editor-aware wrapper but render no richtext output when the content is empty.
+- Accessibility: preserves richtext paragraph/list structure, link purpose and readable wrapping; visual size is independent from semantic markup and no font family/role override is exposed.
+- Runtime: Liquid and CSS only; no JavaScript lifecycle owner is required.
+
+## Button
+
+- Type: `button`
+- Category: Basic / Content Kernel
+- Role: render one CTA link or action using the shared Button Foundation.
+- Capabilities: content, action, variant, icon, layout, responsive, spacing.
+- Content owner: Button owns only its label and optional destination; it does not own business data, forms, submit behavior or parent composition.
+- Action owner: a configured URL renders an anchor; an omitted URL renders an editor-safe `button type="button"` action state. New-tab behavior is limited to anchors and adds `rel="noopener noreferrer"`.
+- Visual owner: Theme Settings owns button typography, height, horizontal padding, disabled opacity, color tokens, focus/loading states, radius and border contract; the block selects only Primary, Secondary or Tertiary.
+- Layout owner: Button owns its own desktop/mobile Fit/Fill width and optional outer padding; the parent owns composition order and inter-block gap.
+- Icon policy: the optional icon uses the Button/Icon Foundation allow-list and only renders when `show_icon` is enabled; icon position and size are local controls.
+- Allowed children: none (`children: false` is internal registry metadata).
+- Composition policy: leaf Kernel; no nested blocks, nested sections, resource selection, submit/form ownership or arbitrary CSS controls.
+- Settings modules: Content (`button_label`, `button_link`, `button_style`, `button_open_in_new_tab`), Icon (`show_icon`, `icon`, `icon_position`, `icon_size`, `custom_icon_size`), Layout (`width`, `width_mobile`) and optional Padding (`padding_top`, `padding_bottom`, `padding_left`, `padding_right`, `customize_mobile_padding`, plus mobile values).
+- Output: `.button-block` editor wrapper containing one shared `.btn` primitive with a whitelisted variant and optional `.btn__icon`.
+- Empty state: retain the editor-aware wrapper but render no interactive element when the label is empty; a non-empty label without a link renders a disabled `button type="button"` action state.
+- Accessibility: preserves native anchor/button semantics, visible focus, safe new-tab relationship, non-interactive decorative icon markup and long-label wrapping; no nested interactive elements are introduced.
+- Runtime: Liquid and CSS only; no JavaScript lifecycle owner is required.
+
 ## Columns
 
 - Type: `columns`

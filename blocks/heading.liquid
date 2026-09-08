@@ -16,7 +16,9 @@
   assign heading_size = 'lg'
   assign heading_tag = 'h2'
   assign heading_width = 'fit-content'
+  assign heading_width_mode = 'fit'
   assign heading_width_mobile = 'fit-content'
+  assign heading_width_mobile_mode = heading_width_mode
   assign heading_alignment = 'start'
   assign heading_alignment_mobile = 'start'
   assign heading_padding_top_mobile = block.settings.padding_top
@@ -38,14 +40,19 @@
 
   if block.settings.width == 'fill'
     assign heading_width = '100%'
+    assign heading_width_mode = 'fill'
   endif
 
   if block.settings.customize_mobile_alignment
     if block.settings.width_mobile == 'fill'
       assign heading_width_mobile = '100%'
+      assign heading_width_mobile_mode = 'fill'
+    else
+      assign heading_width_mobile_mode = 'fit'
     endif
   else
     assign heading_width_mobile = heading_width
+    assign heading_width_mobile_mode = heading_width_mode
   endif
 
   if block.settings.alignment == 'center'
@@ -77,6 +84,8 @@
 
 <div
   class="heading-block"
+  data-block-width="{{ heading_width_mode }}"
+  data-block-width-mobile="{{ heading_width_mobile_mode }}"
   style="--heading-width: {{ heading_width }}; --heading-width-mobile: {{ heading_width_mobile }}; --heading-align: {{ heading_alignment }}; --heading-align-mobile: {{ heading_alignment_mobile }}; --heading-padding-top: {{ block.settings.padding_top }}px; --heading-padding-bottom: {{ block.settings.padding_bottom }}px; --heading-padding-left: {{ block.settings.padding_left }}px; --heading-padding-right: {{ block.settings.padding_right }}px; --heading-padding-top-mobile: {{ heading_padding_top_mobile }}px; --heading-padding-bottom-mobile: {{ heading_padding_bottom_mobile }}px; --heading-padding-left-mobile: {{ heading_padding_left_mobile }}px; --heading-padding-right-mobile: {{ heading_padding_right_mobile }}px;{% if block.settings.text_color != blank %} --heading-color: {{ block.settings.text_color | escape }};{% endif %}"
   {{ block.shopify_attributes }}
 >

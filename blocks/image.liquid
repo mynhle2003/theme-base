@@ -15,7 +15,9 @@
   assign image_ratio_desktop = 'auto'
   assign image_ratio_mobile = 'auto'
   assign image_width_desktop = 'fit-content'
+  assign image_width_desktop_mode = 'fit'
   assign image_width_mobile = 'fit-content'
+  assign image_width_mobile_mode = 'fit'
   assign image_max_width_desktop = 'none'
   assign image_max_width_mobile = 'none'
   assign image_padding_top_mobile = block.settings.padding_top
@@ -51,14 +53,18 @@
 
   if block.settings.width_desktop == 'fill'
     assign image_width_desktop = '100%'
+    assign image_width_desktop_mode = 'fill'
   elsif block.settings.width_desktop == 'custom'
     assign image_width_desktop = block.settings.width_custom_desktop | append: '%'
+    assign image_width_desktop_mode = 'custom'
   endif
 
   if block.settings.width_mobile == 'fill'
     assign image_width_mobile = '100%'
+    assign image_width_mobile_mode = 'fill'
   elsif block.settings.width_mobile == 'custom'
     assign image_width_mobile = block.settings.width_custom_mobile | append: '%'
+    assign image_width_mobile_mode = 'custom'
   endif
 
   if block.settings.limit_width_desktop
@@ -79,6 +85,8 @@
 
 <div
   class="image-block{% if block.settings.show_image_first_mobile %} image-block--mobile-first{% endif %}"
+  data-block-width="{{ image_width_desktop_mode }}"
+  data-block-width-mobile="{{ image_width_mobile_mode }}"
   style="--image-ratio-desktop: {{ image_ratio_desktop }}; --image-ratio-mobile: {{ image_ratio_mobile }}; --image-width-desktop: {{ image_width_desktop }}; --image-width-mobile: {{ image_width_mobile }}; --image-max-width-desktop: {{ image_max_width_desktop }}; --image-max-width-mobile: {{ image_max_width_mobile }}; --image-radius: {{ block.settings.corner_radius }}px; --image-padding-top: {{ block.settings.padding_top }}px; --image-padding-bottom: {{ block.settings.padding_bottom }}px; --image-padding-left: {{ block.settings.padding_left }}px; --image-padding-right: {{ block.settings.padding_right }}px; --image-padding-top-mobile: {{ image_padding_top_mobile }}px; --image-padding-bottom-mobile: {{ image_padding_bottom_mobile }}px; --image-padding-left-mobile: {{ image_padding_left_mobile }}px; --image-padding-right-mobile: {{ image_padding_right_mobile }}px;"
   {{ block.shopify_attributes }}
 >

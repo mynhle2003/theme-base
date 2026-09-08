@@ -14,7 +14,9 @@
   assign eyebrow_content = block.settings.text
   assign eyebrow_plain = eyebrow_content | strip_html | strip
   assign eyebrow_width = 'fit-content'
+  assign eyebrow_width_mode = 'fit'
   assign eyebrow_width_mobile = 'fit-content'
+  assign eyebrow_width_mobile_mode = eyebrow_width_mode
   assign eyebrow_alignment = 'start'
   assign eyebrow_alignment_mobile = 'start'
   assign eyebrow_justify = 'flex-start'
@@ -26,14 +28,19 @@
 
   if block.settings.width == 'fill'
     assign eyebrow_width = '100%'
+    assign eyebrow_width_mode = 'fill'
   endif
 
   if block.settings.customize_mobile_alignment
     if block.settings.width_mobile == 'fill'
       assign eyebrow_width_mobile = '100%'
+      assign eyebrow_width_mobile_mode = 'fill'
+    else
+      assign eyebrow_width_mobile_mode = 'fit'
     endif
   else
     assign eyebrow_width_mobile = eyebrow_width
+    assign eyebrow_width_mobile_mode = eyebrow_width_mode
   endif
 
   if block.settings.alignment == 'center'
@@ -75,6 +82,8 @@
 {% if eyebrow_plain != blank %}
   <div
     class="eyebrow-block eyebrow-text{% if block.settings.show_background %} eyebrow-block--surface color-{{ block.settings.color_scheme }}{% endif %}"
+    data-block-width="{{ eyebrow_width_mode }}"
+    data-block-width-mobile="{{ eyebrow_width_mobile_mode }}"
     style="--eyebrow-width: {{ eyebrow_width }}; --eyebrow-width-mobile: {{ eyebrow_width_mobile }}; --eyebrow-align: {{ eyebrow_alignment }}; --eyebrow-align-mobile: {{ eyebrow_alignment_mobile }}; --eyebrow-justify: {{ eyebrow_justify }}; --eyebrow-justify-mobile: {{ eyebrow_justify_mobile }}; --eyebrow-padding-top: {{ block.settings.padding_top }}px; --eyebrow-padding-bottom: {{ block.settings.padding_bottom }}px; --eyebrow-padding-left: {{ block.settings.padding_left }}px; --eyebrow-padding-right: {{ block.settings.padding_right }}px; --eyebrow-padding-top-mobile: {{ eyebrow_padding_top_mobile }}px; --eyebrow-padding-bottom-mobile: {{ eyebrow_padding_bottom_mobile }}px; --eyebrow-padding-left-mobile: {{ eyebrow_padding_left_mobile }}px; --eyebrow-padding-right-mobile: {{ eyebrow_padding_right_mobile }}px; --eyebrow-border-width: {{ block.settings.border_thickness }}px; --eyebrow-radius: {{ block.settings.corner_radius }}px;{% if block.settings.color != blank %} --eyebrow-color: {{ block.settings.color }};{% endif %}"
     {{ block.shopify_attributes }}
   >

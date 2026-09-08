@@ -61,6 +61,26 @@
 .body-xl { font-size: var(--font-body-xl); }
 .body-xxl { font-size: var(--font-body-xxl); }
 
+/* Keep the Shopify editor host aligned with a direct block's width mode. */
+.shopify-block:has(> [data-block-width='fit']) {
+  max-width: 100%;
+  width: fit-content;
+}
+
+.shopify-block:has(> [data-block-width='fill']) {
+  width: 100%;
+}
+
+@media screen and (max-width: 767.98px) {
+  .shopify-block:has(> [data-block-width-mobile='fit']) {
+    width: fit-content;
+  }
+
+  .shopify-block:has(> [data-block-width-mobile='fill']) {
+    width: 100%;
+  }
+}
+
 /* Button Foundation: shared by single and compound button blocks. */
 .btn {
   align-items: center;

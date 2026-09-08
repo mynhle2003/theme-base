@@ -13,7 +13,9 @@
 {% liquid
   assign video_ratio = 'auto'
   assign video_width_desktop = 'fit-content'
+  assign video_width_desktop_mode = 'fit'
   assign video_width_mobile = 'fit-content'
+  assign video_width_mobile_mode = 'fit'
   assign video_max_width_desktop = 'none'
   assign video_max_width_mobile = 'none'
   assign video_radius = 'var(--media-radius)'
@@ -39,14 +41,18 @@
 
   if block.settings.width_desktop == blank or block.settings.width_desktop == 'fill'
     assign video_width_desktop = '100%'
+    assign video_width_desktop_mode = 'fill'
   elsif block.settings.width_desktop == 'custom'
     assign video_width_desktop = block.settings.width_custom_desktop | append: '%'
+    assign video_width_desktop_mode = 'custom'
   endif
 
   if block.settings.width_mobile == blank or block.settings.width_mobile == 'fill'
     assign video_width_mobile = '100%'
+    assign video_width_mobile_mode = 'fill'
   elsif block.settings.width_mobile == 'custom'
     assign video_width_mobile = block.settings.width_custom_mobile | append: '%'
+    assign video_width_mobile_mode = 'custom'
   endif
 
   if block.settings.limit_width_desktop
@@ -93,6 +99,8 @@
 
 <div
   class="video-block{% if block.settings.show_video_first_mobile %} video-block--mobile-first{% endif %}"
+  data-block-width="{{ video_width_desktop_mode }}"
+  data-block-width-mobile="{{ video_width_mobile_mode }}"
   style="--video-ratio: {{ video_ratio }}; --video-width-desktop: {{ video_width_desktop }}; --video-width-mobile: {{ video_width_mobile }}; --video-max-width-desktop: {{ video_max_width_desktop }}; --video-max-width-mobile: {{ video_max_width_mobile }}; --video-radius: {{ video_radius }}; --video-padding-top: {{ block.settings.padding_top }}px; --video-padding-bottom: {{ block.settings.padding_bottom }}px; --video-padding-left: {{ block.settings.padding_left }}px; --video-padding-right: {{ block.settings.padding_right }}px; --video-padding-top-mobile: {{ video_padding_top_mobile }}px; --video-padding-bottom-mobile: {{ video_padding_bottom_mobile }}px; --video-padding-left-mobile: {{ video_padding_left_mobile }}px; --video-padding-right-mobile: {{ video_padding_right_mobile }}px;"
   {{ block.shopify_attributes }}
 >

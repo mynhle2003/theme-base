@@ -18,6 +18,8 @@
   assign buttons_direction_class = 'buttons-block--row'
   assign buttons_mobile_direction_class = 'buttons-block--mobile-stack'
   assign buttons_width = 'fit-content'
+  assign buttons_width_mode = 'fit'
+  assign buttons_width_mobile_mode = buttons_width_mode
   assign buttons_padding_top_mobile = block.settings.padding_top
   assign buttons_padding_bottom_mobile = block.settings.padding_bottom
   assign buttons_padding_left_mobile = block.settings.padding_left
@@ -41,6 +43,8 @@
 
   if block.settings.width == 'fill'
     assign buttons_width = '100%'
+    assign buttons_width_mode = 'fill'
+    assign buttons_width_mobile_mode = buttons_width_mode
     if block.settings.alignment == 'center'
       assign buttons_alignment = 'center'
     elsif block.settings.alignment == 'end'
@@ -72,6 +76,8 @@
 {% if button_1_valid or button_2_valid %}
 <div
   class="buttons-block {{ buttons_direction_class }} {{ buttons_mobile_direction_class }}"
+  data-block-width="{{ buttons_width_mode }}"
+  data-block-width-mobile="{{ buttons_width_mobile_mode }}"
   style="--buttons-gap: {{ block.settings.gap }}px; --buttons-gap-mobile: {{ buttons_gap_mobile }}px; --buttons-width: {{ buttons_width }}; --buttons-alignment: {{ buttons_alignment }}; --buttons-alignment-mobile: {{ buttons_alignment_mobile }}; --buttons-padding-top: {{ block.settings.padding_top }}px; --buttons-padding-bottom: {{ block.settings.padding_bottom }}px; --buttons-padding-left: {{ block.settings.padding_left }}px; --buttons-padding-right: {{ block.settings.padding_right }}px; --buttons-padding-top-mobile: {{ buttons_padding_top_mobile }}px; --buttons-padding-bottom-mobile: {{ buttons_padding_bottom_mobile }}px; --buttons-padding-left-mobile: {{ buttons_padding_left_mobile }}px; --buttons-padding-right-mobile: {{ buttons_padding_right_mobile }}px;"
   {{ block.shopify_attributes }}
 >

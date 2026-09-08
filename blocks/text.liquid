@@ -11,9 +11,11 @@
 {% liquid
   assign text_content = block.settings.text
   assign text_plain = text_content | strip_html | strip
-  assign text_size = block.settings.text_size | default: 'md'
+  assign text_size = 'md'
   assign text_width = 'fit-content'
+  assign text_width_mode = 'fit'
   assign text_width_mobile = 'fit-content'
+  assign text_width_mobile_mode = text_width_mode
   assign text_alignment = 'start'
   assign text_alignment_mobile = 'start'
   assign text_padding_top_mobile = block.settings.padding_top
@@ -21,16 +23,26 @@
   assign text_padding_left_mobile = block.settings.padding_left
   assign text_padding_right_mobile = block.settings.padding_right
 
+  case block.settings.text_size
+    when 'xs', 'sm', 'md', 'lg', 'xl', 'xxl'
+      assign text_size = block.settings.text_size
+  endcase
+
   if block.settings.width == 'fill'
     assign text_width = '100%'
+    assign text_width_mode = 'fill'
   endif
 
   if block.settings.customize_mobile_alignment
     if block.settings.width_mobile == 'fill'
       assign text_width_mobile = '100%'
+      assign text_width_mobile_mode = 'fill'
+    else
+      assign text_width_mobile_mode = 'fit'
     endif
   else
     assign text_width_mobile = text_width
+    assign text_width_mobile_mode = text_width_mode
   endif
 
   if block.settings.alignment == 'center'
@@ -61,7 +73,9 @@
 
 <div
   class="text-block body-text body-{{ text_size }}"
-  style="--text-width: {{ text_width }}; --text-width-mobile: {{ text_width_mobile }}; --text-align: {{ text_alignment }}; --text-align-mobile: {{ text_alignment_mobile }}; --text-padding-top: {{ block.settings.padding_top }}px; --text-padding-bottom: {{ block.settings.padding_bottom }}px; --text-padding-left: {{ block.settings.padding_left }}px; --text-padding-right: {{ block.settings.padding_right }}px; --text-padding-top-mobile: {{ text_padding_top_mobile }}px; --text-padding-bottom-mobile: {{ text_padding_bottom_mobile }}px; --text-padding-left-mobile: {{ text_padding_left_mobile }}px; --text-padding-right-mobile: {{ text_padding_right_mobile }}px;{% if block.settings.text_color != blank %} --text-color: {{ block.settings.text_color }};{% endif %}"
+  data-block-width="{{ text_width_mode }}"
+  data-block-width-mobile="{{ text_width_mobile_mode }}"
+  style="--text-width: {{ text_width }}; --text-width-mobile: {{ text_width_mobile }}; --text-align: {{ text_alignment }}; --text-align-mobile: {{ text_alignment_mobile }}; --text-padding-top: {{ block.settings.padding_top }}px; --text-padding-bottom: {{ block.settings.padding_bottom }}px; --text-padding-left: {{ block.settings.padding_left }}px; --text-padding-right: {{ block.settings.padding_right }}px; --text-padding-top-mobile: {{ text_padding_top_mobile }}px; --text-padding-bottom-mobile: {{ text_padding_bottom_mobile }}px; --text-padding-left-mobile: {{ text_padding_left_mobile }}px; --text-padding-right-mobile: {{ text_padding_right_mobile }}px;{% if block.settings.text_color != blank %} --text-color: {{ block.settings.text_color | escape }};{% endif %}"
   {{ block.shopify_attributes }}
 >
   {% if text_plain != blank %}
@@ -71,7 +85,7 @@
 
 {% stylesheet %}
   .text-block {
-    color: var(--text-color, var(--color-text));
+    color: var(--text-color, var(--body-color, var(--color-text)));
     max-width: 100%;
     min-width: 0;
     padding-block: var(--text-padding-top) var(--text-padding-bottom);

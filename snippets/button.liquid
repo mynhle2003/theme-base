@@ -11,16 +11,36 @@
   @param {string} [icon_size] - Icon size mode: inherit or custom
   @param {number} [custom_icon_size] - Custom icon size in pixels
   @param {string} [width] - Optional button width: fit or fill
-  @param {boolean} [customize_mobile_alignment] - Whether mobile width is customized
   @param {string} [width_mobile] - Optional mobile button width: fit or fill
 {% enddoc %}
 
 {% liquid
-  assign button_style = style | default: 'primary'
-  assign button_icon = icon | default: 'arrow'
-  assign button_icon_position = icon_position | default: 'after'
-  assign button_icon_size = icon_size | default: 'inherit'
+  assign button_style = 'primary'
+  assign button_icon = 'arrow'
+  assign button_icon_position = 'after'
+  assign button_icon_size = 'inherit'
   assign button_custom_icon_size = custom_icon_size | default: 16
+
+  case style
+    when 'primary', 'secondary', 'tertiary'
+      assign button_style = style
+  endcase
+
+  case icon
+    when 'arrow', 'chevron', 'plus'
+      assign button_icon = icon
+  endcase
+
+  case icon_position
+    when 'before', 'after'
+      assign button_icon_position = icon_position
+  endcase
+
+  case icon_size
+    when 'inherit', 'custom'
+      assign button_icon_size = icon_size
+  endcase
+
   assign button_classes = 'btn btn--' | append: button_style
 
   if url == blank
@@ -31,12 +51,10 @@
     assign button_classes = button_classes | append: ' btn--fill'
   endif
 
-  if customize_mobile_alignment
-    if width_mobile == 'fill'
-      assign button_classes = button_classes | append: ' btn--fill-mobile'
-    else
-      assign button_classes = button_classes | append: ' btn--fit-mobile'
-    endif
+  if width_mobile == 'fill'
+    assign button_classes = button_classes | append: ' btn--fill-mobile'
+  elsif width_mobile == 'fit'
+    assign button_classes = button_classes | append: ' btn--fit-mobile'
   endif
 %}
 
