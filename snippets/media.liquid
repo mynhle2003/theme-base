@@ -15,8 +15,12 @@
   @param {string} [external_video_url] - External video URL
   @param {string} [video_source] - Video source: uploaded or external_url
   @param {boolean} [autoplay] - Whether uploaded video autoplays
+  @param {boolean} [muted] - Whether uploaded video is muted
   @param {boolean} [loop] - Whether uploaded video loops
   @param {boolean} [controls] - Whether uploaded video shows native controls
+  @param {image} [poster_image] - Optional uploaded video poster image
+  @param {string} [video_id] - Optional video element ID
+  @param {string} [video_title] - Optional external video iframe title
   @param {string} [placeholder_class] - Empty media placeholder class
 {% enddoc %}
 
@@ -33,9 +37,10 @@
   {% endif %}
 {% elsif media_type == 'video' %}
   {% if video_source == 'uploaded' and video != blank %}
-    {{ video | video_tag: autoplay: autoplay, loop: loop, muted: autoplay, controls: controls, loading: 'lazy' }}
+    {% assign video_poster = poster_image | image_url: width: 1600 %}
+    {{ video | video_tag: id: video_id, autoplay: autoplay, loop: loop, muted: muted, controls: controls, loading: 'lazy', poster: video_poster }}
   {% elsif video_source == 'external_url' and external_video_url != blank %}
-    {{ external_video_url | external_video_tag }}
+    {{ external_video_url | external_video_tag: id: video_id, title: video_title, loading: 'lazy' }}
   {% else %}
     <div class="{{ placeholder_class }}" aria-hidden="true">{{ 'image' | placeholder_svg_tag }}</div>
   {% endif %}

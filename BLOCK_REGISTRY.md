@@ -73,6 +73,23 @@
 - Accessibility: custom alt text overrides the file alt, blank alt falls back to the file alt or an empty decorative alt, linked images use a semantic anchor, and placeholders are hidden from assistive technology.
 - Runtime: Liquid and CSS only; no JavaScript lifecycle owner is required.
 
+## Video
+
+- Type: `video`
+- Category: Basic / Media Kernel
+- Role: render one uploaded or externally hosted video with controlled playback and responsive media geometry.
+- Capabilities: media, playback, poster, play button, responsive ratio, width, max width, radius, spacing.
+- Content owner: Video owns only its selected source, playback settings and optional cover image; it does not own business data, resource loops or parent composition.
+- Media owner: the shared media renderer owns native uploaded-video and external-player markup; the block owns source selection, poster, ratio, width and local presentation settings.
+- Playback owner: the block owns autoplay, loop and uploaded-video play/pause toggle behavior. Autoplay is muted and is suppressed when the visitor prefers reduced motion; external players retain their provider controls.
+- Allowed children: none (`children: false` is internal registry metadata).
+- Composition policy: leaf Media Kernel; no nested blocks, nested sections, business data, arbitrary HTML or resource selection.
+- Settings modules: Content (`video_source`, `video`, `external_video_url`, `autoplay`, `loop_video`, `cover_image`, `show_video_first_mobile`), Play button (`play_button_size_desktop`, `play_button_size_mobile`, `play_button_background_color`, `play_button_icon_color`), Size (`aspect_ratio`, `custom_aspect_ratio`, independent desktop/mobile width, custom width, limit width and max width), Border (`corner_radius`) and optional Padding (`padding_top`, `padding_bottom`, `padding_left`, `padding_right`, `customize_mobile_padding`, plus mobile values).
+- Output: `.video-block` editor wrapper containing shared video markup or a safe placeholder, local ratio/width/max-width/radius custom properties and an uploaded-video play button when media exists.
+- Empty state: retain the editor-aware wrapper and render a non-interactive placeholder when the selected source is missing; never render both source fields.
+- Accessibility: the custom play button has a visible focus state and accessible label, external iframes receive a title, autoplay is muted, and reduced-motion preferences prevent forced playback.
+- Runtime: Liquid/CSS plus an idempotent block-local JavaScript lifecycle that supports section load/unload and Theme Editor re-render.
+
 ## Columns
 
 - Type: `columns`

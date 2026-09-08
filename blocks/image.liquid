@@ -142,7 +142,7 @@
   }
 
   .image-block__placeholder {
-    background: var(--color-border);
+    background: #f6f6f7;
     color: var(--color-text);
   }
 
@@ -199,7 +199,7 @@
     ], "default": "fill" },
     { "visible_if": "{{ block.settings.width_desktop == 'custom' }}", "type": "range", "id": "width_custom_desktop", "label": "t:labels.custom_width", "min": 1, "max": 100, "step": 1, "unit": "%", "default": 100 },
     { "type": "checkbox", "id": "limit_width_desktop", "label": "t:labels.limit_width", "default": false },
-    { "visible_if": "{{ block.settings.limit_width_desktop }}", "type": "range", "id": "max_width_desktop", "label": "t:labels.max_width", "min": 0, "max": 1600, "step": 8, "unit": "px", "default": 1600 },
+    { "visible_if": "{{ block.settings.limit_width_desktop }}", "type": "range", "id": "max_width_desktop", "label": "t:labels.max_width", "min": 0, "max": 1600, "step": 16, "unit": "px", "default": 1600 },
     { "type": "header", "content": "t:general.mobile" },
     { "type": "select", "id": "image_ratio_mobile", "label": "t:labels.image_ratio", "options": [
       { "value": "auto", "label": "t:options.image_ratio.auto" },
@@ -217,7 +217,7 @@
     ], "default": "fill" },
     { "visible_if": "{{ block.settings.width_mobile == 'custom' }}", "type": "range", "id": "width_custom_mobile", "label": "t:labels.custom_width", "min": 1, "max": 100, "step": 1, "unit": "%", "default": 100 },
     { "type": "checkbox", "id": "limit_width_mobile", "label": "t:labels.limit_width", "default": false },
-    { "visible_if": "{{ block.settings.limit_width_mobile }}", "type": "range", "id": "max_width_mobile", "label": "t:labels.max_width", "min": 0, "max": 1600, "step": 8, "unit": "px", "default": 1600 },
+    { "visible_if": "{{ block.settings.limit_width_mobile }}", "type": "range", "id": "max_width_mobile", "label": "t:labels.max_width", "min": 0, "max": 1600, "step": 16, "unit": "px", "default": 1600 },
     { "type": "header", "content": "t:general.border" },
     { "type": "range", "id": "corner_radius", "label": "t:labels.corner_radius", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
     { "type": "header", "content": "t:general.padding" },
