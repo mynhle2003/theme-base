@@ -24,12 +24,22 @@
   assign swatch_width_value = width | default: settings.swatch_width
   assign swatch_width_mobile_value = width_mobile | default: settings.swatch_width_mobile
   assign swatch_height_ratio_value = height_ratio | default: settings.swatch_height_ratio
+  assign swatch_height_ratio_css = swatch_height_ratio_value
+  if swatch_height_ratio_value == '1:1'
+    assign swatch_height_ratio_css = 1
+  elsif swatch_height_ratio_value == '3:2'
+    assign swatch_height_ratio_css = 0.6667
+  elsif swatch_height_ratio_value == '2:1'
+    assign swatch_height_ratio_css = 0.5
+  elsif swatch_height_ratio_value == '3:1'
+    assign swatch_height_ratio_css = 0.3333
+  endif
 %}
 
 <span
   class="swatch{% if selected %} swatch--selected swatch--selected-{{ selected_style_value }}{% endif %}{% if disabled %} swatch--unavailable{% endif %}"
   aria-hidden="true"
-  style="--swatch-width: {{ swatch_width_value | default: 32 }}px; --swatch-width-mobile: {{ swatch_width_mobile_value | default: 36 }}px; --swatch-height-ratio: {{ swatch_height_ratio_value | default: 1 }};{% if swatch_color %} --swatch-color: {{ swatch_color }};{% endif %}"
+  style="--swatch-width: {{ swatch_width_value | default: 40 }}px; --swatch-width-mobile: {{ swatch_width_mobile_value | default: 40 }}px; --swatch-height-ratio: {{ swatch_height_ratio_css | default: 0.3333 }};{% if swatch_color %} --swatch-color: {{ swatch_color }};{% endif %}"
 >
   {% if swatch_type_value == 'variant_image' and swatch_image %}
     {{ swatch_image | image_url: width: 96, height: 96, crop: 'center' | image_tag: loading: 'lazy' }}

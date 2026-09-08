@@ -1454,84 +1454,57 @@
     "name": "t:general.swatches",
     "settings": [
       {
-        "type": "checkbox",
-        "id": "swatch_enabled",
-        "label": "t:labels.swatch_enabled",
-        "default": true
-      },
-      {
-        "type": "text",
-        "id": "swatch_option_name",
-        "label": "t:labels.swatch_option_name",
-        "default": "Color"
-      },
-      {
         "type": "select",
         "id": "swatch_style",
         "label": "t:labels.swatch_style",
+        "info": "t:info.configure_product_card_swatches",
         "options": [
           { "value": "color", "label": "t:options.swatch_style.color" },
-          {
-            "value": "variant_image",
-            "label": "t:options.swatch_style.variant_image"
-          },
-          { "value": "button", "label": "t:options.swatch_style.button" },
-          { "value": "dropdown", "label": "t:options.swatch_style.dropdown" }
+          { "value": "variant_image", "label": "t:options.swatch_style.variant_image" }
         ],
         "default": "color"
       },
       {
         "type": "range",
         "id": "swatch_width",
-        "label": "t:labels.swatch_width",
+        "label": "t:labels.desktop_width",
         "min": 24,
         "max": 64,
         "step": 4,
         "unit": "px",
-        "default": 32
+        "default": 40
       },
       {
         "type": "range",
         "id": "swatch_width_mobile",
-        "label": "t:labels.swatch_width_mobile",
-        "min": 28,
-        "max": 72,
+        "label": "t:labels.mobile_width",
+        "min": 24,
+        "max": 64,
         "step": 4,
         "unit": "px",
-        "default": 36
-      },
-      {
-        "type": "range",
-        "id": "swatch_height_ratio",
-        "label": "t:labels.swatch_height_ratio",
-        "min": 0.5,
-        "max": 2,
-        "step": 0.1,
-        "default": 1
+        "default": 40
       },
       {
         "type": "select",
-        "id": "swatch_shape",
-        "label": "t:labels.swatch_shape",
+        "id": "swatch_height_ratio",
+        "label": "t:labels.height_ratio",
         "options": [
-          { "value": "square", "label": "t:options.swatch_shape.square" },
-          { "value": "round", "label": "t:options.swatch_shape.round" },
-          { "value": "pill", "label": "t:options.swatch_shape.pill" }
+          { "value": "1:1", "label": "1:1" },
+          { "value": "3:2", "label": "3:2" },
+          { "value": "2:1", "label": "2:1" },
+          { "value": "3:1", "label": "3:1" }
         ],
-        "default": "round"
+        "default": "3:1"
       },
       {
         "type": "select",
         "id": "swatch_selected_style",
-        "label": "t:labels.swatch_selected_style",
+        "label": "t:labels.selected_variant_style",
         "options": [
-          {
-            "value": "outline",
-            "label": "t:options.swatch_selected_style.outline"
-          },
-          { "value": "ring", "label": "t:options.swatch_selected_style.ring" }
+          { "value": "border", "label": "t:options.product_card_swatch_selected_style.border" },
+          { "value": "underline", "label": "t:options.product_card_swatch_selected_style.underline" }
         ],
-        "default": "outline"
+        "default": "underline"
       }
     ]
   },

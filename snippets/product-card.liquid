@@ -95,8 +95,8 @@
 
       {% render 'price', item: product, show_from: true %}
 
-      {% if settings.product_card_show_swatches and settings.swatch_enabled %}
-        {% assign swatch_option_name = settings.swatch_option_name | downcase | strip %}
+      {% if settings.product_card_show_swatches %}
+        {% assign swatch_option_name = 'color' %}
         {% for option in product.options_with_values %}
           {% assign current_option_name = option.name | downcase | strip %}
           {% if current_option_name == swatch_option_name %}

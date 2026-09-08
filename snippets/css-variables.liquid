@@ -134,10 +134,10 @@
     --variant-group-gap: {{ settings.variant_group_gap | default: 20 }}px;
     --variant-label-spacing: {{ settings.variant_label_spacing | default: 12 }}px;
     --variant-item-gap: {{ settings.variant_gap | default: 8 }}px;
-    --swatch-width: {{ settings.swatch_width | default: 32 }}px;
-    --swatch-width-mobile: {{ settings.swatch_width_mobile | default: 36 }}px;
-    --swatch-height-ratio: {{ settings.swatch_height_ratio | default: 1 }};
-    --swatch-radius: {% if settings.swatch_shape == 'round' %}50%{% elsif settings.swatch_shape == 'pill' %}999px{% else %}var(--input-radius){% endif %};
+    --swatch-width: {{ settings.swatch_width | default: 40 }}px;
+    --swatch-width-mobile: {{ settings.swatch_width_mobile | default: 40 }}px;
+    --swatch-height-ratio: {% if settings.swatch_height_ratio == '3:2' %}0.6667{% elsif settings.swatch_height_ratio == '2:1' %}0.5{% elsif settings.swatch_height_ratio == '3:1' %}0.3333{% else %}1{% endif %};
+    --swatch-radius: var(--input-radius);
     --badge-font-size: {{ settings.badge_font_size | default: 12 }}px;
     --badge-radius: {{ settings.badge_radius | default: 4 }}px;
     --badge-padding: {{ settings.badge_padding | default: 4 }}px;
