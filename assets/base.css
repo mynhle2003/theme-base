@@ -215,8 +215,8 @@ textarea[readonly] {
 /* Overlay Foundation: shared backdrop appearance and layering contract. */
 dialog::backdrop,
 .overlay-backdrop {
-  background: color-mix(in srgb, var(--overlay-color) calc(var(--overlay-opacity) * 100%), transparent);
-  backdrop-filter: blur(var(--overlay-blur));
+  background: color-mix(in srgb, var(--overlay-color) 45%, transparent);
+  backdrop-filter: blur(var(--overlay-backdrop-blur));
   z-index: var(--z-index-overlay);
 }
 

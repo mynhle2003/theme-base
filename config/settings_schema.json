@@ -1886,30 +1886,75 @@
     "name": "t:general.overlay_layering",
     "settings": [
       {
-        "type": "color",
-        "id": "overlay_color",
-        "label": "t:labels.overlay_color",
-        "default": "#000000"
+        "type": "color_scheme",
+        "id": "overlay_color_scheme",
+        "label": "t:labels.color_scheme",
+        "default": "scheme-1"
+      },
+      {
+        "type": "select",
+        "id": "overlay_title_size",
+        "label": "t:labels.title_size",
+        "options": [
+          { "value": "h3", "label": "t:options.overlay_title_size.heading_3" },
+          { "value": "h4", "label": "t:options.overlay_title_size.heading_4" },
+          { "value": "h5", "label": "t:options.overlay_title_size.heading_5" },
+          { "value": "h6", "label": "t:options.overlay_title_size.heading_6" }
+        ],
+        "default": "h4"
       },
       {
         "type": "range",
-        "id": "overlay_opacity",
-        "label": "t:labels.overlay_opacity",
+        "id": "backdrop_blur",
+        "label": "t:labels.backdrop_blur",
         "min": 0,
-        "max": 80,
-        "step": 5,
-        "unit": "%",
-        "default": 45
-      },
-      {
-        "type": "range",
-        "id": "overlay_blur",
-        "label": "t:labels.overlay_blur",
-        "min": 0,
-        "max": 20,
+        "max": 40,
         "step": 1,
         "unit": "px",
-        "default": 0
+        "default": 20
+      },
+      {
+        "type": "header",
+        "content": "t:general.popovers"
+      },
+      {
+        "type": "range",
+        "id": "popover_border_thickness",
+        "label": "t:labels.border_thickness",
+        "min": 0,
+        "max": 4,
+        "step": 1,
+        "unit": "px",
+        "default": 1
+      },
+      {
+        "type": "select",
+        "id": "popover_shadow",
+        "label": "t:labels.shadow",
+        "options": [
+          { "value": "none", "label": "t:options.overlay_shadow.none" },
+          { "value": "extra_small", "label": "t:options.overlay_shadow.extra_small" },
+          { "value": "small", "label": "t:options.overlay_shadow.small" },
+          { "value": "medium", "label": "t:options.overlay_shadow.medium" },
+          { "value": "large", "label": "t:options.overlay_shadow.large" }
+        ],
+        "default": "none"
+      },
+      {
+        "type": "header",
+        "content": "t:general.drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "drawer_padding_desktop",
+        "label": "t:labels.drawer_padding_desktop",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "drawer_padding_mobile",
+        "label": "t:labels.drawer_padding_mobile",
+        "default": false
       }
     ]
   },

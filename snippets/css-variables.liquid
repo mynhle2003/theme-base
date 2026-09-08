@@ -5,6 +5,7 @@
   assign body_font = settings.font_body_family
   assign heading_font = settings.font_heading_family | default: body_font
   assign accent_font = settings.font_accent_family | default: body_font
+  assign overlay_color_scheme = settings.color_schemes | where: 'id', settings.overlay_color_scheme | first
 
   if default_color_scheme != blank
     assign active_background = default_color_scheme.settings.background
@@ -160,9 +161,15 @@
     --sale-price-color: var(--badge-sale-price);
     --icon-thickness: {{ settings.icon_thickness | default: 120 | times: 0.0125 }}px;
     --icon-stroke-width: {{ settings.icon_thickness | default: 120 | times: 0.0125 }};
-    --overlay-color: {{ settings.overlay_color | default: '#000000' }};
-    --overlay-opacity: {{ settings.overlay_opacity | default: 45 | divided_by: 100.0 }};
-    --overlay-blur: {{ settings.overlay_blur | default: 0 }}px;
+    --overlay-color-scheme: {{ overlay_color_scheme.id | default: settings.default_color_scheme.id | default: 'scheme-1' }};
+    --overlay-color: {{ overlay_color_scheme.settings.shadow | default: active_foreground }};
+    --overlay-title-size: {% case settings.overlay_title_size %}{% when 'h3' %}var(--font-heading-lg){% when 'h5' %}var(--font-heading-sm){% when 'h6' %}var(--font-heading-xs){% else %}var(--font-heading-md){% endcase %};
+    --overlay-backdrop-blur: {{ settings.backdrop_blur | default: 20 }}px;
+    --overlay-border: {{ settings.popover_border_thickness | default: 1 }}px;
+    --overlay-shadow: {% case settings.popover_shadow %}{% when 'extra_small' %}0 1px 2px color-mix(in srgb, var(--overlay-color) 8%, transparent){% when 'small' %}0 2px 6px color-mix(in srgb, var(--overlay-color) 12%, transparent){% when 'medium' %}0 8px 20px color-mix(in srgb, var(--overlay-color) 16%, transparent){% when 'large' %}0 16px 40px color-mix(in srgb, var(--overlay-color) 20%, transparent){% else %}none{% endcase %};
+    --drawer-padding-desktop: {% if settings.drawer_padding_desktop %}var(--page-margin-desktop){% else %}0px{% endif %};
+    --drawer-padding-mobile: {% if settings.drawer_padding_mobile %}var(--page-margin-mobile){% else %}0px{% endif %};
+    --drawer-padding: var(--drawer-padding-mobile);
     --navigation-radius: {% case settings.navigation_radius_style %}{% when 'slightly_rounded' %}var(--radius-slight){% when 'rounded' %}var(--radius-rounded){% when 'pill' %}var(--radius-pill){% else %}var(--radius-square){% endcase %};
     --tag-radius: {% case settings.tag_radius_style %}{% when 'slightly_rounded' %}var(--radius-slight){% when 'rounded' %}var(--radius-rounded){% when 'pill' %}var(--radius-pill){% else %}var(--radius-square){% endcase %};
     --drawer-radius: {% case settings.drawer_radius_style %}{% when 'slightly_rounded' %}var(--radius-slight){% when 'rounded' %}var(--radius-rounded){% when 'extra_rounded' %}var(--radius-extra){% else %}var(--radius-square){% endcase %};
@@ -225,6 +232,7 @@
   @media screen and (min-width: 750px) and (max-width: 989.98px) {
     :root {
       --page-margin: max(var(--page-margin-min), var(--page-margin-tablet));
+      --drawer-padding: var(--drawer-padding-desktop);
     }
   }
 
