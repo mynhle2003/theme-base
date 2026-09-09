@@ -323,6 +323,8 @@
       top: calc(100% + 0.5rem);
       z-index: var(--z-index-dropdown);
     }
+    .site-header__desktop-nav .navigation__item:hover > .navigation__list--nested,
+    .site-header__desktop-nav .navigation__item:focus-within > .navigation__list--nested { display: grid; }
     .site-header__desktop-nav .navigation__list--nested .navigation__list--nested { inset-inline-start: calc(100% + 0.5rem); top: -1rem; }
   }
 
@@ -515,7 +517,8 @@
     {
       "type": "link_list",
       "id": "menu",
-      "label": "t:labels.menu"
+      "label": "t:labels.menu",
+      "default": "main-menu"
     },
     {
       "type": "select",

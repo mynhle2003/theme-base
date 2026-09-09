@@ -13,6 +13,22 @@ body {
   min-height: 100svh;
 }
 
+.skip-link {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  inset-inline-start: var(--page-margin);
+  padding: 0.75rem 1rem;
+  position: fixed;
+  top: 0.5rem;
+  transform: translateY(-200%);
+  transition: transform var(--motion-duration-fast) var(--motion-ease);
+  z-index: calc(var(--z-index-modal) + 1);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
 html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
   overflow: hidden;
 }

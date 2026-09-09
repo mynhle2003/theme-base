@@ -68,6 +68,7 @@
                 type="button"
                 aria-controls="{{ disclosure_id | escape }}"
                 aria-expanded="{% if link.child_active %}true{% else %}false{% endif %}"
+                aria-haspopup="true"
                 aria-label="{% if link.child_active %}{{ 'navigation.collapse' | t: name: link.title | escape }}{% else %}{{ 'navigation.expand' | t: name: link.title | escape }}{% endif %}"
                 data-navigation-toggle
                 data-label-expanded="{{ 'navigation.collapse' | t: name: link.title | escape }}"

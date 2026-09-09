@@ -28,9 +28,13 @@
   </head>
 
   <body class="color-{{ settings.default_color_scheme.id | default: 'scheme-1' }}{% unless settings.motion_block_animations %} motion--block-animations-disabled{% endunless %}{% unless settings.motion_image_zoom_on_hover %} motion--image-zoom-disabled{% endunless %}">
+    <a class="skip-link" href="#MainContent">{{ 'navigation.skip_to_content' | t }}</a>
+
     {% sections 'header-group' %}
 
-    {{ content_for_layout }}
+    <main id="MainContent" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
 
     {% sections 'footer-group' %}
 
