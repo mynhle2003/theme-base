@@ -1,22 +1,48 @@
 {% doc %}
-  Renders the shared variant picker for the product context supplied by its
-  parent product surface. The shared snippet owns option controls,
-  availability and variant-change runtime state; the parent product form owns
-  submission state.
+  Renders the Variant Picker block for the product context supplied by its
+  parent product form. The shared picker owns option controls, availability and
+  selected-variant events; the parent owns submission, price, media and cart state.
+
+  The block owns only size-chart configuration, responsive padding and its
+  editor-safe missing-context state. It has no product picker, variant loop or
+  child blocks.
 
   @example
   {% content_for 'block', type: 'variant-picker', id: 'variant-picker' %}
 {% enddoc %}
 
 {% liquid
-  assign picker_product = product
+  assign picker_product = closest.product | default: product
+  assign picker_padding_top_mobile = block.settings.padding_top
+  assign picker_padding_bottom_mobile = block.settings.padding_bottom
+  assign picker_padding_left_mobile = block.settings.padding_left
+  assign picker_padding_right_mobile = block.settings.padding_right
+
+  if block.settings.customize_mobile_padding
+    assign picker_padding_top_mobile = block.settings.padding_top_mobile
+    assign picker_padding_bottom_mobile = block.settings.padding_bottom_mobile
+    assign picker_padding_left_mobile = block.settings.padding_left_mobile
+    assign picker_padding_right_mobile = block.settings.padding_right_mobile
+  endif
 %}
 
-<div class="variant-picker-block" {{ block.shopify_attributes }}>
+<div
+  class="variant-picker-block"
+  style="--variant-picker-padding-top: {{ block.settings.padding_top }}px; --variant-picker-padding-bottom: {{ block.settings.padding_bottom }}px; --variant-picker-padding-left: {{ block.settings.padding_left }}px; --variant-picker-padding-right: {{ block.settings.padding_right }}px; --variant-picker-padding-top-mobile: {{ picker_padding_top_mobile }}px; --variant-picker-padding-bottom-mobile: {{ picker_padding_bottom_mobile }}px; --variant-picker-padding-left-mobile: {{ picker_padding_left_mobile }}px; --variant-picker-padding-right-mobile: {{ picker_padding_right_mobile }}px;"
+  {{ block.shopify_attributes }}
+>
   {% if picker_product != blank %}
-    {% render 'variant-picker', product: picker_product %}
+    {% render 'variant-picker',
+      product: picker_product,
+      id_prefix: block.id,
+      size_chart_option_name: block.settings.size_chart_option_name,
+      size_chart_page: block.settings.size_chart_page,
+      size_chart_desktop_layout: block.settings.size_chart_desktop_layout,
+      size_chart_width: block.settings.size_chart_width,
+      size_chart_mobile_layout: block.settings.size_chart_mobile_layout
+    %}
   {% else %}
-    <p class="variant-picker-block__empty" role="status">
+    <p class="variant-picker-block__empty" role="status" aria-live="polite">
       {{ 'blocks.variant_picker.empty' | t }}
     </p>
   {% endif %}
@@ -25,6 +51,8 @@
 {% stylesheet %}
   .variant-picker-block {
     min-width: 0;
+    padding-block: var(--variant-picker-padding-top) var(--variant-picker-padding-bottom);
+    padding-inline: var(--variant-picker-padding-left) var(--variant-picker-padding-right);
     width: 100%;
   }
 
@@ -33,13 +61,58 @@
     font-size: var(--font-body-sm);
     margin: 0;
     opacity: 0.75;
+    overflow-wrap: anywhere;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .variant-picker-block {
+      padding-block: var(--variant-picker-padding-top-mobile) var(--variant-picker-padding-bottom-mobile);
+      padding-inline: var(--variant-picker-padding-left-mobile) var(--variant-picker-padding-right-mobile);
+    }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.variant_picker",
-  "settings": [],
-  "presets": [{ "name": "t:general.variant_picker" }]
+  "settings": [
+    { "type": "paragraph", "content": "t:info.variant_picker_theme_settings" },
+    { "type": "header", "content": "t:general.size_chart" },
+    { "type": "text", "id": "size_chart_option_name", "label": "t:labels.size_chart_option_name", "default": "Size" },
+    { "type": "page", "id": "size_chart_page", "label": "t:labels.size_chart_page", "info": "t:info.size_chart_page" },
+    { "type": "header", "content": "t:general.size_chart_layout" },
+    {
+      "type": "select",
+      "id": "size_chart_desktop_layout",
+      "label": "t:labels.size_chart_desktop_layout",
+      "options": [
+        { "value": "popup", "label": "t:options.size_chart_desktop_layout.popup" },
+        { "value": "drawer", "label": "t:options.size_chart_desktop_layout.drawer" }
+      ],
+      "default": "popup"
+    },
+    { "type": "range", "id": "size_chart_width", "label": "t:labels.size_chart_width", "min": 320, "max": 1000, "step": 20, "unit": "px", "default": 600 },
+    {
+      "type": "select",
+      "id": "size_chart_mobile_layout",
+      "label": "t:labels.size_chart_mobile_layout",
+      "options": [
+        { "value": "bottom_sheet", "label": "t:options.size_chart_mobile_layout.bottom_sheet" },
+        { "value": "drawer", "label": "t:options.size_chart_mobile_layout.drawer" }
+      ],
+      "default": "bottom_sheet"
+    },
+    { "type": "header", "content": "t:general.padding" },
+    { "type": "range", "id": "padding_top", "label": "t:labels.padding_top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "t:labels.padding_bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_left", "label": "t:labels.padding_left", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_right", "label": "t:labels.padding_right", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "checkbox", "id": "customize_mobile_padding", "label": "t:labels.customize_mobile_padding", "default": false },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_top_mobile", "label": "t:labels.padding_top_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_bottom_mobile", "label": "t:labels.padding_bottom_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_left_mobile", "label": "t:labels.padding_left_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_right_mobile", "label": "t:labels.padding_right_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
+  ],
+  "presets": [{ "name": "t:general.variant_picker", "category": "t:general.commerce" }]
 }
 {% endschema %}

@@ -19,12 +19,16 @@
   <p>{{ product.description }}</p>
 </div>
 
-<div class="product-form form__wrapper">
+<div class="product-form form__wrapper" data-update-media="{{ settings.variant_picker_update_media }}">
   {% form 'product', product %}
     {% assign current_variant = product.selected_or_first_available_variant %}
     <input type="hidden" name="id" value="{{ current_variant.id }}">
 
-    {% render 'variant-picker', product: product %}
+    {% if section.blocks.size > 0 %}
+      {% content_for 'blocks' %}
+    {% else %}
+      {% render 'variant-picker', product: product %}
+    {% endif %}
 
     <label class="form__field">
       <span>{{ 'products.product.quantity' | t }}</span>
@@ -86,7 +90,8 @@
 
     const picker = productForm.querySelector('[data-variant-picker]');
     const priceBlock = productForm.parentElement?.previousElementSibling?.querySelector('[data-price]');
-    if (!picker || !priceBlock) return;
+    if (!picker) return;
+    const shouldUpdateMedia = productForm.dataset.updateMedia === 'true';
 
     const formatMoney = (cents) => {
       if (window.Shopify?.formatMoney) return window.Shopify.formatMoney(cents);
@@ -95,11 +100,34 @@
       return new Intl.NumberFormat(document.documentElement.lang, { style: 'currency', currency }).format(cents / 100);
     };
 
+    const updateMedia = (variant) => {
+      if (!shouldUpdateMedia) return;
+
+      const section = productForm.closest('.shopify-section');
+      const mediaId = variant?.featured_media?.id;
+      section?.querySelectorAll('[data-product-media]').forEach((media) => {
+        media.hidden = Boolean(mediaId) && media.dataset.mediaId !== String(mediaId);
+      });
+    };
+
     picker.addEventListener('variant:change', (event) => {
-      const variant = event.detail.variant;
+      const variant = event.detail?.variant;
+      updateMedia(variant);
+      if (!priceBlock) return;
+
       const currentPrice = priceBlock.querySelector('[data-price-current]');
       const comparePrice = priceBlock.querySelector('[data-price-compare]');
-      if (!variant || !currentPrice) return;
+      if (!currentPrice) return;
+
+      if (!variant) {
+        currentPrice.textContent = '';
+        if (comparePrice) {
+          comparePrice.hidden = true;
+          comparePrice.textContent = '';
+        }
+        priceBlock.classList.remove('price--sale');
+        return;
+      }
 
       currentPrice.textContent = formatMoney(variant.price);
       currentPrice.classList.toggle('price__current--sale', variant.compare_at_price > variant.price);
@@ -117,6 +145,8 @@
 {% schema %}
 {
   "name": "t:general.product",
+  "max_blocks": 1,
+  "blocks": [{ "type": "variant-picker" }],
   "settings": [],
   "disabled_on": {
     "groups": ["header", "footer"]

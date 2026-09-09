@@ -2,7 +2,7 @@
   assign cart_drawer_id = 'CartDrawer'
   assign cart_form_id = 'CartDrawerForm-' | append: section.id
   assign overlay_color_scheme_id = settings.overlay_color_scheme | default: settings.default_color_scheme
-  assign cart_dialog_class = 'overlay-dialog--cart-drawer color-' | append: overlay_color_scheme_id
+  assign cart_dialog_class = 'overlay-dialog--cart color-' | append: overlay_color_scheme_id
   assign cart_dialog_label = 'cart.title' | t
   assign cart_dialog_close_label = 'general.close' | t
 %}
@@ -32,26 +32,19 @@
     label: cart_dialog_label,
     content: cart_drawer_content,
     class: cart_dialog_class,
+    presentation: 'drawer',
+    mobile_presentation: 'bottom_sheet',
     close_label: cart_dialog_close_label
   %}
 </div>
 
 {% stylesheet %}
-  .overlay-dialog--cart-drawer {
-    border-radius: var(--drawer-radius) 0 0 var(--drawer-radius);
-    height: 100dvh;
-    margin: 0 0 0 auto;
-    max-height: none;
-    max-width: min(32rem, 100vw);
-    transform: translateX(100%);
-    transition: transform var(--motion-duration) var(--motion-ease);
+  .overlay-dialog--cart {
+    --overlay-dialog-width: 32rem;
   }
 
-  .overlay-dialog--cart-drawer[open] { transform: translateX(0); }
-  .overlay-dialog--cart-drawer .overlay-dialog__panel { display: flex; flex-direction: column; height: 100%; }
-  .overlay-dialog--cart-drawer .overlay-dialog__header { flex: 0 0 auto; }
-  .overlay-dialog--cart-drawer .overlay-dialog__title { font-size: var(--overlay-title-size); }
-  .overlay-dialog--cart-drawer .overlay-dialog__content { display: flex; flex: 1 1 auto; min-height: 0; padding: 0; }
+  .overlay-dialog--cart .overlay-dialog__title { font-size: var(--overlay-title-size); }
+  .overlay-dialog--cart .overlay-dialog__content { display: flex; min-height: 0; padding: 0; }
 
   .cart-drawer__content {
     display: flex;
@@ -70,22 +63,6 @@
 
   .cart-drawer__status { margin: 0; padding: 0 var(--drawer-padding) 1rem; }
 
-  @media screen and (max-width: 767.98px) {
-    .overlay-dialog--cart-drawer {
-      border-radius: var(--bottom-sheet-radius) var(--bottom-sheet-radius) 0 0;
-      height: min(90dvh, 48rem);
-      margin: auto 0 0;
-      max-width: none;
-      transform: translateY(100%);
-      width: 100%;
-    }
-
-    .overlay-dialog--cart-drawer[open] { transform: translateY(0); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .overlay-dialog--cart-drawer { transition: none; }
-  }
 {% endstylesheet %}
 
 {% javascript %}

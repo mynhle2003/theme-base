@@ -1,33 +1,97 @@
 {% doc %}
-  Renders product option controls and keeps the selected variant in sync with a product form.
+  Renders product option controls and emits the selected variant to the parent
+  product form. The parent owns product context, submission, price, media and
+  cart state; this component owns only option controls and availability.
 
   @param {product} product - The product whose options should be rendered.
+  @param {string} [id_prefix] - Stable instance prefix for control and dialog IDs.
+  @param {string} [size_chart_option_name] - Option name that exposes the chart trigger.
+  @param {page} [size_chart_page] - Page or dynamic page source used for the chart.
+  @param {string} [size_chart_desktop_layout] - Desktop chart layout: popup or drawer.
+  @param {number} [size_chart_width] - Desktop chart width in pixels.
+  @param {string} [size_chart_mobile_layout] - Mobile chart layout: bottom_sheet or drawer.
 
   @example
   {% render 'variant-picker', product: product %}
 {% enddoc %}
 
+{% liquid
+  assign picker_id = id_prefix | default: product.id | default: 'product'
+  assign picker_id = picker_id | handleize
+  assign normalized_size_chart_option_name = size_chart_option_name | default: 'Size' | append: '' | downcase | strip
+  assign resolved_size_chart_page = size_chart_page
+
+  if size_chart_page != blank
+    if size_chart_page.title == blank
+      assign resolved_size_chart_page = pages[size_chart_page]
+    endif
+  endif
+
+  assign has_size_chart_page = false
+  if resolved_size_chart_page != blank
+    if resolved_size_chart_page.title != blank
+      assign has_size_chart_page = true
+    endif
+  endif
+
+  assign size_chart_desktop_layout_value = size_chart_desktop_layout | default: 'popup'
+  assign size_chart_width_value = size_chart_width | default: 600
+  assign size_chart_mobile_layout_value = size_chart_mobile_layout | default: 'bottom_sheet'
+  assign size_chart_mobile_presentation = 'drawer'
+  if size_chart_mobile_layout_value == 'bottom_sheet'
+    assign size_chart_mobile_presentation = 'bottom_sheet'
+  endif
+  assign size_chart_label = resolved_size_chart_page.title
+  if size_chart_label == blank
+    assign size_chart_label = 'products.product.size_chart' | t
+  endif
+  assign size_chart_close_label = 'general.close' | t
+%}
+
 <variant-picker
   class="variant-picker"
   data-variant-picker
-  data-update-media="{{ settings.variant_picker_update_media }}"
+  data-picker-invalid-label="{{ 'blocks.variant_picker.invalid_selection' | t | escape }}"
+  data-picker-unavailable-label="{{ 'blocks.variant_picker.unavailable_variant' | t | escape }}"
+  data-swatch-selected-style="{{ settings.swatch_selected_style | escape }}"
 >
   {% for option in product.options_with_values %}
     {% assign option_index = option.position | minus: 1 %}
     {% assign selected_value = product.selected_or_first_available_variant.options[option_index] %}
-    {% assign swatch_option_name = 'color' %}
-    {% assign current_option_name = option.name | downcase | strip %}
+    {% assign current_option_name = option.name | append: '' | downcase | strip %}
     {% assign is_swatch_option = false %}
-    {% if current_option_name == swatch_option_name %}
+    {% if current_option_name == 'color' %}
       {% assign is_swatch_option = true %}
+    {% endif %}
+    {% assign option_has_size_chart = false %}
+    {% if has_size_chart_page %}
+      {% if current_option_name == normalized_size_chart_option_name %}
+        {% assign option_has_size_chart = true %}
+      {% endif %}
     {% endif %}
 
     <fieldset class="variant-option" data-variant-option-group="{{ option.position }}">
-      <legend class="variant-option__label">{{ option.name | escape }}</legend>
+      <legend class="variant-option__header">
+        <span class="variant-option__label">{{ option.name | escape }}</span>
+        {% if option_has_size_chart %}
+          {% assign size_chart_dialog_id = 'VariantSizeChart-' | append: picker_id | append: '-' | append: option.position %}
+          <button
+            class="variant-size-chart__trigger"
+            type="button"
+            data-dialog-open="{{ size_chart_dialog_id | escape }}"
+            aria-controls="{{ size_chart_dialog_id | escape }}"
+            aria-haspopup="dialog"
+          >
+            {{ 'products.product.size_chart' | t }}
+          </button>
+        {% endif %}
+      </legend>
 
       {% if settings.variant_picker_style == 'dropdown' %}
+        {% assign select_id = 'variant-' | append: picker_id | append: '-' | append: option.position | append: '-select' %}
         <select
           class="variant-option__control"
+          id="{{ select_id | escape }}"
           name="option{{ option.position }}"
           data-variant-option="{{ option.position }}"
           aria-label="{{ option.name | escape }}"
@@ -41,30 +105,33 @@
         <div class="variant-option__values">
           {% for value in option.values %}
             {% assign value_label = value.label | default: value %}
-            {% assign input_id = 'variant-' | append: option.position | append: '-' | append: value_label | handleize %}
+            {% assign input_id = 'variant-' | append: picker_id | append: '-' | append: option.position | append: '-' | append: value_label | handleize %}
             {% assign value_variant_image = blank %}
             {% assign value_selected = false %}
             {% if value_label == selected_value %}
               {% assign value_selected = true %}
             {% endif %}
             {% for variant in product.variants %}
-              {% if variant.options[option_index] == value_label and variant.featured_image %}
-                {% assign value_variant_image = variant.featured_image %}
-                {% break %}
+              {% if variant.options[option_index] == value_label %}
+                {% if variant.featured_image %}
+                  {% assign value_variant_image = variant.featured_image %}
+                  {% break %}
+                {% endif %}
               {% endif %}
             {% endfor %}
             <input
               class="variant-option__input"
               type="radio"
-              id="{{ input_id }}"
+              id="{{ input_id | escape }}"
               name="option{{ option.position }}"
               value="{{ value_label | escape }}"
               data-variant-option="{{ option.position }}"
-              {% if value_label == selected_value %}checked{% endif %}
+              aria-label="{{ option.name | escape }}: {{ value_label | escape }}"
+              {% if value_selected %}checked{% endif %}
             >
-            <label class="variant-option__button-label{% if is_swatch_option %} variant-option__button-label--swatch{% endif %}" for="{{ input_id }}">
+            <label class="variant-option__button-label{% if is_swatch_option %} variant-option__button-label--swatch{% endif %}" for="{{ input_id | escape }}">
               {% if is_swatch_option %}
-                {% render 'swatch', label: value_label, swatch: value.swatch, variant_image: value_variant_image, selected: value_selected %}
+                {% render 'swatch', label: value_label, swatch: value.swatch, variant_image: value_variant_image, selected: value_selected, swatch_type: settings.swatch_style, selected_style: settings.swatch_selected_style %}
               {% else %}
                 {{ value_label | escape }}
               {% endif %}
@@ -72,8 +139,20 @@
           {% endfor %}
         </div>
       {% endif %}
+
+      {% if option_has_size_chart %}
+        {% capture size_chart_content %}
+          <div class="variant-size-chart__page">
+            {{ resolved_size_chart_page.content }}
+          </div>
+        {% endcapture %}
+        {% assign size_chart_dialog_style = '--overlay-dialog-width: ' | append: size_chart_width_value | append: 'px;' %}
+        {% render 'dialog', id: size_chart_dialog_id, label: size_chart_label, content: size_chart_content, class: 'variant-size-chart', style: size_chart_dialog_style, presentation: size_chart_desktop_layout_value, mobile_presentation: size_chart_mobile_presentation, close_form: false, close_label: size_chart_close_label %}
+      {% endif %}
     </fieldset>
   {% endfor %}
+
+  <p class="variant-picker__status" data-variant-picker-status role="status" aria-live="polite" hidden></p>
 
   <script type="application/json" data-variant-picker-data>
     {{ product.variants | json }}
@@ -95,9 +174,22 @@
     padding: 0;
   }
 
+  .variant-option__header {
+    align-items: baseline;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
   .variant-option__label {
+    flex: 1 1 auto;
     font: inherit;
     font-weight: 600;
+    min-width: 0;
+    margin: 0;
   }
 
   .variant-option__values {
@@ -131,8 +223,10 @@
     color: var(--color-background);
   }
 
+  .variant-option__button-label:focus-visible,
   .variant-option__input:focus-visible + .variant-option__button-label,
-  .variant-option__control:focus-visible {
+  .variant-option__control:focus-visible,
+  .variant-size-chart__trigger:focus-visible {
     outline: 2px solid var(--input-focus-color);
     outline-offset: 2px;
   }
@@ -147,7 +241,41 @@
     min-height: var(--variant-height);
   }
 
-  @media screen and (max-width: 749px) {
+  .variant-picker__status {
+    color: var(--form-error-color, var(--color-text));
+    font-size: var(--font-body-sm);
+    margin: 0;
+  }
+
+  .variant-size-chart__trigger {
+    background: transparent;
+    border: 0;
+    color: var(--color-text);
+    cursor: pointer;
+    flex: 0 0 auto;
+    font: inherit;
+    font-size: var(--font-body-sm);
+    margin-inline-start: auto;
+    min-height: 2.75rem;
+    padding: 0.25rem 0;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .variant-size-chart {
+    --input-background-color: var(--color-background);
+    --input-border-color: var(--color-border);
+    --input-focus-color: var(--color-heading);
+  }
+
+  .variant-size-chart__page {
+    overflow-wrap: anywhere;
+  }
+
+  .variant-size-chart__page > :first-child { margin-block-start: 0; }
+  .variant-size-chart__page > :last-child { margin-block-end: 0; }
+
+  @media screen and (max-width: 767.98px) {
     .variant-option__button-label,
     .variant-option__control {
       min-height: var(--variant-height-mobile);
@@ -158,16 +286,32 @@
 {% javascript %}
   class VariantPicker extends HTMLElement {
     connectedCallback() {
-      if (this.dataset.initialized === 'true') return;
+      if (this.initialized) return;
 
-      this.dataset.initialized = 'true';
+      const variantData = this.querySelector('[data-variant-picker-data]');
+      if (!variantData) return;
+
+      try {
+        this.variants = JSON.parse(variantData.textContent);
+      } catch (error) {
+        return;
+      }
+
+      this.initialized = true;
       this.form = this.closest('form');
-      this.variants = JSON.parse(this.querySelector('[data-variant-picker-data]').textContent);
       this.idInput = this.form?.querySelector('input[name="id"]');
       this.submitButton = this.form?.querySelector('[type="submit"]');
-
-      this.addEventListener('change', () => this.update());
+      this.status = this.querySelector('[data-variant-picker-status]');
+      this.changeHandler = () => this.update();
+      this.addEventListener('change', this.changeHandler);
       this.update();
+    }
+
+    disconnectedCallback() {
+      if (!this.initialized) return;
+
+      this.removeEventListener('change', this.changeHandler);
+      this.initialized = false;
     }
 
     getSelections() {
@@ -183,21 +327,27 @@
       return this.variants.find((variant) => variant.options.every((value, index) => value === selections[index]));
     }
 
+    isValueAvailable(selections, position, value) {
+      return this.variants.some((variant) => {
+        if (!variant.available || variant.options[position] !== value) return false;
+        return variant.options.every((optionValue, index) => index === position || !selections[index] || optionValue === selections[index]);
+      });
+    }
+
     updateAvailability(selections) {
       this.querySelectorAll('[data-variant-option-group]').forEach((group) => {
         const position = Number(group.dataset.variantOptionGroup) - 1;
 
         group.querySelectorAll('[data-variant-option]').forEach((control) => {
-          const candidate = [...selections];
-          candidate[position] = control.value;
-          const available = this.variants.some((variant) => {
-            if (!variant.available || variant.options[position] !== control.value) return false;
-            return variant.options.every((value, index) => index === position || !selections[index] || value === selections[index]);
-          });
+          if (control.tagName === 'SELECT') {
+            [...control.options].forEach((option) => {
+              option.disabled = !this.isValueAvailable(selections, position, option.value);
+            });
+            return;
+          }
 
+          const available = this.isValueAvailable(selections, position, control.value);
           control.disabled = !available;
-          if (control.tagName === 'OPTION') return;
-
           const label = this.querySelector(`label[for="${control.id}"]`);
           label?.classList.toggle('is-disabled', !available);
           label?.setAttribute('aria-disabled', String(!available));
@@ -205,24 +355,49 @@
       });
     }
 
-    updateMedia(variant) {
-      if (this.dataset.updateMedia !== 'true') return;
+    updateSelectedState() {
+      const selectedStyle = this.dataset.swatchSelectedStyle;
+      const selectedClasses = ['swatch--selected-outline', 'swatch--selected-ring', 'swatch--selected-border', 'swatch--selected-underline'];
 
-      const section = this.closest('.shopify-section');
-      const mediaId = variant?.featured_media?.id;
-      section?.querySelectorAll('[data-product-media]').forEach((media) => {
-        media.hidden = Boolean(mediaId) && media.dataset.mediaId !== String(mediaId);
+      this.querySelectorAll('.variant-option__input').forEach((control) => {
+        const label = this.querySelector(`label[for="${control.id}"]`);
+        const swatch = label?.querySelector('.swatch');
+        if (!swatch) return;
+
+        swatch.classList.toggle('swatch--selected', control.checked);
+        selectedClasses.forEach((className) => swatch.classList.remove(className));
+        if (control.checked && selectedStyle) swatch.classList.add(`swatch--selected-${selectedStyle}`);
       });
+    }
+
+    updateStatus(variant) {
+      if (!this.status) return;
+
+      if (!variant) {
+        this.status.textContent = this.dataset.pickerInvalidLabel || '';
+        this.status.hidden = false;
+        return;
+      }
+
+      if (!variant.available) {
+        this.status.textContent = this.dataset.pickerUnavailableLabel || '';
+        this.status.hidden = false;
+        return;
+      }
+
+      this.status.textContent = '';
+      this.status.hidden = true;
     }
 
     update() {
       const selections = this.getSelections();
       const variant = this.getVariant(selections);
+      this.updateSelectedState();
       this.updateAvailability(selections);
+      this.updateStatus(variant);
 
-      if (this.idInput && variant) this.idInput.value = variant.id;
+      if (this.idInput) this.idInput.value = variant?.id || '';
       if (this.submitButton) this.submitButton.disabled = !variant || !variant.available;
-      this.updateMedia(variant);
       this.dispatchEvent(new CustomEvent('variant:change', { bubbles: true, detail: { variant } }));
     }
   }

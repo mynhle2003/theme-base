@@ -4,7 +4,7 @@
   assign search_results_id = 'SearchDrawerResults-' | append: section.id
   assign search_color_scheme = settings.overlay_color_scheme | default: settings.default_color_scheme
   assign search_color_scheme_id = search_color_scheme.id | default: search_color_scheme | default: 'scheme-1'
-  assign search_dialog_class = 'overlay-dialog--search-drawer color-' | append: search_color_scheme_id
+  assign search_dialog_class = 'overlay-dialog--search color-' | append: search_color_scheme_id
   assign search_dialog_label = 'search.title' | t
   assign search_dialog_close_label = 'general.close' | t
 %}
@@ -74,25 +74,23 @@
     label: search_dialog_label,
     content: search_drawer_content,
     class: search_dialog_class,
+    presentation: 'popup',
+    mobile_presentation: 'popup',
     close_label: search_dialog_close_label
   %}
 </div>
 
 {% stylesheet %}
-  .overlay-dialog--search-drawer {
+  .overlay-dialog--search {
     --input-background-color: var(--color-background);
     --input-border-color: var(--color-border);
     --input-focus-color: var(--color-heading);
-    border: 1px solid var(--color-border);
-    border-radius: var(--drawer-radius);
-    margin: 5vh auto auto;
-    max-height: min(80vh, 48rem);
-    max-width: min(56rem, calc(100vw - (2 * var(--page-margin))));
+    --overlay-dialog-width: 56rem;
   }
 
-  .overlay-dialog--search-drawer .overlay-dialog__header { border-block-end: 1px solid var(--color-border); }
-  .overlay-dialog--search-drawer .overlay-dialog__title { font-size: var(--overlay-title-size); }
-  .overlay-dialog--search-drawer .overlay-dialog__content { padding: 0; }
+  .overlay-dialog--search .overlay-dialog__title { font-size: var(--overlay-title-size); }
+  .overlay-dialog--search .overlay-dialog__header { border-block-end: 1px solid var(--color-border); }
+  .overlay-dialog--search .overlay-dialog__content { padding: 0; }
 
   .search-drawer { display: grid; gap: 1rem; padding: var(--page-margin); }
   .search-drawer__form { display: grid; gap: 0.5rem; }
@@ -118,17 +116,12 @@
   }
 
   @media screen and (max-width: 479.98px) {
-    .overlay-dialog--search-drawer {
-      margin: var(--page-margin) auto auto;
-      max-width: calc(100vw - (2 * var(--page-margin)));
-    }
-
     .search-drawer__field { grid-template-columns: 1fr; }
     .search-drawer__submit { width: 100%; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .overlay-dialog--search-drawer { scroll-behavior: auto; }
+    .overlay-dialog--search { scroll-behavior: auto; }
   }
 {% endstylesheet %}
 
