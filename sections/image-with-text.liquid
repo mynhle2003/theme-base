@@ -1,0 +1,222 @@
+{% liquid
+  assign section_color_scheme = section.settings.color_scheme | default: settings.default_color_scheme.id | default: 'scheme-1'
+  assign media_position_class = 'image-with-text--media-left'
+  assign content_alignment = 'flex-start'
+  assign content_text_alignment = 'start'
+  assign vertical_alignment = 'start'
+
+  if section.settings.media_position == 'right'
+    assign media_position_class = 'image-with-text--media-right'
+  endif
+
+  case section.settings.content_alignment
+    when 'center'
+      assign content_alignment = 'center'
+      assign content_text_alignment = 'center'
+    when 'end'
+      assign content_alignment = 'flex-end'
+      assign content_text_alignment = 'end'
+  endcase
+
+  case section.settings.vertical_alignment
+    when 'center'
+      assign vertical_alignment = 'center'
+    when 'end'
+      assign vertical_alignment = 'end'
+  endcase
+%}
+
+<section
+  class="image-with-text-section full-width color-{{ section_color_scheme | escape }} {{ media_position_class }}"
+  style="--image-with-text-gap-desktop: {{ section.settings.gap_desktop }}px; --image-with-text-gap-mobile: {{ section.settings.gap_mobile }}px; --image-with-text-content-alignment: {{ content_alignment }}; --image-with-text-content-text-alignment: {{ content_text_alignment }}; --image-with-text-vertical-alignment: {{ vertical_alignment }}; --image-with-text-padding-top: {{ section.settings.padding_top }}px; --image-with-text-padding-bottom: {{ section.settings.padding_bottom }}px; --image-with-text-padding-left: {{ section.settings.padding_left }}px; --image-with-text-padding-right: {{ section.settings.padding_right }}px;"
+>
+  <div class="image-with-text__inner">
+    <div class="image-with-text__media">
+      {% if section.settings.image != blank %}
+        {% render 'media',
+          media_type: 'image',
+          image: section.settings.image,
+          mobile_image: section.settings.mobile_image,
+          alt: section.settings.image.alt,
+          image_class: 'image-with-text__asset',
+          image_wrapper_class: 'image-with-text__media-frame',
+          placeholder_class: 'image-with-text__placeholder'
+        %}
+      {% else %}
+        {% render 'media',
+          media_type: 'image',
+          placeholder_class: 'image-with-text__placeholder'
+        %}
+      {% endif %}
+    </div>
+
+    <div class="image-with-text__content">
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .image-with-text-section {
+    background: var(--gradient-background, var(--color-background));
+    color: var(--color-text);
+    padding-block: var(--image-with-text-padding-top) var(--image-with-text-padding-bottom);
+    width: 100%;
+  }
+
+  .image-with-text__inner {
+    align-items: var(--image-with-text-vertical-alignment);
+    display: grid;
+    gap: var(--image-with-text-gap-desktop);
+    grid-template-areas: 'media content';
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    margin-inline: auto;
+    max-width: var(--page-width);
+    padding-inline: var(--image-with-text-padding-left) var(--image-with-text-padding-right);
+    width: calc(100% - (var(--page-margin) * 2));
+  }
+
+  .image-with-text--media-right .image-with-text__inner {
+    grid-template-areas: 'content media';
+  }
+
+  .image-with-text__media,
+  .image-with-text__content {
+    min-width: 0;
+  }
+
+  .image-with-text__media {
+    grid-area: media;
+  }
+
+  .image-with-text__content {
+    align-items: var(--image-with-text-content-alignment);
+    display: flex;
+    flex-direction: column;
+    grid-area: content;
+    justify-content: var(--image-with-text-vertical-alignment);
+    min-height: 100%;
+    text-align: var(--image-with-text-content-text-alignment);
+  }
+
+  .image-with-text__media-frame,
+  .image-with-text__placeholder {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .image-with-text__asset {
+    display: block;
+    height: auto;
+    width: 100%;
+  }
+
+  .image-with-text__placeholder {
+    background: color-mix(in srgb, var(--color-text) 8%, transparent);
+    color: var(--color-text);
+    min-height: 20rem;
+  }
+
+  .image-with-text__placeholder svg {
+    height: 100%;
+    min-height: 20rem;
+    width: 100%;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .image-with-text__inner,
+    .image-with-text--media-right .image-with-text__inner {
+      gap: var(--image-with-text-gap-mobile);
+      grid-template-areas: 'media' 'content';
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .image-with-text__content {
+      min-height: 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.image_with_text",
+  "tag": "section",
+  "class": "image-with-text-section-host",
+  "max_blocks": 4,
+  "blocks": [
+    { "type": "eyebrow" },
+    { "type": "heading" },
+    { "type": "text" },
+    { "type": "buttons" }
+  ],
+  "settings": [
+    { "type": "header", "content": "t:general.media" },
+    { "type": "image_picker", "id": "image", "label": "t:labels.image", "info": "t:info.image_with_text_image_required" },
+    { "type": "image_picker", "id": "mobile_image", "label": "t:labels.mobile_image", "info": "t:info.image_with_text_mobile_image_fallback" },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "t:labels.media_position",
+      "options": [
+        { "value": "left", "label": "t:options.media_position.left" },
+        { "value": "right", "label": "t:options.media_position.right" }
+      ],
+      "default": "left"
+    },
+    { "type": "header", "content": "t:general.layout" },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "t:labels.content_alignment",
+      "options": [
+        { "value": "start", "label": "t:options.alignment.start" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "end", "label": "t:options.alignment.end" }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment",
+      "label": "t:labels.vertical_alignment",
+      "options": [
+        { "value": "start", "label": "t:options.alignment.start" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "end", "label": "t:options.alignment.end" }
+      ],
+      "default": "center"
+    },
+    { "type": "range", "id": "gap_desktop", "label": "t:labels.gap_desktop", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 48 },
+    { "type": "range", "id": "gap_mobile", "label": "t:labels.gap_mobile", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 24 },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:labels.color_scheme", "default": "scheme-1" },
+    { "type": "header", "content": "t:general.padding" },
+    { "type": "range", "id": "padding_top", "label": "t:labels.padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "t:labels.padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_left", "label": "t:labels.padding_left", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_right", "label": "t:labels.padding_right", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
+  ],
+  "presets": [
+    {
+      "name": "t:general.image_with_text",
+      "category": "t:general.basic",
+      "settings": {
+        "media_position": "left",
+        "content_alignment": "start",
+        "vertical_alignment": "center",
+        "gap_desktop": 48,
+        "gap_mobile": 24,
+        "color_scheme": "scheme-1",
+        "padding_top": 64,
+        "padding_bottom": 64
+      },
+      "blocks": [
+        { "type": "eyebrow" },
+        { "type": "heading" },
+        { "type": "text" },
+        { "type": "buttons" }
+      ]
+    }
+  ]
+}
+{% endschema %}
