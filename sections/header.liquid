@@ -83,13 +83,14 @@
           class="site-header__action site-header__cart"
           href="{{ routes.cart_url }}"
           data-dialog-open="CartDrawer"
+          data-cart-trigger
+          data-cart-label="{{ 'header.cart' | t | escape }}"
+          data-cart-count-template="{{ 'header.cart_count' | t: count: '__COUNT__' | escape }}"
           aria-label="{{ 'header.cart' | t | escape }}{% if cart.item_count > 0 %}, {{ 'header.cart_count' | t: count: cart.item_count | escape }}{% endif %}"
         >
           <span class="site-header__action-icon" aria-hidden="true">
             {{ 'icon-cart.svg' | inline_asset_content }}
-            {% if cart.item_count > 0 %}
-              <span class="site-header__cart-count">{{ cart.item_count }}</span>
-            {% endif %}
+            <span class="site-header__cart-count" data-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span>
           </span>
           <span class="site-header__action-label">{{ 'header.cart' | t }}</span>
         </a>

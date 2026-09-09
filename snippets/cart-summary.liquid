@@ -24,6 +24,11 @@
   <div class="cart-summary__actions">
     <a class="btn btn--secondary" href="{{ cart_continue_url }}">{{ 'cart.continue_shopping' | t }}</a>
     {% if cart.item_count > 0 %}
+      {% if form_id != blank %}
+        <button class="btn btn--secondary" type="submit" name="update" form="{{ form_id | escape }}" data-cart-update>
+          {{ 'cart.update' | t }}
+        </button>
+      {% endif %}
       <button class="btn btn--primary btn--fill" type="submit" name="checkout"{% if form_id != blank %} form="{{ form_id | escape }}"{% endif %}>
         {{ 'cart.checkout' | t }}
       </button>

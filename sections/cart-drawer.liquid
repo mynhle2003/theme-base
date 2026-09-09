@@ -1,0 +1,335 @@
+{% liquid
+  assign cart_drawer_id = 'CartDrawer'
+  assign cart_form_id = 'CartDrawerForm-' | append: section.id
+  assign overlay_color_scheme_id = settings.overlay_color_scheme | default: settings.default_color_scheme
+  assign cart_dialog_class = 'overlay-dialog--cart-drawer color-' | append: overlay_color_scheme_id
+  assign cart_dialog_label = 'cart.title' | t
+  assign cart_dialog_close_label = 'general.close' | t
+%}
+
+{% capture cart_drawer_content %}
+  <div class="cart-drawer__content" data-cart-drawer-content>
+    <form id="{{ cart_form_id }}" class="cart-drawer__form" action="{{ routes.cart_url }}" method="post" data-cart-form>
+      {% render 'cart-items', cart: cart, form_id: cart_form_id %}
+      {% render 'cart-summary', cart: cart, form_id: cart_form_id %}
+    </form>
+    <p class="cart-drawer__status form__error" data-cart-status role="status" aria-live="polite" hidden></p>
+  </div>
+{% endcapture %}
+
+<div
+  data-cart-drawer
+  data-cart-section-id="{{ section.id }}"
+  data-cart-change-url="{{ routes.cart_change_url }}.js"
+  data-cart-update-url="{{ routes.cart_update_url }}.js"
+  data-cart-add-url="{{ routes.cart_add_url }}.js"
+  data-cart-updated-label="{{ 'cart.updated' | t | escape }}"
+  data-cart-update-error-label="{{ 'cart.update_error' | t | escape }}"
+  data-cart-adding-label="{{ 'cart.adding' | t | escape }}"
+>
+  {% render 'dialog',
+    id: cart_drawer_id,
+    label: cart_dialog_label,
+    content: cart_drawer_content,
+    class: cart_dialog_class,
+    close_label: cart_dialog_close_label
+  %}
+</div>
+
+{% stylesheet %}
+  .overlay-dialog--cart-drawer {
+    border-radius: var(--drawer-radius) 0 0 var(--drawer-radius);
+    height: 100dvh;
+    margin: 0 0 0 auto;
+    max-height: none;
+    max-width: min(32rem, 100vw);
+    transform: translateX(100%);
+    transition: transform var(--motion-duration) var(--motion-ease);
+  }
+
+  .overlay-dialog--cart-drawer[open] { transform: translateX(0); }
+  .overlay-dialog--cart-drawer .overlay-dialog__panel { display: flex; flex-direction: column; height: 100%; }
+  .overlay-dialog--cart-drawer .overlay-dialog__header { flex: 0 0 auto; }
+  .overlay-dialog--cart-drawer .overlay-dialog__title { font-size: var(--overlay-title-size); }
+  .overlay-dialog--cart-drawer .overlay-dialog__content { display: flex; flex: 1 1 auto; min-height: 0; padding: 0; }
+
+  .cart-drawer__content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .cart-drawer__form { display: flex; flex: 1 1 auto; flex-direction: column; min-height: 0; }
+  .cart-drawer__form .cart-items { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding-inline: var(--drawer-padding); }
+  .cart-drawer__form .cart-items__list { padding-block-end: 1rem; }
+  .cart-drawer__form .cart-line-item { grid-template-columns: 4.5rem minmax(0, 1fr) auto; }
+  .cart-drawer__form .cart-line-item__image { width: 4.5rem; }
+  .cart-drawer__form .cart-line-item__price { font-size: var(--font-body-sm); }
+  .cart-drawer__form .cart-summary { border-block-start: 1px solid var(--color-border); flex: 0 0 auto; padding: var(--drawer-padding); }
+
+  .cart-drawer__status { margin: 0; padding: 0 var(--drawer-padding) 1rem; }
+
+  @media screen and (max-width: 767.98px) {
+    .overlay-dialog--cart-drawer {
+      border-radius: var(--bottom-sheet-radius) var(--bottom-sheet-radius) 0 0;
+      height: min(90dvh, 48rem);
+      margin: auto 0 0;
+      max-width: none;
+      transform: translateY(100%);
+      width: 100%;
+    }
+
+    .overlay-dialog--cart-drawer[open] { transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .overlay-dialog--cart-drawer { transition: none; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    if (window.themeCartManager) return;
+
+    const manager = {
+      roots: new Map(),
+      initialized: false,
+
+      init(root) {
+        const drawers = [];
+        if (root.matches?.('[data-cart-drawer]')) drawers.push(root);
+        if (root.querySelectorAll) drawers.push(...root.querySelectorAll('[data-cart-drawer]'));
+        drawers.forEach((drawer) => this.register(drawer));
+      },
+
+      register(drawer) {
+        if (this.roots.has(drawer)) return;
+        this.roots.set(drawer, { controller: new AbortController(), requestController: null });
+      },
+
+      destroy(root) {
+        const drawers = [];
+        if (root.matches?.('[data-cart-drawer]')) drawers.push(root);
+        if (root.querySelectorAll) drawers.push(...root.querySelectorAll('[data-cart-drawer]'));
+        drawers.forEach((drawer) => {
+          const state = this.roots.get(drawer);
+          if (!state) return;
+          state.requestController?.abort();
+          this.roots.delete(drawer);
+        });
+      },
+
+      getDrawerForEvent(target) {
+        if (!(target instanceof Element)) return null;
+        return [...this.roots.keys()].find((drawer) => drawer.contains(target)) || null;
+      },
+
+      getSectionIds(drawer) {
+        return drawer.dataset.cartSectionId;
+      },
+
+      getSectionsUrl() {
+        return window.location.pathname + window.location.search;
+      },
+
+      setStatus(drawer, message, isError = false) {
+        const status = drawer.querySelector('[data-cart-status]');
+        if (!status) return;
+        status.hidden = !message;
+        status.textContent = message || '';
+        status.setAttribute('role', isError ? 'alert' : 'status');
+        status.classList.toggle('form__error', isError);
+      },
+
+      setBusy(drawer, busy) {
+        drawer.querySelectorAll('[data-cart-quantity], [data-cart-remove], [data-cart-update]').forEach((control) => {
+          control.toggleAttribute('disabled', busy);
+          control.setAttribute('aria-busy', String(busy));
+        });
+      },
+
+      updateHeaderCount(itemCount) {
+        document.querySelectorAll('[data-cart-trigger]').forEach((trigger) => {
+          const count = trigger.querySelector('[data-cart-count]');
+          const countTemplate = trigger.dataset.cartCountTemplate;
+          const baseLabel = trigger.dataset.cartLabel;
+          if (count) {
+            count.textContent = String(itemCount);
+            count.hidden = itemCount < 1;
+          }
+          if (baseLabel) {
+            const countLabel = countTemplate ? countTemplate.replace('__COUNT__', String(itemCount)) : '';
+            trigger.setAttribute('aria-label', itemCount > 0 ? `${baseLabel}, ${countLabel}` : baseLabel);
+          }
+        });
+      },
+
+      replaceDrawerContent(drawer, html) {
+        const parsed = new DOMParser().parseFromString(html, 'text/html');
+        const incoming = parsed.querySelector('[data-cart-drawer-content]');
+        const current = drawer.querySelector('[data-cart-drawer-content]');
+        if (!incoming || !current) return false;
+        current.replaceChildren(...incoming.childNodes);
+        return true;
+      },
+
+      renderResponse(drawer, data) {
+        const renderedSection = data.sections?.[this.getSectionIds(drawer)];
+        if (!renderedSection || !this.replaceDrawerContent(drawer, renderedSection)) {
+          window.location.reload();
+          return false;
+        }
+        if (typeof data.item_count === 'number') this.updateHeaderCount(data.item_count);
+        this.setStatus(drawer, drawer.dataset.cartUpdatedLabel);
+        return true;
+      },
+
+      async request(drawer, url, body) {
+        const state = this.roots.get(drawer);
+        if (!state) return null;
+        state.requestController?.abort();
+        state.requestController = new AbortController();
+        this.setBusy(drawer, true);
+        this.setStatus(drawer, '');
+
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...body, sections: this.getSectionIds(drawer), sections_url: this.getSectionsUrl() }),
+            signal: state.requestController.signal,
+          });
+          const data = await response.json();
+          if (!response.ok || data.status >= 400) throw new Error(data.description || data.message || drawer.dataset.cartUpdateErrorLabel);
+          return data;
+        } catch (error) {
+          if (error.name !== 'AbortError') this.setStatus(drawer, error.message || drawer.dataset.cartUpdateErrorLabel, true);
+          return null;
+        } finally {
+          if (this.roots.has(drawer)) this.setBusy(drawer, false);
+        }
+      },
+
+      async changeLine(drawer, lineKey, quantity) {
+        const data = await this.request(drawer, drawer.dataset.cartChangeUrl, { id: lineKey, quantity: Math.max(0, quantity) });
+        if (data) this.renderResponse(drawer, data);
+      },
+
+      async updateCart(drawer, form) {
+        const updates = {};
+        form.querySelectorAll('[data-cart-line-item]').forEach((line) => {
+          const input = line.querySelector('[data-cart-quantity]');
+          if (input) updates[line.dataset.lineKey] = Math.max(0, Number.parseInt(input.value, 10) || 0);
+        });
+        const data = await this.request(drawer, drawer.dataset.cartUpdateUrl, { updates });
+        if (data) this.renderResponse(drawer, data);
+      },
+
+      async addToCart(drawer, form, submitter) {
+        const variantId = form.querySelector('[name="id"]')?.value;
+        if (!variantId) return;
+        const state = this.roots.get(drawer);
+        if (!state) return;
+        state?.requestController?.abort();
+        state.requestController = new AbortController();
+        submitter?.setAttribute('aria-busy', 'true');
+        this.setStatus(drawer, drawer.dataset.cartAddingLabel);
+
+        try {
+          const formData = new FormData(form);
+          formData.append('sections', this.getSectionIds(drawer));
+          formData.append('sections_url', this.getSectionsUrl());
+          const response = await fetch(drawer.dataset.cartAddUrl, {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: formData,
+            signal: state.requestController.signal,
+          });
+          const data = await response.json();
+          if (!response.ok || data.status >= 400) throw new Error(data.description || data.message || drawer.dataset.cartUpdateErrorLabel);
+          if (this.renderResponse(drawer, data)) {
+            const dialog = drawer.querySelector('[data-dialog]');
+            window.themeDialogManager?.open(dialog, submitter || form.querySelector('button'));
+          }
+        } catch (error) {
+          if (error.name !== 'AbortError') {
+            this.setStatus(drawer, error.message || drawer.dataset.cartUpdateErrorLabel, true);
+            const dialog = drawer.querySelector('[data-dialog]');
+            window.themeDialogManager?.open(dialog, submitter || form.querySelector('button'));
+          }
+        } finally {
+          submitter?.removeAttribute('aria-busy');
+        }
+      },
+
+      handleClick(event) {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        const remove = target.closest('[data-cart-remove]');
+        const drawer = this.getDrawerForEvent(target);
+        if (!remove || !drawer) return;
+        if (remove.hasAttribute('disabled')) return;
+        const line = remove.closest('[data-cart-line-item]');
+        if (!line?.dataset.lineKey) return;
+        event.preventDefault();
+        this.changeLine(drawer, line.dataset.lineKey, 0);
+      },
+
+      handleChange(event) {
+        const input = event.target;
+        if (!(input instanceof HTMLInputElement) || !input.matches('[data-cart-quantity]')) return;
+        const drawer = this.getDrawerForEvent(input);
+        const line = input.closest('[data-cart-line-item]');
+        if (!drawer || !line?.dataset.lineKey) return;
+        this.changeLine(drawer, line.dataset.lineKey, Number.parseInt(input.value, 10) || 0);
+      },
+
+      handleSubmit(event) {
+        const form = event.target;
+        if (!(form instanceof HTMLFormElement)) return;
+        const drawer = this.getDrawerForEvent(form);
+        if (drawer && form.matches('[data-cart-form]')) {
+          if (event.submitter?.name === 'checkout') return;
+          if (event.submitter?.name === 'update') {
+            event.preventDefault();
+            this.updateCart(drawer, form);
+          }
+          return;
+        }
+        if (!form.matches('[action*="/cart/add"]')) return;
+        if (event.submitter?.disabled) return;
+        event.preventDefault();
+        this.addToCart([...this.roots.keys()][0], form, event.submitter);
+      },
+
+      handleSectionLoad(event) { this.init(event.target); },
+      handleSectionUnload(event) { this.destroy(event.target); },
+
+      setup() {
+        if (this.initialized) return;
+        this.initialized = true;
+        document.addEventListener('click', (event) => this.handleClick(event));
+        document.addEventListener('change', (event) => this.handleChange(event));
+        document.addEventListener('submit', (event) => this.handleSubmit(event));
+        document.addEventListener('shopify:section:load', (event) => this.handleSectionLoad(event));
+        document.addEventListener('shopify:section:unload', (event) => this.handleSectionUnload(event));
+        this.init(document);
+      },
+    };
+
+    window.themeCartManager = manager;
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => manager.setup(), { once: true });
+    } else {
+      manager.setup();
+    }
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.cart",
+  "settings": []
+}
+{% endschema %}
