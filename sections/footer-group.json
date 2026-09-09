@@ -14,9 +14,61 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "menu": "",
-        "show_payment_icons": true
-      }
+        "color_scheme": "scheme-1",
+        "show_divider": true,
+        "columns_desktop": 4,
+        "gap_desktop": 32,
+        "gap_mobile": 24,
+        "mobile_behavior": "stack",
+        "padding_top": 64,
+        "padding_bottom": 24
+      },
+      "blocks": {
+        "about": {
+          "type": "text",
+          "settings": {
+            "heading": "About our store",
+            "text": "<p>Tell customers about your store, values, or support hours.</p>"
+          }
+        },
+        "explore": {
+          "type": "menu",
+          "settings": {
+            "heading": "Explore",
+            "menu": ""
+          }
+        },
+        "newsletter": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "Subscribe to our newsletter",
+            "text": "<p>Get updates, stories, and offers from our store.</p>",
+            "email_label": "Email address",
+            "submit_label": "Subscribe"
+          }
+        },
+        "social": {
+          "type": "social",
+          "settings": {
+            "heading": "Follow us"
+          }
+        },
+        "policies": {
+          "type": "policy_payment",
+          "settings": {
+            "heading": "Policies & payment",
+            "show_policy_links": true,
+            "show_payment_icons": true
+          }
+        }
+      },
+      "block_order": [
+        "about",
+        "explore",
+        "newsletter",
+        "social",
+        "policies"
+      ]
     }
   },
   "order": [

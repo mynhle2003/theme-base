@@ -5,6 +5,7 @@
   @param {object} [links] - Link objects for nested recursive rendering.
   @param {string} id_prefix - Unique ID prefix for this navigation instance.
   @param {string} [class] - Optional class for the navigation element.
+  @param {string} [presentation] - Optional presentation mode; use footer for a simple, non-disclosure list.
   @param {string} [label] - Optional accessible navigation label.
   @param {number} [depth] - Current menu depth for recursive rendering.
   @param {number} [max_depth] - Maximum menu depth, capped at three levels.
@@ -27,6 +28,7 @@
     assign navigation_max_depth = 3
   endif
   assign navigation_prefix = id_prefix | default: 'navigation'
+  assign navigation_presentation = presentation | default: 'standard'
   assign navigation_label = 'navigation.label' | t
   if label != blank
     assign navigation_label = label
@@ -45,7 +47,15 @@
   <ul class="navigation__list{% if nested %} navigation__list--nested{% endif %}"{% if nested %}{% if list_id != blank %} id="{{ list_id | escape }}" data-navigation-list{% unless expanded %} hidden{% endunless %}{% endif %}{% endif %}>
     {% for link in navigation_links %}
       <li class="navigation__item{% if link.active or link.child_active %} navigation__item--active{% endif %}">
-        {% if link.links != blank %}
+        {% if navigation_presentation == 'footer' %}
+          <a class="navigation__link{% if link.active %} navigation__link--active{% endif %}" href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>
+            {{ link.title | escape }}
+          </a>
+          {% if link.links != blank and navigation_depth < navigation_max_depth %}
+            {% assign navigation_next_depth = navigation_depth | plus: 1 %}
+            {% render 'navigation', links: link.links, id_prefix: navigation_prefix, depth: navigation_next_depth, max_depth: navigation_max_depth, nested: true, presentation: 'footer' %}
+          {% endif %}
+        {% elsif link.links != blank %}
           {% if navigation_depth < navigation_max_depth %}
             {% assign disclosure_id = navigation_prefix | append: '-' | append: navigation_depth | append: '-' | append: forloop.index %}
             {% assign navigation_next_depth = navigation_depth | plus: 1 %}
