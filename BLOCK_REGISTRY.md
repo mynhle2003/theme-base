@@ -255,6 +255,23 @@
 - Runtime: Liquid pagination and CSS-only responsive layout; no JavaScript lifecycle owner is required.
 - Migration: integrate this block only through a parent section/resource surface that supplies `collection`, then migrate the legacy `sections/collection.liquid` product loop to this render path; do not add a second collection picker to Product Card.
 
+## Product Media Gallery
+
+- Type: `product-media-gallery`
+- Category: Commerce Composition
+- Role: render the current product media collection with responsive gallery presentation and optional thumbnails.
+- Resource owner: the parent section/resource surface supplies the product context; Product Media Gallery never owns a product picker or product loop.
+- Capabilities: image, video, external video and 3D model media; featured-video visibility; desktop grid/carousel layout; shared-dialog lightbox with image zoom, reset and pan controls; one/two-column grid; optional carousel pagination; independent desktop/mobile media ratios; crop/full image fit; mobile thumbnails with size/gap controls; local media gap and responsive padding.
+- Content owner: Product Media Gallery owns only the fixed media gallery presentation; merchants cannot add, remove or reorder arbitrary media children.
+- Composition policy: leaf commerce/media block; no child blocks, nested sections or resource selection.
+- Component boundary: `snippets/product-media-gallery.liquid` owns media-type rendering, carousel controls, mobile thumbnail navigation, lightbox presentation, responsive gallery geometry and local active-media state; the block owns context binding, editor settings, stable wrapper and missing-context state.
+- Variant boundary: the parent product section owns selected-variant state and can update `[data-product-media]` visibility when the global `variant_picker_update_media` setting is enabled; the gallery does not own variant selection or form submission.
+- Output: `.product-media-gallery-block` wrapping a `<product-media-gallery>` component with stable media IDs, `[data-product-media]` hooks and optional thumbnail navigation.
+- States: missing product context, product with no media, image/video/external-video/model media, hidden selected-variant media, active thumbnail, keyboard focus and responsive desktop/mobile layouts are explicit states.
+- Accessibility: media thumbnails and pagination use labeled controls with `aria-current`, lightbox uses the shared popup dialog contract and focus restoration, media remains keyboard reachable where the media type is interactive, images preserve alt text, and missing context/media states use `role="status"`.
+- Localization: gallery labels, thumbnail labels and missing-context copy use translation keys.
+- Runtime: idempotent block-local custom-element lifecycle with scoped thumbnail/carousel/lightbox controls, variant synchronization and IntersectionObserver cleanup; the shared dialog manager owns modal focus/scroll locking and no form ownership is introduced.
+
 ## Divider
 
 - Type: `divider`

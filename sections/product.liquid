@@ -5,12 +5,33 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/product
 {% endcomment %}
 
+{% liquid
+  assign has_media_gallery_block = false
+  assign has_variant_picker_block = false
+
+  for product_block in section.blocks
+    if product_block.type == 'product-media-gallery'
+      assign has_media_gallery_block = true
+    elsif product_block.type == 'variant-picker'
+      assign has_variant_picker_block = true
+    endif
+  endfor
+%}
+
 <div class="product-images">
-  {% for image in product.images %}
-    <div class="product-image" data-product-media data-media-id="{{ image.id }}">
-      {% render 'image', image: image %}
-    </div>
-  {% endfor %}
+  {% if has_media_gallery_block %}
+    {% for product_block in section.blocks %}
+      {% if product_block.type == 'product-media-gallery' %}
+        {% render product_block %}
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    {% for image in product.images %}
+      <div class="product-image" data-product-media data-media-id="{{ image.id }}">
+        {% render 'image', image: image %}
+      </div>
+    {% endfor %}
+  {% endif %}
 </div>
 
 <div class="product-info">
@@ -24,8 +45,12 @@
     {% assign current_variant = product.selected_or_first_available_variant %}
     <input type="hidden" name="id" value="{{ current_variant.id }}">
 
-    {% if section.blocks.size > 0 %}
-      {% content_for 'blocks' %}
+    {% if has_variant_picker_block %}
+      {% for product_block in section.blocks %}
+        {% if product_block.type == 'variant-picker' %}
+          {% render product_block %}
+        {% endif %}
+      {% endfor %}
     {% else %}
       {% render 'variant-picker', product: product %}
     {% endif %}
@@ -145,8 +170,11 @@
 {% schema %}
 {
   "name": "t:general.product",
-  "max_blocks": 1,
-  "blocks": [{ "type": "variant-picker" }],
+  "max_blocks": 2,
+  "blocks": [
+    { "type": "product-media-gallery", "name": "t:general.product_media_gallery", "limit": 1 },
+    { "type": "variant-picker", "name": "t:general.variant_picker", "limit": 1 }
+  ],
   "settings": [],
   "disabled_on": {
     "groups": ["header", "footer"]
