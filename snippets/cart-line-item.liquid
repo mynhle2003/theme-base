@@ -1,0 +1,113 @@
+{% doc %}
+  Renders one cart line item without owning the cart form or mutation lifecycle.
+
+  @param {line_item} item - The Shopify cart line item.
+  @param {string} [form_id] - Optional cart form ID for associated controls.
+
+  @example
+  {% render 'cart-line-item', item: item, form_id: 'CartForm' %}
+{% enddoc %}
+
+{% liquid
+  assign item_title = item.product.title | default: item.title
+  assign item_id = 'CartItem-' | append: item.key | handleize
+%}
+
+<li class="cart-line-item" data-cart-line-item data-line-key="{{ item.key | escape }}">
+  {% if item.image != blank %}
+    {% render 'image', image: item.image, url: item.url, class: 'cart-line-item__image', width: 240, height: 240, crop: 'center' %}
+  {% endif %}
+
+  <div class="cart-line-item__details">
+    <a class="cart-line-item__title" href="{{ item.url }}">{{ item_title | escape }}</a>
+
+    {% if item.variant.title != blank and item.variant.title != 'Default Title' %}
+      <p class="cart-line-item__variant">{{ item.variant.title | escape }}</p>
+    {% endif %}
+
+    {% if item.selling_plan_allocation != blank %}
+      <p class="cart-line-item__selling-plan">{{ item.selling_plan_allocation.selling_plan.name | escape }}</p>
+    {% endif %}
+
+    {% if item.properties != blank %}
+      <dl class="cart-line-item__properties">
+        {% for property in item.properties %}
+          {% unless property.last == blank or property.first contains '_' %}
+            <div>
+              <dt>{{ property.first | escape }}</dt>
+              <dd>{{ property.last | escape }}</dd>
+            </div>
+          {% endunless %}
+        {% endfor %}
+      </dl>
+    {% endif %}
+
+    {% if item.error_message != blank %}
+      <p class="cart-line-item__error form__error" role="alert">{{ item.error_message | escape }}</p>
+    {% endif %}
+
+    <div class="cart-line-item__controls">
+      <div class="cart-line-item__quantity">
+        <label for="{{ item_id | escape }}">{{ 'cart.quantity' | t }}</label>
+        <input
+          id="{{ item_id | escape }}"
+          class="form__control"
+          type="number"
+          name="updates[]"
+          value="{{ item.quantity }}"
+          min="0"
+          step="1"
+          inputmode="numeric"
+          aria-label="{{ 'cart.quantity_for_item' | t: name: item_title | escape }}"
+          data-cart-quantity
+          {% if form_id != blank %}form="{{ form_id | escape }}"{% endif %}
+        >
+      </div>
+      <a class="cart-line-item__remove" href="{{ item.url_to_remove }}"{% if form_id != blank %} data-cart-remove{% endif %}>
+        {{ 'cart.remove_item' | t: name: item_title | escape }}
+      </a>
+    </div>
+  </div>
+
+  <div class="cart-line-item__price" aria-label="{{ 'products.product.price' | t }}">
+    <span>{{ item.final_line_price | money }}</span>
+    {% if item.original_line_price > item.final_line_price %}
+      <s>{{ item.original_line_price | money }}</s>
+    {% endif %}
+  </div>
+</li>
+
+{% stylesheet %}
+  .cart-line-item {
+    align-items: start;
+    border-block-end: 1px solid var(--color-border);
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(5rem, 7rem) minmax(0, 1fr) auto;
+    padding-block: 1rem;
+  }
+
+  .cart-line-item__image { aspect-ratio: 1; }
+  .cart-line-item__details { display: grid; gap: 0.5rem; min-width: 0; }
+  .cart-line-item__title { color: inherit; overflow-wrap: anywhere; text-decoration: none; }
+  .cart-line-item__variant,
+  .cart-line-item__selling-plan,
+  .cart-line-item__properties,
+  .cart-line-item__error { font-size: var(--font-body-sm); margin: 0; }
+  .cart-line-item__properties { display: grid; gap: 0.25rem; }
+  .cart-line-item__properties div { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+  .cart-line-item__properties dt::after { content: ':'; }
+  .cart-line-item__properties dd { margin: 0; }
+  .cart-line-item__controls { align-items: end; display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; }
+  .cart-line-item__quantity { display: grid; gap: 0.25rem; max-width: 8rem; }
+  .cart-line-item__quantity label { font-size: var(--font-body-sm); }
+  .cart-line-item__quantity input { min-width: 5rem; }
+  .cart-line-item__remove { color: inherit; font-size: var(--font-body-sm); }
+  .cart-line-item__price { display: grid; gap: 0.25rem; justify-items: end; white-space: nowrap; }
+  .cart-line-item__price s { opacity: 0.7; }
+
+  @media screen and (max-width: 549px) {
+    .cart-line-item { grid-template-columns: 5rem minmax(0, 1fr); }
+    .cart-line-item__price { grid-column: 2; justify-items: start; }
+  }
+{% endstylesheet %}

@@ -1,0 +1,99 @@
+{% doc %}
+  Renders grouped predictive search resources without owning query input or request state.
+
+  @param {predictive_search} predictive_search - The Shopify predictive search context.
+  @param {string} [id] - Optional result region ID for the owning search input.
+
+  @example
+  {% render 'predictive-search-results', predictive_search: predictive_search, id: 'PredictiveSearchResults' %}
+{% enddoc %}
+
+{% if predictive_search.performed %}
+  {% liquid
+    assign has_results = false
+    if predictive_search.resources.queries.size > 0
+      assign has_results = true
+    elsif predictive_search.resources.collections.size > 0
+      assign has_results = true
+    elsif predictive_search.resources.pages.size > 0
+      assign has_results = true
+    elsif predictive_search.resources.articles.size > 0
+      assign has_results = true
+    elsif predictive_search.resources.products.size > 0
+      assign has_results = true
+    endif
+    assign escaped_terms = predictive_search.terms | escape
+    assign encoded_terms = predictive_search.terms | url_encode
+    assign search_url = routes.search_url | append: '?q=' | append: encoded_terms
+  %}
+
+  <div{% if id != blank %} id="{{ id | escape }}"{% endif %} class="predictive-search-results" data-predictive-search-results role="region" aria-live="polite" aria-label="{{ 'search.results' | t | escape }}">
+    {% if has_results %}
+      {% if predictive_search.resources.queries.size > 0 or predictive_search.resources.collections.size > 0 %}
+        <section class="predictive-search-results__group">
+          <h2 class="predictive-search-results__heading">{{ 'search.suggestions' | t }}</h2>
+          <ul class="predictive-search-results__list">
+            {% for query in predictive_search.resources.queries %}
+              <li><a href="{{ query.url }}">{{ query.styled_text }}</a></li>
+            {% endfor %}
+            {% for collection in predictive_search.resources.collections %}
+              <li><a href="{{ collection.url }}">{{ collection.title | escape }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+
+      {% if predictive_search.resources.products.size > 0 %}
+        <section class="predictive-search-results__group">
+          <h2 class="predictive-search-results__heading">{{ 'search.products' | t }}</h2>
+          <ul class="predictive-search-results__list predictive-search-results__list--products">
+            {% for product in predictive_search.resources.products %}
+              <li class="predictive-search-results__product">
+                {% if product.featured_image != blank %}
+                  {{ product.featured_image | image_url: width: 128, height: 128, crop: 'center' | image_tag: class: 'predictive-search-results__image', loading: 'lazy' }}
+                {% endif %}
+                <a href="{{ product.url }}">
+                  <span>{{ product.title | escape }}</span>
+                  <span class="predictive-search-results__price">{{ product.price | money }}</span>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+
+      {% if predictive_search.resources.pages.size > 0 or predictive_search.resources.articles.size > 0 %}
+        <section class="predictive-search-results__group">
+          <h2 class="predictive-search-results__heading">{{ 'search.content' | t }}</h2>
+          <ul class="predictive-search-results__list">
+            {% for page in predictive_search.resources.pages %}
+              <li><a href="{{ page.url }}">{{ page.title | escape }}</a></li>
+            {% endfor %}
+            {% for article in predictive_search.resources.articles %}
+              <li><a href="{{ article.url }}">{{ article.title | escape }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+
+      <a class="predictive-search-results__view-all" href="{{ search_url }}">{{ 'search.view_all' | t: terms: escaped_terms }}</a>
+    {% else %}
+      <p class="predictive-search-results__empty">{{ 'search.no_results' | t: terms: escaped_terms }}</p>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .predictive-search-results { display: grid; gap: 1rem; }
+  .predictive-search-results__group { display: grid; gap: 0.5rem; }
+  .predictive-search-results__heading { font-size: var(--font-heading-sm); margin: 0; }
+  .predictive-search-results__list { display: grid; gap: 0.5rem; list-style: none; margin: 0; padding: 0; }
+  .predictive-search-results__list a,
+  .predictive-search-results__view-all { color: inherit; overflow-wrap: anywhere; }
+  .predictive-search-results__list--products { gap: 0.75rem; }
+  .predictive-search-results__product { align-items: center; display: grid; gap: 0.75rem; grid-template-columns: 4rem minmax(0, 1fr); }
+  .predictive-search-results__product a { display: grid; gap: 0.25rem; }
+  .predictive-search-results__image { aspect-ratio: 1; object-fit: cover; width: 4rem; }
+  .predictive-search-results__price { font-size: var(--font-body-sm); }
+  .predictive-search-results__empty { margin: 0; }
+{% endstylesheet %}

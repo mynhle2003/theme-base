@@ -5,15 +5,14 @@
 {% enddoc %}
 
 {% liquid
-  assign logo = settings.logo
-
-  if transparent and settings.logo_transparent != blank
-    assign logo = settings.logo_transparent
-  endif
+  assign default_logo = settings.logo
+  assign transparent_logo = settings.logo_transparent
+  assign default_logo_alt = default_logo.alt | default: shop.name
+  assign transparent_logo_alt = transparent_logo.alt | default: shop.name
 %}
 
 <a
-  class="site-logo"
+  class="site-logo{% if transparent and transparent_logo != blank %} site-logo--transparent{% endif %}"
   href="{{ routes.root_url }}"
   aria-label="{{ shop.name | escape }}"
   style="
@@ -21,17 +20,27 @@
     --logo-width-mobile: {{ settings.logo_width_mobile }}px;
   "
 >
-  {% if logo != blank %}
-    {{ logo
+  {% if default_logo != blank %}
+    {{ default_logo
       | image_url: width: 600
       | image_tag:
-        class: 'site-logo__image',
-        alt: shop.name,
+        class: 'site-logo__image site-logo__image--default',
+        alt: default_logo_alt,
         loading: 'eager'
     }}
   {% else %}
     <span class="site-logo__text">
       {{ shop.name | escape }}
     </span>
+  {% endif %}
+
+  {% if transparent and transparent_logo != blank %}
+    {{ transparent_logo
+      | image_url: width: 600
+      | image_tag:
+        class: 'site-logo__image site-logo__image--transparent',
+        alt: transparent_logo_alt,
+        loading: 'eager'
+    }}
   {% endif %}
 </a>

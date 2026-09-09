@@ -1,0 +1,213 @@
+{% doc %}
+  Renders a native modal dialog with a reusable open, close, focus, and scroll-lock contract.
+
+  @param {string} id - Unique dialog ID.
+  @param {string} label - Accessible and visible dialog title.
+  @param {string} content - Dialog body markup.
+  @param {string} [class] - Optional class for the dialog element.
+  @param {string} [close_label] - Optional accessible close label.
+
+  @example
+  {% render 'dialog', id: 'CartDrawer', label: 'Cart', content: cart_content %}
+{% enddoc %}
+
+{% liquid
+  assign dialog_classes = 'overlay-dialog'
+  if class != blank
+    assign dialog_classes = dialog_classes | append: ' ' | append: class
+  endif
+  assign dialog_close_label = 'general.close' | t
+  if close_label != blank
+    assign dialog_close_label = close_label
+  endif
+%}
+
+<dialog
+  id="{{ id | escape }}"
+  class="{{ dialog_classes | escape }}"
+  data-dialog
+  aria-labelledby="{{ id | append: '-title' | escape }}"
+  tabindex="-1"
+>
+  <div class="overlay-dialog__panel">
+    <header class="overlay-dialog__header">
+      <h2 id="{{ id | append: '-title' | escape }}" class="overlay-dialog__title">{{ label | escape }}</h2>
+      <form method="dialog" class="overlay-dialog__close-form">
+        <button type="submit" class="overlay-dialog__close" data-dialog-close aria-label="{{ dialog_close_label | escape }}">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </form>
+    </header>
+    <div class="overlay-dialog__content">{{ content }}</div>
+  </div>
+</dialog>
+
+{% stylesheet %}
+  html[data-scroll-locked] { overflow: hidden; }
+
+  .overlay-dialog {
+    background: var(--color-background);
+    border: 0;
+    color: var(--color-text);
+    margin: auto;
+    max-height: min(90vh, 48rem);
+    max-width: min(42rem, calc(100vw - (2 * var(--page-margin))));
+    padding: 0;
+    width: 100%;
+  }
+
+  .overlay-dialog__panel {
+    max-height: inherit;
+    overflow: auto;
+  }
+
+  .overlay-dialog__header {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: var(--drawer-padding) var(--page-margin);
+  }
+
+  .overlay-dialog__title { margin: 0; }
+  .overlay-dialog__close-form { margin: 0; }
+
+  .overlay-dialog__close {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    font-size: 1.75rem;
+    justify-content: center;
+    line-height: 1;
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+    padding: 0.5rem;
+  }
+
+  .overlay-dialog__close:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  .overlay-dialog__content { padding: 0 var(--page-margin) var(--page-margin); }
+
+  @media screen and (max-width: 749px) {
+    .overlay-dialog { max-width: calc(100vw - (2 * var(--page-margin))); }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    if (window.themeDialogManager) return;
+
+    const manager = {
+      controllers: new Map(),
+      openDialogs: new Set(),
+      initialized: false,
+
+      init(root) {
+        const dialogs = [];
+        if (root.matches?.('[data-dialog]')) dialogs.push(root);
+        if (root.querySelectorAll) dialogs.push(...root.querySelectorAll('[data-dialog]'));
+        dialogs.forEach((dialog) => this.register(dialog));
+      },
+
+      register(dialog) {
+        if (this.controllers.has(dialog)) return;
+
+        const controller = {
+          dialog,
+          lastFocusedElement: null,
+          onClose: () => this.handleClose(dialog),
+          onBackdropClick: (event) => {
+            if (event.target === dialog) dialog.close();
+          },
+        };
+
+        dialog.addEventListener('close', controller.onClose);
+        dialog.addEventListener('click', controller.onBackdropClick);
+        this.controllers.set(dialog, controller);
+
+        if (dialog.open) {
+          this.openDialogs.add(dialog);
+          document.documentElement.setAttribute('data-scroll-locked', 'true');
+        }
+      },
+
+      destroy(root) {
+        const dialogs = [];
+        if (root.matches?.('[data-dialog]')) dialogs.push(root);
+        if (root.querySelectorAll) dialogs.push(...root.querySelectorAll('[data-dialog]'));
+        dialogs.forEach((dialog) => {
+          const controller = this.controllers.get(dialog);
+          if (!controller) return;
+          if (dialog.open) dialog.close();
+          dialog.removeEventListener('close', controller.onClose);
+          dialog.removeEventListener('click', controller.onBackdropClick);
+          this.controllers.delete(dialog);
+        });
+      },
+
+      open(dialog, trigger) {
+        const controller = this.controllers.get(dialog);
+        if (!controller || typeof dialog.showModal !== 'function') return;
+
+        this.openDialogs.forEach((openDialog) => {
+          if (openDialog !== dialog && openDialog.open) openDialog.close();
+        });
+
+        controller.lastFocusedElement = trigger;
+        if (!dialog.open) dialog.showModal();
+        this.openDialogs.add(dialog);
+        document.documentElement.setAttribute('data-scroll-locked', 'true');
+
+        window.requestAnimationFrame(() => {
+          const focusTarget = dialog.querySelector('[autofocus], button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])') || dialog;
+          focusTarget.focus({ preventScroll: true });
+        });
+      },
+
+      handleClose(dialog) {
+        const controller = this.controllers.get(dialog);
+        this.openDialogs.delete(dialog);
+        if (this.openDialogs.size === 0) document.documentElement.removeAttribute('data-scroll-locked');
+        if (controller?.lastFocusedElement?.isConnected) controller.lastFocusedElement.focus({ preventScroll: true });
+        if (controller) controller.lastFocusedElement = null;
+      },
+
+      handleTriggerClick(event) {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        const trigger = target.closest('[data-dialog-open]');
+        if (!trigger) return;
+        const dialog = document.getElementById(trigger.getAttribute('data-dialog-open'));
+        if (!dialog || !this.controllers.has(dialog)) return;
+        event.preventDefault();
+        this.open(dialog, trigger);
+      },
+
+      handleSectionLoad(event) { this.init(event.target); },
+      handleSectionUnload(event) { this.destroy(event.target); },
+
+      setup() {
+        if (this.initialized) return;
+        this.initialized = true;
+        document.addEventListener('click', (event) => this.handleTriggerClick(event));
+        document.addEventListener('shopify:section:load', (event) => this.handleSectionLoad(event));
+        document.addEventListener('shopify:section:unload', (event) => this.handleSectionUnload(event));
+        this.init(document);
+      },
+    };
+
+    window.themeDialogManager = manager;
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => manager.setup(), { once: true });
+    } else {
+      manager.setup();
+    }
+  })();
+{% endjavascript %}

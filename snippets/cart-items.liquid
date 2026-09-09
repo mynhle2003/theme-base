@@ -1,0 +1,26 @@
+{% doc %}
+  Renders the cart line-item collection and its explicit empty state.
+
+  @param {object} cart - The Shopify cart context.
+  @param {string} [form_id] - Optional cart form ID for line-item controls.
+
+  @example
+  {% render 'cart-items', cart: cart, form_id: 'CartForm' %}
+{% enddoc %}
+
+<div class="cart-items" data-cart-items>
+  {% if cart.item_count > 0 %}
+    <ul class="cart-items__list" aria-label="{{ 'cart.items' | t | escape }}">
+      {% for item in cart.items %}
+        {% render 'cart-line-item', item: item, form_id: form_id %}
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="cart-items__empty">{{ 'cart.empty' | t }}</p>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .cart-items__list { list-style: none; margin: 0; padding: 0; }
+  .cart-items__empty { margin: 0; }
+{% endstylesheet %}
