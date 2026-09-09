@@ -13,15 +13,19 @@
 {% liquid
   assign card_product = closest.product | default: product
   assign card_color_scheme = blank
+  assign use_theme_color = true
 
-  if block.settings.color_type == 'color_scheme'
-    assign card_color_scheme = block.settings.color_scheme
+  if settings.product_card_style == 'card'
+    if block.settings.color_type == 'color_scheme'
+      assign card_color_scheme = block.settings.color_scheme
+      assign use_theme_color = false
+    endif
   endif
 %}
 
 <div class="product-card-block" {{ block.shopify_attributes }}>
   {% if card_product != blank %}
-    {% render 'product-card', product: card_product, class: 'product-card-block__card', show_quick_add: true, show_ranking: block.settings.show_ranking, color_scheme: card_color_scheme, use_theme_color: false %}
+    {% render 'product-card', product: card_product, class: 'product-card-block__card', show_quick_add: true, show_ranking: block.settings.show_ranking, color_scheme: card_color_scheme, use_theme_color: use_theme_color %}
   {% else %}
     <p class="product-card-block__empty" role="status">
       {{ 'blocks.product_card.empty' | t }}
@@ -63,7 +67,8 @@
     },
     {
       "type": "header",
-      "content": "t:general.color"
+      "content": "t:general.color",
+      "visible_if": "{{ settings.product_card_style == 'card' }}"
     },
     {
       "type": "select",
@@ -73,10 +78,11 @@
         { "value": "inherit", "label": "t:options.background_scheme.inherit" },
         { "value": "color_scheme", "label": "t:labels.color_scheme" }
       ],
-      "default": "inherit"
+      "default": "inherit",
+      "visible_if": "{{ settings.product_card_style == 'card' }}"
     },
     {
-      "visible_if": "{{ block.settings.color_type == 'color_scheme' }}",
+      "visible_if": "{{ settings.product_card_style == 'card' and block.settings.color_type == 'color_scheme' }}",
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "t:labels.color_scheme",

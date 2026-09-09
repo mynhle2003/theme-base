@@ -24,7 +24,7 @@
   endif
 %}
 
-<div class="price{% if is_sale %} price--sale{% endif %}" data-price aria-label="{{ 'products.product.price' | t }}">
+<div class="price{% if is_sale %} price--sale{% endif %}{% if context == 'product_card' %} card-price-text{% endif %}" data-price aria-label="{{ 'products.product.price' | t }}">
   {% if show_from and item.price_varies %}
     <span class="price__from-label">{{ 'products.product.from' | t }}</span>
   {% endif %}

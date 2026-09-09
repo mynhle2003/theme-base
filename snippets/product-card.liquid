@@ -106,7 +106,7 @@
         <p class="product-card__type body-xs">{{ product.type | escape }}</p>
       {% endif %}
 
-      <h3 class="product-card__title">
+      <h3 class="product-card__title card-title-text">
         <a href="{{ product.url }}">{{ product.title | escape }}</a>
       </h3>
 
@@ -256,6 +256,7 @@
     -webkit-line-clamp: var(--pcard-title-line-limit);
     margin: 0;
     overflow: hidden;
+    overflow-wrap: anywhere;
   }
 
   .product-card__title a {
