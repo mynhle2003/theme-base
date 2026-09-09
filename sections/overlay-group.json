@@ -2,12 +2,17 @@
   "type": "custom.overlay",
   "name": "t:general.overlay",
   "sections": {
-    "cart-drawer": {
+    "searchdrawer": {
+      "type": "search-drawer",
+      "settings": {}
+    },
+    "cartdrawer": {
       "type": "cart-drawer",
       "settings": {}
     }
   },
   "order": [
-    "cart-drawer"
+    "searchdrawer",
+    "cartdrawer"
   ]
 }

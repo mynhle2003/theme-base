@@ -1,0 +1,291 @@
+{% liquid
+  assign search_drawer_id = 'SearchDrawer'
+  assign search_form_id = 'SearchDrawerForm-' | append: section.id
+  assign search_results_id = 'SearchDrawerResults-' | append: section.id
+  assign search_color_scheme = settings.overlay_color_scheme | default: settings.default_color_scheme
+  assign search_color_scheme_id = search_color_scheme.id | default: search_color_scheme | default: 'scheme-1'
+  assign search_dialog_class = 'overlay-dialog--search-drawer color-' | append: search_color_scheme_id
+  assign search_dialog_label = 'search.title' | t
+  assign search_dialog_close_label = 'general.close' | t
+%}
+
+{% capture search_drawer_content %}
+  <div
+    class="search-drawer"
+    data-global-search
+    data-search-section-id="{{ section.id }}"
+    data-search-predictive-url="{{ routes.predictive_search_url | escape }}"
+    data-search-prompt="{{ 'search.prompt' | t | escape }}"
+    data-search-loading-label="{{ 'search.loading' | t | escape }}"
+    data-search-error-label="{{ 'search.error' | t | escape }}"
+  >
+    <form
+      id="{{ search_form_id }}"
+      class="search-drawer__form"
+      action="{{ routes.search_url }}"
+      method="get"
+      role="search"
+      data-search-form
+    >
+      <label class="search-drawer__visually-hidden" for="{{ search_form_id }}-input">{{ 'search.input_label' | t }}</label>
+      <div class="search-drawer__field">
+        <input
+          id="{{ search_form_id }}-input"
+          class="form__control search-drawer__input"
+          type="search"
+          name="q"
+          value=""
+          placeholder="{{ 'search.placeholder' | t | escape }}"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          aria-controls="{{ search_results_id }}"
+          aria-expanded="false"
+          data-search-input
+          autofocus
+        >
+        <button class="btn btn--primary search-drawer__submit" type="submit">
+          {{ 'search.submit' | t }}
+        </button>
+      </div>
+      <p class="search-drawer__status" data-search-status role="status" aria-live="polite" hidden></p>
+    </form>
+
+    <div
+      id="{{ search_results_id }}"
+      class="search-drawer__results"
+      data-search-results
+      role="region"
+      aria-live="polite"
+      aria-label="{{ 'search.results' | t | escape }}"
+    >
+      {% if predictive_search.performed %}
+        {% render 'predictive-search-results', predictive_search: predictive_search %}
+      {% else %}
+        <p class="search-drawer__prompt">{{ 'search.prompt' | t }}</p>
+      {% endif %}
+    </div>
+  </div>
+{% endcapture %}
+
+<div data-search-drawer data-search-section-id="{{ section.id }}">
+  {% render 'dialog',
+    id: search_drawer_id,
+    label: search_dialog_label,
+    content: search_drawer_content,
+    class: search_dialog_class,
+    close_label: search_dialog_close_label
+  %}
+</div>
+
+{% stylesheet %}
+  .overlay-dialog--search-drawer {
+    --input-background-color: var(--color-background);
+    --input-border-color: var(--color-border);
+    --input-focus-color: var(--color-heading);
+    border: 1px solid var(--color-border);
+    border-radius: var(--drawer-radius);
+    margin: 5vh auto auto;
+    max-height: min(80vh, 48rem);
+    max-width: min(56rem, calc(100vw - (2 * var(--page-margin))));
+  }
+
+  .overlay-dialog--search-drawer .overlay-dialog__header { border-block-end: 1px solid var(--color-border); }
+  .overlay-dialog--search-drawer .overlay-dialog__title { font-size: var(--overlay-title-size); }
+  .overlay-dialog--search-drawer .overlay-dialog__content { padding: 0; }
+
+  .search-drawer { display: grid; gap: 1rem; padding: var(--page-margin); }
+  .search-drawer__form { display: grid; gap: 0.5rem; }
+  .search-drawer__field { align-items: stretch; display: grid; gap: 0.75rem; grid-template-columns: minmax(0, 1fr) auto; }
+  .search-drawer__input { min-width: 0; }
+  .search-drawer__submit { min-width: 7rem; }
+  .search-drawer__status { margin: 0; }
+  .search-drawer__results {
+    border-block-start: 1px solid var(--color-border);
+    max-height: min(50vh, 32rem);
+    overflow-y: auto;
+    padding-block-start: 1rem;
+  }
+  .search-drawer__prompt { margin: 0; opacity: 0.75; }
+  .search-drawer__visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  @media screen and (max-width: 479.98px) {
+    .overlay-dialog--search-drawer {
+      margin: var(--page-margin) auto auto;
+      max-width: calc(100vw - (2 * var(--page-margin)));
+    }
+
+    .search-drawer__field { grid-template-columns: 1fr; }
+    .search-drawer__submit { width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .overlay-dialog--search-drawer { scroll-behavior: auto; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    if (window.themeSearchManager) return;
+
+    const manager = {
+      roots: new Map(),
+      initialized: false,
+
+      init(root) {
+        const drawers = [];
+        if (root.matches?.('[data-global-search]')) drawers.push(root);
+        if (root.querySelectorAll) drawers.push(...root.querySelectorAll('[data-global-search]'));
+        drawers.forEach((drawer) => this.register(drawer));
+      },
+
+      register(drawer) {
+        if (this.roots.has(drawer)) return;
+
+        const input = drawer.querySelector('[data-search-input]');
+        const results = drawer.querySelector('[data-search-results]');
+        const status = drawer.querySelector('[data-search-status]');
+        if (!input || !results || !status) return;
+
+        const controller = new AbortController();
+        const state = { controller, input, requestController: null, results, status, timer: null };
+        const scheduleSearch = () => {
+          window.clearTimeout(state.timer);
+          state.timer = window.setTimeout(() => this.search(drawer), 250);
+        };
+        const dialog = drawer.closest('[data-search-drawer]')?.querySelector('[data-dialog]');
+
+        input.addEventListener('input', scheduleSearch, { signal: controller.signal });
+        dialog?.addEventListener('close', () => this.reset(drawer), { signal: controller.signal });
+        this.roots.set(drawer, state);
+      },
+
+      destroy(root) {
+        const drawers = [];
+        if (root.matches?.('[data-global-search]')) drawers.push(root);
+        if (root.querySelectorAll) drawers.push(...root.querySelectorAll('[data-global-search]'));
+        drawers.forEach((drawer) => {
+          const state = this.roots.get(drawer);
+          if (!state) return;
+          window.clearTimeout(state.timer);
+          state.requestController?.abort();
+          state.controller.abort();
+          this.roots.delete(drawer);
+        });
+      },
+
+      setStatus(drawer, message, isError = false) {
+        const state = this.roots.get(drawer);
+        if (!state) return;
+        state.status.hidden = !message;
+        state.status.textContent = message || '';
+        state.status.classList.toggle('form__error', isError);
+        state.status.setAttribute('role', isError ? 'alert' : 'status');
+      },
+
+      resetResults(drawer) {
+        const state = this.roots.get(drawer);
+        if (!state) return;
+        const prompt = document.createElement('p');
+        prompt.className = 'search-drawer__prompt';
+        prompt.textContent = drawer.dataset.searchPrompt || '';
+        state.results.replaceChildren(prompt);
+        state.results.setAttribute('aria-busy', 'false');
+        state.input.setAttribute('aria-expanded', 'false');
+      },
+
+      reset(drawer) {
+        const state = this.roots.get(drawer);
+        if (!state) return;
+        window.clearTimeout(state.timer);
+        state.requestController?.abort();
+        state.requestController = null;
+        this.setStatus(drawer, '');
+        this.resetResults(drawer);
+      },
+
+      async search(drawer) {
+        const state = this.roots.get(drawer);
+        if (!state) return;
+
+        const term = state.input.value.trim();
+        if (!term) {
+          this.reset(drawer);
+          return;
+        }
+
+        state.requestController?.abort();
+        const requestController = new AbortController();
+        state.requestController = requestController;
+        state.results.setAttribute('aria-busy', 'true');
+        this.setStatus(drawer, drawer.dataset.searchLoadingLabel || '');
+
+        try {
+          const url = new URL(drawer.dataset.searchPredictiveUrl, window.location.origin);
+          url.searchParams.set('q', term);
+          url.searchParams.set('section_id', drawer.dataset.searchSectionId);
+          url.searchParams.set('resources[type]', 'product,collection,page,article');
+
+          const response = await fetch(url.toString(), {
+            headers: { Accept: 'text/html' },
+            signal: requestController.signal,
+          });
+          if (!response.ok) throw new Error('Predictive search request failed');
+
+          const html = await response.text();
+          const parsed = new DOMParser().parseFromString(html, 'text/html');
+          const incoming = parsed.querySelector('[data-global-search] [data-search-results]');
+          if (!incoming) throw new Error('Predictive search response was incomplete');
+          if (state.requestController !== requestController) return;
+
+          state.results.replaceChildren(...incoming.childNodes);
+          state.input.setAttribute('aria-expanded', 'true');
+          this.setStatus(drawer, '');
+        } catch (error) {
+          if (error.name !== 'AbortError' && this.roots.has(drawer)) {
+            this.resetResults(drawer);
+            this.setStatus(drawer, drawer.dataset.searchErrorLabel || '', true);
+          }
+        } finally {
+          if (state.requestController === requestController) {
+            state.requestController = null;
+            state.results.setAttribute('aria-busy', 'false');
+          }
+        }
+      },
+
+      handleSectionLoad(event) { this.init(event.target); },
+      handleSectionUnload(event) { this.destroy(event.target); },
+
+      setup() {
+        if (this.initialized) return;
+        this.initialized = true;
+        document.addEventListener('shopify:section:load', (event) => this.handleSectionLoad(event));
+        document.addEventListener('shopify:section:unload', (event) => this.handleSectionUnload(event));
+        this.init(document);
+      },
+    };
+
+    window.themeSearchManager = manager;
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => manager.setup(), { once: true });
+    } else {
+      manager.setup();
+    }
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.search",
+  "settings": []
+}
+{% endschema %}

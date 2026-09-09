@@ -60,7 +60,14 @@
 
     <div class="site-header__actions">
       {% if section.settings.show_search %}
-        <a class="site-header__action" href="{{ routes.search_url }}" data-dialog-open="SearchDrawer">
+        <a
+          class="site-header__action"
+          href="{{ routes.search_url }}"
+          data-dialog-open="SearchDrawer"
+          data-search-trigger
+          aria-haspopup="dialog"
+          aria-controls="SearchDrawer"
+        >
           <span class="site-header__action-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <circle cx="11" cy="11" r="6.5"></circle>
