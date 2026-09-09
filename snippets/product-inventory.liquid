@@ -1,0 +1,50 @@
+{% doc %}
+  Renders the selected variant inventory status and optional low-inventory
+  quantity/progress UI.
+
+  The parent block supplies the resolved inventory state and owns variant
+  synchronization. This snippet owns only the fixed, accessible status markup.
+
+  @param {string} state - in_stock, low_inventory, out_of_stock or untracked_inventory.
+  @param {number} [quantity] - Tracked inventory quantity for the selected variant.
+  @param {number} [threshold] - Merchant-configured low inventory threshold.
+  @param {boolean} [show_quantity] - Whether the low inventory quantity is visible.
+  @param {boolean} [show_progress] - Whether the low inventory progress bar is visible.
+  @param {number} [progress] - Low inventory progress percentage from 0 to 100.
+
+  @example
+  {% render 'product-inventory', state: 'low_inventory', quantity: 4, threshold: 10, show_quantity: true %}
+{% enddoc %}
+
+{% liquid
+  assign inventory_label = 'blocks.product_inventory.in_stock' | t
+
+  case state
+    when 'low_inventory'
+      assign inventory_label = 'blocks.product_inventory.low_inventory' | t
+    when 'out_of_stock'
+      assign inventory_label = 'blocks.product_inventory.out_of_stock' | t
+    when 'untracked_inventory'
+      assign inventory_label = 'blocks.product_inventory.untracked_inventory' | t
+  endcase
+%}
+
+<div class="product-inventory-block__status" data-inventory-status data-state="{{ state | escape }}" role="status" aria-live="polite">
+  <span data-inventory-label>{{ inventory_label }}</span>
+  <span data-inventory-quantity{% unless show_quantity %} hidden{% endunless %}>
+    {{ 'blocks.product_inventory.low_inventory_quantity' | t: quantity: quantity }}
+  </span>
+</div>
+
+<div class="product-inventory-block__progress" data-inventory-progress{% unless show_progress %} hidden{% endunless %}>
+  <span
+    class="product-inventory-block__progress-value"
+    data-inventory-progress-value
+    role="progressbar"
+    aria-label="{{ 'blocks.product_inventory.progress_label' | t | escape }}"
+    aria-valuemin="0"
+    aria-valuemax="{{ threshold | default: 0 }}"
+    aria-valuenow="{{ quantity | default: 0 }}"
+    style="--product-inventory-progress: {{ progress | default: 0 }}%;"
+  ></span>
+</div>

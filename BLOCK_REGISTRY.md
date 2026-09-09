@@ -239,6 +239,25 @@
 - Runtime: Liquid and scoped CSS only; no JavaScript lifecycle owner is required.
 - Targeting: available as a theme block in sections that support `@theme`, including Custom Section; the product section exposes it through its controlled Commerce block allow-list.
 
+## Product Inventory
+
+- Type: `product-inventory`
+- Category: Commerce Composition
+- Role: render inventory signals for the selected variant without calculating or replacing Shopify availability and inventory data.
+- Resource owner: the parent product section/form supplies product context and selected-variant lifecycle; Shopify owns `available`, `inventory_management`, `inventory_policy` and `inventory_quantity`.
+- Capabilities: low-inventory threshold, optional tracked quantity, optional low-inventory progress, typography role/size/letter spacing, semantic low-inventory color and responsive padding.
+- Content owner: status copy is localized and fixed by the component; merchants cannot enter inventory values or arbitrary status content.
+- Composition policy: leaf commerce block; no child blocks, nested sections, product picker or inventory mutation.
+- Component boundary: `snippets/product-inventory.liquid` owns accessible status/progress markup; the block owns context binding, state resolution, editor settings and selected-variant synchronization.
+- Output: `.product-inventory-block` with one live status and an optional progress indicator for valid tracked low inventory.
+- States: available tracked variants resolve to In stock or Low inventory; unavailable variants resolve to Out of stock; available variants without inventory tracking resolve to Untracked inventory.
+- Threshold rule: `low_inventory_threshold = 0` disables the Low inventory state for available tracked variants and displays In stock.
+- Data integrity: quantity and progress render only for valid tracked positive quantities; continue-selling variants with zero/negative quantity remain available and never display a misleading remaining quantity.
+- Accessibility: status changes use a polite live region; progress exposes a localized accessible name and current/max values; long localized labels wrap safely.
+- Localization: every visible status, quantity and missing-context label uses translation keys.
+- Runtime: Liquid initial state plus a lifecycle-safe custom element listening to the parent `variant:change` event; the block does not own variant selection.
+- Targeting: available through `@theme` Commerce surfaces and the Product section controlled allow-list.
+
 ## Variant Picker
 
 - Type: `variant-picker`

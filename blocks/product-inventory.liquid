@@ -1,0 +1,413 @@
+{% doc %}
+  Renders selected-variant inventory signals for the product context supplied
+  by its parent commerce surface.
+
+  Product Inventory owns threshold presentation, optional low-stock quantity
+  and progress UI, typography and responsive padding. Product/variant context,
+  inventory policy and inventory quantity remain owned by Shopify and the
+  parent product flow.
+
+  @example
+  {% content_for 'block', type: 'product-inventory', id: 'product-inventory' %}
+{% enddoc %}
+
+{% liquid
+  assign inventory_product = closest.product | default: product
+  assign inventory_variant = inventory_product.selected_or_first_available_variant
+  assign inventory_threshold = block.settings.low_inventory_threshold | default: 10
+  assign inventory_font_family = 'var(--font-body-family)'
+  assign inventory_font_size = 'var(--font-body-md)'
+  assign inventory_letter_spacing = '0'
+  assign inventory_low_color = 'var(--color-text)'
+  assign inventory_padding_top_mobile = block.settings.padding_top
+  assign inventory_padding_bottom_mobile = block.settings.padding_bottom
+  assign inventory_padding_left_mobile = block.settings.padding_left
+  assign inventory_padding_right_mobile = block.settings.padding_right
+
+  case block.settings.font
+    when 'heading'
+      assign inventory_font_family = 'var(--font-heading-family)'
+    when 'accent'
+      assign inventory_font_family = 'var(--font-accent-family)'
+  endcase
+
+  case block.settings.font_size
+    when 'xs'
+      assign inventory_font_size = 'var(--font-body-xs)'
+    when 'sm'
+      assign inventory_font_size = 'var(--font-body-sm)'
+    when 'lg'
+      assign inventory_font_size = 'var(--font-body-lg)'
+    when 'xl'
+      assign inventory_font_size = 'var(--font-body-xl)'
+    when 'xxl'
+      assign inventory_font_size = 'var(--font-body-xxl)'
+  endcase
+
+  case block.settings.letter_spacing
+    when 'tight'
+      assign inventory_letter_spacing = '-0.01em'
+    when 'relaxed'
+      assign inventory_letter_spacing = '0.02em'
+  endcase
+
+  case block.settings.low_inventory_text_color
+    when 'heading'
+      assign inventory_low_color = 'var(--color-heading)'
+    when 'accent'
+      assign inventory_low_color = 'var(--color-accent)'
+  endcase
+
+  if block.settings.customize_mobile_padding
+    assign inventory_padding_top_mobile = block.settings.padding_top_mobile
+    assign inventory_padding_bottom_mobile = block.settings.padding_bottom_mobile
+    assign inventory_padding_left_mobile = block.settings.padding_left_mobile
+    assign inventory_padding_right_mobile = block.settings.padding_right_mobile
+  endif
+
+  assign inventory_state = 'out_of_stock'
+  assign inventory_quantity = inventory_variant.inventory_quantity
+  assign inventory_show_quantity = false
+  assign inventory_show_progress = false
+  assign inventory_progress = 0
+
+  if inventory_variant != blank
+    if inventory_variant.available
+      if inventory_variant.inventory_management == blank
+        assign inventory_state = 'untracked_inventory'
+      else
+        assign inventory_state = 'in_stock'
+        if inventory_threshold > 0
+          if inventory_quantity > 0
+            if inventory_quantity <= inventory_threshold
+              assign inventory_state = 'low_inventory'
+            endif
+          endif
+        endif
+      endif
+    endif
+  endif
+
+  if inventory_state == 'low_inventory'
+    if block.settings.show_low_inventory_quantity
+      assign inventory_show_quantity = true
+    endif
+    if block.settings.show_low_inventory_progress_bar
+      if inventory_threshold > 0
+        if inventory_quantity > 0
+          assign inventory_show_progress = true
+          assign inventory_progress = inventory_quantity | times: 100.0 | divided_by: inventory_threshold | at_most: 100 | round
+        endif
+      endif
+    endif
+  endif
+%}
+
+<product-inventory
+  class="product-inventory-block"
+  data-product-inventory-block
+  data-inventory-threshold="{{ inventory_threshold }}"
+  data-show-low-inventory-quantity="{{ block.settings.show_low_inventory_quantity }}"
+  data-show-low-inventory-progress="{{ block.settings.show_low_inventory_progress_bar }}"
+  data-label-in-stock="{{ 'blocks.product_inventory.in_stock' | t | escape }}"
+  data-label-low-inventory="{{ 'blocks.product_inventory.low_inventory' | t | escape }}"
+  data-label-out-of-stock="{{ 'blocks.product_inventory.out_of_stock' | t | escape }}"
+  data-label-untracked-inventory="{{ 'blocks.product_inventory.untracked_inventory' | t | escape }}"
+  data-low-inventory-quantity-template="{{ 'blocks.product_inventory.low_inventory_quantity' | t: quantity: '__QUANTITY__' | escape }}"
+  style="--product-inventory-font-family: {{ inventory_font_family }}; --product-inventory-font-size: {{ inventory_font_size }}; --product-inventory-letter-spacing: {{ inventory_letter_spacing }}; --product-inventory-low-color: {{ inventory_low_color }}; --product-inventory-padding-top: {{ block.settings.padding_top }}px; --product-inventory-padding-bottom: {{ block.settings.padding_bottom }}px; --product-inventory-padding-left: {{ block.settings.padding_left }}px; --product-inventory-padding-right: {{ block.settings.padding_right }}px; --product-inventory-padding-top-mobile: {{ inventory_padding_top_mobile }}px; --product-inventory-padding-bottom-mobile: {{ inventory_padding_bottom_mobile }}px; --product-inventory-padding-left-mobile: {{ inventory_padding_left_mobile }}px; --product-inventory-padding-right-mobile: {{ inventory_padding_right_mobile }}px;"
+  {{ block.shopify_attributes }}
+>
+  {% if inventory_product != blank %}
+    {% render 'product-inventory',
+      state: inventory_state,
+      quantity: inventory_quantity,
+      threshold: inventory_threshold,
+      show_quantity: inventory_show_quantity,
+      show_progress: inventory_show_progress,
+      progress: inventory_progress
+    %}
+
+    <script type="application/json" data-product-inventory-variants>
+      [
+        {% for variant in inventory_product.variants %}
+          {
+            "id": {{ variant.id | json }},
+            "available": {{ variant.available | json }},
+            "inventory_management": {{ variant.inventory_management | json }},
+            "inventory_policy": {{ variant.inventory_policy | json }},
+            "inventory_quantity": {{ variant.inventory_quantity | json }}
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
+    </script>
+  {% else %}
+    <p class="product-inventory-block__empty" role="status" aria-live="polite">
+      {{ 'blocks.product_inventory.missing_context' | t }}
+    </p>
+  {% endif %}
+</product-inventory>
+
+{% stylesheet %}
+  .product-inventory-block {
+    color: var(--color-text);
+    display: block;
+    font-family: var(--product-inventory-font-family);
+    font-size: var(--product-inventory-font-size);
+    letter-spacing: var(--product-inventory-letter-spacing);
+    min-width: 0;
+    padding-block: var(--product-inventory-padding-top) var(--product-inventory-padding-bottom);
+    padding-inline: var(--product-inventory-padding-left) var(--product-inventory-padding-right);
+    width: 100%;
+  }
+
+  .product-inventory-block__status {
+    align-items: baseline;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    line-height: var(--font-body-line-height);
+    overflow-wrap: anywhere;
+  }
+
+  .product-inventory-block__status[data-state='low_inventory'] {
+    color: var(--product-inventory-low-color);
+  }
+
+  .product-inventory-block__status[data-state='out_of_stock'] {
+    opacity: 0.75;
+  }
+
+  .product-inventory-block__progress {
+    background: color-mix(in srgb, var(--product-inventory-low-color) 20%, transparent);
+    border-radius: 999px;
+    height: 0.375rem;
+    margin-block-start: 0.625rem;
+    max-width: 24rem;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .product-inventory-block__progress[hidden],
+  [data-inventory-quantity][hidden] {
+    display: none;
+  }
+
+  .product-inventory-block__progress-value {
+    background: var(--product-inventory-low-color);
+    display: block;
+    height: 100%;
+    width: var(--product-inventory-progress);
+  }
+
+  .product-inventory-block__empty {
+    color: var(--color-text);
+    font-size: var(--font-body-sm);
+    margin: 0;
+    opacity: 0.75;
+    overflow-wrap: anywhere;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .product-inventory-block {
+      padding-block: var(--product-inventory-padding-top-mobile) var(--product-inventory-padding-bottom-mobile);
+      padding-inline: var(--product-inventory-padding-left-mobile) var(--product-inventory-padding-right-mobile);
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  class ProductInventory extends HTMLElement {
+    connectedCallback() {
+      if (this.initialized) return;
+
+      const variantData = this.querySelector('[data-product-inventory-variants]');
+      this.section = this.closest('.shopify-section');
+      if (!variantData || !this.section) return;
+
+      try {
+        this.variants = JSON.parse(variantData.textContent);
+      } catch (error) {
+        return;
+      }
+
+      this.initialized = true;
+      this.status = this.querySelector('[data-inventory-status]');
+      this.label = this.querySelector('[data-inventory-label]');
+      this.quantity = this.querySelector('[data-inventory-quantity]');
+      this.progress = this.querySelector('[data-inventory-progress]');
+      this.progressValue = this.querySelector('[data-inventory-progress-value]');
+      this.threshold = Number(this.dataset.inventoryThreshold || 0);
+      this.showQuantity = this.dataset.showLowInventoryQuantity === 'true';
+      this.showProgress = this.dataset.showLowInventoryProgress === 'true';
+      this.variantChangeHandler = (event) => this.updateInventory(event.detail?.variant);
+      this.section.addEventListener('variant:change', this.variantChangeHandler);
+    }
+
+    disconnectedCallback() {
+      if (!this.initialized) return;
+
+      this.section?.removeEventListener('variant:change', this.variantChangeHandler);
+      this.initialized = false;
+    }
+
+    getState(variant) {
+      if (!variant?.available) return 'out_of_stock';
+      if (!variant.inventory_management) return 'untracked_inventory';
+
+      const quantity = this.getQuantity(variant);
+      if (this.threshold > 0 && quantity !== null && quantity > 0 && quantity <= this.threshold) {
+        return 'low_inventory';
+      }
+
+      return 'in_stock';
+    }
+
+    getQuantity(variant) {
+      if (variant?.inventory_quantity === null || variant?.inventory_quantity === undefined || variant?.inventory_quantity === '') {
+        return null;
+      }
+
+      const quantity = Number(variant.inventory_quantity);
+      return Number.isFinite(quantity) ? quantity : null;
+    }
+
+    getLabel(state) {
+      if (state === 'low_inventory') return this.dataset.labelLowInventory;
+      if (state === 'out_of_stock') return this.dataset.labelOutOfStock;
+      if (state === 'untracked_inventory') return this.dataset.labelUntrackedInventory;
+      return this.dataset.labelInStock;
+    }
+
+    updateInventory(eventVariant) {
+      if (!eventVariant?.id || !this.status || !this.label) return;
+
+      const variant = this.variants.find((entry) => String(entry.id) === String(eventVariant.id));
+      if (!variant) return;
+
+      const state = this.getState(variant);
+      const quantity = this.getQuantity(variant);
+      const showLowQuantity = state === 'low_inventory' && this.showQuantity && quantity !== null;
+      const showLowProgress = state === 'low_inventory' && this.showProgress && quantity !== null && quantity > 0 && this.threshold > 0;
+
+      this.status.dataset.state = state;
+      this.label.textContent = this.getLabel(state) || '';
+
+      if (this.quantity) {
+        this.quantity.hidden = !showLowQuantity;
+        this.quantity.textContent = showLowQuantity
+          ? (this.dataset.lowInventoryQuantityTemplate || '').replace('__QUANTITY__', String(quantity))
+          : '';
+      }
+
+      if (this.progress) this.progress.hidden = !showLowProgress;
+      if (this.progressValue) {
+        const percentage = showLowProgress ? Math.min(100, Math.max(0, (quantity / this.threshold) * 100)) : 0;
+        this.progressValue.style.setProperty('--product-inventory-progress', `${Math.round(percentage)}%`);
+        this.progressValue.setAttribute('aria-valuemax', String(this.threshold));
+        this.progressValue.setAttribute('aria-valuenow', String(showLowProgress ? quantity : 0));
+      }
+    }
+  }
+
+  if (!customElements.get('product-inventory')) customElements.define('product-inventory', ProductInventory);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.product_inventory",
+  "settings": [
+    { "type": "header", "content": "t:general.inventory_controls" },
+    {
+      "type": "range",
+      "id": "low_inventory_threshold",
+      "label": "t:labels.low_inventory_threshold",
+      "info": "t:info.low_inventory_threshold",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 10
+    },
+    { "type": "checkbox", "id": "show_low_inventory_quantity", "label": "t:labels.show_low_inventory_quantity", "default": true },
+    { "type": "checkbox", "id": "show_low_inventory_progress_bar", "label": "t:labels.show_low_inventory_progress_bar", "default": false },
+    { "type": "header", "content": "t:general.typography" },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "t:labels.font",
+      "options": [
+        { "value": "body", "label": "t:options.form_font.body" },
+        { "value": "heading", "label": "t:options.form_font.heading" },
+        { "value": "accent", "label": "t:options.form_font.accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "select",
+      "id": "font_size",
+      "label": "t:labels.font_size",
+      "options": [
+        { "value": "xs", "label": "t:options.text_size.xs" },
+        { "value": "sm", "label": "t:options.text_size.sm" },
+        { "value": "md", "label": "t:options.text_size.md" },
+        { "value": "lg", "label": "t:options.text_size.lg" },
+        { "value": "xl", "label": "t:options.text_size.xl" },
+        { "value": "xxl", "label": "t:options.text_size.xxl" }
+      ],
+      "default": "md"
+    },
+    {
+      "type": "select",
+      "id": "letter_spacing",
+      "label": "t:labels.letter_spacing",
+      "options": [
+        { "value": "tight", "label": "t:options.letter_spacing.tight" },
+        { "value": "normal", "label": "t:options.letter_spacing.normal" },
+        { "value": "relaxed", "label": "t:options.letter_spacing.relaxed" }
+      ],
+      "default": "normal"
+    },
+    { "type": "header", "content": "t:general.color" },
+    {
+      "type": "select",
+      "id": "low_inventory_text_color",
+      "label": "t:labels.low_inventory_text_color",
+      "options": [
+        { "value": "text", "label": "t:options.inventory_text_color.text" },
+        { "value": "heading", "label": "t:options.inventory_text_color.heading" },
+        { "value": "accent", "label": "t:options.inventory_text_color.accent" }
+      ],
+      "default": "text"
+    },
+    { "type": "header", "content": "t:general.padding" },
+    { "type": "range", "id": "padding_top", "label": "t:labels.padding_top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "t:labels.padding_bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_left", "label": "t:labels.padding_left", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_right", "label": "t:labels.padding_right", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "checkbox", "id": "customize_mobile_padding", "label": "t:labels.customize_mobile_padding", "default": false },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_top_mobile", "label": "t:labels.padding_top_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_bottom_mobile", "label": "t:labels.padding_bottom_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_left_mobile", "label": "t:labels.padding_left_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_right_mobile", "label": "t:labels.padding_right_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
+  ],
+  "presets": [
+    {
+      "name": "t:general.product_inventory",
+      "category": "t:general.commerce",
+      "settings": {
+        "low_inventory_threshold": 10,
+        "show_low_inventory_quantity": true,
+        "show_low_inventory_progress_bar": false,
+        "font": "body",
+        "font_size": "md",
+        "letter_spacing": "normal",
+        "low_inventory_text_color": "text",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_left": 0,
+        "padding_right": 0,
+        "customize_mobile_padding": false
+      }
+    }
+  ]
+}
+{% endschema %}
