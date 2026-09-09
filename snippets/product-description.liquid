@@ -1,0 +1,18 @@
+{% doc %}
+  Renders the current product description as trusted rich text.
+
+  The parent surface supplies the product context and owns the description
+  block wrapper, height state and spacing. This snippet only renders the
+  product-owned rich text so paragraphs, lists and links remain intact.
+
+  @param {product} product - The product whose description should be rendered.
+
+  @example
+  {% render 'product-description', product: product %}
+{% enddoc %}
+
+{% if product != blank %}
+  {% if product.description != blank %}
+    {{ product.description }}
+  {% endif %}
+{% endif %}

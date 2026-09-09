@@ -222,6 +222,23 @@
 - Runtime: Liquid and scoped CSS only; no JavaScript lifecycle owner is required.
 - Targeting: available as a theme block in sections that support `@theme`, including Custom Section; do not mix `@theme` with section-defined blocks.
 
+## Product Description
+
+- Type: `product-description`
+- Category: Commerce Composition
+- Role: render `product.description` from the product context with a controlled body-text scale and optional height limit.
+- Resource owner: the parent product section/resource surface supplies the product context; Product Description never owns product selection or editable description content.
+- Capabilities: registered body-text scale (`xs`, `sm`, `md`, `lg`, `xl`, `xxl`), height limit with accessible expand/collapse, and responsive padding.
+- Content owner: Shopify product data owns the rich description; merchants can control presentation only and cannot replace it with arbitrary block text.
+- Composition policy: leaf commerce block; no child blocks, nested sections or resource selection.
+- Component boundary: `snippets/product-description.liquid` owns product-owned rich-text output; the block owns context binding, height state, editor settings, stable wrapper and responsive padding.
+- Output: `.product-description-block` containing the product-owned rich text and an optional native `details` disclosure for long content.
+- States: missing/empty description renders no wrapper or spacing; short content is not artificially limited; long content is bounded by the selected height and can be expanded/collapsed.
+- Accessibility: preserves paragraph/list/link semantics, uses a native keyboard-accessible disclosure control, keeps rich text wrapped safely and introduces no nested interactive element.
+- Localization: expand/collapse labels use translation keys; the description itself remains merchant/product data.
+- Runtime: Liquid and scoped CSS only; no JavaScript lifecycle owner is required.
+- Targeting: available as a theme block in sections that support `@theme`, including Custom Section; the product section exposes it through its controlled Commerce block allow-list.
+
 ## Variant Picker
 
 - Type: `variant-picker`

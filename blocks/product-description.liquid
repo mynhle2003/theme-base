@@ -1,0 +1,218 @@
+{% doc %}
+  Renders the current product description for the product context supplied by
+  its parent commerce surface.
+
+  Product Description owns only the body-text scale, optional height limit and
+  responsive padding. It never owns product selection or editable copy.
+
+  @example
+  {% content_for 'block', type: 'product-description', id: 'product-description' %}
+{% enddoc %}
+
+{% liquid
+  assign description_product = closest.product | default: product
+  assign description_size = 'md'
+  assign description_height_limit = 'none'
+  assign description_max_height = 'none'
+  assign description_expand_threshold = 0
+  assign description_padding_top_mobile = block.settings.padding_top
+  assign description_padding_bottom_mobile = block.settings.padding_bottom
+  assign description_padding_left_mobile = block.settings.padding_left
+  assign description_padding_right_mobile = block.settings.padding_right
+
+  case block.settings.text_size
+    when 'xs', 'sm', 'md', 'lg', 'xl', 'xxl'
+      assign description_size = block.settings.text_size
+  endcase
+
+  case block.settings.height_limit
+    when 'small'
+      assign description_height_limit = 'small'
+      assign description_max_height = '12rem'
+      assign description_expand_threshold = 420
+    when 'medium'
+      assign description_height_limit = 'medium'
+      assign description_max_height = '20rem'
+      assign description_expand_threshold = 760
+    when 'large'
+      assign description_height_limit = 'large'
+      assign description_max_height = '32rem'
+      assign description_expand_threshold = 1200
+  endcase
+
+  if block.settings.customize_mobile_padding
+    assign description_padding_top_mobile = block.settings.padding_top_mobile
+    assign description_padding_bottom_mobile = block.settings.padding_bottom_mobile
+    assign description_padding_left_mobile = block.settings.padding_left_mobile
+    assign description_padding_right_mobile = block.settings.padding_right_mobile
+  endif
+
+  assign description_plain = description_product.description | strip_html | strip
+  assign description_is_long = false
+  if description_expand_threshold > 0
+    if description_plain.size > description_expand_threshold
+      assign description_is_long = true
+    endif
+  endif
+%}
+
+{% if description_plain != blank %}
+  <div
+    class="product-description-block body-text body-{{ description_size }}"
+    style="--product-description-max-height: {{ description_max_height }}; --product-description-padding-top: {{ block.settings.padding_top }}px; --product-description-padding-bottom: {{ block.settings.padding_bottom }}px; --product-description-padding-left: {{ block.settings.padding_left }}px; --product-description-padding-right: {{ block.settings.padding_right }}px; --product-description-padding-top-mobile: {{ description_padding_top_mobile }}px; --product-description-padding-bottom-mobile: {{ description_padding_bottom_mobile }}px; --product-description-padding-left-mobile: {{ description_padding_left_mobile }}px; --product-description-padding-right-mobile: {{ description_padding_right_mobile }}px;"
+    {{ block.shopify_attributes }}
+  >
+    {% if description_height_limit == 'none' %}
+      <div class="product-description-block__content">
+        {% render 'product-description', product: description_product %}
+      </div>
+    {% elsif description_is_long == false %}
+      <div class="product-description-block__content">
+        {% render 'product-description', product: description_product %}
+      </div>
+    {% else %}
+      <details class="product-description-block__details">
+        <summary class="product-description-block__summary">
+          <span class="product-description-block__summary-label product-description-block__summary-label--more">
+            {{ 'blocks.product_description.show_more' | t }}
+          </span>
+          <span class="product-description-block__summary-label product-description-block__summary-label--less">
+            {{ 'blocks.product_description.show_less' | t }}
+          </span>
+        </summary>
+        <div class="product-description-block__content product-description-block__content--limited">
+          {% render 'product-description', product: description_product %}
+        </div>
+      </details>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .product-description-block {
+    color: var(--body-color, var(--color-text));
+    min-width: 0;
+    max-width: 100%;
+    padding-block: var(--product-description-padding-top) var(--product-description-padding-bottom);
+    padding-inline: var(--product-description-padding-left) var(--product-description-padding-right);
+    width: 100%;
+  }
+
+  .product-description-block__content {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .product-description-block__content :where(p, ul, ol, blockquote, pre) {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .product-description-block__content > :first-child {
+    margin-block-start: 0;
+  }
+
+  .product-description-block__content > :last-child {
+    margin-block-end: 0;
+  }
+
+  .product-description-block__content--limited {
+    max-height: var(--product-description-max-height);
+    overflow: hidden;
+  }
+
+  .product-description-block__details[open] .product-description-block__content--limited {
+    max-height: none;
+  }
+
+  .product-description-block__summary {
+    color: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    margin-block-end: 0.75rem;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .product-description-block__summary:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  .product-description-block__summary-label--less,
+  .product-description-block__details[open] .product-description-block__summary-label--more {
+    display: none;
+  }
+
+  .product-description-block__details[open] .product-description-block__summary-label--less {
+    display: inline;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .product-description-block {
+      padding-block: var(--product-description-padding-top-mobile) var(--product-description-padding-bottom-mobile);
+      padding-inline: var(--product-description-padding-left-mobile) var(--product-description-padding-right-mobile);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.product_description",
+  "settings": [
+    { "type": "header", "content": "t:general.typography" },
+    {
+      "type": "select",
+      "id": "height_limit",
+      "label": "t:labels.height_limit",
+      "options": [
+        { "value": "none", "label": "t:options.height_limit.none" },
+        { "value": "small", "label": "t:options.height_limit.small" },
+        { "value": "medium", "label": "t:options.height_limit.medium" },
+        { "value": "large", "label": "t:options.height_limit.large" }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "t:labels.text_size",
+      "options": [
+        { "value": "xs", "label": "t:options.text_size.xs" },
+        { "value": "sm", "label": "t:options.text_size.sm" },
+        { "value": "md", "label": "t:options.text_size.md" },
+        { "value": "lg", "label": "t:options.text_size.lg" },
+        { "value": "xl", "label": "t:options.text_size.xl" },
+        { "value": "xxl", "label": "t:options.text_size.xxl" }
+      ],
+      "default": "md"
+    },
+    { "type": "header", "content": "t:general.padding" },
+    { "type": "range", "id": "padding_top", "label": "t:labels.padding_top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "t:labels.padding_bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_left", "label": "t:labels.padding_left", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_right", "label": "t:labels.padding_right", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "checkbox", "id": "customize_mobile_padding", "label": "t:labels.customize_mobile_padding", "default": false },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_top_mobile", "label": "t:labels.padding_top_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_bottom_mobile", "label": "t:labels.padding_bottom_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_left_mobile", "label": "t:labels.padding_left_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_right_mobile", "label": "t:labels.padding_right_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
+  ],
+  "presets": [
+    {
+      "name": "t:general.product_description",
+      "category": "t:general.commerce",
+      "settings": {
+        "height_limit": "medium",
+        "text_size": "md",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_left": 0,
+        "padding_right": 0,
+        "customize_mobile_padding": false
+      }
+    }
+  ]
+}
+{% endschema %}
