@@ -192,17 +192,17 @@
 
 - Type: `product-price`
 - Category: Commerce Composition
-- Role: render the current product price using the shared price component.
-- Resource owner: the parent section/resource surface supplies the product context; the block never owns a product picker, variant source or product loop.
-- Capabilities: optional `From` label for variable products; currency, compare-at, unit-price and sale-order policy remain owned by global Theme Settings and the shared price snippet.
+- Role: render the current product or selected variant price using the shared price component.
+- Resource owner: the parent section/resource surface supplies the product context and selected variant lifecycle; the block never owns a product picker, variant source or product loop.
+- Capabilities: sale badge visibility, tax/shipping notice visibility, typography role/size/letter spacing, and desktop/mobile padding; currency, compare-at, unit-price and sale-order policy remain owned by global Theme Settings and the shared price snippet.
 - Content owner: Product Price owns no child content; merchants cannot add, remove or reorder price sub-elements.
 - Composition policy: leaf commerce block; no child blocks, nested sections or resource selection.
-- Component boundary: `snippets/price.liquid` owns money formatting, sale comparison, unit price and price accessibility markup; this block owns only the editor-facing wrapper and controlled `show_from` setting.
+- Component boundary: `snippets/price.liquid` owns money formatting, sale comparison, sale badge contract, unit price and price accessibility markup; this block owns the editor-facing wrapper, responsive presentation controls, tax/shipping notice and variant-update bridge.
 - Output: `.product-price-block` wrapping the shared `.price` component.
-- States: missing product context renders an editor-safe empty state; product sale, compare-at, unit-price and variable-price states are delegated to the shared component.
-- Accessibility: preserves the shared price `aria-label` and exposes the missing-context state with `role="status"`.
+- States: missing product context renders an editor-safe empty state; regular, sale, range/from, unit-price and unavailable selected-variant states remain tied to the current product/variant context.
+- Accessibility: preserves the shared price `aria-label`, announces price updates politely, and exposes the missing-context state with `role="status"`.
 - Localization: all visible price labels and empty-state copy use translation keys or shared settings.
-- Runtime: Liquid-only; no JavaScript lifecycle owner is required until a parent variant lifecycle is defined.
+- Runtime: Liquid initial render plus a scoped `variant:change` listener; the parent variant picker remains the lifecycle owner.
 
 ## Variant Picker
 

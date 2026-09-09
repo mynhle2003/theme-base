@@ -1,29 +1,153 @@
 {% doc %}
-  Renders a controlled product price block for the product context supplied by
-  its parent resource surface. Price formatting and global price policies are
-  delegated to the shared price snippet.
+  Renders the current product or selected variant price from the product context
+  supplied by its parent commerce surface. Price formatting, localization,
+  badge policy and global price policies remain owned by shared primitives and
+  Theme Settings.
+
+  The block owns presentation controls for the sale badge, tax/shipping notice,
+  typography role, and responsive padding. It does not select a product, choose
+  a variant, calculate a price, or render child blocks.
 
   @example
   {% content_for 'block', type: 'product-price', id: 'product-price' %}
 {% enddoc %}
 
 {% liquid
-  assign price_product = product
+  assign price_product = closest.product | default: product
+  assign price_item = price_product.selected_or_first_available_variant | default: price_product
+  assign price_font_family = 'var(--font-body-family)'
+  assign price_font_size = 'var(--font-body-xl)'
+  assign price_letter_spacing = '0'
+  assign price_padding_top_mobile = block.settings.padding_top
+  assign price_padding_bottom_mobile = block.settings.padding_bottom
+  assign price_padding_left_mobile = block.settings.padding_left
+  assign price_padding_right_mobile = block.settings.padding_right
+
+  case block.settings.font
+    when 'heading'
+      assign price_font_family = 'var(--font-heading-family)'
+    when 'accent'
+      assign price_font_family = 'var(--font-accent-family)'
+  endcase
+
+  case block.settings.font_size
+    when 'xs'
+      assign price_font_size = 'var(--font-body-xs)'
+    when 'sm'
+      assign price_font_size = 'var(--font-body-sm)'
+    when 'md'
+      assign price_font_size = 'var(--font-body-md)'
+    when 'lg'
+      assign price_font_size = 'var(--font-body-lg)'
+    when 'xxl'
+      assign price_font_size = 'var(--font-body-xxl)'
+  endcase
+
+  case block.settings.letter_spacing
+    when 'tight'
+      assign price_letter_spacing = '-0.01em'
+    when 'relaxed'
+      assign price_letter_spacing = '0.02em'
+    when 'loose'
+      assign price_letter_spacing = '0.06em'
+    when 'extra_loose'
+      assign price_letter_spacing = '0.12em'
+  endcase
+
+  if block.settings.customize_mobile_padding
+    assign price_padding_top_mobile = block.settings.padding_top_mobile
+    assign price_padding_bottom_mobile = block.settings.padding_bottom_mobile
+    assign price_padding_left_mobile = block.settings.padding_left_mobile
+    assign price_padding_right_mobile = block.settings.padding_right_mobile
+  endif
 %}
 
-<div class="product-price-block" {{ block.shopify_attributes }}>
+<div
+  class="product-price-block"
+  data-product-price-block
+  style="--price-font-family: {{ price_font_family }}; --price-font-size: {{ price_font_size }}; --price-letter-spacing: {{ price_letter_spacing }}; --price-padding-top: {{ block.settings.padding_top }}px; --price-padding-bottom: {{ block.settings.padding_bottom }}px; --price-padding-left: {{ block.settings.padding_left }}px; --price-padding-right: {{ block.settings.padding_right }}px; --price-padding-top-mobile: {{ price_padding_top_mobile }}px; --price-padding-bottom-mobile: {{ price_padding_bottom_mobile }}px; --price-padding-left-mobile: {{ price_padding_left_mobile }}px; --price-padding-right-mobile: {{ price_padding_right_mobile }}px;"
+  {{ block.shopify_attributes }}
+>
   {% if price_product != blank %}
-    {% render 'price', item: price_product, show_from: block.settings.show_from, context: 'product_page' %}
+    {% render 'price', item: price_item, product: price_product, show_from: true, show_sale_badge: block.settings.show_sale_badge, context: 'product_page' %}
+
+    {% if block.settings.show_tax_and_shipping_notice %}
+      <p class="product-price-block__tax-shipping-notice">
+        {{ 'products.product.tax_shipping_notice' | t }}
+      </p>
+    {% endif %}
+
+    {% if price_product.variants != blank %}
+      <script type="application/json" data-price-variants>
+        [
+          {% for variant in price_product.variants %}
+            {% liquid
+              assign variant_is_sale = false
+              if variant.compare_at_price > variant.price
+                assign variant_is_sale = true
+              endif
+
+              if settings.price_show_currency_code_product_pages
+                assign variant_current_text = variant.price | money_with_currency
+                assign variant_compare_text = variant.compare_at_price | money_with_currency
+              else
+                assign variant_current_text = variant.price | money
+                assign variant_compare_text = variant.compare_at_price | money
+              endif
+
+              assign variant_unit_text = blank
+              if variant.unit_price != blank
+                if variant.unit_price_measurement != blank
+                  assign variant_unit_text = variant.unit_price | unit_price_with_measurement: variant.unit_price_measurement
+                endif
+              endif
+
+              assign variant_sale_badge_text = blank
+              if block.settings.show_sale_badge
+                if variant_is_sale
+                  assign variant_sale_badge_text = 'products.product.on_sale' | t
+                  assign variant_savings = variant.compare_at_price | minus: variant.price
+                  case settings.badge_sale_type
+                    when 'percentage'
+                      assign variant_discount = variant_savings | times: 100 | divided_by: variant.compare_at_price | round
+                      assign variant_sale_badge_text = 'products.product.discount_percentage' | t: discount: variant_discount
+                    when 'percentage_only'
+                      assign variant_discount = variant_savings | times: 100 | divided_by: variant.compare_at_price | round
+                      assign variant_sale_badge_text = 'products.product.discount_percentage_only' | t: discount: variant_discount
+                    when 'amount_saved'
+                      assign variant_savings_money = variant_savings | money
+                      assign variant_sale_badge_text = 'products.product.discount_amount' | t: amount: variant_savings_money
+                  endcase
+                endif
+              endif
+            %}
+            {
+              "id": {{ variant.id | json }},
+              "available": {{ variant.available | json }},
+              "current": {{ variant_current_text | json }},
+              "compare": {% if variant_is_sale %}{{ variant_compare_text | json }}{% else %}null{% endif %},
+              "unit": {{ variant_unit_text | json }},
+              "sale_badge": {{ variant_sale_badge_text | json }}
+            }{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        ]
+      </script>
+    {% endif %}
   {% else %}
-    <span class="product-price-block__empty" role="status">
+    <p class="product-price-block__empty" role="status" aria-live="polite">
       {{ 'blocks.product_price.empty' | t }}
-    </span>
+    </p>
   {% endif %}
 </div>
 
 {% stylesheet %}
   .product-price-block {
+    font-family: var(--price-font-family);
+    font-size: var(--price-font-size);
+    letter-spacing: var(--price-letter-spacing);
     min-width: 0;
+    padding-block: var(--price-padding-top) var(--price-padding-bottom);
+    padding-inline: var(--price-padding-left) var(--price-padding-right);
     width: 100%;
   }
 
@@ -31,20 +155,138 @@
     max-width: 100%;
   }
 
-  .product-price-block__empty {
+  .product-price-block__tax-shipping-notice {
     color: var(--color-text);
-    display: inline-block;
     font-size: var(--font-body-sm);
+    margin: 0.5rem 0 0;
     opacity: 0.75;
   }
+
+  .product-price-block__empty {
+    color: var(--color-text);
+    font-size: var(--font-body-sm);
+    margin: 0;
+    opacity: 0.75;
+    overflow-wrap: anywhere;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .product-price-block {
+      padding-block: var(--price-padding-top-mobile) var(--price-padding-bottom-mobile);
+      padding-inline: var(--price-padding-left-mobile) var(--price-padding-right-mobile);
+    }
+  }
 {% endstylesheet %}
+
+{% javascript %}
+  document.querySelectorAll('[data-product-price-block]').forEach((priceBlock) => {
+    if (priceBlock.dataset.priceInitialized === 'true') return;
+
+    const variantData = priceBlock.querySelector('[data-price-variants]');
+    const section = priceBlock.closest('.shopify-section');
+    if (!variantData || !section) return;
+
+    let variants;
+    try {
+      variants = JSON.parse(variantData.textContent);
+    } catch (error) {
+      return;
+    }
+
+    priceBlock.dataset.priceInitialized = 'true';
+
+    const updatePrice = (variant) => {
+      if (!variant) return;
+
+      const currentVariant = variants.find((entry) => String(entry.id) === String(variant.id));
+      const price = priceBlock.querySelector('[data-price]');
+      const current = price?.querySelector('[data-price-current]');
+      const compare = price?.querySelector('[data-price-compare]');
+      const unit = price?.querySelector('[data-price-unit]');
+      const saleBadge = price?.querySelector('[data-price-sale-badge]');
+      if (!currentVariant || !price || !current) return;
+
+      current.textContent = currentVariant.current;
+      current.classList.toggle('price__current--sale', Boolean(currentVariant.compare));
+      price.classList.toggle('price--sale', Boolean(currentVariant.compare));
+      price.dataset.available = String(Boolean(currentVariant.available));
+
+      if (compare) {
+        compare.hidden = !currentVariant.compare;
+        compare.textContent = currentVariant.compare || '';
+      }
+
+      if (unit) {
+        unit.hidden = !currentVariant.unit;
+        unit.textContent = currentVariant.unit || '';
+      }
+
+      if (saleBadge) {
+        saleBadge.hidden = !currentVariant.sale_badge;
+        saleBadge.textContent = currentVariant.sale_badge || '';
+      }
+    };
+
+    section.addEventListener('variant:change', (event) => updatePrice(event.detail?.variant));
+  });
+{% endjavascript %}
 
 {% schema %}
 {
   "name": "t:general.product_price",
   "settings": [
-    { "type": "checkbox", "id": "show_from", "label": "t:labels.product_price_show_from", "default": true }
+    { "type": "checkbox", "id": "show_sale_badge", "label": "t:labels.show_sale_badge", "default": true },
+    { "type": "checkbox", "id": "show_tax_and_shipping_notice", "label": "t:labels.show_tax_and_shipping_notice", "default": false },
+    { "type": "header", "content": "t:general.typography" },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "t:labels.font",
+      "options": [
+        { "value": "body", "label": "t:options.form_font.body" },
+        { "value": "heading", "label": "t:options.form_font.heading" },
+        { "value": "accent", "label": "t:options.form_font.accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "select",
+      "id": "font_size",
+      "label": "t:labels.font_size",
+      "options": [
+        { "value": "xs", "label": "t:options.text_size.xs" },
+        { "value": "sm", "label": "t:options.text_size.sm" },
+        { "value": "md", "label": "t:options.text_size.md" },
+        { "value": "lg", "label": "t:options.text_size.lg" },
+        { "value": "xl", "label": "t:options.text_size.xl" },
+        { "value": "xxl", "label": "t:options.text_size.xxl" }
+      ],
+      "default": "xl"
+    },
+    {
+      "type": "select",
+      "id": "letter_spacing",
+      "label": "t:labels.letter_spacing",
+      "options": [
+        { "value": "tight", "label": "t:options.letter_spacing.tight" },
+        { "value": "normal", "label": "t:options.letter_spacing.normal" },
+        { "value": "relaxed", "label": "t:options.letter_spacing.relaxed" },
+        { "value": "loose", "label": "t:options.letter_spacing.loose" },
+        { "value": "extra_loose", "label": "t:options.letter_spacing.extra_loose" }
+      ],
+      "default": "normal"
+    },
+    { "type": "header", "content": "t:general.padding" },
+    { "type": "range", "id": "padding_top", "label": "t:labels.padding_top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "t:labels.padding_bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_left", "label": "t:labels.padding_left", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_right", "label": "t:labels.padding_right", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "checkbox", "id": "customize_mobile_padding", "label": "t:labels.customize_mobile_padding", "default": false },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_top_mobile", "label": "t:labels.padding_top_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_bottom_mobile", "label": "t:labels.padding_bottom_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_left_mobile", "label": "t:labels.padding_left_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_right_mobile", "label": "t:labels.padding_right_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
   ],
-  "presets": [{ "name": "t:general.product_price" }]
+  "presets": [{ "name": "t:general.product_price", "category": "t:general.commerce" }]
 }
 {% endschema %}

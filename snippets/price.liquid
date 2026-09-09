@@ -2,7 +2,9 @@
   Renders a reusable price component for products and variants.
 
   @param {object} item - A product or variant-like object with price data.
+  @param {product} [product] - The parent product used for variable-price state.
   @param {boolean} [show_from] - Whether to show a From label for variable products.
+  @param {boolean} [show_sale_badge] - Whether to render the configured sale badge.
   @param {string} [context] - Price context: product_card or product_page.
 
   @example
@@ -12,6 +14,20 @@
 {% liquid
   assign price_value = item.price
   assign compare_at_price = item.compare_at_price
+  assign price_varies = item.price_varies
+  assign item_has_unit_price = false
+  if item.unit_price != blank
+    if item.unit_price_measurement != blank
+      assign item_has_unit_price = true
+    endif
+  endif
+  assign show_unit_slot = item_has_unit_price
+  if product != blank
+    assign show_unit_slot = true
+  endif
+  if product != blank
+    assign price_varies = product.price_varies
+  endif
   assign is_sale = false
   if compare_at_price > price_value
     assign is_sale = true
@@ -22,11 +38,36 @@
   elsif context == 'product_page'
     assign show_currency_code = settings.price_show_currency_code_product_pages
   endif
+
+  assign sale_badge_label = blank
+  if show_sale_badge
+    if is_sale
+      assign sale_badge_label = 'products.product.on_sale' | t
+      assign savings = compare_at_price | minus: price_value
+      case settings.badge_sale_type
+        when 'percentage'
+          assign discount = savings | times: 100 | divided_by: compare_at_price | round
+          assign sale_badge_label = 'products.product.discount_percentage' | t: discount: discount
+        when 'percentage_only'
+          assign discount = savings | times: 100 | divided_by: compare_at_price | round
+          assign sale_badge_label = 'products.product.discount_percentage_only' | t: discount: discount
+        when 'amount_saved'
+          assign savings_money = savings | money
+          assign sale_badge_label = 'products.product.discount_amount' | t: amount: savings_money
+      endcase
+    endif
+  endif
 %}
 
-<div class="price{% if is_sale %} price--sale{% endif %}{% if context == 'product_card' %} card-price-text{% endif %}" data-price aria-label="{{ 'products.product.price' | t }}">
-  {% if show_from and item.price_varies %}
-    <span class="price__from-label">{{ 'products.product.from' | t }}</span>
+<div class="price{% if is_sale %} price--sale{% endif %}{% if context == 'product_card' %} card-price-text{% endif %}" data-price{% if context == 'product_page' %} aria-live="polite"{% endif %} aria-label="{{ 'products.product.price' | t }}">
+  {% if show_sale_badge %}
+    <span class="price__sale-badge" data-price-sale-badge{% unless sale_badge_label != blank %} hidden{% endunless %}>{{ sale_badge_label }}</span>
+  {% endif %}
+
+  {% if show_from %}
+    {% if price_varies %}
+      <span class="price__from-label">{{ 'products.product.from' | t }}</span>
+    {% endif %}
   {% endif %}
 
   {% if settings.price_show_sale_first == false %}
@@ -45,9 +86,9 @@
     </s>
   {% endif %}
 
-  {% if item.unit_price and item.unit_price_measurement %}
-    <span class="price__unit" data-price-unit>
-      {{ item.unit_price | unit_price_with_measurement: item.unit_price_measurement }}
+  {% if show_unit_slot %}
+    <span class="price__unit" data-price-unit{% unless item_has_unit_price %} hidden{% endunless %}>
+      {% if item_has_unit_price %}{{ item.unit_price | unit_price_with_measurement: item.unit_price_measurement }}{% endif %}
     </span>
   {% endif %}
 </div>
@@ -62,6 +103,15 @@
 
   .price__current--sale { color: var(--sale-price-color, var(--color-text)); }
   .price__compare { color: var(--color-text); opacity: 0.7; }
+  .price__sale-badge {
+    background: var(--badge-sale-background);
+    border-radius: var(--badge-radius);
+    color: var(--badge-sale-color);
+    font-size: var(--badge-font-size);
+    letter-spacing: var(--badge-letter-spacing);
+    line-height: 1.2;
+    padding: var(--badge-padding-block) var(--badge-padding-inline);
+  }
   .price__unit,
   .price__from-label { color: var(--color-text); font-size: var(--font-body-sm); }
 {% endstylesheet %}
