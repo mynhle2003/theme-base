@@ -101,7 +101,12 @@
   {{ block.shopify_attributes }}
 >
   <div class="video-block__media{% if block.settings.aspect_ratio == 'original' or block.settings.aspect_ratio == blank %} video-block__media--original{% endif %}{% unless video_has_media %} video-block__media--placeholder{% endunless %}" role="group" aria-label="{{ video_title }}">
-    {% render 'media', media_type: 'video', video: block.settings.video, external_video_url: block.settings.external_video_url, video_source: block.settings.video_source, autoplay: false, muted: block.settings.autoplay, loop: block.settings.loop_video, controls: false, poster_image: block.settings.cover_image, video_id: video_id, video_title: video_title, placeholder_class: 'video-block__placeholder' %}
+    {% render 'media', media_type: 'video', video: block.settings.video, external_video_url: block.settings.external_video_url, video_source: block.settings.video_source, autoplay: false, muted: block.settings.autoplay, loop: block.settings.loop_video, controls: false, video_id: video_id, video_title: video_title, placeholder_class: 'video-block__placeholder' %}
+    {% if video_has_media and block.settings.video_source == 'uploaded' and block.settings.cover_image != blank %}
+      <div class="video-block__cover" data-video-cover aria-hidden="true">
+        {{ block.settings.cover_image | image_url: width: 1600 | image_tag: alt: '', class: 'video-block__cover-image', loading: 'lazy' }}
+      </div>
+    {% endif %}
     {% if video_has_media and block.settings.video_source == 'uploaded' %}
       <button class="video-block__play-button" type="button" data-video-play-button data-video-state="paused" data-play-label="{{ 'accessibility.play_video' | t | escape }}" data-pause-label="{{ 'accessibility.pause_video' | t | escape }}" aria-label="{{ 'accessibility.play_video' | t | escape }}" aria-controls="{{ video_id | escape }}">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path data-video-play-icon d="m9 6 9 6-9 6z" /></svg>
@@ -137,7 +142,9 @@
     display: block;
     height: 100%;
     object-fit: cover;
+    position: relative;
     width: 100%;
+    z-index: 0;
   }
 
   .video-block__media > iframe {
@@ -150,6 +157,25 @@
 
   .video-block__media--original.video-block__media--placeholder {
     aspect-ratio: 16 / 9;
+  }
+
+  .video-block__cover {
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .video-block__cover[hidden] {
+    display: none;
+  }
+
+  .video-block__cover-image {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
   }
 
   .video-block__placeholder {
@@ -187,7 +213,7 @@
     transform: translate(-50%, -50%);
     transition: opacity var(--motion-duration) var(--motion-ease);
     width: var(--video-play-button-size);
-    z-index: 1;
+    z-index: 2;
   }
 
   .video-block__media:hover .video-block__play-button,
@@ -255,8 +281,13 @@
 
       const video = block.querySelector('video');
       const playButton = block.querySelector('[data-video-play-button]');
+      const cover = block.querySelector('[data-video-cover]');
       const playIcon = playButton && playButton.querySelector('[data-video-play-icon]');
       if (!video || !playButton) return;
+
+      const hideCover = () => {
+        if (cover) cover.hidden = true;
+      };
 
       const syncPlayButton = () => {
         const isPlaying = !video.paused && !video.ended;
@@ -273,6 +304,7 @@
       };
 
       const onPlay = () => {
+        hideCover();
         syncPlayButton();
       };
       const onPause = () => {
