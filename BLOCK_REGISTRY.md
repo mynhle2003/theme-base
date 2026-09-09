@@ -5,17 +5,17 @@
 - Type: `heading`
 - Category: Basic / Content Kernel
 - Role: render one short heading with semantic HTML independent from its visual typography scale.
-- Capabilities: content, typography, appearance, layout, responsive, spacing.
+- Capabilities: content, Heading-role typography, semantic HTML, appearance, layout, responsive and spacing.
 - Content owner: Heading owns its inline rich text content; it does not own body copy, business data or parent composition.
-- Typography owner: Theme Settings owns the Heading font family, scale tokens, line height, letter spacing and text case; the block selects only the registered visual scale.
+- Typography owner: Theme Settings owns the Heading font family, scale tokens, line height, letter spacing and text case; the block selects only the registered `heading_size` visual scale (`xs`, `sm`, `md`, `lg`, `xl`, `display`).
 - Layout owner: Heading owns its own width, alignment and optional outer padding; the parent owns composition order, flow and gap.
 - Appearance owner: the optional `text_color` override is local to the block; an omitted value inherits the nearest scheme `--color-heading` token.
 - Allowed children: none (`children: false` is internal registry metadata).
 - Composition policy: leaf Kernel; no nested blocks, nested sections, resource selection or arbitrary CSS controls.
-- Settings modules: Content (`heading`), Typography (`heading_size`, `html_tag`), Appearance (`text_color`), Layout (`width`, `width_mobile`, `alignment`, `customize_mobile_alignment`, `alignment_mobile`) and optional Padding (`padding_top`, `padding_bottom`, `padding_left`, `padding_right`, `customize_mobile_padding`, plus mobile values).
+- Settings modules: Content (`heading`), Typography (`heading_size`, `html_tag`), Appearance (`text_color`), Layout (`width`, `width_mobile`, `alignment`, `customize_mobile_alignment`, `alignment_mobile`) and optional Padding (`padding_top`, `padding_bottom`, `padding_left`, `padding_right`, `customize_mobile_padding`, plus mobile values). Heading does not expose font role, raw font size or block-level text case.
 - Output: `.heading-block` editor wrapper containing one `.heading-text` element with one registered `.heading-*` visual scale class.
 - Empty state: retain the editor-aware wrapper but render no heading element when the inline content is empty.
-- Accessibility: semantic tag is independently selectable from visual scale; the `html_tag` info guides heading order and the block does not create an extra heading when content is empty.
+- Accessibility: semantic tag is independently selectable from visual scale; the `html_tag` info guides heading order, the block does not create an extra heading when content is empty, and inline-richtext content cannot introduce block-level structure.
 - Runtime: Liquid and CSS only; no JavaScript lifecycle owner is required.
 
 ## Text
@@ -203,6 +203,24 @@
 - Accessibility: preserves the shared price `aria-label`, announces price updates politely, and exposes the missing-context state with `role="status"`.
 - Localization: all visible price labels and empty-state copy use translation keys or shared settings.
 - Runtime: Liquid initial render plus a scoped `variant:change` listener; the parent variant picker remains the lifecycle owner.
+
+## Product Title
+
+- Type: `product-title`
+- Category: Commerce Composition
+- Role: render the current product title with an editor-controlled semantic HTML tag.
+- Resource owner: the parent product section supplies the product context; Product Title never owns product selection, product lookup or editable title content.
+- Capabilities: shared `heading_size` scale (`display`, `xl`, `lg`, `md`, `sm`, `xs`, `custom`), custom heading size from 12–100px, semantic HTML tag (`div`/H1–H6), optional text color, text case and responsive padding.
+- Editor schema: Typography contains Heading size, HTML tag with heading-order guidance, and Text case; Padding contains Top/Bottom/Left/Right plus Custom for mobile. The custom range is capped at 89 steps to satisfy Shopify's range-setting limit.
+- Content owner: Shopify product data owns the title string; merchants can control presentation only and cannot replace it with arbitrary block text.
+- Composition policy: leaf commerce block; no child blocks, nested sections or resource selection.
+- Component boundary: `snippets/product-title.liquid` owns escaped semantic title markup; the block owns context binding, editor-facing typography/layout settings, stable wrapper and missing-context state.
+- Output: `.product-title-block` wrapping one configured semantic title element when product context is available; H1 is the default.
+- States: missing product context renders an editor-safe empty status; long titles wrap safely without horizontal overflow.
+- Accessibility: defaults to an H1, provides heading-order guidance for the configurable tag, escapes product data, keeps text readable and exposes missing context with `role="status"`.
+- Localization: missing-context copy uses a translation key; the product title itself remains merchant/product data.
+- Runtime: Liquid and scoped CSS only; no JavaScript lifecycle owner is required.
+- Targeting: available as a theme block in sections that support `@theme`, including Custom Section; do not mix `@theme` with section-defined blocks.
 
 ## Variant Picker
 

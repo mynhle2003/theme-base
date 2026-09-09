@@ -300,6 +300,7 @@
     "font_size_desktop": "Font size (desktop)",
     "font_size_mobile": "Font size (mobile)",
     "heading_size": "Heading size",
+    "custom_heading_size": "Custom size",
     "line_height": "Line height",
     "letter_spacing": "Letter spacing",
     "text_case": "Text case",
@@ -321,6 +322,7 @@
     "padding_left": "Left",
     "padding_right": "Right",
     "customize_mobile_padding": "Customize mobile",
+    "product_title_customize_mobile_padding": "Custom for mobile",
     "padding_top_mobile": "Top on mobile",
     "padding_bottom_mobile": "Bottom on mobile",
     "padding_left_mobile": "Left on mobile",
@@ -431,7 +433,8 @@
     "logo": "Used in the header. If no logo is selected, the shop name is shown instead.",
     "logo_transparent": "Optional alternate logo for headers with a transparent background.",
     "favicon": "Displayed in the browser tab. Use a square image for the best result.",
-    "html_tag": "Use div for non-heading content, or choose a heading level that follows the page hierarchy.",
+    "html_tag": "Use heading levels in a logical order for accessibility and readability. If the content is not a page heading, choose Text container (div).",
+    "product_title_html_tag": "Use headings in order (H1 → H2 → H3) for better SEO and readability. If unsure, choose Paragraph.",
     "text_color": "Leave blank to inherit the current color scheme."
     ,"image_with_text_image_required": "Required for the complete section. A placeholder is shown when it is blank."
     ,"image_with_text_mobile_image_fallback": "Optional. The desktop image is used when no mobile image is selected."
@@ -661,16 +664,21 @@
       "md": "Medium",
       "lg": "Large",
       "xl": "Extra large",
-      "display": "Display"
+      "display": "Display",
+      "custom": "Custom"
     },
     "html_tag": {
       "div": "Text container (div)",
+      "p": "Paragraph",
       "h1": "H1",
       "h2": "H2",
       "h3": "H3",
       "h4": "H4",
       "h5": "H5",
       "h6": "H6"
+    },
+    "product_title_html_tag": {
+      "div": "Paragraph (div)"
     },
     "text_size": {
       "xs": "Extra small",

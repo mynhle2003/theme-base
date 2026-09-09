@@ -1,0 +1,31 @@
+{% doc %}
+  Renders the current product title as a semantic title element.
+
+  The parent surface supplies the product context and owns composition order.
+  This snippet owns only the escaped title output and receives presentation
+  tokens from the Product Title block. The default element is an h1.
+
+  @param {product} product - The product whose title should be rendered.
+  @param {string} [html_tag] - The validated semantic element to render.
+  @param {string} [class] - Optional class for the title element.
+
+  @example
+  {% render 'product-title', product: product %}
+{% enddoc %}
+
+{% liquid
+  assign title_tag = 'h1'
+
+  case html_tag
+    when 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+      assign title_tag = html_tag
+  endcase
+%}
+
+{% if product != blank %}
+  {% if product.title != blank %}
+    <{{ title_tag }} class="{{ class | default: 'product-title' | escape }}">
+      {{ product.title | escape }}
+    </{{ title_tag }}>
+  {% endif %}
+{% endif %}

@@ -1,0 +1,222 @@
+{% doc %}
+  Renders the current product title for the product context supplied by its
+  parent commerce surface.
+
+  Product Title owns the title size, semantic HTML tag, optional text color,
+  text case and responsive padding. It never owns product selection or
+  editable title content; the parent owns product context and composition
+  order.
+
+  @example
+  {% content_for 'block', type: 'product-title', id: 'product-title' %}
+{% enddoc %}
+
+{% liquid
+  assign title_product = closest.product | default: product
+  assign title_font_size = 'var(--font-heading-lg)'
+  assign title_line_height = 'var(--font-heading-h3-line-height)'
+  assign title_html_tag = 'h1'
+  assign title_text_transform = 'capitalize'
+  assign title_padding_top_mobile = block.settings.padding_top
+  assign title_padding_bottom_mobile = block.settings.padding_bottom
+  assign title_padding_left_mobile = block.settings.padding_left
+  assign title_padding_right_mobile = block.settings.padding_right
+
+  case block.settings.heading_size
+    when 'display'
+      assign title_font_size = 'var(--font-heading-display)'
+      assign title_line_height = 'var(--font-heading-h1-line-height)'
+    when 'xl'
+      assign title_font_size = 'var(--font-heading-xl)'
+      assign title_line_height = 'var(--font-heading-h2-line-height)'
+    when 'lg'
+      assign title_font_size = 'var(--font-heading-lg)'
+      assign title_line_height = 'var(--font-heading-h3-line-height)'
+    when 'md'
+      assign title_font_size = 'var(--font-heading-md)'
+      assign title_line_height = 'var(--font-heading-h4-line-height)'
+    when 'sm'
+      assign title_font_size = 'var(--font-heading-sm)'
+      assign title_line_height = 'var(--font-heading-h5-line-height)'
+    when 'xs'
+      assign title_font_size = 'var(--font-heading-xs)'
+      assign title_line_height = 'var(--font-heading-h6-line-height)'
+    when 'custom'
+      assign title_font_size = block.settings.custom_heading_size | append: 'px'
+      assign title_line_height = 'var(--font-heading-line-height)'
+  endcase
+
+  case block.settings.html_tag
+    when 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+      assign title_html_tag = block.settings.html_tag
+  endcase
+
+  case block.settings.text_case
+    when 'original'
+      assign title_text_transform = 'none'
+    when 'uppercase'
+      assign title_text_transform = 'uppercase'
+    when 'capitalize'
+      assign title_text_transform = 'capitalize'
+  endcase
+
+  if block.settings.customize_mobile_padding
+    assign title_padding_top_mobile = block.settings.padding_top_mobile
+    assign title_padding_bottom_mobile = block.settings.padding_bottom_mobile
+    assign title_padding_left_mobile = block.settings.padding_left_mobile
+    assign title_padding_right_mobile = block.settings.padding_right_mobile
+  endif
+%}
+
+<div
+  class="product-title-block"
+  style="--product-title-font-size: {{ title_font_size }}; --product-title-line-height: {{ title_line_height }}; --product-title-text-transform: {{ title_text_transform }}; --product-title-padding-top: {{ block.settings.padding_top }}px; --product-title-padding-bottom: {{ block.settings.padding_bottom }}px; --product-title-padding-left: {{ block.settings.padding_left }}px; --product-title-padding-right: {{ block.settings.padding_right }}px; --product-title-padding-top-mobile: {{ title_padding_top_mobile }}px; --product-title-padding-bottom-mobile: {{ title_padding_bottom_mobile }}px; --product-title-padding-left-mobile: {{ title_padding_left_mobile }}px; --product-title-padding-right-mobile: {{ title_padding_right_mobile }}px;{% if block.settings.text_color != blank %} --product-title-color: {{ block.settings.text_color | escape }};{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  {% if title_product != blank %}
+    {% if title_product.title != blank %}
+      {% render 'product-title', product: title_product, html_tag: title_html_tag, class: 'product-title-block__title' %}
+    {% else %}
+      <p class="product-title-block__empty" role="status" aria-live="polite">
+        {{ 'blocks.product_title.empty' | t }}
+      </p>
+    {% endif %}
+  {% else %}
+    <p class="product-title-block__empty" role="status" aria-live="polite">
+      {{ 'blocks.product_title.empty' | t }}
+    </p>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .product-title-block {
+    color: var(--product-title-color, var(--color-heading));
+    font-family: var(--font-heading-family);
+    font-size: var(--product-title-font-size);
+    line-height: var(--product-title-line-height);
+    min-width: 0;
+    padding-block: var(--product-title-padding-top) var(--product-title-padding-bottom);
+    padding-inline: var(--product-title-padding-left) var(--product-title-padding-right);
+    text-transform: var(--product-title-text-transform);
+    width: 100%;
+  }
+
+  .product-title-block__title {
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    margin: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    text-transform: inherit;
+  }
+
+  .product-title-block__empty {
+    color: var(--color-text);
+    font-size: var(--font-body-sm);
+    margin: 0;
+    opacity: 0.75;
+    overflow-wrap: anywhere;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    .product-title-block {
+      padding-block: var(--product-title-padding-top-mobile) var(--product-title-padding-bottom-mobile);
+      padding-inline: var(--product-title-padding-left-mobile) var(--product-title-padding-right-mobile);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.product_title",
+  "settings": [
+    { "type": "header", "content": "t:general.typography" },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:labels.heading_size",
+      "options": [
+        { "value": "display", "label": "t:options.heading_size.display" },
+        { "value": "xl", "label": "t:options.heading_size.xl" },
+        { "value": "lg", "label": "t:options.heading_size.lg" },
+        { "value": "md", "label": "t:options.heading_size.md" },
+        { "value": "sm", "label": "t:options.heading_size.sm" },
+        { "value": "xs", "label": "t:options.heading_size.xs" },
+        { "value": "custom", "label": "t:options.heading_size.custom" }
+      ],
+      "default": "lg"
+    },
+    {
+      "visible_if": "{{ block.settings.heading_size == 'custom' }}",
+      "type": "range",
+      "id": "custom_heading_size",
+      "label": "t:labels.custom_heading_size",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "select",
+      "id": "html_tag",
+      "label": "t:labels.html_tag",
+      "info": "t:info.product_title_html_tag",
+      "options": [
+        { "value": "div", "label": "t:options.product_title_html_tag.div" },
+        { "value": "h1", "label": "t:options.html_tag.h1" },
+        { "value": "h2", "label": "t:options.html_tag.h2" },
+        { "value": "h3", "label": "t:options.html_tag.h3" },
+        { "value": "h4", "label": "t:options.html_tag.h4" },
+        { "value": "h5", "label": "t:options.html_tag.h5" },
+        { "value": "h6", "label": "t:options.html_tag.h6" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:labels.text_color",
+      "info": "t:info.text_color"
+    },
+    {
+      "type": "select",
+      "id": "text_case",
+      "label": "t:labels.text_case",
+      "options": [
+        { "value": "original", "label": "t:options.text_case.original" },
+        { "value": "uppercase", "label": "t:options.text_case.uppercase" },
+        { "value": "capitalize", "label": "t:options.text_case.capitalize" }
+      ],
+      "default": "capitalize"
+    },
+    { "type": "header", "content": "t:general.padding" },
+    { "type": "range", "id": "padding_top", "label": "t:labels.padding_top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "t:labels.padding_bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_left", "label": "t:labels.padding_left", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_right", "label": "t:labels.padding_right", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "checkbox", "id": "customize_mobile_padding", "label": "t:labels.product_title_customize_mobile_padding", "default": false },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_top_mobile", "label": "t:labels.padding_top_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_bottom_mobile", "label": "t:labels.padding_bottom_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_left_mobile", "label": "t:labels.padding_left_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "visible_if": "{{ block.settings.customize_mobile_padding }}", "type": "range", "id": "padding_right_mobile", "label": "t:labels.padding_right_mobile", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
+  ],
+  "presets": [
+    {
+      "name": "t:general.product_title",
+      "category": "t:general.commerce",
+      "settings": {
+        "heading_size": "lg",
+        "html_tag": "h1",
+        "text_case": "capitalize",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_left": 0,
+        "padding_right": 0,
+        "customize_mobile_padding": false
+      }
+    }
+  ]
+}
+{% endschema %}

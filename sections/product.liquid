@@ -7,11 +7,14 @@
 
 {% liquid
   assign has_media_gallery_block = false
+  assign has_product_title_block = false
   assign has_variant_picker_block = false
 
   for product_block in section.blocks
     if product_block.type == 'product-media-gallery'
       assign has_media_gallery_block = true
+    elsif product_block.type == 'product-title'
+      assign has_product_title_block = true
     elsif product_block.type == 'variant-picker'
       assign has_variant_picker_block = true
     endif
@@ -35,7 +38,15 @@
 </div>
 
 <div class="product-info">
-  <h1>{{ product.title }}</h1>
+  {% if has_product_title_block %}
+    {% for product_block in section.blocks %}
+      {% if product_block.type == 'product-title' %}
+        {% render product_block %}
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    <h1 class="product-info__title">{{ product.title | escape }}</h1>
+  {% endif %}
   {% render 'price', item: product, show_from: true, context: 'product_page' %}
   <p>{{ product.description }}</p>
 </div>
@@ -170,9 +181,10 @@
 {% schema %}
 {
   "name": "t:general.product",
-  "max_blocks": 2,
+  "max_blocks": 3,
   "blocks": [
     { "type": "product-media-gallery", "name": "t:general.product_media_gallery", "limit": 1 },
+    { "type": "product-title", "name": "t:general.product_title", "limit": 1 },
     { "type": "variant-picker", "name": "t:general.variant_picker", "limit": 1 }
   ],
   "settings": [],
