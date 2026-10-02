@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+"use strict";
+
+const path = require("node:path");
+const { spawnSync } = require("node:child_process");
+
+const args = process.argv.slice(2);
+const isPreview = args[0] === "preview";
+const script = path.join(
+  __dirname,
+  "scripts",
+  isPreview ? "theme-base-preview.cjs" : "theme-base-sync.cjs",
+);
+const forwardedArgs = isPreview ? args.slice(1) : args;
+const result = spawnSync(process.execPath, [script, ...forwardedArgs], {
+  cwd: __dirname,
+  stdio: "inherit",
+});
+
+if (result.error) {
+  console.error(result.error.message);
+  process.exitCode = 1;
+} else {
+  process.exitCode = result.status ?? 1;
+}
