@@ -1,0 +1,478 @@
+{% liquid
+  assign marquee_direction = block.settings.animation_direction | default: 'backward'
+  unless marquee_direction == 'forward' or marquee_direction == 'backward'
+    assign marquee_direction = 'forward'
+  endunless
+
+  assign marquee_speed = block.settings.animation_speed
+  if marquee_speed == blank
+    assign marquee_speed = 1
+  else
+    assign marquee_speed = marquee_speed | plus: 0
+  endif
+  if marquee_speed < 0 or marquee_speed > 3
+    assign marquee_speed = 1
+  endif
+  assign marquee_duration = 28.0
+  if marquee_speed > 0
+    assign marquee_duration = 28.0 | divided_by: marquee_speed
+  endif
+
+  assign marquee_background = block.settings.background_color
+
+  assign padding_top = block.settings.padding_top
+  if padding_top == blank
+    assign padding_top = 24
+  else
+    assign padding_top = padding_top | plus: 0
+  endif
+  assign padding_bottom = block.settings.padding_bottom
+  if padding_bottom == blank
+    assign padding_bottom = 24
+  else
+    assign padding_bottom = padding_bottom | plus: 0
+  endif
+  assign padding_left = block.settings.padding_left
+  if padding_left == blank
+    assign padding_left = 0
+  else
+    assign padding_left = padding_left | plus: 0
+  endif
+  assign padding_right = block.settings.padding_right
+  if padding_right == blank
+    assign padding_right = 0
+  else
+    assign padding_right = padding_right | plus: 0
+  endif
+  assign marquee_gap_desktop = block.settings.gap_desktop
+  if marquee_gap_desktop == blank
+    assign marquee_gap_desktop = 48
+  else
+    assign marquee_gap_desktop = marquee_gap_desktop | plus: 0
+  endif
+  assign marquee_gap_mobile = block.settings.gap_mobile
+  if marquee_gap_mobile == blank
+    assign marquee_gap_mobile = 32
+  else
+    assign marquee_gap_mobile = marquee_gap_mobile | plus: 0
+  endif
+%}
+
+{% capture marquee_style %}
+  --marquee-duration: {{ marquee_duration }}s;
+  {% if marquee_background != blank %}--marquee-background-color: {{ marquee_background | escape }};{% endif %}
+  {% if padding_top != 24 %}--marquee-padding-top: {{ padding_top }}px;{% endif %}
+  {% if padding_bottom != 24 %}--marquee-padding-bottom: {{ padding_bottom }}px;{% endif %}
+  {% if padding_left != 0 %}--marquee-padding-left: {{ padding_left }}px;{% endif %}
+  {% if padding_right != 0 %}--marquee-padding-right: {{ padding_right }}px;{% endif %}
+  {% if marquee_gap_desktop != 48 %}--marquee-gap: {{ marquee_gap_desktop }}px;{% endif %}
+  {% if marquee_gap_mobile != 32 %}--marquee-gap-mobile: {{ marquee_gap_mobile }}px;{% endif %}
+{% endcapture %}
+{% assign marquee_style = marquee_style | strip | replace: '\n', ' ' %}
+
+{% assign marquee_class = 'section-spacing marquee marquee--block marquee--' | append: marquee_direction | append: ' section-color-scope' %}
+{% if marquee_speed == 0 %}
+  {% assign marquee_class = marquee_class | append: ' marquee--static' %}
+{% endif %}
+
+<div
+  class="{{ marquee_class }}"
+  {{ block.shopify_attributes }}
+  {% if marquee_style != blank %}style="{{ marquee_style }}"{% endif %}
+>
+  <div class="container full-width marquee__container">
+    <div class="marquee__viewport" role="region" aria-label="Marquee">
+      <div class="marquee__track">
+        {% content_for 'blocks' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .marquee--block {
+    --marquee-duration: 28s;
+    --marquee-loop-distance: 0px;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--marquee-background-color, var(--background-color));
+    padding-top: var(--marquee-padding-top, 24px);
+    padding-bottom: var(--marquee-padding-bottom, 24px);
+  }
+
+  .marquee--block .container.full-width.marquee__container {
+    min-width: 0;
+    padding-right: var(--marquee-padding-right, 0px);
+    padding-left: var(--marquee-padding-left, 0px);
+  }
+
+  .marquee--block .marquee__viewport {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .marquee--block .marquee__track {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--marquee-gap, 48px);
+    width: max-content;
+    min-width: 0;
+    max-width: min-content;
+    animation: none;
+    will-change: transform;
+  }
+
+  .marquee--block.marquee--ready .marquee__track {
+    animation: marquee-scroll-left var(--marquee-duration) linear infinite;
+  }
+
+  .marquee--block.marquee--forward .marquee__track {
+    animation-name: marquee-scroll-right;
+  }
+
+  .marquee--block.marquee--backward .marquee__track {
+    animation-name: marquee-scroll-left;
+  }
+
+  .marquee--block.marquee--static .marquee__track {
+    animation: none;
+    transform: none;
+  }
+
+  @media (max-width: 767.98px) {
+    .marquee--block .marquee__track {
+      gap: var(--marquee-gap-mobile, var(--marquee-gap, 48px));
+    }
+  }
+
+  .marquee--block .marquee__track > * {
+    flex: 0 0 auto;
+  }
+
+  .marquee--block .marquee__track > .marquee-item-layout {
+    width: fit-content;
+    max-width: max-content;
+  }
+
+  .marquee--block .marquee__track > .marquee-item-layout--horizontal {
+    flex-wrap: nowrap;
+  }
+
+  /* Percentage widths are circular inside a fit-content horizontal item. */
+  .marquee--block .marquee__track > .marquee-item-layout--horizontal > * {
+    width: fit-content;
+    flex: 0 0 auto;
+  }
+
+  /* Marquee items are transparent by default; an Item background setting can override this. */
+  .marquee--block .marquee__track > .marquee-item-layout {
+    --group-background-color: transparent;
+  }
+
+  .marquee--block:hover .marquee__track,
+  .marquee--block:focus-within .marquee__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-scroll-left {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(calc(-1 * var(--marquee-loop-distance)), 0, 0); }
+  }
+
+  @keyframes marquee-scroll-right {
+    from { transform: translate3d(calc(-1 * var(--marquee-loop-distance)), 0, 0); }
+    to { transform: translate3d(0, 0, 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee--block.marquee--ready .marquee__track {
+      animation: none;
+      transform: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    const instances = new WeakMap();
+    const selector = '.marquee--block';
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const setFocusableState = (element) => {
+      element.setAttribute('aria-hidden', 'true');
+      element.querySelectorAll('a, button, input, select, textarea, [tabindex]').forEach((focusable) => {
+        focusable.setAttribute('tabindex', '-1');
+      });
+    };
+
+    const initialize = (marquee) => {
+      if (!marquee || instances.has(marquee) || reducedMotion.matches) return;
+
+      const track = marquee.querySelector('.marquee__track');
+      const viewport = marquee.querySelector('.marquee__viewport');
+      if (!track || !viewport || track.children.length === 0) return;
+
+      let clones = [];
+      let isSyncing = false;
+
+      const syncClones = () => {
+        if (isSyncing) return;
+        isSyncing = true;
+        mutationObserver.disconnect();
+
+        clones.forEach((clone) => clone.remove());
+        const originalItems = [...track.children].filter((item) => !item.hasAttribute('data-marquee-clone'));
+        if (originalItems.length === 0) {
+          isSyncing = false;
+          return;
+        }
+
+        const appendCloneSet = (setIndex) => {
+          originalItems.forEach((item, itemIndex) => {
+            const clone = item.cloneNode(true);
+            setFocusableState(clone);
+            clone.dataset.marqueeClone = 'true';
+            clone.dataset.marqueeCloneIndex = String(setIndex * originalItems.length + itemIndex);
+            track.appendChild(clone);
+          });
+        };
+
+        // One clone set is the loop distance. Add more sets until the track
+        // still covers the viewport after it has moved by that distance.
+        appendCloneSet(1);
+        const firstClone = track.querySelector('[data-marquee-clone]');
+        const loopDistance = firstClone.getBoundingClientRect().left - track.getBoundingClientRect().left;
+        let setIndex = 2;
+        while (track.scrollWidth < viewport.clientWidth + loopDistance && setIndex <= 100) {
+          appendCloneSet(setIndex);
+          setIndex += 1;
+        }
+
+        clones = [...track.children].filter((item) => item.hasAttribute('data-marquee-clone'));
+
+        mutationObserver.observe(track, {
+          attributes: true,
+          childList: true,
+          subtree: true
+        });
+        isSyncing = false;
+      };
+
+      const mutationObserver = new MutationObserver((mutations) => {
+        if (mutations.some((mutation) => {
+          if (mutation.type === 'attributes') {
+            if (mutation.attributeName === 'class' || mutation.attributeName === 'style') return false;
+            if (mutation.attributeName.startsWith('data-shopify-editor')) return false;
+          }
+          return !mutation.target.closest?.('[data-marquee-clone]');
+        })) {
+          syncClones();
+          updateDistance();
+        }
+      });
+
+      syncClones();
+
+      const updateDistance = () => {
+        const firstClone = clones[0];
+        if (!firstClone) return;
+        const distance = firstClone.getBoundingClientRect().left - track.getBoundingClientRect().left;
+        track.style.setProperty('--marquee-loop-distance', `${distance}px`);
+      };
+
+      const resizeObserver = new ResizeObserver(() => {
+        syncClones();
+        updateDistance();
+      });
+      resizeObserver.observe(viewport);
+      updateDistance();
+      marquee.classList.add('marquee--ready');
+
+      instances.set(marquee, { clones, resizeObserver, mutationObserver });
+    };
+
+    const destroy = (marquee) => {
+      const state = instances.get(marquee);
+      if (!state) return;
+      state.resizeObserver.disconnect();
+      state.mutationObserver.disconnect();
+      marquee.querySelectorAll('[data-marquee-clone]').forEach((clone) => clone.remove());
+      marquee.classList.remove('marquee--ready');
+      instances.delete(marquee);
+    };
+
+    const initializeRoot = (root = document) => {
+      if (root.matches?.(selector)) initialize(root);
+      root.querySelectorAll?.(selector).forEach(initialize);
+    };
+
+    const destroyRoot = (root) => {
+      if (root.matches?.(selector)) destroy(root);
+      root.querySelectorAll?.(selector).forEach(destroy);
+    };
+
+    reducedMotion.addEventListener('change', () => {
+      if (reducedMotion.matches) destroyRoot(document);
+      else initializeRoot();
+    });
+
+    document.addEventListener('shopify:section:load', (event) => initializeRoot(event.target));
+    document.addEventListener('shopify:section:unload', (event) => destroyRoot(event.target));
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => initializeRoot(), { once: true });
+    } else {
+      initializeRoot();
+    }
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:general.marquee",
+  "tag": null,
+  "blocks": [
+    { "type": "marquee-item" }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:general.animation"
+    },
+    {
+      "type": "select",
+      "id": "animation_direction",
+      "label": "t:labels.animation_direction",
+      "options": [
+        { "value": "forward", "label": "t:options.animation_direction.forward" },
+        { "value": "backward", "label": "t:options.animation_direction.backward" }
+      ],
+      "default": "backward"
+    },
+    {
+      "type": "range",
+      "id": "animation_speed",
+      "label": "t:labels.animation_speed",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "t:general.appearance"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "background_color",
+      "label": "t:labels.background"
+    },
+    {
+      "type": "header",
+      "content": "t:general.gap"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "t:labels.desktop_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "t:labels.mobile_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "t:general.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:options.position.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:options.position.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "t:labels.left_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "t:labels.right_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee",
+      "category": "t:general.content",
+      "blocks": [
+        {
+          "type": "marquee-item",
+          "name": "t:general.item",
+          "settings": { "direction": "horizontal", "position": "center" },
+          "blocks": [
+            { "type": "heading", "settings": { "text": "<p>Diamond statement</p>", "heading_size": "md", "html_tag": "div" } },
+            { "type": "image", "settings": { "image_ratio_desktop": "custom", "image_ratio_custom_width_desktop": 2, "image_ratio_custom_height_desktop": 1, "width_desktop": "fill", "corner_radius": "square" } }
+          ]
+        },
+        {
+          "type": "marquee-item",
+          "name": "t:general.item",
+          "settings": { "direction": "horizontal", "position": "center" },
+          "blocks": [
+            { "type": "heading", "settings": { "text": "<p>Birthstone</p>", "heading_size": "md", "html_tag": "div" } },
+            { "type": "image", "settings": { "image_ratio_desktop": "custom", "image_ratio_custom_width_desktop": 2, "image_ratio_custom_height_desktop": 1, "width_desktop": "fill", "corner_radius": "square" } }
+          ]
+        },
+        {
+          "type": "marquee-item",
+          "name": "t:general.item",
+          "settings": { "direction": "horizontal", "position": "center" },
+          "blocks": [
+            { "type": "heading", "settings": { "text": "<p>Diamond statement</p>", "heading_size": "md", "html_tag": "div" } },
+            { "type": "image", "settings": { "image_ratio_desktop": "custom", "image_ratio_custom_width_desktop": 2, "image_ratio_custom_height_desktop": 1, "width_desktop": "fill", "corner_radius": "square" } }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
