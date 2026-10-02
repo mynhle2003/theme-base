@@ -5,14 +5,21 @@ const fs = require("node:fs");
 const net = require("node:net");
 const os = require("node:os");
 const path = require("node:path");
+const { StringDecoder } = require("node:string_decoder");
 const { spawn, spawnSync, execFileSync } = require("node:child_process");
 
 const ROOT = path.resolve(__dirname, "..");
+const DEFAULT_STORE = "layouthub-template-v2";
+const STORE_ALIASES = new Map([
+  // Correct the recurring transposition used in preview commands for this repo's store.
+  ["lauyouthub-template-v2", DEFAULT_STORE],
+]);
 const BASE_PORT = 9300;
 const LAST_PORT = 9399;
 const DIR = path.join(ROOT, ".shopify", "theme-base-preview");
 const LOCK = path.join(DIR, "owner.json");
 const LOG = path.join(DIR, "preview.log");
+const LAST_ERROR = path.join(DIR, "last-error.json");
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function log(message) {
@@ -33,8 +40,13 @@ function currentBranch() {
 }
 
 function normalizeStore(value) {
-  if (!value) throw new Error("Thiếu store. Dùng --store layouthub-template-v2.");
-  const name = value.toLowerCase().replace(/\.myshopify\.com$/, "");
+  if (!value) throw new Error(`Thiếu store. Dùng --store ${DEFAULT_STORE}.`);
+  let name = value.toLowerCase().replace(/\.myshopify\.com$/, "");
+  const canonicalName = STORE_ALIASES.get(name);
+  if (canonicalName) {
+    log(`Đã chuẩn hóa tên store gõ nhầm "${name}" thành "${canonicalName}.myshopify.com".`);
+    name = canonicalName;
+  }
   if (!/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(name)) {
     throw new Error("Store chỉ nhận tên store hoặc domain dạng <store>.myshopify.com.");
   }
@@ -54,7 +66,7 @@ function parseStartArgs(args) {
       throw new Error(`Tùy chọn không hỗ trợ: ${args[i]}`);
     }
   }
-  return normalizeStore(store);
+  return normalizeStore(store === undefined ? DEFAULT_STORE : store);
 }
 
 function readOwner() {
@@ -70,6 +82,28 @@ function writeOwner(owner) {
   const temporary = `${LOCK}.${process.pid}.tmp`;
   fs.writeFileSync(temporary, `${JSON.stringify(owner, null, 2)}\n`, { mode: 0o600 });
   fs.renameSync(temporary, LOCK);
+}
+
+function saveLastError(message) {
+  if (!message) {
+    try {
+      fs.unlinkSync(LAST_ERROR);
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
+    }
+    return;
+  }
+  const temporary = `${LAST_ERROR}.${process.pid}.tmp`;
+  fs.writeFileSync(temporary, `${JSON.stringify({ at: new Date().toISOString(), message }, null, 2)}\n`, { mode: 0o600 });
+  fs.renameSync(temporary, LAST_ERROR);
+}
+
+function readLastError() {
+  try {
+    return JSON.parse(fs.readFileSync(LAST_ERROR, "utf8"));
+  } catch {
+    return null;
+  }
 }
 
 function processAlive(pid) {
@@ -119,9 +153,11 @@ function isOwnedThemeDev(pid, owner) {
 
 function clearShopifyFlagOverrides() {
   const env = { ...process.env };
+  const storePassword = env.SHOPIFY_FLAG_STORE_PASSWORD;
   for (const key of Object.keys(env)) {
     if (key.startsWith("SHOPIFY_FLAG_")) delete env[key];
   }
+  if (storePassword) env.SHOPIFY_FLAG_STORE_PASSWORD = storePassword;
   return env;
 }
 
@@ -138,6 +174,18 @@ function extractThemeEditorUrl(output) {
         return false;
       }
     }) || null;
+}
+
+function editorUrlFromCurrentLog(owner) {
+  if (!fs.existsSync(LOG)) return null;
+  const output = fs.readFileSync(LOG, "utf8");
+  const marker = `Chạy shopify theme dev --store ${owner.store} --path ${ROOT}`;
+  const index = output.lastIndexOf(marker);
+  if (index < 0) return null;
+  const line = output.slice(output.lastIndexOf("\n", index) + 1, index);
+  const loggedAt = line.match(/^\[([^\]]+)\]/)?.[1];
+  if (!loggedAt || Date.parse(loggedAt) < Date.parse(owner.startedAt)) return null;
+  return extractThemeEditorUrl(output.slice(index));
 }
 
 async function portIsOpen(port) {
@@ -304,6 +352,16 @@ async function supervise(runtime) {
           error.noRetry = true;
           throw error;
         }
+        if (child.storePasswordPrompt) {
+          const error = new Error("Store cần mật khẩu storefront. Chạy preview start trong terminal để nhập ẩn, hoặc đặt SHOPIFY_FLAG_STORE_PASSWORD khi chạy không tương tác.");
+          error.noRetry = true;
+          throw error;
+        }
+        if (child.editorUrlError) {
+          const error = new Error(`Không lưu được link Theme Editor: ${child.editorUrlError.message}`);
+          error.noRetry = true;
+          throw error;
+        }
         if (!runtime.alive(child)) throw new Error("Shopify CLI theme dev đã dừng.");
         if (await portIsOpen(port)) {
           if (!runtime.ownsPort(port, child.pid)) {
@@ -312,6 +370,7 @@ async function supervise(runtime) {
           missedChecks = 0;
           if (healthyAt === undefined) {
             healthyAt = Date.now();
+            runtime.setLastError(null);
             runtime.log(`Preview đang chạy tại http://127.0.0.1:${port}/ (store ${runtime.store})`);
           }
           if (Date.now() - healthyAt >= 60000) backoff = 2000;
@@ -325,13 +384,14 @@ async function supervise(runtime) {
       }
     } catch (error) {
       runtime.log(`Lỗi: ${error.message}`);
+      runtime.setLastError(error.message);
       if (error.noRetry) stopRetry = true;
     } finally {
       if (child) await runtime.stop(child);
       runtime.setChild(null, null);
     }
     if (stopRetry) {
-      runtime.log("Không tự khởi động lại preview sau lỗi quyền truy cập; sửa store hoặc quyền tài khoản rồi chạy start lại.");
+      runtime.log("Preview dừng để chờ xử lý lỗi; xem `node theme-base preview status`, sửa theo nguyên nhân rồi chạy start lại.");
       break;
     }
     if (!runtime.stopping()) {
@@ -385,6 +445,7 @@ async function run(store) {
       wait,
       log,
       setEditorUrl,
+      setLastError: saveLastError,
       guard,
       verify: () => {
         guard();
@@ -410,11 +471,19 @@ async function run(store) {
             if (/not authorized to use the CLI to develop in the provided store/i.test(recentOutput)) {
               child.accessDenied = true;
             }
+            if (/Failed to prompt:[\s\S]*?Enter your store password/i.test(recentOutput)) {
+              child.storePasswordPrompt = true;
+            }
             const editorUrl = extractThemeEditorUrl(recentOutput);
             if (editorUrl && child.editorUrl !== editorUrl) {
               child.editorUrl = editorUrl;
-              runtime.setEditorUrl(editorUrl);
-              runtime.log(`Theme Editor: ${editorUrl}`);
+              try {
+                setEditorUrl(editorUrl);
+                log(`Theme Editor: ${editorUrl}`);
+              } catch (error) {
+                child.editorUrlError = error;
+                log(`Không lưu được Theme Editor: ${error.message}`);
+              }
             }
           });
         };
@@ -440,6 +509,88 @@ async function run(store) {
   }
 }
 
+function promptStorePassword() {
+  if (!process.stdin.isTTY || typeof process.stdin.setRawMode !== "function") {
+    throw new Error("Cần terminal tương tác để nhập mật khẩu storefront, hoặc đặt SHOPIFY_FLAG_STORE_PASSWORD trước khi chạy preview start.");
+  }
+  process.stdout.write("Storefront password: ");
+  return new Promise((resolve, reject) => {
+    const wasRaw = process.stdin.isRaw;
+    let value = Buffer.alloc(0);
+    const finish = (error) => {
+      process.stdin.off("data", onData);
+      process.stdin.setRawMode(Boolean(wasRaw));
+      process.stdin.pause();
+      process.stdout.write("\n");
+      if (error) reject(error);
+      else if (value.length === 0) reject(new Error("Mật khẩu storefront trống."));
+      else resolve(value.toString("utf8"));
+    };
+    const onData = (chunk) => {
+      for (const byte of chunk) {
+        if (byte === 13 || byte === 10) return finish();
+        if (byte === 3 || byte === 4) return finish(new Error("Đã hủy nhập mật khẩu storefront."));
+        if (byte === 8 || byte === 127) {
+          value = Buffer.from(Array.from(value.toString("utf8")).slice(0, -1).join(""));
+        } else if (byte >= 32) {
+          value = Buffer.concat([value, Buffer.from([byte])]);
+        }
+      }
+    };
+    process.stdin.setRawMode(true);
+    process.stdin.resume();
+    process.stdin.on("data", onData);
+  });
+}
+
+function createLogFollower(initialOffset) {
+  let offset = initialOffset;
+  let pending = "";
+  let decoder = new StringDecoder("utf8");
+
+  const printLines = (content) => {
+    const lines = `${pending}${content}`.split(/\r?\n/);
+    pending = lines.pop();
+    for (const line of lines) process.stdout.write(`${line}${os.EOL}`);
+  };
+
+  return {
+    poll() {
+      let size;
+      try {
+        size = fs.statSync(LOG).size;
+      } catch (error) {
+        if (error.code === "ENOENT") return;
+        throw error;
+      }
+      if (size < offset) {
+        offset = 0;
+        pending = "";
+        decoder = new StringDecoder("utf8");
+      }
+      if (size === offset) return;
+
+      const fd = fs.openSync(LOG, "r");
+      try {
+        const buffer = Buffer.alloc(Math.min(size - offset, 64 * 1024));
+        const bytesRead = fs.readSync(fd, buffer, 0, buffer.length, offset);
+        if (bytesRead > 0) {
+          offset += bytesRead;
+          printLines(decoder.write(buffer.subarray(0, bytesRead)));
+        }
+      } finally {
+        fs.closeSync(fd);
+      }
+    },
+    flush() {
+      this.poll();
+      printLines(decoder.end());
+      if (pending) process.stdout.write(pending);
+      pending = "";
+    },
+  };
+}
+
 async function start(store) {
   assertThemeRoot();
   if (!currentBranch()) throw new Error("Đang ở detached HEAD; hãy checkout nhánh cần preview.");
@@ -449,44 +600,116 @@ async function start(store) {
     throw new Error(`Preview đã chạy tại http://127.0.0.1:${existing.port || "..."}/ cho ${existing.store}; dùng status hoặc stop.`);
   }
 
-  const fd = fs.openSync(LOG, "a", 0o600);
-  const child = spawn(process.execPath, [__filename, "run", "--store", store], {
-    cwd: ROOT,
-    detached: true,
-    stdio: ["ignore", fd, fd],
-  });
-  fs.closeSync(fd);
-  child.unref();
+  let storePassword = process.env.SHOPIFY_FLAG_STORE_PASSWORD || null;
+  let supervisorPid = null;
+  let interrupted = false;
+  const interrupt = () => {
+    interrupted = true;
+    if (supervisorPid && processAlive(supervisorPid)) {
+      try {
+        process.kill(supervisorPid, "SIGTERM");
+      } catch {
+        // The supervisor may have exited while the signal was being sent.
+      }
+    }
+  };
+  process.on("SIGINT", interrupt);
+  try {
+    for (;;) {
+      saveLastError(null);
+      const logOffset = fs.existsSync(LOG) ? fs.statSync(LOG).size : 0;
+      const follower = createLogFollower(logOffset);
+      const fd = fs.openSync(LOG, "a", 0o600);
+      const child = spawn(process.execPath, [__filename, "run", "--store", store], {
+        cwd: ROOT,
+        env: storePassword ? { ...process.env, SHOPIFY_FLAG_STORE_PASSWORD: storePassword } : process.env,
+        detached: true,
+        stdio: ["ignore", fd, fd],
+      });
+      fs.closeSync(fd);
+      child.unref();
+      supervisorPid = child.pid;
+      if (interrupted) interrupt();
+      const startedAt = Date.now();
+      let lockSeen = false;
+      let shownError = null;
+      log(`Đang chờ Shopify CLI kết nối ${store}; hoàn tất đăng nhập trong trình duyệt nếu được yêu cầu.`);
 
-  for (let i = 0; i < 80; i += 1) {
-    const owner = readOwner();
-    if (owner?.pid === child.pid && owner.port) {
-      log(`Preview supervisor PID ${child.pid}; branch ${owner.branch}; store ${store}.`);
-      log(`Đang khởi động tại http://127.0.0.1:${owner.port}/; trạng thái: node theme-base preview status`);
-      log(`Log: ${LOG}`);
-      return;
+      for (;;) {
+        follower.poll();
+        if (interrupted) {
+          log("Đang dừng preview...");
+          while (processAlive(child.pid)) {
+            follower.poll();
+            await sleep(250);
+          }
+          follower.flush();
+          return;
+        }
+        const owner = readOwner();
+        if (owner?.pid === child.pid) {
+          lockSeen = true;
+          if (owner.editorUrl && owner.port) {
+            log(`Preview: http://127.0.0.1:${owner.port}/`);
+            log(`Theme Editor: ${owner.editorUrl}`);
+            log(`Supervisor PID ${child.pid}; branch ${owner.branch}; store ${store}.`);
+            log("Đang theo dõi thay đổi file và hiển thị log Shopify CLI. Nhấn Ctrl+C để dừng preview.");
+            while (processAlive(child.pid)) {
+              follower.poll();
+              await sleep(250);
+            }
+            follower.flush();
+            return;
+          }
+        }
+        const latestError = readLastError()?.message;
+        if (latestError && latestError !== shownError) {
+          shownError = latestError;
+          log(`Shopify CLI: ${latestError}`);
+        }
+        if (child.exitCode !== null || child.signalCode !== null || !processAlive(child.pid)) {
+          follower.flush();
+          const message = latestError || `Supervisor thoát trước khi preview sẵn sàng. Xem ${LOG}`;
+          if (!storePassword && message.includes("SHOPIFY_FLAG_STORE_PASSWORD")) {
+            storePassword = await promptStorePassword();
+            break;
+          }
+          throw new Error(message);
+        }
+        if (!lockSeen && Date.now() - startedAt >= 20000) {
+          interrupt();
+          throw new Error(`Supervisor chưa nhận lock trong 20 giây. Xem ${LOG}`);
+        }
+        await sleep(500);
+      }
     }
-    if (!processAlive(child.pid)) {
-      throw new Error(`Supervisor thoát khi khởi động. Xem log: ${LOG}`);
-    }
-    await sleep(250);
+  } finally {
+    process.off("SIGINT", interrupt);
   }
-  throw new Error(`Supervisor chưa nhận lock trong 20 giây. Xem log: ${LOG}`);
 }
 
 async function status() {
   const owner = readOwner();
+  const lastError = readLastError();
   if (!owner) {
     log("Preview: đã dừng.");
+    if (lastError?.message) log(`Lỗi gần nhất: ${lastError.message}`);
     log(`Log: ${LOG}`);
     return;
   }
   const running = isSupervisor(owner);
   const open = owner.port ? await portIsOpen(owner.port) : false;
-  log(`Supervisor: ${running ? `PID ${owner.pid}` : "đã dừng"}; Shopify CLI: ${owner.childPid || "đang khởi động"}.`);
+  const editorUrl = owner.editorUrl || editorUrlFromCurrentLog(owner);
+  const cliAlive = owner.childPid && processAlive(owner.childPid);
+  const cliState = owner.childPid ? (cliAlive ? `PID ${owner.childPid}` : "đã dừng") : "đang khởi động";
+  log(`Supervisor: ${running ? `PID ${owner.pid}` : "đã dừng"}; Shopify CLI: ${cliState}.`);
   log(`Branch: ${owner.branch || "không rõ"}; store: ${owner.store || "không rõ"}.`);
   log(`Preview: ${owner.port ? `http://127.0.0.1:${owner.port}/` : "chưa có cổng"}; cổng: ${open ? "đang mở" : "đang đóng"}.`);
-  log(`Theme Editor: ${owner.editorUrl || "đang chờ Shopify CLI kết nối store"}.`);
+  log(`${!running && !cliAlive ? "Theme Editor phiên trước" : "Theme Editor"}: ${editorUrl || "đang chờ Shopify CLI kết nối store"}.`);
+  if (!running && cliAlive) {
+    log("Shopify CLI vẫn chạy ngoài supervisor; chạy preview start để dọn phiên cũ và khôi phục giám sát.");
+  }
+  if (lastError?.message) log(`Lỗi gần nhất: ${lastError.message}`);
   log(`Log: ${LOG}`);
 }
 
@@ -496,7 +719,11 @@ function logs() {
     return;
   }
   const lines = fs.readFileSync(LOG, "utf8").trimEnd().split(/\r?\n/);
-  console.log(lines.slice(-100).join(os.EOL));
+  const recent = lines.slice(-40).map((line) => line
+    .replace(/User verification code:\s*[A-Z0-9-]+/gi, "User verification code: [ẩn]")
+    .replace(/https:\/\/accounts\.shopify\.com\/activate-with-code\?[^\s]*/gi,
+      "https://accounts.shopify.com/activate-with-code?[đã ẩn]"));
+  console.log(`40 dòng log gần nhất (mã đăng nhập đã ẩn):${os.EOL}${recent.join(os.EOL)}`);
 }
 
 async function stop() {
@@ -527,12 +754,13 @@ async function stop() {
 
 function help() {
   console.log("Shopify theme preview cho repo base cá nhân\n\n" +
-    "  node theme-base preview start --store layouthub-template-v2\n" +
+    "  node theme-base preview start\n" +
+    `  node theme-base preview start --store ${DEFAULT_STORE}\n` +
     "  node theme-base preview status\n" +
     "  node theme-base preview logs\n" +
     "  node theme-base preview stop\n\n" +
-    `Tự chọn cổng trống trong dải ${BASE_PORT}-${LAST_PORT}; không dùng cổng team 9292. ` +
-    "File local được Shopify CLI đồng bộ khi thay đổi.");
+    `Mặc định dùng store ${DEFAULT_STORE}.myshopify.com; tự chọn cổng trống trong dải ${BASE_PORT}-${LAST_PORT}, tách khỏi cổng mặc định 9292. ` +
+    "Start giữ terminal mở, hiện log liên tục và theo dõi thay đổi file; nhấn Ctrl+C để dừng preview.");
 }
 
 async function main(args) {
