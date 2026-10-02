@@ -1,5 +1,54 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"6d008b1ed65a29f14371861ccaeadeca77d4d4e5"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"823f0b095da49be3c2f59d3eedd43453048496dd"} -->
+
 # Base update history
+
+## 2026-10-02 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `6d008b1ed65a29f14371861ccaeadeca77d4d4e5`
+- Updated through team commit: `823f0b095da49be3c2f59d3eedd43453048496dd`
+- Team commits included: 14
+- Source changes:
+
+```text
+assets/bundle-builder.js            |  69 ++++--
+ assets/button-loading.js            |  28 +++
+ assets/component-bouncing-dots.css  |   5 +
+ assets/critical.css                 |  51 +++-
+ assets/editorial-text.js            |  97 ++++++++
+ assets/quick-add.js                 |  36 ++-
+ assets/quick-view.js                |  28 +--
+ assets/section-parallax.css         | 167 +++++++++++++
+ assets/section-parallax.js          | 175 ++++++++++++++
+ blocks/_bundle-summary.liquid       |   2 +
+ blocks/editorial-text.liquid        | 209 +++++++++++------
+ blocks/parallax-item.liquid         | 451 ++++++++++++++++++++++++++++++++++++
+ docs/parallax-section-build-plan.md |  71 ++++++
+ sections/bundle-builder.liquid      |   1 +
+ sections/parallax.liquid            | 405 ++++++++++++++++++++++++++++++++
+ snippets/swiper-navigation.liquid   |   2 +-
+ snippets/theme-button.liquid        |   2 +-
+ tests/editorial-text.test.cjs       |  49 ++++
+ 18 files changed, 1707 insertions(+), 141 deletions(-)
+```
+
+- Included team commits:
+  - `8b1a39821a6eaef092620549f533642ef57b3712` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `b94488dd7e8443d1acf7b54ff0d8713706c660fa` — Restore placeholder image overlay layers
+  - `70200cafcf95465402494280bb99330b31bf1875` — Merge remote-tracking branch 'origin/codex/spinel-chieutt-dev' into codex/spinel-chieutt-dev
+  - `41ed5aa52ee3598de035deb49be44c0811bdbd6d` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `1e8b729af3b36a8ec4fc14f372bb48c741aa68e1` — fix: use tertiary colors for outline carousel navigation
+  - `786bc243bfb2ff7a0d7d4d6a5bc8c86f4110a5c4` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `c175256c2f0afde479d5dd170d1f29e9dd0e65a7` — fix: inherit slideshow navigation text colors
+  - `85665105f00dd94632fa4acf22aab20f95ffc25d` — Merge remote-tracking branch 'origin/codex/spinel-chieutt-dev' into codex/spinel-chieutt-dev
+  - `b2aeea388081f1c2e243a1d6d45f208f830b1d41` — Revert accidental Spinel sync to theme-base/dev
+  - `d4415a1fe0f042a4d3f550cb241416fee0abb9ee` — Revert "fix: inherit slideshow navigation text colors"
+  - `1e15831c4fb3e1db502906704556f487a67d4ced` — fix(bundle-builder): restore add clicks and loading state
+  - `dcb1f65ce3d755f85162671ba9e4880c52823164` — feat(parallax): add composable section and inline editorial images
+  - `ad8304346c4d4f59c883a96e305123557bc78609` — fix: release motion layer for nested backdrop blur
+  - `823f0b095da49be3c2f59d3eedd43453048496dd` — Merge remote-tracking branch 'theme-base/dev' into codex/spinel-chieutt-dev
+
 
 ## 2026-10-02 — Update from upstream/dev
 
