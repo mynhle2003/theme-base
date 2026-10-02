@@ -33,8 +33,8 @@ function git(args, options) {
   return run("git", args, options);
 }
 
-function gitText(args) {
-  return git(args).stdout.trim();
+function gitText(args, options) {
+  return git(args, options).stdout.trim();
 }
 
 function currentBranch() {
@@ -459,18 +459,112 @@ function recordedCustomizationPaths(record) {
   return paths;
 }
 
-function branchCustomizationPaths(branch, includeWorktree = false) {
-  const base = themeBaseCheckpoint(branch);
-  const files = new Set(gitText(["diff", "--name-only", base, branch]).split("\n").filter(Boolean));
+function revisionFile(revision, file) {
+  const result = git(["show", `${revision}:${file}`], { allowFailure: true });
+  return result.status === 0 ? result.stdout : null;
+}
+
+function worktreeFile(file) {
+  const absolute = path.join(ROOT, file);
+  if (!fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) return null;
+  return fs.readFileSync(absolute, "utf8");
+}
+
+function worktreeFilesUnder(directory) {
+  const absolute = path.join(ROOT, directory);
+  if (!fs.existsSync(absolute)) return [];
+  const files = [];
+  const visit = (current) => {
+    for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+      const fullPath = path.join(current, entry.name);
+      if (entry.isDirectory()) visit(fullPath);
+      else if (entry.isFile()) files.push(path.relative(ROOT, fullPath).split(path.sep).join("/"));
+    }
+  };
+  visit(absolute);
+  return files;
+}
+
+function sectionImplementationDependencies(revision, includeWorktree = false) {
+  const sourceFiles = new Set(gitText([
+    "ls-tree", "-r", "--name-only", revision, "--", "sections", "blocks",
+  ]).split("\n").filter((file) => /^(sections|blocks)\/.+\.liquid$/i.test(file)));
+  if (includeWorktree) {
+    for (const directory of ["sections", "blocks"]) {
+      for (const file of worktreeFilesUnder(directory)) {
+        if (/\.liquid$/i.test(file)) sourceFiles.add(file);
+      }
+    }
+  }
+
+  const dependencies = new Set();
+  const visited = new Set();
+  const queue = [...sourceFiles];
+  while (queue.length) {
+    const source = queue.shift();
+    if (visited.has(source)) continue;
+    visited.add(source);
+    const contents = includeWorktree ? worktreeFile(source) : revisionFile(revision, source);
+    if (contents === null) continue;
+
+    for (const match of contents.matchAll(/[\"']([^\"']+\.(?:css|js|mjs))[\"']\s*\|\s*asset_url/gi)) {
+      dependencies.add(`assets/${match[1]}`);
+    }
+    for (const match of contents.matchAll(/{%-?\s*(?:render|include)\s+[\"']([^\"']+)[\"']/gi)) {
+      const snippet = `snippets/${match[1]}.liquid`;
+      dependencies.add(snippet);
+      if (!visited.has(snippet)) queue.push(snippet);
+    }
+  }
+  return dependencies;
+}
+
+function sectionImplementation(contents) {
+  if (contents === null) return "";
+  return contents
+    .replace(/{%-?\s*schema\s*-?%}[\s\S]*?{%-?\s*endschema\s*-?%}/gi, "\n")
+    .trim();
+}
+
+function implementationPathsChanged(base, target, includeWorktree = false) {
+  const changed = new Set(gitText(["diff", "--name-only", base, target]).split("\n").filter(Boolean));
   if (includeWorktree) {
     for (const args of [
       ["diff", "--name-only"],
       ["diff", "--cached", "--name-only"],
       ["ls-files", "--others", "--exclude-standard"],
     ]) {
-      for (const file of gitText(args).split("\n").filter(Boolean)) files.add(file);
+      for (const file of gitText(args).split("\n").filter(Boolean)) changed.add(file);
     }
   }
+
+  const dependencies = new Set([
+    ...sectionImplementationDependencies(base),
+    ...sectionImplementationDependencies(target),
+  ]);
+  if (includeWorktree) {
+    for (const dependency of sectionImplementationDependencies(target, true)) dependencies.add(dependency);
+  }
+
+  const implementationChanges = [];
+  for (const file of [...changed].sort()) {
+    const isSectionOrBlock = /^(sections|blocks)\/.+\.liquid$/i.test(file);
+    const isReferencedSnippet = /^snippets\/.+\.liquid$/i.test(file) && dependencies.has(file);
+    const isReferencedAsset = /^assets\/.+\.(?:css|js|mjs)$/i.test(file) && dependencies.has(file);
+    if (!isSectionOrBlock && !isReferencedSnippet && !isReferencedAsset) continue;
+
+    const before = revisionFile(base, file);
+    const after = includeWorktree ? worktreeFile(file) : revisionFile(target, file);
+    const beforeImplementation = isSectionOrBlock ? sectionImplementation(before) : (before ?? "");
+    const afterImplementation = isSectionOrBlock ? sectionImplementation(after) : (after ?? "");
+    if (beforeImplementation !== afterImplementation) implementationChanges.push(file);
+  }
+  return implementationChanges;
+}
+
+function branchCustomizationPaths(branch, includeWorktree = false) {
+  const base = themeBaseCheckpoint(branch);
+  const files = new Set(implementationPathsChanged(base, branch, includeWorktree));
   files.delete(path.relative(ROOT, customizationRecord(branch)));
   files.delete(path.relative(ROOT, BASE_HISTORY_FILE));
   return [...files].sort();
@@ -482,20 +576,20 @@ function verifyCustomizationRecord(branch, includeWorktree = false) {
     throw new Error(`Thiếu hồ sơ custom ${path.relative(ROOT, record)}.`);
   }
   const recorded = recordedCustomizationPaths(record);
-  const missing = branchCustomizationPaths(branch, includeWorktree).filter((file) => !recorded.has(file));
+  const customizations = branchCustomizationPaths(branch, includeWorktree);
+  const missing = customizations.filter((file) => !recorded.has(file));
   if (missing.length) {
     console.error(`Các file custom chưa được ghi trong ${path.relative(ROOT, record)}:`);
     console.error(missing.join("\n"));
-    throw new Error("Cập nhật hồ sơ custom trước khi commit/push hoặc đồng bộ base.");
+    throw new Error("Ghi các thay đổi Liquid/CSS/JS của section hoặc block vào hồ sơ trước khi commit/push hoặc đồng bộ base.");
   }
-  console.log(`Hồ sơ ${path.relative(ROOT, record)} đã bao phủ ${branchCustomizationPaths(branch, includeWorktree).length} file custom.`);
+  console.log(`Hồ sơ ${path.relative(ROOT, record)} đã bao phủ ${customizations.length} file custom.`);
 }
 
 function overlappingChanges(branch, base) {
-  const themePaths = new Set(gitText(["diff", "--name-only", base, branch]).split("\n").filter(Boolean));
-  const basePaths = gitText(["diff", "--name-only", base, "main"]).split("\n").filter(Boolean);
-  const mainOnlyHistory = path.relative(ROOT, BASE_HISTORY_FILE);
-  return basePaths.filter((file) => file !== mainOnlyHistory && themePaths.has(file) && !file.startsWith("docs/theme-customizations/"));
+  const themePaths = new Set(implementationPathsChanged(base, branch));
+  const basePaths = implementationPathsChanged(base, "main");
+  return basePaths.filter((file) => themePaths.has(file));
 }
 
 function writeThemeBaseHistory(branch, previousSha, targetSha, changeRange, changeSummary) {
@@ -629,7 +723,7 @@ function themeRecordContents(slug, baseSha) {
     `Personal base at creation: \`${baseSha}\`\n` +
     `Theme update source: this repository's \`main\` branch\n` +
     `Team base source for personal main: ${UPSTREAM} (only \`main\` or \`dev\`)\n\n` +
-    `Record every theme-specific change here before committing the code. During base updates, review any overlapping paths and describe the expected behavior before resolving.\n\n` +
+    `Record only theme-specific section/block implementation changes here: Liquid/HTML outside {% schema %}, plus CSS/JS assets and snippets rendered or loaded by those sections/blocks. Theme presets, schema-only changes, template JSON, and saved settings values are not custom code. During base updates, review overlapping implementation paths and describe the expected behavior before resolving. See [the customization policy](../theme-customization-policy.md).\n\n` +
     `## Customizations\n\n` +
     `| File/path | Base behavior | Theme-specific behavior | Reason | Update/merge rule |\n` +
     `| --- | --- | --- | --- | --- |\n` +
@@ -677,7 +771,7 @@ function help() {
     `  node theme-base update-themes --all [--push]\n` +
     `  node theme-base update-themes --branch theme/<slug> [--push]\n` +
     `  node theme-base new-theme <slug> [--push]\n` +
-    `  node theme-base check-custom <slug>\n` +
+    `  node theme-base check-custom <slug>  # validates section/block code differences only\n` +
     `  node theme-base preview start --store <store>\n` +
     `  node theme-base preview status|logs|stop\n\n` +
     `Only upstream/main and upstream/dev are fetched. update-base commits and pushes after Theme Check; theme updates require APPLY and use --push for publishing.`);
