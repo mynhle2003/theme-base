@@ -2,10 +2,10 @@
 "use strict";
 
 const { spawnSync } = require("node:child_process");
+const { createInterface } = require("node:readline/promises");
 const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
-const readline = require("node:readline/promises");
 const { stdin, stdout } = require("node:process");
 
 const ROOT = path.resolve(__dirname, "..");
@@ -184,6 +184,10 @@ function mergeTree(base, ours, theirs, label, preservedPaths = []) {
   const theirsTree = preservedPaths.length
     ? treePreservingPaths(theirs, ours, preservedPaths)
     : gitText(["rev-parse", `${theirs}^{tree}`]);
+  return mergeTreeObjects(base, oursTree, theirsTree, label);
+}
+
+function mergeTreeObjects(base, oursTree, theirsTree, label) {
   const oursAnchor = gitText(["commit-tree", oursTree, "-p", base, "-m", `Temporary merge anchor for ${label} (ours)`]);
   const theirsAnchor = gitText(["commit-tree", theirsTree, "-p", base, "-m", `Temporary merge anchor for ${label} (theirs)`]);
   const result = git(["merge-tree", "--write-tree", oursAnchor, theirsAnchor], { allowFailure: true });
@@ -196,10 +200,32 @@ function mergeTree(base, ours, theirs, label, preservedPaths = []) {
   return tree;
 }
 
+function writeTreeWithOverrides(sourceTree, overrides) {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "theme-base-sync-tree-"));
+  const env = { GIT_INDEX_FILE: path.join(tempDir, "index") };
+  try {
+    git(["read-tree", `${sourceTree}^{tree}`], { env });
+    for (const [repoPath, contents] of Object.entries(overrides)) {
+      if (contents === null) {
+        git(["update-index", "--force-remove", "--", repoPath], { env, allowFailure: true });
+        continue;
+      }
+      const existing = treeEntry(sourceTree, repoPath);
+      const mode = existing?.mode || "100644";
+      const oid = git(["hash-object", "-w", "--stdin"], { input: contents }).stdout.trim();
+      git(["update-index", "--add", "--cacheinfo", `${mode},${oid},${repoPath}`], { env });
+    }
+    return gitText(["write-tree"], { env });
+  } finally {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
+}
+
 function previewTree(from, tree) {
   listChanges(from, tree);
   console.log("\nDiff đầy đủ để review:");
-  git(["diff", "--no-ext-diff", "--no-color", from, tree], { inherit: true });
+  const diff = git(["--no-pager", "diff", "--no-ext-diff", "--no-color", from, tree]);
+  if (diff.stdout) process.stdout.write(diff.stdout);
 }
 
 function applyTreeDiff(from, tree) {
@@ -275,18 +301,6 @@ function checkDiffAndTheme() {
   git(["diff", "--check"], { inherit: true });
   git(["diff", "--cached", "--check"], { inherit: true });
   themeCheck();
-}
-
-async function requestApply(label) {
-  console.log(`\nReview staged diff bằng git diff --cached (${label}).`);
-  if (!stdin.isTTY || !stdout.isTTY) {
-    console.log("Không có terminal tương tác; merge sẽ bị hủy, chưa commit.");
-    return false;
-  }
-  const prompt = readline.createInterface({ input: stdin, output: stdout });
-  const answer = await prompt.question("Nhập APPLY để chạy Theme Check và commit; nhấn Enter để hủy: ");
-  prompt.close();
-  return answer.trim() === "APPLY";
 }
 
 function parseArgs(args) {
@@ -464,6 +478,340 @@ function revisionFile(revision, file) {
   return result.status === 0 ? result.stdout : null;
 }
 
+const LIQUID_SCHEMA_PATTERN = /({%-?\s*schema\s*-?%})([\s\S]*?)({%-?\s*endschema\s*-?%})/gi;
+const SCHEMA_MERGE_MARKER = "__THEME_BASE_SYNC_SCHEMA_BLOCK__";
+
+function liquidSchema(contents, file) {
+  if (contents === null) return null;
+  const matches = [...contents.matchAll(LIQUID_SCHEMA_PATTERN)];
+  if (!matches.length) return null;
+  if (matches.length !== 1) throw new Error(`${file} có ${matches.length} khối schema; không thể hòa trộn an toàn.`);
+  const match = matches[0];
+  let schema;
+  try {
+    schema = JSON.parse(match[2]);
+  } catch (error) {
+    throw new Error(`Schema trong ${file} không phải JSON hợp lệ: ${error.message}`);
+  }
+  return { openTag: match[1], closeTag: match[3], schema };
+}
+
+function schemaMarkerContents(contents, file) {
+  const region = liquidSchema(contents, file);
+  if (!region) return contents;
+  return contents.replace(LIQUID_SCHEMA_PATTERN, SCHEMA_MERGE_MARKER);
+}
+
+function renderLiquidSchema(schema, region) {
+  return `${region.openTag}\n${JSON.stringify(schema, null, 2)}\n${region.closeTag}`;
+}
+
+function cloneJson(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function stableJson(value) {
+  if (Array.isArray(value)) return `[${value.map(stableJson).join(",")}]`;
+  if (value && typeof value === "object") {
+    return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${stableJson(value[key])}`).join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
+
+function schemaSettingGroups(schema, file) {
+  const groups = new Map();
+  const rootOwner = file.startsWith("sections/") ? "section" : "self";
+  groups.set(rootOwner, { owner: rootOwner, type: null, settings: Array.isArray(schema.settings) ? schema.settings : [] });
+  if (Array.isArray(schema.blocks)) {
+    for (const block of schema.blocks) {
+      if (!block || typeof block.type !== "string") continue;
+      groups.set(`block:${block.type}`, { owner: `block:${block.type}`, type: block.type, settings: Array.isArray(block.settings) ? block.settings : [] });
+    }
+  }
+  return groups;
+}
+
+function findSchemaGroup(schema, file, owner, create = false) {
+  if (owner === "section" || owner === "self") {
+    if (!Array.isArray(schema.settings) && create) schema.settings = [];
+    return Array.isArray(schema.settings) ? { owner, type: null, settings: schema.settings } : null;
+  }
+  const type = owner.slice("block:".length);
+  const block = Array.isArray(schema.blocks) && schema.blocks.find((item) => item?.type === type);
+  if (!block) return null;
+  if (!Array.isArray(block.settings) && create) block.settings = [];
+  return Array.isArray(block.settings) ? { owner, type, settings: block.settings } : null;
+}
+
+function visitPresetBlocks(blocks, callback) {
+  if (!Array.isArray(blocks)) return;
+  for (const block of blocks) {
+    if (!block || typeof block !== "object") continue;
+    callback(block);
+    visitPresetBlocks(block.blocks, callback);
+  }
+}
+
+function addPresetDefault(schema, owner, settingId, defaultValue) {
+  let count = 0;
+  for (const preset of Array.isArray(schema.presets) ? schema.presets : []) {
+    if (!preset || typeof preset !== "object") continue;
+    if (owner === "section" || owner === "self") {
+      if (!preset.settings || typeof preset.settings !== "object" || Array.isArray(preset.settings)) preset.settings = {};
+      if (!Object.hasOwn(preset.settings, settingId)) {
+        preset.settings[settingId] = cloneJson(defaultValue);
+        count += 1;
+      }
+      continue;
+    }
+    visitPresetBlocks(preset.blocks, (block) => {
+      if (block.type !== owner.slice("block:".length)) return;
+      if (!block.settings || typeof block.settings !== "object" || Array.isArray(block.settings)) block.settings = {};
+      if (!Object.hasOwn(block.settings, settingId)) {
+        block.settings[settingId] = cloneJson(defaultValue);
+        count += 1;
+      }
+    });
+  }
+  return count;
+}
+
+function removePresetSetting(schema, owner, settingId) {
+  for (const preset of Array.isArray(schema.presets) ? schema.presets : []) {
+    if (!preset || typeof preset !== "object") continue;
+    if (owner === "section" || owner === "self") {
+      if (preset.settings && typeof preset.settings === "object") delete preset.settings[settingId];
+      continue;
+    }
+    visitPresetBlocks(preset.blocks, (block) => {
+      if (block.type === owner.slice("block:".length) && block.settings && typeof block.settings === "object") {
+        delete block.settings[settingId];
+      }
+    });
+  }
+}
+
+function reconcileThemeSchema(file, themeRegion, sourceRegion) {
+  const schema = cloneJson(themeRegion.schema);
+  const source = sourceRegion.schema;
+  const sourceGroups = schemaSettingGroups(source, file);
+  const added = [];
+  const removed = [];
+  const changed = [];
+  const presetChanges = [];
+  const blockingDifferences = [];
+
+  for (const [owner, sourceGroup] of sourceGroups) {
+    let themeGroup = findSchemaGroup(schema, file, owner, owner === "section" || owner === "self");
+    if (!themeGroup) continue;
+    const themeById = new Map(themeGroup.settings.filter((setting) => setting && typeof setting.id === "string").map((setting) => [setting.id, setting]));
+    const sourceById = new Map(sourceGroup.settings.filter((setting) => setting && typeof setting.id === "string").map((setting) => [setting.id, setting]));
+    for (const sourceSetting of sourceGroup.settings) {
+      if (!sourceSetting || typeof sourceSetting.id !== "string") continue;
+      const current = themeById.get(sourceSetting.id);
+      if (!current) {
+        if (!Object.hasOwn(sourceSetting, "default")) {
+          throw new Error(`Option mới ${file} (${owner}: ${sourceSetting.id}) chưa khai báo default ở main; dừng để không tự đoán giá trị.`);
+        }
+        themeGroup.settings.push(cloneJson(sourceSetting));
+        const presetCount = addPresetDefault(schema, owner, sourceSetting.id, sourceSetting.default);
+        added.push({ file, owner, id: sourceSetting.id, label: sourceSetting.label || sourceSetting.content || sourceSetting.id, defaultValue: sourceSetting.default, presetCount });
+      } else if (stableJson(current) !== stableJson(sourceSetting)) {
+        const allFields = [...new Set([...Object.keys(current), ...Object.keys(sourceSetting)])];
+        const changedSettingFields = allFields.filter((field) => stableJson(current[field]) !== stableJson(sourceSetting[field]));
+        const functionalFields = ["type", "options", "min", "max", "step", "unit", "visible_if", "accept", "min_length", "max_length"];
+        const changedFields = changedSettingFields.filter((field) => functionalFields.includes(field));
+        changed.push({ file, owner, id: sourceSetting.id, label: current.label || sourceSetting.label || sourceSetting.id, changedFields: changedSettingFields });
+        const fieldValues = changedSettingFields.map((field) => {
+          const themeValue = Object.hasOwn(current, field) ? JSON.stringify(current[field]) : "(không có)";
+          const sourceValue = Object.hasOwn(sourceSetting, field) ? JSON.stringify(sourceSetting[field]) : "(không có)";
+          return `${field}: theme=${themeValue}, main=${sourceValue}`;
+        }).join("; ");
+        presetChanges.push(`${file}: option ${owner}/${sourceSetting.id} khác main ở ${fieldValues}; giữ định nghĩa theme`);
+        if (changedFields.length) {
+          blockingDifferences.push(`${file}: option ${owner}/${sourceSetting.id} đổi trường ảnh hưởng hành vi ${changedFields.join(", ")}; cần review trước khi cập nhật logic`);
+        }
+      }
+    }
+    for (const currentSetting of themeGroup.settings) {
+      if (!currentSetting || typeof currentSetting.id !== "string") continue;
+      if (!sourceById.has(currentSetting.id)) {
+        removed.push({ file, owner, id: currentSetting.id, label: currentSetting.label || currentSetting.content || currentSetting.id });
+      }
+    }
+  }
+
+  const themeStructure = cloneJson(themeRegion.schema);
+  const sourceStructure = cloneJson(source);
+  for (const candidate of [themeStructure, sourceStructure]) {
+    delete candidate.settings;
+    delete candidate.presets;
+    if (Array.isArray(candidate.blocks)) candidate.blocks = candidate.blocks.map((block) => {
+      if (!block || typeof block !== "object") return block;
+      const copy = cloneJson(block);
+      delete copy.settings;
+      return copy;
+    });
+  }
+  if (stableJson(themeStructure) !== stableJson(sourceStructure)) {
+    const keys = [...new Set([...Object.keys(themeStructure), ...Object.keys(sourceStructure)])]
+      .filter((key) => stableJson(themeStructure[key]) !== stableJson(sourceStructure[key]));
+    presetChanges.push(`${file}: schema khác main ở trường ${keys.join(", ")}; giữ nguyên schema của theme`);
+  }
+  const themeBlockTypes = (themeRegion.schema.blocks || []).map((block) => block?.type).filter(Boolean).sort();
+  const sourceBlockTypes = (source.blocks || []).map((block) => block?.type).filter(Boolean).sort();
+  if (stableJson(themeBlockTypes) !== stableJson(sourceBlockTypes)) {
+    blockingDifferences.push(`${file}: danh sách block được phép khác main (theme: ${themeBlockTypes.join(", ") || "(không có)"}; main: ${sourceBlockTypes.join(", ") || "(không có)"})`);
+  }
+  if (stableJson(themeRegion.schema.presets || []) !== stableJson(source.presets || [])) {
+    const names = (presets) => presets.map((preset) => preset?.name || preset?.category || "(không tên)").join(", ") || "(không có)";
+    presetChanges.push(`${file}: preset theme [${names(themeRegion.schema.presets || [])}] khác main [${names(source.presets || [])}]; giữ preset theme và chỉ thêm default cho option mới`);
+  }
+  return { schema, added, removed, changed, presetChanges, blockingDifferences };
+}
+
+function isSectionBlockLiquid(file) {
+  return /^(sections|blocks)\/.+\.liquid$/i.test(file);
+}
+
+function isThemeConfigPath(file) {
+  return file === "config/settings_schema.json" || file === "config/settings_data.json" ||
+    /^templates\/.+\.json$/i.test(file) || /^sections\/.+-group\.json$/i.test(file);
+}
+
+function revisionFiles(revision) {
+  return gitText(["ls-tree", "-r", "--name-only", revision]).split("\n").filter(Boolean);
+}
+
+function normalizedSchemaTree(revision, files) {
+  const sourceTree = gitText(["rev-parse", `${revision}^{tree}`]);
+  const overrides = {};
+  for (const file of files) {
+    if (!isSectionBlockLiquid(file)) continue;
+    const contents = revisionFile(revision, file);
+    if (contents !== null) overrides[file] = schemaMarkerContents(contents, file);
+  }
+  return Object.keys(overrides).length ? writeTreeWithOverrides(sourceTree, overrides) : sourceTree;
+}
+
+function preservedThemeConfigPaths(revision) {
+  return revisionFiles(revision).filter(isThemeConfigPath);
+}
+
+function buildThemeMergeTree(base, branch, mainSha, label, historyPath) {
+  const baseFiles = revisionFiles(base).filter(isSectionBlockLiquid);
+  const themeFiles = revisionFiles(branch).filter(isSectionBlockLiquid);
+  const sourceFiles = revisionFiles(mainSha).filter(isSectionBlockLiquid);
+  const deletedFromMain = baseFiles.filter((file) => themeFiles.includes(file) && !sourceFiles.includes(file));
+  if (deletedFromMain.length) {
+    throw new Error(`main đã xóa section/block đang có trong theme; cần review thủ công trước khi cập nhật:\n${deletedFromMain.join("\n")}`);
+  }
+
+  const schemaFiles = [...new Set([...baseFiles, ...themeFiles, ...sourceFiles])];
+  const preservePaths = [...new Set([
+    historyPath,
+    ...preservedThemeConfigPaths(base),
+    ...preservedThemeConfigPaths(branch),
+  ])];
+  const baseTree = normalizedSchemaTree(base, schemaFiles);
+  const themeTree = normalizedSchemaTree(branch, schemaFiles);
+  const sourceWithPreservedConfig = treePreservingPaths(mainSha, branch, preservePaths);
+  const sourceTree = normalizedSchemaTree(sourceWithPreservedConfig, schemaFiles);
+  return mergeTreeObjects(base, themeTree, sourceTree, label);
+}
+
+function composeThemeResultTree(tree, branch, mainSha, base, schemaRemovals = []) {
+  const paths = revisionFiles(tree).filter(isSectionBlockLiquid);
+  const overrides = {};
+  const schemaPlans = new Map();
+  const addedSettings = [];
+  const removedSettings = [];
+  const heldSchemaDifferences = [];
+  const heldSchemaFiles = [];
+  const blockingSchemaDifferences = [];
+
+  for (const file of paths) {
+    const mergedContents = revisionFile(tree, file);
+    if (!mergedContents?.includes(SCHEMA_MERGE_MARKER)) continue;
+    const baseRegion = liquidSchema(revisionFile(base, file), file);
+    const themeContents = revisionFile(branch, file);
+    const sourceContents = revisionFile(mainSha, file);
+    const themeRegion = liquidSchema(themeContents, file);
+    const sourceRegion = liquidSchema(sourceContents, file);
+    const sourceSchemaChanged = !baseRegion || !sourceRegion || stableJson(baseRegion.schema) !== stableJson(sourceRegion.schema);
+    let schema;
+    let region;
+
+    if (themeRegion && sourceRegion && sourceSchemaChanged) {
+      region = themeRegion;
+      const reconciled = reconcileThemeSchema(file, themeRegion, sourceRegion);
+      schema = reconciled.schema;
+      addedSettings.push(...reconciled.added);
+      removedSettings.push(...reconciled.removed);
+      heldSchemaDifferences.push(...reconciled.presetChanges);
+      if (reconciled.presetChanges.length) heldSchemaFiles.push(file);
+      blockingSchemaDifferences.push(...reconciled.blockingDifferences);
+      schemaPlans.set(file, { schema, region, removed: reconciled.removed });
+    } else if (themeRegion && sourceRegion) {
+      schema = themeRegion.schema;
+      region = themeRegion;
+      schemaPlans.set(file, { schema, region, removed: [] });
+    } else if (themeRegion) {
+      schema = themeRegion.schema;
+      region = themeRegion;
+      heldSchemaDifferences.push(`${file}: main không còn schema; giữ nguyên schema của theme`);
+      heldSchemaFiles.push(file);
+      schemaPlans.set(file, { schema, region, removed: [] });
+    } else if (sourceRegion) {
+      schema = sourceRegion.schema;
+      region = sourceRegion;
+      schemaPlans.set(file, { schema, region, removed: [] });
+    } else {
+      overrides[file] = mergedContents.replace(SCHEMA_MERGE_MARKER, "");
+      continue;
+    }
+    overrides[file] = mergedContents.replace(SCHEMA_MERGE_MARKER, renderLiquidSchema(schema, region));
+  }
+
+  for (const removal of schemaRemovals) {
+    const plan = schemaPlans.get(removal.file);
+    if (!plan) continue;
+    const group = findSchemaGroup(plan.schema, removal.file, removal.owner);
+    if (group) {
+      for (let index = group.settings.length - 1; index >= 0; index -= 1) {
+        if (group.settings[index]?.id === removal.id) group.settings.splice(index, 1);
+      }
+    }
+    removePresetSetting(plan.schema, removal.owner, removal.id);
+    plan.removed.push(removal);
+    const mergedContents = revisionFile(tree, removal.file);
+    overrides[removal.file] = mergedContents.replace(SCHEMA_MERGE_MARKER, renderLiquidSchema(plan.schema, plan.region));
+  }
+
+  const resultTree = Object.keys(overrides).length ? writeTreeWithOverrides(tree, overrides) : tree;
+  return { tree: resultTree, addedSettings, removedSettings, heldSchemaDifferences, heldSchemaFiles, blockingSchemaDifferences };
+}
+
+async function confirmRemovedSettings(candidates) {
+  if (!candidates.length) return [];
+  console.log("\nCác option có trong theme nhưng main đã bỏ. Mặc định giữ lại; xác nhận riêng option nào muốn xóa:");
+  if (!stdin.isTTY || !stdout.isTTY) {
+    console.log("Không có terminal tương tác; giữ lại toàn bộ option đã liệt kê.");
+    return [];
+  }
+  const rl = createInterface({ input: stdin, output: stdout });
+  const accepted = [];
+  try {
+    for (const item of candidates) {
+      const answer = await rl.question(`Xóa ${item.file} — ${item.owner} — ${item.id} (${item.label}) như main? [y/N] `);
+      if (/^(y|yes)$/i.test(answer.trim())) accepted.push(item);
+    }
+  } finally {
+    rl.close();
+  }
+  return accepted;
+}
+
 function worktreeFile(file) {
   const absolute = path.join(ROOT, file);
   if (!fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) return null;
@@ -616,7 +964,7 @@ function writeThemeBaseHistory(branch, previousSha, targetSha, changeRange, chan
   fs.writeFileSync(record, `${marker}\n${contents}`, "utf8");
 }
 
-async function updateOneTheme(branch, options) {
+async function updateOneTheme(branch) {
   if (!gitText(["branch", "--list", "--format=%(refname:short)", branch])) {
     if (!remoteRefExists(branch)) throw new Error(`Không tìm thấy nhánh local hoặc origin/${branch}.`);
     git(["switch", "--track", "-c", branch, `origin/${branch}`], { inherit: true });
@@ -636,14 +984,86 @@ async function updateOneTheme(branch, options) {
 
   const range = sourceChangeRange(base, mainSha);
   const overlaps = overlappingChanges(branch, base);
-  const historyPath = path.relative(ROOT, BASE_HISTORY_FILE);
-  const tree = mergeTree(base, branch, "main", `main vào ${branch}`, [historyPath]);
-  const changeSummary = gitText(["diff", "--stat", branch, tree]) || "No file changes.";
-  previewTree(branch, tree);
   if (overlaps.length) {
-    console.log("\nCẢNH BÁO: các file này đã thay đổi riêng ở theme và main; kiểm tra hồ sơ custom/hành vi trước khi duyệt:");
-    console.log(overlaps.join("\n"));
+    console.error(`\nDừng cập nhật ${branch}: các file implementation cùng được sửa ở theme và main, cần bạn review từng file trước:`);
+    console.error(overlaps.join("\n"));
+    console.error("Commit main trong lần cập nhật này:");
+    for (const commit of range.commits) console.error(`  ${commit.sha} ${commit.subject}`);
+    throw new Error("Có thay đổi section/block/snippet/CSS/JS chồng lấn; chưa áp dụng, commit hoặc push.");
   }
+
+  const historyPath = path.relative(ROOT, BASE_HISTORY_FILE);
+  const mergedTree = buildThemeMergeTree(base, branch, mainSha, `main vào ${branch}`, historyPath);
+  let plan = composeThemeResultTree(mergedTree, branch, mainSha, base);
+  let tree = plan.tree;
+
+  console.log(`\nNguồn: main (${mainSha}). ${range.commits.length} commit main sẽ được gộp:`);
+  for (const commit of range.commits) console.log(`  ${commit.sha} ${commit.subject}`);
+  if (plan.addedSettings.length) {
+    console.log("\nOption mới từ main sẽ được thêm với default của main; giá trị đó cũng được thêm vào preset hiện có:");
+    for (const item of plan.addedSettings) {
+      console.log(`  ${item.file} — ${item.owner} — ${item.id} (${item.label}); default=${JSON.stringify(item.defaultValue)}; preset được bổ sung: ${item.presetCount}`);
+    }
+  }
+  if (plan.removedSettings.length) {
+    console.log("\nOption main đã bỏ sẽ được giữ trong bản cập nhật cho tới khi bạn xác nhận xóa từng option.");
+    for (const item of plan.removedSettings) {
+      console.log(`  ${item.file} — ${item.owner} — ${item.id} (${item.label})`);
+    }
+  }
+  if (plan.heldSchemaDifferences.length) {
+    console.log("\nKhác biệt schema/preset giữ nguyên theo theme hiện tại:");
+    for (const difference of [...new Set(plan.heldSchemaDifferences)]) console.log(`  ${difference}`);
+  }
+  const sourceConfigChanges = gitText(["diff", "--name-only", base, mainSha]).split("\n").filter((file) => file && isThemeConfigPath(file));
+  const keptConfigPaths = new Set([...preservedThemeConfigPaths(base), ...preservedThemeConfigPaths(branch)]);
+  const heldConfigChanges = sourceConfigChanges.filter((file) => keptConfigPaths.has(file));
+  const addedConfigFiles = sourceConfigChanges.filter((file) => !keptConfigPaths.has(file));
+  if (heldConfigChanges.length) {
+    console.log("\nMain có thay đổi template/config dưới đây; giữ nguyên bản hiện có của theme. Diff nguồn đầy đủ:");
+    console.log(heldConfigChanges.join("\n"));
+    const heldDiff = git(["--no-pager", "diff", "--no-ext-diff", "--no-color", base, mainSha, "--", ...heldConfigChanges]);
+    if (heldDiff.stdout) process.stdout.write(heldDiff.stdout);
+  }
+  if (addedConfigFiles.length) {
+    console.log("\nFile template/config mới chưa có ở mốc base/theme sẽ được thêm từ main:");
+    console.log(addedConfigFiles.join("\n"));
+  }
+  const heldSchemaFiles = [...new Set(plan.heldSchemaFiles)];
+  if (heldSchemaFiles.length) {
+    console.log("\nDiff đầy đủ từ main cho section/block có schema hoặc preset được giữ theo theme:");
+    console.log(heldSchemaFiles.join("\n"));
+    const schemaDiff = git(["--no-pager", "diff", "--no-ext-diff", "--no-color", base, mainSha, "--", ...heldSchemaFiles]);
+    if (schemaDiff.stdout) process.stdout.write(schemaDiff.stdout);
+  }
+
+  previewTree(branch, tree);
+  if (plan.blockingSchemaDifferences.length) {
+    console.error("\nDừng cập nhật vì cấu hình section/block có thay đổi ảnh hưởng cách logic mới hoạt động:");
+    for (const difference of [...new Set(plan.blockingSchemaDifferences)]) console.error(`  ${difference}`);
+    throw new Error("Chưa áp dụng, commit hoặc push; cần review các khác biệt schema được liệt kê.");
+  }
+  const confirmedRemovals = await confirmRemovedSettings(plan.removedSettings);
+  if (confirmedRemovals.length) {
+    plan = composeThemeResultTree(mergedTree, branch, mainSha, base, confirmedRemovals);
+    tree = plan.tree;
+    console.log("\nDiff sau khi áp dụng các xác nhận xóa option:");
+    previewTree(branch, tree);
+  }
+  if (plan.removedSettings.length && !confirmedRemovals.length) {
+    console.log("\nĐã giữ lại toàn bộ option bị main loại bỏ.");
+  } else if (confirmedRemovals.length) {
+    const confirmedKeys = new Set(confirmedRemovals.map((item) => `${item.file}\0${item.owner}\0${item.id}`));
+    const retainedRemovals = plan.removedSettings.filter((item) => !confirmedKeys.has(`${item.file}\0${item.owner}\0${item.id}`));
+    console.log("\nĐã xác nhận xóa:");
+    for (const item of confirmedRemovals) console.log(`  ${item.file} — ${item.owner} — ${item.id} (${item.label})`);
+    if (retainedRemovals.length) {
+      console.log("Giữ lại vì không có xác nhận xóa:");
+      for (const item of retainedRemovals) console.log(`  ${item.file} — ${item.owner} — ${item.id} (${item.label})`);
+    }
+  }
+
+  const changeSummary = gitText(["diff", "--stat", branch, tree]) || "No file changes.";
   const originalRecord = fs.readFileSync(customizationRecord(branch), "utf8");
   const patch = applyTreeDiff(branch, tree);
   let committed = false;
@@ -651,18 +1071,12 @@ async function updateOneTheme(branch, options) {
     writeThemeBaseHistory(branch, base, mainSha, range, changeSummary);
     git(["add", "--", path.relative(ROOT, customizationRecord(branch))]);
     verifyCustomizationRecord(branch, true);
-    if (!(await requestApply(`main ${mainSha.slice(0, 8)} vào ${branch}`))) {
-      rollbackTreeDiff(patch);
-      fs.writeFileSync(customizationRecord(branch), originalRecord, "utf8");
-      git(["add", "--", path.relative(ROOT, customizationRecord(branch))]);
-      console.log(`Đã hủy cập nhật ${branch} theo yêu cầu.`);
-      return false;
-    }
     checkDiffAndTheme();
     const message = `chore(theme): update base with ${range.commits.length} main commits through ${mainSha.slice(0, 8)}`;
     git(["commit", "-m", message], { inherit: true });
     committed = true;
-    if (options.push) git(["push", "--set-upstream", "origin", branch], { inherit: true });
+    git(["push", "--set-upstream", "origin", branch], { inherit: true });
+    console.log(`Đã commit và push ${branch} từ main đến ${mainSha.slice(0, 8)}.`);
   } catch (error) {
     if (!committed) {
       rollbackTreeDiff(patch);
@@ -698,7 +1112,7 @@ async function updateThemes(options) {
     for (const branch of branches) {
       console.log(`\n=== Đồng bộ ${branch} từ main ===`);
       try {
-        if (await updateOneTheme(branch, options)) completed.push(branch);
+        if (await updateOneTheme(branch)) completed.push(branch);
       } catch (error) {
         failed = error;
         break;
@@ -768,13 +1182,13 @@ async function newTheme(slug, options) {
 function help() {
   console.log(`Personal theme base sync\n\n` +
     `  node theme-base update-base [--source auto|main|dev]\n` +
-    `  node theme-base update-themes --all [--push]\n` +
-    `  node theme-base update-themes --branch theme/<slug> [--push]\n` +
+    `  node theme-base update-themes --all\n` +
+    `  node theme-base update-themes --branch theme/<slug>\n` +
     `  node theme-base new-theme <slug> [--push]\n` +
     `  node theme-base check-custom <slug>  # validates section/block code differences only\n` +
     `  node theme-base preview start --store <store>\n` +
     `  node theme-base preview status|logs|stop\n\n` +
-    `Only upstream/main and upstream/dev are fetched. update-base commits and pushes after Theme Check; theme updates require APPLY and use --push for publishing.`);
+    `Only upstream/main and upstream/dev are fetched. update-base and safe theme updates commit and push after Theme Check. Theme updates preserve existing templates and saved presets, add defaults for new section/block settings, and ask before removing settings. Overlapping custom implementation changes stop for review.`);
 }
 
 async function main() {
