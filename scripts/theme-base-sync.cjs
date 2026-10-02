@@ -33,8 +33,8 @@ function git(args, options) {
   return run("git", args, options);
 }
 
-function gitText(args) {
-  return git(args).stdout.trim();
+function gitText(args, options) {
+  return git(args, options).stdout.trim();
 }
 
 function currentBranch() {
