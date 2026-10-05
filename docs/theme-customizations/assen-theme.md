@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"020c10f081adeda038ec99ef7b307ffc7d46ab07"} -->
+<!-- theme-base-sync-state: {"sha":"89321f5ebbd78e1144eae1a31adbef4679bd9cd3"} -->
 # Customization record: assen-theme
 
 Theme branch: `theme/assen-theme`
@@ -66,6 +66,77 @@ Record every theme-specific change here before committing the code. During base 
 | --- | --- | --- | --- |
 
 ## Base sync history
+
+### 2026-10-05 — Update from personal main
+
+- Previous main commit: `020c10f081adeda038ec99ef7b307ffc7d46ab07`
+- Updated through main commit: `89321f5ebbd78e1144eae1a31adbef4679bd9cd3`
+- Main commits included: 3
+- Included main commits:
+  - `1edc4f43ef37eb328c8f58e005d34a24295695e3` — chore(base): update base with 32 upstream commits through 6eacf7b7
+  - `d426df565afbdec2a15c5305f0bcecac6b8a7b88` — fix(sync): preserve blank optional setting defaults
+  - `89321f5ebbd78e1144eae1a31adbef4679bd9cd3` — fix(sync): allow option label changes without blocking updates
+- Change summary:
+
+```text
+assets/cart-drawer.css                             |   1 +
+ assets/collections-with-tabs.js                    |  16 +
+ assets/component-overlay.css                       |   2 +
+ assets/component-pagination.css                    | 161 +++++++++
+ assets/critical.css                                | 260 ++++++--------
+ assets/product-information.css                     |   8 -
+ assets/product-media.css                           |  25 ++
+ assets/product-media.js                            |   4 +-
+ assets/section-collection.css                      | 152 +-------
+ blocks/_collection-pagination.liquid               |  45 +--
+ blocks/_header-menu.liquid                         |   6 +
+ blocks/_product-media.liquid                       |  33 +-
+ blocks/blog-archive-list.liquid                    |  19 +-
+ blocks/blog-list.liquid                            |  13 +-
+ blocks/blog-meta.liquid                            | 106 +++---
+ blocks/blog-tag-filter.liquid                      | 232 +++++++++++++
+ blocks/blog-title.liquid                           | 170 +++++++++
+ blocks/collections-with-tabs-item.liquid           |   8 +-
+ blocks/comments.liquid                             | 130 +++----
+ blocks/content.liquid                              |   4 +-
+ blocks/featured-image.liquid                       |  35 +-
+ blocks/featured-post.liquid                        | 210 ++++++++---
+ blocks/image-card.liquid                           |   2 +-
+ blocks/pagination.liquid                           |  78 ++++-
+ blocks/previous-and-next-posts.liquid              |  94 +++--
+ blocks/product-buy-quantity.liquid                 |   8 +-
+ blocks/tags-and-sharing.liquid                     |  28 +-
+ docs/audits/article-reference-2026-10-05.md        |  26 ++
+ docs/audits/blog-reference-2026-10-05.md           |  69 ++++
+ .../collections-with-tabs-color-2026-10-05.md      |  33 ++
+ docs/theme-customization-policy.md                 |   4 +-
+ locales/en.default.json                            |  24 +-
+ locales/en.default.schema.json                     |   4 +-
+ scripts/theme-base-sync.cjs                        |  34 +-
+ sections/article.liquid                            |  88 ++++-
+ sections/blog-posts.liquid                         |  18 +
+ sections/blog.liquid                               | 216 +++++++-----
+ sections/collections-with-tabs.liquid              |  37 +-
+ sections/featured-collection.liquid                |  19 +
+ sections/related-posts.liquid                      | 386 +++++++++++++++++++++
+ snippets/css-variables.liquid                      |   4 +-
+ snippets/heading-size-token.liquid                 |  15 +
+ snippets/media-card.liquid                         |   3 +-
+ snippets/pagination-pages.liquid                   |  45 +++
+ snippets/product-card-swatches.liquid              |  24 +-
+ snippets/swatch-option.liquid                      |  31 ++
+ snippets/swatch.liquid                             |   6 +-
+ snippets/variant-picker.liquid                     | 101 +++---
+ templates/blog.json                                |  11 +-
+ tests/blog-archive.test.cjs                        |  79 +++++
+ tests/blog-heading-schema.test.cjs                 |  33 ++
+ tests/collections-with-tabs-color.test.cjs         |  75 ++++
+ tests/product-controls.test.cjs                    | 102 ++++++
+ tests/product-media-pagination.test.cjs            |  79 +++++
+ tests/theme-base-sync.test.cjs                     |  80 +++++
+ 55 files changed, 2705 insertions(+), 791 deletions(-)
+```
+
 
 ### 2026-10-05 — Update from personal main
 
@@ -336,3 +407,7 @@ docs/theme-customization-policy.md |  18 ++++++
  scripts/theme-base-sync.cjs        | 124 ++++++++++++++++++++++++++++++++-----
  2 files changed, 127 insertions(+), 15 deletions(-)
 ```
+
+### Reviewed schema migration
+
+Owner approved main schema for conflicts outside homepage. Updated Blog static heading to blog-title and added tag filter; migrated legacy typography tokens in non-homepage templates. Kept homepage index configuration, custom implementations, existing preset values and unconfirmed removed settings. Retained homepage product-media thumbnail visibility because this UI-only difference does not change runtime values.

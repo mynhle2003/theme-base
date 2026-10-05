@@ -19,14 +19,14 @@
         "padding_top": 64,
         "padding_bottom": 96,
         "padding_top_mobile": 50,
-        "padding_bottom_mobile": 56
+        "padding_bottom_mobile": 56,
+        "customize_mobile_padding": true
       },
       "blocks": {
         "heading": {
-          "type": "heading",
+          "type": "blog-title",
           "static": true,
           "settings": {
-            "text": "<p>News</p>",
             "heading_size": "lg",
             "html_tag": "h1"
           }
@@ -110,6 +110,11 @@
             "featured-post",
             "pagination"
           ]
+        },
+        "tag-filter": {
+          "type": "blog-tag-filter",
+          "static": true,
+          "settings": {}
         }
       }
     }
