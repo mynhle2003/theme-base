@@ -377,7 +377,7 @@
     width: var(--countdown-unit-width, auto);
     min-width: 5.2rem;
     min-height: 5.6rem;
-    padding: 0.8rem 0.9rem 0.7rem;
+    padding: 16px 0;
     flex: 0 0 var(--countdown-unit-width, auto);
     flex-direction: column;
     align-items: center;
@@ -460,8 +460,35 @@
   }
 
   .countdown-timer--style-with-labels .countdown-timer__label {
-    letter-spacing: 0.08em;
+    margin-top: 0;
+    color: inherit;
+    font-size: 10px;
+    line-height: 15px;
+    letter-spacing: 2.4px;
     text-transform: uppercase;
+  }
+
+  /* Essen theme: Figma's four equal Time cards, independent of root font size. */
+  .countdown-timer--style-with-labels {
+    width: 496px;
+    flex-shrink: 1;
+  }
+
+  .countdown-timer--style-with-labels .countdown-timer__units {
+    gap: 16px;
+  }
+
+  .countdown-timer--style-with-labels .countdown-timer__unit {
+    width: 112px;
+    min-width: 0;
+    min-height: 0;
+    flex: 1 1 112px;
+    justify-content: flex-start;
+  }
+
+  .countdown-timer--style-with-labels .countdown-timer__value {
+    line-height: 1.2;
+    letter-spacing: -0.8px;
   }
 
   .countdown-timer--style-inline .countdown-timer__label,
@@ -507,7 +534,22 @@
     .countdown-timer__unit {
       min-width: clamp(3.8rem, 20vw, 5.2rem);
       min-height: 5.2rem;
-      padding: 0.6rem 0.5rem 0.5rem;
+      padding: 16px 0;
+    }
+
+    .countdown-timer--style-with-labels {
+      width: 324px;
+    }
+
+    .countdown-timer--style-with-labels .countdown-timer__units {
+      gap: 12px;
+    }
+
+    .countdown-timer--style-with-labels .countdown-timer__unit {
+      width: 72px;
+      min-width: 0;
+      min-height: 0;
+      flex-basis: 72px;
     }
 
     .countdown-timer--style-inline .countdown-timer__unit,
@@ -663,6 +705,8 @@
         if (!this.unitElements?.length) return;
 
         this.style.removeProperty('--countdown-unit-width');
+        // Essen's labelled cards use responsive CSS widths rather than text measurement.
+        if (this.classList.contains('countdown-timer--style-with-labels')) return;
         const maxWidth = Math.max(...this.unitElements.map((unit) => unit.getBoundingClientRect().width));
         if (Number.isFinite(maxWidth) && maxWidth > 0) {
           this.style.setProperty('--countdown-unit-width', `${Math.ceil(maxWidth)}px`);
