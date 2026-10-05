@@ -335,7 +335,7 @@
     when 'slightly_rounded'
       assign radius_navigation = 'var(--radius-slight)'
     when 'rounded'
-      assign radius_navigation = 'var(--radius-rounded)'
+      assign radius_navigation = '6px'
     when 'pill'
       assign radius_navigation = 'var(--radius-pill)'
   endcase
@@ -596,6 +596,8 @@
       assign product_card_image_ratio = '1 / 1'
     when 'portrait'
       assign product_card_image_ratio = '4 / 5'
+    when 'ratio_5_4'
+      assign product_card_image_ratio = '5 / 4'
     when 'landscape'
       assign product_card_image_ratio = '4 / 3'
   endcase

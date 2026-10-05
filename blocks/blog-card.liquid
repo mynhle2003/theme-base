@@ -18,7 +18,7 @@
   endif
 
   assign blog_card_ratio_setting = block.settings.ratio | default: 'original'
-  unless blog_card_ratio_setting == 'original' or blog_card_ratio_setting == 'square' or blog_card_ratio_setting == 'portrait' or blog_card_ratio_setting == 'landscape' or blog_card_ratio_setting == 'wide'
+  unless blog_card_ratio_setting == 'original' or blog_card_ratio_setting == 'square' or blog_card_ratio_setting == 'portrait' or blog_card_ratio_setting == 'ratio_5_4' or blog_card_ratio_setting == 'landscape' or blog_card_ratio_setting == 'wide'
     assign blog_card_ratio_setting = 'original'
   endunless
   assign blog_card_media_layout = block.settings.media_layout | default: 'stacked'
@@ -31,6 +31,8 @@
       assign blog_card_ratio = '1'
     when 'portrait'
       assign blog_card_ratio = '0.8'
+    when 'ratio_5_4'
+      assign blog_card_ratio = '1.25'
     when 'landscape'
       assign blog_card_ratio = '1.3333'
     when 'wide'
@@ -363,19 +365,23 @@
         },
         {
           "value": "square",
-          "label": "Square"
+          "label": "Square - 1:1"
         },
         {
           "value": "portrait",
-          "label": "Portrait"
+          "label": "Portrait - 4:5"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape - 5:4"
         },
         {
           "value": "landscape",
-          "label": "Landscape"
+          "label": "Landscape - 4:3"
         },
         {
           "value": "wide",
-          "label": "Wide"
+          "label": "Wide - 16:9"
         }
       ],
       "default": "original"
@@ -490,7 +496,7 @@
         },
         {
           "value": "square",
-          "label": "Square"
+          "label": "Square - 1:1"
         },
         {
           "value": "rounded",

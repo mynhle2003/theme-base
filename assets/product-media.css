@@ -66,8 +66,18 @@
   height: auto;
 }
 
+/* Theme custom: frame main product images at 4:5 on desktop and mobile. */
+.product-media-gallery:not(.product-media-gallery--overlay) .product-media-gallery__main .product-media--image {
+  aspect-ratio: 4 / 5;
+}
+
+.product-media-gallery:not(.product-media-gallery--overlay) .product-media-gallery__main .product-media--image > img {
+  height: 100%;
+  object-fit: cover;
+}
+
 /* Overlay galleries intentionally have their own media contract. The
-   product-page gallery stays natural, while Quick Add and Quick View can use
+   product-page gallery uses its theme frame, while Quick Add and Quick View can use
    a responsive frame ratio without sharing the page gallery's layout rules. */
 .product-media-gallery--overlay .product-media-gallery__main .product-media {
   aspect-ratio: var(--overlay-media-ratio-desktop, 1);
@@ -220,15 +230,16 @@
   }
 
   .product-media-gallery--desktop-left_thumbnails .media-gallery__navigation,
-  .product-media-gallery--desktop-bottom_thumbnails .media-gallery__navigation {
+  .product-media-gallery--desktop-bottom_thumbnails .media-gallery__navigation,
+  .product-media-gallery--desktop-carousel_two_items .media-gallery__navigation {
     display: grid;
   }
 
-  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__main {
+  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--desktop-carousel_two_items):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__main {
     overflow: visible;
   }
 
-  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__main > .swiper-wrapper {
+  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--desktop-carousel_two_items):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__main > .swiper-wrapper {
     display: grid;
     gap: var(--product-media-gap, var(--layout-grid-gap));
     transform: none !important;
@@ -248,7 +259,7 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__slide {
+  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--desktop-carousel_two_items):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__slide {
     width: auto !important;
   }
 
@@ -275,11 +286,13 @@
     transform: none !important;
   }
 
+  .product-media-gallery--desktop-carousel_two_items .media-thumbnails__carousel,
+  .product-media-gallery--desktop-carousel_two_items .product-media-gallery__pagination,
   .product-media-gallery--desktop-grid .media-thumbnails__carousel,
   .product-media-gallery--desktop-stacked .media-thumbnails__carousel,
   .product-media-gallery--desktop-two_column_grid .media-thumbnails__carousel,
-  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__pagination,
-  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--overlay-quick-add-strip) .media-gallery__navigation {
+  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--desktop-carousel_two_items):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__pagination,
+  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--desktop-carousel_two_items):not(.product-media-gallery--overlay-quick-add-strip) .media-gallery__navigation {
     display: none;
   }
 }
@@ -377,7 +390,8 @@
     display: block;
   }
 
-  .product-media-gallery--mobile-slider .media-thumbnails__carousel {
+  .product-media-gallery--mobile-slider .media-thumbnails__carousel,
+  .product-media-gallery--mobile-carousel_two_items .media-thumbnails__carousel {
     display: none;
   }
 
@@ -682,5 +696,36 @@ html.product-media-lightbox-open {
     flex-basis: 5rem;
     width: 5rem;
     height: 5rem;
+  }
+}
+
+/* Keep two media visible and horizontally reachable before Swiper initializes. */
+@media (min-width: 768px) {
+  .product-media-gallery--desktop-carousel_two_items .product-media-gallery__main:not(.swiper-initialized) {
+    overflow-x: auto;
+  }
+
+  .product-media-gallery--desktop-carousel_two_items .product-media-gallery__main:not(.swiper-initialized) > .swiper-wrapper {
+    gap: var(--product-media-gap, 12px);
+  }
+
+  .product-media-gallery--desktop-carousel_two_items .product-media-gallery__main:not(.swiper-initialized) .product-media-gallery__slide {
+    flex: 0 0 calc((100% - var(--product-media-gap, 12px)) / 2);
+    height: auto;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .product-media-gallery--mobile-carousel_two_items .product-media-gallery__main:not(.swiper-initialized) {
+    overflow-x: auto;
+  }
+
+  .product-media-gallery--mobile-carousel_two_items .product-media-gallery__main:not(.swiper-initialized) > .swiper-wrapper {
+    gap: var(--product-media-gap-mobile, 10px);
+  }
+
+  .product-media-gallery--mobile-carousel_two_items .product-media-gallery__main:not(.swiper-initialized) .product-media-gallery__slide {
+    flex: 0 0 calc((100% - var(--product-media-gap-mobile, 10px)) / 2);
+    height: auto;
   }
 }

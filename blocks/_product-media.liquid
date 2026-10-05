@@ -15,12 +15,12 @@
   assign selected_media_found = false
 
   assign media_desktop_layout = block.settings.desktop_layout | default: 'left_thumbnails'
-  unless media_desktop_layout == 'left_thumbnails' or media_desktop_layout == 'bottom_thumbnails' or media_desktop_layout == 'grid' or media_desktop_layout == 'stacked' or media_desktop_layout == 'stacked_thumbnails' or media_desktop_layout == 'two_column_grid'
+  unless media_desktop_layout == 'left_thumbnails' or media_desktop_layout == 'bottom_thumbnails' or media_desktop_layout == 'grid' or media_desktop_layout == 'stacked' or media_desktop_layout == 'stacked_thumbnails' or media_desktop_layout == 'two_column_grid' or media_desktop_layout == 'carousel_two_items'
     assign media_desktop_layout = 'left_thumbnails'
   endunless
 
   assign media_mobile_layout = block.settings.mobile_layout | default: 'slider'
-  unless media_mobile_layout == 'thumbnails' or media_mobile_layout == 'slider'
+  unless media_mobile_layout == 'thumbnails' or media_mobile_layout == 'slider' or media_mobile_layout == 'carousel_two_items'
     assign media_mobile_layout = 'slider'
   endunless
 
@@ -30,7 +30,7 @@
   endif
 
   assign media_mobile_show_pagination = true
-  if media_mobile_layout != 'slider' or block.settings.mobile_show_pagination == false
+  if media_mobile_layout == 'thumbnails' or block.settings.mobile_show_pagination == false
     assign media_mobile_show_pagination = false
   endif
 
@@ -85,6 +85,8 @@
       assign media_thumbnail_ratio = '1'
     when 'portrait'
       assign media_thumbnail_ratio = '0.8'
+    when 'ratio_5_4'
+      assign media_thumbnail_ratio = '1.25'
     when 'landscape'
       assign media_thumbnail_ratio = '1.3333'
     when 'wide'
@@ -211,10 +213,10 @@
         <div class="media-gallery__controls swiper-carousel__navigation--show_on_hover{% if media_controls_color_scheme != blank %} color-scheme {{ media_controls_color_scheme }}{% endif %}">
           {% if media_product.media.size > 1 %}
             <button class="media-gallery__navigation media-gallery__navigation--previous product-media-gallery__navigation product-media-gallery__navigation--previous btn btn-secondary btn--secondary btn--icon swiper-nav-button swiper-nav-button--prev" type="button" aria-label="{{ 'products.previous_media' | t | escape }}" data-product-media-previous>
-              {% render 'carousel-navigation-icon', icon: 'chevron', direction: 'previous' %}
+              {% render 'carousel-navigation-icon', icon: 'long_arrow', direction: 'previous' %}
             </button>
             <button class="media-gallery__navigation media-gallery__navigation--next product-media-gallery__navigation product-media-gallery__navigation--next btn btn-secondary btn--secondary btn--icon swiper-nav-button swiper-nav-button--next" type="button" aria-label="{{ 'products.next_media' | t | escape }}" data-product-media-next>
-              {% render 'carousel-navigation-icon', icon: 'chevron', direction: 'next' %}
+              {% render 'carousel-navigation-icon', icon: 'long_arrow', direction: 'next' %}
             </button>
           {% endif %}
         </div>
@@ -301,6 +303,10 @@
         {
           "value": "two_column_grid",
           "label": "t:options.product_media_layout.two_column_grid"
+        },
+        {
+          "value": "carousel_two_items",
+          "label": "t:options.product_media_layout.carousel_two_items"
         }
       ],
       "default": "left_thumbnails"
@@ -331,6 +337,10 @@
         {
           "value": "portrait",
           "label": "t:options.image_ratio.portrait"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "t:options.image_ratio.ratio_5_4"
         },
         {
           "value": "landscape",
@@ -377,6 +387,10 @@
         {
           "value": "slider",
           "label": "t:options.product_media_mobile_layout.slider"
+        },
+        {
+          "value": "carousel_two_items",
+          "label": "t:options.product_media_mobile_layout.carousel_two_items"
         }
       ],
       "default": "slider"
@@ -403,7 +417,24 @@
       "id": "mobile_show_pagination",
       "label": "t:labels.show_pagination",
       "default": true,
-      "visible_if": "{{ block.settings.mobile_layout == 'slider' }}"
+      "visible_if": "{{ block.settings.mobile_layout != 'thumbnails' }}"
+    },
+    {
+      "type": "select",
+      "id": "mobile_pagination_type",
+      "label": "t:labels.type",
+      "options": [
+        {
+          "value": "progress_bar",
+          "label": "t:options.collection_pagination.progress_bar"
+        },
+        {
+          "value": "bullets",
+          "label": "t:options.collection_pagination.bullets"
+        }
+      ],
+      "default": "bullets",
+      "visible_if": "{{ block.settings.mobile_layout != 'thumbnails' and block.settings.mobile_show_pagination }}"
     },
     {
       "type": "checkbox",
@@ -498,23 +529,6 @@
       "step": 1,
       "unit": "px",
       "default": 10
-    },
-    {
-      "type": "select",
-      "id": "mobile_pagination_type",
-      "label": "t:labels.type",
-      "options": [
-        {
-          "value": "progress_bar",
-          "label": "t:options.collection_pagination.progress_bar"
-        },
-        {
-          "value": "bullets",
-          "label": "t:options.collection_pagination.bullets"
-        }
-      ],
-      "default": "bullets",
-      "visible_if": "{{ block.settings.mobile_layout == 'slider' and block.settings.mobile_show_pagination }}"
     }
   ]
 }

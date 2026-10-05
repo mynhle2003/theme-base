@@ -6,7 +6,7 @@
 
 {% liquid
   assign press_item_ratio = block.settings.image_ratio | default: 'original'
-  unless press_item_ratio == 'original' or press_item_ratio == 'square' or press_item_ratio == 'portrait' or press_item_ratio == 'landscape' or press_item_ratio == 'wide'
+  unless press_item_ratio == 'original' or press_item_ratio == 'square' or press_item_ratio == 'portrait' or press_item_ratio == 'ratio_5_4' or press_item_ratio == 'landscape' or press_item_ratio == 'wide'
     assign press_item_ratio = 'original'
   endunless
 
@@ -19,6 +19,8 @@
       assign press_item_ratio_value = '1'
     when 'portrait'
       assign press_item_ratio_value = '0.8'
+    when 'ratio_5_4'
+      assign press_item_ratio_value = '1.25'
     when 'landscape'
       assign press_item_ratio_value = '1.3333'
     when 'wide'
@@ -161,6 +163,10 @@
         {
           "value": "portrait",
           "label": "t:options.image_ratio.portrait"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "t:options.image_ratio.ratio_5_4"
         },
         {
           "value": "landscape",

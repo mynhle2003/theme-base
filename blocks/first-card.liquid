@@ -13,7 +13,7 @@
   assign first_card_alt = first_card_article.title | default: 'Blog post'
 
   assign first_card_ratio_setting = block.settings.ratio | default: 'original'
-  unless first_card_ratio_setting == 'original' or first_card_ratio_setting == 'square' or first_card_ratio_setting == 'portrait' or first_card_ratio_setting == 'landscape' or first_card_ratio_setting == 'wide'
+  unless first_card_ratio_setting == 'original' or first_card_ratio_setting == 'square' or first_card_ratio_setting == 'portrait' or first_card_ratio_setting == 'ratio_5_4' or first_card_ratio_setting == 'landscape' or first_card_ratio_setting == 'wide'
     assign first_card_ratio_setting = 'original'
   endunless
   assign first_card_media_layout = block.settings.media_layout | default: 'horizontal'
@@ -26,6 +26,8 @@
       assign first_card_ratio = '1'
     when 'portrait'
       assign first_card_ratio = '0.8'
+    when 'ratio_5_4'
+      assign first_card_ratio = '1.25'
     when 'landscape'
       assign first_card_ratio = '1.3333'
     when 'wide'
@@ -375,19 +377,23 @@
         },
         {
           "value": "square",
-          "label": "Square"
+          "label": "Square - 1:1"
         },
         {
           "value": "portrait",
-          "label": "Portrait"
+          "label": "Portrait - 4:5"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape - 5:4"
         },
         {
           "value": "landscape",
-          "label": "Landscape"
+          "label": "Landscape - 4:3"
         },
         {
           "value": "wide",
-          "label": "Wide"
+          "label": "Wide - 16:9"
         }
       ],
       "default": "original"
@@ -509,7 +515,7 @@
         },
         {
           "value": "square",
-          "label": "Square"
+          "label": "Square - 1:1"
         },
         {
           "value": "rounded",

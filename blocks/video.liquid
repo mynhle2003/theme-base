@@ -52,6 +52,8 @@
       assign aspect_ratio_desktop = '1'
     when 'portrait'
       assign aspect_ratio_desktop = '0.8'
+    when 'ratio_5_4'
+      assign aspect_ratio_desktop = '1.25'
     when 'landscape'
       assign aspect_ratio_desktop = '1.3333'
     when 'wide'
@@ -86,6 +88,8 @@
       assign aspect_ratio_mobile = '1'
     when 'portrait'
       assign aspect_ratio_mobile = '0.8'
+    when 'ratio_5_4'
+      assign aspect_ratio_mobile = '1.25'
     when 'landscape'
       assign aspect_ratio_mobile = '1.3333'
     when 'wide'
@@ -425,6 +429,10 @@
           "label": "t:options.aspect_ratio.portrait"
         },
         {
+          "value": "ratio_5_4",
+          "label": "t:options.aspect_ratio.ratio_5_4"
+        },
+        {
           "value": "landscape",
           "label": "t:options.aspect_ratio.landscape"
         },
@@ -513,6 +521,10 @@
         {
           "value": "portrait",
           "label": "t:options.aspect_ratio.portrait"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "t:options.aspect_ratio.ratio_5_4"
         },
         {
           "value": "landscape",

@@ -8,6 +8,8 @@
       assign stacked_bands_desktop_ratio = 1
     when 'portrait'
       assign stacked_bands_desktop_ratio = 0.8
+    when 'ratio_5_4'
+      assign stacked_bands_desktop_ratio = 1.25
     when 'landscape'
       assign stacked_bands_desktop_ratio = 1.3333
     when 'wide'
@@ -25,6 +27,8 @@
         assign stacked_bands_mobile_ratio = 1
       when 'portrait'
         assign stacked_bands_mobile_ratio = 0.8
+      when 'ratio_5_4'
+        assign stacked_bands_mobile_ratio = 1.25
       when 'landscape'
         assign stacked_bands_mobile_ratio = 1.3333
       when 'wide'
@@ -266,6 +270,10 @@
           "label": "Portrait - 4:5"
         },
         {
+          "value": "ratio_5_4",
+          "label": "Landscape - 5:4"
+        },
+        {
           "value": "landscape",
           "label": "Landscape - 4:3"
         },
@@ -327,6 +335,10 @@
         {
           "value": "portrait",
           "label": "Portrait - 4:5"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape - 5:4"
         },
         {
           "value": "landscape",

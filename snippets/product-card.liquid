@@ -26,7 +26,7 @@
   endunless
 
   assign card_ratio = settings.product_card_ratio | default: 'natural'
-  unless card_ratio == 'natural' or card_ratio == 'square' or card_ratio == 'portrait' or card_ratio == 'landscape'
+  unless card_ratio == 'natural' or card_ratio == 'square' or card_ratio == 'portrait' or card_ratio == 'ratio_5_4' or card_ratio == 'landscape'
     assign card_ratio = 'natural'
   endunless
 
@@ -135,6 +135,8 @@
       assign image_height = 800
     when 'portrait'
       assign image_height = 1000
+    when 'ratio_5_4'
+      assign image_height = 640
     when 'landscape'
       assign image_height = 600
   endcase

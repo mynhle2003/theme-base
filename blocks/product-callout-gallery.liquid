@@ -47,6 +47,8 @@
       if gallery_ratio < 0.25 or gallery_ratio > 3
         assign gallery_ratio = 16 | divided_by: 9.0
       endif
+    when 'ratio_5_4'
+      assign gallery_ratio = '1.25'
     when '0.8', 'portrait'
       assign gallery_ratio = '0.8'
     else
@@ -412,6 +414,10 @@
         {
           "value": "portrait",
           "label": "t:options.image_ratio.portrait"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "t:options.image_ratio.ratio_5_4"
         },
         {
           "value": "landscape",

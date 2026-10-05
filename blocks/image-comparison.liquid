@@ -51,6 +51,8 @@
       assign comparison_ratio_desktop = 1
     when 'portrait'
       assign comparison_ratio_desktop = 0.8
+    when 'ratio_5_4'
+      assign comparison_ratio_desktop = 1.25
     when 'landscape'
       assign comparison_ratio_desktop = 1.3333
     when 'wide'
@@ -88,6 +90,8 @@
       assign comparison_ratio_mobile = 1
     when 'portrait'
       assign comparison_ratio_mobile = 0.8
+    when 'ratio_5_4'
+      assign comparison_ratio_mobile = 1.25
     when 'landscape'
       assign comparison_ratio_mobile = 1.3333
     when 'wide'
@@ -412,6 +416,10 @@
           "label": "t:options.image_ratio.portrait"
         },
         {
+          "value": "ratio_5_4",
+          "label": "t:options.image_ratio.ratio_5_4"
+        },
+        {
           "value": "landscape",
           "label": "t:options.image_ratio.landscape"
         },
@@ -456,6 +464,10 @@
         {
           "value": "portrait",
           "label": "t:options.image_ratio.portrait"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "t:options.image_ratio.ratio_5_4"
         },
         {
           "value": "landscape",

@@ -18,7 +18,7 @@
   endcapture
   assign image_ratio_desktop = image_ratio_desktop | strip
   assign image_height_desktop = 'auto'
-  if image_ratio_desktop_setting == 'square' or image_ratio_desktop_setting == 'portrait' or image_ratio_desktop_setting == 'landscape' or image_ratio_desktop_setting == 'wide' or image_ratio_desktop_setting == 'custom'
+  if image_ratio_desktop_setting == 'square' or image_ratio_desktop_setting == 'portrait' or image_ratio_desktop_setting == 'ratio_5_4' or image_ratio_desktop_setting == 'landscape' or image_ratio_desktop_setting == 'wide' or image_ratio_desktop_setting == 'custom'
     assign image_height_desktop = '100%'
   endif
 
@@ -28,7 +28,7 @@
   endcapture
   assign image_ratio_mobile = image_ratio_mobile | strip
   assign image_height_mobile = 'auto'
-  if image_ratio_mobile_setting == 'square' or image_ratio_mobile_setting == 'portrait' or image_ratio_mobile_setting == 'landscape' or image_ratio_mobile_setting == 'wide' or image_ratio_mobile_setting == 'custom'
+  if image_ratio_mobile_setting == 'square' or image_ratio_mobile_setting == 'portrait' or image_ratio_mobile_setting == 'ratio_5_4' or image_ratio_mobile_setting == 'landscape' or image_ratio_mobile_setting == 'wide' or image_ratio_mobile_setting == 'custom'
     assign image_height_mobile = '100%'
   endif
 
@@ -307,6 +307,10 @@
           "label": "t:options.image_ratio.portrait"
         },
         {
+          "value": "ratio_5_4",
+          "label": "t:options.image_ratio.ratio_5_4"
+        },
+        {
           "value": "landscape",
           "label": "t:options.image_ratio.landscape"
         },
@@ -402,6 +406,10 @@
         {
           "value": "portrait",
           "label": "t:options.image_ratio.portrait"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "t:options.image_ratio.ratio_5_4"
         },
         {
           "value": "landscape",

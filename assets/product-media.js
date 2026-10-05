@@ -157,11 +157,20 @@ class ProductMediaGallery extends HTMLElement {
   get galleryMode() {
     if (this.mobileQuery.matches) return 'mobile';
     if (this.dataset.overlayPresentation === 'quick-add-strip') return 'quick-add-strip';
+    if (this.dataset.desktopLayout === 'carousel_two_items') return 'desktop-carousel-two-items';
     if (!['left_thumbnails', 'bottom_thumbnails'].includes(this.dataset.desktopLayout)) return 'desktop-static';
 
     const useLeftThumbnails = this.dataset.desktopLayout === 'left_thumbnails'
       && (this.desktopLeftThumbnailQuery?.matches ?? true);
     return useLeftThumbnails ? 'desktop-carousel-left' : 'desktop-carousel-bottom';
+  }
+
+  get isTwoItemCarousel() {
+    return (this.mobileQuery?.matches ? this.dataset.mobileLayout : this.dataset.desktopLayout) === 'carousel_two_items';
+  }
+
+  get gallerySlidesPerView() {
+    return this.isTwoItemCarousel ? Math.min(2, Math.max(1, this.visibleSlides().length)) : 1;
   }
 
   get quickAddStripSlidesPerView() {
@@ -225,7 +234,7 @@ class ProductMediaGallery extends HTMLElement {
     const pagination = this.querySelector('[data-product-media-pagination]');
     if (!pagination) return;
 
-    const hasOverflow = this.visibleSlides().length > 1;
+    const hasOverflow = this.visibleSlides().length > this.gallerySlidesPerView;
     pagination.toggleAttribute('hidden', !(shouldShow && hasOverflow));
   }
 
@@ -273,9 +282,8 @@ class ProductMediaGallery extends HTMLElement {
 
     if (this.mainSwiper && this.activeGalleryMode === mode) {
       this.syncQuickAddStripSlidesPerView();
-      if (mode === 'quick-add-strip') {
-        this.mainSwiper.params.slidesPerView = this.quickAddStripSlidesPerView;
-      }
+      this.mainSwiper.params.slidesPerView = mode === 'quick-add-strip'
+        ? this.quickAddStripSlidesPerView : this.gallerySlidesPerView;
       this.thumbnailSwiper?.update();
       this.mainSwiper.update();
       if (preferredMediaId) this.showMedia(preferredMediaId, instant);
@@ -286,9 +294,9 @@ class ProductMediaGallery extends HTMLElement {
     this.activeGalleryMode = mode;
     const isMobile = mode === 'mobile';
     const isQuickAddStrip = mode === 'quick-add-strip';
-    const showThumbnails = (!isMobile && !isQuickAddStrip) || this.dataset.mobileLayout === 'thumbnails';
-    const showPagination = isMobile && this.dataset.mobileLayout === 'slider' && this.dataset.mobileShowPagination === 'true';
-    const slidesPerView = isQuickAddStrip ? this.quickAddStripSlidesPerView : 1;
+    const showThumbnails = (!isMobile && !isQuickAddStrip && !this.isTwoItemCarousel) || (isMobile && this.dataset.mobileLayout === 'thumbnails');
+    const showPagination = isMobile && ['slider', 'carousel_two_items'].includes(this.dataset.mobileLayout) && this.dataset.mobileShowPagination === 'true';
+    const slidesPerView = isQuickAddStrip ? this.quickAddStripSlidesPerView : this.gallerySlidesPerView;
     this.syncPaginationVisibility(showPagination);
     this.syncQuickAddStripSlidesPerView();
     const gapProperty = isMobile ? '--product-media-gap-mobile' : '--product-media-gap';
@@ -975,7 +983,7 @@ class ProductMediaGallery extends HTMLElement {
 
   syncGalleryOverflow() {
     const visibleMediaCount = this.visibleSlides().length;
-    const hasOverflow = visibleMediaCount > 1;
+    const hasOverflow = visibleMediaCount > (this.isTwoItemCarousel ? this.gallerySlidesPerView : 1);
     this.dataset.visibleMediaCount = String(visibleMediaCount);
     this.syncQuickAddStripSlidesPerView();
     this.classList.toggle('product-media-gallery--single-media', !hasOverflow);
@@ -983,7 +991,7 @@ class ProductMediaGallery extends HTMLElement {
     this.querySelector('.media-thumbnails__carousel')?.toggleAttribute('hidden', !hasOverflow);
     this.querySelector('.media-gallery__controls')?.toggleAttribute('hidden', !hasOverflow);
     const showPagination = Boolean(this.mobileQuery?.matches)
-      && this.dataset.mobileLayout === 'slider'
+      && ['slider', 'carousel_two_items'].includes(this.dataset.mobileLayout)
       && this.dataset.mobileShowPagination === 'true';
     this.syncPaginationVisibility(showPagination);
   }
