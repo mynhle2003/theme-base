@@ -44,18 +44,32 @@
   "name": "Divider",
   "tag": "section",
   "enabled_on": {
-    "templates": ["collection"]
+    "templates": [
+      "collection"
+    ]
   },
   "settings": [
-    { "type": "header", "content": "Layout" },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
     {
       "type": "select",
       "id": "width",
       "label": "Width",
       "options": [
-        { "value": "page", "label": "Page" },
-        { "value": "full", "label": "Full" },
-        { "value": "full_bleed", "label": "Full (no padding)" }
+        {
+          "value": "page",
+          "label": "Page"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        },
+        {
+          "value": "full_bleed",
+          "label": "Full (no padding)"
+        }
       ],
       "default": "full_bleed"
     },
@@ -74,9 +88,18 @@
       "id": "length",
       "label": "Length",
       "options": [
-        { "value": "fill", "label": "Fill" },
-        { "value": "max", "label": "Max length" },
-        { "value": "custom", "label": "Custom" }
+        {
+          "value": "fill",
+          "label": "Fill"
+        },
+        {
+          "value": "max",
+          "label": "Max length"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
       ],
       "default": "fill"
     },
@@ -91,7 +114,10 @@
       "default": 50,
       "visible_if": "{{ section.settings.length == 'custom' }}"
     },
-    { "type": "header", "content": "Appearance" },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
     {
       "type": "color_scheme",
       "id": "color_scheme",
@@ -103,8 +129,14 @@
       "id": "border_type",
       "label": "Border type",
       "options": [
-        { "value": "inherit", "label": "Inherit" },
-        { "value": "custom", "label": "Custom" }
+        {
+          "value": "inherit",
+          "label": "Inherit"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
       ],
       "default": "inherit"
     },
@@ -115,7 +147,10 @@
       "label": "Border color",
       "visible_if": "{{ section.settings.border_type == 'custom' }}"
     },
-    { "type": "header", "content": "Section padding" },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
     {
       "type": "range",
       "id": "padding_top",
@@ -165,6 +200,10 @@
       "visible_if": "{{ section.settings.customize_mobile_padding }}"
     }
   ],
-  "presets": [{ "name": "Divider" }]
+  "presets": [
+    {
+      "name": "Divider"
+    }
+  ]
 }
 {% endschema %}

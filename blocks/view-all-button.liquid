@@ -119,23 +119,57 @@
   "name": "t:general.view_all_button",
   "tag": null,
   "settings": [
-    { "type": "header", "content": "t:general.content" },
-    { "type": "text", "id": "button_label", "label": "t:labels.button_label", "default": "View all" },
-    { "type": "url", "id": "button_link", "label": "t:labels.link" },
-    { "type": "checkbox", "id": "button_open_in_new_tab", "label": "t:labels.open_in_new_tab", "default": false },
-    { "type": "header", "content": "t:labels.desktop" },
+    {
+      "type": "header",
+      "content": "t:general.content"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:labels.button_label",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:labels.link"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_open_in_new_tab",
+      "label": "t:labels.open_in_new_tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:labels.desktop"
+    },
     {
       "type": "select",
       "id": "button_style",
       "label": "t:labels.style",
       "options": [
-        { "value": "solid", "label": "Solid" },
-        { "value": "outline", "label": "t:options.button_variant.outline" },
-        { "value": "text", "label": "t:options.button_style.text" }
+        {
+          "value": "solid",
+          "label": "Solid"
+        },
+        {
+          "value": "outline",
+          "label": "t:options.button_variant.outline"
+        },
+        {
+          "value": "text",
+          "label": "t:options.button_style.text"
+        }
       ],
       "default": "text"
     },
-    { "type": "checkbox", "id": "show_icon", "label": "t:labels.show_icon", "default": false },
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "t:labels.show_icon",
+      "default": false
+    },
     {
       "type": "select",
       "id": "icon",
@@ -211,8 +245,14 @@
       "id": "icon_size",
       "label": "t:labels.icon_size",
       "options": [
-        { "value": "inherit", "label": "t:options.icon_size.inherit" },
-        { "value": "custom", "label": "t:options.icon_size.custom" }
+        {
+          "value": "inherit",
+          "label": "t:options.icon_size.inherit"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.icon_size.custom"
+        }
       ],
       "default": "inherit",
       "visible_if": "{{ block.settings.show_icon or block.settings.show_icon_mobile }}"
@@ -228,15 +268,27 @@
       "default": 20,
       "visible_if": "{{ block.settings.icon_size == 'custom' and block.settings.show_icon or block.settings.show_icon_mobile }}"
     },
-    { "type": "header", "content": "t:labels.mobile" },
+    {
+      "type": "header",
+      "content": "t:labels.mobile"
+    },
     {
       "type": "select",
       "id": "button_style_mobile",
       "label": "t:labels.style",
       "options": [
-        { "value": "solid", "label": "Solid" },
-        { "value": "outline", "label": "t:options.button_variant.outline" },
-        { "value": "text", "label": "t:options.button_style.text" }
+        {
+          "value": "solid",
+          "label": "Solid"
+        },
+        {
+          "value": "outline",
+          "label": "t:options.button_variant.outline"
+        },
+        {
+          "value": "text",
+          "label": "t:options.button_style.text"
+        }
       ],
       "default": "outline"
     },
@@ -245,15 +297,37 @@
       "id": "button_height_mobile",
       "label": "Height",
       "options": [
-        { "value": "inherit", "label": "t:options.icon_size.inherit" },
-        { "value": "small", "label": "Small" },
-        { "value": "medium", "label": "Medium" },
-        { "value": "large", "label": "Large" }
+        {
+          "value": "inherit",
+          "label": "t:options.icon_size.inherit"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
       ],
       "default": "inherit"
     },
-    { "type": "checkbox", "id": "full_width_mobile", "label": "t:labels.full_width", "default": true },
-    { "type": "checkbox", "id": "show_icon_mobile", "label": "t:labels.show_icon", "default": false }
+    {
+      "type": "checkbox",
+      "id": "full_width_mobile",
+      "label": "t:labels.full_width",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon_mobile",
+      "label": "t:labels.show_icon",
+      "default": false
+    }
   ]
 }
 {% endschema %}

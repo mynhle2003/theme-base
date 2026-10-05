@@ -74,10 +74,18 @@
   "name": "Image text card grid",
   "class": "section-image-text-card-grid",
   "tag": "section",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "group" },
-    { "type": "carousel" }
+    {
+      "type": "group"
+    },
+    {
+      "type": "carousel"
+    }
   ],
   "settings": [
     {
@@ -85,34 +93,151 @@
       "id": "section_width",
       "label": "Section width",
       "options": [
-        { "value": "page_width", "label": "Page width" },
-        { "value": "full_width", "label": "Full width" },
-        { "value": "full_width_no_padding", "label": "Full width, no padding" }
+        {
+          "value": "page_width",
+          "label": "Page width"
+        },
+        {
+          "value": "full_width",
+          "label": "Full width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "Full width, no padding"
+        }
       ],
       "default": "page_width"
     },
-    { "type": "text_alignment", "id": "alignment", "label": "Alignment", "default": "center" },
-    { "type": "range", "id": "content_gap_desktop", "label": "Content gap (desktop)", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 40 },
-    { "type": "range", "id": "content_gap_mobile", "label": "Content gap (mobile)", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 32 },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "content_gap_desktop",
+      "label": "Content gap (desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "content_gap_mobile",
+      "label": "Content gap (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
     {
       "type": "header",
       "content": "Color"
     },
-    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
-    ,
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
     {
       "type": "header",
       "content": "Padding"
     },
-    { "type": "range", "id": "padding_top", "label": "Top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 64 },
-    { "type": "range", "id": "padding_right", "label": "Right", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 64 },
-    { "type": "range", "id": "padding_left", "label": "Left", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "checkbox", "id": "customize_mobile_padding", "label": "Customize mobile padding", "default": true },
-    { "type": "range", "id": "padding_top_mobile", "label": "Mobile top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 40, "visible_if": "{{ section.settings.customize_mobile_padding }}" },
-    { "type": "range", "id": "padding_right_mobile", "label": "Mobile right", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.customize_mobile_padding }}" },
-    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 40, "visible_if": "{{ section.settings.customize_mobile_padding }}" },
-    { "type": "range", "id": "padding_left_mobile", "label": "Mobile left", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.customize_mobile_padding }}" }
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "Customize mobile padding",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_right_mobile",
+      "label": "Mobile right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_left_mobile",
+      "label": "Mobile left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    }
   ],
   "presets": [
     {
@@ -134,18 +259,62 @@
             "shadow": "none"
           },
           "blocks": [
-            { "type": "eyebrow", "settings": { "text": "<p>Section tags</p>" } },
-            { "type": "heading", "settings": { "text": "<p>Main Heading Text Placeholder</p>", "heading_size": "lg", "html_tag": "h2" } }
+            {
+              "type": "eyebrow",
+              "settings": {
+                "text": "<p>Section tags</p>"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Main Heading Text Placeholder</p>",
+                "heading_size": "lg",
+                "html_tag": "h2"
+              }
+            }
           ]
         },
         {
           "type": "carousel",
-          "settings": { "columns_desktop": "4", "columns_mobile": "1", "gap_desktop": 32, "gap_mobile": 24, "show_navigation_on_desktop": true, "show_pagination_on_desktop": false, "show_pagination_on_mobile": false },
+          "settings": {
+            "columns_desktop": "4",
+            "columns_mobile": "1",
+            "gap_desktop": 32,
+            "gap_mobile": 24,
+            "show_navigation_on_desktop": true,
+            "show_pagination_on_desktop": false,
+            "show_pagination_on_mobile": false
+          },
           "blocks": [
-            { "type": "image-text-card-grid-item", "settings": { "heading": "<p>Main Category</p>", "content": "<p>This is a placeholder description for a card. Add supporting content here.</p>" } },
-            { "type": "image-text-card-grid-item", "settings": { "heading": "<p>Main Category</p>", "content": "<p>This is a placeholder description for a card. Add supporting content here.</p>" } },
-            { "type": "image-text-card-grid-item", "settings": { "heading": "<p>Main Category</p>", "content": "<p>This is a placeholder description for a card. Add supporting content here.</p>" } },
-            { "type": "image-text-card-grid-item", "settings": { "heading": "<p>Main Category</p>", "content": "<p>This is a placeholder description for a card. Add supporting content here.</p>" } }
+            {
+              "type": "image-text-card-grid-item",
+              "settings": {
+                "heading": "<p>Main Category</p>",
+                "content": "<p>This is a placeholder description for a card. Add supporting content here.</p>"
+              }
+            },
+            {
+              "type": "image-text-card-grid-item",
+              "settings": {
+                "heading": "<p>Main Category</p>",
+                "content": "<p>This is a placeholder description for a card. Add supporting content here.</p>"
+              }
+            },
+            {
+              "type": "image-text-card-grid-item",
+              "settings": {
+                "heading": "<p>Main Category</p>",
+                "content": "<p>This is a placeholder description for a card. Add supporting content here.</p>"
+              }
+            },
+            {
+              "type": "image-text-card-grid-item",
+              "settings": {
+                "heading": "<p>Main Category</p>",
+                "content": "<p>This is a placeholder description for a card. Add supporting content here.</p>"
+              }
+            }
           ]
         }
       ]

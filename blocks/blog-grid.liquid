@@ -168,8 +168,12 @@
   "name": "Blog grid",
   "tag": null,
   "blocks": [
-    { "type": "first-card" },
-    { "type": "blog-card" }
+    {
+      "type": "first-card"
+    },
+    {
+      "type": "blog-card"
+    }
   ],
   "settings": [
     {
@@ -192,8 +196,14 @@
       "id": "layout",
       "label": "Layout",
       "options": [
-        { "value": "horizontal", "label": "Horizontal" },
-        { "value": "vertical", "label": "Vertical" }
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        }
       ],
       "default": "horizontal"
     },
@@ -220,11 +230,26 @@
       "id": "desktop_columns",
       "label": "t:labels.desktop_columns",
       "options": [
-        { "value": "2", "label": "2" },
-        { "value": "3", "label": "3" },
-        { "value": "4", "label": "4" },
-        { "value": "5", "label": "5" },
-        { "value": "6", "label": "6" }
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        }
       ],
       "default": "2",
       "visible_if": "{{ block.settings.layout == 'vertical' }}"
@@ -234,8 +259,14 @@
       "id": "mobile_columns",
       "label": "t:labels.mobile_columns",
       "options": [
-        { "value": "1", "label": "1" },
-        { "value": "2", "label": "2" }
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
       ],
       "default": "1",
       "visible_if": "{{ block.settings.layout == 'vertical' }}"

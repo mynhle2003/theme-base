@@ -533,7 +533,11 @@
 {
   "name": "Search",
   "class": "section-search-overlay",
-  "enabled_on": { "groups": ["custom.overlay"] },
+  "enabled_on": {
+    "groups": [
+      "custom.overlay"
+    ]
+  },
   "settings": [
     {
       "type": "header",
@@ -544,8 +548,14 @@
       "id": "appearance_type",
       "label": "t:labels.type",
       "options": [
-        { "value": "inherit", "label": "t:options.appearance_type.inherit" },
-        { "value": "scheme", "label": "t:options.appearance_type.scheme" }
+        {
+          "value": "inherit",
+          "label": "t:options.appearance_type.inherit"
+        },
+        {
+          "value": "scheme",
+          "label": "t:options.appearance_type.scheme"
+        }
       ],
       "default": "inherit"
     },
@@ -601,13 +611,26 @@
       "id": "view_all_style",
       "label": "t:labels.view_all_style",
       "options": [
-        { "value": "primary", "label": "t:options.button_variant.primary" },
-        { "value": "secondary", "label": "t:options.button_variant.secondary" },
-        { "value": "tertiary", "label": "t:options.button_variant.tertiary" }
+        {
+          "value": "primary",
+          "label": "t:options.button_variant.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.button_variant.secondary"
+        },
+        {
+          "value": "tertiary",
+          "label": "t:options.button_variant.tertiary"
+        }
       ],
       "default": "primary"
     }
   ],
-  "presets": [{ "name": "Search" }]
+  "presets": [
+    {
+      "name": "Search"
+    }
+  ]
 }
 {% endschema %}

@@ -58,29 +58,128 @@
   "name": "Blog post",
   "tag": "div",
   "class": "article-posts-section",
-  "enabled_on": { "templates": ["article"] },
+  "enabled_on": {
+    "templates": [
+      "article"
+    ]
+  },
   "blocks": [
-    { "type": "blog-meta" },
-    { "type": "featured-image" },
-    { "type": "content" },
-    { "type": "tags-and-sharing" },
-    { "type": "divider" },
-    { "type": "previous-and-next-posts" },
-    { "type": "comments" }
+    {
+      "type": "blog-meta"
+    },
+    {
+      "type": "featured-image"
+    },
+    {
+      "type": "content"
+    },
+    {
+      "type": "tags-and-sharing"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "previous-and-next-posts"
+    },
+    {
+      "type": "comments"
+    }
   ],
   "max_blocks": 7,
   "settings": [
-    { "type": "range", "id": "max_width", "label": "Max width", "min": 400, "max": 1600, "step": 20, "unit": "px", "default": 1280 },
-    { "type": "header", "content": "Gap" },
-    { "type": "range", "id": "gap_desktop", "label": "Desktop", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 50 },
-    { "type": "range", "id": "gap_mobile", "label": "Mobile", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 30 },
-    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
-    { "type": "header", "content": "Padding" },
-    { "type": "range", "id": "padding_top", "label": "Top", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 100 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 120 },
-    { "type": "checkbox", "id": "custom_mobile_padding", "label": "Custom for mobile", "default": false },
-    { "type": "range", "id": "padding_top_mobile", "label": "Top (mobile)", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 50, "visible_if": "{{ section.settings.custom_mobile_padding }}" },
-    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom (mobile)", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 60, "visible_if": "{{ section.settings.custom_mobile_padding }}" }
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 400,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1280
+    },
+    {
+      "type": "header",
+      "content": "Gap"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_padding",
+      "label": "Custom for mobile",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top (mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.custom_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom (mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 60,
+      "visible_if": "{{ section.settings.custom_mobile_padding }}"
+    }
   ]
 }
 {% endschema %}

@@ -72,15 +72,193 @@
 {
   "name": "Accordion row",
   "tag": null,
-  "blocks": [{ "type": "faq_answer_text" }],
+  "blocks": [
+    {
+      "type": "faq_answer_text"
+    }
+  ],
   "settings": [
-    { "type": "header", "content": "Question" },
-    { "type": "text", "id": "question", "label": "Question", "default": "Frequently asked question" },
-    { "type": "checkbox", "id": "show_question_icon", "label": "Show icon", "default": false },
-    { "type": "select", "id": "question_icon", "label": "Icon", "options": [{ "value": "arrow", "label": "Arrow" }, { "value": "arrow-left", "label": "Arrow left" }, { "value": "arrow-right", "label": "Arrow right" }, { "value": "bars-3", "label": "Menu" }, { "value": "chevron", "label": "Chevron" }, { "value": "chevron-down", "label": "Chevron down" }, { "value": "chevron-left", "label": "Chevron left" }, { "value": "chevron-right", "label": "Chevron right" }, { "value": "x-mark", "label": "Close" }, { "value": "magnifying-glass", "label": "Search" }, { "value": "shopping-bag", "label": "Shopping bag" }, { "value": "cart", "label": "Cart" }, { "value": "user", "label": "Account" }, { "value": "truck", "label": "Shipping" }, { "value": "tag", "label": "Tag" }, { "value": "discount", "label": "Discount" }, { "value": "trash", "label": "Trash" }, { "value": "document-text", "label": "Document" }, { "value": "receipt-percent", "label": "Receipt" }, { "value": "share", "label": "Share" }, { "value": "play", "label": "Play" }, { "value": "pause", "label": "Pause" }, { "value": "plus", "label": "Plus" }, { "value": "minus", "label": "Minus" }, { "value": "check", "label": "Check" }, { "value": "circle", "label": "Circle" }, { "value": "square", "label": "Square" }, { "value": "triangle", "label": "Triangle" }, { "value": "diamond", "label": "Diamond" }, { "value": "star", "label": "Star" }, { "value": "four-stars", "label": "Four stars" }, { "value": "five-stars", "label": "Five stars" }], "default": "check", "visible_if": "{{ block.settings.show_question_icon }}" },
-    { "type": "range", "id": "question_icon_gap", "label": "Gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 8, "visible_if": "{{ block.settings.show_question_icon }}" },
-    { "type": "range", "id": "question_icon_size", "label": "Icon size", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 20, "visible_if": "{{ block.settings.show_question_icon }}" },
-    { "type": "checkbox", "id": "initially_open", "label": "t:labels.initially_open", "default": false }
+    {
+      "type": "header",
+      "content": "Question"
+    },
+    {
+      "type": "text",
+      "id": "question",
+      "label": "Question",
+      "default": "Frequently asked question"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_question_icon",
+      "label": "Show icon",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "question_icon",
+      "label": "Icon",
+      "options": [
+        {
+          "value": "arrow",
+          "label": "Arrow"
+        },
+        {
+          "value": "arrow-left",
+          "label": "Arrow left"
+        },
+        {
+          "value": "arrow-right",
+          "label": "Arrow right"
+        },
+        {
+          "value": "bars-3",
+          "label": "Menu"
+        },
+        {
+          "value": "chevron",
+          "label": "Chevron"
+        },
+        {
+          "value": "chevron-down",
+          "label": "Chevron down"
+        },
+        {
+          "value": "chevron-left",
+          "label": "Chevron left"
+        },
+        {
+          "value": "chevron-right",
+          "label": "Chevron right"
+        },
+        {
+          "value": "x-mark",
+          "label": "Close"
+        },
+        {
+          "value": "magnifying-glass",
+          "label": "Search"
+        },
+        {
+          "value": "shopping-bag",
+          "label": "Shopping bag"
+        },
+        {
+          "value": "cart",
+          "label": "Cart"
+        },
+        {
+          "value": "user",
+          "label": "Account"
+        },
+        {
+          "value": "truck",
+          "label": "Shipping"
+        },
+        {
+          "value": "tag",
+          "label": "Tag"
+        },
+        {
+          "value": "discount",
+          "label": "Discount"
+        },
+        {
+          "value": "trash",
+          "label": "Trash"
+        },
+        {
+          "value": "document-text",
+          "label": "Document"
+        },
+        {
+          "value": "receipt-percent",
+          "label": "Receipt"
+        },
+        {
+          "value": "share",
+          "label": "Share"
+        },
+        {
+          "value": "play",
+          "label": "Play"
+        },
+        {
+          "value": "pause",
+          "label": "Pause"
+        },
+        {
+          "value": "plus",
+          "label": "Plus"
+        },
+        {
+          "value": "minus",
+          "label": "Minus"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        },
+        {
+          "value": "circle",
+          "label": "Circle"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "triangle",
+          "label": "Triangle"
+        },
+        {
+          "value": "diamond",
+          "label": "Diamond"
+        },
+        {
+          "value": "star",
+          "label": "Star"
+        },
+        {
+          "value": "four-stars",
+          "label": "Four stars"
+        },
+        {
+          "value": "five-stars",
+          "label": "Five stars"
+        }
+      ],
+      "default": "check",
+      "visible_if": "{{ block.settings.show_question_icon }}"
+    },
+    {
+      "type": "range",
+      "id": "question_icon_gap",
+      "label": "Gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8,
+      "visible_if": "{{ block.settings.show_question_icon }}"
+    },
+    {
+      "type": "range",
+      "id": "question_icon_size",
+      "label": "Icon size",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20,
+      "visible_if": "{{ block.settings.show_question_icon }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "initially_open",
+      "label": "t:labels.initially_open",
+      "default": false
+    }
   ],
   "presets": [
     {

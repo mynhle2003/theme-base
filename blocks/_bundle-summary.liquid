@@ -305,9 +305,11 @@
 
         {% render 'theme-button',
           label: bundle_add_bundle_label,
+          aria_label: bundle_add_bundle_label,
           variant: 'primary',
           class: 'bundle-summary__submit',
           disabled: true,
+          loading_dots: true,
           attributes: 'data-bundle-submit'
         %}
       </div>
@@ -986,55 +988,372 @@
   "name": "Bundle summary",
   "tag": null,
   "settings": [
-    { "type": "header", "content": "Heading" },
-    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Your bundle" },
-    { "type": "header", "content": "Message" },
-    { "type": "inline_richtext", "id": "initial_message", "label": "Initial message", "default": "Add [x] more items to unlock [label]!", "info": "Use [x] for the remaining amount or quantity needed to reach the next goal, and [label] for the upcoming goal label." },
-    { "type": "inline_richtext", "id": "unlocked_message", "label": "Reward unlocked message", "default": "🎉 Your offer is unlocked!" },
-    { "type": "select", "id": "progress_font_size", "label": "t:labels.font_size", "options": [{ "value": "xs", "label": "t:options.text_size.xs" }, { "value": "sm", "label": "t:options.text_size.sm" }, { "value": "md", "label": "t:options.text_size.md" }, { "value": "lg", "label": "t:options.text_size.lg" }, { "value": "xl", "label": "t:options.text_size.xl" }, { "value": "xxl", "label": "t:options.text_size.xxl" }], "default": "md" },
-    { "type": "color", "id": "progress_color", "label": "Progress bar color", "default": "#32A84C" },
-    { "type": "header", "content": "Discount settings" },
-    { "type": "paragraph", "content": "Enter the exact value you configured in Discounts in the Shopify admin. [Learn more](https://help.shopify.com/en/manual/products/bundles/shopify-bundles#product-bundles-and-discounts)." },
-    { "type": "text", "id": "discount_label", "label": "Label", "default": "10% off" },
-    { "type": "select", "id": "discount_type", "label": "Discount type", "options": [{ "value": "amount_off_order", "label": "Amount off order" }, { "value": "amount_off_products", "label": "Amount off products" }], "default": "amount_off_order" },
-    { "type": "select", "id": "discount_method", "label": "Discount method", "options": [{ "value": "percentage", "label": "Percentage" }, { "value": "amount", "label": "Fixed amount" }], "default": "percentage" },
-    { "type": "range", "id": "discount_percentage", "label": "Discount percentage", "min": 1, "max": 100, "step": 1, "unit": "%", "default": 10, "visible_if": "{{ block.settings.discount_method == 'percentage' }}" },
-    { "type": "number", "id": "discount_amount", "label": "Discount amount", "default": 10, "visible_if": "{{ block.settings.discount_method == 'amount' }}" },
-    { "type": "checkbox", "id": "only_apply_discount_once_per_order", "label": "Only apply discount once per order", "default": false, "visible_if": "{{ block.settings.discount_type == 'amount_off_products' or block.settings.tier_2_discount_type == 'amount_off_products' or block.settings.tier_3_discount_type == 'amount_off_products' }}" },
-    { "type": "select", "id": "minimum_requirement", "label": "Minimum requirement", "options": [{ "value": "quantity", "label": "Quantity of items" }, { "value": "amount", "label": "Purchase amount" }], "default": "quantity" },
-    { "type": "range", "id": "minimum_quantity", "label": "Minimum quantity of items", "min": 2, "max": 10, "step": 1, "default": 3, "visible_if": "{{ block.settings.minimum_requirement == 'quantity' }}" },
-    { "type": "number", "id": "minimum_amount", "label": "Minimum purchase amount", "default": 50, "visible_if": "{{ block.settings.minimum_requirement == 'amount' }}" },
-    { "type": "header", "content": "Tier 2" },
-    { "type": "checkbox", "id": "enable_tier_2", "label": "Enable tier 2", "default": false },
-    { "type": "text", "id": "tier_2_label", "label": "Label", "default": "15% off", "visible_if": "{{ block.settings.enable_tier_2 }}" },
-    { "type": "select", "id": "tier_2_discount_type", "label": "Discount type", "options": [{ "value": "amount_off_order", "label": "Amount off order" }, { "value": "amount_off_products", "label": "Amount off products" }], "default": "amount_off_order", "visible_if": "{{ block.settings.enable_tier_2 }}" },
-    { "type": "range", "id": "tier_2_discount_percentage", "label": "Discount percentage", "min": 1, "max": 100, "step": 1, "unit": "%", "default": 15, "visible_if": "{{ block.settings.enable_tier_2 and block.settings.discount_method == 'percentage' }}" },
-    { "type": "number", "id": "tier_2_discount_amount", "label": "Discount amount", "default": 15, "visible_if": "{{ block.settings.enable_tier_2 and block.settings.discount_method == 'amount' }}" },
-    { "type": "range", "id": "tier_2_minimum_quantity", "label": "Minimum quantity of items", "min": 3, "max": 10, "step": 1, "default": 5, "visible_if": "{{ block.settings.enable_tier_2 and block.settings.minimum_requirement == 'quantity' }}" },
-    { "type": "number", "id": "tier_2_minimum_amount", "label": "Minimum purchase amount", "default": 75, "visible_if": "{{ block.settings.enable_tier_2 and block.settings.minimum_requirement == 'amount' }}" },
-    { "type": "header", "content": "Tier 3" },
-    { "type": "checkbox", "id": "enable_tier_3", "label": "Enable tier 3", "default": false },
-    { "type": "text", "id": "tier_3_label", "label": "Label", "default": "20% off", "visible_if": "{{ block.settings.enable_tier_3 }}" },
-    { "type": "select", "id": "tier_3_discount_type", "label": "Discount type", "options": [{ "value": "amount_off_order", "label": "Amount off order" }, { "value": "amount_off_products", "label": "Amount off products" }], "default": "amount_off_order", "visible_if": "{{ block.settings.enable_tier_3 }}" },
-    { "type": "range", "id": "tier_3_discount_percentage", "label": "Discount percentage", "min": 1, "max": 100, "step": 1, "unit": "%", "default": 20, "visible_if": "{{ block.settings.enable_tier_3 and block.settings.discount_method == 'percentage' }}" },
-    { "type": "number", "id": "tier_3_discount_amount", "label": "Discount amount", "default": 20, "visible_if": "{{ block.settings.enable_tier_3 and block.settings.discount_method == 'amount' }}" },
-    { "type": "range", "id": "tier_3_minimum_quantity", "label": "Minimum quantity of items", "min": 4, "max": 10, "step": 1, "default": 7, "visible_if": "{{ block.settings.enable_tier_3 and block.settings.minimum_requirement == 'quantity' }}" },
-    { "type": "number", "id": "tier_3_minimum_amount", "label": "Minimum purchase amount", "default": 100, "visible_if": "{{ block.settings.enable_tier_3 and block.settings.minimum_requirement == 'amount' }}" },
-    { "type": "header", "content": "Bundle items" },
-    { "type": "checkbox", "id": "show_quantity_selector", "label": "Show quantity selector", "default": true },
-    { "type": "header", "content": "Gap" },
-    { "type": "range", "id": "gap_desktop", "label": "Desktop", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 28 },
-    { "type": "range", "id": "gap_mobile", "label": "Mobile", "min": 10, "max": 48, "step": 1, "unit": "px", "default": 16 },
-    { "type": "header", "content": "t:general.border" },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your bundle"
+    },
+    {
+      "type": "header",
+      "content": "Message"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "initial_message",
+      "label": "Initial message",
+      "default": "Add [x] more items to unlock [label]!",
+      "info": "Use [x] for the remaining amount or quantity needed to reach the next goal, and [label] for the upcoming goal label."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "unlocked_message",
+      "label": "Reward unlocked message",
+      "default": "🎉 Your offer is unlocked!"
+    },
+    {
+      "type": "select",
+      "id": "progress_font_size",
+      "label": "t:labels.font_size",
+      "options": [
+        {
+          "value": "xs",
+          "label": "t:options.text_size.xs"
+        },
+        {
+          "value": "sm",
+          "label": "t:options.text_size.sm"
+        },
+        {
+          "value": "md",
+          "label": "t:options.text_size.md"
+        },
+        {
+          "value": "lg",
+          "label": "t:options.text_size.lg"
+        },
+        {
+          "value": "xl",
+          "label": "t:options.text_size.xl"
+        },
+        {
+          "value": "xxl",
+          "label": "t:options.text_size.xxl"
+        }
+      ],
+      "default": "md"
+    },
+    {
+      "type": "color",
+      "id": "progress_color",
+      "label": "Progress bar color",
+      "default": "#32A84C"
+    },
+    {
+      "type": "header",
+      "content": "Discount settings"
+    },
+    {
+      "type": "paragraph",
+      "content": "Enter the exact value you configured in Discounts in the Shopify admin. [Learn more](https://help.shopify.com/en/manual/products/bundles/shopify-bundles#product-bundles-and-discounts)."
+    },
+    {
+      "type": "text",
+      "id": "discount_label",
+      "label": "Label",
+      "default": "10% off"
+    },
+    {
+      "type": "select",
+      "id": "discount_type",
+      "label": "Discount type",
+      "options": [
+        {
+          "value": "amount_off_order",
+          "label": "Amount off order"
+        },
+        {
+          "value": "amount_off_products",
+          "label": "Amount off products"
+        }
+      ],
+      "default": "amount_off_order"
+    },
+    {
+      "type": "select",
+      "id": "discount_method",
+      "label": "Discount method",
+      "options": [
+        {
+          "value": "percentage",
+          "label": "Percentage"
+        },
+        {
+          "value": "amount",
+          "label": "Fixed amount"
+        }
+      ],
+      "default": "percentage"
+    },
+    {
+      "type": "range",
+      "id": "discount_percentage",
+      "label": "Discount percentage",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 10,
+      "visible_if": "{{ block.settings.discount_method == 'percentage' }}"
+    },
+    {
+      "type": "number",
+      "id": "discount_amount",
+      "label": "Discount amount",
+      "default": 10,
+      "visible_if": "{{ block.settings.discount_method == 'amount' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "only_apply_discount_once_per_order",
+      "label": "Only apply discount once per order",
+      "default": false,
+      "visible_if": "{{ block.settings.discount_type == 'amount_off_products' or block.settings.tier_2_discount_type == 'amount_off_products' or block.settings.tier_3_discount_type == 'amount_off_products' }}"
+    },
+    {
+      "type": "select",
+      "id": "minimum_requirement",
+      "label": "Minimum requirement",
+      "options": [
+        {
+          "value": "quantity",
+          "label": "Quantity of items"
+        },
+        {
+          "value": "amount",
+          "label": "Purchase amount"
+        }
+      ],
+      "default": "quantity"
+    },
+    {
+      "type": "range",
+      "id": "minimum_quantity",
+      "label": "Minimum quantity of items",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 3,
+      "visible_if": "{{ block.settings.minimum_requirement == 'quantity' }}"
+    },
+    {
+      "type": "number",
+      "id": "minimum_amount",
+      "label": "Minimum purchase amount",
+      "default": 50,
+      "visible_if": "{{ block.settings.minimum_requirement == 'amount' }}"
+    },
+    {
+      "type": "header",
+      "content": "Tier 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_tier_2",
+      "label": "Enable tier 2",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "tier_2_label",
+      "label": "Label",
+      "default": "15% off",
+      "visible_if": "{{ block.settings.enable_tier_2 }}"
+    },
+    {
+      "type": "select",
+      "id": "tier_2_discount_type",
+      "label": "Discount type",
+      "options": [
+        {
+          "value": "amount_off_order",
+          "label": "Amount off order"
+        },
+        {
+          "value": "amount_off_products",
+          "label": "Amount off products"
+        }
+      ],
+      "default": "amount_off_order",
+      "visible_if": "{{ block.settings.enable_tier_2 }}"
+    },
+    {
+      "type": "range",
+      "id": "tier_2_discount_percentage",
+      "label": "Discount percentage",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 15,
+      "visible_if": "{{ block.settings.enable_tier_2 and block.settings.discount_method == 'percentage' }}"
+    },
+    {
+      "type": "number",
+      "id": "tier_2_discount_amount",
+      "label": "Discount amount",
+      "default": 15,
+      "visible_if": "{{ block.settings.enable_tier_2 and block.settings.discount_method == 'amount' }}"
+    },
+    {
+      "type": "range",
+      "id": "tier_2_minimum_quantity",
+      "label": "Minimum quantity of items",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ block.settings.enable_tier_2 and block.settings.minimum_requirement == 'quantity' }}"
+    },
+    {
+      "type": "number",
+      "id": "tier_2_minimum_amount",
+      "label": "Minimum purchase amount",
+      "default": 75,
+      "visible_if": "{{ block.settings.enable_tier_2 and block.settings.minimum_requirement == 'amount' }}"
+    },
+    {
+      "type": "header",
+      "content": "Tier 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_tier_3",
+      "label": "Enable tier 3",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "tier_3_label",
+      "label": "Label",
+      "default": "20% off",
+      "visible_if": "{{ block.settings.enable_tier_3 }}"
+    },
+    {
+      "type": "select",
+      "id": "tier_3_discount_type",
+      "label": "Discount type",
+      "options": [
+        {
+          "value": "amount_off_order",
+          "label": "Amount off order"
+        },
+        {
+          "value": "amount_off_products",
+          "label": "Amount off products"
+        }
+      ],
+      "default": "amount_off_order",
+      "visible_if": "{{ block.settings.enable_tier_3 }}"
+    },
+    {
+      "type": "range",
+      "id": "tier_3_discount_percentage",
+      "label": "Discount percentage",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 20,
+      "visible_if": "{{ block.settings.enable_tier_3 and block.settings.discount_method == 'percentage' }}"
+    },
+    {
+      "type": "number",
+      "id": "tier_3_discount_amount",
+      "label": "Discount amount",
+      "default": 20,
+      "visible_if": "{{ block.settings.enable_tier_3 and block.settings.discount_method == 'amount' }}"
+    },
+    {
+      "type": "range",
+      "id": "tier_3_minimum_quantity",
+      "label": "Minimum quantity of items",
+      "min": 4,
+      "max": 10,
+      "step": 1,
+      "default": 7,
+      "visible_if": "{{ block.settings.enable_tier_3 and block.settings.minimum_requirement == 'quantity' }}"
+    },
+    {
+      "type": "number",
+      "id": "tier_3_minimum_amount",
+      "label": "Minimum purchase amount",
+      "default": 100,
+      "visible_if": "{{ block.settings.enable_tier_3 and block.settings.minimum_requirement == 'amount' }}"
+    },
+    {
+      "type": "header",
+      "content": "Bundle items"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quantity_selector",
+      "label": "Show quantity selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Gap"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "Desktop",
+      "min": 10,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Mobile",
+      "min": 10,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "t:general.border"
+    },
     {
       "type": "select",
       "id": "corner_radius",
       "label": "t:labels.corner_radius",
       "options": [
-        { "value": "inherit", "label": "t:options.radius_preset.inherit" },
-        { "value": "square", "label": "t:options.radius_preset.square" },
-        { "value": "rounded", "label": "t:options.radius_preset.rounded" },
-        { "value": "custom", "label": "t:options.radius_preset.custom" }
+        {
+          "value": "inherit",
+          "label": "t:options.radius_preset.inherit"
+        },
+        {
+          "value": "square",
+          "label": "t:options.radius_preset.square"
+        },
+        {
+          "value": "rounded",
+          "label": "t:options.radius_preset.rounded"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.radius_preset.custom"
+        }
       ],
       "default": "square"
     },
@@ -1049,17 +1368,99 @@
       "default": 0,
       "visible_if": "{{ block.settings.corner_radius == 'custom' }}"
     },
-    { "type": "range", "id": "border_thickness", "label": "t:labels.border_thickness", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 0 },
-    { "type": "select", "id": "shadow", "label": "t:labels.shadow", "options": [{ "value": "none", "label": "None" }, { "value": "small", "label": "Small" }, { "value": "medium", "label": "Medium" }], "default": "small" },
-    { "type": "header", "content": "t:general.appearance" },
-    { "type": "color_scheme", "id": "desktop_color_scheme", "label": "Desktop color scheme", "default": "scheme-1" },
-    { "type": "color_scheme", "id": "mobile_color_scheme", "label": "Mobile color scheme", "default": "scheme-3" },
-    { "type": "header", "content": "Padding" },
-    { "type": "range", "id": "padding_vertical", "label": "Top and bottom", "min": 0, "max": 50, "step": 1, "unit": "px", "default": 30 },
-    { "type": "range", "id": "padding_horizontal", "label": "Left and right", "min": 0, "max": 50, "step": 1, "unit": "px", "default": 30 },
-    { "type": "checkbox", "id": "customize_mobile_padding", "label": "Custom for mobile", "default": true },
-    { "type": "range", "id": "padding_vertical_mobile", "label": "Top and bottom (mobile)", "min": 0, "max": 50, "step": 1, "unit": "px", "default": 24, "visible_if": "{{ block.settings.customize_mobile_padding }}" }
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "label": "t:labels.border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "shadow",
+      "label": "t:labels.shadow",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        }
+      ],
+      "default": "small"
+    },
+    {
+      "type": "header",
+      "content": "t:general.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "desktop_color_scheme",
+      "label": "Desktop color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "mobile_color_scheme",
+      "label": "Mobile color scheme",
+      "default": "scheme-3"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "label": "Top and bottom",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "label": "Left and right",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "Custom for mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical_mobile",
+      "label": "Top and bottom (mobile)",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ block.settings.customize_mobile_padding }}"
+    }
   ],
-  "presets": [{ "name": "Bundle summary", "category": "t:labels.products" }]
+  "presets": [
+    {
+      "name": "Bundle summary",
+      "category": "t:labels.products"
+    }
+  ]
 }
 {% endschema %}

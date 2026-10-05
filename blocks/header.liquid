@@ -218,22 +218,54 @@
   "name": "t:general.header",
   "tag": null,
   "blocks": [
-    { "type": "button" },
-    { "type": "buttons" },
-    { "type": "collection-card-button" },
-    { "type": "collection-card-description" },
-    { "type": "collection-card-title" },
-    { "type": "countdown-timer" },
-    { "type": "divider" },
-    { "type": "editorial-text" },
-    { "type": "eyebrow" },
-    { "type": "heading" },
-    { "type": "icon" },
-    { "type": "image" },
-    { "type": "scroll-to" },
-    { "type": "spacer" },
-    { "type": "text" },
-    { "type": "video" }
+    {
+      "type": "button"
+    },
+    {
+      "type": "buttons"
+    },
+    {
+      "type": "collection-card-button"
+    },
+    {
+      "type": "collection-card-description"
+    },
+    {
+      "type": "collection-card-title"
+    },
+    {
+      "type": "countdown-timer"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "editorial-text"
+    },
+    {
+      "type": "eyebrow"
+    },
+    {
+      "type": "heading"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "scroll-to"
+    },
+    {
+      "type": "spacer"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "video"
+    }
   ],
   "settings": [
     {
@@ -245,9 +277,18 @@
       "id": "width",
       "label": "t:labels.width",
       "options": [
-        { "value": "fit", "label": "t:options.width.fit" },
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "custom", "label": "t:options.width.custom" }
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
       ],
       "default": "fit"
     },
@@ -273,9 +314,18 @@
       "id": "width_mobile",
       "label": "t:labels.mobile_width",
       "options": [
-        { "value": "fit", "label": "t:options.width.fit" },
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "custom", "label": "t:options.width.custom" }
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
       ],
       "default": "fit",
       "visible_if": "{{ block.settings.customize_mobile_size }}"
@@ -307,9 +357,18 @@
       "id": "alignment",
       "label": "t:labels.alignment",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "right", "label": "t:options.alignment.right" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
       ],
       "default": "left",
       "visible_if": "{{ block.settings.inherit_alignment == false }}"
@@ -326,9 +385,18 @@
       "id": "alignment_mobile",
       "label": "t:labels.mobile_alignment",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "right", "label": "t:options.alignment.right" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
       ],
       "default": "left",
       "visible_if": "{{ block.settings.customize_mobile_alignment and block.settings.inherit_alignment == false }}"

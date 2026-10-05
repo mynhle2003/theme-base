@@ -214,132 +214,364 @@
 {
   "name": "t:general.contact_form",
   "tag": null,
-  "blocks": [{ "type": "contact-field" }],
+  "blocks": [
+    {
+      "type": "contact-field"
+    }
+  ],
   "settings": [
-    { "type": "header", "content": "t:general.gap" },
-    { "type": "range", "id": "gap_desktop", "label": "t:labels.desktop_gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 16 },
-    { "type": "range", "id": "gap_mobile", "label": "t:labels.mobile_gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 16 },
-    { "type": "header", "content": "t:labels.field_height" },
-    { "type": "select", "id": "field_height_desktop", "label": "t:options.device.desktop", "options": [
-      { "value": "inherit", "label": "Inherit" },
-      { "value": "extra_small", "label": "t:options.menu_font_size.extra_small" },
-      { "value": "small", "label": "t:options.menu_font_size.small" },
-      { "value": "medium", "label": "t:options.menu_font_size.medium" },
-      { "value": "large", "label": "t:options.menu_font_size.large" },
-      { "value": "extra_large", "label": "t:options.menu_font_size.extra_large" }
-    ], "default": "inherit" },
-    { "type": "select", "id": "field_height_mobile", "label": "t:options.device.mobile", "options": [
-      { "value": "inherit", "label": "Inherit" },
-      { "value": "extra_small", "label": "t:options.menu_font_size.extra_small" },
-      { "value": "small", "label": "t:options.menu_font_size.small" },
-      { "value": "medium", "label": "t:options.menu_font_size.medium" },
-      { "value": "large", "label": "t:options.menu_font_size.large" },
-      { "value": "extra_large", "label": "t:options.menu_font_size.extra_large" }
-    ], "default": "inherit" },
-    { "type": "header", "content": "t:general.button" },
-    { "type": "text", "id": "submit_label", "label": "t:labels.button_label", "default": "Send" },
-    { "type": "select", "id": "button_style", "label": "t:labels.style", "options": [
-      { "value": "primary", "label": "t:options.button_variant.primary" },
-      { "value": "secondary", "label": "t:options.button_variant.secondary" },
-      { "value": "tertiary", "label": "t:options.button_variant.tertiary" }
-    ], "default": "primary" },
-    { "type": "checkbox", "id": "show_icon", "label": "t:labels.show_icon", "default": false },
-{
-  "type": "select",
-  "id": "icon",
-  "label": "t:labels.icon",
-  "options": [
     {
-      "value": "arrow_right",
-      "label": "Arrow right"
+      "type": "header",
+      "content": "t:general.gap"
     },
     {
-      "value": "long_arrow_right",
-      "label": "Long arrow right"
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "t:labels.desktop_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
     },
     {
-      "value": "chevron_right",
-      "label": "Chevron"
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "t:labels.mobile_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
     },
     {
-      "value": "arrow_up_right",
-      "label": "Arrow up right"
+      "type": "header",
+      "content": "t:labels.field_height"
     },
     {
-      "value": "circle_arrow",
-      "label": "Circle arrow"
+      "type": "select",
+      "id": "field_height_desktop",
+      "label": "t:options.device.desktop",
+      "options": [
+        {
+          "value": "inherit",
+          "label": "Inherit"
+        },
+        {
+          "value": "extra_small",
+          "label": "t:options.menu_font_size.extra_small"
+        },
+        {
+          "value": "small",
+          "label": "t:options.menu_font_size.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.menu_font_size.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.menu_font_size.large"
+        },
+        {
+          "value": "extra_large",
+          "label": "t:options.menu_font_size.extra_large"
+        }
+      ],
+      "default": "inherit"
     },
     {
-      "value": "circle_chevron",
-      "label": "Circle chevron"
+      "type": "select",
+      "id": "field_height_mobile",
+      "label": "t:options.device.mobile",
+      "options": [
+        {
+          "value": "inherit",
+          "label": "Inherit"
+        },
+        {
+          "value": "extra_small",
+          "label": "t:options.menu_font_size.extra_small"
+        },
+        {
+          "value": "small",
+          "label": "t:options.menu_font_size.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.menu_font_size.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.menu_font_size.large"
+        },
+        {
+          "value": "extra_large",
+          "label": "t:options.menu_font_size.extra_large"
+        }
+      ],
+      "default": "inherit"
     },
     {
-      "value": "long_arrow_up",
-      "label": "Long arrow up"
+      "type": "header",
+      "content": "t:general.button"
     },
     {
-      "value": "double_chevron",
-      "label": "Double chevron"
+      "type": "text",
+      "id": "submit_label",
+      "label": "t:labels.button_label",
+      "default": "Send"
     },
     {
-      "value": "arrow_outline",
-      "label": "Arrow outline"
+      "type": "select",
+      "id": "button_style",
+      "label": "t:labels.style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:options.button_variant.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.button_variant.secondary"
+        },
+        {
+          "value": "tertiary",
+          "label": "t:options.button_variant.tertiary"
+        }
+      ],
+      "default": "primary"
     },
     {
-      "value": "square_chevron",
-      "label": "Square chevron"
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "t:labels.show_icon",
+      "default": false
     },
     {
-      "value": "plus",
-      "label": "Plus"
+      "type": "select",
+      "id": "icon",
+      "label": "t:labels.icon",
+      "options": [
+        {
+          "value": "arrow_right",
+          "label": "Arrow right"
+        },
+        {
+          "value": "long_arrow_right",
+          "label": "Long arrow right"
+        },
+        {
+          "value": "chevron_right",
+          "label": "Chevron"
+        },
+        {
+          "value": "arrow_up_right",
+          "label": "Arrow up right"
+        },
+        {
+          "value": "circle_arrow",
+          "label": "Circle arrow"
+        },
+        {
+          "value": "circle_chevron",
+          "label": "Circle chevron"
+        },
+        {
+          "value": "long_arrow_up",
+          "label": "Long arrow up"
+        },
+        {
+          "value": "double_chevron",
+          "label": "Double chevron"
+        },
+        {
+          "value": "arrow_outline",
+          "label": "Arrow outline"
+        },
+        {
+          "value": "square_chevron",
+          "label": "Square chevron"
+        },
+        {
+          "value": "plus",
+          "label": "Plus"
+        }
+      ],
+      "default": "arrow_right",
+      "visible_if": "{{ block.settings.show_icon }}"
+    },
+    {
+      "type": "select",
+      "id": "icon_position",
+      "label": "t:labels.icon_position",
+      "options": [
+        {
+          "value": "before",
+          "label": "Left"
+        },
+        {
+          "value": "after",
+          "label": "Right"
+        }
+      ],
+      "default": "after",
+      "visible_if": "{{ block.settings.show_icon }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.size"
+    },
+    {
+      "type": "select",
+      "id": "width_desktop",
+      "label": "t:labels.desktop_width",
+      "options": [
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
+      ],
+      "default": "fit"
+    },
+    {
+      "type": "range",
+      "id": "width_custom_desktop",
+      "label": "t:labels.desktop_custom_width",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width_desktop == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:labels.mobile_width",
+      "options": [
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
+      ],
+      "default": "fit"
+    },
+    {
+      "type": "range",
+      "id": "width_custom_mobile",
+      "label": "t:labels.mobile_custom_width",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "limit_width_desktop",
+      "label": "t:labels.desktop_limit_width",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "max_width_desktop",
+      "label": "t:labels.desktop_max_width",
+      "min": 240,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "default": 900,
+      "visible_if": "{{ block.settings.limit_width_desktop }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "limit_width_mobile",
+      "label": "t:labels.mobile_limit_width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "max_width_mobile",
+      "label": "t:labels.mobile_max_width",
+      "min": 240,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 480,
+      "visible_if": "{{ block.settings.limit_width_mobile }}"
+    },
+    {
+      "type": "select",
+      "id": "animation_type",
+      "label": "Animation",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "default": "none"
     }
   ],
-  "default": "arrow_right",
-  "visible_if": "{{ block.settings.show_icon }}"
-},
-{
-  "type": "select",
-  "id": "icon_position",
-  "label": "t:labels.icon_position",
-  "options": [
+  "presets": [
     {
-      "value": "before",
-      "label": "Left"
-    },
-    {
-      "value": "after",
-      "label": "Right"
+      "name": "t:general.contact_form",
+      "category": "t:general.forms",
+      "settings": {
+        "gap_desktop": 16,
+        "gap_mobile": 16,
+        "field_height_desktop": "inherit",
+        "field_height_mobile": "inherit",
+        "submit_label": "Send",
+        "button_style": "primary",
+        "show_icon": false,
+        "width_desktop": "fit",
+        "width_custom_desktop": 100,
+        "width_mobile": "fit",
+        "width_custom_mobile": 100,
+        "limit_width_desktop": true,
+        "max_width_desktop": 900,
+        "limit_width_mobile": false,
+        "max_width_mobile": 480,
+        "animation_type": "none"
+      },
+      "blocks": [
+        {
+          "type": "contact-field",
+          "settings": {
+            "label": "Custom field",
+            "field_type": "text",
+            "required": false
+          }
+        },
+        {
+          "type": "contact-field",
+          "settings": {
+            "label": "Custom field",
+            "field_type": "text",
+            "required": false
+          }
+        }
+      ]
     }
-  ],
-  "default": "after",
-  "visible_if": "{{ block.settings.show_icon }}"
-},
-    { "type": "header", "content": "t:general.size" },
-    { "type": "select", "id": "width_desktop", "label": "t:labels.desktop_width", "options": [
-      { "value": "fit", "label": "t:options.width.fit" }, { "value": "fill", "label": "t:options.width.fill" }, { "value": "custom", "label": "t:options.width.custom" }
-    ], "default": "fit" },
-    { "type": "range", "id": "width_custom_desktop", "label": "t:labels.desktop_custom_width", "min": 1, "max": 100, "step": 1, "unit": "%", "default": 100, "visible_if": "{{ block.settings.width_desktop == 'custom' }}" },
-    { "type": "select", "id": "width_mobile", "label": "t:labels.mobile_width", "options": [
-      { "value": "fit", "label": "t:options.width.fit" }, { "value": "fill", "label": "t:options.width.fill" }, { "value": "custom", "label": "t:options.width.custom" }
-    ], "default": "fit" },
-    { "type": "range", "id": "width_custom_mobile", "label": "t:labels.mobile_custom_width", "min": 1, "max": 100, "step": 1, "unit": "%", "default": 100, "visible_if": "{{ block.settings.width_mobile == 'custom' }}" },
-    { "type": "checkbox", "id": "limit_width_desktop", "label": "t:labels.desktop_limit_width", "default": true },
-    { "type": "range", "id": "max_width_desktop", "label": "t:labels.desktop_max_width", "min": 240, "max": 1200, "step": 10, "unit": "px", "default": 900, "visible_if": "{{ block.settings.limit_width_desktop }}" },
-    { "type": "checkbox", "id": "limit_width_mobile", "label": "t:labels.mobile_limit_width", "default": false },
-    { "type": "range", "id": "max_width_mobile", "label": "t:labels.mobile_max_width", "min": 240, "max": 800, "step": 10, "unit": "px", "default": 480, "visible_if": "{{ block.settings.limit_width_mobile }}" },
-    { "type": "select", "id": "animation_type", "label": "Animation", "options": [{ "value": "none", "label": "None" }], "default": "none" }
-  ],
-  "presets": [{
-    "name": "t:general.contact_form",
-    "category": "t:general.forms",
-    "settings": {
-      "gap_desktop": 16, "gap_mobile": 16, "field_height_desktop": "inherit", "field_height_mobile": "inherit", "submit_label": "Send", "button_style": "primary", "show_icon": false,
-      "width_desktop": "fit", "width_custom_desktop": 100, "width_mobile": "fit", "width_custom_mobile": 100, "limit_width_desktop": true, "max_width_desktop": 900, "limit_width_mobile": false, "max_width_mobile": 480, "animation_type": "none"
-    },
-    "blocks": [
-      { "type": "contact-field", "settings": { "label": "Custom field", "field_type": "text", "required": false } },
-      { "type": "contact-field", "settings": { "label": "Custom field", "field_type": "text", "required": false } }
-    ]
-  }]
+  ]
 }
 {% endschema %}

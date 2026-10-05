@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"ed7468aa59d460c2d86cee8b7035487d1bb88bf8"} -->
+<!-- theme-base-sync-state: {"sha":"0eee77c2125c6fffe1a1c07566b2b534cad3c5ad"} -->
 # Customization record: assen-theme
 
 Theme branch: `theme/assen-theme`
@@ -20,6 +20,242 @@ Record every theme-specific change here before committing the code. During base 
 | --- | --- | --- | --- |
 
 ## Base sync history
+
+### 2026-10-05 — Update from personal main
+
+- Previous main commit: `ed7468aa59d460c2d86cee8b7035487d1bb88bf8`
+- Updated through main commit: `0eee77c2125c6fffe1a1c07566b2b534cad3c5ad`
+- Main commits included: 6
+- Included main commits:
+  - `912e638889f2623658e6c63b44a83cb8f9ba64c9` — chore(base): update base with 14 upstream commits through 823f0b09
+  - `497695b2f50993d3194f9b5f3aff6803ee10276b` — feat(sync): auto-push safe theme updates
+  - `8a0e66d3ada9c00b072001e67c1919fd68c5d69b` — fix(sync): use normalized schema base for theme merges
+  - `12ad4d12f0221c3e7fb1456e4db68b79b39c93e9` — fix(sync): allow settings without Shopify defaults
+  - `733f16ea01962231dcf90add8f90599ee3afa735` — fix(sync): stream large diff patches to disk
+  - `0eee77c2125c6fffe1a1c07566b2b534cad3c5ad` — fix(sync): stream full review diffs without buffering
+- Change summary:
+
+```text
+assets/bundle-builder.js                       |  69 ++-
+ assets/button-loading.js                       |  28 +
+ assets/component-bouncing-dots.css             |   5 +
+ assets/critical.css                            |  51 +-
+ assets/editorial-text.js                       |  97 ++++
+ assets/quick-add.js                            |  36 +-
+ assets/quick-view.js                           |  28 +-
+ assets/section-parallax.css                    | 167 ++++++
+ assets/section-parallax.js                     | 175 ++++++
+ blocks/_bundle-product-list.liquid             | 189 ++++++-
+ blocks/_bundle-summary.liquid                  | 511 ++++++++++++++++--
+ blocks/_collection-breadcrumb.liquid           |  45 +-
+ blocks/_collection-columns.liquid              | 108 +++-
+ blocks/_collection-count.liquid                |  10 +-
+ blocks/_collection-pagination.liquid           |  35 +-
+ blocks/_collection-products.liquid             |  15 +-
+ blocks/_collection-sort.liquid                 |  15 +-
+ blocks/_collection-toolbar.liquid              | 106 +++-
+ blocks/_column.liquid                          |  98 +++-
+ blocks/_header-account.liquid                  |  70 ++-
+ blocks/_header-cart.liquid                     |  30 +-
+ blocks/_header-divider.liquid                  |  10 +-
+ blocks/_header-localization.liquid             |  25 +-
+ blocks/_header-logo.liquid                     |  10 +-
+ blocks/_header-menu.liquid                     | 136 ++++-
+ blocks/_header-search.liquid                   |  75 ++-
+ blocks/_header-top.liquid                      |  47 +-
+ blocks/_mega-menu-banner.liquid                | 476 ++++++++++++++---
+ blocks/_mega-menu-banners.liquid               | 226 +++++++-
+ blocks/_overlay-product-media.liquid           | 150 ++++--
+ blocks/_product-collection-grid.liquid         |   4 +-
+ blocks/_product-details.liquid                 | 149 ++++--
+ blocks/_product-media.liquid                   |  95 +++-
+ blocks/announcement-countdown-timer.liquid     | 276 +++++++++-
+ blocks/announcement-text.liquid                |  63 ++-
+ blocks/banner.liquid                           |  75 ++-
+ blocks/blog-archive-list.liquid                |  32 +-
+ blocks/blog-card-button.liquid                 |  25 +-
+ blocks/blog-card-description.liquid            |  50 +-
+ blocks/blog-card-meta.liquid                   | 175 ++++--
+ blocks/blog-card-tag.liquid                    |  85 ++-
+ blocks/blog-card-title.liquid                  |  90 +++-
+ blocks/blog-card.liquid                        | 142 +++--
+ blocks/blog-grid.liquid                        |  53 +-
+ blocks/blog-list.liquid                        | 135 ++++-
+ blocks/blog-meta.liquid                        | 209 +++++++-
+ blocks/button-view-details.liquid              |  10 +-
+ blocks/button.liquid                           |  45 +-
+ blocks/buttons.liquid                          | 150 ++++--
+ blocks/carousel.liquid                         | 253 +++++++--
+ blocks/collection-background-item.liquid       |  70 ++-
+ blocks/collection-card-button.liquid           |  45 +-
+ blocks/collection-card-description.liquid      |  60 ++-
+ blocks/collection-card-title.liquid            | 110 +++-
+ blocks/collection-card.liquid                  | 301 ++++++++++-
+ blocks/collection-list-items.liquid            | 125 ++++-
+ blocks/collection-promo.liquid                 | 313 ++++++++---
+ blocks/collection-tab.liquid                   |   4 +-
+ blocks/collection-thumbnail.liquid             |  61 ++-
+ blocks/collections-with-tabs-item.liquid       |  68 ++-
+ blocks/comments.liquid                         | 180 ++++++-
+ blocks/comparison-table-column.liquid          |  62 ++-
+ blocks/contact-field.liquid                    |  30 +-
+ blocks/contact-form.liquid                     | 432 +++++++++++----
+ blocks/content.liquid                          |  21 +-
+ blocks/countdown-timer.liquid                  | 190 +++++--
+ blocks/discount-code.liquid                    | 161 +++++-
+ blocks/divider.liquid                          |  60 ++-
+ blocks/editorial-text.liquid                   | 702 +++++++++++++++++++++----
+ blocks/email-signup.liquid                     |  90 +++-
+ blocks/eyebrow.liquid                          |  40 +-
+ blocks/faq_accordion.liquid                    | 497 ++++++++++++++++-
+ blocks/faq_answer_text.liquid                  |   6 +-
+ blocks/faq_category.liquid                     | 195 +++++--
+ blocks/faq_item.liquid                         | 194 ++++++-
+ blocks/featured-image.liquid                   | 136 ++++-
+ blocks/featured-post.liquid                    | 310 ++++++++++-
+ blocks/first-card.liquid                       | 134 ++++-
+ blocks/gallery-grid.liquid                     | 216 +++++++-
+ blocks/gallery-header-group.liquid             | 323 +++++++++---
+ blocks/gallery-image.liquid                    | 218 +++++++-
+ blocks/gallery-item.liquid                     | 113 +++-
+ blocks/gallery-strip-feature-item.liquid       |  71 ++-
+ blocks/gallery-strip-item.liquid               |  38 +-
+ blocks/gallery-strip-overlay-group.liquid      | 101 +++-
+ blocks/grid.liquid                             |  94 +++-
+ blocks/group.liquid                            | 260 +++++++--
+ blocks/header.liquid                           | 124 ++++-
+ blocks/heading.liquid                          | 100 +++-
+ blocks/icon.liquid                             | 175 ++++--
+ blocks/image-card.liquid                       | 268 ++++++++--
+ blocks/image-comparison.liquid                 | 190 +++++--
+ blocks/image-text-card-grid-item.liquid        |  32 +-
+ blocks/image-text-stacked-band.liquid          |  84 ++-
+ blocks/image.liquid                            | 125 ++++-
+ blocks/localization.liquid                     |  40 +-
+ blocks/location-item.liquid                    | 145 ++++-
+ blocks/location-list.liquid                    |  61 ++-
+ blocks/logo.liquid                             |  20 +-
+ blocks/marquee-item.liquid                     |  21 +-
+ blocks/marquee.liquid                          |  89 +++-
+ blocks/menu.liquid                             | 110 +++-
+ blocks/pagination.liquid                       |  99 +++-
+ blocks/parallax-item.liquid                    | 451 ++++++++++++++++
+ blocks/policy-links.liquid                     |  30 +-
+ blocks/popup.liquid                            |  16 +-
+ blocks/press-item.liquid                       |  56 +-
+ blocks/press-quotes.liquid                     |   6 +-
+ blocks/previous-and-next-posts.liquid          | 116 +++-
+ blocks/product-accordion.liquid                | 105 +++-
+ blocks/product-buy-accelerated-checkout.liquid |  21 +-
+ blocks/product-buy-add-to-cart.liquid          |  32 +-
+ blocks/product-buy-quantity.liquid             |  85 ++-
+ blocks/product-callout-gallery.liquid          | 135 ++++-
+ blocks/product-callout.liquid                  | 427 ++++++++++++---
+ blocks/product-card.liquid                     |  10 +-
+ blocks/product-description.liquid              |  50 +-
+ blocks/product-inventory.liquid                |  10 +-
+ blocks/product-list-banner.liquid              |  14 +-
+ blocks/product-list.liquid                     | 119 ++++-
+ blocks/product-pickup-availability.liquid      | 202 +++++--
+ blocks/product-price.liquid                    |  70 ++-
+ blocks/product-recommendations.liquid          |  30 +-
+ blocks/product-sticky-add-to-cart.liquid       |  56 +-
+ blocks/product-title.liquid                    |  85 ++-
+ blocks/product-variant-picker.liquid           |  30 +-
+ blocks/row.liquid                              |  36 +-
+ blocks/scroll-to.liquid                        |  25 +-
+ blocks/scrolling-card.liquid                   | 163 +++++-
+ blocks/shop-the-look-products.liquid           | 106 +++-
+ blocks/slideshow-slide.liquid                  | 392 ++++++++++++--
+ blocks/social-links.liquid                     |  30 +-
+ blocks/spacer.liquid                           |  20 +-
+ blocks/tab-layout.liquid                       |  70 ++-
+ blocks/tabs-view-all-button.liquid             |  45 +-
+ blocks/tags-and-sharing.liquid                 |  72 ++-
+ blocks/testimonial-item.liquid                 | 218 ++++++--
+ blocks/text.liquid                             |  80 ++-
+ blocks/timeline-list.liquid                    |  20 +-
+ blocks/video.liquid                            | 135 ++++-
+ blocks/view-all-button.liquid                  | 116 +++-
+ docs/parallax-section-build-plan.md            |  71 +++
+ docs/theme-customization-policy.md             |  10 +
+ scripts/theme-base-sync.cjs                    | 522 ++++++++++++++++--
+ sections/404.liquid                            |   6 +-
+ sections/announcement-bar.liquid               | 376 +++++++++++--
+ sections/article.liquid                        | 137 ++++-
+ sections/blog-posts.liquid                     |  63 ++-
+ sections/blog.liquid                           |  37 +-
+ sections/breadcrumbs.liquid                    |  61 ++-
+ sections/bundle-builder.liquid                 | 200 ++++++-
+ sections/cart-drawer.liquid                    |  34 +-
+ sections/cart.liquid                           |   6 +-
+ sections/collection-list-thumbnails.liquid     | 552 ++++++++++++++++++-
+ sections/collection-list.liquid                | 109 +++-
+ sections/collection-page-breadcrumb.liquid     | 202 ++++++-
+ sections/collection-page-links.liquid          | 187 ++++++-
+ sections/collection-tabs.liquid                | 182 +++++--
+ sections/collections-with-background.liquid    | 562 +++++++++++++++++++-
+ sections/collections-with-tabs.liquid          | 438 ++++++++++++++-
+ sections/collections.liquid                    |  16 +-
+ sections/contact-form-custom.liquid            |  49 +-
+ sections/contact-information.liquid            | 182 ++++++-
+ sections/countdown.liquid                      | 103 +++-
+ sections/custom-section.liquid                 |  98 +++-
+ sections/divider.liquid                        |  65 ++-
+ sections/email-signup-dual-image.liquid        | 374 +++++++++++--
+ sections/email-signup-form.liquid              |  54 +-
+ sections/email-signup-single-image.liquid      |  74 ++-
+ sections/faq-accordion.liquid                  | 347 ++++++++++--
+ sections/faq-image-accordion.liquid            | 375 +++++++++++--
+ sections/featured-blog-posts.liquid            |  63 ++-
+ sections/featured-collection-banner.liquid     |  43 +-
+ sections/featured-collection.liquid            |  58 +-
+ sections/featured-product.liquid               |  39 +-
+ sections/footer.liquid                         |  36 +-
+ sections/gallery-carousel.liquid               | 323 ++++++++++--
+ sections/gallery-custom.liquid                 | 184 +++++--
+ sections/gallery-full-width-strip.liquid       | 234 +++++++--
+ sections/gallery-image-grid.liquid             | 284 ++++++++--
+ sections/header.liquid                         |  62 ++-
+ sections/hero.liquid                           | 318 ++++++++---
+ sections/hotspot-full-width-carousel.liquid    | 204 +++++--
+ sections/hotspot.liquid                        |  44 +-
+ sections/icon-text-cards.liquid                | 417 +++++++++++++--
+ sections/icon-text-inline.liquid               | 124 ++++-
+ sections/image-cards.liquid                    |  20 +-
+ sections/image-comparison-custom.liquid        | 104 +++-
+ sections/image-comparison-split-custom.liquid  | 192 +++++--
+ sections/image-text-card-grid.liquid           | 223 +++++++-
+ sections/image-text-split-layout.liquid        | 167 +++++-
+ sections/image-text-stacked-bands.liquid       | 545 ++++++++++++++++---
+ sections/location-list.liquid                  | 266 ++++++++--
+ sections/location-map.liquid                   | 286 ++++++++--
+ sections/page.liquid                           |   6 +-
+ sections/parallax.liquid                       | 405 ++++++++++++++
+ sections/password.liquid                       |   6 +-
+ sections/press.liquid                          |  40 +-
+ sections/product-information.liquid            |  44 +-
+ sections/product.liquid                        |   6 +-
+ sections/quick-add.liquid                      |  44 +-
+ sections/quick-view.liquid                     |  44 +-
+ sections/rich-text.liquid                      |  42 +-
+ sections/scroll-reading-text.liquid            | 105 +++-
+ sections/scrolling-cards.liquid                | 149 +++++-
+ sections/scrolling-text-star-separator.liquid  | 458 ++++++++++++++--
+ sections/search-overlay.liquid                 |  37 +-
+ sections/search.liquid                         |   6 +-
+ sections/shop-the-look-section.liquid          |  47 +-
+ sections/slideshow.liquid                      | 418 +++++++++++++--
+ sections/testimonial-carousel.liquid           | 429 ++++++++++++---
+ sections/testimonials-background-custom.liquid |  99 +++-
+ sections/testimonials-horizontal-custom.liquid |  59 ++-
+ sections/text-marquee-custom.liquid            | 262 ++++++---
+ snippets/swiper-navigation.liquid              |   2 +-
+ snippets/theme-button.liquid                   |   2 +-
+ tests/editorial-text.test.cjs                  |  49 ++
+ 217 files changed, 25054 insertions(+), 3990 deletions(-)
+```
+
 
 ### 2026-10-02 — Update from personal main
 

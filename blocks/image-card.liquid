@@ -477,13 +477,27 @@
   "name": "t:general.image_card",
   "tag": null,
   "blocks": [
-    { "type": "eyebrow" },
-    { "type": "heading" },
-    { "type": "text" },
-    { "type": "button" },
-    { "type": "buttons" },
-    { "type": "icon" },
-    { "type": "header" }
+    {
+      "type": "eyebrow"
+    },
+    {
+      "type": "heading"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "buttons"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "header"
+    }
   ],
   "settings": [
     {
@@ -510,8 +524,14 @@
       "id": "background_type",
       "label": "t:labels.type",
       "options": [
-        { "value": "image", "label": "t:general.image" },
-        { "value": "video", "label": "t:general.video" }
+        {
+          "value": "image",
+          "label": "t:general.image"
+        },
+        {
+          "value": "video",
+          "label": "t:general.video"
+        }
       ],
       "default": "image"
     },
@@ -554,8 +574,14 @@
       "id": "device",
       "label": "t:labels.device",
       "options": [
-        { "value": "desktop", "label": "t:options.device.desktop" },
-        { "value": "mobile", "label": "t:options.device.mobile" }
+        {
+          "value": "desktop",
+          "label": "t:options.device.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.device.mobile"
+        }
       ],
       "default": "desktop"
     },
@@ -564,8 +590,14 @@
       "id": "width_desktop",
       "label": "t:labels.width",
       "options": [
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "custom", "label": "t:options.width.custom" }
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
       ],
       "default": "fill",
       "visible_if": "{{ block.settings.device == 'desktop' }}"
@@ -604,15 +636,42 @@
       "id": "height_desktop",
       "label": "t:labels.height",
       "options": [
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "ratio_1_1", "label": "t:options.image_card_height.ratio_1_1" },
-        { "value": "ratio_4_5", "label": "t:options.image_card_height.ratio_4_5" },
-        { "value": "ratio_3_2", "label": "t:options.image_card_height.ratio_3_2" },
-        { "value": "ratio_4_3", "label": "t:options.image_card_height.ratio_4_3" },
-        { "value": "ratio_16_9", "label": "t:options.image_card_height.ratio_16_9" },
-        { "value": "ratio_2_3", "label": "t:options.image_card_height.ratio_2_3" },
-        { "value": "ratio_3_4", "label": "t:options.image_card_height.ratio_3_4" },
-        { "value": "ratio_9_16", "label": "t:options.image_card_height.ratio_9_16" }
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "ratio_1_1",
+          "label": "t:options.image_card_height.ratio_1_1"
+        },
+        {
+          "value": "ratio_4_5",
+          "label": "t:options.image_card_height.ratio_4_5"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "t:options.image_card_height.ratio_3_2"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "t:options.image_card_height.ratio_4_3"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "t:options.image_card_height.ratio_16_9"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "t:options.image_card_height.ratio_2_3"
+        },
+        {
+          "value": "ratio_3_4",
+          "label": "t:options.image_card_height.ratio_3_4"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "t:options.image_card_height.ratio_9_16"
+        }
       ],
       "default": "ratio_1_1",
       "visible_if": "{{ block.settings.device == 'desktop' }}"
@@ -622,8 +681,14 @@
       "id": "width_mobile",
       "label": "t:labels.width",
       "options": [
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "custom", "label": "t:options.width.custom" }
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
       ],
       "default": "fill",
       "visible_if": "{{ block.settings.device == 'mobile' }}"
@@ -662,15 +727,42 @@
       "id": "height_mobile",
       "label": "t:labels.height",
       "options": [
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "ratio_1_1", "label": "t:options.image_card_height.ratio_1_1" },
-        { "value": "ratio_4_5", "label": "t:options.image_card_height.ratio_4_5" },
-        { "value": "ratio_3_2", "label": "t:options.image_card_height.ratio_3_2" },
-        { "value": "ratio_4_3", "label": "t:options.image_card_height.ratio_4_3" },
-        { "value": "ratio_16_9", "label": "t:options.image_card_height.ratio_16_9" },
-        { "value": "ratio_2_3", "label": "t:options.image_card_height.ratio_2_3" },
-        { "value": "ratio_3_4", "label": "t:options.image_card_height.ratio_3_4" },
-        { "value": "ratio_9_16", "label": "t:options.image_card_height.ratio_9_16" }
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "ratio_1_1",
+          "label": "t:options.image_card_height.ratio_1_1"
+        },
+        {
+          "value": "ratio_4_5",
+          "label": "t:options.image_card_height.ratio_4_5"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "t:options.image_card_height.ratio_3_2"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "t:options.image_card_height.ratio_4_3"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "t:options.image_card_height.ratio_16_9"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "t:options.image_card_height.ratio_2_3"
+        },
+        {
+          "value": "ratio_3_4",
+          "label": "t:options.image_card_height.ratio_3_4"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "t:options.image_card_height.ratio_9_16"
+        }
       ],
       "default": "ratio_1_1",
       "visible_if": "{{ block.settings.device == 'mobile' }}"
@@ -690,15 +782,42 @@
       "id": "position_desktop",
       "label": "t:labels.desktop_position",
       "options": [
-        { "value": "top_left", "label": "Top left" },
-        { "value": "top_center", "label": "Top center" },
-        { "value": "top_right", "label": "Top right" },
-        { "value": "center_left", "label": "Center left" },
-        { "value": "center_center", "label": "Center center" },
-        { "value": "center_right", "label": "Center right" },
-        { "value": "bottom_left", "label": "Bottom left" },
-        { "value": "bottom_center", "label": "Bottom center" },
-        { "value": "bottom_right", "label": "Bottom right" }
+        {
+          "value": "top_left",
+          "label": "Top left"
+        },
+        {
+          "value": "top_center",
+          "label": "Top center"
+        },
+        {
+          "value": "top_right",
+          "label": "Top right"
+        },
+        {
+          "value": "center_left",
+          "label": "Center left"
+        },
+        {
+          "value": "center_center",
+          "label": "Center center"
+        },
+        {
+          "value": "center_right",
+          "label": "Center right"
+        },
+        {
+          "value": "bottom_left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom_center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom_right",
+          "label": "Bottom right"
+        }
       ],
       "default": "top_center"
     },
@@ -707,15 +826,42 @@
       "id": "position_mobile",
       "label": "t:labels.mobile_position",
       "options": [
-        { "value": "top_left", "label": "Top left" },
-        { "value": "top_center", "label": "Top center" },
-        { "value": "top_right", "label": "Top right" },
-        { "value": "center_left", "label": "Center left" },
-        { "value": "center_center", "label": "Center center" },
-        { "value": "center_right", "label": "Center right" },
-        { "value": "bottom_left", "label": "Bottom left" },
-        { "value": "bottom_center", "label": "Bottom center" },
-        { "value": "bottom_right", "label": "Bottom right" }
+        {
+          "value": "top_left",
+          "label": "Top left"
+        },
+        {
+          "value": "top_center",
+          "label": "Top center"
+        },
+        {
+          "value": "top_right",
+          "label": "Top right"
+        },
+        {
+          "value": "center_left",
+          "label": "Center left"
+        },
+        {
+          "value": "center_center",
+          "label": "Center center"
+        },
+        {
+          "value": "center_right",
+          "label": "Center right"
+        },
+        {
+          "value": "bottom_left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom_center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom_right",
+          "label": "Bottom right"
+        }
       ],
       "default": "top_center"
     },
@@ -748,10 +894,22 @@
       "id": "corner_radius",
       "label": "t:labels.corner_radius",
       "options": [
-        { "value": "square", "label": "t:options.radius_preset.square" },
-        { "value": "slightly_rounded", "label": "t:options.radius_preset.slightly_rounded" },
-        { "value": "rounded", "label": "t:options.radius_preset.rounded" },
-        { "value": "pill", "label": "t:options.radius_preset.pill" }
+        {
+          "value": "square",
+          "label": "t:options.radius_preset.square"
+        },
+        {
+          "value": "slightly_rounded",
+          "label": "t:options.radius_preset.slightly_rounded"
+        },
+        {
+          "value": "rounded",
+          "label": "t:options.radius_preset.rounded"
+        },
+        {
+          "value": "pill",
+          "label": "t:options.radius_preset.pill"
+        }
       ],
       "default": "square"
     },
