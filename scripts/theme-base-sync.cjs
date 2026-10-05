@@ -658,7 +658,16 @@ function reconcileThemeSchema(file, themeRegion, sourceRegion) {
         const allFields = [...new Set([...Object.keys(current), ...Object.keys(sourceSetting)])];
         const changedSettingFields = allFields.filter((field) => stableJson(current[field]) !== stableJson(sourceSetting[field]));
         const functionalFields = ["type", "options", "min", "max", "step", "unit", "visible_if", "accept", "min_length", "max_length"];
-        const changedFields = changedSettingFields.filter((field) => functionalFields.includes(field));
+        const changedFields = changedSettingFields.filter((field) => {
+          if (!functionalFields.includes(field)) return false;
+          // Option labels/group headings are editor copy, not stored values.
+          // Translation-only changes must be reported and retained, not block sync.
+          if (field === "options" && Array.isArray(current.options) && Array.isArray(sourceSetting.options)) {
+            return stableJson(current.options.map((option) => option.value)) !==
+              stableJson(sourceSetting.options.map((option) => option.value));
+          }
+          return true;
+        });
         changed.push({ file, owner, id: sourceSetting.id, label: current.label || sourceSetting.label || sourceSetting.id, changedFields: changedSettingFields });
         const fieldValues = changedSettingFields.map((field) => {
           const themeValue = Object.hasOwn(current, field) ? JSON.stringify(current[field]) : "(không có)";

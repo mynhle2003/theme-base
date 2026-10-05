@@ -59,3 +59,22 @@ test('URL and resource picker settings continue to stay unset', () => {
     assert.equal(result.added[0].hasDefault, false);
   }
 });
+
+test('translated option labels are retained without blocking sync', () => {
+  const setting = { type: 'select', id: 'tag', default: 'h1', options: [{ value: 'h1', label: 'H1' }] };
+  const result = reconcileThemeSchema('blocks/example.liquid',
+    { schema: { settings: [setting] } },
+    { schema: { settings: [{ ...setting, options: [{ value: 'h1', label: 't:options.html_tag.h1' }] }] } });
+  assert.deepEqual(result.blockingDifferences, []);
+  assert.deepEqual(result.schema.settings[0], setting);
+  assert.equal(result.presetChanges.length, 1);
+});
+
+test('changed option values still block sync even when labels are identical', () => {
+  const setting = { type: 'select', id: 'size', default: 'h1', options: [{ value: 'h1', label: 'Large' }] };
+  const result = reconcileThemeSchema('blocks/example.liquid',
+    { schema: { settings: [setting] } },
+    { schema: { settings: [{ ...setting, default: 'xl', options: [{ value: 'xl', label: 'Large' }] }] } });
+  assert.equal(result.blockingDifferences.length, 1);
+  assert.deepEqual(result.schema.settings[0], setting);
+});
