@@ -12,7 +12,7 @@ Record every theme-specific change here before committing the code. During base 
 
 | File/path | Base behavior | Theme-specific behavior | Reason | Update/merge rule |
 | --- | --- | --- | --- | --- |
-| _No customizations recorded yet_ | | | | |
+| `sections/icon-with-text-custom.liquid` | No dedicated Essen icon/text grid section. | Adds a section shell composing one editable grid; preset matches Figma desktop/mobile spacing and uses existing icon blocks with custom SVG markup. | Essen homepage after Featured product. | Keep theme section; review shared grid/group/token changes for responsive compatibility. |
 
 ## Base update decisions
 

@@ -15,6 +15,7 @@
         "slide1": {
           "type": "slideshow-slide",
           "settings": {
+            "image": "shopify://shop_images/essen-slideshow-1.avif",
             "layout": "classic",
             "media_type": "image",
             "show_overlay": true,
@@ -89,6 +90,8 @@
         "slide2": {
           "type": "slideshow-slide",
           "settings": {
+            "image": "shopify://shop_images/essen-slideshow-2.avif",
+            "mobile_image": "shopify://shop_images/essen-slideshow-2-mobile.avif",
             "layout": "classic",
             "media_type": "image",
             "show_overlay": true,
@@ -163,6 +166,7 @@
         "slide3": {
           "type": "slideshow-slide",
           "settings": {
+            "image": "shopify://shop_images/essen-slideshow-3.avif",
             "layout": "classic",
             "media_type": "image",
             "show_overlay": true,
@@ -297,7 +301,7 @@
           "type": "collection-tab",
           "settings": {
             "label": "Best sellers",
-            "collection": ""
+            "collection": "best-sellers-assen"
           },
           "blocks": {
             "product-card": {
@@ -316,7 +320,7 @@
           "type": "collection-tab",
           "settings": {
             "label": "Work-Casual",
-            "collection": ""
+            "collection": "work-casual-assen"
           },
           "blocks": {
             "product-card": {
@@ -335,7 +339,7 @@
           "type": "collection-tab",
           "settings": {
             "label": "Weekend basics",
-            "collection": ""
+            "collection": "weekend-basics-assen"
           },
           "blocks": {
             "product-card": {
@@ -658,12 +662,1244 @@
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 56
       }
+    },
+    "shop_the_look": {
+      "type": "shop-the-look-section",
+      "blocks": {
+        "image": {
+          "type": "image",
+          "static": true,
+          "settings": {
+            "image_ratio_desktop": "square",
+            "image_ratio_mobile": "square",
+            "width_desktop": "fill",
+            "width_mobile": "fill",
+            "corner_radius": "square",
+            "customize_mobile_padding": false,
+            "image": "shopify://shop_images/essen-shop-the-look.avif",
+            "alt_text": "Essen look: anthracite T-shirt, trousers and sneakers"
+          }
+        },
+        "header": {
+          "type": "header",
+          "static": true,
+          "settings": {
+            "width": "custom",
+            "max_width": 510,
+            "customize_mobile_size": true,
+            "width_mobile": "fill",
+            "inherit_alignment": false,
+            "alignment": "center",
+            "customize_mobile_alignment": true,
+            "alignment_mobile": "center",
+            "gap_desktop": 0,
+            "gap_mobile": 0
+          },
+          "blocks": {
+            "heading_1": {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Shop the Look</p>",
+                "heading_size": "xl",
+                "html_tag": "h2",
+                "width": "fill"
+              }
+            },
+            "spacer_2": {
+              "type": "spacer",
+              "settings": {
+                "unit_desktop": "pixel",
+                "size_desktop_px": 40,
+                "show_on_mobile": true,
+                "unit_mobile": "pixel",
+                "size_mobile_px": 36
+              }
+            }
+          },
+          "block_order": [
+            "heading_1",
+            "spacer_2"
+          ]
+        },
+        "product-list": {
+          "type": "shop-the-look-products",
+          "static": true,
+          "blocks": {
+            "shop-the-look-product_1": {
+              "type": "shop-the-look-product",
+              "settings": {
+                "show_hotspot": true,
+                "hotspot_horizontal": 63,
+                "hotspot_vertical": 24,
+                "customize_mobile_position": true,
+                "hotspot_horizontal_mobile": 63,
+                "hotspot_vertical_mobile": 27,
+                "product": "ts-01-essence-oversized-heavyweight-anthracite-2-0"
+              }
+            },
+            "shop-the-look-product_2": {
+              "type": "shop-the-look-product",
+              "settings": {
+                "show_hotspot": true,
+                "hotspot_horizontal": 79,
+                "hotspot_vertical": 52,
+                "customize_mobile_position": true,
+                "hotspot_horizontal_mobile": 78,
+                "hotspot_vertical_mobile": 54,
+                "product": "tp-01-essence-straight-black-2-0"
+              }
+            },
+            "shop-the-look-product_3": {
+              "type": "shop-the-look-product",
+              "settings": {
+                "show_hotspot": true,
+                "hotspot_horizontal": 41,
+                "hotspot_vertical": 85,
+                "customize_mobile_position": true,
+                "hotspot_horizontal_mobile": 40,
+                "hotspot_vertical_mobile": 85,
+                "product": "lt-07-premium-nappa-white-blueberry"
+              }
+            }
+          },
+          "settings": {
+            "layout_type": "carousel",
+            "columns_desktop": "1",
+            "columns_mobile": "1",
+            "product_gap_desktop": 4,
+            "product_gap_mobile": 4,
+            "show_navigation_on_desktop": true,
+            "navigation_position": "outside",
+            "navigation_style": "icon_only",
+            "navigation_icon": "chevron",
+            "navigation_behavior": "always",
+            "show_pagination_on_desktop": true,
+            "pagination_type": "progress_bar",
+            "pagination_top_padding_desktop": 40,
+            "pagination_top_padding_mobile": 36,
+            "pagination_limit_width": true,
+            "pagination_max_width": 180,
+            "autoplay": false,
+            "autoplay_pause_on_hover": true,
+            "autoplay_speed": 4
+          },
+          "block_order": [
+            "shop-the-look-product_1",
+            "shop-the-look-product_2",
+            "shop-the-look-product_3"
+          ]
+        }
+      },
+      "settings": {
+        "section_width": "full_width_no_padding",
+        "media_position": "right",
+        "mobile_media_position": "first",
+        "gap_desktop": 0,
+        "gap_mobile": 56,
+        "color_scheme": "scheme-2",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "blocks": {
+        "header": {
+          "type": "header",
+          "static": true,
+          "settings": {
+            "width": "custom",
+            "gap_desktop": 16,
+            "gap_mobile": 16,
+            "max_width": 770,
+            "customize_mobile_size": true,
+            "width_mobile": "fill",
+            "inherit_alignment": true
+          },
+          "blocks": {
+            "heading_1": {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Trending this week</p>",
+                "heading_size": "lg",
+                "html_tag": "h2",
+                "width": "fill"
+              }
+            }
+          },
+          "block_order": [
+            "heading_1"
+          ]
+        },
+        "featured-collection-view-all": {
+          "type": "view-all-button",
+          "static": true,
+          "settings": {
+            "button_label": "View all",
+            "button_style": "text",
+            "button_style_mobile": "text",
+            "button_height_mobile": "inherit",
+            "full_width_mobile": false,
+            "show_icon": false,
+            "show_icon_mobile": false
+          }
+        },
+        "product-list": {
+          "type": "product-list",
+          "static": true,
+          "settings": {
+            "collection": "trending-this-week-assen",
+            "max_products": 4,
+            "layout_type": "carousel",
+            "columns_desktop": "4",
+            "columns_mobile": "2",
+            "show_next_slide_preview_on_desktop": false,
+            "product_gap_desktop": 24,
+            "product_gap_mobile": 12,
+            "show_navigation_on_desktop": true,
+            "navigation_position": "top",
+            "navigation_style": "icon_only",
+            "navigation_icon": "chevron",
+            "show_pagination_on_desktop": true,
+            "pagination_type": "progress_bar",
+            "pagination_top_padding_desktop": 48,
+            "pagination_top_padding_mobile": 36,
+            "pagination_limit_width": false,
+            "pagination_max_width": 260,
+            "autoplay": false,
+            "autoplay_pause_on_hover": true,
+            "autoplay_speed": 4,
+            "navigation_behavior": "always"
+          },
+          "blocks": {
+            "product-card": {
+              "type": "product-card",
+              "static": true,
+              "settings": {
+                "color_type": "inherit",
+                "color_scheme": "scheme-1"
+              }
+            }
+          },
+          "block_order": []
+        }
+      },
+      "block_order": [],
+      "settings": {
+        "section_width": "full_width",
+        "desktop_alignment": "left",
+        "mobile_alignment": "left",
+        "gap_desktop": 40,
+        "gap_mobile": 36,
+        "color_scheme": "scheme-1",
+        "customize_mobile_padding": true,
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      }
+    },
+    "countdown": {
+      "type": "countdown",
+      "blocks": {
+        "content": {
+          "type": "group",
+          "static": true,
+          "settings": {
+            "direction": "vertical",
+            "alignment": "left",
+            "alignment_mobile": "center",
+            "width": "fill",
+            "height": "fit",
+            "gap_desktop": 16,
+            "gap_mobile": 16,
+            "appearance_type": "inherit",
+            "border_type": "none",
+            "corner_radius": "square",
+            "shadow": "none",
+            "customize_mobile_padding": true,
+            "limit_width": true,
+            "max_width": 580,
+            "width_mobile": "fill",
+            "limit_width_mobile": false,
+            "customize_mobile_alignment": true,
+            "padding_left_mobile": 16,
+            "padding_right_mobile": 16
+          },
+          "blocks": {
+            "heading_1": {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Flash sale: Up to 40% Off!</p>",
+                "heading_size": "xl",
+                "html_tag": "h2",
+                "width": "fill",
+                "customize_mobile_size": true,
+                "width_mobile": "fill"
+              }
+            },
+            "text_2": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Timeless quality, limited time offer. Don't miss out.</p>",
+                "text_size": "sm",
+                "width": "fill",
+                "customize_mobile_size": true,
+                "width_mobile": "fill"
+              }
+            }
+          },
+          "block_order": [
+            "heading_1",
+            "text_2"
+          ]
+        },
+        "countdown": {
+          "type": "countdown-timer",
+          "static": true,
+          "settings": {
+            "style": "with_labels",
+            "show_background": true,
+            "corner_radius": "square",
+            "type": "fixed_time",
+            "end_time": "2026-12-25 12:00",
+            "hide_when_expired": true,
+            "number_size": "xl",
+            "label_size": "xs",
+            "color_type": "custom",
+            "number_color": "#ffffff",
+            "background_color": "#333333"
+          }
+        },
+        "button": {
+          "type": "button",
+          "static": true,
+          "settings": {
+            "button_label": "SHOP SALE",
+            "button_link": "",
+            "button_style": "secondary",
+            "button_open_in_new_tab": false,
+            "show_icon": false,
+            "width": "fit",
+            "width_mobile": "fit",
+            "customize_mobile_padding": false
+          }
+        }
+      },
+      "block_order": [],
+      "settings": {
+        "section_width": "full_width",
+        "enable_boxed_layout": false,
+        "direction": "horizontal",
+        "position": "center",
+        "horizontal_alignment": "space-between",
+        "customize_mobile_alignment": true,
+        "alignment": "left",
+        "alignment_mobile": "center",
+        "gap_desktop": 36,
+        "gap_mobile": 36,
+        "color_scheme": "scheme-3",
+        "boxed_color_scheme": "scheme-1",
+        "boxed_padding_block": 70,
+        "boxed_padding_inline": 50,
+        "boxed_padding_block_mobile": 40,
+        "boxed_padding_inline_mobile": 30,
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "featured_product_heading": {
+      "type": "rich-text",
+      "blocks": {
+        "eyebrow": {
+          "type": "eyebrow",
+          "settings": {
+            "text": ""
+          },
+          "static": true,
+          "disabled": true
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "text": "<p>Everyday uniform</p>",
+            "heading_size": "xl",
+            "html_tag": "h2",
+            "width": "fill"
+          },
+          "static": true
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": ""
+          },
+          "static": true,
+          "disabled": true
+        }
+      },
+      "block_order": [],
+      "settings": {
+        "section_width": "full_width",
+        "alignment": "left",
+        "color_scheme": "scheme-1",
+        "padding_top": 80,
+        "padding_bottom": 40,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 36
+      }
+    },
+    "featured_product": {
+      "type": "featured-product",
+      "blocks": {
+        "product-media": {
+          "type": "_product-media",
+          "settings": {
+            "desktop_layout": "grid",
+            "mobile_layout": "slider",
+            "mobile_show_next_slide": true,
+            "mobile_show_pagination": true,
+            "full_width_media": false,
+            "zoom": "open_lightbox",
+            "autoplay": false,
+            "loop_video": false,
+            "gap": 8,
+            "gap_mobile": 8
+          },
+          "static": true
+        },
+        "product-details": {
+          "type": "_product-details",
+          "settings": {
+            "alignment": "left",
+            "limit_width": false,
+            "container_position": "left",
+            "gap_desktop": 24,
+            "gap_mobile": 24,
+            "border_thickness": 0,
+            "corner_radius": "square",
+            "shadow": "none",
+            "appearance_type": "inherit",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0
+          },
+          "static": true,
+          "blocks": {
+            "group_1": {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "left",
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 20,
+                "gap_mobile": 20
+              },
+              "blocks": {
+                "group_1": {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "alignment": "left",
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "gap_desktop": 8,
+                    "gap_mobile": 8
+                  },
+                  "blocks": {
+                    "product-title_1": {
+                      "type": "product-title",
+                      "settings": {
+                        "heading_size": "sm",
+                        "html_tag": "h3",
+                        "text_case": "original"
+                      }
+                    },
+                    "text_2": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Italian Fleece</p>",
+                        "text_size": "sm",
+                        "text_color": "#999999",
+                        "width": "fill"
+                      }
+                    },
+                    "product-price_3": {
+                      "type": "product-price",
+                      "settings": {
+                        "font": "body",
+                        "font_size": "lg",
+                        "show_sale_badge": false,
+                        "show_tax_shipping_notice": false
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "product-title_1",
+                    "text_2",
+                    "product-price_3"
+                  ]
+                },
+                "divider_2": {
+                  "type": "divider",
+                  "settings": {
+                    "style": "solid",
+                    "thickness": "thin",
+                    "color": "custom",
+                    "custom_color": "#e6e6e6",
+                    "width": "full",
+                    "desktop_spacing": 0,
+                    "mobile_spacing": 0
+                  }
+                },
+                "product-variant-picker_3": {
+                  "type": "product-variant-picker",
+                  "settings": {
+                    "show_option_names": true,
+                    "color_option_display": "text"
+                  }
+                },
+                "product-buy-buttons_4": {
+                  "type": "product-buy-buttons",
+                  "settings": {
+                    "gap_desktop": 20,
+                    "gap_mobile": 20,
+                    "show_back_in_stock_button": false,
+                    "show_gift_card_form": false
+                  },
+                  "blocks": {
+                    "quantity": {
+                      "type": "product-buy-quantity",
+                      "settings": {
+                        "style": "default"
+                      },
+                      "static": true
+                    },
+                    "add-to-cart": {
+                      "type": "product-buy-add-to-cart",
+                      "settings": {
+                        "show_price": false,
+                        "style": "primary"
+                      },
+                      "static": true
+                    },
+                    "accelerated-checkout": {
+                      "type": "product-buy-accelerated-checkout",
+                      "settings": {},
+                      "static": true,
+                      "disabled": true
+                    }
+                  },
+                  "block_order": []
+                }
+              },
+              "block_order": [
+                "group_1",
+                "divider_2",
+                "product-variant-picker_3",
+                "product-buy-buttons_4"
+              ]
+            },
+            "button-view-details_2": {
+              "type": "button-view-details",
+              "settings": {
+                "label": "View Full Details",
+                "show_icon": false,
+                "padding_top": 0,
+                "padding_bottom": 0
+              }
+            }
+          },
+          "block_order": [
+            "group_1",
+            "button-view-details_2"
+          ]
+        }
+      },
+      "block_order": [],
+      "settings": {
+        "sticky_content": true,
+        "width": "full",
+        "media_width": "medium",
+        "gap": 40,
+        "gap_mobile": 28,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56,
+        "product": "ts-01-essence-regular-heavyweight-black-2-0"
+      }
+    },
+    "icon_with_text_custom": {
+      "type": "icon-with-text-custom",
+      "settings": {
+        "section_width": "page_width",
+        "alignment": "center",
+        "color_scheme": "scheme-1",
+        "background_color": "#f8f8f8",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      },
+      "blocks": {
+        "grid": {
+          "type": "grid",
+          "settings": {
+            "columns_desktop": 3,
+            "columns_tablet": 3,
+            "columns_mobile": 1,
+            "gap": 40,
+            "gap_mobile": 40,
+            "alignment": "top"
+          },
+          "blocks": {
+            "card_1": {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "center",
+                "alignment_mobile": "center",
+                "customize_mobile_alignment": false,
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 20,
+                "gap_mobile": 20,
+                "padding_left": 32,
+                "padding_right": 32,
+                "customize_mobile_padding": true,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": {
+                "card_1_1": {
+                  "type": "icon",
+                  "settings": {
+                    "source": "custom",
+                    "custom_icon": "<svg preserveAspectRatio=\"none\" overflow=\"visible\" style=\"display: block;\" width=\"28\" height=\"28\" viewBox=\"0 0 28 28\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g id=\"icon\" clip-path=\"url(#clip0_0_9)\">\n<path id=\"Vector\" d=\"M23.9574 6.61752C19.4282 6.61752 13.1088 0.518812 13.0456 0.457344L12.5761 -1.16747e-07L1.33332 7.3016L2.0496 8.01788C2.17516 8.1435 3.59007 9.54605 5.58334 11.0452L1.34206 13.8727L2.0496 14.5803C2.17516 14.7058 3.59007 16.1084 5.58334 17.6076L1.34556 20.4328L2.04719 21.1403C2.32495 21.4204 8.9101 28.0001 14.1138 28.0001H14.3639L26.648 19.7424H23.9574C22.6649 19.7424 21.0387 19.1958 19.2075 18.1527L26.6666 13.18H23.9573C22.6648 13.18 21.0387 12.6334 19.2075 11.5903L26.6666 6.61758L23.9574 6.61752ZM21.7609 21.0507L13.8724 26.3535C10.2901 26.1819 5.69643 22.2889 3.9393 20.6753L7.01515 18.6247C9.20223 20.0864 11.7952 21.3829 14.1138 21.3829H14.3622L17.6943 19.1614C19.1596 20.0668 20.5194 20.6987 21.7609 21.0507ZM21.7507 14.4855L13.874 19.7366C10.2941 19.5677 5.70518 15.7144 3.94307 14.1104L7.01515 12.0623C9.20229 13.524 11.7953 14.8205 14.1138 14.8205H14.3622L17.6943 12.599C19.1556 13.5019 20.5119 14.1328 21.7507 14.4855ZM13.874 13.1742C10.3006 13.0056 5.7217 9.16587 3.95259 7.55671L12.3813 2.08274C13.7611 3.34278 17.8371 6.83441 21.7448 7.92699L13.874 13.1742Z\" fill=\"#111111\"/>\n<g id=\"Group\">\n<path id=\"Vector_2\" d=\"M23.9574 6.61752C19.4282 6.61752 13.1088 0.518812 13.0456 0.457344L12.5761 -1.16747e-07L1.33332 7.3016L2.0496 8.01788C2.17516 8.1435 3.59007 9.54605 5.58334 11.0452L1.34206 13.8727L2.0496 14.5803C2.17516 14.7058 3.59007 16.1084 5.58334 17.6076L1.34556 20.4328L2.04719 21.1403C2.32495 21.4204 8.9101 28.0001 14.1138 28.0001H14.3639L26.648 19.7424H23.9574C22.6649 19.7424 21.0387 19.1958 19.2075 18.1527L26.6666 13.18H23.9573C22.6648 13.18 21.0387 12.6334 19.2075 11.5903L26.6666 6.61758L23.9574 6.61752ZM21.7609 21.0507L13.8724 26.3535C10.2901 26.1819 5.69643 22.2889 3.9393 20.6753L7.01515 18.6247C9.20223 20.0864 11.7952 21.3829 14.1138 21.3829H14.3622L17.6943 19.1614C19.1596 20.0668 20.5194 20.6987 21.7609 21.0507ZM21.7507 14.4855L13.874 19.7366C10.2941 19.5677 5.70518 15.7144 3.94307 14.1104L7.01515 12.0623C9.20229 13.524 11.7953 14.8205 14.1138 14.8205H14.3622L17.6943 12.599C19.1556 13.5019 20.5119 14.1328 21.7507 14.4855ZM13.874 13.1742C10.3006 13.0056 5.7217 9.16587 3.95259 7.55671L12.3813 2.08274C13.7611 3.34278 17.8371 6.83441 21.7448 7.92699L13.874 13.1742Z\" fill=\"#111111\"/>\n</g>\n</g>\n<defs>\n<clipPath id=\"clip0_0_9\">\n<rect width=\"28\" height=\"28\" fill=\"white\"/>\n</clipPath>\n</defs>\n</svg>\n",
+                    "icon_width": 28,
+                    "icon_padding": 0
+                  }
+                },
+                "card_1_2": {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "alignment": "center",
+                    "alignment_mobile": "center",
+                    "customize_mobile_alignment": false,
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "gap_desktop": 10,
+                    "gap_mobile": 10
+                  },
+                  "blocks": {
+                    "card_1_2_1": {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>Responsible materials</p>",
+                        "heading_size": "sm",
+                        "html_tag": "h3",
+                        "width": "fill"
+                      }
+                    },
+                    "card_1_2_2": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Our philosophy: to create timeless clothes, not compromising on the future.</p>",
+                        "text_size": "sm",
+                        "width": "fill"
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "card_1_2_1",
+                    "card_1_2_2"
+                  ]
+                }
+              },
+              "block_order": [
+                "card_1_1",
+                "card_1_2"
+              ]
+            },
+            "card_2": {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "center",
+                "alignment_mobile": "center",
+                "customize_mobile_alignment": false,
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 20,
+                "gap_mobile": 20,
+                "padding_left": 32,
+                "padding_right": 32,
+                "customize_mobile_padding": true,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": {
+                "card_2_1": {
+                  "type": "icon",
+                  "settings": {
+                    "source": "custom",
+                    "custom_icon": "<svg preserveAspectRatio=\"none\" overflow=\"visible\" style=\"display: block;\" width=\"28\" height=\"27.9443\" viewBox=\"0 0 28 27.9443\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g id=\"Group\">\n<path id=\"Vector\" d=\"M22.6441 0H5.35585L0 7.38732L14 27.9443L28 7.38732L22.6441 0ZM19.4261 8.22459L14 23.9602L8.57391 8.22459H19.4261ZM11.6553 6.57967H2.61728L5.93503 2.00345L11.6553 6.57967ZM8.12008 1.64492H19.8799L14 6.34889L8.12008 1.64492ZM6.83397 8.22459L11.2171 20.9358L2.56037 8.22459H6.83397ZM21.166 8.22459H25.4396L16.7829 20.9358L21.166 8.22459ZM16.3447 6.57967L22.0649 2.00345L25.3827 6.57967H16.3447Z\" fill=\"#111111\"/>\n</g>\n</svg>\n",
+                    "icon_width": 28,
+                    "icon_padding": 0
+                  }
+                },
+                "card_2_2": {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "alignment": "center",
+                    "alignment_mobile": "center",
+                    "customize_mobile_alignment": false,
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "gap_desktop": 10,
+                    "gap_mobile": 10
+                  },
+                  "blocks": {
+                    "card_2_2_1": {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>Small-batch production</p>",
+                        "heading_size": "sm",
+                        "html_tag": "h3",
+                        "width": "fill"
+                      }
+                    },
+                    "card_2_2_2": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We focus on every detail, ensuring the precision of every seam and superior fabric quality.</p>",
+                        "text_size": "sm",
+                        "width": "fill"
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "card_2_2_1",
+                    "card_2_2_2"
+                  ]
+                }
+              },
+              "block_order": [
+                "card_2_1",
+                "card_2_2"
+              ]
+            },
+            "card_3": {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "center",
+                "alignment_mobile": "center",
+                "customize_mobile_alignment": false,
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 20,
+                "gap_mobile": 20,
+                "padding_left": 32,
+                "padding_right": 32,
+                "customize_mobile_padding": true,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": {
+                "card_3_1": {
+                  "type": "icon",
+                  "settings": {
+                    "source": "custom",
+                    "custom_icon": "<svg preserveAspectRatio=\"none\" overflow=\"visible\" style=\"display: block;\" width=\"28\" height=\"28\" viewBox=\"0 0 28 28\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g id=\"Group\">\n<path id=\"Vector\" d=\"M23.7705 16.089V6.86197L11.8853 0L0 6.86197V20.5859L11.8853 27.4479L16.5164 24.7741C17.5462 26.6924 19.5717 28 21.8972 28C25.2623 28 28 25.2623 28 21.8972C28 19.1855 26.2219 16.8815 23.7705 16.089ZM21.3096 7.33556L11.8852 12.7768L2.46094 7.33556L11.8853 1.89443L21.3096 7.33556ZM1.64062 8.75634L11.065 14.1975V25.0798L1.64062 19.6387V8.75634ZM12.7056 25.0798V14.1975L22.13 8.75634V15.7993C22.0527 15.7964 21.9752 15.7945 21.8973 15.7945C18.5322 15.7945 15.7945 18.5322 15.7945 21.8972C15.7945 22.3491 15.8443 22.7895 15.9379 23.2136L12.7056 25.0798ZM21.8972 26.3594C19.4368 26.3594 17.435 24.3576 17.435 21.8972C17.435 19.4368 19.4368 17.4351 21.8972 17.4351C24.3576 17.4351 26.3594 19.4368 26.3594 21.8972C26.3594 24.3576 24.3576 26.3594 21.8972 26.3594Z\" fill=\"#111111\"/>\n<path id=\"Vector_2\" d=\"M22.7175 19.2888H21.0769V21.0769H19.2888V22.7175H21.0769V24.5057H22.7175V22.7175H24.5056V21.0769H22.7175V19.2888Z\" fill=\"#111111\"/>\n</g>\n</svg>\n",
+                    "icon_width": 28,
+                    "icon_padding": 0
+                  }
+                },
+                "card_3_2": {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "alignment": "center",
+                    "alignment_mobile": "center",
+                    "customize_mobile_alignment": false,
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "gap_desktop": 10,
+                    "gap_mobile": 10
+                  },
+                  "blocks": {
+                    "card_3_2_1": {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>Repair & care guides</p>",
+                        "heading_size": "sm",
+                        "html_tag": "h3",
+                        "width": "fill"
+                      }
+                    },
+                    "card_3_2_2": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Detailed washing and care instructions will keep each of your items looking like new.</p>",
+                        "text_size": "sm",
+                        "width": "fill"
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "card_3_2_1",
+                    "card_3_2_2"
+                  ]
+                }
+              },
+              "block_order": [
+                "card_3_1",
+                "card_3_2"
+              ]
+            }
+          },
+          "block_order": [
+            "card_1",
+            "card_2",
+            "card_3"
+          ]
+        }
+      },
+      "block_order": [
+        "grid"
+      ]
+    },
+    "blog_posts": {
+      "type": "blog-posts",
+      "blocks": {
+        "header": {
+          "type": "header",
+          "settings": {
+            "width": "fill",
+            "inherit_alignment": true,
+            "gap_desktop": 8,
+            "gap_mobile": 8
+          },
+          "static": true,
+          "blocks": {
+            "blog_heading_1": {
+              "type": "heading",
+              "settings": {
+                "text": "<p>From the Blog</p>",
+                "heading_size": "xl",
+                "html_tag": "h2",
+                "width": "fill"
+              }
+            }
+          },
+          "block_order": [
+            "blog_heading_1"
+          ]
+        },
+        "blog-posts-view-all": {
+          "type": "view-all-button",
+          "settings": {
+            "button_label": "All Stories",
+            "button_style": "text",
+            "button_style_mobile": "text",
+            "button_height_mobile": "inherit",
+            "full_width_mobile": false,
+            "show_icon": false,
+            "show_icon_mobile": false
+          },
+          "static": true
+        },
+        "blog-list": {
+          "type": "blog-list",
+          "settings": {
+            "blog": "",
+            "max_posts": 5,
+            "layout_type": "carousel",
+            "columns_desktop": "3",
+            "columns_mobile": "1",
+            "show_next_slide_preview_on_desktop": false,
+            "gap_desktop": 32,
+            "gap_mobile": 28,
+            "show_navigation_on_desktop": true,
+            "navigation_position": "top",
+            "navigation_style": "icon_only",
+            "navigation_icon": "chevron",
+            "navigation_behavior": "always",
+            "show_pagination_on_desktop": true,
+            "pagination_type": "progress_bar",
+            "pagination_padding_desktop": 48,
+            "pagination_padding_mobile": 36,
+            "pagination_limit_width": false,
+            "pagination_max_width": 260,
+            "autoplay": false,
+            "autoplay_pause_on_hover": true,
+            "autoplay_speed": 4
+          },
+          "static": true,
+          "blocks": {
+            "blog-card": {
+              "type": "blog-card",
+              "settings": {
+                "ratio": "landscape",
+                "alignment": "left",
+                "desktop_gap": 8,
+                "mobile_gap": 8,
+                "border_thickness": 0,
+                "corner_radius": "square",
+                "shadow": "none",
+                "color_type": "inherit",
+                "color_scheme": "scheme-1",
+                "padding_top": 20,
+                "padding_bottom": 0,
+                "padding_left": 16,
+                "padding_right": 16,
+                "customize_mobile_padding": false
+              },
+              "static": true,
+              "blocks": {
+                "blog_blog_card_title_2": {
+                  "type": "blog-card-title",
+                  "settings": {
+                    "line_limit": "no_limit",
+                    "heading_size": "sm",
+                    "html_tag": "h3",
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "customize_mobile_padding": false
+                  }
+                },
+                "blog_blog_card_meta_3": {
+                  "type": "blog-card-meta",
+                  "settings": {
+                    "show_date": true,
+                    "show_author": false,
+                    "show_comment_count": false,
+                    "details_order": "date_author_comment",
+                    "author_display_type": "text",
+                    "author_prefix": "by",
+                    "show_date_icon": false,
+                    "date_icon": "calendar",
+                    "date_format": "long",
+                    "show_comment_icon": false,
+                    "comment_icon": "comment",
+                    "separator_icon": "none",
+                    "layout": "horizontal",
+                    "gap": 12,
+                    "icon_size": 18,
+                    "icon_gap": 6,
+                    "size": "sm",
+                    "text_color": "#999999",
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "customize_mobile_padding": false
+                  }
+                },
+                "blog_blog_card_tag_4": {
+                  "type": "blog-card-tag",
+                  "settings": {
+                    "text_case": "original",
+                    "padding_top": 8,
+                    "style": "outline",
+                    "font": "body",
+                    "font_size": "xs",
+                    "padding_bottom": 0
+                  }
+                }
+              },
+              "block_order": [
+                "blog_blog_card_title_2",
+                "blog_blog_card_meta_3",
+                "blog_blog_card_tag_4"
+              ]
+            }
+          },
+          "block_order": []
+        }
+      },
+      "settings": {
+        "section_width": "full_width",
+        "desktop_alignment": "left",
+        "mobile_alignment": "left",
+        "gap_desktop": 40,
+        "gap_mobile": 36,
+        "color_scheme": "scheme-1",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56,
+        "blog": "from-the-blog-essen"
+      }
+    },
+    "gallery_custom": {
+      "type": "gallery-custom",
+      "settings": {
+        "section_width": "full_width_no_padding",
+        "direction": "vertical",
+        "position": "center",
+        "horizontal_alignment": "space-between",
+        "customize_mobile_alignment": true,
+        "alignment": "left",
+        "alignment_mobile": "left",
+        "gap_desktop": 0,
+        "gap_mobile": 0,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      },
+      "blocks": {
+        "gallery_1": {
+          "type": "carousel",
+          "settings": {
+            "columns_desktop": "4",
+            "columns_mobile": "1",
+            "gap_desktop": 0,
+            "gap_mobile": 0,
+            "width": "fill",
+            "show_navigation_on_desktop": false,
+            "show_pagination_on_desktop": false,
+            "show_pagination_on_mobile": false,
+            "autoplay": false,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "customize_mobile_padding": true,
+            "show_next_slide_preview_on_desktop": false,
+            "pagination_padding_desktop": 48,
+            "pagination_padding_mobile": 36,
+            "loop": false,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0
+          },
+          "blocks": {
+            "gallery_1_1": {
+              "type": "slide",
+              "settings": {
+                "direction": "vertical",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "height": "fill",
+                "appearance_type": "inherit",
+                "customize_mobile_padding": false,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0
+              },
+              "blocks": {
+                "gallery_1_1_1": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "square",
+                    "image_ratio_mobile": "square",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "limit_width_desktop": false,
+                    "limit_width_mobile": false,
+                    "corner_radius": "square",
+                    "customize_mobile_padding": false,
+                    "image": "shopify://shop_images/essen-gallery-1.avif",
+                    "alt_text": "Man wearing a white T-shirt by the sea"
+                  }
+                }
+              },
+              "block_order": [
+                "gallery_1_1_1"
+              ]
+            },
+            "gallery_1_2": {
+              "type": "slide",
+              "settings": {
+                "direction": "vertical",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "height": "fill",
+                "appearance_type": "inherit",
+                "customize_mobile_padding": false,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0
+              },
+              "blocks": {
+                "gallery_1_2_1": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "square",
+                    "image_ratio_mobile": "square",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "limit_width_desktop": false,
+                    "limit_width_mobile": false,
+                    "corner_radius": "square",
+                    "customize_mobile_padding": false,
+                    "image": "shopify://shop_images/essen-gallery-2.avif",
+                    "alt_text": "Folded black T-shirt on a light surface"
+                  }
+                }
+              },
+              "block_order": [
+                "gallery_1_2_1"
+              ]
+            },
+            "gallery_1_3": {
+              "type": "slide",
+              "settings": {
+                "direction": "vertical",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "height": "fill",
+                "appearance_type": "inherit",
+                "customize_mobile_padding": false,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0
+              },
+              "blocks": {
+                "gallery_1_3_1": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "square",
+                    "image_ratio_mobile": "square",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "limit_width_desktop": false,
+                    "limit_width_mobile": false,
+                    "corner_radius": "square",
+                    "customize_mobile_padding": false,
+                    "image": "shopify://shop_images/essen-gallery-3.avif",
+                    "alt_text": "Back of a beige polo shirt"
+                  }
+                }
+              },
+              "block_order": [
+                "gallery_1_3_1"
+              ]
+            },
+            "gallery_1_4": {
+              "type": "slide",
+              "settings": {
+                "direction": "vertical",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "height": "fill",
+                "appearance_type": "inherit",
+                "customize_mobile_padding": false,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0
+              },
+              "blocks": {
+                "gallery_1_4_1": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "square",
+                    "image_ratio_mobile": "square",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "limit_width_desktop": false,
+                    "limit_width_mobile": false,
+                    "corner_radius": "square",
+                    "customize_mobile_padding": false,
+                    "image": "shopify://shop_images/essen-gallery-4.avif",
+                    "alt_text": "Black-and-white portrait of a man wearing a black T-shirt"
+                  }
+                }
+              },
+              "block_order": [
+                "gallery_1_4_1"
+              ]
+            },
+            "gallery_1_5": {
+              "type": "slide",
+              "settings": {
+                "direction": "vertical",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "height": "fill",
+                "appearance_type": "inherit",
+                "customize_mobile_padding": false,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0
+              },
+              "blocks": {
+                "gallery_1_5_1": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "square",
+                    "image_ratio_mobile": "square",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "limit_width_desktop": false,
+                    "limit_width_mobile": false,
+                    "corner_radius": "square",
+                    "customize_mobile_padding": false,
+                    "image": "shopify://shop_images/essen-gallery-5.avif",
+                    "alt_text": "Man wearing a black long-sleeve shirt"
+                  }
+                }
+              },
+              "block_order": [
+                "gallery_1_5_1"
+              ]
+            }
+          },
+          "block_order": [
+            "gallery_1_1",
+            "gallery_1_2",
+            "gallery_1_3",
+            "gallery_1_4",
+            "gallery_1_5"
+          ]
+        }
+      },
+      "block_order": [
+        "gallery_1"
+      ]
     }
   },
   "order": [
     "slideshow",
     "collection_tabs",
     "image_cards",
-    "collection_list"
+    "collection_list",
+    "shop_the_look",
+    "featured_collection",
+    "countdown",
+    "featured_product_heading",
+    "featured_product",
+    "icon_with_text_custom",
+    "blog_posts",
+    "gallery_custom"
   ]
 }

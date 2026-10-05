@@ -1,0 +1,487 @@
+{% liquid
+  assign section_width = section.settings.section_width | default: 'page_width'
+  unless section_width == 'page_width' or section_width == 'full_width' or section_width == 'full_width_no_padding'
+    assign section_width = 'page_width'
+  endunless
+
+  assign container_width = 'page-width'
+  assign container_no_padding = false
+  if section_width == 'full_width' or section_width == 'full_width_no_padding'
+    assign container_width = 'full-width'
+  endif
+  if section_width == 'full_width_no_padding'
+    assign container_no_padding = true
+  endif
+
+  assign color_scheme = section.settings.color_scheme | default: 'scheme-1'
+  if section.settings.color_scheme.id != blank
+    assign color_scheme = section.settings.color_scheme.id
+  endif
+
+  assign alignment = section.settings.alignment | default: 'center'
+  assign flex_align = 'flex-start'
+  if alignment == 'center'
+    assign flex_align = 'center'
+  elsif alignment == 'right'
+    assign flex_align = 'flex-end'
+  endif
+
+  assign mobile_flex_align = flex_align
+  if section.settings.customize_mobile_alignment
+    assign mobile_alignment = section.settings.alignment_mobile | default: alignment
+    if mobile_alignment == 'center'
+      assign mobile_flex_align = 'center'
+    elsif mobile_alignment == 'right'
+      assign mobile_flex_align = 'flex-end'
+    else
+      assign mobile_flex_align = 'flex-start'
+    endif
+  endif
+
+  assign content_gap = section.settings.content_gap | default: 40 | plus: 0
+  assign content_gap_mobile = content_gap
+  if section.settings.customize_mobile_gap
+    assign content_gap_mobile = section.settings.content_gap_mobile | default: content_gap | plus: 0
+  endif
+
+  assign padding_top = section.settings.padding_top | default: 0 | plus: 0
+  assign padding_bottom = section.settings.padding_bottom | default: 0 | plus: 0
+  assign padding_top_mobile = padding_top
+  assign padding_bottom_mobile = padding_bottom
+  if section.settings.customize_mobile_padding
+    assign padding_top_mobile = section.settings.padding_top_mobile | default: padding_top | plus: 0
+    assign padding_bottom_mobile = section.settings.padding_bottom_mobile | default: padding_bottom | plus: 0
+  endif
+%}
+
+  <div
+    class="section-spacing icon-with-text-custom icon-with-text-custom__spacing color-scheme section-color-scope {{ color_scheme | handleize }}"
+    style="--icon-with-text-custom-align: {{ flex_align }}; --icon-with-text-custom-align-mobile: {{ mobile_flex_align }}; --icon-with-text-custom-gap: {{ content_gap }}px; --icon-with-text-custom-gap-mobile: {{ content_gap_mobile }}px; --icon-with-text-custom-padding-top: {{ padding_top }}px; --icon-with-text-custom-padding-bottom: {{ padding_bottom }}px; --icon-with-text-custom-padding-top-mobile: {{ padding_top_mobile }}px; --icon-with-text-custom-padding-bottom-mobile: {{ padding_bottom_mobile }}px;{% if section.settings.background_color != blank %} --icon-with-text-custom-background: {{ section.settings.background_color | escape }};{% endif %}"
+  >
+    {% if section.settings.background_image != blank %}
+      <div class="icon-with-text-custom__background" aria-hidden="true">
+        {{ section.settings.background_image | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 2000, 2400', sizes: '100vw', alt: '' }}
+      </div>
+    {% endif %}
+    <div class="container {{ container_width }} icon-with-text-custom__container{% if container_no_padding %} icon-with-text-custom__container--no-padding{% endif %}">
+      <div class="icon-with-text-custom__content">
+        {% content_for 'blocks' %}
+      </div>
+    </div>
+  </div>
+
+{% stylesheet %}
+  .icon-with-text-custom { width: 100%; min-width: 0; }
+  .icon-with-text-custom__spacing {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: var(--icon-with-text-custom-padding-top);
+    padding-bottom: var(--icon-with-text-custom-padding-bottom);
+    background-color: var(--icon-with-text-custom-background, var(--background-color));
+  }
+  .icon-with-text-custom__background { position: absolute; z-index: 0; inset: 0; pointer-events: none; }
+  .icon-with-text-custom__background img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .icon-with-text-custom__container { position: relative; z-index: 1; min-width: 0; }
+  .container.full-width.icon-with-text-custom__container--no-padding { padding-inline: 0; }
+  .icon-with-text-custom__content {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: var(--icon-with-text-custom-align);
+    gap: var(--icon-with-text-custom-gap);
+  }
+  .icon-with-text-custom__content > * { min-width: 0; max-width: 100%; }
+  @media (max-width: 767.98px) {
+    .icon-with-text-custom__spacing {
+      padding-top: var(--icon-with-text-custom-padding-top-mobile);
+      padding-bottom: var(--icon-with-text-custom-padding-bottom-mobile);
+    }
+    .icon-with-text-custom__content { align-items: var(--icon-with-text-custom-align-mobile); gap: var(--icon-with-text-custom-gap-mobile, var(--icon-with-text-custom-gap)); }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Icon with text (custom)",
+  "class": "section-icon-with-text-custom",
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
+  "blocks": [
+    {
+      "type": "grid"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:general.layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:labels.section_width",
+      "options": [
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "t:options.section_width.full_width_no_padding"
+        }
+      ],
+      "default": "page_width"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_alignment",
+      "label": "t:labels.customize_mobile_alignment",
+      "default": false
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment_mobile",
+      "label": "t:labels.mobile_alignment",
+      "default": "center",
+      "visible_if": "{{ section.settings.customize_mobile_alignment }}"
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "t:labels.content_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_gap",
+      "label": "t:labels.customize_mobile_layout",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "content_gap_mobile",
+      "label": "t:labels.mobile_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 12,
+      "visible_if": "{{ section.settings.customize_mobile_gap }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "background_color",
+      "label": "t:labels.background",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:labels.background_image"
+    },
+    {
+      "type": "header",
+      "content": "t:general.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:options.position.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:options.position.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.customize_mobile_padding",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 56,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 56,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Icon with text (custom)",
+      "category": "t:general.content",
+      "settings": {
+        "section_width": "page_width",
+        "alignment": "center",
+        "color_scheme": "scheme-1",
+        "background_color": "#f8f8f8",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      },
+      "blocks": [
+        {
+          "type": "grid",
+          "settings": {
+            "columns_desktop": 3,
+            "columns_tablet": 3,
+            "columns_mobile": 1,
+            "gap": 40,
+            "gap_mobile": 40,
+            "alignment": "top"
+          },
+          "blocks": [
+            {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "center",
+                "alignment_mobile": "center",
+                "customize_mobile_alignment": false,
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 20,
+                "gap_mobile": 20,
+                "padding_left": 32,
+                "padding_right": 32,
+                "customize_mobile_padding": true,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": [
+                {
+                  "type": "icon",
+                  "settings": {
+                    "source": "custom",
+                    "custom_icon": "<svg preserveAspectRatio=\"none\" overflow=\"visible\" style=\"display: block;\" width=\"28\" height=\"28\" viewBox=\"0 0 28 28\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g id=\"icon\" clip-path=\"url(#clip0_0_9)\">\n<path id=\"Vector\" d=\"M23.9574 6.61752C19.4282 6.61752 13.1088 0.518812 13.0456 0.457344L12.5761 -1.16747e-07L1.33332 7.3016L2.0496 8.01788C2.17516 8.1435 3.59007 9.54605 5.58334 11.0452L1.34206 13.8727L2.0496 14.5803C2.17516 14.7058 3.59007 16.1084 5.58334 17.6076L1.34556 20.4328L2.04719 21.1403C2.32495 21.4204 8.9101 28.0001 14.1138 28.0001H14.3639L26.648 19.7424H23.9574C22.6649 19.7424 21.0387 19.1958 19.2075 18.1527L26.6666 13.18H23.9573C22.6648 13.18 21.0387 12.6334 19.2075 11.5903L26.6666 6.61758L23.9574 6.61752ZM21.7609 21.0507L13.8724 26.3535C10.2901 26.1819 5.69643 22.2889 3.9393 20.6753L7.01515 18.6247C9.20223 20.0864 11.7952 21.3829 14.1138 21.3829H14.3622L17.6943 19.1614C19.1596 20.0668 20.5194 20.6987 21.7609 21.0507ZM21.7507 14.4855L13.874 19.7366C10.2941 19.5677 5.70518 15.7144 3.94307 14.1104L7.01515 12.0623C9.20229 13.524 11.7953 14.8205 14.1138 14.8205H14.3622L17.6943 12.599C19.1556 13.5019 20.5119 14.1328 21.7507 14.4855ZM13.874 13.1742C10.3006 13.0056 5.7217 9.16587 3.95259 7.55671L12.3813 2.08274C13.7611 3.34278 17.8371 6.83441 21.7448 7.92699L13.874 13.1742Z\" fill=\"#111111\"/>\n<g id=\"Group\">\n<path id=\"Vector_2\" d=\"M23.9574 6.61752C19.4282 6.61752 13.1088 0.518812 13.0456 0.457344L12.5761 -1.16747e-07L1.33332 7.3016L2.0496 8.01788C2.17516 8.1435 3.59007 9.54605 5.58334 11.0452L1.34206 13.8727L2.0496 14.5803C2.17516 14.7058 3.59007 16.1084 5.58334 17.6076L1.34556 20.4328L2.04719 21.1403C2.32495 21.4204 8.9101 28.0001 14.1138 28.0001H14.3639L26.648 19.7424H23.9574C22.6649 19.7424 21.0387 19.1958 19.2075 18.1527L26.6666 13.18H23.9573C22.6648 13.18 21.0387 12.6334 19.2075 11.5903L26.6666 6.61758L23.9574 6.61752ZM21.7609 21.0507L13.8724 26.3535C10.2901 26.1819 5.69643 22.2889 3.9393 20.6753L7.01515 18.6247C9.20223 20.0864 11.7952 21.3829 14.1138 21.3829H14.3622L17.6943 19.1614C19.1596 20.0668 20.5194 20.6987 21.7609 21.0507ZM21.7507 14.4855L13.874 19.7366C10.2941 19.5677 5.70518 15.7144 3.94307 14.1104L7.01515 12.0623C9.20229 13.524 11.7953 14.8205 14.1138 14.8205H14.3622L17.6943 12.599C19.1556 13.5019 20.5119 14.1328 21.7507 14.4855ZM13.874 13.1742C10.3006 13.0056 5.7217 9.16587 3.95259 7.55671L12.3813 2.08274C13.7611 3.34278 17.8371 6.83441 21.7448 7.92699L13.874 13.1742Z\" fill=\"#111111\"/>\n</g>\n</g>\n<defs>\n<clipPath id=\"clip0_0_9\">\n<rect width=\"28\" height=\"28\" fill=\"white\"/>\n</clipPath>\n</defs>\n</svg>\n",
+                    "icon_width": 28,
+                    "icon_padding": 0
+                  }
+                },
+                {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "alignment": "center",
+                    "alignment_mobile": "center",
+                    "customize_mobile_alignment": false,
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "gap_desktop": 10,
+                    "gap_mobile": 10
+                  },
+                  "blocks": [
+                    {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>Responsible materials</p>",
+                        "heading_size": "sm",
+                        "html_tag": "h3",
+                        "width": "fill"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Our philosophy: to create timeless clothes, not compromising on the future.</p>",
+                        "text_size": "sm",
+                        "width": "fill"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "center",
+                "alignment_mobile": "center",
+                "customize_mobile_alignment": false,
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 20,
+                "gap_mobile": 20,
+                "padding_left": 32,
+                "padding_right": 32,
+                "customize_mobile_padding": true,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": [
+                {
+                  "type": "icon",
+                  "settings": {
+                    "source": "custom",
+                    "custom_icon": "<svg preserveAspectRatio=\"none\" overflow=\"visible\" style=\"display: block;\" width=\"28\" height=\"27.9443\" viewBox=\"0 0 28 27.9443\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g id=\"Group\">\n<path id=\"Vector\" d=\"M22.6441 0H5.35585L0 7.38732L14 27.9443L28 7.38732L22.6441 0ZM19.4261 8.22459L14 23.9602L8.57391 8.22459H19.4261ZM11.6553 6.57967H2.61728L5.93503 2.00345L11.6553 6.57967ZM8.12008 1.64492H19.8799L14 6.34889L8.12008 1.64492ZM6.83397 8.22459L11.2171 20.9358L2.56037 8.22459H6.83397ZM21.166 8.22459H25.4396L16.7829 20.9358L21.166 8.22459ZM16.3447 6.57967L22.0649 2.00345L25.3827 6.57967H16.3447Z\" fill=\"#111111\"/>\n</g>\n</svg>\n",
+                    "icon_width": 28,
+                    "icon_padding": 0
+                  }
+                },
+                {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "alignment": "center",
+                    "alignment_mobile": "center",
+                    "customize_mobile_alignment": false,
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "gap_desktop": 10,
+                    "gap_mobile": 10
+                  },
+                  "blocks": [
+                    {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>Small-batch production</p>",
+                        "heading_size": "sm",
+                        "html_tag": "h3",
+                        "width": "fill"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We focus on every detail, ensuring the precision of every seam and superior fabric quality.</p>",
+                        "text_size": "sm",
+                        "width": "fill"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "center",
+                "alignment_mobile": "center",
+                "customize_mobile_alignment": false,
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 20,
+                "gap_mobile": 20,
+                "padding_left": 32,
+                "padding_right": 32,
+                "customize_mobile_padding": true,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": [
+                {
+                  "type": "icon",
+                  "settings": {
+                    "source": "custom",
+                    "custom_icon": "<svg preserveAspectRatio=\"none\" overflow=\"visible\" style=\"display: block;\" width=\"28\" height=\"28\" viewBox=\"0 0 28 28\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g id=\"Group\">\n<path id=\"Vector\" d=\"M23.7705 16.089V6.86197L11.8853 0L0 6.86197V20.5859L11.8853 27.4479L16.5164 24.7741C17.5462 26.6924 19.5717 28 21.8972 28C25.2623 28 28 25.2623 28 21.8972C28 19.1855 26.2219 16.8815 23.7705 16.089ZM21.3096 7.33556L11.8852 12.7768L2.46094 7.33556L11.8853 1.89443L21.3096 7.33556ZM1.64062 8.75634L11.065 14.1975V25.0798L1.64062 19.6387V8.75634ZM12.7056 25.0798V14.1975L22.13 8.75634V15.7993C22.0527 15.7964 21.9752 15.7945 21.8973 15.7945C18.5322 15.7945 15.7945 18.5322 15.7945 21.8972C15.7945 22.3491 15.8443 22.7895 15.9379 23.2136L12.7056 25.0798ZM21.8972 26.3594C19.4368 26.3594 17.435 24.3576 17.435 21.8972C17.435 19.4368 19.4368 17.4351 21.8972 17.4351C24.3576 17.4351 26.3594 19.4368 26.3594 21.8972C26.3594 24.3576 24.3576 26.3594 21.8972 26.3594Z\" fill=\"#111111\"/>\n<path id=\"Vector_2\" d=\"M22.7175 19.2888H21.0769V21.0769H19.2888V22.7175H21.0769V24.5057H22.7175V22.7175H24.5056V21.0769H22.7175V19.2888Z\" fill=\"#111111\"/>\n</g>\n</svg>\n",
+                    "icon_width": 28,
+                    "icon_padding": 0
+                  }
+                },
+                {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "alignment": "center",
+                    "alignment_mobile": "center",
+                    "customize_mobile_alignment": false,
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "gap_desktop": 10,
+                    "gap_mobile": 10
+                  },
+                  "blocks": [
+                    {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>Repair & care guides</p>",
+                        "heading_size": "sm",
+                        "html_tag": "h3",
+                        "width": "fill"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Detailed washing and care instructions will keep each of your items looking like new.</p>",
+                        "text_size": "sm",
+                        "width": "fill"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "max_blocks": 1
+}
+{% endschema %}
