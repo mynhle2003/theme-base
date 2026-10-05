@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"0eee77c2125c6fffe1a1c07566b2b534cad3c5ad"} -->
+<!-- theme-base-sync-state: {"sha":"020c10f081adeda038ec99ef7b307ffc7d46ab07"} -->
 # Customization record: assen-theme
 
 Theme branch: `theme/assen-theme`
@@ -37,6 +37,24 @@ Record every theme-specific change here before committing the code. During base 
 | --- | --- | --- | --- |
 
 ## Base sync history
+
+### 2026-10-05 — Update from personal main
+
+- Previous main commit: `0eee77c2125c6fffe1a1c07566b2b534cad3c5ad`
+- Updated through main commit: `020c10f081adeda038ec99ef7b307ffc7d46ab07`
+- Main commits included: 1
+- Included main commits:
+  - `020c10f081adeda038ec99ef7b307ffc7d46ab07` — chore(base): update base with 2 upstream commits through 22b24b6b
+- Change summary:
+
+```text
+assets/product-media.js              |   4 +-
+ blocks/marquee.liquid                | 255 ++++++++++++++++++++++++++---------
+ sections/text-marquee-custom.liquid  |  73 +++-------
+ tests/product-media-pointer.test.cjs |  85 ++++++++++++
+ 4 files changed, 295 insertions(+), 122 deletions(-)
+```
+
 
 ### 2026-10-05 — Update from personal main
 
