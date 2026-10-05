@@ -1,0 +1,88 @@
+{% doc %}
+  Foreground media for the custom Zoom image banner. Owns source, ratio, width,
+  overlay and alt text. The parent owns positioning and scroll motion.
+{% enddoc %}
+{% liquid
+  assign image_width = block.settings.image_width | default: 550 | at_least: 100 | at_most: 900
+  assign ratio_width = block.settings.ratio_width | default: 600 | at_least: 1
+  assign ratio_height = block.settings.ratio_height | default: 700 | at_least: 1
+  capture image_sizes
+    echo '(min-width: 768px) '
+    echo image_width
+    echo 'px, calc(100vw - 32px)'
+  endcapture
+%}
+<div class="scrolling-image-block"
+  style="--zoom-image-width: {{ image_width }}px; --zoom-image-ratio: {{ ratio_width }} / {{ ratio_height }}; --zoom-image-overlay: {{ block.settings.overlay_opacity | divided_by: 100.0 }};"
+  {{ block.shopify_attributes }}>
+  <div class="scrolling-image-block__media" data-zoom-image>
+    {% render 'image', image: block.settings.image, mobile_image: block.settings.mobile_image, alt: block.settings.alt_text, width: 1800, widths: '400, 600, 800, 1200, 1800', sizes: image_sizes, class: 'scrolling-image-block__image' %}
+    <span class="scrolling-image-block__overlay" aria-hidden="true"></span>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Zoom foreground image",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:labels.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "t:labels.mobile_image"
+    },
+    {
+      "type": "text",
+      "id": "alt_text",
+      "label": "t:labels.alt_text"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Desktop maximum width",
+      "min": 100,
+      "max": 900,
+      "step": 10,
+      "default": 550,
+      "unit": "px"
+    },
+    {
+      "type": "number",
+      "id": "ratio_width",
+      "label": "Aspect ratio width",
+      "default": 600
+    },
+    {
+      "type": "number",
+      "id": "ratio_height",
+      "label": "Aspect ratio height",
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Image overlay opacity",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "default": 10,
+      "unit": "%"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Zoom foreground image",
+      "settings": {
+        "image_width": 550,
+        "ratio_width": 600,
+        "ratio_height": 700,
+        "overlay_opacity": 10
+      }
+    }
+  ]
+}
+{% endschema %}

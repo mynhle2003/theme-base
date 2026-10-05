@@ -1,0 +1,279 @@
+{% comment %}
+  Theme-specific editorial banner. Shared blocks own text and button presentation;
+  the section owns overlapping composition, spacing and native scroll progress.
+{% endcomment %}
+{{ 'section-zoom-image-banner.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-zoom-image-banner.js' | asset_url }}" defer="defer"></script>
+{% liquid
+  assign scheme = section.settings.color_scheme.id | default: section.settings.color_scheme | default: 'scheme-3'
+  assign container_width = 'page-width'
+  if section.settings.section_width != 'page_width'
+    assign container_width = 'full-width'
+  endif
+  assign content_width = section.settings.content_width | default: 768 | at_least: 320 | at_most: 1200
+  assign enable_zoom = section.settings.enable_zoom
+  if settings.motion_image_zoom == false
+    assign enable_zoom = false
+  endif
+  assign padding_top_mobile = section.settings.padding_top
+  assign padding_bottom_mobile = section.settings.padding_bottom
+  if section.settings.customize_mobile_padding
+    assign padding_top_mobile = section.settings.padding_top_mobile
+    assign padding_bottom_mobile = section.settings.padding_bottom_mobile
+  endif
+%}
+<zoom-image-banner
+  class="zoom-image-banner section-spacing color-scheme section-color-scope {{ scheme }}"
+  data-zoom-enabled="{{ enable_zoom }}"
+  data-zoom-amount="{{ section.settings.zoom_amount }}"
+  style="--zoom-content-width: {{ content_width }}px; --zoom-background-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }}; --section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px; --section-padding-top-mobile: {{ padding_top_mobile }}px; --section-padding-bottom-mobile: {{ padding_bottom_mobile }}px;"
+>
+  <div class="zoom-image-banner__background" aria-hidden="true">
+    {% render 'media-background', media_type: 'image', image: section.settings.background_image, mobile_image: section.settings.mobile_background_image, sizes: '100vw', aria_hidden: true %}
+    <span class="zoom-image-banner__overlay"></span>
+  </div>
+  <div class="zoom-image-banner__content container {{ container_width }}{% if section.settings.section_width == 'full_width_no_padding' %} zoom-image-banner__content--no-padding{% endif %}">
+    {% content_for 'blocks' %}
+  </div>
+</zoom-image-banner>
+{% schema %}
+{
+  "name": "Zoom image banner",
+  "tag": "section",
+  "class": "section-zoom-image-banner",
+  "enabled_on": {
+    "templates": [
+      "index",
+      "page",
+      "collection",
+      "product"
+    ]
+  },
+  "max_blocks": 2,
+  "blocks": [
+    {
+      "type": "group"
+    },
+    {
+      "type": "scrolling-image"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:general.layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:labels.section_width",
+      "options": [
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "t:options.section_width.full_width_no_padding"
+        }
+      ],
+      "default": "full_width"
+    },
+    {
+      "type": "number",
+      "id": "content_width",
+      "label": "Content maximum width",
+      "default": 768
+    },
+    {
+      "type": "header",
+      "content": "t:general.media"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:labels.background_image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Mobile background image"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Background overlay opacity",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "default": 0,
+      "unit": "%"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-3"
+    },
+    {
+      "type": "header",
+      "content": "Scroll zoom"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_zoom",
+      "label": "Enable scroll zoom",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "zoom_amount",
+      "label": "Zoom amount",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 12,
+      "unit": "%",
+      "visible_if": "{{ section.settings.enable_zoom }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:labels.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:labels.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.customize_mobile_padding",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 80,
+      "unit": "px",
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 80,
+      "unit": "px",
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Zoom image banner",
+      "category": "t:general.banners",
+      "settings": {
+        "section_width": "full_width",
+        "color_scheme": "scheme-3",
+        "overlay_opacity": 0,
+        "content_width": 768,
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "customize_mobile_padding": false,
+        "enable_zoom": true,
+        "zoom_amount": 12
+      },
+      "blocks": [
+        {
+          "type": "scrolling-image",
+          "settings": {
+            "image_width": 550,
+            "ratio_width": 600,
+            "ratio_height": 700,
+            "overlay_opacity": 10
+          }
+        },
+        {
+          "type": "group",
+          "settings": {
+            "direction": "vertical",
+            "alignment": "center",
+            "alignment_mobile": "center",
+            "width": "fill",
+            "width_mobile": "fill",
+            "limit_width": false,
+            "limit_width_mobile": false,
+            "gap_desktop": 36,
+            "gap_mobile": 36,
+            "height": "fit",
+            "appearance_type": "inherit",
+            "backdrop_blur": 0
+          },
+          "blocks": [
+            {
+              "type": "header",
+              "settings": {
+                "width": "fill",
+                "inherit_alignment": true,
+                "gap_desktop": 8,
+                "gap_mobile": 8
+              },
+              "blocks": [
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>NEW COLLECTION</p>",
+                    "show_background": false
+                  }
+                },
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Discover timeless essentials and styles for your wardrobe</p>",
+                    "heading_size": "xl",
+                    "html_tag": "h2",
+                    "width": "fill"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "button",
+              "settings": {
+                "button_label": "Explore Now",
+                "button_link": "/collections/all",
+                "button_style": "primary"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1886,6 +1886,104 @@
       "block_order": [
         "gallery_1"
       ]
+    },
+    "zoom_image_banner": {
+      "type": "zoom-image-banner",
+      "name": "Zoom image banner",
+      "settings": {
+        "section_width": "full_width",
+        "color_scheme": "scheme-3",
+        "background_image": "shopify://shop_images/assen-zoom-background.avif",
+        "overlay_opacity": 0,
+        "content_width": 768,
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "customize_mobile_padding": false,
+        "enable_zoom": true,
+        "zoom_amount": 12
+      },
+      "blocks": {
+        "scrolling-image": {
+          "type": "scrolling-image",
+          "settings": {
+            "image": "shopify://shop_images/assen-zoom-portrait.avif",
+            "image_width": 550,
+            "ratio_width": 600,
+            "ratio_height": 700,
+            "overlay_opacity": 10
+          },
+          "blocks": {}
+        },
+        "group": {
+          "type": "group",
+          "settings": {
+            "direction": "vertical",
+            "alignment": "center",
+            "alignment_mobile": "center",
+            "width": "fill",
+            "width_mobile": "fill",
+            "limit_width": false,
+            "limit_width_mobile": false,
+            "gap_desktop": 36,
+            "gap_mobile": 36,
+            "height": "fit",
+            "appearance_type": "inherit",
+            "backdrop_blur": 0
+          },
+          "blocks": {
+            "header1": {
+              "type": "header",
+              "settings": {
+                "width": "fill",
+                "inherit_alignment": true,
+                "gap_desktop": 8,
+                "gap_mobile": 8
+              },
+              "blocks": {
+                "eyebrow1": {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>NEW COLLECTION</p>",
+                    "show_background": false
+                  },
+                  "blocks": {}
+                },
+                "heading2": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Discover timeless essentials and styles for your wardrobe</p>",
+                    "heading_size": "xl",
+                    "html_tag": "h2",
+                    "width": "fill"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "eyebrow1",
+                "heading2"
+              ]
+            },
+            "button2": {
+              "type": "button",
+              "settings": {
+                "button_label": "Explore Now",
+                "button_link": "/collections/all",
+                "button_style": "primary"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "header1",
+            "button2"
+          ]
+        }
+      },
+      "block_order": [
+        "scrolling-image",
+        "group"
+      ]
     }
   },
   "order": [
@@ -1898,6 +1996,7 @@
     "countdown",
     "featured_product_heading",
     "featured_product",
+    "zoom_image_banner",
     "icon_with_text_custom",
     "blog_posts",
     "gallery_custom"
