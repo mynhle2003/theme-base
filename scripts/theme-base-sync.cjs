@@ -717,7 +717,9 @@ function buildThemeMergeTree(base, branch, mainSha, label, historyPath) {
   const themeTree = normalizedSchemaTree(branch, schemaFiles);
   const sourceWithPreservedConfig = treePreservingPaths(mainSha, branch, preservePaths);
   const sourceTree = normalizedSchemaTree(sourceWithPreservedConfig, schemaFiles);
-  return mergeTreeObjects(base, themeTree, sourceTree, label);
+  // All three sides must use the same schema marker during the implementation merge.
+  const baseAnchor = gitText(["commit-tree", baseTree, "-p", base, "-m", `Temporary merge anchor for ${label} (base)`]);
+  return mergeTreeObjects(baseAnchor, themeTree, sourceTree, label);
 }
 
 function composeThemeResultTree(tree, branch, mainSha, base, schemaRemovals = []) {
