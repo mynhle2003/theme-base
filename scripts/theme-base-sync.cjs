@@ -10,6 +10,16 @@ const { stdin, stdout } = require("node:process");
 
 const ROOT = path.resolve(__dirname, "..");
 const UPSTREAM = "https://github.com/Chieu2507/shopify-theme-base";
+const SHOPIFY_SETTING_TYPES_WITHOUT_DEFAULT_ATTRIBUTE = new Set([
+  "article",
+  "blog",
+  "collection",
+  "image_picker",
+  "page",
+  "product",
+  "video",
+]);
+const SHOPIFY_SETTING_TYPES_WITH_IMPLICIT_EMPTY_DEFAULT = new Set(["url"]);
 
 function run(command, args, { allowFailure = false, inherit = false, input, env } = {}) {
   const result = spawnSync(command, args, {
@@ -610,12 +620,20 @@ function reconcileThemeSchema(file, themeRegion, sourceRegion) {
       if (!sourceSetting || typeof sourceSetting.id !== "string") continue;
       const current = themeById.get(sourceSetting.id);
       if (!current) {
-        if (!Object.hasOwn(sourceSetting, "default")) {
+        const hasDefault = Object.hasOwn(sourceSetting, "default");
+        const defaultUnsupported = SHOPIFY_SETTING_TYPES_WITHOUT_DEFAULT_ATTRIBUTE.has(sourceSetting.type);
+        const defaultRemainsEmpty = SHOPIFY_SETTING_TYPES_WITH_IMPLICIT_EMPTY_DEFAULT.has(sourceSetting.type);
+        if (!hasDefault && !defaultUnsupported && !defaultRemainsEmpty) {
           throw new Error(`Option mới ${file} (${owner}: ${sourceSetting.id}) chưa khai báo default ở main; dừng để không tự đoán giá trị.`);
         }
         themeGroup.settings.push(cloneJson(sourceSetting));
-        const presetCount = addPresetDefault(schema, owner, sourceSetting.id, sourceSetting.default);
-        added.push({ file, owner, id: sourceSetting.id, label: sourceSetting.label || sourceSetting.content || sourceSetting.id, defaultValue: sourceSetting.default, presetCount });
+        const presetCount = hasDefault ? addPresetDefault(schema, owner, sourceSetting.id, sourceSetting.default) : 0;
+        const defaultNote = defaultUnsupported
+          ? "Shopify không hỗ trợ default cho kiểu setting này; giữ giá trị unset"
+          : defaultRemainsEmpty && !hasDefault
+            ? "main không khai báo default cho URL; giữ giá trị unset"
+            : null;
+        added.push({ file, owner, id: sourceSetting.id, label: sourceSetting.label || sourceSetting.content || sourceSetting.id, hasDefault, defaultNote, defaultValue: sourceSetting.default, presetCount });
       } else if (stableJson(current) !== stableJson(sourceSetting)) {
         const allFields = [...new Set([...Object.keys(current), ...Object.keys(sourceSetting)])];
         const changedSettingFields = allFields.filter((field) => stableJson(current[field]) !== stableJson(sourceSetting[field]));
@@ -1002,9 +1020,12 @@ async function updateOneTheme(branch) {
   console.log(`\nNguồn: main (${mainSha}). ${range.commits.length} commit main sẽ được gộp:`);
   for (const commit of range.commits) console.log(`  ${commit.sha} ${commit.subject}`);
   if (plan.addedSettings.length) {
-    console.log("\nOption mới từ main sẽ được thêm với default của main; giá trị đó cũng được thêm vào preset hiện có:");
+    console.log("\nOption mới từ main sẽ được thêm; default được chuyển vào preset khi Shopify hỗ trợ:");
     for (const item of plan.addedSettings) {
-      console.log(`  ${item.file} — ${item.owner} — ${item.id} (${item.label}); default=${JSON.stringify(item.defaultValue)}; preset được bổ sung: ${item.presetCount}`);
+      const defaultSummary = item.hasDefault
+        ? `default=${JSON.stringify(item.defaultValue)}; preset được bổ sung: ${item.presetCount}`
+        : `${item.defaultNote}; không thêm giá trị vào preset`;
+      console.log(`  ${item.file} — ${item.owner} — ${item.id} (${item.label}); ${defaultSummary}`);
     }
   }
   if (plan.removedSettings.length) {
