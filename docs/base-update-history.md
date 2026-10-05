@@ -1,6 +1,143 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"22b24b6b92a1026816957ff1373c669e0aaddb1a"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"6eacf7b70c93c4e8cd1e70ada16c70701aecebf2"} -->
 
 # Base update history
+
+## 2026-10-05 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `22b24b6b92a1026816957ff1373c669e0aaddb1a`
+- Updated through team commit: `6eacf7b70c93c4e8cd1e70ada16c70701aecebf2`
+- Team commits included: 32
+- Source changes:
+
+```text
+assets/cart-drawer.css                             |   1 +
+ assets/collections-with-tabs.js                    |  16 +
+ assets/component-overlay.css                       |   2 +
+ assets/component-pagination.css                    | 161 +++++++
+ assets/critical.css                                | 260 +++++------
+ assets/product-information.css                     |   8 -
+ assets/product-media.css                           |  25 ++
+ assets/product-media.js                            |   4 +-
+ assets/section-collection.css                      | 152 +------
+ blocks/_collection-pagination.liquid               |  45 +-
+ blocks/_header-menu.liquid                         |   6 +
+ blocks/_product-media.liquid                       |  30 +-
+ blocks/blog-archive-list.liquid                    |  27 +-
+ blocks/blog-list.liquid                            |  13 +-
+ blocks/blog-meta.liquid                            | 259 +++++++++--
+ blocks/blog-tag-filter.liquid                      | 232 ++++++++++
+ blocks/blog-title.liquid                           | 170 +++++++
+ blocks/collections-with-tabs-item.liquid           |   8 +-
+ blocks/comments.liquid                             | 258 +++++++++--
+ blocks/content.liquid                              |  35 +-
+ blocks/featured-image.liquid                       | 163 ++++++-
+ blocks/featured-post.liquid                        | 488 ++++++++++++++++++---
+ blocks/image-card.liquid                           |   2 +-
+ blocks/pagination.liquid                           | 162 ++++++-
+ blocks/previous-and-next-posts.liquid              | 178 +++++++-
+ blocks/product-buy-quantity.liquid                 |   4 +-
+ blocks/tags-and-sharing.liquid                     | 106 ++++-
+ config/settings_schema.json                        |  17 +-
+ docs/audits/article-reference-2026-10-05.md        |  26 ++
+ docs/audits/blog-reference-2026-10-05.md           |  69 +++
+ .../collections-with-tabs-color-2026-10-05.md      |  33 ++
+ locales/en.default.json                            |  24 +-
+ locales/en.default.schema.json                     |   4 +-
+ sections/announcement-bar.liquid                   |   8 +-
+ sections/article.liquid                            | 239 ++++++++--
+ sections/blog-posts.liquid                         |  22 +-
+ sections/blog.liquid                               | 318 +++++++-------
+ sections/bundle-builder.liquid                     |  10 +-
+ sections/collection-banner.liquid                  |   8 +-
+ sections/collection-list-thumbnails.liquid         |   2 +-
+ sections/collection-list.liquid                    |   4 +-
+ sections/collection-page-breadcrumb.liquid         |   4 +-
+ sections/collection-page-links.liquid              |   4 +-
+ sections/collection-tabs.liquid                    |   4 +-
+ sections/collection.liquid                         |   4 +-
+ sections/collections-with-tabs.liquid              |  11 +-
+ sections/contact-form-custom.liquid                |   4 +-
+ sections/contact-information.liquid                |   4 +-
+ sections/custom-section.liquid                     |   4 +-
+ sections/divider.liquid                            |  12 +-
+ sections/email-signup-dual-image.liquid            |   4 +-
+ sections/email-signup-form.liquid                  |   4 +-
+ sections/email-signup-single-image.liquid          |   4 +-
+ sections/faq-accordion.liquid                      |   4 +-
+ sections/faq-image-accordion.liquid                |   4 +-
+ sections/featured-blog-posts.liquid                |   4 +-
+ sections/featured-collection-banner.liquid         |   4 +-
+ sections/featured-collection.liquid                |  23 +-
+ sections/hero.liquid                               |   4 +-
+ sections/hotspot-full-width-carousel.liquid        |   4 +-
+ sections/icon-text-cards.liquid                    |   4 +-
+ sections/icon-text-inline.liquid                   |   4 +-
+ sections/image-cards.liquid                        |   4 +-
+ sections/image-text-card-grid.liquid               |  18 +-
+ sections/image-text-split-layout.liquid            |   4 +-
+ sections/location-list.liquid                      |  18 +-
+ sections/location-map.liquid                       |  18 +-
+ sections/related-posts.liquid                      | 386 ++++++++++++++++
+ sections/rich-text.liquid                          |   4 +-
+ sections/scrolling-cards.liquid                    |  10 +-
+ sections/slideshow.liquid                          |   4 +-
+ sections/testimonial-carousel.liquid               |   4 +-
+ sections/text-marquee-custom.liquid                |   8 +-
+ sections/timeline.liquid                           |   4 +-
+ snippets/css-variables.liquid                      |   4 +-
+ snippets/heading-size-token.liquid                 |  15 +
+ snippets/media-card.liquid                         |   3 +-
+ snippets/pagination-pages.liquid                   |  45 ++
+ snippets/product-card-swatches.liquid              |  24 +-
+ snippets/swatch-option.liquid                      |  31 ++
+ snippets/swatch.liquid                             |   6 +-
+ snippets/variant-picker.liquid                     | 101 +++--
+ templates/article.json                             | 190 +++++++-
+ templates/blog.json                                | 141 +++++-
+ tests/blog-archive.test.cjs                        |  79 ++++
+ tests/blog-heading-schema.test.cjs                 |  33 ++
+ tests/collections-with-tabs-color.test.cjs         |  75 ++++
+ tests/product-controls.test.cjs                    | 102 +++++
+ tests/product-media-pagination.test.cjs            |  79 ++++
+ 89 files changed, 4120 insertions(+), 1007 deletions(-)
+```
+
+- Included team commits:
+  - `da9f848ee00271f170d3cbe74b51bd80cb682e9b` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `901d6cd917e5622b57061494bb6efd535d83122f` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `0f609f8e95bea5b17c2834150e4ee18ec8d20e11` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `528b7b70a54d9c5d6ae7beff74cd2c0152070b26` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `c54acdb1d252392a0eef26f6d7c610d215cc7774` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `4b5ed5707828d382b75afd54b71356004b42d79f` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `4968d0e5397c758843fcb6a5bfe03a0cc46d6f50` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `b5f8da697829cd58d0026e632acf45662e4ae241` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `aeda2a386a3809ee56a0784be0eb0d2fd749458e` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `adba828b8c04e3803822cb20ed00c3318ef4c530` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `99d63b77dd3eaf25b94e29bb6c198c8cdaf206bb` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `81137c2af310704be7307b894f8d5880ec0a1966` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `75d6207dcf5b4ebea1bddda1fe3a928c9df5fe6d` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `ebd597c1c7ee3f920cbc96f11dadc84c60ec3033` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `bececf168431b89b5ae0a8654bfeefb01c8626b9` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `50089fe0d126d6f5e2f733ed63dace4741063204` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `64334d2d03b684514dfe060259cb3ed8a39b585f` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `77020a2809ed046e6551a28daefe0132d131eb09` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `5896fd2503aafca1d474f1d2fd3c78d4fd548b3a` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `82a4610acce8a13a3acb79e9ea368a5f718985c4` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `2d68d5fe283738d2445bd343ca1132fd17e4432e` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `16d1540eb386ca1c8c9d0b2ad634e9f5f7fce59e` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `f882eec586ac9eb32b3324ae794331fe5ccfbcd5` — feat(blog): complete archive and article with shared schema controls
+  - `f2c5768d90786b4e4e8aed64a8977289e3659e8f` — Merge remote-tracking branch 'origin/codex/spinel-chieutt-dev' into codex/spinel-chieutt-dev
+  - `7c1922d8f8b9b21cc637248b276bfe4ac348f161` — Merge remote-tracking branch 'theme-base/dev' into codex/spinel-chieutt-dev
+  - `8b31e4b7e5433bf02a5a3d33a6cc4b4caae0a4a3` — fix(schema): preserve canonical padding labels after base merge
+  - `159bf8d238f4cc477954384d67c7d844a1381035` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `32cb243e9e22e385ce98aa1e2a04adb4b4005bd2` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `b2c3b68ffae1842a13d54f4a8f9fb62070a1ccb5` — Fix active collection tab color scheme scope
+  - `a099bef50f8b4d27ebba64738f58135d49bf9372` — Merge remote-tracking branch 'origin/codex/spinel-chieutt-dev' into codex/spinel-chieutt-dev
+  - `06446db9cfad7d97818e7a6915ab86394961912e` — fix(theme): unify product swatches and media controls
+  - `6eacf7b70c93c4e8cd1e70ada16c70701aecebf2` — fix(sections): order mobile collection actions
+
 
 ## 2026-10-05 — Update from upstream/dev
 
