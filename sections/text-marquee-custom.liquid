@@ -498,37 +498,51 @@
           "settings": {
             "animation_direction": "backward",
             "animation_speed": 1,
-            "gap_desktop": 48,
-            "gap_mobile": 32,
-            "padding_top": 24,
-            "padding_bottom": 24,
+            "background_color": "#f0f0f0",
+            "gap_desktop": 16,
+            "gap_mobile": 16,
+            "padding_top": 0,
+            "padding_bottom": 0,
             "padding_left": 0,
-            "padding_right": 0
+            "padding_right": 0,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
           },
           "blocks": [
             {
               "type": "marquee-item",
               "settings": {
                 "direction": "horizontal",
-                "position": "center"
+                "position": "center",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": false,
+                "gap_desktop": 16,
+                "gap_mobile": 16
               },
               "blocks": [
                 {
-                  "type": "heading",
+                  "type": "text",
                   "settings": {
-                    "text": "<p>Diamond statement</p>",
-                    "heading_size": "md",
-                    "html_tag": "div"
+                    "text": "<p>Free 30-day returns</p>",
+                    "text_size": "sm",
+                    "text_color": "#111111",
+                    "width": "fit",
+                    "padding_left": 16,
+                    "padding_right": 16
                   }
                 },
                 {
-                  "type": "image",
+                  "type": "icon",
                   "settings": {
-                    "image_ratio_desktop": "custom",
-                    "image_ratio_custom_width_desktop": 2,
-                    "image_ratio_custom_height_desktop": 1,
-                    "width_desktop": "fill",
-                    "corner_radius": "square"
+                    "source": "custom",
+                    "icon": "square",
+                    "icon_width": 6,
+                    "icon_padding": 0,
+                    "custom_mobile": false,
+                    "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>"
                   }
                 }
               ]
@@ -537,25 +551,33 @@
               "type": "marquee-item",
               "settings": {
                 "direction": "horizontal",
-                "position": "center"
+                "position": "center",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": false,
+                "gap_desktop": 16,
+                "gap_mobile": 16
               },
               "blocks": [
                 {
-                  "type": "heading",
+                  "type": "text",
                   "settings": {
-                    "text": "<p>Birthstone</p>",
-                    "heading_size": "md",
-                    "html_tag": "div"
+                    "text": "<p>Fast shipping</p>",
+                    "text_size": "sm",
+                    "text_color": "#111111",
+                    "width": "fit",
+                    "padding_left": 16,
+                    "padding_right": 16
                   }
                 },
                 {
-                  "type": "image",
+                  "type": "icon",
                   "settings": {
-                    "image_ratio_desktop": "custom",
-                    "image_ratio_custom_width_desktop": 2,
-                    "image_ratio_custom_height_desktop": 1,
-                    "width_desktop": "fill",
-                    "corner_radius": "square"
+                    "source": "custom",
+                    "icon": "square",
+                    "icon_width": 6,
+                    "icon_padding": 0,
+                    "custom_mobile": false,
+                    "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>"
                   }
                 }
               ]
@@ -564,32 +586,54 @@
               "type": "marquee-item",
               "settings": {
                 "direction": "horizontal",
-                "position": "center"
+                "position": "center",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": false,
+                "gap_desktop": 16,
+                "gap_mobile": 16
               },
               "blocks": [
                 {
-                  "type": "heading",
+                  "type": "text",
                   "settings": {
-                    "text": "<p>Diamond statement</p>",
-                    "heading_size": "md",
-                    "html_tag": "div"
+                    "text": "<p>Easy exchanges</p>",
+                    "text_size": "sm",
+                    "text_color": "#111111",
+                    "width": "fit",
+                    "padding_left": 16,
+                    "padding_right": 16
                   }
                 },
                 {
-                  "type": "image",
+                  "type": "icon",
                   "settings": {
-                    "image_ratio_desktop": "custom",
-                    "image_ratio_custom_width_desktop": 2,
-                    "image_ratio_custom_height_desktop": 1,
-                    "width_desktop": "fill",
-                    "corner_radius": "square"
+                    "source": "custom",
+                    "icon": "square",
+                    "icon_width": 6,
+                    "icon_padding": 0,
+                    "custom_mobile": false,
+                    "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>"
                   }
                 }
               ]
             }
           ]
         }
-      ]
+      ],
+      "settings": {
+        "section_width": "full_width_no_padding",
+        "direction": "vertical",
+        "position_vertical": "left",
+        "gap_desktop": 0,
+        "gap_mobile": 0,
+        "color_scheme": "scheme-1",
+        "background_color": "#f0f0f0",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
     }
   ]
 }

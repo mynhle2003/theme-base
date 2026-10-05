@@ -497,6 +497,171 @@
         "padding_bottom_mobile": 0
       }
     },
+    "scrolling_text_images": {
+      "type": "text-marquee-custom",
+      "blocks": {
+        "marquee1": {
+          "type": "marquee",
+          "settings": {
+            "animation_direction": "backward",
+            "animation_speed": 1,
+            "background_color": "#f0f0f0",
+            "gap_desktop": 16,
+            "gap_mobile": 16,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
+          },
+          "blocks": {
+            "marquee_item1": {
+              "type": "marquee-item",
+              "settings": {
+                "direction": "horizontal",
+                "position": "center",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": false,
+                "gap_desktop": 16,
+                "gap_mobile": 16
+              },
+              "blocks": {
+                "text1": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Free 30-day returns</p>",
+                    "text_size": "sm",
+                    "text_color": "#111111",
+                    "width": "fit",
+                    "padding_left": 16,
+                    "padding_right": 16
+                  }
+                },
+                "icon2": {
+                  "type": "icon",
+                  "settings": {
+                    "source": "custom",
+                    "icon": "square",
+                    "icon_width": 6,
+                    "icon_padding": 0,
+                    "custom_mobile": false,
+                    "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>"
+                  }
+                }
+              },
+              "block_order": [
+                "text1",
+                "icon2"
+              ]
+            },
+            "marquee_item2": {
+              "type": "marquee-item",
+              "settings": {
+                "direction": "horizontal",
+                "position": "center",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": false,
+                "gap_desktop": 16,
+                "gap_mobile": 16
+              },
+              "blocks": {
+                "text1": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Fast shipping</p>",
+                    "text_size": "sm",
+                    "text_color": "#111111",
+                    "width": "fit",
+                    "padding_left": 16,
+                    "padding_right": 16
+                  }
+                },
+                "icon2": {
+                  "type": "icon",
+                  "settings": {
+                    "source": "custom",
+                    "icon": "square",
+                    "icon_width": 6,
+                    "icon_padding": 0,
+                    "custom_mobile": false,
+                    "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>"
+                  }
+                }
+              },
+              "block_order": [
+                "text1",
+                "icon2"
+              ]
+            },
+            "marquee_item3": {
+              "type": "marquee-item",
+              "settings": {
+                "direction": "horizontal",
+                "position": "center",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": false,
+                "gap_desktop": 16,
+                "gap_mobile": 16
+              },
+              "blocks": {
+                "text1": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Easy exchanges</p>",
+                    "text_size": "sm",
+                    "text_color": "#111111",
+                    "width": "fit",
+                    "padding_left": 16,
+                    "padding_right": 16
+                  }
+                },
+                "icon2": {
+                  "type": "icon",
+                  "settings": {
+                    "source": "custom",
+                    "icon": "square",
+                    "icon_width": 6,
+                    "icon_padding": 0,
+                    "custom_mobile": false,
+                    "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>"
+                  }
+                }
+              },
+              "block_order": [
+                "text1",
+                "icon2"
+              ]
+            }
+          },
+          "block_order": [
+            "marquee_item1",
+            "marquee_item2",
+            "marquee_item3"
+          ]
+        }
+      },
+      "block_order": [
+        "marquee1"
+      ],
+      "settings": {
+        "section_width": "full_width_no_padding",
+        "direction": "vertical",
+        "position_vertical": "left",
+        "gap_desktop": 0,
+        "gap_mobile": 0,
+        "color_scheme": "scheme-1",
+        "background_color": "#f0f0f0",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
     "collection_tabs": {
       "type": "collection-tabs",
       "blocks": {
@@ -888,9 +1053,9 @@
             "brand": {
               "type": "icon",
               "settings": {
-                "source": "library",
+                "source": "custom",
                 "icon": "square",
-                "custom_icon": "",
+                "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>",
                 "icon_link": "",
                 "accessible_label": "",
                 "open_in_new_tab": false,
@@ -3459,6 +3624,7 @@
   },
   "order": [
     "slideshow",
+    "scrolling_text_images",
     "collection_tabs",
     "image_cards",
     "collection_list",
