@@ -1,6 +1,28 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"823f0b095da49be3c2f59d3eedd43453048496dd"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"22b24b6b92a1026816957ff1373c669e0aaddb1a"} -->
 
 # Base update history
+
+## 2026-10-05 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `823f0b095da49be3c2f59d3eedd43453048496dd`
+- Updated through team commit: `22b24b6b92a1026816957ff1373c669e0aaddb1a`
+- Team commits included: 2
+- Source changes:
+
+```text
+assets/product-media.js              |   4 +-
+ blocks/marquee.liquid                | 254 +++++++++++++++++++++++++----------
+ sections/text-marquee-custom.liquid  |  83 +++---------
+ tests/product-media-pointer.test.cjs |  85 ++++++++++++
+ 4 files changed, 296 insertions(+), 130 deletions(-)
+```
+
+- Included team commits:
+  - `393d5187ec4eac6cf791dd3612352aef44e9db92` — fix(scrolling-text): repair marquee copies, scroll motion and padding
+  - `22b24b6b92a1026816957ff1373c669e0aaddb1a` — fix(quick-add): preserve image clicks when dragging gallery
+
 
 ## 2026-10-02 — Update from upstream/dev
 
