@@ -520,11 +520,150 @@
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 56
       }
+    },
+    "collection_list": {
+      "type": "collection-list",
+      "blocks": {
+        "header": {
+          "type": "header",
+          "static": true,
+          "settings": {
+            "width": "custom",
+            "max_width": 770,
+            "customize_mobile_size": true,
+            "width_mobile": "fill",
+            "inherit_alignment": true,
+            "gap_desktop": 12,
+            "gap_mobile": 12
+          },
+          "blocks": {
+            "brand": {
+              "type": "icon",
+              "settings": {
+                "source": "library",
+                "icon": "square",
+                "icon_width": 12
+              },
+              "blocks": {}
+            },
+            "heading": {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Explore our wardrobe essentials. Built to define your daily code.</p>",
+                "heading_size": "lg",
+                "html_tag": "h2",
+                "width": "fill"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "brand",
+            "heading"
+          ]
+        },
+        "view-all": {
+          "type": "view-all-button",
+          "static": true,
+          "settings": {
+            "button_label": "Shop all",
+            "button_link": "shopify://collections/shop-all-assen",
+            "button_style": "text",
+            "button_style_mobile": "text",
+            "full_width_mobile": false,
+            "show_icon": false,
+            "show_icon_mobile": false
+          },
+          "blocks": {}
+        },
+        "collection-list": {
+          "type": "collection-list-items",
+          "static": true,
+          "settings": {
+            "collections": [
+              "t-shirts-assen",
+              "trousers-assen",
+              "sneakers-assen",
+              "polo-shirts-assen"
+            ],
+            "layout": "carousel",
+            "columns_desktop": "4",
+            "columns_mobile": "2",
+            "show_next_slide_preview_on_desktop": false,
+            "show_next_slide_preview_on_mobile": false,
+            "gap_desktop": 4,
+            "gap_mobile": 4,
+            "show_navigation_on_desktop": true,
+            "navigation_position": "top",
+            "navigation_style": "icon_only",
+            "navigation_icon": "chevron",
+            "navigation_behavior": "always",
+            "show_pagination_on_desktop": true,
+            "pagination_type": "progress_bar",
+            "pagination_top_padding_desktop": 48,
+            "pagination_top_padding_mobile": 36,
+            "pagination_limit_width": false,
+            "autoplay": false
+          },
+          "blocks": {
+            "collection-card": {
+              "type": "collection-card",
+              "static": true,
+              "settings": {
+                "ratio": "portrait",
+                "placement": "below_image",
+                "alignment": "left",
+                "corner_radius": "square",
+                "shadow": "none",
+                "border_thickness": 0,
+                "color_type": "inherit",
+                "padding_top": 16,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0
+              },
+              "blocks": {
+                "title": {
+                  "type": "collection-card-title",
+                  "static": true,
+                  "settings": {
+                    "show_product_count": true,
+                    "heading_size": "custom",
+                    "custom_heading_size": 14,
+                    "html_tag": "h3",
+                    "product_count_font": "body",
+                    "product_count_font_size": "xs"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": []
+            }
+          },
+          "block_order": []
+        }
+      },
+      "block_order": [],
+      "settings": {
+        "section_width": "full_width",
+        "desktop_alignment": "left",
+        "mobile_alignment": "left",
+        "gap_desktop": 40,
+        "gap_mobile": 36,
+        "background_media": "none",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56
+      }
     }
   },
   "order": [
     "slideshow",
     "collection_tabs",
-    "image_cards"
+    "image_cards",
+    "collection_list"
   ]
 }
