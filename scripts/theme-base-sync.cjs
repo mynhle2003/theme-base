@@ -239,13 +239,25 @@ function previewTree(from, tree) {
 }
 
 function applyTreeDiff(from, tree) {
-  const patch = git(["diff", "--binary", from, tree]).stdout;
-  if (patch) run("git", ["apply", "--index"], { input: patch });
-  return patch;
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "theme-base-sync-patch-"));
+  const patchPath = path.join(tempDir, "changes.patch");
+  try {
+    git(["diff", "--binary", `--output=${patchPath}`, from, tree]);
+    const hasPatch = fs.existsSync(patchPath) && fs.statSync(patchPath).size > 0;
+    if (hasPatch) git(["apply", "--index", patchPath]);
+    return { tempDir, patchPath, hasPatch };
+  } catch (error) {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+    throw error;
+  }
 }
 
 function rollbackTreeDiff(patch) {
-  if (patch) run("git", ["apply", "--reverse", "--index"], { input: patch, allowFailure: true });
+  if (patch?.hasPatch) git(["apply", "--reverse", "--index", patch.patchPath], { allowFailure: true });
+}
+
+function cleanupTreeDiff(patch) {
+  if (patch?.tempDir) fs.rmSync(patch.tempDir, { recursive: true, force: true });
 }
 
 function sourceChangeRange(previousSha, targetRef) {
@@ -385,6 +397,8 @@ async function updateBase(options) {
       git(["add", "--", logPath], { allowFailure: true });
     }
     throw error;
+  } finally {
+    cleanupTreeDiff(patch);
   }
   const commitSha = gitText(["rev-parse", "--short", "HEAD"]);
   console.log(`Đã tạo ${commitSha} và push main; cập nhật ${range.commits.length} commit team đến ${targetSha}.`);
@@ -1107,6 +1121,8 @@ async function updateOneTheme(branch) {
       git(["add", "--", path.relative(ROOT, customizationRecord(branch))], { allowFailure: true });
     }
     throw error;
+  } finally {
+    cleanupTreeDiff(patch);
   }
   return true;
 }
