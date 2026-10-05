@@ -234,8 +234,7 @@ function writeTreeWithOverrides(sourceTree, overrides) {
 function previewTree(from, tree) {
   listChanges(from, tree);
   console.log("\nDiff đầy đủ để review:");
-  const diff = git(["--no-pager", "diff", "--no-ext-diff", "--no-color", from, tree]);
-  if (diff.stdout) process.stdout.write(diff.stdout);
+  git(["--no-pager", "diff", "--no-ext-diff", "--no-color", from, tree], { inherit: true });
 }
 
 function applyTreeDiff(from, tree) {
@@ -1059,8 +1058,7 @@ async function updateOneTheme(branch) {
   if (heldConfigChanges.length) {
     console.log("\nMain có thay đổi template/config dưới đây; giữ nguyên bản hiện có của theme. Diff nguồn đầy đủ:");
     console.log(heldConfigChanges.join("\n"));
-    const heldDiff = git(["--no-pager", "diff", "--no-ext-diff", "--no-color", base, mainSha, "--", ...heldConfigChanges]);
-    if (heldDiff.stdout) process.stdout.write(heldDiff.stdout);
+    git(["--no-pager", "diff", "--no-ext-diff", "--no-color", base, mainSha, "--", ...heldConfigChanges], { inherit: true });
   }
   if (addedConfigFiles.length) {
     console.log("\nFile template/config mới chưa có ở mốc base/theme sẽ được thêm từ main:");
@@ -1070,8 +1068,7 @@ async function updateOneTheme(branch) {
   if (heldSchemaFiles.length) {
     console.log("\nDiff đầy đủ từ main cho section/block có schema hoặc preset được giữ theo theme:");
     console.log(heldSchemaFiles.join("\n"));
-    const schemaDiff = git(["--no-pager", "diff", "--no-ext-diff", "--no-color", base, mainSha, "--", ...heldSchemaFiles]);
-    if (schemaDiff.stdout) process.stdout.write(schemaDiff.stdout);
+    git(["--no-pager", "diff", "--no-ext-diff", "--no-color", base, mainSha, "--", ...heldSchemaFiles], { inherit: true });
   }
 
   previewTree(branch, tree);
