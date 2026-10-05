@@ -19,7 +19,14 @@ const SHOPIFY_SETTING_TYPES_WITHOUT_DEFAULT_ATTRIBUTE = new Set([
   "product",
   "video",
 ]);
-const SHOPIFY_SETTING_TYPES_WITH_IMPLICIT_EMPTY_DEFAULT = new Set(["url"]);
+// These optional inputs return an empty/unset value when main omits default.
+// Preserve that state rather than inventing content or a color in theme presets.
+const SHOPIFY_SETTING_TYPES_WITH_IMPLICIT_EMPTY_DEFAULT = new Set([
+  "url",
+  "text",
+  "color",
+  "color_background",
+]);
 
 function run(command, args, { allowFailure = false, inherit = false, input, env } = {}) {
   const result = spawnSync(command, args, {
@@ -644,7 +651,7 @@ function reconcileThemeSchema(file, themeRegion, sourceRegion) {
         const defaultNote = defaultUnsupported
           ? "Shopify không hỗ trợ default cho kiểu setting này; giữ giá trị unset"
           : defaultRemainsEmpty && !hasDefault
-            ? "main không khai báo default cho URL; giữ giá trị unset"
+            ? `main không khai báo default cho kiểu ${sourceSetting.type}; giữ giá trị unset`
             : null;
         added.push({ file, owner, id: sourceSetting.id, label: sourceSetting.label || sourceSetting.content || sourceSetting.id, hasDefault, defaultNote, defaultValue: sourceSetting.default, presetCount });
       } else if (stableJson(current) !== stableJson(sourceSetting)) {
@@ -1249,7 +1256,11 @@ async function main() {
   }
 }
 
-main().catch((error) => {
-  console.error(`\nLỗi: ${error.message}`);
-  process.exitCode = 1;
-});
+if (require.main === module) {
+  main().catch((error) => {
+    console.error(`\nLỗi: ${error.message}`);
+    process.exitCode = 1;
+  });
+}
+
+module.exports = { reconcileThemeSchema };
