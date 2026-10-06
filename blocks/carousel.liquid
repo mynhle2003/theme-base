@@ -14,11 +14,6 @@
     assign carousel_columns_mobile = 1
   endif
 
-  assign carousel_show_next_slide_preview = false
-  if block.settings.show_next_slide_preview_on_desktop
-    assign carousel_show_next_slide_preview = true
-  endif
-
   assign image_text_card_ratio_setting = block.settings.image_text_card_ratio | default: 'auto'
   assign image_text_card_ratio = '6 / 7'
   case image_text_card_ratio_setting
@@ -202,13 +197,17 @@
   assign carousel_delay = carousel_speed | times: 1000
   assign carousel_previous_label = 'collection_tabs.previous' | t
   assign carousel_next_label = 'collection_tabs.next' | t
+  assign carousel_columns_visible_desktop = carousel_columns_desktop
+  assign carousel_columns_visible_mobile = carousel_columns_mobile
+  if block.settings.show_next_slide_preview_on_desktop and block.blocks.size > carousel_columns_desktop
+    assign carousel_columns_visible_desktop = carousel_columns_desktop | plus: 0.2857142857
+  endif
+  if block.settings.show_next_slide_preview_on_mobile and block.blocks.size > carousel_columns_mobile
+    assign carousel_columns_visible_mobile = carousel_columns_mobile | plus: 0.2857142857
+  endif
   assign carousel_has_multiple_items = false
   if block.blocks != blank and block.blocks.size > 1
     assign carousel_has_multiple_items = true
-  endif
-  assign carousel_show_next_slide_preview = false
-  if block.settings.show_next_slide_preview_on_desktop
-    assign carousel_show_next_slide_preview = true
   endif
 %}
 
@@ -232,6 +231,10 @@
 {% endcapture %}
 
 {% capture carousel_style %}
+  --carousel-columns-visible-desktop: {{ carousel_columns_visible_desktop }};
+  --carousel-columns-visible-mobile: {{ carousel_columns_visible_mobile }};
+  --carousel-gap-desktop: {{ carousel_gap_desktop }}px;
+  --carousel-gap-mobile: {{ carousel_gap_mobile }}px;
   --carousel-padding-top: {{ carousel_padding_top }}px;
   --carousel-padding-bottom: {{ carousel_padding_bottom }}px;
   {% if carousel_customize_mobile_padding %}
@@ -264,6 +267,9 @@
   class="carousel-block carousel-block--width-{{ carousel_width_mode }} carousel-block--card-icon-{{ image_text_card_toggle_icon }}"
   style="{{ carousel_style | strip }}"
   data-carousel-block
+  data-carousel-contained-preview="true"
+  data-carousel-preview-desktop="{{ block.settings.show_next_slide_preview_on_desktop }}"
+  data-carousel-preview-mobile="{{ block.settings.show_next_slide_preview_on_mobile }}"
   data-image-text-card-heading-tag="{{ image_text_card_heading_tag }}"
   data-swiper-columns-desktop="{{ carousel_columns_desktop }}"
   data-swiper-columns-mobile="{{ carousel_columns_mobile }}"
@@ -286,11 +292,9 @@
       root_class: 'carousel-block__viewport',
       aria_label: 'Carousel',
       pagination: carousel_pagination,
-      show_next_slide_preview: carousel_show_next_slide_preview,
       autoplay: carousel_autoplay,
       pause_on_hover: carousel_pause_on_hover,
-      autoplay_delay: carousel_delay,
-      show_next_slide_preview: carousel_show_next_slide_preview
+      autoplay_delay: carousel_delay
     %}
     {% if carousel_has_multiple_items and carousel_controls_style == 'standard' %}
       {% render 'swiper-navigation',
@@ -327,7 +331,15 @@
 {% stylesheet %}
   .carousel-block { width: var(--carousel-width, 100%); min-width: 0; padding-block: var(--carousel-padding-top) var(--carousel-padding-bottom); }
   .carousel-block__container { position: relative; min-width: 0; }
-  .carousel-block__viewport { width: 100%; }
+  .carousel-block__viewport {
+    --carousel-columns-visible: var(--carousel-columns-visible-desktop);
+    --carousel-gap: var(--carousel-gap-desktop);
+    width: 100%; overflow: hidden;
+  }
+  .carousel-block__viewport:not(.swiper-initialized) > .swiper-wrapper { column-gap: var(--carousel-gap); }
+  .carousel-block__viewport:not(.swiper-initialized) > .swiper-wrapper > .swiper-slide {
+    width: calc((100% + var(--carousel-gap)) / var(--carousel-columns-visible) - var(--carousel-gap));
+  }
   .carousel-block__viewport > .swiper-wrapper { column-gap: 0; }
   .carousel-block__navigation { position: absolute; z-index: 2; inset: 50% 0 auto; display: flex; justify-content: space-between; padding-inline: 0.5rem; transform: translateY(-50%); pointer-events: none; }
   .carousel-block__navigation.swiper-carousel__navigation--outside { padding-inline: 0; }
@@ -356,6 +368,10 @@
   .carousel-block__viewport > .carousel-block__pagination--progress_bar { --swiper-pagination-progressbar-size: 2px; }
   .carousel-block__viewport > .swiper-pagination:not([data-pagination-visible-desktop='true']) { display: none; }
   @media (max-width: 767.98px) {
+    .carousel-block__viewport {
+      --carousel-columns-visible: var(--carousel-columns-visible-mobile);
+      --carousel-gap: var(--carousel-gap-mobile);
+    }
     .carousel-block { padding-block: var(--carousel-padding-top-mobile, var(--carousel-padding-top)) var(--carousel-padding-bottom-mobile, var(--carousel-padding-bottom)); }
     .carousel-block__navigation { display: none; }
     .carousel-block__fraction-controls { margin-top: 1rem; }
@@ -445,6 +461,12 @@
       "type": "checkbox",
       "id": "show_next_slide_preview_on_desktop",
       "label": "t:labels.show_next_slide_preview_on_desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_next_slide_preview_on_mobile",
+      "label": "t:labels.show_next_slide_preview_on_mobile",
       "default": false
     },
     {
@@ -1144,6 +1166,7 @@
       "settings": {
         "columns_desktop": "4",
         "columns_mobile": "1",
+        "show_next_slide_preview_on_mobile": false,
         "width": "fill",
         "navigation_style": "secondary",
         "navigation_icon": "chevron",

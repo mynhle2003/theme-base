@@ -285,6 +285,9 @@
       {% endif %}
       {% render 'product-card-title', product: product, heading_tag: heading_tag %}
       {% render 'product-card-price', item: product %}
+      {% if settings.product_card_show_metafield %}
+        {% render 'product-card-metafield', product: product, key: settings.product_card_metafield_key %}
+      {% endif %}
     </div>
 
     {% if middle_content != blank %}

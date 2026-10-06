@@ -84,6 +84,7 @@
       media_gallery_id: media_gallery_id,
       block_id: block.id,
       show_option_names: show_option_names,
+      show_selected_value: block.settings.show_selected_value,
       size_chart_option_name: size_chart_option_name,
       size_chart_page: block.settings.size_chart_page,
       size_chart_desktop_layout: size_chart_desktop_layout,
@@ -111,6 +112,13 @@
       "id": "show_option_names",
       "label": "t:labels.show_option_captions",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_selected_value",
+      "label": "t:labels.show_selected_value",
+      "default": true,
+      "visible_if": "{{ block.settings.show_option_names }}"
     },
     {
       "type": "header",

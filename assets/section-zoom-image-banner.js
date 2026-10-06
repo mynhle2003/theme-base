@@ -1,7 +1,7 @@
 (() => {
-  if (customElements.get('zoom-image-banner')) return;
+  if (customElements.get('zoom-foreground-image')) return;
 
-  class ZoomImageBanner extends HTMLElement {
+  class ZoomForegroundImage extends HTMLElement {
     connectedCallback() {
       queueMicrotask(() => {
         if (this.isConnected && !this.controller) this.setup();
@@ -11,7 +11,7 @@
     setup() {
       this.images = [...this.querySelectorAll('[data-zoom-image]')];
       if (!this.images.length) return;
-      this.foreground = this.images[0].closest('.scrolling-image-block') || this;
+      this.foreground = this;
       this.controller = new AbortController();
       this.motion = matchMedia('(prefers-reduced-motion: reduce)');
       this.amount = Math.min(30, Math.max(0, Number(this.dataset.zoomAmount) || 0)) / 100;
@@ -113,5 +113,5 @@
     }
   }
 
-  customElements.define('zoom-image-banner', ZoomImageBanner);
+  customElements.define('zoom-foreground-image', ZoomForegroundImage);
 })();

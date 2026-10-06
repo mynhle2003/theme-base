@@ -54,7 +54,7 @@
 <script type="module" src="{{ 'announcement-bar.js' | asset_url }}"></script>
 
 <div
-  class="announcement-bar announcement-bar--{{ announcement_type }} announcement-bar--direction-{{ announcement_direction }} announcement-bar--navigation-{{ announcement_navigation_behavior }} color-scheme section-color-scope body-text body-{{ announcement_font_size }} {{ announcement_color_scheme }}{% if announcement_speed == 0 %} announcement-bar--static{% endif %}{% if section.settings.bottom_separator %} announcement-bar--bottom-separator{% endif %}"
+  class="announcement-bar{% if section.settings.show_close_button %} announcement-bar--dismissible{% endif %} announcement-bar--{{ announcement_type }} announcement-bar--direction-{{ announcement_direction }} announcement-bar--navigation-{{ announcement_navigation_behavior }} color-scheme section-color-scope body-text body-{{ announcement_font_size }} {{ announcement_color_scheme }}{% if announcement_speed == 0 %} announcement-bar--static{% endif %}{% if section.settings.bottom_separator %} announcement-bar--bottom-separator{% endif %}"
   data-announcement-bar
   data-announcement-type="{{ announcement_type }}"
   data-announcement-speed="{{ announcement_speed }}"
@@ -82,10 +82,24 @@
       {% render 'carousel-navigation-icon', icon: announcement_navigation_icon, direction: 'next' %}
     </button>
   </div>
+  {% if section.settings.show_close_button %}
+    <button class="announcement-bar__close" type="button" data-announcement-close aria-label="{{ 'accessibility.close_announcement' | t | escape }}">
+      {% render 'icon', icon: 'close', bare: true %}
+    </button>
+  {% endif %}
 </div>
 
 {% stylesheet %}
   .announcement-bar { --announcement-bar-loop-distance: 0px; position: relative; width: 100%; overflow: hidden; color: var(--body-color); background: var(--announcement-bar-background, var(--background-color)); padding: var(--announcement-bar-padding-top, 8px) var(--announcement-bar-padding-right, 0px) var(--announcement-bar-padding-bottom, 8px) var(--announcement-bar-padding-left, 0px); }
+  .announcement-bar[hidden] { display: none; }
+  .announcement-bar--dismissible { --announcement-close-inset: var(--page-margin-desktop, 48px); }
+  .announcement-bar--dismissible .announcement-bar__inner { padding-inline: calc(var(--announcement-close-inset) + 28px); }
+  .announcement-bar__close { position: absolute; z-index: 2; inset-inline-end: max(0px, calc(var(--announcement-close-inset) - 8px)); top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 40px; height: 40px; padding: 8px; border: 0; color: inherit; background: transparent; cursor: pointer; }
+  .announcement-bar__close .icon, .announcement-bar__close svg { display: block; width: 24px; height: 24px; }
+  .announcement-bar__close:hover { opacity: .7; }
+  .announcement-bar__close:focus-visible { outline: 2px solid currentColor; outline-offset: -3px; }
+  @media (max-width: 1023.98px) { .announcement-bar--dismissible { --announcement-close-inset: var(--page-margin-tablet, 32px); } }
+  @media (max-width: 767.98px) { .announcement-bar--dismissible { --announcement-close-inset: var(--page-margin-mobile, 16px); } }
   .announcement-bar__inner { position: relative; z-index: 1; display: flex; align-items: center; width: 100%; min-height: 2rem; }
   .announcement-bar__background, .announcement-bar__overlay, .announcement-bar__background-image, .announcement-bar__background-image > picture, .announcement-bar__background-image > picture > img { position: absolute; inset: 0; width: 100%; height: 100%; }
   .announcement-bar__background { z-index: 0; pointer-events: none; }
@@ -151,6 +165,12 @@
     }
   ],
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_close_button",
+      "label": "Show close button",
+      "default": false
+    },
     {
       "type": "header",
       "content": "Bottom separator"
@@ -421,6 +441,7 @@
       "name": "Announcement bar",
       "category": "t:general.header",
       "settings": {
+        "show_close_button": true,
         "type": "slider",
         "speed": 1,
         "direction": "left",
@@ -428,7 +449,7 @@
         "pause_on_hover": true,
         "navigation_behavior": "show_on_hover",
         "navigation_icon": "arrow",
-        "font_size": "sm",
+        "font_size": "xs",
         "background_type": "none",
         "overlay": false,
         "gap": 16,
@@ -443,31 +464,8 @@
         {
           "type": "announcement-text",
           "settings": {
-            "text": "Free shipping for all orders over $100.00",
+            "text": "FORMA. Minimal Design, Maximum Quality",
             "width": "fill"
-          }
-        },
-        {
-          "type": "discount-code",
-          "settings": {
-            "message": "<p>50% off - use code:</p>",
-            "discount_code": "BIG50",
-            "button_label": "Shop now",
-            "button_style": "tertiary",
-            "show_icon": false
-          }
-        },
-        {
-          "type": "announcement-countdown-timer",
-          "settings": {
-            "message": "<p>Hurry up! Sale ends in:</p>",
-            "style": "inline",
-            "type": "fixed_time",
-            "end_time": "2026-12-25 12:00",
-            "button_label": "Shop now",
-            "button_style": "tertiary",
-            "show_icon": false,
-            "color_type": "inherit"
           }
         }
       ]

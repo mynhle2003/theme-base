@@ -92,6 +92,13 @@
           {
             "type": "color",
             "alpha": true,
+            "id": "product_card_metafield",
+            "label": "t:labels.product_card_metafield_color",
+            "default": "#999999"
+          },
+          {
+            "type": "color",
+            "alpha": true,
             "id": "accent",
             "label": "t:labels.accent_color",
             "default": "#111111"
@@ -1136,7 +1143,7 @@
       {
         "type": "range",
         "id": "input_border_width",
-        "min": 0,
+        "min": 1,
         "max": 3,
         "step": 1,
         "unit": "px",
@@ -1496,6 +1503,20 @@
         "default": false
       },
       {
+        "type": "checkbox",
+        "id": "product_card_show_metafield",
+        "label": "t:labels.show_metafield",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "product_card_metafield_key",
+        "label": "t:labels.metafield_key",
+        "default": "custom.material",
+        "info": "t:info.product_card_metafield_key",
+        "visible_if": "{{ settings.product_card_show_metafield }}"
+      },
+      {
         "type": "header",
         "content": "t:general.swatches"
       },
@@ -1683,6 +1704,7 @@
           { "value": "color", "label": "t:options.swatch_type.color" },
           { "value": "variant_image", "label": "t:options.swatch_type.variant_image" },
           { "value": "button", "label": "t:options.variant_picker_type.button" },
+          { "value": "color_button", "label": "t:options.swatch_type.color_button" },
           { "value": "dropdown", "label": "t:options.variant_picker_type.dropdown" }
         ],
         "default": "color",
@@ -2116,4 +2138,3 @@
     ]
   }
 ]
-

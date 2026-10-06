@@ -35,13 +35,13 @@
     assign render_recipient_form = true
   endif
 
-  assign buy_gap_desktop = block.settings.gap_desktop | default: 12 | plus: 0
-  assign buy_gap_mobile = block.settings.gap_mobile | default: 12 | plus: 0
+  assign buy_gap_desktop = block.settings.gap_desktop | default: 20 | plus: 0
+  assign buy_gap_mobile = block.settings.gap_mobile | default: 20 | plus: 0
   if buy_gap_desktop < 0 or buy_gap_desktop > 48
-    assign buy_gap_desktop = 12
+    assign buy_gap_desktop = 20
   endif
   if buy_gap_mobile < 0 or buy_gap_mobile > 48
-    assign buy_gap_mobile = 12
+    assign buy_gap_mobile = 20
   endif
 
   assign buy_padding_top = block.settings.padding_top | default: 0 | plus: 0
@@ -162,7 +162,7 @@
 %}
 
 {% capture buy_style %}
-  {% if buy_gap_desktop != 12 %}--product-buy-buttons-gap: {{ buy_gap_desktop }}px;{% endif %}
+  {% if buy_gap_desktop != 20 %}--product-buy-buttons-gap: {{ buy_gap_desktop }}px;{% endif %}
   {% if buy_gap_mobile != buy_gap_desktop %}--product-buy-buttons-gap-mobile: {{ buy_gap_mobile }}px;{% endif %}
   {% if buy_padding_top != 0 %}--product-buy-buttons-padding-top: {{ buy_padding_top }}px;{% endif %}
   {% if buy_padding_bottom != 0 %}--product-buy-buttons-padding-bottom: {{ buy_padding_bottom }}px;{% endif %}
@@ -412,7 +412,7 @@
       "max": 48,
       "step": 1,
       "unit": "px",
-      "default": 12
+      "default": 20
     },
     {
       "type": "range",
@@ -422,7 +422,7 @@
       "max": 48,
       "step": 1,
       "unit": "px",
-      "default": 12
+      "default": 20
     },
     {
       "type": "header",

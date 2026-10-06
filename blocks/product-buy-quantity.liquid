@@ -37,6 +37,12 @@
   "tag": null,
   "settings": [
     {
+      "type": "text",
+      "id": "label",
+      "label": "t:labels.label",
+      "default": "Quantity"
+    },
+    {
       "type": "select",
       "id": "style",
       "label": "t:labels.style",
@@ -108,11 +114,6 @@
       "unit": "px",
       "default": 4,
       "visible_if": "{{ block.settings.style == 'custom' }}"
-    },
-    {
-      "type": "text",
-      "id": "label",
-      "label": "t:labels.label"
     }
   ]
 }

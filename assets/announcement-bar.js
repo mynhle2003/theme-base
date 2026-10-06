@@ -280,13 +280,35 @@ const init = (root) => {
   if (!(root instanceof HTMLElement) || states.has(root)) return;
   const track = root.querySelector('[data-announcement-track]');
   if (!track) return;
+  root.hidden = false;
   const slides = Array.from(track.children);
   const sliderState = root.dataset.announcementType === 'slider' ? initSlider(root, slides, track) : { previous: null, next: null, onPrevious: null, onNext: null };
   const scrollingState = root.dataset.announcementType === 'scrolling' ? initScrolling(root, track) : { clones: [], resizeObserver: null, mutationObserver: null };
   const copyState = initCopyInteraction(root);
+  const closeButton = root.querySelector('[data-announcement-close]');
+  const onClose = () => {
+    const hadFocus = root.contains(document.activeElement);
+    destroy(root);
+    root.hidden = true;
+    if (hadFocus) {
+      const section = root.closest('.shopify-section');
+      let nextSection = section?.nextElementSibling;
+      let nextControl;
+      while (nextSection && !nextControl) {
+        nextControl = Array.from(nextSection.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])'))
+          .find((element) => element.tabIndex >= 0 && element.getClientRects().length > 0);
+        nextSection = nextSection.nextElementSibling;
+      }
+      if (nextControl) nextControl.focus({ preventScroll: true });
+      else closeButton?.blur();
+    }
+  };
+  closeButton?.addEventListener('click', onClose);
   root.dataset.announcementInitialized = 'true';
   states.set(root, {
     track,
+    closeButton,
+    onClose,
     ...sliderState,
     ...scrollingState,
     ...copyState,
@@ -298,6 +320,7 @@ const init = (root) => {
 const destroy = (root) => {
   const state = states.get(root);
   if (!state) return;
+  state.closeButton?.removeEventListener('click', state.onClose);
   state.previous?.removeEventListener('click', state.onPrevious);
   state.next?.removeEventListener('click', state.onNext);
   state.onClick && root.removeEventListener('click', state.onClick);
@@ -330,5 +353,8 @@ const destroyWithin = (root) => {
 
 document.addEventListener('shopify:section:load', (event) => initWithin(event.target));
 document.addEventListener('shopify:section:unload', (event) => destroyWithin(event.target));
+document.addEventListener('shopify:section:select', (event) => {
+  event.target.querySelectorAll(`${selector}[hidden]`).forEach((root) => init(root));
+});
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => initWithin(), { once: true });
 else initWithin();

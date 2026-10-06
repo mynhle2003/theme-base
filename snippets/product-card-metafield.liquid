@@ -1,0 +1,29 @@
+{% doc %}
+  Renders a single-line product metafield beneath the card details.
+  Missing keys and unsupported values do not create an empty card row.
+
+  @param {product} product - Card product supplied by the parent renderer
+  @param {string} key - Product metafield namespace.key
+{% enddoc %}
+
+{% liquid
+  assign key_parts = key | strip | split: '.'
+  assign card_metafield_text = ''
+  if product != blank and key_parts.size == 2
+    assign namespace = key_parts[0]
+    assign field_key = key_parts[1]
+    if namespace != blank and field_key != blank
+      assign card_metafield = product.metafields[namespace][field_key]
+      if card_metafield != blank
+        case card_metafield.type
+          when 'single_line_text_field', 'multi_line_text_field', 'rich_text_field', 'number_integer', 'number_decimal', 'boolean', 'date', 'date_time', 'money', 'rating', 'dimension', 'volume', 'weight', 'list.single_line_text_field'
+            assign card_metafield_text = card_metafield | metafield_text | strip
+        endcase
+      endif
+    endif
+  endif
+%}
+
+{% if card_metafield_text != blank %}
+  <p class="product-card__metafield">{{ card_metafield_text | escape }}</p>
+{% endif %}

@@ -1,6 +1,6 @@
 {% comment %}
   Theme-specific editorial banner. Shared blocks own text and button presentation;
-  the section owns overlapping composition, spacing and native scroll progress.
+  the section owns overlapping composition and spacing. Foreground blocks own zoom.
 {% endcomment %}
 {{ 'section-zoom-image-banner.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'section-zoom-image-banner.js' | asset_url }}" defer="defer"></script>
@@ -9,11 +9,6 @@
   assign container_width = 'page-width'
   if section.settings.section_width != 'page_width'
     assign container_width = 'full-width'
-  endif
-  assign content_width = section.settings.content_width | default: 768 | at_least: 320 | at_most: 1200
-  assign enable_zoom = section.settings.enable_zoom
-  if settings.motion_image_zoom == false
-    assign enable_zoom = false
   endif
   assign padding_top_mobile = section.settings.padding_top
   assign padding_bottom_mobile = section.settings.padding_bottom
@@ -24,9 +19,7 @@
 %}
 <zoom-image-banner
   class="zoom-image-banner section-spacing color-scheme section-color-scope {{ scheme }}"
-  data-zoom-enabled="{{ enable_zoom }}"
-  data-zoom-amount="{{ section.settings.zoom_amount }}"
-  style="--zoom-content-width: {{ content_width }}px; --zoom-background-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }}; --section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px; --section-padding-top-mobile: {{ padding_top_mobile }}px; --section-padding-bottom-mobile: {{ padding_bottom_mobile }}px;"
+  style="--zoom-background-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }}; --section-padding-top: {{ section.settings.padding_top }}px; --section-padding-bottom: {{ section.settings.padding_bottom }}px; --section-padding-top-mobile: {{ padding_top_mobile }}px; --section-padding-bottom-mobile: {{ padding_bottom_mobile }}px;"
 >
   <div class="zoom-image-banner__background" aria-hidden="true">
     {% render 'media-background', media_type: 'image', image: section.settings.background_image, mobile_image: section.settings.mobile_background_image, sizes: '100vw', aria_hidden: true %}
@@ -84,12 +77,6 @@
       "default": "full_width"
     },
     {
-      "type": "number",
-      "id": "content_width",
-      "label": "Content maximum width",
-      "default": 768
-    },
-    {
       "type": "header",
       "content": "t:general.media"
     },
@@ -118,27 +105,6 @@
       "id": "color_scheme",
       "label": "t:labels.color_scheme",
       "default": "scheme-3"
-    },
-    {
-      "type": "header",
-      "content": "Scroll zoom"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_zoom",
-      "label": "Enable scroll zoom",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "zoom_amount",
-      "label": "Zoom amount",
-      "min": 0,
-      "max": 30,
-      "step": 1,
-      "default": 12,
-      "unit": "%",
-      "visible_if": "{{ section.settings.enable_zoom }}"
     },
     {
       "type": "header",
@@ -201,20 +167,14 @@
         "section_width": "full_width",
         "color_scheme": "scheme-3",
         "overlay_opacity": 0,
-        "content_width": 768,
         "padding_top": 80,
         "padding_bottom": 80,
-        "customize_mobile_padding": false,
-        "enable_zoom": true,
-        "zoom_amount": 12
+        "customize_mobile_padding": false
       },
       "blocks": [
         {
           "type": "scrolling-image",
           "settings": {
-            "image_width": 550,
-            "ratio_width": 600,
-            "ratio_height": 700,
             "overlay_opacity": 10
           }
         },
@@ -226,13 +186,15 @@
             "alignment_mobile": "center",
             "width": "fill",
             "width_mobile": "fill",
-            "limit_width": false,
-            "limit_width_mobile": false,
+            "limit_width": true,
+            "limit_width_mobile": true,
             "gap_desktop": 36,
             "gap_mobile": 36,
             "height": "fit",
             "appearance_type": "inherit",
-            "backdrop_blur": 0
+            "backdrop_blur": 0,
+            "max_width": 770,
+            "max_width_mobile": 770
           },
           "blocks": [
             {

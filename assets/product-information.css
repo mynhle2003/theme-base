@@ -305,17 +305,17 @@
 
 .product-buy-buttons__form {
   display: grid;
-  gap: var(--product-buy-buttons-gap, 12px);
+  gap: var(--product-buy-buttons-gap, 20px);
   width: 100%;
   min-width: 0;
 }
 
 .product-buy-buttons__purchase {
-  --product-buy-quantity-max-width: 12rem;
+  --product-buy-quantity-max-width: 128px;
   display: grid;
-  grid-template-columns: minmax(0, var(--product-buy-quantity-max-width)) minmax(0, 1fr);
-  align-items: end;
-  gap: var(--product-buy-buttons-gap, 12px);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: var(--product-buy-buttons-gap, 20px);
   min-width: 0;
 }
 
@@ -329,6 +329,10 @@
   min-width: 0;
 }
 
+.product-buy-buttons .product-buy-buttons__quantity {
+  gap: 8px;
+}
+
 .product-buy-buttons__quantity--custom .product-buy-buttons__quantity-control {
   border-color: var(--product-buy-quantity-border, var(--input-border-color));
   border-width: var(--product-buy-quantity-border-width, var(--input-border-width));
@@ -338,12 +342,13 @@
 }
 
 .product-buy-buttons__quantity-control {
+  --product-buy-quantity-control-height: var(--input-height, var(--button-height));
   display: grid;
   grid-template-columns: var(--input-height, var(--button-height)) minmax(2.5rem, 1fr) var(--input-height, var(--button-height));
   align-items: center;
   width: 100%;
   max-width: 100%;
-  min-height: var(--input-height, var(--button-height));
+  min-height: var(--product-buy-quantity-control-height);
   overflow: hidden;
   border: var(--input-border-width) solid var(--input-border-color);
   border-radius: var(--input-radius);
@@ -359,7 +364,7 @@
 .product-buy-buttons__quantity-control .form__control {
   width: 100%;
   min-width: 0;
-  min-height: var(--input-height, var(--button-height));
+  min-height: calc(var(--product-buy-quantity-control-height) - 2 * var(--product-buy-quantity-border-width, var(--input-border-width)));
   padding-inline: 0.25rem;
   border: 0 !important;
   border-radius: 0 !important;
@@ -380,7 +385,7 @@
   display: inline-flex;
   width: 100%;
   min-width: 0;
-  min-height: var(--input-height, var(--button-height));
+  min-height: calc(var(--product-buy-quantity-control-height) - 2 * var(--product-buy-quantity-border-width, var(--input-border-width)));
   align-items: center;
   justify-content: center;
   padding: 0;
@@ -513,7 +518,7 @@
 .product-buy-buttons__back-in-stock {
   display: block;
   width: 100%;
-  margin-block-start: var(--product-buy-buttons-gap, 12px);
+  margin-block-start: var(--product-buy-buttons-gap, 20px);
 }
 
 .product-buy-buttons__back-in-stock-trigger,
@@ -854,26 +859,20 @@ product-sticky-layout.product-information__layout > .product-details {
   }
 
   .product-buy-buttons__form {
-    gap: var(--product-buy-buttons-gap-mobile, var(--product-buy-buttons-gap, 12px));
+    gap: var(--product-buy-buttons-gap-mobile, var(--product-buy-buttons-gap, 20px));
   }
 
   .product-buy-buttons__purchase {
-    grid-template-columns: minmax(0, var(--product-buy-quantity-max-width, 12rem)) minmax(0, 1fr);
-    gap: var(--product-buy-buttons-gap-mobile, var(--product-buy-buttons-gap, 12px));
+    gap: var(--product-buy-buttons-gap-mobile, var(--product-buy-buttons-gap, 20px));
   }
 
   .product-buy-buttons__quantity-control {
+    --product-buy-quantity-control-height: var(--input-height-mobile, var(--button-height-mobile));
     grid-template-columns: var(--input-height-mobile, var(--button-height-mobile)) minmax(2.5rem, 1fr) var(--input-height-mobile, var(--button-height-mobile));
-    min-height: var(--input-height-mobile, var(--button-height-mobile));
-  }
-
-  .product-buy-buttons__quantity-control .form__control,
-  .product-buy-buttons__quantity-button {
-    min-height: var(--input-height-mobile, var(--button-height-mobile));
   }
 
   .product-buy-buttons__back-in-stock {
-    margin-block-start: var(--product-buy-buttons-gap-mobile, var(--product-buy-buttons-gap, 12px));
+    margin-block-start: var(--product-buy-buttons-gap-mobile, var(--product-buy-buttons-gap, 20px));
   }
 
   .product-buy-buttons__accelerated-checkout .shopify-payment-button__button--unbranded {

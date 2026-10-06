@@ -22,6 +22,7 @@
   assign default_heading = settings.foreground_color | default: '#111111'
   assign default_heading_highlight = '#A67C52'
   assign default_body = settings.foreground_color | default: '#404040'
+  assign default_product_card_metafield = '#999999'
   assign default_accent = settings.color_accent | default: '#111111'
   assign default_border = settings.color_border | default: '#D8D8D8'
   assign default_shadow = default_body
@@ -50,6 +51,7 @@
       assign default_heading = scheme.settings.heading | default: default_heading
       assign default_heading_highlight = scheme.settings.heading_highlight | default: default_heading_highlight
       assign default_body = scheme.settings.text | default: default_body
+      assign default_product_card_metafield = scheme.settings.product_card_metafield | default: default_product_card_metafield
       assign default_accent = scheme.settings.accent | default: default_accent
       assign default_border = scheme.settings.border | default: default_border
       assign default_shadow = scheme.settings.shadow | default: default_shadow
@@ -491,7 +493,7 @@
   endif
   assign input_height_mobile = settings.input_height_mobile | default: 44
   assign input_border_width = settings.input_border_width
-  if input_border_width == blank
+  if input_border_width == blank or input_border_width < 1
     assign input_border_width = 1
   endif
   assign input_radius = 'var(--radius-rounded)'
@@ -741,7 +743,7 @@
   assign variant_border_width = 'var(--input-border-width)'
 
   assign swatch_style = 'color'
-  if settings.swatch_style == 'variant_image' or settings.swatch_style == 'button' or settings.swatch_style == 'dropdown'
+  if settings.swatch_style == 'variant_image' or settings.swatch_style == 'button' or settings.swatch_style == 'color_button' or settings.swatch_style == 'dropdown'
     assign swatch_style = settings.swatch_style
   endif
   assign swatch_width_desktop = settings.swatch_width_desktop | default: 40
@@ -887,6 +889,7 @@
     --heading-color: {{ default_heading }};
     --heading-highlight-color: {{ default_heading_highlight }};
     --body-color: {{ default_body }};
+    --product-card-metafield-color: {{ default_product_card_metafield }};
     --color-foreground-rgb: {{ default_body_rgb }};
     --accent-color: {{ default_accent }};
     --border-color: {{ default_border }};
@@ -1226,6 +1229,7 @@
     {% assign scheme_heading = scheme.settings.heading | default: default_heading %}
     {% assign scheme_heading_highlight = scheme.settings.heading_highlight | default: default_heading_highlight %}
     {% assign scheme_body = scheme.settings.text | default: default_body %}
+    {% assign scheme_product_card_metafield = scheme.settings.product_card_metafield | default: '#999999' %}
     {% assign scheme_accent = scheme.settings.accent | default: default_accent %}
     {% assign scheme_border = scheme.settings.border | default: default_border %}
     {% assign scheme_shadow = scheme.settings.shadow | default: default_shadow %}
@@ -1250,6 +1254,7 @@
       --heading-color: {{ scheme_heading }};
       --heading-highlight-color: {{ scheme_heading_highlight }};
       --body-color: {{ scheme_body }};
+      --product-card-metafield-color: {{ scheme_product_card_metafield }};
       --color-foreground-rgb: {{ scheme_body_rgb }};
       --accent-color: {{ scheme_accent }};
       --input-focus-color: var(--accent-color);
