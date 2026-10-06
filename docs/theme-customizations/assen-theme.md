@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"89321f5ebbd78e1144eae1a31adbef4679bd9cd3"} -->
+<!-- theme-base-sync-state: {"sha":"d887dac2d2f637e2aae15f59272634f8fd3d1e32"} -->
 # Customization record: assen-theme
 
 Theme branch: `theme/assen-theme`
@@ -23,7 +23,7 @@ Record every theme-specific change here before committing the code. During base 
 
 | `blocks/blog-card.liquid` | Existing media ratio presets do not support landscape 5:4; collection thumbnails retain legacy portrait 2:3. | Adds validated 5:4 rendering (1.25); collection thumbnails also add explicit 4:5 without changing legacy values. | Expose Essen theme image ratios in the editor. | Preserve additive options and their Liquid/CSS mappings; review overlapping ratio logic from main and verify desktop/mobile crop. |
 | `blocks/carousel.liquid` | Existing media ratio presets do not support landscape 5:4; collection thumbnails retain legacy portrait 2:3. | Adds validated 5:4 rendering (1.25); collection thumbnails also add explicit 4:5 without changing legacy values. | Expose Essen theme image ratios in the editor. | Preserve additive options and their Liquid/CSS mappings; review overlapping ratio logic from main and verify desktop/mobile crop. |
-| `blocks/collection-card.liquid` | Existing media ratio presets do not support landscape 5:4; collection thumbnails retain legacy portrait 2:3. | Adds validated 5:4 rendering (1.25); collection thumbnails also add explicit 4:5 without changing legacy values. | Expose Essen theme image ratios in the editor. | Preserve additive options and their Liquid/CSS mappings; review overlapping ratio logic from main and verify desktop/mobile crop. |
+| `snippets/collection-card-render.liquid` | Main shared collection card renderer validates the common ratio values and maps them to CSS aspect ratios. | Adds the Assen-only `ratio_5_4` option to the renderer allow-list and maps it to `1.25`, shared by both collection-card adapters. | Preserve the theme's 5:4 collection-card crop while adopting main's shared render kernel. | Keep the 5:4 schema choice in both adapters aligned with the allow-list and 1.25 mapping; review main renderer changes together with both callers. |
 | `blocks/collection-thumbnail.liquid` | Existing media ratio presets do not support landscape 5:4; collection thumbnails retain legacy portrait 2:3. | Adds validated 5:4 rendering (1.25); collection thumbnails also add explicit 4:5 without changing legacy values. | Expose Essen theme image ratios in the editor. | Preserve additive options and their Liquid/CSS mappings; review overlapping ratio logic from main and verify desktop/mobile crop. |
 | `blocks/first-card.liquid` | Existing media ratio presets do not support landscape 5:4; collection thumbnails retain legacy portrait 2:3. | Adds validated 5:4 rendering (1.25); collection thumbnails also add explicit 4:5 without changing legacy values. | Expose Essen theme image ratios in the editor. | Preserve additive options and their Liquid/CSS mappings; review overlapping ratio logic from main and verify desktop/mobile crop. |
 | `blocks/image-card.liquid` | Existing media ratio presets do not support landscape 5:4; collection thumbnails retain legacy portrait 2:3. | Adds validated 5:4 rendering (1.25); collection thumbnails also add explicit 4:5 without changing legacy values. | Expose Essen theme image ratios in the editor. | Preserve additive options and their Liquid/CSS mappings; review overlapping ratio logic from main and verify desktop/mobile crop. |
@@ -122,8 +122,76 @@ Record every theme-specific change here before committing the code. During base 
 
 | Base commit | Files reviewed | Decision and reason | Approved by/date |
 | --- | --- | --- | --- |
+| `d887dac2d2f637e2aae15f59272634f8fd3d1e32` | `blocks/collection-card.liquid`, `sections/cart.liquid`, `sections/collections.liquid`, `blocks/product-variant-picker.liquid`, `templates/cart.json`, `templates/list-collections.json` | Dùng implementation collection-card/cart/collections từ main; giữ 5:4 của Assen trong renderer dùng chung; nhập composition defaults đã duyệt; xóa `color_option_display`, `grid_item_width`, `grid_gap` cùng giá trị đã lưu trong preset/template theo xác nhận riêng. | Theme owner, 2026-10-06 |
 
 ## Base sync history
+
+### 2026-10-06 — Update from personal main
+
+- Previous main commit: `89321f5ebbd78e1144eae1a31adbef4679bd9cd3`
+- Updated through main commit: `d887dac2d2f637e2aae15f59272634f8fd3d1e32`
+- Main commits included: 1
+- Included main commits:
+  - `d887dac2d2f637e2aae15f59272634f8fd3d1e32` — chore(base): update base with 34 upstream commits through 8169f12c
+- Change summary:
+
+```text
+assets/accordion-details.js                        |  23 +-
+ assets/cart-drawer.js                              |  21 +-
+ assets/cart-page.css                               |  15 +
+ assets/cart-page.js                                | 155 ++++++++++
+ assets/cart-recommendations.js                     |  67 +++++
+ assets/component-collection-card.css               |  88 ++++++
+ assets/critical.css                                |   8 +
+ assets/gift-card.css                               |  29 ++
+ assets/gift-card.js                                |  57 ++++
+ blocks/_bundle-product-list.liquid                 |  34 +--
+ blocks/_cart-content.liquid                        | 139 +++++++++
+ blocks/_cart-order-summary.liquid                  | 195 +++++++++++++
+ blocks/_cart-summary.liquid                        |  49 ++++
+ blocks/_collections-list.liquid                    | 202 +++++++++++++
+ blocks/_collections-page-card.liquid               | 315 +++++++++++++++++++++
+ blocks/cart-free-shipping.liquid                   | 169 +++++++++++
+ blocks/cart-items.liquid                           | 170 +++++++++++
+ blocks/cart-order-note.liquid                      | 214 ++++++++++++++
+ blocks/cart-shipping-estimator.liquid              | 214 ++++++++++++++
+ blocks/collection-card.liquid                      | 262 ++---------------
+ blocks/pagination.liquid                           |  21 +-
+ blocks/product-list.liquid                         |  56 +++-
+ blocks/product-variant-picker.liquid               |  23 --
+ docs/audits/cart-reference-2026-10-05.md           | 102 +++++++
+ .../audits/collection-list-reference-2026-10-05.md |  45 +++
+ docs/audits/gift-card-reference-2026-10-05.md      |  35 +++
+ docs/phase-2-theme-settings.md                     |   9 +-
+ locales/en.default.json                            |  20 +-
+ locales/en.default.schema.json                     |   4 +-
+ sections/cart-recommendations.liquid               | 266 +++++++++++++++++
+ sections/cart.liquid                               | 197 ++++++++-----
+ sections/collections.liquid                        | 234 ++++++++++-----
+ sections/featured-product.liquid                   |   3 +-
+ snippets/cart-surface-style.liquid                 |   6 +
+ snippets/collection-card-render.liquid             | 166 +++++++++++
+ snippets/css-variables.liquid                      |   3 +
+ snippets/icon.liquid                               |   6 +-
+ snippets/pagination-pages.liquid                   |   3 +
+ snippets/product-collection-grid.liquid            |   5 +-
+ snippets/swatch.liquid                             |   2 -
+ snippets/variant-picker.liquid                     |   3 +-
+ templates/cart.json                                | 110 ++++++-
+ templates/gift_card.liquid                         | 104 +++----
+ templates/index.json                               |   1 -
+ templates/index.spinel-sync.json                   |   1 -
+ templates/list-collections.json                    |  71 ++++-
+ tests/accordion-details.test.cjs                   |  74 +++++
+ tests/cart-page.test.cjs                           |  86 ++++++
+ tests/cart-recommendations.test.cjs                |  32 +++
+ tests/cart-shadow.test.cjs                         |  17 ++
+ tests/collections-page.test.cjs                    |  75 +++++
+ tests/gift-card.test.cjs                           |  21 ++
+ tests/product-controls.test.cjs                    |  18 +-
+ 53 files changed, 3696 insertions(+), 549 deletions(-)
+```
+
 
 ### 2026-10-05 — Update from personal main
 

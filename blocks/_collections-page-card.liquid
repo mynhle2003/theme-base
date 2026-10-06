@@ -1,15 +1,14 @@
 {% doc %}
-  Editorial Collection card with a fixed editable Title and dynamic content
-  roles. Reads closest.collection supplied by the owning collection list.
+  Collection-list page card adapter. The shared render kernel and canonical
+  card settings remain unchanged; every content role is dynamic so merchants
+  can add/remove/reorder Title, Description and Button without a phantom fixed
+  Title in the inspector. Reads closest.collection from the list query owner.
   @param {boolean} [placeholder] - Deliberate skeleton state
   @param {string} [image_loading] - Parent media loading decision
   @param {string} [image_sizes] - Parent media sizes
   @param {number} [placeholder_index] - Collection placeholder variant1–6
 {% enddoc %}
-{% capture card_content %}
-  {% content_for 'block', type: 'collection-card-title', id: 'title' %}
-  {% content_for 'blocks' %}
-{% endcapture %}
+{% capture card_content %}{% content_for 'blocks' %}{% endcapture %}
 {{ 'component-collection-card.css' | asset_url | stylesheet_tag }}
 {% render 'collection-card-render', block: block, card_collection: closest.collection, card_content: card_content, placeholder: placeholder, image_loading: image_loading, image_sizes: image_sizes, placeholder_index: placeholder_index %}
 {% schema %}
@@ -310,18 +309,6 @@
       "unit": "px",
       "default": 0,
       "visible_if": "{{ block.settings.customize_mobile_padding }}"
-    }
-  ],
-  "presets": [
-    {
-      "name": "t:general.collection_card",
-      "blocks": [
-        {
-          "type": "collection-card-title",
-          "id": "title",
-          "static": true
-        }
-      ]
     }
   ]
 }
