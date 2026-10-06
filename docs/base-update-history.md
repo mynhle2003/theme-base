@@ -1,6 +1,109 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"6eacf7b70c93c4e8cd1e70ada16c70701aecebf2"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"8169f12ce76e4a0e473ef1c1fbb429735fd51216"} -->
 
 # Base update history
+
+## 2026-10-06 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `6eacf7b70c93c4e8cd1e70ada16c70701aecebf2`
+- Updated through team commit: `8169f12ce76e4a0e473ef1c1fbb429735fd51216`
+- Team commits included: 34
+- Source changes:
+
+```text
+assets/accordion-details.js                        |  23 +-
+ assets/cart-drawer.js                              |  21 +-
+ assets/cart-page.css                               |  15 ++
+ assets/cart-page.js                                | 155 +++++++++++
+ assets/cart-recommendations.js                     |  67 +++++
+ assets/component-collection-card.css               |  88 ++++++
+ assets/critical.css                                |   8 +
+ assets/gift-card.css                               |  29 ++
+ assets/gift-card.js                                |  57 ++++
+ blocks/_bundle-product-list.liquid                 |  34 +--
+ blocks/_cart-content.liquid                        | 139 ++++++++++
+ blocks/_cart-order-summary.liquid                  | 195 ++++++++++++++
+ blocks/_cart-summary.liquid                        |  49 ++++
+ blocks/_collections-list.liquid                    | 202 ++++++++++++++
+ blocks/_collections-page-card.liquid               |  16 ++
+ blocks/cart-free-shipping.liquid                   | 169 ++++++++++++
+ blocks/cart-items.liquid                           | 170 ++++++++++++
+ blocks/cart-order-note.liquid                      | 214 +++++++++++++++
+ blocks/cart-shipping-estimator.liquid              | 214 +++++++++++++++
+ blocks/collection-card.liquid                      | 254 +-----------------
+ blocks/pagination.liquid                           |  21 +-
+ blocks/product-list.liquid                         | 171 ++++++++++--
+ blocks/product-variant-picker.liquid               |  21 --
+ config/settings_schema.json                        |   2 +-
+ docs/audits/cart-reference-2026-10-05.md           | 102 +++++++
+ .../audits/collection-list-reference-2026-10-05.md |  45 ++++
+ docs/audits/gift-card-reference-2026-10-05.md      |  35 +++
+ docs/phase-2-theme-settings.md                     |   9 +-
+ locales/en.default.json                            |  20 +-
+ locales/en.default.schema.json                     |   4 +-
+ sections/cart-recommendations.liquid               | 266 ++++++++++++++++++
+ sections/cart.liquid                               | 223 +++++++++------
+ sections/collections.liquid                        | 298 ++++++++++++++++-----
+ snippets/cart-surface-style.liquid                 |   6 +
+ snippets/collection-card-render.liquid             | 164 ++++++++++++
+ snippets/css-variables.liquid                      |   3 +
+ snippets/icon.liquid                               |   6 +-
+ snippets/pagination-pages.liquid                   |   3 +
+ snippets/product-collection-grid.liquid            |   5 +-
+ snippets/swatch.liquid                             |   2 -
+ snippets/variant-picker.liquid                     |   3 +-
+ templates/cart.json                                | 110 +++++++-
+ templates/gift_card.liquid                         | 104 +++----
+ templates/index.json                               |   1 -
+ templates/index.spinel-sync.json                   |   1 -
+ templates/list-collections.json                    |  71 ++++-
+ tests/accordion-details.test.cjs                   |  74 +++++
+ tests/cart-page.test.cjs                           |  86 ++++++
+ tests/cart-recommendations.test.cjs                |  32 +++
+ tests/cart-shadow.test.cjs                         |  17 ++
+ tests/collections-page.test.cjs                    |  75 ++++++
+ tests/gift-card.test.cjs                           |  21 ++
+ tests/product-controls.test.cjs                    |  18 +-
+ 53 files changed, 3572 insertions(+), 566 deletions(-)
+```
+
+- Included team commits:
+  - `b5b2c0c336560e1ef9f4b334c7461fe1e254cf1b` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `98a30dba55d446a1fd6044ede7a34aa03cffc90d` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `84f6a14822165ec58982a1e12bccc2938503e5d4` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `81c2222ebec315c195a32bcee93db42f62f21e94` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `fbd708fa976978aee5b991e760cbf646b3fd7256` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `9d8f1c08d40a4b4e0c1524e13ef81e46cb8760f1` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `ad666b191084fb3461333916f2874154d544d8aa` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `d40c4a9d678702b6ba4e23bfa976597523b1f679` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `97677e6c59291dba1d97983cbcef897a7ecf3eed` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `3a78db7f213be3fa4ffa7fd1e79efa3296961ae1` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `839b61b007f630d388b2861851305bfd123e8adc` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `7ffd24ec88b26c6d6f05b4443500ac2fc1b1e677` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `9f85a77f73d9b9fbf8ea45f4f5fa36f6241ddd8b` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `65e0e3bd5c9647244fdb40fcecd0b0fba8736d07` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `19ba08b92253b40d6de54af8d5aafd7ca8fbda94` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `a73144dd3c7bc437d07041ccebac259c64d287c2` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `7e3619d85886c7e631db7f8f41e491cead1d0ab2` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `1bbb51e78125dfaa4a8e522ccb6f23b3f1b19a30` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `3760e71aa751140c96d28a5e81309315ab0ae171` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `c937805e779bdb013510e0f61872947f0cabebd7` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `34f182ffeb92be02ba867fc5ef36c2b57e4fed07` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `40abfdd446e8ff7a0fa501de82531900918a86a8` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `f4394625bcdd082592b690933b4d7133544e2d80` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `ebb3d7de512e02d1c24d52cb17465a9ba8cb03d6` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `a802b0853b5bb51b01c26f434ebcbd7f5714d61a` — fix(variant-picker): align swatches with theme settings
+  - `87d4ea989bfee7d8289ead58af4f71929fb99bff` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `d72889079d6034a8819d67f9fafb7773359d0609` — fix(bundle): align selected swatch border
+  - `6882c93c1919881d4c567c100239fec717e26429` — feat(collections): build configurable collection list page
+  - `c2c95f99920d8d00a30bc2097c799a892eeaff74` — feat(gift-card): add responsive redemption page and copy controls
+  - `7efa20abaaea4eecee70ede3acaa9a96c0ad33b9` — fix(disclosure): settle padded accordion animations correctly
+  - `b647e5509758bac81fca616d8705df368c2ed10d` — feat(cart): build editable cart page with shared recommendations
+  - `ca6c0663385904551290a9d03ce7d3fbaac4fc4f` — Merge development Shopify updates before outbound base sync
+  - `1751c2b43c76e584ebbb35ed302182dfd6f0a7c7` — Merge theme-base dev history for outbound feature sync
+  - `8169f12ce76e4a0e473ef1c1fbb429735fd51216` — style(collections): remove trailing blank line from shared renderer
+
 
 ## 2026-10-05 — Update from upstream/dev
 
