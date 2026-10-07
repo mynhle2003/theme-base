@@ -122,14 +122,30 @@
 {
   "name": "t:general.press",
   "class": "section-press",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "header" },
-    { "type": "heading" },
-    { "type": "icon" },
-    { "type": "eyebrow" },
-    { "type": "text" },
-    { "type": "press-quotes" }
+    {
+      "type": "header"
+    },
+    {
+      "type": "heading"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "eyebrow"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "press-quotes"
+    }
   ],
   "settings": [
     {
@@ -151,8 +167,14 @@
       "id": "alignment",
       "label": "t:labels.alignment",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        }
       ],
       "default": "left"
     },
@@ -246,52 +268,35 @@
   "presets": [
     {
       "name": "t:general.press",
-      "category": "Trust & social proof",
       "settings": {
-        "max_width": 1024,
+        "max_width": 928,
         "alignment": "center",
-        "gap_desktop": 12,
-        "gap_mobile": 12,
+        "gap_desktop": 20,
+        "gap_mobile": 20,
         "color_scheme": "scheme-1",
         "padding_top": 40,
-        "padding_bottom": 32,
+        "padding_bottom": 80,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
         {
-          "type": "header",
+          "type": "eyebrow",
           "settings": {
-            "width": "fill",
-            "alignment": "center",
-            "gap_desktop": 8,
-            "gap_mobile": 8
-          },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Main Heading</p>",
-                "heading_size": "md",
-                "html_tag": "h2",
-                "width": "fit"
-              }
-            }
-          ]
+            "text": "<p>IN THE PRESS</p>"
+          }
         },
         {
           "type": "press-quotes",
-          "id": "quotes",
-          "static": true,
           "settings": {
-            "autoplay": true,
+            "autoplay": false,
             "pause_on_hover": true,
             "autoplay_speed": 4,
-            "image_spacing_desktop": 32,
-            "image_spacing_mobile": 20,
-            "image_gap_desktop": 20,
-            "image_gap_mobile": 16
+            "image_spacing_desktop": 36,
+            "image_spacing_mobile": 32,
+            "image_gap_desktop": 32,
+            "image_gap_mobile": 32
           },
           "blocks": [
             {
@@ -299,18 +304,19 @@
               "settings": {
                 "image_ratio": "original",
                 "corner_radius": "square",
-                "custom_corner_radius": 0,
-                "image_width_desktop": 100,
-                "image_width_mobile": 70
+                "image_width_desktop": 120,
+                "image_width_mobile": 120
               },
               "blocks": [
                 {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>Maecenas ut porta dui, eu consequat nunc. In hac habitasse platea dictumst. Sed sollicitudin orci at sapien dignissim, rhoncus facilisis libero pretium. Aenean id dapibus risus. Etiam non rhoncus nunc, eu commodo nunc. Aliquam sit amet condimentum nunc, rhoncus tincidunt libero. In mollis, nulla non hendrerit faucibus, sem massa auctor nibh.</p>",
-                    "heading_size": "xs",
+                    "text": "<p>\"When designing this collection, we wanted to strike a balance between bold silhouettes and timeless proportions. The result is a series of rings that feel effortless, yet striking\"</p>",
+                    "heading_size": "lg",
                     "html_tag": "div",
-                    "width": "fill"
+                    "width": "fill",
+                    "customize_mobile_size": true,
+                    "width_mobile": "fill"
                   }
                 }
               ]
@@ -320,18 +326,19 @@
               "settings": {
                 "image_ratio": "original",
                 "corner_radius": "square",
-                "custom_corner_radius": 0,
-                "image_width_desktop": 100,
-                "image_width_mobile": 70
+                "image_width_desktop": 120,
+                "image_width_mobile": 120
               },
               "blocks": [
                 {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>Maecenas ut porta dui, eu consequat nunc. In hac habitasse platea dictumst. Sed sollicitudin orci at sapien dignissim, rhoncus facilisis libero pretium. Aenean id dapibus risus. Etiam non rhoncus nunc, eu commodo nunc. Aliquam sit amet condimentum nunc, rhoncus tincidunt libero. In mollis, nulla non hendrerit faucibus, sem massa auctor nibh.</p>",
-                    "heading_size": "xs",
+                    "text": "<p>\"When designing this collection, we wanted to strike a balance between bold silhouettes and timeless proportions. The result is a series of rings that feel effortless, yet striking\"</p>",
+                    "heading_size": "lg",
                     "html_tag": "div",
-                    "width": "fill"
+                    "width": "fill",
+                    "customize_mobile_size": true,
+                    "width_mobile": "fill"
                   }
                 }
               ]
@@ -341,23 +348,70 @@
               "settings": {
                 "image_ratio": "original",
                 "corner_radius": "square",
-                "custom_corner_radius": 0,
-                "image_width_desktop": 100,
-                "image_width_mobile": 70
+                "image_width_desktop": 120,
+                "image_width_mobile": 120
               },
               "blocks": [
                 {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>Maecenas ut porta dui, eu consequat nunc. In hac habitasse platea dictumst. Sed sollicitudin orci at sapien dignissim, rhoncus facilisis libero pretium. Aenean id dapibus risus. Etiam non rhoncus nunc, eu commodo nunc. Aliquam sit amet condimentum nunc, rhoncus tincidunt libero. In mollis, nulla non hendrerit faucibus, sem massa auctor nibh.</p>",
-                    "heading_size": "xs",
+                    "text": "<p>\"When designing this collection, we wanted to strike a balance between bold silhouettes and timeless proportions. The result is a series of rings that feel effortless, yet striking\"</p>",
+                    "heading_size": "lg",
                     "html_tag": "div",
-                    "width": "fill"
+                    "width": "fill",
+                    "customize_mobile_size": true,
+                    "width_mobile": "fill"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "press-item",
+              "settings": {
+                "image_ratio": "original",
+                "corner_radius": "square",
+                "image_width_desktop": 120,
+                "image_width_mobile": 120
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>\"When designing this collection, we wanted to strike a balance between bold silhouettes and timeless proportions. The result is a series of rings that feel effortless, yet striking\"</p>",
+                    "heading_size": "lg",
+                    "html_tag": "div",
+                    "width": "fill",
+                    "customize_mobile_size": true,
+                    "width_mobile": "fill"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "press-item",
+              "settings": {
+                "image_ratio": "original",
+                "corner_radius": "square",
+                "image_width_desktop": 120,
+                "image_width_mobile": 120
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>\"When designing this collection, we wanted to strike a balance between bold silhouettes and timeless proportions. The result is a series of rings that feel effortless, yet striking\"</p>",
+                    "heading_size": "lg",
+                    "html_tag": "div",
+                    "width": "fill",
+                    "customize_mobile_size": true,
+                    "width_mobile": "fill"
                   }
                 }
               ]
             }
-          ]
+          ],
+          "id": "quotes",
+          "static": true
         }
       ]
     }

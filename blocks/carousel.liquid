@@ -286,7 +286,8 @@
       autoplay: carousel_autoplay,
       pause_on_hover: carousel_pause_on_hover,
       autoplay_delay: carousel_delay,
-      show_next_slide_preview: carousel_show_next_slide_preview
+      show_next_slide_preview: carousel_show_next_slide_preview,
+      show_next_slide_preview_on_mobile: block.settings.show_next_slide_preview_on_mobile
     %}
     {% if carousel_has_multiple_items and carousel_controls_style == 'standard' %}
       {% render 'swiper-navigation',
@@ -443,6 +444,7 @@
       "label": "t:labels.show_next_slide_preview_on_desktop",
       "default": false
     },
+    {"type": "checkbox", "id": "show_next_slide_preview_on_mobile", "label": "t:labels.show_next_slide_preview_on_mobile", "default": false},
     {
       "type": "header",
       "content": "t:general.gap"

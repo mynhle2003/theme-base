@@ -113,11 +113,11 @@
   .slideshow__swiper > .swiper-wrapper > .swiper-slide { flex: 0 0 100%; width: 100%; height: auto; }
   .swiper-slide-clone { pointer-events: none; }
   .slideshow--desktop-adapt .slideshow__swiper { height: auto; }
-  .slideshow--desktop-extra_small { --slideshow-height: 42rem; }
-  .slideshow--desktop-small { --slideshow-height: 56rem; }
-  .slideshow--desktop-medium { --slideshow-height: 64rem; }
-  .slideshow--desktop-large { --slideshow-height: 90rem; }
-  .slideshow--desktop-extra_large { --slideshow-height: 108rem; }
+  .slideshow--desktop-extra_small { --slideshow-height: 52.5rem; }
+  .slideshow--desktop-small { --slideshow-height: 70rem; }
+  .slideshow--desktop-medium { --slideshow-height: 80rem; }
+  .slideshow--desktop-large { --slideshow-height: 112.5rem; }
+  .slideshow--desktop-extra_large { --slideshow-height: 135rem; }
   .slideshow--desktop-full_screen { --slideshow-height: 100svh; }
   .slideshow:not(.slideshow--desktop-adapt) .slideshow__swiper { height: var(--slideshow-height, 72rem); }
   .slideshow__navigation { --swiper-nav-size: 4.4rem; position: absolute; inset: 50% 1.6rem auto; z-index: 10; display: flex; justify-content: space-between; color: var(--heading-color); pointer-events: none; transform: translateY(-50%); }
@@ -177,11 +177,11 @@
   .slideshow__pagination--numbers .slideshow__pagination-number[aria-current='true'] circle:last-child { stroke-opacity: 1; stroke-dashoffset: calc(93.6404px * (1 - var(--percent, 1))); }
   .slideshow__pagination--numbers .slideshow__pagination-number:hover, .slideshow__pagination--numbers .slideshow__pagination-number:focus-visible { opacity: 1; }
   .slideshow__pagination--numbers .slideshow__pagination-number:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
-  .slideshow__swiper > .slideshow__pagination--progress_bar { --swiper-pagination-bullet-gap: .4rem; background: none; }
-  .slideshow__pagination--progress_bar .slideshow__pagination-segment { position: relative; flex: 1 1 0; width: 0; min-width: 0; height: 2px; margin: 0; padding: 0; border: 0; border-radius: 999px; overflow: hidden; appearance: none; cursor: pointer; color: inherit; background: color-mix(in srgb, currentColor 30%, transparent); opacity: .55; transition: height var(--motion-duration-standard) var(--motion-ease-standard), opacity var(--motion-duration-standard) var(--motion-ease-standard); }
+  .slideshow .slideshow__swiper > .slideshow__pagination--progress_bar[data-pagination-type='progress_bar'] { --swiper-pagination-bullet-gap: 1.6rem; inset-block-end: 2rem; inset-inline: 0; height: 4.4rem; padding-inline: var(--slideshow-content-inline-padding); background: none; }
+  .slideshow__pagination--progress_bar .slideshow__pagination-segment { position: relative; flex: 0 0 5rem; width: 5rem; min-width: 0; height: 4.4rem; margin: 0; padding: 0; border: 0; border-radius: 999px; overflow: visible; appearance: none; cursor: pointer; color: inherit; background: transparent; }
+  .slideshow__pagination--progress_bar .slideshow__pagination-segment::before { content: ''; position: absolute; inset: 2rem 0; border-radius: inherit; background: color-mix(in srgb, currentColor 40%, transparent); }
   .slideshow__pagination--progress_bar .slideshow__pagination-segment:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
-  .slideshow__pagination--progress_bar .slideshow__pagination-segment--active { height: 3px; opacity: 1; }
-  .slideshow__pagination--progress_bar .slideshow__pagination-segment-fill { position: absolute; inset: 0; display: block; width: 100%; height: 100%; border-radius: inherit; background: currentColor; transform: scaleX(0); transform-origin: left center; }
+  .slideshow__pagination--progress_bar .slideshow__pagination-segment-fill { position: absolute; inset: 2rem 0; display: block; width: 100%; height: .4rem; border-radius: inherit; background: currentColor; transform: scaleX(0); transform-origin: left center; }
   .slideshow__pagination--progress_bar .slideshow__pagination-segment--active .slideshow__pagination-segment-fill { transform: scaleX(1); }
   .slideshow[data-autoplay='true'] .slideshow__pagination--progress_bar .slideshow__pagination-segment--active .slideshow__pagination-segment-fill { transform: scaleX(var(--slideshow-autoplay-progress, 0)); }
   .slideshow--single-slide .slideshow__navigation, .slideshow.slideshow--single-slide .slideshow__swiper > .slideshow__pagination { display: none; }
@@ -194,12 +194,13 @@
     .slideshow { --slideshow-content-inline-padding: var(--page-margin-mobile); padding-block: var(--slideshow-padding-top-mobile, var(--slideshow-padding-top, 0px)) var(--slideshow-padding-bottom-mobile, var(--slideshow-padding-bottom, 0px)); }
     .slideshow--width-page .slideshow__container { --page-margin-current: var(--page-margin-mobile); }
     .slideshow--width-full .slideshow__container { width: calc(100% - (var(--page-margin-mobile) * 2)); }
+    .slideshow[data-show-next-slide-preview-on-mobile='true'] .slideshow__swiper { overflow: visible; }
     .slideshow--mobile-adapt .slideshow__swiper { height: auto; }
-    .slideshow--mobile-extra_small { --slideshow-height-mobile: 32rem; }
-    .slideshow--mobile-small { --slideshow-height-mobile: 44rem; }
-    .slideshow--mobile-medium { --slideshow-height-mobile: 56rem; }
-    .slideshow--mobile-large { --slideshow-height-mobile: 68rem; }
-    .slideshow--mobile-extra_large { --slideshow-height-mobile: 82rem; }
+    .slideshow--mobile-extra_small { --slideshow-height-mobile: 34.3rem; }
+    .slideshow--mobile-small { --slideshow-height-mobile: 47.1rem; }
+    .slideshow--mobile-medium { --slideshow-height-mobile: 60rem; }
+    .slideshow--mobile-large { --slideshow-height-mobile: 72.9rem; }
+    .slideshow--mobile-extra_large { --slideshow-height-mobile: 87.9rem; }
     .slideshow--mobile-full_screen { --slideshow-height-mobile: 100svh; }
     .slideshow:not(.slideshow--mobile-adapt) .slideshow__swiper { height: var(--slideshow-height-mobile, 44rem); }
     .slideshow__navigation { display: none; }
@@ -248,10 +249,214 @@
     { "type": "range", "id": "padding_top_mobile", "label": "t:labels.mobile_top_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.width != 'full_bleed' and section.settings.customize_mobile_padding }}" },
     { "type": "range", "id": "padding_bottom_mobile", "label": "t:labels.mobile_bottom_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.width != 'full_bleed' and section.settings.customize_mobile_padding }}" }
   ],
-  "presets": [{ "name": "Slideshow", "category": "t:general.banners", "blocks": [
-    { "type": "slideshow-slide", "blocks": [{ "type": "eyebrow", "settings": { "text": "<p>EYEBROW</p>" } }, { "type": "heading", "settings": { "text": "<p>Heading slide</p>" } }, { "type": "button", "settings": { "button_label": "Button label" } }] },
-    { "type": "slideshow-slide", "blocks": [{ "type": "eyebrow", "settings": { "text": "<p>EYEBROW</p>" } }, { "type": "heading", "settings": { "text": "<p>Heading slide</p>" } }, { "type": "button", "settings": { "button_label": "Button label" } }] },
-    { "type": "slideshow-slide", "blocks": [{ "type": "eyebrow", "settings": { "text": "<p>EYEBROW</p>" } }, { "type": "heading", "settings": { "text": "<p>Heading slide</p>" } }, { "type": "button", "settings": { "button_label": "Button label" } }] }
-  ]}]
+  "presets": [
+    {
+      "name": "Slideshow",
+      "category": "t:general.banners",
+      "settings": {
+        "width": "full_bleed",
+        "full_width_content": false,
+        "show_next_slide_preview_on_desktop": false,
+        "transition_style": "fade",
+        "desktop_height": "medium",
+        "mobile_height": "medium",
+        "autoplay": true,
+        "pause_on_hover": true,
+        "autoplay_delay": 6,
+        "show_navigation": false,
+        "show_pagination": true,
+        "pagination_type": "progress_bar",
+        "pagination_position_desktop": "center",
+        "pagination_position_mobile": "center",
+        "aria_label": "Jewelry slideshow",
+        "color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": false
+      },
+      "blocks": [
+        {
+          "type": "slideshow-slide",
+          "settings": {
+            "layout": "classic",
+            "media_type": "image",
+            "show_overlay": true,
+            "overlay_color": "#0000001a",
+            "parallax_effect": "none",
+            "content_width": "custom",
+            "content_max_width": 600,
+            "desktop_position": "center_center",
+            "mobile_position": "center_center",
+            "desktop_gap": 40,
+            "mobile_gap": 36,
+            "color_scheme": "scheme-3"
+          },
+          "blocks": [
+            {
+              "type": "header",
+              "settings": {
+                "width": "fill",
+                "inherit_alignment": true,
+                "gap_desktop": 16,
+                "gap_mobile": 16
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Timeless Jewelry for Every Moment</p>",
+                    "heading_size": "display",
+                    "html_tag": "h1",
+                    "text_color": "#ffffff",
+                    "width": "fill"
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Save up to 25% when you build your own ring or stud stack!</p>",
+                    "text_size": "md",
+                    "text_color": "#ffffffcc",
+                    "width": "fill"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "button",
+              "settings": {
+                "button_label": "SHOP NOW",
+                "button_link": "shopify://collections/all",
+                "button_style": "primary",
+                "show_icon": false,
+                "width": "fit",
+                "width_mobile": "fit"
+              }
+            }
+          ]
+        },
+        {
+          "type": "slideshow-slide",
+          "settings": {
+            "layout": "classic",
+            "media_type": "image",
+            "show_overlay": true,
+            "overlay_color": "#0000001a",
+            "parallax_effect": "none",
+            "content_width": "custom",
+            "content_max_width": 600,
+            "desktop_position": "center_center",
+            "mobile_position": "center_center",
+            "desktop_gap": 40,
+            "mobile_gap": 36,
+            "color_scheme": "scheme-3"
+          },
+          "blocks": [
+            {
+              "type": "header",
+              "settings": {
+                "width": "fill",
+                "inherit_alignment": true,
+                "gap_desktop": 16,
+                "gap_mobile": 16
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Jewelry That Shines Beyond Seasons</p>",
+                    "heading_size": "display",
+                    "html_tag": "h2",
+                    "text_color": "#ffffff",
+                    "width": "fill"
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>We make waterproof Inspired that you will never have to take off.</p>",
+                    "text_size": "md",
+                    "text_color": "#ffffffcc",
+                    "width": "fill"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "button",
+              "settings": {
+                "button_label": "SHOP NOW",
+                "button_link": "shopify://collections/all",
+                "button_style": "primary",
+                "show_icon": false,
+                "width": "fit",
+                "width_mobile": "fit"
+              }
+            }
+          ]
+        },
+        {
+          "type": "slideshow-slide",
+          "settings": {
+            "layout": "classic",
+            "media_type": "image",
+            "show_overlay": true,
+            "overlay_color": "#0000001a",
+            "parallax_effect": "none",
+            "content_width": "custom",
+            "content_max_width": 600,
+            "desktop_position": "center_center",
+            "mobile_position": "center_center",
+            "desktop_gap": 40,
+            "mobile_gap": 36,
+            "color_scheme": "scheme-3"
+          },
+          "blocks": [
+            {
+              "type": "header",
+              "settings": {
+                "width": "fill",
+                "inherit_alignment": true,
+                "gap_desktop": 16,
+                "gap_mobile": 16
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>The perfect piercing composition is yours.</p>",
+                    "heading_size": "display",
+                    "html_tag": "h2",
+                    "text_color": "#ffffff",
+                    "width": "fill"
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>You will be surprised by the soft touch of its high-quality hypoallergenic resin.</p>",
+                    "text_size": "md",
+                    "text_color": "#ffffffcc",
+                    "width": "fill"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "button",
+              "settings": {
+                "button_label": "SHOP NOW",
+                "button_link": "shopify://collections/all",
+                "button_style": "primary",
+                "show_icon": false,
+                "width": "fit",
+                "width_mobile": "fit"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

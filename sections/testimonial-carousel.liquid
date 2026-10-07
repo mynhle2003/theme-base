@@ -195,77 +195,99 @@
       "blocks": [
         {
           "type": "carousel",
-          "settings": {
-            "columns_desktop": "1",
-            "columns_mobile": "1",
-            "controls_style": "fraction",
-            "controls_alignment": "left",
-            "controls_alignment_mobile": "center",
-            "loop": true,
-            "show_pagination_on_desktop": false,
-            "show_pagination_on_mobile": false,
-            "show_navigation_on_desktop": true
-          },
+          "settings": {"columns_desktop": "1", "columns_mobile": "1", "width": "fill", "gap_desktop": 0, "gap_mobile": 0, "show_next_slide_preview_on_desktop": false, "show_next_slide_preview_on_mobile": false, "controls_style": "fraction", "controls_alignment": "left", "controls_alignment_mobile": "left", "navigation_icon": "long_arrow", "loop": false, "autoplay": false, "show_pagination_on_desktop": false, "show_pagination_on_mobile": false, "pagination_padding_desktop": 48, "pagination_padding_mobile": 36, "show_navigation_on_desktop": true},
           "blocks": [
             {
               "type": "testimonial-item",
+              "settings": {"direction": "horizontal", "position": "center", "alignment": "left", "vertical_on_mobile": true, "alignment_mobile": "left", "gap_desktop": 0, "gap_mobile": 40, "border_thickness": 0, "corner_radius": "square", "shadow": "none"},
               "blocks": [
-                { "type": "image", "settings": { "image_ratio_desktop": "square", "image_ratio_mobile": "square", "width_desktop": "fill", "width_mobile": "fill" } },
                 {
                   "type": "group",
-                  "settings": { "direction": "vertical", "alignment": "left", "width": "fill", "height": "fill", "gap_desktop": 16, "gap_mobile": 12, "appearance_type": "inherit", "border_type": "none", "corner_radius": "square", "shadow": "none" },
+                  "settings": {"direction": "vertical", "position": "center", "alignment": "left", "alignment_mobile": "left", "width": "fill", "width_mobile": "fill", "height": "fill", "gap_desktop": 20, "gap_mobile": 8, "appearance_type": "inherit", "border_type": "none", "corner_radius": "square", "shadow": "none", "padding_left": 96, "padding_right": 96, "padding_bottom": 72, "customize_mobile_padding": true, "padding_top_mobile": 0, "padding_bottom_mobile": 16, "padding_left_mobile": 16, "padding_right_mobile": 16},
                   "blocks": [
-                    { "type": "eyebrow", "settings": { "text": "<p>FROM THE PEOPLE</p>" } },
-                    { "type": "icon", "settings": { "source": "library", "icon": "five-stars", "icon_width": 74, "custom_mobile": false } },
-                    { "type": "text", "settings": { "text": "<p>Share a customer testimonial that builds trust in your products and brand.</p>", "text_size": "md" } },
-                    { "type": "heading", "settings": { "text": "<p>— Customer name</p>", "heading_size": "xs", "html_tag": "h5", "width": "fit", "customize_mobile_size": false, "width_mobile": "fit" } }
+                    {"type": "eyebrow", "settings": {"text": "<p>FROM THE PEOPLE</p>", "color": "#636363"}},
+                    {
+                      "type": "group",
+                      "settings": {"direction": "vertical", "position": "top", "alignment": "left", "alignment_mobile": "left", "width": "fill", "width_mobile": "fill", "height": "fit", "gap_desktop": 20, "gap_mobile": 20, "appearance_type": "inherit", "border_type": "none", "corner_radius": "square", "shadow": "none"},
+                      "blocks": [
+                        {
+                          "type": "group",
+                          "settings": {"direction": "vertical", "position": "top", "alignment": "left", "alignment_mobile": "left", "width": "fill", "width_mobile": "fill", "height": "fit", "gap_desktop": 10, "gap_mobile": 10, "appearance_type": "inherit", "border_type": "none", "corner_radius": "square", "shadow": "none"},
+                          "blocks": [
+                            {"type": "icon", "settings": {"source": "library", "icon": "five-stars", "icon_width": 88, "custom_mobile": false}},
+                            {"type": "heading", "settings": {"text": "<p>“The necklace looks amazing! Thank you so much for all of your help and outstanding customer service. What I love most is the attention to detail. Every gem sparkles beautifully honour”</p>", "heading_size": "lg", "html_tag": "div", "width": "fill", "customize_mobile_size": true, "width_mobile": "fill"}}
+                          ]
+                        },
+                        {"type": "text", "settings": {"text": "<p>— Madison P, London</p>", "text_size": "sm", "width": "fill", "customize_mobile_size": true, "width_mobile": "fill"}}
+                      ]
+                    }
                   ]
-                }
+                },
+                {"type": "image", "settings": {"show_image_first_mobile": true, "image_ratio_desktop": "custom", "image_ratio_custom_width_desktop": 5, "image_ratio_custom_height_desktop": 4, "image_ratio_mobile": "custom", "image_ratio_custom_width_mobile": 5, "image_ratio_custom_height_mobile": 4, "width_desktop": "fill", "width_mobile": "fill", "corner_radius": "square"}}
               ]
             },
             {
               "type": "testimonial-item",
+              "settings": {"direction": "horizontal", "position": "center", "alignment": "left", "vertical_on_mobile": true, "alignment_mobile": "left", "gap_desktop": 0, "gap_mobile": 40, "border_thickness": 0, "corner_radius": "square", "shadow": "none"},
               "blocks": [
-                { "type": "image", "settings": { "image_ratio_desktop": "square", "image_ratio_mobile": "square", "width_desktop": "fill", "width_mobile": "fill" } },
                 {
                   "type": "group",
-                  "settings": { "direction": "vertical", "alignment": "left", "width": "fill", "height": "fill", "gap_desktop": 16, "gap_mobile": 12, "appearance_type": "inherit", "border_type": "none", "corner_radius": "square", "shadow": "none" },
+                  "settings": {"direction": "vertical", "position": "center", "alignment": "left", "alignment_mobile": "left", "width": "fill", "width_mobile": "fill", "height": "fill", "gap_desktop": 20, "gap_mobile": 8, "appearance_type": "inherit", "border_type": "none", "corner_radius": "square", "shadow": "none", "padding_left": 96, "padding_right": 96, "padding_bottom": 72, "customize_mobile_padding": true, "padding_top_mobile": 0, "padding_bottom_mobile": 16, "padding_left_mobile": 16, "padding_right_mobile": 16},
                   "blocks": [
-                    { "type": "eyebrow", "settings": { "text": "<p>FROM THE PEOPLE</p>" } },
-                    { "type": "icon", "settings": { "source": "library", "icon": "five-stars", "icon_width": 74, "custom_mobile": false } },
-                    { "type": "text", "settings": { "text": "<p>Share a customer testimonial that builds trust in your products and brand.</p>", "text_size": "md" } },
-                    { "type": "heading", "settings": { "text": "<p>— Customer name</p>", "heading_size": "xs", "html_tag": "h5", "width": "fit", "customize_mobile_size": false, "width_mobile": "fit" } }
+                    {"type": "eyebrow", "settings": {"text": "<p>FROM THE PEOPLE</p>", "color": "#636363"}},
+                    {
+                      "type": "group",
+                      "settings": {"direction": "vertical", "position": "top", "alignment": "left", "alignment_mobile": "left", "width": "fill", "width_mobile": "fill", "height": "fit", "gap_desktop": 20, "gap_mobile": 20, "appearance_type": "inherit", "border_type": "none", "corner_radius": "square", "shadow": "none"},
+                      "blocks": [
+                        {
+                          "type": "group",
+                          "settings": {"direction": "vertical", "position": "top", "alignment": "left", "alignment_mobile": "left", "width": "fill", "width_mobile": "fill", "height": "fit", "gap_desktop": 10, "gap_mobile": 10, "appearance_type": "inherit", "border_type": "none", "corner_radius": "square", "shadow": "none"},
+                          "blocks": [
+                            {"type": "icon", "settings": {"source": "library", "icon": "five-stars", "icon_width": 88, "custom_mobile": false}},
+                            {"type": "heading", "settings": {"text": "<p>“The necklace looks amazing! Thank you so much for all of your help and outstanding customer service. What I love most is the attention to detail. Every gem sparkles beautifully honour”</p>", "heading_size": "lg", "html_tag": "div", "width": "fill", "customize_mobile_size": true, "width_mobile": "fill"}}
+                          ]
+                        },
+                        {"type": "text", "settings": {"text": "<p>— Madison P, London</p>", "text_size": "sm", "width": "fill", "customize_mobile_size": true, "width_mobile": "fill"}}
+                      ]
+                    }
                   ]
-                }
+                },
+                {"type": "image", "settings": {"show_image_first_mobile": true, "image_ratio_desktop": "custom", "image_ratio_custom_width_desktop": 5, "image_ratio_custom_height_desktop": 4, "image_ratio_mobile": "custom", "image_ratio_custom_width_mobile": 5, "image_ratio_custom_height_mobile": 4, "width_desktop": "fill", "width_mobile": "fill", "corner_radius": "square"}}
               ]
             },
             {
               "type": "testimonial-item",
+              "settings": {"direction": "horizontal", "position": "center", "alignment": "left", "vertical_on_mobile": true, "alignment_mobile": "left", "gap_desktop": 0, "gap_mobile": 40, "border_thickness": 0, "corner_radius": "square", "shadow": "none"},
               "blocks": [
-                { "type": "image", "settings": { "image_ratio_desktop": "square", "image_ratio_mobile": "square", "width_desktop": "fill", "width_mobile": "fill" } },
                 {
                   "type": "group",
-                  "settings": { "direction": "vertical", "alignment": "left", "width": "fill", "height": "fill", "gap_desktop": 16, "gap_mobile": 12, "appearance_type": "inherit", "border_type": "none", "corner_radius": "square", "shadow": "none" },
+                  "settings": {"direction": "vertical", "position": "center", "alignment": "left", "alignment_mobile": "left", "width": "fill", "width_mobile": "fill", "height": "fill", "gap_desktop": 20, "gap_mobile": 8, "appearance_type": "inherit", "border_type": "none", "corner_radius": "square", "shadow": "none", "padding_left": 96, "padding_right": 96, "padding_bottom": 72, "customize_mobile_padding": true, "padding_top_mobile": 0, "padding_bottom_mobile": 16, "padding_left_mobile": 16, "padding_right_mobile": 16},
                   "blocks": [
-                    { "type": "eyebrow", "settings": { "text": "<p>FROM THE PEOPLE</p>" } },
-                    { "type": "icon", "settings": { "source": "library", "icon": "five-stars", "icon_width": 74, "custom_mobile": false } },
-                    { "type": "text", "settings": { "text": "<p>Share a customer testimonial that builds trust in your products and brand.</p>", "text_size": "md" } },
-                    { "type": "heading", "settings": { "text": "<p>— Customer name</p>", "heading_size": "xs", "html_tag": "h5", "width": "fit", "customize_mobile_size": false, "width_mobile": "fit" } }
+                    {"type": "eyebrow", "settings": {"text": "<p>FROM THE PEOPLE</p>", "color": "#636363"}},
+                    {
+                      "type": "group",
+                      "settings": {"direction": "vertical", "position": "top", "alignment": "left", "alignment_mobile": "left", "width": "fill", "width_mobile": "fill", "height": "fit", "gap_desktop": 20, "gap_mobile": 20, "appearance_type": "inherit", "border_type": "none", "corner_radius": "square", "shadow": "none"},
+                      "blocks": [
+                        {
+                          "type": "group",
+                          "settings": {"direction": "vertical", "position": "top", "alignment": "left", "alignment_mobile": "left", "width": "fill", "width_mobile": "fill", "height": "fit", "gap_desktop": 10, "gap_mobile": 10, "appearance_type": "inherit", "border_type": "none", "corner_radius": "square", "shadow": "none"},
+                          "blocks": [
+                            {"type": "icon", "settings": {"source": "library", "icon": "five-stars", "icon_width": 88, "custom_mobile": false}},
+                            {"type": "heading", "settings": {"text": "<p>“The necklace looks amazing! Thank you so much for all of your help and outstanding customer service. What I love most is the attention to detail. Every gem sparkles beautifully honour”</p>", "heading_size": "lg", "html_tag": "div", "width": "fill", "customize_mobile_size": true, "width_mobile": "fill"}}
+                          ]
+                        },
+                        {"type": "text", "settings": {"text": "<p>— Madison P, London</p>", "text_size": "sm", "width": "fill", "customize_mobile_size": true, "width_mobile": "fill"}}
+                      ]
+                    }
                   ]
-                }
+                },
+                {"type": "image", "settings": {"show_image_first_mobile": true, "image_ratio_desktop": "custom", "image_ratio_custom_width_desktop": 5, "image_ratio_custom_height_desktop": 4, "image_ratio_mobile": "custom", "image_ratio_custom_width_mobile": 5, "image_ratio_custom_height_mobile": 4, "width_desktop": "fill", "width_mobile": "fill", "corner_radius": "square"}}
               ]
             }
           ]
         }
       ],
-      "settings": {
-        "section_width": "page_width",
-        "alignment": "left",
-        "customize_mobile_alignment": false,
-        "alignment_mobile": "left",
-        "color_scheme": "scheme-1",
-        "customize_mobile_padding": false
-      }
+      "settings": {"section_width": "full_width_no_padding", "alignment": "left", "customize_mobile_alignment": false, "alignment_mobile": "left", "content_gap": 0, "customize_mobile_gap": false, "color_scheme": "scheme-4", "background_color": "#f9f9f9", "padding_top": 0, "padding_bottom": 0, "customize_mobile_padding": true, "padding_top_mobile": 0, "padding_bottom_mobile": 56}
     }
   ]
 }

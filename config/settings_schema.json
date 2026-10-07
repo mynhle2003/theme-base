@@ -370,7 +370,7 @@
         "id": "type_heading_1_size_desktop",
         "min": 40,
         "max": 96,
-        "step": 4,
+        "step": 2,
         "unit": "px",
         "label": "t:labels.font_size_desktop",
         "default": 64
@@ -426,7 +426,7 @@
         "id": "type_heading_2_size_desktop",
         "min": 32,
         "max": 72,
-        "step": 4,
+        "step": 2,
         "unit": "px",
         "label": "t:labels.font_size_desktop",
         "default": 40
@@ -480,9 +480,9 @@
       {
         "type": "range",
         "id": "type_heading_3_size_desktop",
-        "min": 28,
+        "min": 26,
         "max": 60,
-        "step": 4,
+        "step": 2,
         "unit": "px",
         "label": "t:labels.font_size_desktop",
         "default": 32
@@ -536,7 +536,7 @@
       {
         "type": "range",
         "id": "type_heading_4_size_desktop",
-        "min": 24,
+        "min": 20,
         "max": 48,
         "step": 4,
         "unit": "px",
@@ -582,7 +582,7 @@
       {
         "type": "range",
         "id": "type_heading_5_size_desktop",
-        "min": 18,
+        "min": 16,
         "max": 36,
         "step": 2,
         "unit": "px",
@@ -1290,6 +1290,37 @@
       },
       {
         "type": "select",
+        "id": "product_card_title_weight",
+        "label": "Title weight",
+        "options": [
+          { "value": "400", "label": "Regular" },
+          { "value": "500", "label": "Medium" },
+          { "value": "600", "label": "Semibold" }
+        ],
+        "default": "400"
+      },
+      {
+        "type": "range",
+        "id": "product_card_price_size_desktop",
+        "label": "Price size",
+        "min": 10,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "product_card_price_size_mobile",
+        "label": "Mobile price size",
+        "min": 10,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "default": 14
+      },
+      {
+        "type": "select",
         "id": "product_card_alignment",
         "label": "t:labels.alignment",
         "options": [
@@ -1507,7 +1538,8 @@
         "label": "t:labels.position",
         "options": [
           { "value": "top", "label": "t:options.position.top" },
-          { "value": "bottom", "label": "t:options.position.bottom" }
+          { "value": "bottom", "label": "t:options.position.bottom" },
+          { "value": "inline", "label": "Beside product information" }
         ],
         "default": "top"
       },
@@ -1671,6 +1703,20 @@
   {
     "name": "t:general.swatches",
     "settings": [
+      {
+        "type": "color",
+        "id": "swatch_gold_color",
+        "label": "Gold fallback color",
+        "default": "#d4af37",
+        "info": "Used only when the Color option has no native Shopify swatch."
+      },
+      {
+        "type": "color",
+        "id": "swatch_silver_color",
+        "label": "Silver fallback color",
+        "default": "#b7bcc3",
+        "info": "Native Shopify swatch data takes precedence."
+      },
       {
         "type": "select",
         "id": "swatch_style",

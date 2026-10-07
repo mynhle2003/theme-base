@@ -13,6 +13,10 @@
   assign media_main_aria_label = 'products.media_gallery' | t: product: media_product.title
   assign media_thumbnails_aria_label = 'products.media_thumbnails' | t
   assign selected_media_found = false
+  assign media_main_image_ratio = block.settings.main_image_ratio | default: 'auto'
+  unless media_main_image_ratio == 'square'
+    assign media_main_image_ratio = 'auto'
+  endunless
 
   assign media_desktop_layout = block.settings.desktop_layout | default: 'left_thumbnails'
   unless media_desktop_layout == 'left_thumbnails' or media_desktop_layout == 'bottom_thumbnails' or media_desktop_layout == 'grid' or media_desktop_layout == 'stacked' or media_desktop_layout == 'stacked_thumbnails' or media_desktop_layout == 'two_column_grid'
@@ -150,6 +154,7 @@
   data-mobile-layout="{{ media_mobile_layout }}"
   data-mobile-show-pagination="{{ media_mobile_show_pagination }}"
   data-zoom="{{ media_zoom }}"
+  data-main-image-ratio="{{ media_main_image_ratio }}"
   data-block-animations="{{ media_block_motion_enabled }}"
   data-current-variant-id="{{ current_variant.id | default: '' }}"
   data-current-variant-media-id="{{ current_variant.featured_media.id | default: '' }}"
@@ -265,6 +270,16 @@
   "name": "t:general.product_media",
   "tag": null,
   "settings": [
+    {
+      "type": "select",
+      "id": "main_image_ratio",
+      "label": "Main image ratio",
+      "options": [
+        { "value": "auto", "label": "Original image" },
+        { "value": "square", "label": "Square" }
+      ],
+      "default": "auto"
+    },
     {
       "type": "paragraph",
       "content": "t:info.product_media_variant_filter"

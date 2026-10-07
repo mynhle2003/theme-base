@@ -12,6 +12,15 @@
 {% liquid
   assign collection_card_title_collection = closest.collection
   assign collection_card_title = collection_card_title_collection.title
+  assign collection_card_title_suffix = block.settings.title_suffix_to_hide
+  if collection_card_title_suffix != blank
+    assign collection_card_suffix_start = collection_card_title_suffix.size | times: -1
+    assign collection_card_title_end = collection_card_title | slice: collection_card_suffix_start, collection_card_title_suffix.size
+    if collection_card_title_end == collection_card_title_suffix
+      assign collection_card_title_length = collection_card_title.size | minus: collection_card_title_suffix.size
+      assign collection_card_title = collection_card_title | slice: 0, collection_card_title_length
+    endif
+  endif
   if collection_card_title == blank
     assign collection_card_title = 'collection_list.default_title' | t
   endif
@@ -186,6 +195,12 @@
   "name": "t:labels.title",
   "tag": null,
   "settings": [
+    {
+      "type": "text",
+      "id": "title_suffix_to_hide",
+      "label": "Title suffix to hide",
+      "info": "Hides only an exact suffix at the end of the displayed title. The collection name and link are preserved."
+    },
     {
       "type": "checkbox",
       "id": "show_product_count",

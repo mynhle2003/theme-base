@@ -8,12 +8,36 @@
   assign text = block.settings.text | default: '@pam_sam'
   assign social_background = block.settings.social_background | default: '#F0E5E2'
   assign icon_size = block.settings.icon_size | default: 24 | plus: 0
+  assign gallery_product = block.settings.product
+  assign gallery_media_ratio = '1'
+  if block.settings.image_ratio == 'portrait_tall'
+    assign gallery_media_ratio = '5 / 7'
+  endif
 %}
 
-<article class="gallery-item swiper-slide" style="--gallery-item-social-background: {{ social_background | escape }}; --gallery-item-icon-size: {{ icon_size }}px;" {{ block.shopify_attributes }}>
+<article class="gallery-item swiper-slide{% if gallery_product != blank %} gallery-item--product{% endif %}" style="--gallery-item-social-background: {{ social_background | escape }}; --gallery-item-icon-size: {{ icon_size }}px; --gallery-item-media-ratio: {{ gallery_media_ratio }};" {{ block.shopify_attributes }}>
   <div class="gallery-item__media">
     {% render 'image', image: block.settings.image, mobile_image: block.settings.mobile_image, alt: block.settings.alt_text, class: 'gallery-item__image', width: 1600, widths: '320, 480, 640, 800, 1200, 1600', sizes: '(min-width: 1200px) 25vw, (min-width: 768px) 33vw, 100vw' %}
   </div>
+  {% if gallery_product != blank %}
+    <div class="gallery-item__product">
+      <a class="gallery-item__product-image" href="{{ gallery_product.url }}">
+        {{ gallery_product.featured_image | image_url: width: 140 | image_tag: loading: 'lazy', alt: gallery_product.title }}
+      </a>
+      <div class="gallery-item__product-details">
+        {% render 'product-card-title', product: gallery_product, heading_tag: 'h3' %}
+        {% render 'product-card-price', item: gallery_product %}
+      </div>
+      {% assign gallery_add_label = 'products.add_to_cart' | t %}
+      {% assign gallery_add_accessible_label = gallery_add_label | append: ': ' | append: gallery_product.title %}
+      {% assign gallery_add_disabled = false %}
+      {% unless gallery_product.available %}{% assign gallery_add_disabled = true %}{% endunless %}
+      <form action="{{ routes.cart_add_url }}" method="post">
+        <input type="hidden" name="id" value="{{ gallery_product.selected_or_first_available_variant.id }}">
+        {% render 'theme-button', type: 'submit', label: gallery_add_label, aria_label: gallery_add_accessible_label, variant: 'tertiary', icon: 'cart', icon_only: true, disabled: gallery_add_disabled, class: 'gallery-item__product-add' %}
+      </form>
+    </div>
+  {% else %}
   <div class="gallery-item__footer">
     <div class="gallery-item__identity">
       <div class="gallery-item__avatar">
@@ -32,12 +56,13 @@
       {% if social_url != blank %}</a>{% else %}</span>{% endif %}
     {% endunless %}
   </div>
+  {% endif %}
 </article>
 
 {% stylesheet %}
   .gallery-item { display: flex !important; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid var(--border-color); background: var(--background-color); }
   .gallery-item__media, .gallery-item__image, .gallery-item__image > picture, .gallery-item__image > img, .gallery-item__image .image__placeholder { display: block; width: 100%; height: 100%; }
-  .gallery-item__media { aspect-ratio: 1; overflow: hidden; }
+  .gallery-item__media { aspect-ratio: var(--gallery-item-media-ratio, 1); overflow: hidden; }
   .gallery-item__media img, .gallery-item__media .image__placeholder { height: 100%; object-fit: cover; }
   .gallery-item__footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 16px; }
   .gallery-item__identity { display: flex; align-items: center; min-width: 0; gap: 8px; }
@@ -47,6 +72,13 @@
   .gallery-item__text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--font-body-sm); line-height: 1.2; }
   .gallery-item__social { display: inline-flex; flex: 0 0 calc(var(--gallery-item-icon-size, 24px) + 32px); align-items: center; justify-content: center; width: calc(var(--gallery-item-icon-size, 24px) + 32px); height: calc(var(--gallery-item-icon-size, 24px) + 32px); padding: 16px; color: currentColor; background: var(--gallery-item-social-background, #F0E5E2); border-radius: 50%; text-decoration: none; }
   .gallery-item__social svg { display: block; width: var(--gallery-item-icon-size, 24px); height: var(--gallery-item-icon-size, 24px); }
+  .gallery-item--product { gap: 8px; border: 0; }
+  .gallery-item__product { display: flex; align-items: center; gap: 12px; padding: 16px; border: 1px solid var(--border-color); }
+  .gallery-item__product-image { display: block; flex: 0 0 70px; width: 70px; height: 70px; }
+  .gallery-item__product-image img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .gallery-item__product-details { display: flex; flex: 1; flex-direction: column; min-width: 0; gap: 8px; }
+  .gallery-item__product-details .product-card__title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1.5; }
+  .gallery-item__product-add { width: 44px; height: 44px; padding: 0; }
 {% endstylesheet %}
 
 {% schema %}
@@ -54,6 +86,8 @@
   "name": "Gallery item",
   "tag": null,
   "settings": [
+    { "type": "product", "id": "product", "label": "Product", "info": "Displays a linked product card instead of the social profile footer." },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio", "options": [{ "value": "square", "label": "Square" }, { "value": "portrait_tall", "label": "5:7 portrait" }], "default": "square" },
     { "type": "header", "content": "Image" },
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "image_picker", "id": "mobile_image", "label": "Mobile image" },

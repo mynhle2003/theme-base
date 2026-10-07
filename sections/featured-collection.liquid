@@ -497,12 +497,16 @@
       "category": "t:general.collection",
       "settings": {
         "section_width": "page_width",
-        "desktop_alignment": "left",
-        "mobile_alignment": "left",
-        "gap_desktop": 32,
-        "gap_mobile": 24,
+        "desktop_alignment": "center",
+        "mobile_alignment": "center",
+        "gap_desktop": 48,
+        "gap_mobile": 40,
         "color_scheme": "scheme-1",
-        "customize_mobile_padding": false
+        "customize_mobile_padding": true,
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
         {
@@ -510,17 +514,20 @@
           "id": "header",
           "static": true,
           "settings": {
-            "width": "fit",
-            "gap_desktop": 12,
-            "gap_mobile": 8
+            "width": "fill",
+            "gap_desktop": 8,
+            "gap_mobile": 8,
+            "inherit_alignment": true
           },
           "blocks": [
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Featured collection</p>",
-                "heading_size": "lg",
-                "html_tag": "h2"
+                "text": "<p>Trending Jewelry</p>",
+                "heading_size": "custom",
+                "html_tag": "h2",
+                "custom_heading_size": 34,
+                "width": "fill"
               }
             }
           ]
@@ -545,22 +552,134 @@
           "static": true,
           "settings": {
             "collection": "",
-            "max_products": 6,
+            "max_products": 5,
             "layout_type": "carousel",
             "columns_desktop": "4",
             "columns_mobile": "1",
-            "show_next_slide_preview_on_desktop": false,
-            "product_gap_desktop": 4,
-            "product_gap_mobile": 4,
-            "show_navigation_on_desktop": true,
+            "show_next_slide_preview_on_desktop": true, "show_next_slide_preview_on_mobile": false,
+            "product_gap_desktop": 20,
+            "product_gap_mobile": 12,
+            "show_navigation_on_desktop": false,
             "navigation_position": "top",
             "navigation_style": "secondary",
             "navigation_icon": "chevron",
             "show_pagination_on_desktop": true,
             "pagination_type": "progress_bar",
-            "pagination_top_padding_desktop": 50,
-            "pagination_top_padding_mobile": 24,
-            "pagination_limit_width": true,
+            "pagination_top_padding_desktop": 48,
+            "pagination_top_padding_mobile": 40,
+            "pagination_limit_width": false,
+            "pagination_max_width": 260,
+            "autoplay": false,
+            "autoplay_pause_on_hover": true,
+            "autoplay_speed": 4
+          },
+          "blocks": [
+            {
+              "type": "product-card",
+              "id": "product-card",
+              "static": true,
+              "settings": {
+                "color_type": "inherit",
+                "color_scheme": "scheme-1"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shop Best Sellers",
+      "category": "t:general.collection",
+      "settings": {
+        "section_width": "page_width",
+        "desktop_alignment": "left",
+        "mobile_alignment": "left",
+        "gap_desktop": 40,
+        "gap_mobile": 40,
+        "color_scheme": "scheme-1",
+        "customize_mobile_padding": true,
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      },
+      "blocks": [
+        {
+          "type": "header",
+          "id": "header",
+          "static": true,
+          "settings": {
+            "width": "custom",
+            "max_width": 500,
+            "customize_mobile_size": true,
+            "width_mobile": "fill",
+            "gap_desktop": 16,
+            "gap_mobile": 12,
+            "inherit_alignment": true
+          },
+          "blocks": [
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>💍</p><p>Shop Best Sellers</p>",
+                "heading_size": "custom",
+                "html_tag": "h2",
+                "custom_heading_size": 34,
+                "width": "custom",
+                "max_width": 380,
+                "customize_mobile_size": true,
+                "width_mobile": "fill"
+              }
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Discover our most-loved pieces, handpicked by customers and trending as favorites.</p>",
+                "text_size": "md",
+                "width": "custom",
+                "max_width": 380,
+                "customize_mobile_size": true,
+                "width_mobile": "fill"
+              }
+            }
+          ]
+        },
+        {
+          "type": "view-all-button",
+          "id": "featured-collection-view-all",
+          "static": true,
+          "settings": {
+            "button_label": "shop now",
+            "button_style": "solid",
+            "button_style_mobile": "solid",
+            "button_height_mobile": "small",
+            "full_width_mobile": false,
+            "show_icon": false,
+            "show_icon_mobile": false
+          }
+        },
+        {
+          "type": "product-list",
+          "id": "product-list",
+          "static": true,
+          "settings": {
+            "collection": "",
+            "max_products": 4,
+            "layout_type": "carousel",
+            "columns_desktop": "3",
+            "columns_mobile": "1",
+            "show_next_slide_preview_on_desktop": true, "show_next_slide_preview_on_mobile": false,
+            "product_gap_desktop": 20,
+            "product_gap_mobile": 20,
+            "show_navigation_on_desktop": false,
+            "navigation_position": "top",
+            "navigation_style": "secondary",
+            "navigation_icon": "chevron",
+            "show_pagination_on_desktop": false,
+            "pagination_type": "progress_bar",
+            "pagination_top_padding_desktop": 48,
+            "pagination_top_padding_mobile": 40,
+            "pagination_limit_width": false,
             "pagination_max_width": 260,
             "autoplay": false,
             "autoplay_pause_on_hover": true,

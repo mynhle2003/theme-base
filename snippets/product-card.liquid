@@ -120,7 +120,7 @@
     assign swatches_enabled = false
   endif
   assign swatch_position = settings.product_card_swatch_position | default: 'top'
-  unless swatch_position == 'top'
+  unless swatch_position == 'top' or swatch_position == 'inline'
     assign swatch_position = 'bottom'
   endunless
   assign swatch_selected_style = settings.product_card_swatch_selected_style | default: 'border'
@@ -230,7 +230,8 @@
       {% render 'product-badges',
         product: product,
         show_sale_badge: show_sale_badge,
-        show_sold_out_badge: show_sold_out_badge
+        show_sold_out_badge: show_sold_out_badge,
+        show_manual_badges: true
       %}
     </div>
 
@@ -289,7 +290,7 @@
       {{ middle_content }}
     {% endif %}
 
-    {% if swatches_enabled and swatch_position == 'bottom' %}
+    {% if swatches_enabled and swatch_position != 'top' %}
       {% render 'product-card-swatches', product: product, secondary_image_enabled: secondary_image_enabled, image_width: image_width, image_height: image_height %}
     {% endif %}
 

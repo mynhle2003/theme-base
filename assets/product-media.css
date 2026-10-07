@@ -66,6 +66,15 @@
   height: auto;
 }
 
+.product-media-gallery[data-main-image-ratio='square'] .product-media--image {
+  aspect-ratio: 1;
+}
+
+.product-media-gallery[data-main-image-ratio='square'] .product-media--image > img {
+  height: 100%;
+  object-fit: cover;
+}
+
 /* Overlay galleries intentionally have their own media contract. The
    product-page gallery stays natural, while Quick Add and Quick View can use
    a responsive frame ratio without sharing the page gallery's layout rules. */

@@ -135,31 +135,81 @@
 {
   "name": "t:general.custom_section",
   "class": "section-kernel",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "carousel" },
-    { "type": "header" },
-    { "type": "heading" },
-    { "type": "editorial-text" },
-    { "type": "eyebrow" },
-    { "type": "text" },
-    { "type": "image" },
-    { "type": "image-comparison" },
-    { "type": "image-card" },
-    { "type": "video" },
-    { "type": "button" },
-    { "type": "buttons" },
-    { "type": "icon" },
-    { "type": "divider" },
-    { "type": "spacer" },
-    { "type": "group" },
-    { "type": "marquee" },
-    { "type": "row" },
-    { "type": "grid" },
-    { "type": "email-signup" },
-    { "type": "contact-form" },
-    { "type": "product-list" },
-    { "type": "countdown-timer" }
+    {
+      "type": "carousel"
+    },
+    {
+      "type": "header"
+    },
+    {
+      "type": "heading"
+    },
+    {
+      "type": "editorial-text"
+    },
+    {
+      "type": "eyebrow"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "image-comparison"
+    },
+    {
+      "type": "image-card"
+    },
+    {
+      "type": "video"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "buttons"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "spacer"
+    },
+    {
+      "type": "group"
+    },
+    {
+      "type": "marquee"
+    },
+    {
+      "type": "row"
+    },
+    {
+      "type": "grid"
+    },
+    {
+      "type": "email-signup"
+    },
+    {
+      "type": "contact-form"
+    },
+    {
+      "type": "product-list"
+    },
+    {
+      "type": "countdown-timer"
+    }
   ],
   "settings": [
     {
@@ -305,15 +355,34 @@
   "presets": [
     {
       "name": "t:general.custom_section",
-      "category": "t:general.layout",
       "settings": {
         "section_width": "page_width",
-        "alignment": "left",
-        "customize_mobile_alignment": false,
-        "alignment_mobile": "left",
+        "alignment": "center",
+        "customize_mobile_alignment": true,
+        "alignment_mobile": "center",
+        "content_gap": 0,
+        "customize_mobile_gap": true,
+        "content_gap_mobile": 0,
         "color_scheme": "scheme-1",
-        "customize_mobile_padding": false
-      }
+        "padding_top": 20,
+        "padding_bottom": 48,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 40
+      },
+      "blocks": [
+        {
+          "type": "heading",
+          "settings": {
+            "text": "<p>See Our Popular Item</p>",
+            "heading_size": "xl",
+            "html_tag": "h2",
+            "width": "fill",
+            "customize_mobile_size": true,
+            "width_mobile": "fill"
+          }
+        }
+      ]
     }
   ]
 }

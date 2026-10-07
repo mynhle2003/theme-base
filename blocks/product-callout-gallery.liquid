@@ -197,7 +197,8 @@
         root_class: 'product-callout-gallery__viewport',
         aria_label: gallery_navigation_label,
         pagination: gallery_pagination,
-        show_next_slide_preview: gallery_show_preview
+        show_next_slide_preview: gallery_show_preview,
+        show_next_slide_preview_on_mobile: block.settings.show_next_slide_preview_on_mobile
       %}
       {% if gallery_navigation_position != 'top' %}{{ gallery_navigation }}{% endif %}
     </div>
@@ -375,6 +376,7 @@
       "default": false,
       "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
     },
+    {"type": "checkbox", "id": "show_next_slide_preview_on_mobile", "label": "t:labels.show_next_slide_preview_on_mobile", "default": false, "visible_if": "{{ block.settings.layout_type == 'carousel' }}"},
     {
       "type": "select",
       "id": "image_ratio",

@@ -95,46 +95,479 @@
 {
   "name": "FAQ Image Accordion",
   "class": "section-faq-image-accordion",
-  "enabled_on": { "templates": ["*"] },
-  "blocks": [{ "type": "group" }, { "type": "faq_accordion" }],
-  "settings": [
-    { "type": "header", "content": "Layout" },
-    { "type": "select", "id": "section_width", "label": "t:labels.section_width", "options": [{ "value": "page_width", "label": "t:options.section_width.page_width" }, { "value": "full_width", "label": "t:options.section_width.full_width" }, { "value": "full_width_no_padding", "label": "t:options.section_width.full_width_no_padding" }], "default": "page_width" },
-    { "type": "select", "id": "layout", "label": "Layout", "options": [{ "value": "horizontal", "label": "Horizontal" }, { "value": "vertical", "label": "Vertical" }], "default": "horizontal" },
-    { "type": "select", "id": "position", "label": "Position", "options": [{ "value": "top", "label": "Top" }, { "value": "center", "label": "Center" }, { "value": "bottom", "label": "Bottom" }], "default": "top", "visible_if": "{{ section.settings.layout == 'horizontal' }}" },
-    { "type": "select", "id": "alignment", "label": "Alignment", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }], "default": "left", "visible_if": "{{ section.settings.layout == 'vertical' }}" },
-    { "type": "select", "id": "horizontal_alignment", "label": "Horizontal alignment", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }, { "value": "space-between", "label": "Space between" }], "default": "left", "visible_if": "{{ section.settings.layout == 'horizontal' }}" },
-    { "type": "checkbox", "id": "vertical_on_mobile", "label": "Vertical on mobile", "default": true, "visible_if": "{{ section.settings.layout == 'horizontal' }}" },
-    { "type": "select", "id": "alignment_mobile", "label": "Mobile alignment", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }], "default": "left", "visible_if": "{{ section.settings.layout == 'horizontal' and section.settings.vertical_on_mobile }}" },
-    { "type": "header", "content": "Gap" },
-    { "type": "range", "id": "gap_desktop", "label": "Desktop gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 80 },
-    { "type": "range", "id": "gap_mobile", "label": "Mobile gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 40 },
-    { "type": "header", "content": "Appearance" },
-    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
-    { "type": "color", "alpha": true, "id": "background_color", "label": "Background" },
-    { "type": "header", "content": "Padding" },
-    { "type": "range", "id": "padding_top", "label": "t:labels.top_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "padding_bottom", "label": "t:labels.bottom_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
-  ],
-  "presets": [{
-    "name": "FAQ Image Accordion",
-    "category": "Content",
-    "settings": { "section_width": "page_width", "layout": "horizontal", "alignment": "left", "horizontal_alignment": "left", "vertical_on_mobile": true, "alignment_mobile": "left", "gap_desktop": 48, "gap_mobile": 32, "color_scheme": "scheme-1", "padding_top": 48, "padding_bottom": 48 },
-    "blocks": [
-      { "type": "group", "settings": { "direction": "vertical", "alignment": "left", "width": "fill", "gap_desktop": 16, "gap_mobile": 12 }, "blocks": [
-        { "type": "heading", "settings": { "text": "<p>FAQs</p>", "heading_size": "lg", "html_tag": "h2" } },
-        { "type": "text", "settings": { "text": "<p>Find answers to common questions about our products, shipping, returns, payments, and store policies.</p>" } }
-      ] },
-      { "type": "group", "settings": { "direction": "vertical", "alignment": "center", "width": "fill", "gap_desktop": 0, "gap_mobile": 0 }, "blocks": [
-        { "type": "image", "settings": { "image_ratio_desktop": "auto", "image_ratio_mobile": "auto", "width_desktop": "fill", "width_mobile": "fill", "limit_width_desktop": false, "limit_width_mobile": false, "corner_radius": "square", "customize_mobile_padding": false } }
-      ] },
-      { "type": "faq_accordion", "settings": { "style": "simple", "icon": "chevron", "dividers": true, "question_font_size": "xs", "answer_font_size": "md", "customize_mobile_font_size": false, "question_font_size_mobile": "xs", "answer_font_size_mobile": "md", "gap_desktop": 16, "gap_mobile": 16, "width": "fill", "limit_width": false, "padding": "medium" }, "blocks": [
-        { "type": "faq_item", "settings": { "question": "What is your return policy?", "show_question_icon": true, "question_icon": "document-text" } },
-        { "type": "faq_item", "settings": { "question": "How long does shipping take?", "show_question_icon": true, "question_icon": "truck" } },
-        { "type": "faq_item", "settings": { "question": "Which payment methods do you accept?", "show_question_icon": true, "question_icon": "receipt-percent" } },
-        { "type": "faq_item", "settings": { "question": "How can I contact support?", "show_question_icon": true, "question_icon": "share" } }
-      ] }
+  "enabled_on": {
+    "templates": [
+      "*"
     ]
-  }]
+  },
+  "blocks": [
+    {
+      "type": "group"
+    },
+    {
+      "type": "faq_accordion"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:labels.section_width",
+      "options": [
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "t:options.section_width.full_width_no_padding"
+        }
+      ],
+      "default": "page_width"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        }
+      ],
+      "default": "horizontal"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Position",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "top",
+      "visible_if": "{{ section.settings.layout == 'horizontal' }}"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "visible_if": "{{ section.settings.layout == 'vertical' }}"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment",
+      "label": "Horizontal alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "space-between",
+          "label": "Space between"
+        }
+      ],
+      "default": "left",
+      "visible_if": "{{ section.settings.layout == 'horizontal' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "vertical_on_mobile",
+      "label": "Vertical on mobile",
+      "default": true,
+      "visible_if": "{{ section.settings.layout == 'horizontal' }}"
+    },
+    {
+      "type": "select",
+      "id": "alignment_mobile",
+      "label": "Mobile alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "visible_if": "{{ section.settings.layout == 'horizontal' and section.settings.vertical_on_mobile }}"
+    },
+    {
+      "type": "header",
+      "content": "Gap"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "Desktop gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Mobile gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "background_color",
+      "label": "Background"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:labels.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:labels.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Image Accordion",
+      "settings": {
+        "section_width": "page_width",
+        "layout": "vertical",
+        "alignment": "center",
+        "gap_desktop": 56,
+        "gap_mobile": 36,
+        "color_scheme": "scheme-1",
+        "background_color": "#f9f9f9",
+        "padding_top": 0,
+        "padding_bottom": 0
+      },
+      "blocks": [
+        {
+          "type": "group",
+          "settings": {
+            "direction": "vertical",
+            "alignment": "center",
+            "alignment_mobile": "center",
+            "width": "fill",
+            "width_mobile": "fill",
+            "height": "fit",
+            "gap_desktop": 16,
+            "gap_mobile": 12,
+            "border_type": "none",
+            "corner_radius": "square",
+            "shadow": "none",
+            "limit_width": true,
+            "max_width": 700,
+            "padding_top": 80,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 56,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
+          },
+          "blocks": [
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Frequently Asked Questions</p>",
+                "heading_size": "xl",
+                "html_tag": "h2",
+                "width": "fill",
+                "customize_mobile_size": true,
+                "width_mobile": "fill"
+              }
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Explore our most frequently asked questions for clear, concise guidance designed to make your shopping experience seamless.</p>",
+                "text_size": "md",
+                "width": "fill"
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "settings": {
+            "direction": "horizontal",
+            "alignment": "left",
+            "alignment_mobile": "left",
+            "width": "fill",
+            "width_mobile": "fill",
+            "height": "fit",
+            "gap_desktop": 40,
+            "gap_mobile": 36,
+            "border_type": "none",
+            "corner_radius": "square",
+            "shadow": "none",
+            "position_horizontal": "center",
+            "horizontal_alignment": "left",
+            "customize_mobile_alignment": true,
+            "padding_bottom": 80,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 56,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
+          },
+          "blocks": [
+            {
+              "type": "group",
+              "settings": {
+                "direction": "horizontal",
+                "alignment": "left",
+                "alignment_mobile": "left",
+                "width": "custom",
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "border_type": "none",
+                "corner_radius": "square",
+                "shadow": "none",
+                "position_horizontal": "center",
+                "horizontal_alignment": "center",
+                "customize_mobile_alignment": false,
+                "width_custom": 50
+              },
+              "blocks": [
+                {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_custom_width_desktop": 1,
+                    "image_ratio_custom_height_desktop": 1,
+                    "image_ratio_mobile": "custom",
+                    "image_ratio_custom_width_mobile": 1,
+                    "image_ratio_custom_height_mobile": 1,
+                    "width_desktop": "custom",
+                    "width_mobile": "custom",
+                    "corner_radius": "square",
+                    "width_custom_desktop": 45,
+                    "width_custom_mobile": 45
+                  }
+                },
+                {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_custom_width_desktop": 2,
+                    "image_ratio_custom_height_desktop": 3,
+                    "image_ratio_mobile": "custom",
+                    "image_ratio_custom_width_mobile": 2,
+                    "image_ratio_custom_height_mobile": 3,
+                    "width_desktop": "custom",
+                    "width_mobile": "custom",
+                    "corner_radius": "square",
+                    "width_custom_desktop": 46,
+                    "width_custom_mobile": 46
+                  }
+                }
+              ]
+            },
+            {
+              "type": "faq_accordion",
+              "settings": {
+                "style": "simple",
+                "icon": "chevron",
+                "dividers": true,
+                "question_font_size": "xs",
+                "answer_font_size": "sm",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "width": "fill",
+                "padding": "custom",
+                "padding_top": 20,
+                "padding_bottom": 20,
+                "padding_left": 0,
+                "padding_right": 0
+              },
+              "blocks": [
+                {
+                  "type": "faq_item",
+                  "settings": {
+                    "question": "How can I track the status of my order?",
+                    "show_question_icon": false,
+                    "initially_open": true
+                  },
+                  "blocks": [
+                    {
+                      "type": "faq_answer_text",
+                      "settings": {
+                        "text": "<p>Once your order ships, you’ll receive a confirmation email with a tracking link so you can follow your package in real time. Please contact our support team immediately with your order number and a photo of the item.</p>"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "faq_item",
+                  "settings": {
+                    "question": "How do I place an order on your website?",
+                    "show_question_icon": false,
+                    "initially_open": false
+                  },
+                  "blocks": [
+                    {
+                      "type": "faq_answer_text",
+                      "settings": {
+                        "text": ""
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "faq_item",
+                  "settings": {
+                    "question": "What shipping options do you offer?",
+                    "show_question_icon": false,
+                    "initially_open": false
+                  },
+                  "blocks": [
+                    {
+                      "type": "faq_answer_text",
+                      "settings": {
+                        "text": ""
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "faq_item",
+                  "settings": {
+                    "question": "Can I change or cancel my order after it’s been placed?",
+                    "show_question_icon": false,
+                    "initially_open": false
+                  },
+                  "blocks": [
+                    {
+                      "type": "faq_answer_text",
+                      "settings": {
+                        "text": ""
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "faq_item",
+                  "settings": {
+                    "question": "What should I do if my package is delayed or lost?",
+                    "show_question_icon": false,
+                    "initially_open": false
+                  },
+                  "blocks": [
+                    {
+                      "type": "faq_answer_text",
+                      "settings": {
+                        "text": ""
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "faq_item",
+                  "settings": {
+                    "question": "Do you offer international shipping for orders outside my country?",
+                    "show_question_icon": false,
+                    "initially_open": false
+                  },
+                  "blocks": [
+                    {
+                      "type": "faq_answer_text",
+                      "settings": {
+                        "text": ""
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

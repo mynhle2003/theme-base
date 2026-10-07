@@ -141,12 +141,12 @@
       assign heading_letter_spacing = '0.2px'
   endcase
 
-  assign heading_1_letter_spacing = '-1.28px'
-  assign heading_2_letter_spacing = '-0.8px'
-  assign heading_3_letter_spacing = '-0.64px'
-  assign heading_4_letter_spacing = '-0.48px'
-  assign heading_5_letter_spacing = '0em'
-  assign heading_6_letter_spacing = '0em'
+  assign heading_1_letter_spacing = heading_letter_spacing
+  assign heading_2_letter_spacing = heading_letter_spacing
+  assign heading_3_letter_spacing = heading_letter_spacing
+  assign heading_4_letter_spacing = heading_letter_spacing
+  assign heading_5_letter_spacing = heading_letter_spacing
+  assign heading_6_letter_spacing = heading_letter_spacing
 
   assign heading_1_size_desktop = settings.type_heading_1_size_desktop | default: 64
   assign heading_1_size_tablet = settings.type_heading_1_size_tablet | default: 52
@@ -184,9 +184,6 @@
       assign heading_2_line_height = '1.3'
   endcase
   assign heading_2_line_height_tablet = heading_2_line_height
-  if settings.type_heading_2_line_height == 'normal'
-    assign heading_2_line_height_tablet = '1.3'
-  endif
   assign heading_3_line_height = '1.3'
   case settings.type_heading_3_line_height
     when 'tight'
@@ -690,6 +687,8 @@
   assign product_card_swatch_position = 'bottom'
   if settings.product_card_swatch_position == 'top'
     assign product_card_swatch_position = 'top'
+  elsif settings.product_card_swatch_position == 'inline'
+    assign product_card_swatch_position = 'inline'
   endif
   assign product_card_swatch_type = 'color'
   if settings.product_card_swatch_type == 'variant_image'
@@ -1091,6 +1090,9 @@
     --product-card-title-font-family: {{ product_card_title_font_family }};
     --product-card-title-size: {{ product_card_title_size_desktop }}px;
     --product-card-title-size-mobile: {{ product_card_title_size_mobile }}px;
+    --product-card-title-weight: {{ settings.product_card_title_weight | default: 400 }};
+    --product-card-price-size: {{ settings.product_card_price_size_desktop | default: 14 }}px;
+    --product-card-price-size-mobile: {{ settings.product_card_price_size_mobile | default: 14 }}px;
     --product-card-image-ratio: {{ product_card_image_ratio }};
     --product-card-alignment: {{ product_card_alignment }};
     --product-card-content-alignment: {{ product_card_content_alignment }};

@@ -1,6 +1,11 @@
 import { EffectFade, Pagination } from './swiper-loader.js';
 import { createSwiperCarousel, destroySwiperCarousel } from './swiper-carousel.js';
 
+// Elara: one-column mobile preview keeps the Collection list sizing contract.
+const getMobilePreviewSlidesPerView = (viewport, columns = 1) =>
+  columns === 1 && viewport.dataset.swiperNextSlidePreviewMobile === 'true' ? 1.2 : columns;
+
+
 const instances = new WeakMap();
 const desktopBreakpoint = 768;
 
@@ -563,7 +568,8 @@ const initialize = (root) => {
   // that require centered-slide runtime must opt in explicitly on their root.
   const useCenteredSlidePreview = root.dataset.showNextSlidePreviewOnDesktop === 'true';
   const transition = root.dataset.transition === 'fade' ? 'fade' : 'slide';
-  const fade = transition === 'fade' && !useCenteredSlidePreview;
+  const mobilePreview = viewport.dataset.swiperNextSlidePreviewMobile === 'true';
+  const fade = transition === 'fade' && !useCenteredSlidePreview && !mobilePreview;
   const manualLoop = manualLoopRequested && loop ? createManualLoop(viewport) : null;
   const paginationModules = pagination && !manualLoop ? [Pagination] : [];
   const modules = fade ? [EffectFade, ...paginationModules] : paginationModules;
@@ -574,7 +580,8 @@ const initialize = (root) => {
     ...(fade ? { fadeEffect: { crossFade: true } } : {}),
     preventInteractionOnTransition: true,
     speed: prefersReducedMotion() ? 0 : 600,
-    slidesPerView: number(root.dataset.swiperColumnsMobile, 1),
+    slidesPerView: getMobilePreviewSlidesPerView(viewport, number(root.dataset.swiperColumnsMobile, 1)),
+    centeredSlides: false,
     spaceBetween: number(root.dataset.swiperGapMobile, 12),
     breakpoints: {
       [desktopBreakpoint]: {

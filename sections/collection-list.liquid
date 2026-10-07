@@ -254,11 +254,21 @@
 {
   "name": "t:general.collection_list",
   "class": "section-collection-list",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "header" },
-    { "type": "view-all-button" },
-    { "type": "collection-list-items" }
+    {
+      "type": "header"
+    },
+    {
+      "type": "view-all-button"
+    },
+    {
+      "type": "collection-list-items"
+    }
   ],
   "settings": [
     {
@@ -270,8 +280,14 @@
       "id": "section_width",
       "label": "t:labels.section_width",
       "options": [
-        { "value": "page_width", "label": "t:options.section_width.page_width" },
-        { "value": "full_width", "label": "t:options.section_width.full_width" }
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        }
       ],
       "default": "page_width"
     },
@@ -280,8 +296,14 @@
       "id": "desktop_alignment",
       "label": "t:labels.alignment",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        }
       ],
       "default": "left"
     },
@@ -290,9 +312,18 @@
       "id": "mobile_alignment",
       "label": "t:labels.mobile_alignment",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "right", "label": "t:options.alignment.right" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
       ],
       "default": "left"
     },
@@ -329,9 +360,18 @@
       "id": "background_media",
       "label": "t:general.media",
       "options": [
-        { "value": "none", "label": "t:options.background_media.none" },
-        { "value": "image", "label": "t:general.image" },
-        { "value": "video", "label": "t:general.video" }
+        {
+          "value": "none",
+          "label": "t:options.background_media.none"
+        },
+        {
+          "value": "image",
+          "label": "t:general.image"
+        },
+        {
+          "value": "video",
+          "label": "t:general.video"
+        }
       ],
       "default": "none"
     },
@@ -411,10 +451,118 @@
       "name": "t:general.collection_list",
       "category": "t:general.collections",
       "blocks": [
-        { "type": "header", "id": "header", "static": true, "blocks": [{ "type": "heading", "settings": { "text": "<p>Collection list</p>", "html_tag": "h2" } }] },
-        { "type": "view-all-button", "id": "view-all", "static": true },
-        { "type": "collection-list-items", "id": "collection-list", "static": true, "blocks": [{ "type": "collection-card", "id": "collection-card", "static": true, "blocks": [{ "type": "collection-card-title", "id": "title", "static": true }] }] }
-      ]
+        {
+          "type": "header",
+          "static": true,
+          "settings": {
+            "width": "custom",
+            "max_width": 770,
+            "customize_mobile_size": true,
+            "width_mobile": "fill",
+            "inherit_alignment": false,
+            "alignment": "center",
+            "gap_desktop": 8,
+            "gap_mobile": 8
+          },
+          "id": "header",
+          "blocks": [
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Shop By Category</p>",
+                "heading_size": "lg",
+                "html_tag": "h2",
+                "width": "fill"
+              }
+            }
+          ]
+        },
+        {
+          "type": "collection-list-items",
+          "static": true,
+          "settings": {
+            "layout": "carousel",
+            "columns_desktop": "4",
+            "columns_mobile": "1",
+            "show_next_slide_preview_on_desktop": false,
+            "show_next_slide_preview_on_mobile": true,
+            "gap_desktop": 24,
+            "gap_mobile": 16,
+            "show_navigation_on_desktop": false,
+            "show_pagination_on_desktop": false,
+            "pagination_type": "progress_bar",
+            "pagination_top_padding_desktop": 48,
+            "pagination_top_padding_mobile": 36,
+            "autoplay": false,
+            "collections": [
+              "earrings-elara",
+              "bracelets-elara",
+              "necklaces-elara",
+              "rings-elara"
+            ]
+          },
+          "id": "collection-list",
+          "blocks": [
+            {
+              "type": "collection-card",
+              "static": true,
+              "settings": {
+                "ratio": "portrait_6_7",
+                "ratio_custom": 0.9,
+                "placement": "on_image",
+                "alignment": "left",
+                "gap_desktop": 12,
+                "gap_mobile": 12,
+                "corner_radius": "square",
+                "border_thickness": 0,
+                "shadow": "none",
+                "color_type": "color_scheme",
+                "color_scheme": "scheme-3",
+                "padding_top": 28,
+                "padding_bottom": 28,
+                "padding_left": 28,
+                "padding_right": 28
+              },
+              "id": "collection-card",
+              "blocks": [
+                {
+                  "type": "collection-card-title",
+                  "static": true,
+                  "settings": {
+                    "show_product_count": false,
+                    "heading_size": "md",
+                    "html_tag": "h3",
+                    "title_suffix_to_hide": " - Elara"
+                  },
+                  "id": "title"
+                },
+                {
+                  "type": "collection-card-description",
+                  "settings": {
+                    "source": "product_count",
+                    "text_size": "sm",
+                    "text_limit": "one"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "settings": {
+        "section_width": "full_width",
+        "desktop_alignment": "center",
+        "mobile_alignment": "center",
+        "gap_desktop": 48,
+        "gap_mobile": 40,
+        "background_media": "none",
+        "color_scheme": "scheme-1",
+        "padding_top": 20,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 56
+      }
     }
   ]
 }

@@ -39,7 +39,7 @@
   if collection_card_ratio_setting == 'original'
     assign collection_card_ratio_setting = 'auto'
   endif
-  unless collection_card_ratio_setting == 'auto' or collection_card_ratio_setting == 'square' or collection_card_ratio_setting == 'portrait' or collection_card_ratio_setting == 'landscape' or collection_card_ratio_setting == 'landscape_3_2' or collection_card_ratio_setting == 'portrait_2_3' or collection_card_ratio_setting == 'wide' or collection_card_ratio_setting == 'custom'
+  unless collection_card_ratio_setting == 'auto' or collection_card_ratio_setting == 'square' or collection_card_ratio_setting == 'portrait' or collection_card_ratio_setting == 'landscape' or collection_card_ratio_setting == 'landscape_3_2' or collection_card_ratio_setting == 'portrait_2_3' or collection_card_ratio_setting == 'portrait_6_7' or collection_card_ratio_setting == 'wide' or collection_card_ratio_setting == 'custom'
     assign collection_card_ratio_setting = 'auto'
   endunless
   assign collection_card_ratio = 'auto'
@@ -54,6 +54,8 @@
       assign collection_card_ratio = '1.5'
     when 'portrait_2_3'
       assign collection_card_ratio = '0.6667'
+    when 'portrait_6_7'
+      assign collection_card_ratio = '6 / 7'
     when 'wide'
       assign collection_card_ratio = '1.7778'
     when 'custom'

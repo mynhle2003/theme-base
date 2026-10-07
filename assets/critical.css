@@ -2020,6 +2020,20 @@ legend {
   text-align: var(--product-card-alignment);
 }
 
+.product-card--swatches-inline .product-card__content {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+}
+
+.product-card--swatches-inline .product-card__content > :not(.product-card__details, .product-card__swatches-variant-picker) {
+  grid-column: 1 / -1;
+}
+
+.product-card--swatches-inline .product-card__swatches-variant-picker {
+  justify-self: end;
+  margin-top: 4px;
+}
+
 .product-card__details {
   display: flex;
   flex-direction: column;
@@ -2044,6 +2058,11 @@ legend {
   line-height: var(--font-heading-md-line-height);
   letter-spacing: var(--font-heading-letter-spacing);
   color: var(--heading-color);
+  font-weight: var(--product-card-title-weight, 400);
+}
+
+.product-card--swatches-inline .product-card__title {
+  line-height: 1.5;
 }
 
 .product-card__title-link {
@@ -2079,10 +2098,24 @@ legend {
   color: color-mix(in srgb, var(--body-color) 70%, transparent);
 }
 
-.product-card__price {
+.price.product-card__price {
   width: 100%;
   justify-content: var(--product-card-content-alignment);
   text-align: var(--product-card-alignment);
+  --price-font-size: var(--product-card-price-size, 14px);
+  font-size: var(--price-font-size);
+  line-height: 1.5;
+}
+
+.product-card__price .price__compare-at {
+  font-size: 1em;
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .price.product-card__price {
+    --price-font-size: var(--product-card-price-size-mobile, 14px);
+  }
 }
 
 .product-card__swatches-variant-picker {
@@ -2438,8 +2471,9 @@ legend {
   aspect-ratio: var(--swatch-control-ratio, var(--swatch-height-ratio, 3 / 1));
   overflow: hidden;
   box-sizing: border-box;
-  border: 1px solid color-mix(in srgb, var(--body-color) 15%, transparent);
+  border: 1px solid transparent;
   border-radius: var(--swatch-radius);
+  container-type: size;
   pointer-events: none;
 }
 
@@ -2453,7 +2487,8 @@ legend {
   z-index: 1;
   inset: 0;
   box-sizing: border-box;
-  border: 3px solid transparent;
+  /* Match the 4px selected inset, capped by height for flat ratios. */
+  border: min(3px, 25cqh) solid transparent;
   border-radius: inherit;
   content: '';
   pointer-events: none;
@@ -2461,7 +2496,11 @@ legend {
 }
 
 .swatch-control--border:has(> input:checked) .swatch-control__visual {
-  border-color: var(--body-color);
+  border-color: var(--heading-color, var(--body-color));
+}
+
+.product-card__swatches .swatch-control--border:has(> input:checked) .swatch--color {
+  border-color: var(--swatch-color);
 }
 
 .swatch-control--border:has(> input:checked) .swatch-control__visual::before {

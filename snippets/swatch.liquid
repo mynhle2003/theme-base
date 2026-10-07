@@ -44,8 +44,14 @@
       assign swatch_color = '#4b6b3c'
     when 'silver', 'platinum', 'steel', 'gray', 'grey'
       assign swatch_color = '#b7bcc3'
+      if swatch_key == 'silver'
+        assign swatch_color = settings.swatch_silver_color | default: '#b7bcc3'
+      endif
     when 'gold', 'yellow'
       assign swatch_color = '#d4af37'
+      if swatch_key == 'gold'
+        assign swatch_color = settings.swatch_gold_color | default: '#d4af37'
+      endif
     when 'orange'
       assign swatch_color = '#d97706'
     when 'purple', 'violet'

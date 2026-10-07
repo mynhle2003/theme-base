@@ -388,13 +388,17 @@
       "name": "t:general.shop_the_look",
       "category": "t:general.content",
       "settings": {
-        "section_width": "full_width",
-        "media_position": "right",
+        "section_width": "page_width",
+        "media_position": "left",
         "mobile_media_position": "first",
-        "gap_desktop": 50,
-        "gap_mobile": 16,
+        "gap_desktop": 56,
+        "gap_mobile": 40,
         "color_scheme": "scheme-1",
-        "customize_mobile_padding": false
+        "padding_top": 10,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
         {
@@ -402,8 +406,12 @@
           "id": "image",
           "static": true,
           "settings": {
-            "image_ratio_desktop": "auto",
-            "image_ratio_mobile": "auto",
+            "image_ratio_desktop": "custom",
+            "image_ratio_custom_width_desktop": 6,
+            "image_ratio_custom_height_desktop": 7,
+            "image_ratio_mobile": "custom",
+            "image_ratio_custom_width_mobile": 6,
+            "image_ratio_custom_height_mobile": 7,
             "width_desktop": "fill",
             "width_mobile": "fill",
             "corner_radius": "square",
@@ -415,27 +423,30 @@
           "id": "header",
           "static": true,
           "settings": {
-            "width": "fit",
-            "gap_desktop": 12,
-            "gap_mobile": 8
+            "width": "custom",
+            "max_width": 770,
+            "inherit_alignment": true,
+            "gap_desktop": 16,
+            "gap_mobile": 16
           },
           "blocks": [
             {
               "type": "heading",
               "settings": {
                 "text": "<p>Shop the Look</p>",
-                "heading_size": "md",
-                "html_tag": "h2"
+                "heading_size": "xl",
+                "html_tag": "h2",
+                "width": "fill"
               }
             },
             {
               "type": "spacer",
               "settings": {
                 "unit_desktop": "pixel",
-                "size_desktop_px": 16,
+                "size_desktop_px": 32,
                 "show_on_mobile": true,
                 "unit_mobile": "pixel",
-                "size_mobile_px": 12
+                "size_mobile_px": 20
               }
             }
           ]
@@ -444,32 +455,59 @@
           "type": "shop-the-look-products",
           "id": "product-list",
           "static": true,
+          "settings": {
+            "layout_type": "carousel",
+            "columns_desktop": "2",
+            "columns_mobile": "1",
+            "product_gap_desktop": 20,
+            "product_gap_mobile": 16,
+            "show_navigation_on_desktop": true,
+            "navigation_position": "outside",
+            "navigation_style": "secondary",
+            "navigation_icon": "chevron",
+            "navigation_behavior": "always",
+            "show_pagination_on_desktop": true,
+            "pagination_type": "progress_bar",
+            "pagination_top_padding_desktop": 64,
+            "pagination_top_padding_mobile": 36,
+            "pagination_limit_width": true,
+            "pagination_max_width": 260,
+            "autoplay": false,
+            "autoplay_pause_on_hover": true,
+            "autoplay_speed": 4
+          },
           "blocks": [
             {
               "type": "shop-the-look-product",
               "settings": {
                 "show_hotspot": true,
-                "hotspot_horizontal": 72,
-                "hotspot_vertical": 48,
-                "customize_mobile_position": false
+                "hotspot_horizontal": 55,
+                "hotspot_vertical": 85,
+                "customize_mobile_position": true,
+                "hotspot_horizontal_mobile": 50,
+                "hotspot_vertical_mobile": 84
               }
             },
             {
               "type": "shop-the-look-product",
               "settings": {
                 "show_hotspot": true,
-                "hotspot_horizontal": 32,
-                "hotspot_vertical": 62,
-                "customize_mobile_position": false
+                "hotspot_horizontal": 44,
+                "hotspot_vertical": 28,
+                "customize_mobile_position": true,
+                "hotspot_horizontal_mobile": 40,
+                "hotspot_vertical_mobile": 28
               }
             },
             {
               "type": "shop-the-look-product",
               "settings": {
                 "show_hotspot": true,
-                "hotspot_horizontal": 54,
-                "hotspot_vertical": 82,
-                "customize_mobile_position": false
+                "hotspot_horizontal": 66,
+                "hotspot_vertical": 91,
+                "customize_mobile_position": true,
+                "hotspot_horizontal_mobile": 66,
+                "hotspot_vertical_mobile": 90
               }
             }
           ]

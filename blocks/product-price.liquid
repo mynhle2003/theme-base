@@ -13,7 +13,7 @@
   endunless
 
   assign price_size = block.settings.font_size | default: 'md'
-  unless price_size == 'xs' or price_size == 'sm' or price_size == 'md' or price_size == 'lg' or price_size == 'xl' or price_size == 'xxl'
+  unless price_size == 'xs' or price_size == 'sm' or price_size == 'md' or price_size == 'lg' or price_size == 'xl' or price_size == 'xxl' or price_size == 'custom'
     assign price_size = 'md'
   endunless
 
@@ -72,6 +72,12 @@
 %}
 
 {% capture price_style %}
+  {% if price_size == 'custom' %}
+    --price-font-size: {{ block.settings.custom_font_size | default: 22 | at_least: 10 | at_most: 48 }}px;
+  {% endif %}
+  {% if block.settings.font_weight == '400' or block.settings.font_weight == '500' or block.settings.font_weight == '600' %}
+    --price-font-weight: {{ block.settings.font_weight }};
+  {% endif %}
   {% if price_padding_top != 0 %}--product-price-padding-top: {{ price_padding_top }}px;{% endif %}
   {% if price_padding_bottom != 0 %}--product-price-padding-bottom: {{ price_padding_bottom }}px;{% endif %}
   {% if price_padding_left != 0 %}--product-price-padding-left: {{ price_padding_left }}px;{% endif %}
@@ -208,9 +214,33 @@
         { "value": "md", "label": "t:options.product_price_size.md" },
         { "value": "lg", "label": "t:options.product_price_size.lg" },
         { "value": "xl", "label": "t:options.product_price_size.xl" },
-        { "value": "xxl", "label": "t:options.product_price_size.xxl" }
+        { "value": "xxl", "label": "t:options.product_price_size.xxl" },
+        { "value": "custom", "label": "Custom" }
       ],
       "default": "md"
+    },
+    {
+      "type": "range",
+      "id": "custom_font_size",
+      "label": "Custom price size",
+      "min": 10,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 22,
+      "visible_if": "{{ block.settings.font_size == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Price weight",
+      "options": [
+        { "value": "inherit", "label": "Inherit" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" }
+      ],
+      "default": "inherit"
     },
     {
       "type": "select",
