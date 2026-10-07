@@ -6,6 +6,8 @@
     if (!state) return;
     window.removeEventListener('scroll', state.schedule);
     window.removeEventListener('resize', state.schedule);
+    state.observer?.disconnect();
+    state.motion.removeEventListener('change', state.onMotionChange);
     if (state.frame) window.cancelAnimationFrame(state.frame);
     state.media?.style.removeProperty('transform');
     states.delete(hero);
@@ -17,11 +19,11 @@
     const media = hero.querySelector('[data-hero-media]');
     const surface = hero.querySelector('[data-hero-surface]') || hero;
     const effect = hero.dataset.heroParallax;
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (!(media instanceof HTMLElement) || !effect || effect === 'fixed') return;
 
     const update = () => {
-      if (effect && media instanceof HTMLElement && !reduceMotion) {
+      if (state.visible && !motion.matches) {
         const bounds = surface.getBoundingClientRect();
         const viewportCenter = window.innerHeight / 2;
         const progress = Math.max(-1, Math.min(1, (viewportCenter - (bounds.top + (bounds.height / 2))) / Math.max(bounds.height, 1)));
@@ -43,8 +45,15 @@
     const state = {
       frame: 0,
       media,
+      motion,
+      visible: true,
+      observer: null,
+      onMotionChange: () => {
+        if (motion.matches) media.style.removeProperty('transform');
+        else state.schedule();
+      },
       schedule: () => {
-        if (state.frame) return;
+        if (state.frame || !state.visible || motion.matches) return;
         state.frame = window.requestAnimationFrame(() => {
           state.frame = 0;
           update();
@@ -53,6 +62,19 @@
     };
 
     states.set(hero, state);
+    motion.addEventListener('change', state.onMotionChange);
+    if ('IntersectionObserver' in window) {
+      state.visible = false;
+      state.observer = new IntersectionObserver((entries) => {
+        state.visible = entries.some((entry) => entry.isIntersecting);
+        if (state.visible) state.schedule();
+        else if (state.frame) {
+          window.cancelAnimationFrame(state.frame);
+          state.frame = 0;
+        }
+      }, { rootMargin: '100px 0px' });
+      state.observer.observe(surface);
+    }
     window.addEventListener('scroll', state.schedule, { passive: true });
     window.addEventListener('resize', state.schedule, { passive: true });
     state.schedule();
