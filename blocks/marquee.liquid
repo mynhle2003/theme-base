@@ -344,8 +344,8 @@
           });
         });
       };
-      // Scrolling text owns this effect; other placements keep their existing motion.
-      const scrollReactive = marquee.closest('.text-marquee-custom') && !marquee.classList.contains('marquee--static');
+      // Reuse the scrolling-text phase shift wherever the marquee block is placed.
+      const scrollReactive = !marquee.classList.contains('marquee--static');
       if (scrollReactive) window.addEventListener('scroll', handleScroll, { passive: true });
 
       instances.set(marquee, {
@@ -402,7 +402,9 @@
   "name": "t:general.marquee",
   "tag": null,
   "blocks": [
-    { "type": "marquee-item" }
+    {
+      "type": "marquee-item"
+    }
   ],
   "settings": [
     {
@@ -414,8 +416,14 @@
       "id": "animation_direction",
       "label": "t:labels.animation_direction",
       "options": [
-        { "value": "forward", "label": "t:options.animation_direction.forward" },
-        { "value": "backward", "label": "t:options.animation_direction.backward" }
+        {
+          "value": "forward",
+          "label": "t:options.animation_direction.forward"
+        },
+        {
+          "value": "backward",
+          "label": "t:options.animation_direction.backward"
+        }
       ],
       "default": "backward"
     },
@@ -565,28 +573,85 @@
         {
           "type": "marquee-item",
           "name": "t:general.item",
-          "settings": { "direction": "horizontal", "position": "center" },
+          "settings": {
+            "direction": "horizontal",
+            "position": "center"
+          },
           "blocks": [
-            { "type": "heading", "settings": { "text": "<p>Diamond statement</p>", "heading_size": "md", "html_tag": "div" } },
-            { "type": "image", "settings": { "image_ratio_desktop": "custom", "image_ratio_custom_width_desktop": 2, "image_ratio_custom_height_desktop": 1, "width_desktop": "fill", "corner_radius": "square" } }
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Diamond statement</p>",
+                "heading_size": "md",
+                "html_tag": "div"
+              }
+            },
+            {
+              "type": "image",
+              "settings": {
+                "image_ratio_desktop": "custom",
+                "image_ratio_custom_width_desktop": 2,
+                "image_ratio_custom_height_desktop": 1,
+                "width_desktop": "fill",
+                "corner_radius": "square"
+              }
+            }
           ]
         },
         {
           "type": "marquee-item",
           "name": "t:general.item",
-          "settings": { "direction": "horizontal", "position": "center" },
+          "settings": {
+            "direction": "horizontal",
+            "position": "center"
+          },
           "blocks": [
-            { "type": "heading", "settings": { "text": "<p>Birthstone</p>", "heading_size": "md", "html_tag": "div" } },
-            { "type": "image", "settings": { "image_ratio_desktop": "custom", "image_ratio_custom_width_desktop": 2, "image_ratio_custom_height_desktop": 1, "width_desktop": "fill", "corner_radius": "square" } }
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Birthstone</p>",
+                "heading_size": "md",
+                "html_tag": "div"
+              }
+            },
+            {
+              "type": "image",
+              "settings": {
+                "image_ratio_desktop": "custom",
+                "image_ratio_custom_width_desktop": 2,
+                "image_ratio_custom_height_desktop": 1,
+                "width_desktop": "fill",
+                "corner_radius": "square"
+              }
+            }
           ]
         },
         {
           "type": "marquee-item",
           "name": "t:general.item",
-          "settings": { "direction": "horizontal", "position": "center" },
+          "settings": {
+            "direction": "horizontal",
+            "position": "center"
+          },
           "blocks": [
-            { "type": "heading", "settings": { "text": "<p>Diamond statement</p>", "heading_size": "md", "html_tag": "div" } },
-            { "type": "image", "settings": { "image_ratio_desktop": "custom", "image_ratio_custom_width_desktop": 2, "image_ratio_custom_height_desktop": 1, "width_desktop": "fill", "corner_radius": "square" } }
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Diamond statement</p>",
+                "heading_size": "md",
+                "html_tag": "div"
+              }
+            },
+            {
+              "type": "image",
+              "settings": {
+                "image_ratio_desktop": "custom",
+                "image_ratio_custom_width_desktop": 2,
+                "image_ratio_custom_height_desktop": 1,
+                "width_desktop": "fill",
+                "corner_radius": "square"
+              }
+            }
           ]
         }
       ]

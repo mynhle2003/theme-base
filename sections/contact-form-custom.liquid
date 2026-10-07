@@ -248,10 +248,18 @@
 {
   "name": "t:general.contact_form_custom",
   "class": "section-kernel",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "image" },
-    { "type": "group" }
+    {
+      "type": "image"
+    },
+    {
+      "type": "group"
+    }
   ],
   "settings": [
     {
@@ -279,8 +287,14 @@
       "id": "direction",
       "label": "t:labels.direction",
       "options": [
-        { "value": "horizontal", "label": "t:options.direction.horizontal" },
-        { "value": "vertical", "label": "t:options.direction.vertical" }
+        {
+          "value": "horizontal",
+          "label": "t:options.direction.horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "t:options.direction.vertical"
+        }
       ],
       "default": "horizontal"
     },
@@ -289,9 +303,18 @@
       "id": "align_items",
       "label": "t:labels.align_items",
       "options": [
-        { "value": "top", "label": "t:options.align_items.top" },
-        { "value": "center", "label": "t:options.align_items.center" },
-        { "value": "bottom", "label": "t:options.align_items.bottom" }
+        {
+          "value": "top",
+          "label": "t:options.align_items.top"
+        },
+        {
+          "value": "center",
+          "label": "t:options.align_items.center"
+        },
+        {
+          "value": "bottom",
+          "label": "t:options.align_items.bottom"
+        }
       ],
       "default": "center",
       "visible_if": "{{ section.settings.direction == 'horizontal' }}"
@@ -359,8 +382,14 @@
       "id": "background_type",
       "label": "t:general.media",
       "options": [
-        { "value": "color", "label": "t:labels.color" },
-        { "value": "image", "label": "t:labels.image" }
+        {
+          "value": "color",
+          "label": "t:labels.color"
+        },
+        {
+          "value": "image",
+          "label": "t:labels.image"
+        }
       ],
       "default": "color"
     },
@@ -518,7 +547,9 @@
                 "gap_mobile": 24,
                 "submit_label": "Send",
                 "limit_width_desktop": false,
-                "limit_width_mobile": false
+                "limit_width_mobile": false,
+                "require_name": true,
+                "require_message": true
               },
               "blocks": [
                 {

@@ -9,6 +9,8 @@
   {% content_for 'block', type: 'eyebrow', id: 'eyebrow' %}
 {% enddoc %}
 
+{% assign block_plain_text = block.settings.text | strip_html | replace: '&nbsp;', '' | replace: '&#160;', '' | strip %}
+
 {% liquid
   assign border_thickness = block.settings.border_thickness | default: 0
   assign border_thickness = border_thickness | plus: 0
@@ -78,6 +80,7 @@
   <div
     class="{{ eyebrow_class }}"
     {% if eyebrow_style != blank %}style="{{ eyebrow_style }}"{% endif %}
+    {% if block_plain_text == blank %}data-content-empty{% endif %}
     {{ block.shopify_attributes }}
   >
     {% if block.settings.show_icon %}
@@ -186,10 +189,22 @@
       "id": "icon",
       "label": "t:labels.icon",
       "options": [
-        { "value": "circle", "label": "t:options.eyebrow_icon.circle" },
-        { "value": "square", "label": "t:options.eyebrow_icon.square" },
-        { "value": "triangle", "label": "t:options.eyebrow_icon.triangle" },
-        { "value": "diamond", "label": "t:options.eyebrow_icon.diamond" }
+        {
+          "value": "circle",
+          "label": "t:options.eyebrow_icon.circle"
+        },
+        {
+          "value": "square",
+          "label": "t:options.eyebrow_icon.square"
+        },
+        {
+          "value": "triangle",
+          "label": "t:options.eyebrow_icon.triangle"
+        },
+        {
+          "value": "diamond",
+          "label": "t:options.eyebrow_icon.diamond"
+        }
       ],
       "default": "circle",
       "visible_if": "{{ block.settings.show_icon }}"
@@ -215,10 +230,22 @@
       "id": "corner_radius",
       "label": "t:labels.corner_radius",
       "options": [
-        { "value": "square", "label": "t:options.radius_preset.square" },
-        { "value": "slightly_rounded", "label": "t:options.radius_preset.slightly_rounded" },
-        { "value": "rounded", "label": "t:options.radius_preset.rounded" },
-        { "value": "pill", "label": "t:options.radius_preset.pill" }
+        {
+          "value": "square",
+          "label": "t:options.radius_preset.square"
+        },
+        {
+          "value": "slightly_rounded",
+          "label": "t:options.radius_preset.slightly_rounded"
+        },
+        {
+          "value": "rounded",
+          "label": "t:options.radius_preset.rounded"
+        },
+        {
+          "value": "pill",
+          "label": "t:options.radius_preset.pill"
+        }
       ],
       "default": "square",
       "visible_if": "{{ block.settings.show_background }}"

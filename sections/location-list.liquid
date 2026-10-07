@@ -198,10 +198,18 @@
 {
   "name": "Location list",
   "class": "section-kernel",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "group" },
-    { "type": "location-list" }
+    {
+      "type": "group"
+    },
+    {
+      "type": "location-list"
+    }
   ],
   "settings": [
     {
@@ -209,9 +217,18 @@
       "id": "section_width",
       "label": "Section width",
       "options": [
-        { "value": "page_width", "label": "Page width" },
-        { "value": "full_width", "label": "Full width" },
-        { "value": "full_width_no_padding", "label": "Full width (no padding)" }
+        {
+          "value": "page_width",
+          "label": "Page width"
+        },
+        {
+          "value": "full_width",
+          "label": "Full width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "Full width (no padding)"
+        }
       ],
       "default": "page_width"
     },
@@ -243,15 +260,96 @@
       "type": "header",
       "content": "Padding"
     },
-    { "type": "range", "id": "padding_top", "label": "t:labels.top_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 64 },
-    { "type": "range", "id": "padding_right", "label": "t:labels.right_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "padding_bottom", "label": "t:labels.bottom_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 64 },
-    { "type": "range", "id": "padding_left", "label": "t:labels.left_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "checkbox", "id": "customize_mobile_padding", "label": "t:labels.customize_mobile_padding", "default": false },
-    { "type": "range", "id": "padding_top_mobile", "label": "t:labels.mobile_top_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 40, "visible_if": "{{ section.settings.customize_mobile_padding }}" },
-    { "type": "range", "id": "padding_right_mobile", "label": "t:labels.mobile_right_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.customize_mobile_padding }}" },
-    { "type": "range", "id": "padding_bottom_mobile", "label": "t:labels.mobile_bottom_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 40, "visible_if": "{{ section.settings.customize_mobile_padding }}" },
-    { "type": "range", "id": "padding_left_mobile", "label": "t:labels.mobile_left_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.customize_mobile_padding }}" }
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:labels.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "t:labels.right_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:labels.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "t:labels.left_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.customize_mobile_padding",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_right_mobile",
+      "label": "t:labels.mobile_right_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_left_mobile",
+      "label": "t:labels.mobile_left_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    }
   ],
   "presets": [
     {
@@ -283,40 +381,146 @@
             "padding_right": 0
           },
           "blocks": [
-            { "type": "eyebrow", "settings": { "text": "<p>SUBHEADING</p>", "show_background": false, "show_icon": false } },
-            { "type": "heading", "settings": { "text": "<p>Main Heading Placeholder</p>", "heading_size": "xl", "html_tag": "h2", "width": "fit" } },
-            { "type": "text", "settings": { "text": "<p>This is placeholder text for a paragraph that provides a short and engaging description to support the heading above and keep visual balance.</p>", "text_size": "sm", "width": "custom", "max_width": 640 } }
+            {
+              "type": "eyebrow",
+              "settings": {
+                "text": "<p>SUBHEADING</p>",
+                "show_background": false,
+                "show_icon": false
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Main Heading Placeholder</p>",
+                "heading_size": "display",
+                "html_tag": "h2",
+                "width": "fit"
+              }
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>This is placeholder text for a paragraph that provides a short and engaging description to support the heading above and keep visual balance.</p>",
+                "text_size": "sm",
+                "width": "custom",
+                "max_width": 640
+              }
+            }
           ]
         },
         {
           "type": "location-list",
-          "settings": { "active_background_color": "#F7EFED", "active_border_color": "#000000", "gap": 24, "gap_mobile": 16 },
+          "settings": {
+            "active_background_color": "#F7EFED",
+            "active_border_color": "#000000",
+            "gap": 24,
+            "gap_mobile": 16
+          },
           "blocks": [
             {
               "type": "location-item",
-              "settings": { "image_alt": "Sydney store" },
+              "settings": {
+                "image_alt": "Sydney store"
+              },
               "blocks": [
-                { "type": "heading", "settings": { "text": "<p>Sydney</p>", "heading_size": "sm", "html_tag": "h4" } },
-                { "type": "text", "settings": { "text": "<p>123 Sample St, Sydney NSW 2000 AU</p>", "text_size": "sm" } },
-                { "type": "button", "settings": { "button_label": "Get directions", "button_link": "https://www.google.com/maps/dir/?api=1&destination=Sydney%2C%20Australia", "button_style": "tertiary", "show_icon": false, "icon": "arrow", "icon_position": "after", "width": "fit" } }
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Sydney</p>",
+                    "heading_size": "display",
+                    "html_tag": "h4"
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>123 Sample St, Sydney NSW 2000 AU</p>",
+                    "text_size": "sm"
+                  }
+                },
+                {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "Get directions",
+                    "button_link": "https://www.google.com/maps/dir/?api=1&destination=Sydney%2C%20Australia",
+                    "button_style": "tertiary",
+                    "show_icon": false,
+                    "icon": "arrow",
+                    "icon_position": "after",
+                    "width": "fit"
+                  }
+                }
               ]
             },
             {
               "type": "location-item",
-              "settings": { "image_alt": "Ho Chi Minh City store" },
+              "settings": {
+                "image_alt": "Ho Chi Minh City store"
+              },
               "blocks": [
-                { "type": "heading", "settings": { "text": "<p>Ho Chi Minh City</p>", "heading_size": "sm", "html_tag": "h4" } },
-                { "type": "text", "settings": { "text": "<p>2 Hai Trieu, District 1, Ho Chi Minh City</p>", "text_size": "sm" } },
-                { "type": "button", "settings": { "button_label": "Get directions", "button_link": "https://www.google.com/maps/dir/?api=1&destination=2%20Hai%20Trieu%2C%20Ho%20Chi%20Minh%20City", "button_style": "tertiary", "show_icon": false, "icon": "arrow", "icon_position": "after", "width": "fit" } }
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Ho Chi Minh City</p>",
+                    "heading_size": "display",
+                    "html_tag": "h4"
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>2 Hai Trieu, District 1, Ho Chi Minh City</p>",
+                    "text_size": "sm"
+                  }
+                },
+                {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "Get directions",
+                    "button_link": "https://www.google.com/maps/dir/?api=1&destination=2%20Hai%20Trieu%2C%20Ho%20Chi%20Minh%20City",
+                    "button_style": "tertiary",
+                    "show_icon": false,
+                    "icon": "arrow",
+                    "icon_position": "after",
+                    "width": "fit"
+                  }
+                }
               ]
             },
             {
               "type": "location-item",
-              "settings": { "image_alt": "London store" },
+              "settings": {
+                "image_alt": "London store"
+              },
               "blocks": [
-                { "type": "heading", "settings": { "text": "<p>London</p>", "heading_size": "sm", "html_tag": "h4" } },
-                { "type": "text", "settings": { "text": "<p>123 Sample St, London W1C 1DE, United Kingdom</p>", "text_size": "sm" } },
-                { "type": "button", "settings": { "button_label": "Get directions", "button_link": "https://www.google.com/maps/dir/?api=1&destination=London%2C%20United%20Kingdom", "button_style": "tertiary", "show_icon": false, "icon": "arrow", "icon_position": "after", "width": "fit" } }
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>London</p>",
+                    "heading_size": "display",
+                    "html_tag": "h4"
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>123 Sample St, London W1C 1DE, United Kingdom</p>",
+                    "text_size": "sm"
+                  }
+                },
+                {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "Get directions",
+                    "button_link": "https://www.google.com/maps/dir/?api=1&destination=London%2C%20United%20Kingdom",
+                    "button_style": "tertiary",
+                    "show_icon": false,
+                    "icon": "arrow",
+                    "icon_position": "after",
+                    "width": "fit"
+                  }
+                }
               ]
             }
           ]

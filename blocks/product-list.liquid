@@ -201,7 +201,7 @@
 {% capture product_list_navigation_markup %}
   {% if product_list_layout == 'carousel' and product_list_show_navigation %}
     <div
-      class="swiper-carousel__navigation--centered swiper-carousel__navigation--{{ product_list_navigation_behavior }} product-list__navigation product-list__navigation--{{ product_list_navigation_position }} product-list__navigation--{{ product_list_navigation_behavior }}"
+      class="swiper-carousel__navigation--centered swiper-carousel__navigation--{{ product_list_navigation_behavior }} product-list__navigation product-list__navigation--{{ product_list_navigation_position }}{% if product_list_navigation_position == 'top' %} section-list-layout__navigation{% endif %} product-list__navigation--{{ product_list_navigation_behavior }}"
       data-product-list-navigation
       {% if product_list_navigation_center_style != blank %}style="{{ product_list_navigation_center_style }}"{% endif %}
     >
@@ -231,7 +231,7 @@
 {% endif %}
 
 <div
-  class="product-list"
+  class="product-list section-list-layout__bridge"
   data-product-list
   {% if product_list_recommendations %}data-recommendation-intent="{{ block.settings.recommendation_type | default: 'related' }}" data-recommendation-limit="{{ product_list_max_products | at_most: 10 }}" data-recommendation-placeholder="{{ product_list_is_placeholder }}"{% endif %}
   data-layout="{{ product_list_layout }}"
@@ -239,7 +239,7 @@
   {{ block.shopify_attributes }}
 >
   {% if product_list_navigation_position == 'top' %}{{ product_list_navigation_markup }}{% endif %}
-  <div class="product-list__carousel swiper-carousel__container" data-product-list-carousel>
+  <div class="product-list__carousel section-list-layout__main swiper-carousel__container" data-product-list-carousel>
     {% render 'product-collection-grid',
       collection: product_list_collection,
       products: product_list_real_items,
@@ -463,7 +463,13 @@
       "default": false,
       "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
     },
-    {"type": "checkbox", "id": "show_next_slide_preview_on_mobile", "label": "t:labels.show_next_slide_preview_on_mobile", "default": false, "visible_if": "{{ block.settings.layout_type == 'carousel' }}"},
+    {
+      "type": "checkbox",
+      "id": "show_next_slide_preview_on_mobile",
+      "label": "t:labels.show_next_slide_preview_on_mobile",
+      "default": false,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
     {
       "type": "header",
       "content": "t:general.products_gap"
@@ -694,7 +700,8 @@
         "layout_type": "carousel",
         "columns_desktop": "4",
         "columns_mobile": "1",
-        "show_next_slide_preview_on_desktop": false, "show_next_slide_preview_on_mobile": false,
+        "show_next_slide_preview_on_desktop": false,
+        "show_next_slide_preview_on_mobile": false,
         "product_gap_desktop": 4,
         "product_gap_mobile": 4,
         "show_navigation_on_desktop": true,

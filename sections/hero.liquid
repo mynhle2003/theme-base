@@ -416,25 +416,61 @@
 {
   "name": "Hero",
   "class": "section-hero",
-  "enabled_on": { "templates": ["index"] },
+  "enabled_on": {
+    "templates": [
+      "index"
+    ]
+  },
   "max_blocks": 50,
   "blocks": [
-    { "type": "header" },
-    { "type": "eyebrow" },
-    { "type": "heading" },
-    { "type": "text" },
-    { "type": "image" },
-    { "type": "video" },
-    { "type": "button" },
-    { "type": "buttons" },
-    { "type": "icon" },
-    { "type": "divider" },
-    { "type": "spacer" },
-    { "type": "scroll-to" },
-    { "type": "group" },
-    { "type": "marquee" },
-    { "type": "row" },
-    { "type": "grid" }
+    {
+      "type": "header"
+    },
+    {
+      "type": "eyebrow"
+    },
+    {
+      "type": "heading"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "video"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "buttons"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "spacer"
+    },
+    {
+      "type": "scroll-to"
+    },
+    {
+      "type": "group"
+    },
+    {
+      "type": "marquee"
+    },
+    {
+      "type": "row"
+    },
+    {
+      "type": "grid"
+    }
   ],
   "settings": [
     {
@@ -446,8 +482,14 @@
       "id": "width",
       "label": "t:labels.section_width",
       "options": [
-        { "value": "page", "label": "t:options.hero_width.page" },
-        { "value": "full", "label": "t:options.hero_width.full" }
+        {
+          "value": "page",
+          "label": "t:options.hero_width.page"
+        },
+        {
+          "value": "full",
+          "label": "t:options.hero_width.full"
+        }
       ],
       "default": "full"
     },
@@ -456,8 +498,14 @@
       "id": "layout",
       "label": "t:general.layout",
       "options": [
-        { "value": "classic", "label": "t:options.hero_layout.classic" },
-        { "value": "stack", "label": "t:options.hero_layout.stack" }
+        {
+          "value": "classic",
+          "label": "t:options.hero_layout.classic"
+        },
+        {
+          "value": "stack",
+          "label": "t:options.hero_layout.stack"
+        }
       ],
       "default": "classic"
     },
@@ -466,8 +514,14 @@
       "id": "desktop_content_position",
       "label": "t:labels.desktop_content_position",
       "options": [
-        { "value": "first", "label": "t:options.hero_content_position.first" },
-        { "value": "last", "label": "t:options.hero_content_position.last" }
+        {
+          "value": "first",
+          "label": "t:options.hero_content_position.first"
+        },
+        {
+          "value": "last",
+          "label": "t:options.hero_content_position.last"
+        }
       ],
       "default": "last",
       "visible_if": "{{ section.settings.layout == 'stack' }}"
@@ -492,8 +546,14 @@
       "id": "media_type",
       "label": "t:labels.type",
       "options": [
-        { "value": "image", "label": "t:general.image" },
-        { "value": "video", "label": "t:general.video" }
+        {
+          "value": "image",
+          "label": "t:general.image"
+        },
+        {
+          "value": "video",
+          "label": "t:general.video"
+        }
       ],
       "default": "image"
     },
@@ -533,11 +593,26 @@
       "id": "parallax_effect",
       "label": "t:labels.parallax_effect",
       "options": [
-        { "value": "none", "label": "t:options.parallax.none" },
-        { "value": "fixed", "label": "t:options.parallax.fixed" },
-        { "value": "vertical", "label": "t:options.parallax.vertical" },
-        { "value": "horizontal", "label": "t:options.parallax.horizontal" },
-        { "value": "zoom", "label": "t:options.parallax.zoom" }
+        {
+          "value": "none",
+          "label": "t:options.parallax.none"
+        },
+        {
+          "value": "fixed",
+          "label": "t:options.parallax.fixed"
+        },
+        {
+          "value": "vertical",
+          "label": "t:options.parallax.vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "t:options.parallax.horizontal"
+        },
+        {
+          "value": "zoom",
+          "label": "t:options.parallax.zoom"
+        }
       ],
       "default": "none",
       "visible_if": "{{ section.settings.layout == 'classic' }}"
@@ -551,13 +626,34 @@
       "id": "desktop_height",
       "label": "t:options.device.desktop",
       "options": [
-        { "value": "adapt", "label": "t:options.hero_height.adapt" },
-        { "value": "extra_small", "label": "t:options.hero_height.extra_small" },
-        { "value": "small", "label": "t:options.hero_height.small" },
-        { "value": "medium", "label": "t:options.hero_height.medium" },
-        { "value": "large", "label": "t:options.hero_height.large" },
-        { "value": "extra_large", "label": "t:options.hero_height.extra_large" },
-        { "value": "full_screen", "label": "t:options.hero_height.full_screen" }
+        {
+          "value": "adapt",
+          "label": "t:options.hero_height.adapt"
+        },
+        {
+          "value": "extra_small",
+          "label": "t:options.hero_height.extra_small"
+        },
+        {
+          "value": "small",
+          "label": "t:options.hero_height.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.hero_height.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.hero_height.large"
+        },
+        {
+          "value": "extra_large",
+          "label": "t:options.hero_height.extra_large"
+        },
+        {
+          "value": "full_screen",
+          "label": "t:options.hero_height.full_screen"
+        }
       ],
       "default": "medium"
     },
@@ -566,13 +662,34 @@
       "id": "mobile_height",
       "label": "t:options.device.mobile",
       "options": [
-        { "value": "adapt", "label": "t:options.hero_height.adapt" },
-        { "value": "extra_small", "label": "t:options.hero_height.extra_small" },
-        { "value": "small", "label": "t:options.hero_height.small" },
-        { "value": "medium", "label": "t:options.hero_height.medium" },
-        { "value": "large", "label": "t:options.hero_height.large" },
-        { "value": "extra_large", "label": "t:options.hero_height.extra_large" },
-        { "value": "full_screen", "label": "t:options.hero_height.full_screen" }
+        {
+          "value": "adapt",
+          "label": "t:options.hero_height.adapt"
+        },
+        {
+          "value": "extra_small",
+          "label": "t:options.hero_height.extra_small"
+        },
+        {
+          "value": "small",
+          "label": "t:options.hero_height.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.hero_height.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.hero_height.large"
+        },
+        {
+          "value": "extra_large",
+          "label": "t:options.hero_height.extra_large"
+        },
+        {
+          "value": "full_screen",
+          "label": "t:options.hero_height.full_screen"
+        }
       ],
       "default": "adapt"
     },
@@ -585,9 +702,18 @@
       "id": "content_width",
       "label": "t:labels.width",
       "options": [
-        { "value": "fit", "label": "t:options.width.fit" },
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "custom", "label": "t:options.width.custom" }
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
       ],
       "default": "fit"
     },
@@ -613,15 +739,42 @@
       "id": "desktop_position",
       "label": "t:labels.desktop_position",
       "options": [
-        { "value": "top_left", "label": "t:options.hero_position.top_left" },
-        { "value": "top_center", "label": "t:options.hero_position.top_center" },
-        { "value": "top_right", "label": "t:options.hero_position.top_right" },
-        { "value": "center_left", "label": "t:options.hero_position.center_left" },
-        { "value": "center_center", "label": "t:options.hero_position.center_center" },
-        { "value": "center_right", "label": "t:options.hero_position.center_right" },
-        { "value": "bottom_left", "label": "t:options.hero_position.bottom_left" },
-        { "value": "bottom_center", "label": "t:options.hero_position.bottom_center" },
-        { "value": "bottom_right", "label": "t:options.hero_position.bottom_right" }
+        {
+          "value": "top_left",
+          "label": "t:options.hero_position.top_left"
+        },
+        {
+          "value": "top_center",
+          "label": "t:options.hero_position.top_center"
+        },
+        {
+          "value": "top_right",
+          "label": "t:options.hero_position.top_right"
+        },
+        {
+          "value": "center_left",
+          "label": "t:options.hero_position.center_left"
+        },
+        {
+          "value": "center_center",
+          "label": "t:options.hero_position.center_center"
+        },
+        {
+          "value": "center_right",
+          "label": "t:options.hero_position.center_right"
+        },
+        {
+          "value": "bottom_left",
+          "label": "t:options.hero_position.bottom_left"
+        },
+        {
+          "value": "bottom_center",
+          "label": "t:options.hero_position.bottom_center"
+        },
+        {
+          "value": "bottom_right",
+          "label": "t:options.hero_position.bottom_right"
+        }
       ],
       "default": "bottom_left"
     },
@@ -630,15 +783,42 @@
       "id": "mobile_position",
       "label": "t:labels.mobile_position",
       "options": [
-        { "value": "top_left", "label": "t:options.hero_position.top_left" },
-        { "value": "top_center", "label": "t:options.hero_position.top_center" },
-        { "value": "top_right", "label": "t:options.hero_position.top_right" },
-        { "value": "center_left", "label": "t:options.hero_position.center_left" },
-        { "value": "center_center", "label": "t:options.hero_position.center_center" },
-        { "value": "center_right", "label": "t:options.hero_position.center_right" },
-        { "value": "bottom_left", "label": "t:options.hero_position.bottom_left" },
-        { "value": "bottom_center", "label": "t:options.hero_position.bottom_center" },
-        { "value": "bottom_right", "label": "t:options.hero_position.bottom_right" }
+        {
+          "value": "top_left",
+          "label": "t:options.hero_position.top_left"
+        },
+        {
+          "value": "top_center",
+          "label": "t:options.hero_position.top_center"
+        },
+        {
+          "value": "top_right",
+          "label": "t:options.hero_position.top_right"
+        },
+        {
+          "value": "center_left",
+          "label": "t:options.hero_position.center_left"
+        },
+        {
+          "value": "center_center",
+          "label": "t:options.hero_position.center_center"
+        },
+        {
+          "value": "center_right",
+          "label": "t:options.hero_position.center_right"
+        },
+        {
+          "value": "bottom_left",
+          "label": "t:options.hero_position.bottom_left"
+        },
+        {
+          "value": "bottom_center",
+          "label": "t:options.hero_position.bottom_center"
+        },
+        {
+          "value": "bottom_right",
+          "label": "t:options.hero_position.bottom_right"
+        }
       ],
       "default": "center_center"
     },
@@ -764,7 +944,9 @@
       "blocks": [
         {
           "type": "eyebrow",
-          "settings": { "text": "<p>The new chapter</p>" }
+          "settings": {
+            "text": "<p>The new chapter</p>"
+          }
         },
         {
           "type": "heading",
@@ -804,7 +986,9 @@
         },
         {
           "type": "eyebrow",
-          "settings": { "text": "<p>Octavia three-stone ring / Two-hand gesture / Copy center</p>" }
+          "settings": {
+            "text": "<p>Octavia three-stone ring / Two-hand gesture / Copy center</p>"
+          }
         },
         {
           "type": "text",

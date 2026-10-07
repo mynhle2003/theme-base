@@ -115,7 +115,7 @@
     {% endif %}
 
     <div class="container {{ container_width }} email-signup-form__container">
-      <div class="email-signup-form__content layout-flow layout-flow--responsive align-content" style="{{ content_style }}">
+      <div class="email-signup-form__content section-content-scope layout-flow layout-flow--responsive align-content" style="{{ content_style }}">
         {% content_for 'block', type: 'header', id: 'header' %}
         {% content_for 'block', type: 'email-signup', id: 'email-signup' %}
       </div>
@@ -271,10 +271,18 @@
 {
   "name": "t:general.email_signup_form",
   "class": "section-email-signup-form",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "header" },
-    { "type": "email-signup" }
+    {
+      "type": "header"
+    },
+    {
+      "type": "email-signup"
+    }
   ],
   "settings": [
     {
@@ -286,9 +294,18 @@
       "id": "section_width",
       "label": "t:labels.section_width",
       "options": [
-        { "value": "page_width", "label": "t:options.section_width.page_width" },
-        { "value": "full_width", "label": "t:options.section_width.full_width" },
-        { "value": "full_width_no_padding", "label": "t:options.section_width.full_width_no_padding" }
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "t:options.section_width.full_width_no_padding"
+        }
       ],
       "default": "page_width"
     },
@@ -316,8 +333,14 @@
       "id": "form_layout",
       "label": "t:general.layout",
       "options": [
-        { "value": "horizontal", "label": "t:options.direction.horizontal" },
-        { "value": "vertical", "label": "t:options.direction.vertical" }
+        {
+          "value": "horizontal",
+          "label": "t:options.direction.horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "t:options.direction.vertical"
+        }
       ],
       "default": "horizontal"
     },
@@ -326,9 +349,18 @@
       "id": "form_position",
       "label": "t:labels.position",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "right", "label": "t:options.alignment.right" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
       ],
       "default": "center"
     },
@@ -469,7 +501,7 @@
               "type": "heading",
               "settings": {
                 "text": "<p>Main Heading Placeholder</p>",
-                "heading_size": "md",
+                "heading_size": "display",
                 "html_tag": "h2"
               }
             },

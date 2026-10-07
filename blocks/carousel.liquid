@@ -5,6 +5,10 @@
 {% enddoc %}
 
 {% liquid
+  assign carousel_transition = block.settings.transition_style | default: 'slide'
+  unless carousel_transition == 'slide' or carousel_transition == 'fade'
+    assign carousel_transition = 'slide'
+  endunless
   assign carousel_columns_desktop = block.settings.columns_desktop | default: '4' | plus: 0
   if carousel_columns_desktop < 1 or carousel_columns_desktop > 6
     assign carousel_columns_desktop = 4
@@ -256,10 +260,16 @@
   {% if block.settings.image_text_card_content_color != blank %}--image-text-card-content-color: {{ block.settings.image_text_card_content_color | escape }};{% endif %}
 {% endcapture %}
 
+{% if carousel_transition == 'fade' %}
+  <link rel="stylesheet" href="{{ 'swiper-12.2.0-effect-fade.min.css' | asset_url }}" media="print" onload="this.media='all'">
+  <noscript>{{ 'swiper-12.2.0-effect-fade.min.css' | asset_url | stylesheet_tag }}</noscript>
+{% endif %}
+
 <div
   class="carousel-block carousel-block--width-{{ carousel_width_mode }} carousel-block--card-icon-{{ image_text_card_toggle_icon }}"
   style="{{ carousel_style | strip }}"
   data-carousel-block
+  data-transition="{{ carousel_transition }}"
   data-image-text-card-heading-tag="{{ image_text_card_heading_tag }}"
   data-swiper-columns-desktop="{{ carousel_columns_desktop }}"
   data-swiper-columns-mobile="{{ carousel_columns_mobile }}"
@@ -282,7 +292,6 @@
       root_class: 'carousel-block__viewport',
       aria_label: 'Carousel',
       pagination: carousel_pagination,
-      show_next_slide_preview: carousel_show_next_slide_preview,
       autoplay: carousel_autoplay,
       pause_on_hover: carousel_pause_on_hover,
       autoplay_delay: carousel_delay,
@@ -444,7 +453,12 @@
       "label": "t:labels.show_next_slide_preview_on_desktop",
       "default": false
     },
-    {"type": "checkbox", "id": "show_next_slide_preview_on_mobile", "label": "t:labels.show_next_slide_preview_on_mobile", "default": false},
+    {
+      "type": "checkbox",
+      "id": "show_next_slide_preview_on_mobile",
+      "label": "t:labels.show_next_slide_preview_on_mobile",
+      "default": false
+    },
     {
       "type": "header",
       "content": "t:general.gap"
@@ -478,11 +492,26 @@
       "id": "border_type",
       "label": "Border style",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "solid", "label": "Solid" },
-        { "value": "dashed", "label": "Dashed" },
-        { "value": "dotted", "label": "Dotted" },
-        { "value": "double", "label": "Double" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "solid",
+          "label": "Solid"
+        },
+        {
+          "value": "dashed",
+          "label": "Dashed"
+        },
+        {
+          "value": "dotted",
+          "label": "Dotted"
+        },
+        {
+          "value": "double",
+          "label": "Double"
+        }
       ],
       "default": "solid"
     },
@@ -509,10 +538,22 @@
       "id": "corner_radius",
       "label": "Corner radius",
       "options": [
-        { "value": "square", "label": "Square" },
-        { "value": "slightly_rounded", "label": "Slightly rounded" },
-        { "value": "rounded", "label": "Rounded" },
-        { "value": "pill", "label": "Pill" }
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "slightly_rounded",
+          "label": "Slightly rounded"
+        },
+        {
+          "value": "rounded",
+          "label": "Rounded"
+        },
+        {
+          "value": "pill",
+          "label": "Pill"
+        }
       ],
       "default": "square"
     },
@@ -525,9 +566,18 @@
       "id": "image_text_card_toggle_icon",
       "label": "Icon",
       "options": [
-        { "value": "plus", "label": "Plus" },
-        { "value": "arrow", "label": "Arrow" },
-        { "value": "chevron", "label": "Chevron" }
+        {
+          "value": "plus",
+          "label": "Plus"
+        },
+        {
+          "value": "arrow",
+          "label": "Arrow"
+        },
+        {
+          "value": "chevron",
+          "label": "Chevron"
+        }
       ],
       "default": "plus"
     },
@@ -550,17 +600,48 @@
       "id": "image_text_card_ratio",
       "label": "Image ratio",
       "options": [
-        { "value": "auto", "label": "Auto" },
-        { "value": "square", "label": "Square - 1:1" },
-        { "value": "portrait", "label": "Portrait - 4:5" },
-        { "value": "landscape", "label": "Landscape - 4:3" },
-        { "value": "wide", "label": "Wide - 16:9" },
-        { "value": "custom", "label": "Custom" }
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "square",
+          "label": "Square - 1:1"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait - 4:5"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape - 4:3"
+        },
+        {
+          "value": "wide",
+          "label": "Wide - 16:9"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
       ],
       "default": "auto"
     },
-    { "type": "number", "id": "image_text_card_ratio_width", "label": "Width", "default": 6, "visible_if": "{{ block.settings.image_text_card_ratio == 'custom' }}" },
-    { "type": "number", "id": "image_text_card_ratio_height", "label": "Height", "info": "Numbers only. Width 6 + Height 7 = 6:7.", "default": 7, "visible_if": "{{ block.settings.image_text_card_ratio == 'custom' }}" },
+    {
+      "type": "number",
+      "id": "image_text_card_ratio_width",
+      "label": "Width",
+      "default": 6,
+      "visible_if": "{{ block.settings.image_text_card_ratio == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "image_text_card_ratio_height",
+      "label": "Height",
+      "info": "Numbers only. Width 6 + Height 7 = 6:7.",
+      "default": 7,
+      "visible_if": "{{ block.settings.image_text_card_ratio == 'custom' }}"
+    },
     {
       "type": "checkbox",
       "id": "image_text_card_customize_mobile",
@@ -572,18 +653,49 @@
       "id": "image_text_card_ratio_mobile",
       "label": "Mobile image ratio",
       "options": [
-        { "value": "auto", "label": "Auto" },
-        { "value": "square", "label": "Square - 1:1" },
-        { "value": "portrait", "label": "Portrait - 4:5" },
-        { "value": "landscape", "label": "Landscape - 4:3" },
-        { "value": "wide", "label": "Wide - 16:9" },
-        { "value": "custom", "label": "Custom" }
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "square",
+          "label": "Square - 1:1"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait - 4:5"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape - 4:3"
+        },
+        {
+          "value": "wide",
+          "label": "Wide - 16:9"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
       ],
       "default": "auto",
       "visible_if": "{{ block.settings.image_text_card_customize_mobile }}"
     },
-    { "type": "number", "id": "image_text_card_ratio_width_mobile", "label": "Mobile width", "default": 6, "visible_if": "{{ block.settings.image_text_card_customize_mobile and block.settings.image_text_card_ratio_mobile == 'custom' }}" },
-    { "type": "number", "id": "image_text_card_ratio_height_mobile", "label": "Mobile height", "info": "Numbers only. Width 6 + Height 7 = 6:7.", "default": 7, "visible_if": "{{ block.settings.image_text_card_customize_mobile and block.settings.image_text_card_ratio_mobile == 'custom' }}" },
+    {
+      "type": "number",
+      "id": "image_text_card_ratio_width_mobile",
+      "label": "Mobile width",
+      "default": 6,
+      "visible_if": "{{ block.settings.image_text_card_customize_mobile and block.settings.image_text_card_ratio_mobile == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "image_text_card_ratio_height_mobile",
+      "label": "Mobile height",
+      "info": "Numbers only. Width 6 + Height 7 = 6:7.",
+      "default": 7,
+      "visible_if": "{{ block.settings.image_text_card_customize_mobile and block.settings.image_text_card_ratio_mobile == 'custom' }}"
+    },
     {
       "type": "range",
       "id": "image_text_card_max_width",
@@ -614,13 +726,34 @@
       "id": "image_text_card_heading_tag",
       "label": "Heading HTML tag",
       "options": [
-        { "value": "div", "label": "Paragraph" },
-        { "value": "h1", "label": "H1" },
-        { "value": "h2", "label": "H2" },
-        { "value": "h3", "label": "H3" },
-        { "value": "h4", "label": "H4" },
-        { "value": "h5", "label": "H5" },
-        { "value": "h6", "label": "H6" }
+        {
+          "value": "div",
+          "label": "Paragraph"
+        },
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        }
       ],
       "default": "h4"
     },
@@ -644,7 +777,12 @@
       "unit": "px",
       "default": 14
     },
-    { "type": "color", "alpha": true, "id": "image_text_card_typo_color", "label": "Heading color" },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "image_text_card_typo_color",
+      "label": "Heading color"
+    },
     {
       "type": "header",
       "content": "Content"
@@ -669,7 +807,12 @@
       "unit": "px",
       "default": 14
     },
-    { "type": "color", "alpha": true, "id": "image_text_card_content_color", "label": "Content color" },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "image_text_card_content_color",
+      "label": "Content color"
+    },
     {
       "type": "header",
       "content": "t:general.size"
@@ -716,8 +859,14 @@
       "id": "navigation_position",
       "label": "t:labels.position",
       "options": [
-        { "value": "outside", "label": "t:options.collection_navigation_position.outside" },
-        { "value": "inside", "label": "t:options.collection_navigation_position.inside" }
+        {
+          "value": "outside",
+          "label": "t:options.collection_navigation_position.outside"
+        },
+        {
+          "value": "inside",
+          "label": "t:options.collection_navigation_position.inside"
+        }
       ],
       "default": "inside",
       "visible_if": "{{ block.settings.show_navigation_on_desktop }}"
@@ -806,8 +955,14 @@
       "id": "controls_style",
       "label": "Controls style",
       "options": [
-        { "value": "standard", "label": "Standard" },
-        { "value": "fraction", "label": "Number / total" }
+        {
+          "value": "standard",
+          "label": "Standard"
+        },
+        {
+          "value": "fraction",
+          "label": "Number / total"
+        }
       ],
       "default": "standard"
     },
@@ -816,9 +971,18 @@
       "id": "controls_alignment",
       "label": "Controls alignment",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
       ],
       "default": "center",
       "visible_if": "{{ block.settings.controls_style == 'fraction' }}"
@@ -828,9 +992,18 @@
       "id": "controls_alignment_mobile",
       "label": "Controls alignment (mobile)",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
       ],
       "default": "center",
       "visible_if": "{{ block.settings.controls_style == 'fraction' }}"
@@ -966,6 +1139,22 @@
       "unit": "px",
       "default": 0,
       "visible_if": "{{ block.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "select",
+      "id": "transition_style",
+      "label": "Style",
+      "options": [
+        {
+          "value": "slide",
+          "label": "Slide"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        }
+      ],
+      "default": "slide"
     }
   ],
   "presets": [
@@ -984,7 +1173,8 @@
         "show_pagination_on_mobile": true,
         "pagination_padding_desktop": 40,
         "pagination_padding_mobile": 40,
-        "autoplay": false
+        "autoplay": false,
+        "transition_style": "slide"
       },
       "blocks": [
         {

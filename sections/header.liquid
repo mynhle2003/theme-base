@@ -30,6 +30,22 @@
     margin-block-end: calc(var(--header-layout-height, 0px) * -1);
   }
 
+  /* Home overlay is present in the server-rendered block. Keep its wrapper
+     out of document flow before JS measures/reorganizes the header, rather
+     than pulling MainContent upward after the first paint. */
+  .section-header:has(.header-top[data-header-overlap-first-section]) {
+    position: relative;
+    height: 0;
+    margin-block-end: 0;
+    overflow: visible;
+    z-index: var(--z-drawer, 200);
+  }
+
+  .section-header:has(.header-top[data-header-overlap-first-section][data-sticky-type]:not([data-sticky-type='none'])) {
+    position: sticky;
+    top: 0;
+  }
+
   .header[data-sticky-type='always'],
   .header[data-sticky-type='scroll_up'] {
     position: sticky;
@@ -46,7 +62,7 @@
   }
 
   .header[data-sticky-type='scroll_up'].header--is-hidden {
-    transform: translateY(-100%);
+    transform: translateY(calc(-1 * var(--header-layout-height, 100%)));
   }
 
   /* Keep the fixed drawer viewport-relative through its entire overlay
@@ -81,8 +97,16 @@
 {
   "name": "t:general.header",
   "class": "section-header header section-color-scope",
-  "enabled_on": { "groups": ["header"] },
-  "blocks": [{ "type": "_header-top" }],
+  "enabled_on": {
+    "groups": [
+      "header"
+    ]
+  },
+  "blocks": [
+    {
+      "type": "_header-top"
+    }
+  ],
   "settings": [
     {
       "type": "header",
@@ -93,8 +117,14 @@
       "id": "section_width",
       "label": "t:labels.section_width",
       "options": [
-        { "value": "page_width", "label": "t:options.section_width.page_width" },
-        { "value": "full_width", "label": "t:options.section_width.full_width" }
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        }
       ],
       "default": "page_width"
     },
@@ -117,11 +147,26 @@
       "id": "sticky_type",
       "label": "t:labels.type",
       "options": [
-        { "value": "always", "label": "t:options.sticky_type.always" },
-        { "value": "scroll_up", "label": "t:options.sticky_type.scroll_up" },
-        { "value": "top_header_only", "label": "t:options.sticky_type.top_header_only" },
-        { "value": "bottom_header_only", "label": "t:options.sticky_type.bottom_header_only" },
-        { "value": "none", "label": "t:options.sticky_type.none" }
+        {
+          "value": "always",
+          "label": "t:options.sticky_type.always"
+        },
+        {
+          "value": "scroll_up",
+          "label": "t:options.sticky_type.scroll_up"
+        },
+        {
+          "value": "top_header_only",
+          "label": "t:options.sticky_type.top_header_only"
+        },
+        {
+          "value": "bottom_header_only",
+          "label": "t:options.sticky_type.bottom_header_only"
+        },
+        {
+          "value": "none",
+          "label": "t:options.sticky_type.none"
+        }
       ],
       "default": "none"
     },
@@ -176,7 +221,6 @@
             "padding_top_mobile": 12,
             "padding_bottom_mobile": 12
           },
-
           "blocks": [
             {
               "type": "_header-menu",
@@ -203,15 +247,23 @@
                     "max_width": 850
                   },
                   "blocks": [
-                    { "type": "_mega-menu-banner", "settings": {} },
-                    { "type": "_mega-menu-banner", "settings": {} }
+                    {
+                      "type": "_mega-menu-banner",
+                      "settings": {}
+                    },
+                    {
+                      "type": "_mega-menu-banner",
+                      "settings": {}
+                    }
                   ]
                 }
               ]
             },
             {
               "type": "_header-logo",
-              "settings": { "position": "center" }
+              "settings": {
+                "position": "center"
+              }
             },
             {
               "type": "_header-menu-toggle"

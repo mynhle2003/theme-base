@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"d887dac2d2f637e2aae15f59272634f8fd3d1e32"} -->
+<!-- theme-base-sync-state: {"sha":"8f3ac3c9345da36c73b2e1fea3ed4e6303e47d0d"} -->
 # Customization record: elara-theme
 
 Theme branch: `theme/elara-theme`
@@ -25,6 +25,9 @@ Theme update source: this repository's `main` branch
 | `blocks/product-price.liquid` | Price size uses fixed body roles and inherits shared weight. | Optional custom size 10–48px and weight override; Popular item selects 22px/500. | Match Figma detail price without changing prices on other surfaces. | Preserve existing role values, money formatting and variant price templates. |
 | `blocks/_product-media.liquid` | Main product media uses its natural image ratio. | Optional square main-image setting emits a scoped data attribute; thumbnails and video retain existing behavior. | Match the square Popular item media shown in Figma. | Preserve gallery state, variant filtering and editor/runtime bindings. |
 | `assets/product-media.css` | Product media has natural height. | Image-only square cropping when the owning block opts in. | Match Figma while retaining original source AVIF assets. | Keep rules scoped to the block data attribute and image media; do not crop video/model media. |
+| `blocks/slideshow-slide.liquid` | Main CDN crops use base mobile heights. | Pass Elara mobile heights 343/471/600/729/879px to shared artwork/preload renderer, matching existing custom slideshow CSS. | Keep calibrated slideshow composition with new CDN/preload logic. | Preserve height agreement between section CSS, picture sources and preload hints. |
+| `sections/password.liquid` | Main renders password content from merchant blocks. | Preserve the existing password title as a translated fallback when no blocks are saved; keep main dialog, logo, footer and no-JavaScript form. | Preserve existing password composition during the approved base sync. | Keep empty-composition fallback and new merchant block support when merging. |
+| `sections/text-marquee-custom.liquid` | Main uses shared layout-flow and omits space-between from mobile alignment. | Keep legacy space-between mobile alignment through the shared flow variables; migrate saved horizontal/vertical alignment to new controls. Remove only approved position_vertical. | Preserve saved composition while importing shared layout logic. | Retain additive alignment values and their CSS variable mapping when merging; never silently remap saved choices. |
 
 | `blocks/product-list.liquid` | Desktop preview control/render path without an independent mobile preview. | Add/forward an independent mobile preview checkbox, default false, through the existing Swiper viewport. | User requested consistent mobile next-slide preview on Elara, 2026-10-07. | Review overlapping upstream carousel/schema changes before merging; preserve independent flags, 768px breakpoint, 1.2 sizing, existing loops, editor lifecycle and prior custom behavior in this file. |
 | `blocks/blog-list.liquid` | Desktop preview control/render path without an independent mobile preview. | Add/forward an independent mobile preview checkbox, default false, through the existing Swiper viewport. | User requested consistent mobile next-slide preview on Elara, 2026-10-07. | Review overlapping upstream carousel/schema changes before merging; preserve independent flags, 768px breakpoint, 1.2 sizing, existing loops, editor lifecycle and prior custom behavior in this file. |
@@ -155,3 +158,293 @@ Validation: Theme Check passed after the final media-fill fix (322 files; zero e
 After explicit user approval, six Figma-derived AVIF files were uploaded through the Shopify upload-image connector to `layouthub-template-v2.myshopify.com`. Readback confirms all six READY, MIME image/avif, desktop 1920 × 680px and mobile 375 × 600px. The homepage and existing preset now select independent desktop/mobile files per collection: Earrings uses the blonde portrait from `52006:3424`; Bracelets uses the hand/bracelets photo from `52039:15375`; Necklaces uses the white blouse/necklaces photo from `52039:15394`. Necklaces uses its measured 30% brown overlay, while Earrings/Bracelets use 20% black. Existing collection handles, block order, height, spacing and interactions are retained. The pending upload limitation above is resolved. File IDs and permanent CDN URLs are saved in ignored `.shopify/elara-collections-background/upload-ledger.json` and verified in `upload-readback.json`. No catalog membership, theme publication, commit or push was performed.
 
 Media verification: restarted the existing development preview after stale CLI upload errors. Browser checks confirm all three desktop AVIFs and all three mobile AVIFs load successfully from their distinct Shopify URLs; mobile tab clicks select the corresponding background, and the frame remains 600px (680px desktop). Theme Check passed with zero errors and 33 existing warnings; customization coverage passed for 18 files.
+
+
+### 2026-10-07 — Approved merge of current personal main
+
+- Owner approved retaining custom behavior while integrating current base logic. Reviewed overlaps were merged by behavior, without replacing custom implementations.
+- Carousel retains independent mobile 1.2-slide preview; fade uses one slide and zero gap when previews are inactive. Preview opts into slide transition.
+- Product-card inventory data is added alongside inline swatches and manual badges. Retain product collection labels and mobile preview bindings while importing base section-list navigation classes.
+- Keep saved schemas/presets/compositions except new setting defaults, additive approved schema compatibility, and migration/removal of position_vertical explicitly approved by the owner. Existing password title remains for an empty saved block composition. Existing marquee direction/alignment values are migrated, including legacy mobile space-between support.
+
+## Base sync history
+
+### 2026-10-07 — Update from personal main
+
+- Previous main commit: `d887dac2d2f637e2aae15f59272634f8fd3d1e32`
+- Updated through main commit: `8f3ac3c9345da36c73b2e1fea3ed4e6303e47d0d`
+- Main commits included: 2
+- Included main commits:
+  - `36b9ab04bcbb59ea3073666812dcfa5244f4c15c` — chore(base): update base with 112 upstream commits through bedb4bd5
+  - `8f3ac3c9345da36c73b2e1fea3ed4e6303e47d0d` — fix(sync): preserve presets for used and custom theme sections
+- Change summary:
+
+```text
+assets/carousel-block.js                           |   9 +-
+ assets/cart-drawer.js                              | 155 +++-
+ assets/component-overlay.css                       |  80 +-
+ assets/component-search-suggestions.css            |  35 +
+ assets/critical.css                                | 233 +++++-
+ assets/header.js                                   |  11 +-
+ assets/password-page.js                            |  27 +
+ assets/product-buy-buttons.js                      |  29 +
+ assets/product-card-variants.js                    |   8 +
+ assets/product-media.js                            |  10 +-
+ assets/quick-add.js                                |   8 +-
+ assets/quick-view.js                               |   8 +-
+ assets/recently-viewed.js                          |  54 ++
+ assets/search-page.js                              |  56 ++
+ assets/search-suggestions.js                       |  96 +++
+ assets/variant-picker.js                           |  18 +-
+ blocks/_bundle-product-list.liquid                 | 189 ++++-
+ blocks/_bundle-summary.liquid                      | 509 ++++++++++--
+ blocks/_collection-breadcrumb.liquid               |  45 +-
+ blocks/_collection-columns.liquid                  | 108 ++-
+ blocks/_collection-count.liquid                    |  14 +-
+ blocks/_collection-filter.liquid                   |  36 +-
+ blocks/_collection-pagination.liquid               |  35 +-
+ blocks/_collection-products.liquid                 |  15 +-
+ blocks/_collection-sort.liquid                     |  43 +-
+ blocks/_collection-toolbar.liquid                  | 115 ++-
+ blocks/_collections-page-card.liquid               | 297 ++++++-
+ blocks/_column.liquid                              |  98 ++-
+ blocks/_header-account.liquid                      |  70 +-
+ blocks/_header-cart.liquid                         |  30 +-
+ blocks/_header-divider.liquid                      |  10 +-
+ blocks/_header-localization.liquid                 |  25 +-
+ blocks/_header-logo.liquid                         |  10 +-
+ blocks/_header-menu.liquid                         | 136 +++-
+ blocks/_header-search.liquid                       |  75 +-
+ blocks/_header-top.liquid                          |  47 +-
+ blocks/_mega-menu-banner.liquid                    | 476 +++++++++--
+ blocks/_mega-menu-banners.liquid                   | 226 +++++-
+ blocks/_overlay-product-media.liquid               | 150 +++-
+ blocks/_product-collection-grid.liquid             |   4 +-
+ blocks/_product-details.liquid                     | 149 +++-
+ blocks/_product-media.liquid                       | 115 ++-
+ blocks/_search-input.liquid                        | 262 ++++++
+ blocks/_search-products.liquid                     | 148 ++++
+ blocks/_search-results.liquid                      | 155 ++++
+ blocks/announcement-countdown-timer.liquid         | 276 ++++++-
+ blocks/announcement-text.liquid                    |  63 +-
+ blocks/banner.liquid                               |  77 +-
+ blocks/blog-archive-list.liquid                    |  32 +-
+ blocks/blog-card-button.liquid                     |  25 +-
+ blocks/blog-card-description.liquid                |  50 +-
+ blocks/blog-card-meta.liquid                       | 175 +++-
+ blocks/blog-card-tag.liquid                        |  85 +-
+ blocks/blog-card-title.liquid                      |  90 ++-
+ blocks/blog-card.liquid                            | 142 +++-
+ blocks/blog-grid.liquid                            | 104 ++-
+ blocks/blog-list.liquid                            | 152 +++-
+ blocks/button-view-details.liquid                  |  10 +-
+ blocks/button.liquid                               |  45 +-
+ blocks/buttons.liquid                              | 150 +++-
+ blocks/carousel.liquid                             | 290 +++++--
+ blocks/collection-background-item.liquid           |  70 +-
+ blocks/collection-card-button.liquid               |  45 +-
+ blocks/collection-card-description.liquid          |  60 +-
+ blocks/collection-card-title.liquid                | 110 ++-
+ blocks/collection-card.liquid                      | 313 +++++++-
+ blocks/collection-list-items.liquid                | 133 ++-
+ blocks/collection-promo.liquid                     | 313 ++++++--
+ blocks/collection-tab.liquid                       |   4 +-
+ blocks/collection-thumbnail.liquid                 |  73 +-
+ blocks/collections-with-tabs-item.liquid           |  72 +-
+ blocks/comparison-table-column.liquid              |  62 +-
+ blocks/comparison-table.liquid                     |   2 +-
+ blocks/contact-field.liquid                        |  37 +-
+ blocks/contact-form.liquid                         | 473 ++++++++---
+ blocks/countdown-timer.liquid                      | 190 ++++-
+ blocks/discount-code.liquid                        | 161 +++-
+ blocks/divider.liquid                              |  60 +-
+ blocks/editorial-text.liquid                       | 581 ++++++++++++--
+ blocks/email-signup.liquid                         |  90 ++-
+ blocks/eyebrow.liquid                              |  43 +-
+ blocks/faq_accordion.liquid                        | 497 +++++++++++-
+ blocks/faq_answer_text.liquid                      |   6 +-
+ blocks/faq_category.liquid                         | 201 ++++-
+ blocks/faq_item.liquid                             | 224 +++++-
+ blocks/first-card.liquid                           | 134 +++-
+ blocks/gallery-grid.liquid                         | 216 ++++-
+ blocks/gallery-header-group.liquid                 | 323 ++++++--
+ blocks/gallery-image.liquid                        | 218 ++++-
+ blocks/gallery-item.liquid                         | 137 +++-
+ blocks/gallery-strip-feature-item.liquid           |  71 +-
+ blocks/gallery-strip-item.liquid                   |  38 +-
+ blocks/gallery-strip-overlay-group.liquid          | 101 ++-
+ blocks/grid.liquid                                 |  94 ++-
+ blocks/group.liquid                                | 260 ++++--
+ blocks/header.liquid                               | 130 ++-
+ blocks/heading.liquid                              | 124 ++-
+ blocks/icon.liquid                                 | 175 +++-
+ blocks/image-card.liquid                           | 268 +++++--
+ blocks/image-comparison.liquid                     | 190 ++++-
+ blocks/image-text-card-grid-item.liquid            |  32 +-
+ blocks/image-text-stacked-band.liquid              |  84 +-
+ blocks/image.liquid                                | 125 ++-
+ blocks/localization.liquid                         |  40 +-
+ blocks/location-item.liquid                        | 145 +++-
+ blocks/location-list.liquid                        |  61 +-
+ blocks/logo.liquid                                 |  20 +-
+ blocks/marquee-item.liquid                         |  21 +-
+ blocks/marquee.liquid                              |  93 ++-
+ blocks/menu.liquid                                 | 110 ++-
+ blocks/policy-links.liquid                         |  30 +-
+ blocks/popup.liquid                                |  16 +-
+ blocks/press-item.liquid                           |  56 +-
+ blocks/press-quotes.liquid                         |   6 +-
+ blocks/previous-and-next-posts.liquid              |   2 +-
+ blocks/product-accordion.liquid                    | 105 ++-
+ blocks/product-buy-accelerated-checkout.liquid     |  21 +-
+ blocks/product-buy-add-to-cart.liquid              |  32 +-
+ blocks/product-buy-buttons.liquid                  |   3 +
+ blocks/product-buy-quantity.liquid                 |  91 ++-
+ blocks/product-callout-gallery.liquid              | 143 +++-
+ blocks/product-callout.liquid                      | 427 ++++++++--
+ blocks/product-card.liquid                         |  10 +-
+ blocks/product-description.liquid                  |  50 +-
+ blocks/product-inventory.liquid                    |  10 +-
+ blocks/product-list-banner.liquid                  |  14 +-
+ blocks/product-list.liquid                         |  17 +-
+ blocks/product-pickup-availability.liquid          | 202 ++++-
+ blocks/product-price.liquid                        |  95 ++-
+ blocks/product-recommendations.liquid              |  30 +-
+ blocks/product-sticky-add-to-cart.liquid           |  56 +-
+ blocks/product-title.liquid                        |  85 +-
+ blocks/product-variant-picker.liquid               |  20 +-
+ blocks/row.liquid                                  |  36 +-
+ blocks/scroll-to.liquid                            |  25 +-
+ blocks/scrolling-card.liquid                       | 163 +++-
+ blocks/shop-the-look-products.liquid               | 106 ++-
+ blocks/slideshow-slide.liquid                      | 425 +++++++++-
+ blocks/social-links.liquid                         |  30 +-
+ blocks/spacer.liquid                               |  20 +-
+ blocks/tab-layout.liquid                           |  70 +-
+ blocks/tabs-view-all-button.liquid                 |  45 +-
+ blocks/testimonial-item.liquid                     | 218 ++++-
+ blocks/text.liquid                                 |  85 +-
+ blocks/timeline-list.liquid                        |  30 +-
+ blocks/timeline-slide.liquid                       |   2 +-
+ blocks/video.liquid                                | 135 +++-
+ blocks/view-all-button.liquid                      | 116 ++-
+ docs/audits/404-reference-2026-10-06.md            |  48 ++
+ docs/audits/about-us-reference-2026-10-06.md       |  50 ++
+ docs/audits/contact-reference-2026-10-06.md        |  48 ++
+ docs/audits/faq-reference-2026-10-06.md            |  73 ++
+ docs/audits/marquee-parallax-2026-10-06.md         |  13 +
+ docs/audits/outbound-base-sync-2026-10-06.md       |   8 +
+ docs/audits/pages-outbound-base-sync-2026-10-06.md |  36 +
+ docs/audits/quick-add-media-zoom-2026-10-06.md     |  42 +
+ .../audits/search-outbound-base-sync-2026-10-06.md |  25 +
+ docs/audits/search-reference-2026-10-06.md         | 105 +++
+ docs/qa/performance-regressions-2026-10-06.md      |  17 +
+ docs/theme-customization-policy.md                 |   5 +-
+ layout/password.liquid                             |   8 +-
+ layout/theme.liquid                                |  23 +-
+ locales/en.default.json                            |  18 +-
+ locales/en.default.schema.json                     |  24 +-
+ scripts/theme-base-sync.cjs                        | 151 +++-
+ sections/404.liquid                                | 218 ++++-
+ sections/announcement-bar.liquid                   | 409 ++++++++--
+ sections/blog-posts.liquid                         | 202 +----
+ sections/breadcrumbs.liquid                        |  61 +-
+ sections/bundle-builder.liquid                     | 199 ++++-
+ sections/cart-drawer.liquid                        |  47 +-
+ sections/collection-list-thumbnails.liquid         | 570 ++++++++++++-
+ sections/collection-list.liquid                    | 176 +---
+ sections/collection-page-breadcrumb.liquid         | 202 ++++-
+ sections/collection-page-links.liquid              | 187 ++++-
+ sections/collection-tabs.liquid                    | 200 ++++-
+ sections/collections-with-background.liquid        | 617 +++++++++++++-
+ sections/collections-with-tabs.liquid              | 453 ++++++++++-
+ sections/collections.liquid                        |   2 +-
+ sections/comparison-table-custom.liquid            |   2 +-
+ sections/contact-form-custom.liquid                |  53 +-
+ sections/contact-information.liquid                | 182 ++++-
+ sections/countdown.liquid                          | 105 ++-
+ sections/divider.liquid                            |  66 +-
+ sections/email-signup-dual-image.liquid            | 374 +++++++--
+ sections/email-signup-form.liquid                  |  58 +-
+ sections/email-signup-single-image.liquid          |  76 +-
+ sections/faq-accordion.liquid                      | 347 +++++++-
+ sections/featured-blog-posts.liquid                | 201 ++---
+ sections/featured-collection-banner.liquid         |  47 +-
+ sections/featured-collection.liquid                | 311 ++-----
+ sections/footer.liquid                             |  36 +-
+ sections/gallery-carousel.liquid                   | 324 +++++++-
+ sections/gallery-full-width-strip.liquid           | 234 +++++-
+ sections/gallery-image-grid.liquid                 | 284 ++++++-
+ sections/header.liquid                             |  80 +-
+ sections/hero.liquid                               | 318 ++++++--
+ sections/hotspot-full-width-carousel.liquid        | 208 ++++-
+ sections/hotspot-gallery.liquid                    |  14 +-
+ sections/hotspot.liquid                            |  53 +-
+ sections/icon-text-cards.liquid                    | 418 ++++++++--
+ sections/icon-text-inline.liquid                   | 127 ++-
+ sections/image-cards.liquid                        |  20 +-
+ sections/image-comparison-custom.liquid            | 106 ++-
+ sections/image-comparison-split-custom.liquid      | 198 +++--
+ sections/image-text-card-grid.liquid               | 224 +++++-
+ sections/image-text-stacked-bands.liquid           | 545 +++++++++++--
+ sections/location-list.liquid                      | 266 +++++-
+ sections/location-map.liquid                       | 286 ++++++-
+ sections/page.liquid                               |   6 +-
+ sections/parallax.liquid                           |   2 +-
+ sections/password.liquid                           | 228 +++++-
+ sections/product-information.liquid                |  44 +-
+ sections/product.liquid                            |   6 +-
+ sections/quick-add.liquid                          |  55 +-
+ sections/quick-view.liquid                         |  55 +-
+ sections/recently-viewed-card.liquid               |  42 +
+ sections/related-posts.liquid                      |  11 +-
+ sections/rich-text.liquid                          |  48 +-
+ sections/scroll-reading-text.liquid                | 105 ++-
+ sections/scrolling-cards.liquid                    | 161 +++-
+ sections/scrolling-text-star-separator.liquid      | 492 ++++++++++--
+ sections/search-overlay.liquid                     |  81 +-
+ sections/search.liquid                             | 555 +++----------
+ sections/shop-the-look-section.liquid              |  49 +-
+ sections/slideshow.liquid                          | 418 +++++++++-
+ sections/testimonial-carousel.liquid               | 665 +++++++++++++--
+ sections/testimonials-background-custom.liquid     | 108 ++-
+ sections/testimonials-horizontal-custom.liquid     |  70 +-
+ sections/text-marquee-custom.liquid                | 322 +++++---
+ sections/timeline.liquid                           |  24 +-
+ snippets/css-variables.liquid                      |  25 +-
+ snippets/deferred-stylesheet.liquid                |  11 +
+ snippets/form-field.liquid                         |   2 +-
+ snippets/heading-size-token.liquid                 |  18 +-
+ snippets/product-card-quick-add.liquid             |  12 +-
+ snippets/product-card-swatches.liquid              |   3 +
+ snippets/product-card.liquid                       |   3 +
+ snippets/search-filters.liquid                     | 101 +++
+ snippets/search-query-fields.liquid                |   8 +
+ snippets/section-content-slot.liquid               |  13 +
+ snippets/slideshow-image.liquid                    | 121 +++
+ snippets/variant-picker.liquid                     |  12 +
+ templates/404.json                                 |  12 +-
+ templates/index.json                               |  14 +-
+ templates/index.spinel-sync.json                   |  12 +-
+ templates/page.about-us.json                       | 891 +++++++++++++++++++++
+ templates/page.contact.json                        |   4 +-
+ templates/page.faqs.json                           | 633 +++++++++++++++
+ templates/password.json                            |  10 +-
+ templates/product.json                             | 330 +++++++-
+ templates/search.json                              |   9 +-
+ tests/cart-drawer-add.test.cjs                     |  53 +-
+ tests/faq-item.test.cjs                            |  35 +
+ tests/heading-size-sync.test.cjs                   |  42 +
+ tests/overlay-product-modules.test.cjs             |  26 +
+ tests/product-media-pointer.test.cjs               |  44 +
+ tests/recently-viewed.test.cjs                     |  56 ++
+ tests/search-history.test.cjs                      |  35 +
+ tests/search-page.test.cjs                         |  84 ++
+ tests/search-suggestions.test.cjs                  |  52 ++
+ tests/section-content.test.cjs                     | 111 +++
+ tests/slideshow-image.test.cjs                     |  66 ++
+ tests/theme-base-sync.test.cjs                     |  81 ++
+ 264 files changed, 27266 insertions(+), 5262 deletions(-)
+```
+
+- Validation: 194 Node tests pass, including merged carousel, variants, inventory, pointer tolerance, CDN artwork/preload and schema synchronization. Full Theme Check passes with zero errors and 38 warnings. Saved-value audit confirms only approved position_vertical removal; global settings schema remains unchanged. Live Shopify storefront/editor was not exercised.

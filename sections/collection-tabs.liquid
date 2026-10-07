@@ -100,7 +100,7 @@
 >
   <div class="container {{ collection_tabs_container_width }} collection-tabs__container">
     <div
-      class="collection-tabs__layout"
+      class="collection-tabs__layout section-content-scope"
       data-collection-tabs
       data-collection-tabs-ready="false"
       data-layout-direction="{{ collection_tabs_layout_direction }}"
@@ -117,7 +117,7 @@
           {% content_for 'block', type: 'header', id: 'header' %}
           {% content_for 'block', type: 'tab-layout', id: 'tab-layout' %}
         </div>
-        <div class="collection-tabs__actions">
+        <div class="collection-tabs__actions section-content-slot">
           {% content_for 'block', type: 'tabs-view-all-button', id: 'collection-tabs-view-all' %}
         </div>
       </div>
@@ -314,19 +314,45 @@
     }
 
   }
+  .collection-tabs__controls:not(:has(.block-header:not([data-content-empty]), [data-tab-navigation] > *, .collection-tabs-view-all)) {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .collection-tabs__layout[data-layout-direction='horizontal']:not(:has(.block-header:not([data-content-empty]), [data-tab-navigation] > *, .collection-tabs-view-all)) {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: 'list';
+    }
+  }
+  /* The tab navigation is populated by JS; :has updates when tabs arrive. */
+  .collection-tabs__controls-group:not(:has(> .block-header:not([data-content-empty]), [data-tab-navigation] > *)),
+  .collection-tabs__layout .tab-layout:not(:has([data-tab-navigation] > *)) {
+    display: none;
+  }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.collection_tabs",
   "class": "section-collection-tabs",
-  "enabled_on": { "templates": ["index"] },
+  "enabled_on": {
+    "templates": [
+      "index"
+    ]
+  },
   "max_blocks": 8,
   "blocks": [
-    { "type": "header" },
-    { "type": "tab-layout" },
-    { "type": "collection-tab" },
-    { "type": "tabs-view-all-button" }
+    {
+      "type": "header"
+    },
+    {
+      "type": "tab-layout"
+    },
+    {
+      "type": "collection-tab"
+    },
+    {
+      "type": "tabs-view-all-button"
+    }
   ],
   "settings": [
     {
@@ -338,8 +364,14 @@
       "id": "section_width",
       "label": "t:labels.section_width",
       "options": [
-        { "value": "page_width", "label": "t:options.section_width.page_width" },
-        { "value": "full_width", "label": "t:options.section_width.full_width" }
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        }
       ],
       "default": "full_width"
     },
@@ -348,8 +380,14 @@
       "id": "layout_direction",
       "label": "t:general.layout",
       "options": [
-        { "value": "horizontal", "label": "t:options.direction.horizontal" },
-        { "value": "vertical", "label": "t:options.direction.vertical" }
+        {
+          "value": "horizontal",
+          "label": "t:options.direction.horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "t:options.direction.vertical"
+        }
       ],
       "default": "vertical"
     },
@@ -358,9 +396,18 @@
       "id": "tab_position",
       "label": "t:labels.tab_position",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "right", "label": "t:options.alignment.right" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
       ],
       "default": "left",
       "visible_if": "{{ section.settings.layout_direction == 'vertical' }}"
@@ -370,9 +417,18 @@
       "id": "mobile_alignment",
       "label": "t:labels.mobile_tabs_and_view_all_alignment",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "right", "label": "t:options.alignment.right" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
       ],
       "default": "left"
     },
@@ -418,8 +474,14 @@
       "id": "layout_type",
       "label": "t:labels.type",
       "options": [
-        { "value": "grid", "label": "t:options.product_list_layout.grid" },
-        { "value": "carousel", "label": "t:options.product_list_layout.carousel" }
+        {
+          "value": "grid",
+          "label": "t:options.product_list_layout.grid"
+        },
+        {
+          "value": "carousel",
+          "label": "t:options.product_list_layout.carousel"
+        }
       ],
       "default": "carousel"
     },
@@ -428,11 +490,26 @@
       "id": "columns_desktop",
       "label": "t:labels.desktop_columns",
       "options": [
-        { "value": "2", "label": "2" },
-        { "value": "3", "label": "3" },
-        { "value": "4", "label": "4" },
-        { "value": "5", "label": "5" },
-        { "value": "6", "label": "6" }
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        }
       ],
       "default": "4"
     },
@@ -441,8 +518,14 @@
       "id": "columns_mobile",
       "label": "t:labels.mobile_columns",
       "options": [
-        { "value": "1", "label": "1" },
-        { "value": "2", "label": "2" }
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
       ],
       "default": "1"
     },
@@ -494,8 +577,14 @@
       "id": "navigation_position",
       "label": "t:labels.position",
       "options": [
-        { "value": "outside", "label": "t:options.collection_navigation_position.outside" },
-        { "value": "inside", "label": "t:options.collection_navigation_position.inside" }
+        {
+          "value": "outside",
+          "label": "t:options.collection_navigation_position.outside"
+        },
+        {
+          "value": "inside",
+          "label": "t:options.collection_navigation_position.inside"
+        }
       ],
       "default": "inside",
       "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_navigation_on_desktop }}"
@@ -505,10 +594,22 @@
       "id": "navigation_style",
       "label": "t:labels.style",
       "options": [
-        { "value": "primary", "label": "t:options.button_variant.primary" },
-        { "value": "secondary", "label": "t:options.button_variant.secondary" },
-        { "value": "outline", "label": "t:options.button_variant.outline" },
-        { "value": "icon_only", "label": "t:options.button_variant.icon_only" }
+        {
+          "value": "primary",
+          "label": "t:options.button_variant.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.button_variant.secondary"
+        },
+        {
+          "value": "outline",
+          "label": "t:options.button_variant.outline"
+        },
+        {
+          "value": "icon_only",
+          "label": "t:options.button_variant.icon_only"
+        }
       ],
       "default": "secondary",
       "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_navigation_on_desktop }}"
@@ -518,9 +619,18 @@
       "id": "navigation_icon",
       "label": "t:labels.icon",
       "options": [
-        { "value": "chevron", "label": "t:options.collection_navigation_icon.chevron" },
-        { "value": "arrow", "label": "t:options.collection_navigation_icon.arrow" },
-        { "value": "long_arrow", "label": "t:options.collection_navigation_icon.long_arrow" }
+        {
+          "value": "chevron",
+          "label": "t:options.collection_navigation_icon.chevron"
+        },
+        {
+          "value": "arrow",
+          "label": "t:options.collection_navigation_icon.arrow"
+        },
+        {
+          "value": "long_arrow",
+          "label": "t:options.collection_navigation_icon.long_arrow"
+        }
       ],
       "default": "chevron",
       "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_navigation_on_desktop }}"
@@ -530,8 +640,14 @@
       "id": "navigation_behavior",
       "label": "t:labels.behavior",
       "options": [
-        { "value": "show_on_hover", "label": "t:options.collection_navigation_behavior.show_on_hover" },
-        { "value": "always", "label": "t:options.collection_navigation_behavior.always" }
+        {
+          "value": "show_on_hover",
+          "label": "t:options.collection_navigation_behavior.show_on_hover"
+        },
+        {
+          "value": "always",
+          "label": "t:options.collection_navigation_behavior.always"
+        }
       ],
       "default": "show_on_hover",
       "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_navigation_on_desktop }}"
@@ -553,8 +669,14 @@
       "id": "pagination_type",
       "label": "t:labels.type",
       "options": [
-        { "value": "progress_bar", "label": "t:options.collection_pagination.progress_bar" },
-        { "value": "bullets", "label": "t:options.collection_pagination.bullets" }
+        {
+          "value": "progress_bar",
+          "label": "t:options.collection_pagination.progress_bar"
+        },
+        {
+          "value": "bullets",
+          "label": "t:options.collection_pagination.bullets"
+        }
       ],
       "default": "progress_bar",
       "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop }}"

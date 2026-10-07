@@ -677,10 +677,22 @@
       "id": "form_layout",
       "label": "t:labels.form_layout",
       "options": [
-        { "value": "horizontal", "label": "t:options.direction.horizontal" },
-        { "value": "vertical", "label": "t:options.direction.vertical" },
-        { "value": "input_with_button", "label": "t:options.email_signup_layout.input_with_button" },
-        { "value": "underlined_input", "label": "t:options.email_signup_layout.underlined_input" }
+        {
+          "value": "horizontal",
+          "label": "t:options.direction.horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "t:options.direction.vertical"
+        },
+        {
+          "value": "input_with_button",
+          "label": "t:options.email_signup_layout.input_with_button"
+        },
+        {
+          "value": "underlined_input",
+          "label": "t:options.email_signup_layout.underlined_input"
+        }
       ],
       "default": "horizontal"
     },
@@ -776,9 +788,18 @@
       "id": "width_desktop",
       "label": "t:labels.desktop_width",
       "options": [
-        { "value": "fit", "label": "t:options.width.fit" },
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "custom", "label": "t:options.width.custom" }
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
       ],
       "default": "fill"
     },
@@ -815,9 +836,18 @@
       "id": "width_mobile",
       "label": "t:labels.mobile_width",
       "options": [
-        { "value": "fit", "label": "t:options.width.fit" },
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "custom", "label": "t:options.width.custom" }
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
       ],
       "default": "fill"
     },
@@ -854,9 +884,18 @@
       "id": "field_height",
       "label": "t:labels.field_height",
       "options": [
-        { "value": "small", "label": "t:options.email_signup_field_height.small" },
-        { "value": "medium", "label": "t:options.email_signup_field_height.medium" },
-        { "value": "large", "label": "t:options.email_signup_field_height.large" }
+        {
+          "value": "small",
+          "label": "t:options.email_signup_field_height.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.email_signup_field_height.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.email_signup_field_height.large"
+        }
       ],
       "default": "large",
       "visible_if": "{{ block.settings.form_layout != 'underlined_input' }}"
@@ -880,9 +919,18 @@
       "id": "button_style",
       "label": "t:labels.style",
       "options": [
-        { "value": "primary", "label": "t:options.button_variant.primary" },
-        { "value": "secondary", "label": "t:options.button_variant.secondary" },
-        { "value": "tertiary", "label": "t:options.button_variant.tertiary" }
+        {
+          "value": "primary",
+          "label": "t:options.button_variant.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.button_variant.secondary"
+        },
+        {
+          "value": "tertiary",
+          "label": "t:options.button_variant.tertiary"
+        }
       ],
       "default": "primary",
       "visible_if": "{{ block.settings.form_layout != 'underlined_input' }}"
@@ -968,8 +1016,14 @@
       "id": "icon_size",
       "label": "t:labels.icon_size",
       "options": [
-        { "value": "inherit", "label": "t:options.icon_size.inherit" },
-        { "value": "custom", "label": "t:options.icon_size.custom" }
+        {
+          "value": "inherit",
+          "label": "t:options.icon_size.inherit"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.icon_size.custom"
+        }
       ],
       "default": "inherit",
       "visible_if": "{{ block.settings.show_icon }}"

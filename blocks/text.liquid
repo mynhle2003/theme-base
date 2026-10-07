@@ -9,6 +9,8 @@
   {% content_for 'block', type: 'text', id: 'text' %}
 {% enddoc %}
 
+{% assign block_plain_text = block.settings.text | strip_html | replace: '&nbsp;', '' | replace: '&#160;', '' | strip %}
+
 {% liquid
   assign text_size = block.settings.text_size | default: 'md'
   unless text_size == 'xs' or text_size == 'sm' or text_size == 'md' or text_size == 'lg' or text_size == 'xl' or text_size == 'xxl'
@@ -100,9 +102,10 @@
   <div
     class="{{ text_class }}"
     {% if text_style != blank %}style="{{ text_style }}"{% endif %}
+    {% if block_plain_text == blank %}data-content-empty{% endif %}
     {{ block.shopify_attributes }}
   >
-    {% if block.settings.height_limit != blank and block.settings.height_limit != 'none' %}
+    {% if block_plain_text != blank and block.settings.height_limit != blank and block.settings.height_limit != 'none' %}
       {% liquid
         assign text_height = 200
         case block.settings.height_limit
@@ -181,12 +184,30 @@
       "id": "text_size",
       "label": "t:labels.text_size",
       "options": [
-        { "value": "xs", "label": "t:options.text_size.xs" },
-        { "value": "sm", "label": "t:options.text_size.sm" },
-        { "value": "md", "label": "t:options.text_size.md" },
-        { "value": "lg", "label": "t:options.text_size.lg" },
-        { "value": "xl", "label": "t:options.text_size.xl" },
-        { "value": "xxl", "label": "t:options.text_size.xxl" }
+        {
+          "value": "xs",
+          "label": "t:options.text_size.xs"
+        },
+        {
+          "value": "sm",
+          "label": "t:options.text_size.sm"
+        },
+        {
+          "value": "md",
+          "label": "t:options.text_size.md"
+        },
+        {
+          "value": "lg",
+          "label": "t:options.text_size.lg"
+        },
+        {
+          "value": "xl",
+          "label": "t:options.text_size.xl"
+        },
+        {
+          "value": "xxl",
+          "label": "t:options.text_size.xxl"
+        }
       ],
       "default": "md"
     },
@@ -195,10 +216,22 @@
       "id": "height_limit",
       "label": "t:labels.height_limit",
       "options": [
-        { "value": "none", "label": "t:options.product_description_height.none" },
-        { "value": "small", "label": "t:options.product_description_height.small" },
-        { "value": "medium", "label": "t:options.product_description_height.medium" },
-        { "value": "large", "label": "t:options.product_description_height.large" }
+        {
+          "value": "none",
+          "label": "t:options.product_description_height.none"
+        },
+        {
+          "value": "small",
+          "label": "t:options.product_description_height.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.product_description_height.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.product_description_height.large"
+        }
       ],
       "default": "none"
     },
@@ -217,9 +250,18 @@
       "id": "width",
       "label": "t:labels.width",
       "options": [
-        { "value": "fit", "label": "t:options.width.fit" },
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "custom", "label": "t:options.width.custom" }
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
       ],
       "default": "fit"
     },
@@ -245,9 +287,18 @@
       "id": "width_mobile",
       "label": "t:labels.mobile_width",
       "options": [
-        { "value": "fit", "label": "t:options.width.fit" },
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "custom", "label": "t:options.width.custom" }
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
       ],
       "default": "fit",
       "visible_if": "{{ block.settings.customize_mobile_size }}"

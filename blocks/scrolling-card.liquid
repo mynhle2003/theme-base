@@ -302,8 +302,12 @@
   "name": "Card",
   "tag": null,
   "blocks": [
-    { "type": "group" },
-    { "type": "image" }
+    {
+      "type": "group"
+    },
+    {
+      "type": "image"
+    }
   ],
   "settings": [
     {
@@ -315,8 +319,14 @@
       "id": "direction",
       "label": "Direction",
       "options": [
-        { "value": "horizontal", "label": "Horizontal" },
-        { "value": "vertical", "label": "Vertical" }
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        }
       ],
       "default": "horizontal"
     },
@@ -325,9 +335,18 @@
       "id": "position",
       "label": "Position",
       "options": [
-        { "value": "top", "label": "Top" },
-        { "value": "center", "label": "Center" },
-        { "value": "bottom", "label": "Bottom" }
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
       ],
       "default": "top"
     },
@@ -336,9 +355,18 @@
       "id": "alignment",
       "label": "Alignment",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
       ],
       "default": "left"
     },
@@ -354,9 +382,18 @@
       "id": "alignment_mobile",
       "label": "Alignment (mobile)",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
       ],
       "default": "left",
       "visible_if": "{{ block.settings.direction == 'vertical' or block.settings.vertical_on_mobile }}"
@@ -404,11 +441,26 @@
       "id": "corner_radius",
       "label": "Corner radius",
       "options": [
-        { "value": "inherit", "label": "Inherit" },
-        { "value": "square", "label": "Square" },
-        { "value": "slightly_rounded", "label": "Slightly rounded" },
-        { "value": "rounded", "label": "Rounded" },
-        { "value": "pill", "label": "Pill" }
+        {
+          "value": "inherit",
+          "label": "Inherit"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "slightly_rounded",
+          "label": "Slightly rounded"
+        },
+        {
+          "value": "rounded",
+          "label": "Rounded"
+        },
+        {
+          "value": "pill",
+          "label": "Pill"
+        }
       ],
       "default": "inherit"
     },
@@ -417,10 +469,22 @@
       "id": "shadow",
       "label": "Shadow",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "small", "label": "Small" },
-        { "value": "medium", "label": "Medium" },
-        { "value": "large", "label": "Large" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
       ],
       "default": "none"
     },
@@ -433,9 +497,18 @@
       "id": "background_media",
       "label": "Media",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "image", "label": "Image" },
-        { "value": "video", "label": "Video" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "video",
+          "label": "Video"
+        }
       ],
       "default": "none"
     },
@@ -612,10 +685,42 @@
             "shadow": "none"
           },
           "blocks": [
-            { "type": "eyebrow", "settings": { "text": "<p>Subheading</p>", "show_background": true, "corner_radius": "pill" } },
-            { "type": "spacer", "settings": { "unit_desktop": "pixel", "size_desktop_px": 80, "show_on_mobile": true, "unit_mobile": "pixel", "size_mobile_px": 40 } },
-            { "type": "heading", "settings": { "text": "<p>Heading</p>", "heading_size": "lg", "html_tag": "h3", "width": "fit" } },
-            { "type": "text", "settings": { "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>", "text_size": "sm", "width": "custom", "max_width": 500 } }
+            {
+              "type": "eyebrow",
+              "settings": {
+                "text": "<p>Subheading</p>",
+                "show_background": true,
+                "corner_radius": "pill"
+              }
+            },
+            {
+              "type": "spacer",
+              "settings": {
+                "unit_desktop": "pixel",
+                "size_desktop_px": 80,
+                "show_on_mobile": true,
+                "unit_mobile": "pixel",
+                "size_mobile_px": 40
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Heading</p>",
+                "heading_size": "lg",
+                "html_tag": "h3",
+                "width": "fit"
+              }
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>",
+                "text_size": "sm",
+                "width": "custom",
+                "max_width": 500
+              }
+            }
           ]
         },
         {

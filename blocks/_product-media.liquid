@@ -275,8 +275,14 @@
       "id": "main_image_ratio",
       "label": "Main image ratio",
       "options": [
-        { "value": "auto", "label": "Original image" },
-        { "value": "square", "label": "Square" }
+        {
+          "value": "auto",
+          "label": "Original image"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        }
       ],
       "default": "auto"
     },
@@ -293,12 +299,30 @@
       "id": "desktop_layout",
       "label": "t:labels.desktop_layout",
       "options": [
-        { "value": "left_thumbnails", "label": "t:options.product_media_layout.left_thumbnails" },
-        { "value": "bottom_thumbnails", "label": "t:options.product_media_layout.bottom_thumbnails" },
-        { "value": "grid", "label": "t:options.product_media_layout.grid" },
-        { "value": "stacked", "label": "t:options.product_media_layout.stacked" },
-        { "value": "stacked_thumbnails", "label": "t:options.product_media_layout.stacked_thumbnails" },
-        { "value": "two_column_grid", "label": "t:options.product_media_layout.two_column_grid" }
+        {
+          "value": "left_thumbnails",
+          "label": "t:options.product_media_layout.left_thumbnails"
+        },
+        {
+          "value": "bottom_thumbnails",
+          "label": "t:options.product_media_layout.bottom_thumbnails"
+        },
+        {
+          "value": "grid",
+          "label": "t:options.product_media_layout.grid"
+        },
+        {
+          "value": "stacked",
+          "label": "t:options.product_media_layout.stacked"
+        },
+        {
+          "value": "stacked_thumbnails",
+          "label": "t:options.product_media_layout.stacked_thumbnails"
+        },
+        {
+          "value": "two_column_grid",
+          "label": "t:options.product_media_layout.two_column_grid"
+        }
       ],
       "default": "left_thumbnails"
     },
@@ -318,12 +342,30 @@
       "id": "thumbnail_ratio",
       "label": "t:labels.thumbnail_aspect_ratio",
       "options": [
-        { "value": "auto", "label": "t:options.image_ratio.auto" },
-        { "value": "square", "label": "t:options.image_ratio.square" },
-        { "value": "portrait", "label": "t:options.image_ratio.portrait" },
-        { "value": "landscape", "label": "t:options.image_ratio.landscape" },
-        { "value": "wide", "label": "t:options.image_ratio.wide" },
-        { "value": "custom", "label": "t:options.image_ratio.custom" }
+        {
+          "value": "auto",
+          "label": "t:options.image_ratio.auto"
+        },
+        {
+          "value": "square",
+          "label": "t:options.image_ratio.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:options.image_ratio.portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "t:options.image_ratio.landscape"
+        },
+        {
+          "value": "wide",
+          "label": "t:options.image_ratio.wide"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.image_ratio.custom"
+        }
       ],
       "default": "auto"
     },
@@ -350,8 +392,14 @@
       "id": "mobile_layout",
       "label": "t:labels.layout_style",
       "options": [
-        { "value": "thumbnails", "label": "t:options.product_media_mobile_layout.thumbnails" },
-        { "value": "slider", "label": "t:options.product_media_mobile_layout.slider" }
+        {
+          "value": "thumbnails",
+          "label": "t:options.product_media_mobile_layout.thumbnails"
+        },
+        {
+          "value": "slider",
+          "label": "t:options.product_media_mobile_layout.slider"
+        }
       ],
       "default": "slider"
     },
@@ -384,8 +432,14 @@
       "id": "mobile_pagination_type",
       "label": "t:labels.type",
       "options": [
-        { "value": "progress_bar", "label": "t:options.collection_pagination.progress_bar" },
-        { "value": "bullets", "label": "t:options.collection_pagination.bullets" }
+        {
+          "value": "progress_bar",
+          "label": "t:options.collection_pagination.progress_bar"
+        },
+        {
+          "value": "bullets",
+          "label": "t:options.collection_pagination.bullets"
+        }
       ],
       "default": "bullets",
       "visible_if": "{{ block.settings.mobile_layout == 'slider' and block.settings.mobile_show_pagination }}"
@@ -405,8 +459,14 @@
       "id": "appearance_type",
       "label": "t:labels.type",
       "options": [
-        { "value": "inherit", "label": "t:options.appearance_type.inherit" },
-        { "value": "scheme", "label": "t:options.appearance_type.scheme" }
+        {
+          "value": "inherit",
+          "label": "t:options.appearance_type.inherit"
+        },
+        {
+          "value": "scheme",
+          "label": "t:options.appearance_type.scheme"
+        }
       ],
       "default": "inherit"
     },
@@ -426,9 +486,18 @@
       "id": "zoom",
       "label": "t:labels.zoom_behavior",
       "options": [
-        { "value": "open_lightbox", "label": "t:options.product_media_zoom.open_lightbox" },
-        { "value": "click_hover", "label": "t:options.product_media_zoom.click_hover" },
-        { "value": "none", "label": "t:options.product_media_zoom.none" }
+        {
+          "value": "open_lightbox",
+          "label": "t:options.product_media_zoom.open_lightbox"
+        },
+        {
+          "value": "click_hover",
+          "label": "t:options.product_media_zoom.click_hover"
+        },
+        {
+          "value": "none",
+          "label": "t:options.product_media_zoom.none"
+        }
       ],
       "default": "open_lightbox"
     },

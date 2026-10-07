@@ -299,11 +299,19 @@
 {
   "name": "t:general.testimonials_background_custom",
   "class": "section-testimonials-background-custom",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "max_blocks": 50,
   "blocks": [
-    { "type": "@theme" },
-    { "type": "@app" }
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "@app"
+    }
   ],
   "settings": [
     {
@@ -315,9 +323,18 @@
       "id": "section_width",
       "label": "t:labels.section_width",
       "options": [
-        { "value": "page_width", "label": "t:options.section_width.page_width" },
-        { "value": "full_width", "label": "t:options.section_width.full_width" },
-        { "value": "full_width_no_padding", "label": "t:options.section_width.full_width_no_padding" }
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "t:options.section_width.full_width_no_padding"
+        }
       ],
       "default": "page_width"
     },
@@ -326,9 +343,18 @@
       "id": "alignment",
       "label": "t:labels.alignment",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "right", "label": "t:options.alignment.right" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
       ],
       "default": "center"
     },
@@ -343,9 +369,18 @@
       "id": "alignment_mobile",
       "label": "t:labels.alignment_mobile",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "right", "label": "t:options.alignment.right" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
       ],
       "default": "center",
       "visible_if": "{{ section.settings.customize_mobile_alignment }}"
@@ -383,9 +418,18 @@
       "id": "media_type",
       "label": "Media",
       "options": [
-        { "value": "none", "label": "t:options.background_media.none" },
-        { "value": "image", "label": "t:general.image" },
-        { "value": "video", "label": "t:general.video" }
+        {
+          "value": "none",
+          "label": "t:options.background_media.none"
+        },
+        {
+          "value": "image",
+          "label": "t:general.image"
+        },
+        {
+          "value": "video",
+          "label": "t:general.video"
+        }
       ],
       "default": "none"
     },
@@ -426,11 +470,26 @@
       "id": "parallax_effect",
       "label": "t:labels.parallax_effect",
       "options": [
-        { "value": "none", "label": "t:options.parallax.none" },
-        { "value": "fixed", "label": "t:options.parallax.fixed" },
-        { "value": "vertical", "label": "t:options.parallax.vertical" },
-        { "value": "horizontal", "label": "t:options.parallax.horizontal" },
-        { "value": "zoom", "label": "t:options.parallax.zoom" }
+        {
+          "value": "none",
+          "label": "t:options.parallax.none"
+        },
+        {
+          "value": "fixed",
+          "label": "t:options.parallax.fixed"
+        },
+        {
+          "value": "vertical",
+          "label": "t:options.parallax.vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "t:options.parallax.horizontal"
+        },
+        {
+          "value": "zoom",
+          "label": "t:options.parallax.zoom"
+        }
       ],
       "default": "none",
       "visible_if": "{{ section.settings.media_type != 'none' }}"
@@ -542,7 +601,8 @@
             "loop": false,
             "padding_top": 0,
             "padding_bottom": 0,
-            "customize_mobile_padding": false
+            "customize_mobile_padding": false,
+            "transition_style": "slide"
           },
           "blocks": [
             {
@@ -576,7 +636,7 @@
                   "type": "heading",
                   "settings": {
                     "text": "<p>Share a customer testimonial that builds trust in your products and brand.<br>Highlight the detail that made the experience memorable.<br>Tell future customers what made it special.</p>",
-                    "heading_size": "lg",
+                    "heading_size": "display",
                     "width": "fit",
                     "customize_mobile_size": false,
                     "width_mobile": "fit"
@@ -629,7 +689,7 @@
                   "type": "heading",
                   "settings": {
                     "text": "<p>Share a customer testimonial that builds trust in your products and brand.<br>Highlight the detail that made the experience memorable.<br>Tell future customers what made it special.</p>",
-                    "heading_size": "lg",
+                    "heading_size": "display",
                     "width": "fit",
                     "customize_mobile_size": false,
                     "width_mobile": "fit"
@@ -682,7 +742,7 @@
                   "type": "heading",
                   "settings": {
                     "text": "<p>Share a customer testimonial that builds trust in your products and brand.<br>Highlight the detail that made the experience memorable.<br>Tell future customers what made it special.</p>",
-                    "heading_size": "lg",
+                    "heading_size": "display",
                     "width": "fit",
                     "customize_mobile_size": false,
                     "width_mobile": "fit"

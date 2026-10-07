@@ -533,23 +533,178 @@
   "name": "Product list",
   "tag": null,
   "settings": [
-    { "type": "paragraph", "content": "Products chosen here override the collection. Configure the same products or collection in Shopify Discounts for the offer to apply." },
-    { "type": "collection", "id": "collection", "label": "Collection" },
-    { "type": "product_list", "id": "products", "label": "Products", "limit": 50, "info": "Selected products display instead of the collection above." },
-    { "type": "range", "id": "max_products", "label": "Max products", "min": 4, "max": 16, "step": 1, "default": 9 },
-    { "type": "header", "content": "Layout" },
-    { "type": "select", "id": "desktop_columns", "label": "Desktop columns", "options": [{ "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" }], "default": "3" },
-    { "type": "select", "id": "mobile_columns", "label": "Mobile columns", "options": [{ "value": "1", "label": "1" }, { "value": "2", "label": "2" }], "default": "1" },
-    { "type": "header", "content": "Gap" },
-    { "type": "range", "id": "gap_horizontal", "label": "Horizontal gap", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 12 },
-    { "type": "range", "id": "gap_vertical", "label": "Vertical gap", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 30 },
-    { "type": "range", "id": "gap_horizontal_mobile", "label": "Horizontal (mobile)", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 8 },
-    { "type": "range", "id": "gap_vertical_mobile", "label": "Vertical (mobile)", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 30 },
-    { "type": "header", "content": "Product card" },
-    { "type": "select", "id": "add_button_style", "label": "Add button style", "options": [{ "value": "primary", "label": "Primary" }, { "value": "secondary", "label": "Secondary" }, { "value": "outline", "label": "Outline" }], "default": "outline" },
-    { "type": "select", "id": "variant_picker_type", "label": "Variant picker type", "options": [{ "value": "button", "label": "Button" }, { "value": "dropdown", "label": "Dropdown" }], "default": "button" },
-    { "type": "select", "id": "variant_picker_type_mobile", "label": "Variant picker type (mobile)", "options": [{ "value": "button", "label": "Button" }, { "value": "dropdown", "label": "Dropdown" }], "default": "button", "visible_if": "{{ block.settings.variant_picker_type == 'button' }}" }
+    {
+      "type": "paragraph",
+      "content": "Products chosen here override the collection. Configure the same products or collection in Shopify Discounts for the offer to apply."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Products",
+      "limit": 50,
+      "info": "Selected products display instead of the collection above."
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Max products",
+      "min": 4,
+      "max": 16,
+      "step": 1,
+      "default": 9
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "desktop_columns",
+      "label": "Desktop columns",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Mobile columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "header",
+      "content": "Gap"
+    },
+    {
+      "type": "range",
+      "id": "gap_horizontal",
+      "label": "Horizontal gap",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "gap_vertical",
+      "label": "Vertical gap",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "gap_horizontal_mobile",
+      "label": "Horizontal (mobile)",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "gap_vertical_mobile",
+      "label": "Vertical (mobile)",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Product card"
+    },
+    {
+      "type": "select",
+      "id": "add_button_style",
+      "label": "Add button style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
+      ],
+      "default": "outline"
+    },
+    {
+      "type": "select",
+      "id": "variant_picker_type",
+      "label": "Variant picker type",
+      "options": [
+        {
+          "value": "button",
+          "label": "Button"
+        },
+        {
+          "value": "dropdown",
+          "label": "Dropdown"
+        }
+      ],
+      "default": "button"
+    },
+    {
+      "type": "select",
+      "id": "variant_picker_type_mobile",
+      "label": "Variant picker type (mobile)",
+      "options": [
+        {
+          "value": "button",
+          "label": "Button"
+        },
+        {
+          "value": "dropdown",
+          "label": "Dropdown"
+        }
+      ],
+      "default": "button",
+      "visible_if": "{{ block.settings.variant_picker_type == 'button' }}"
+    }
   ],
-  "presets": [{ "name": "Product list", "category": "t:labels.products" }]
+  "presets": [
+    {
+      "name": "Product list",
+      "category": "t:labels.products"
+    }
+  ]
 }
 {% endschema %}

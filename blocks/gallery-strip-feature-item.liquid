@@ -75,15 +75,58 @@
 {
   "name": "Strip feature",
   "tag": null,
-  "blocks": [{ "type": "gallery-strip-overlay-group" }],
+  "blocks": [
+    {
+      "type": "gallery-strip-overlay-group"
+    }
+  ],
   "settings": [
-    { "type": "image_picker", "id": "image", "label": "Image" },
-    { "type": "image_picker", "id": "mobile_image", "label": "Mobile image" },
-    { "type": "text", "id": "alt_text", "label": "Alt text" },
-    { "type": "url", "id": "link", "label": "Link" },
-    { "type": "checkbox", "id": "open_in_new_tab", "label": "Open link in new tab", "default": false },
-    { "type": "header", "content": "Overlay" },
-    { "type": "select", "id": "show_overlay", "label": "Show overlay", "options": [{ "value": "always", "label": "Always" }, { "value": "hover", "label": "On hover" }], "default": "always" },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image"
+    },
+    {
+      "type": "text",
+      "id": "alt_text",
+      "label": "Alt text"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "Open link in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "select",
+      "id": "show_overlay",
+      "label": "Show overlay",
+      "options": [
+        {
+          "value": "always",
+          "label": "Always"
+        },
+        {
+          "value": "hover",
+          "label": "On hover"
+        }
+      ],
+      "default": "always"
+    },
     {
       "type": "color",
       "id": "overlay_background",
@@ -92,6 +135,16 @@
       "default": "#00000061"
     }
   ],
-  "presets": [{ "name": "Strip feature", "category": "Gallery", "blocks": [{ "type": "gallery-strip-overlay-group" }] }]
+  "presets": [
+    {
+      "name": "Strip feature",
+      "category": "Gallery",
+      "blocks": [
+        {
+          "type": "gallery-strip-overlay-group"
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}
