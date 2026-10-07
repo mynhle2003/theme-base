@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"d887dac2d2f637e2aae15f59272634f8fd3d1e32"} -->
+<!-- theme-base-sync-state: {"sha":"8f3ac3c9345da36c73b2e1fea3ed4e6303e47d0d"} -->
 # Customization record: essen-theme
 
 Theme branch: `theme/essen-theme`
@@ -15,6 +15,8 @@ Record every theme-specific change here before committing the code. During base 
 | `sections/featured-product.liquid` | Variant option captions use Accent color; form labels inherit the shared form typography, including Quantity's weight 500. | Featured product option-header captions and form labels use Body small (currently Poppins 14px), regular weight 400, normal style, 1.5 line height and the inherited scheme Text color. | Match Essen Featured product Size, Color and Quantity labels. | Preserve the Featured product scoped selectors and body font/color tokens; review shared variant/form label cascade changes during updates. |
 | `sections/announcement-bar.liquid` | Announcement bar provides slider/scrolling messages without dismissal. | Adds optional Show close button, a right-aligned 24px inherited-color close icon in a 40px target, responsive page margins and reserved content space; current preset enables it. | Match Essen Figma Top bar and allow customers to dismiss it. | Preserve setting, scoped CSS and close markup; review upstream announcement layout, icon and schema changes together. |
 | `assets/announcement-bar.js` | Initializes and destroys slider/scrolling and discount-copy runtime. | Close destroys the instance and hides its root until reload; transfers focus to the next header control and restores hidden bars on editor section selection/load. | Accessible dismissal without persisted shopper state or background timers. | Preserve scoped close listeners, runtime cleanup and editor restoration; review upstream slider/scrolling lifecycle overlaps. |
+| `sections/password.liquid` | Main renders password content from merchant blocks. | Preserve the existing password title as a translated fallback when no blocks are saved; keep main dialog, logo, footer and no-JavaScript form. | Preserve existing password composition during the approved base sync. | Keep empty-composition fallback and new merchant block support when merging. |
+| `sections/text-marquee-custom.liquid` | Main uses shared layout-flow and omits space-between from mobile alignment. | Keep legacy space-between mobile alignment through the shared flow variables; migrate saved horizontal/vertical alignment to new controls. Remove only approved position_vertical. | Preserve saved composition while importing shared layout logic. | Retain additive alignment values and their CSS variable mapping when merging; never silently remap saved choices. |
 
 | `blocks/product-variant-picker.liquid` | Show option captions controls option names and their selected values together. | Adds Show selected value directly below Show option captions, defaulting to true and visible only when captions are enabled; passes the setting to the shared picker. | Let Assen merchants show option names without the selected-value suffix. | Preserve the additive setting, conditional editor visibility and snippet parameter together when merging picker updates. |
 | `blocks/_bundle-product-list.liquid` | Bundle selected variant buttons override the shared picker with heading-color background and border. | Removes the selected-color override so bundle buttons inherit the same selected input colors as Color button and Size buttons. | Keep variant selection colors consistent across this theme. | Preserve shared selected colors when merging bundle picker styling; review future selected-state overrides. |
@@ -169,6 +171,170 @@ Record every theme-specific change here before committing the code. During base 
 | `d887dac2d2f637e2aae15f59272634f8fd3d1e32` | `blocks/collection-card.liquid`, `sections/cart.liquid`, `sections/collections.liquid`, `blocks/product-variant-picker.liquid`, `templates/cart.json`, `templates/list-collections.json` | Dùng implementation collection-card/cart/collections từ main; giữ 5:4 của Assen trong renderer dùng chung; nhập composition defaults đã duyệt; xóa `color_option_display`, `grid_item_width`, `grid_gap` cùng giá trị đã lưu trong preset/template theo xác nhận riêng. Sau đồng bộ, bỏ header `Swatches` mồ côi và khớp options `swatch_style` với main theo yêu cầu bổ sung. | Theme owner, 2026-10-06 |
 
 ## Base sync history
+
+### 2026-10-07 — Update from personal main
+
+- Previous main commit: `d887dac2d2f637e2aae15f59272634f8fd3d1e32`
+- Updated through main commit: `8f3ac3c9345da36c73b2e1fea3ed4e6303e47d0d`
+- Main commits included: 2
+- Included main commits:
+  - `36b9ab04bcbb59ea3073666812dcfa5244f4c15c` — chore(base): update base with 112 upstream commits through bedb4bd5
+  - `8f3ac3c9345da36c73b2e1fea3ed4e6303e47d0d` — fix(sync): preserve presets for used and custom theme sections
+- Change summary:
+
+```text
+assets/carousel-block.js                           |  11 +-
+ assets/cart-drawer.js                              | 155 +++-
+ assets/component-overlay.css                       |  80 +-
+ assets/component-search-suggestions.css            |  35 +
+ assets/critical.css                                | 233 +++++-
+ assets/header.js                                   |  11 +-
+ assets/password-page.js                            |  27 +
+ assets/product-buy-buttons.js                      |  29 +
+ assets/product-card-variants.js                    |   8 +
+ assets/product-media.js                            |  10 +-
+ assets/quick-add.js                                |   8 +-
+ assets/quick-view.js                               |   8 +-
+ assets/recently-viewed.js                          |  54 ++
+ assets/search-page.js                              |  56 ++
+ assets/search-suggestions.js                       |  96 +++
+ assets/variant-picker.js                           |  18 +-
+ blocks/_collection-count.liquid                    |   4 +-
+ blocks/_collection-filter.liquid                   |  36 +-
+ blocks/_collection-sort.liquid                     |  28 +-
+ blocks/_collection-toolbar.liquid                  |   9 +-
+ blocks/_search-input.liquid                        | 262 ++++++
+ blocks/_search-products.liquid                     | 148 ++++
+ blocks/_search-results.liquid                      | 155 ++++
+ blocks/banner.liquid                               |  10 +-
+ blocks/blog-grid.liquid                            |  51 +-
+ blocks/blog-list.liquid                            |   6 +-
+ blocks/carousel.liquid                             |  29 +-
+ blocks/collection-list-items.liquid                |   8 +-
+ blocks/collection-thumbnail.liquid                 |  12 +-
+ blocks/collections-with-tabs-item.liquid           |   4 +-
+ blocks/comparison-table.liquid                     |   2 +-
+ blocks/contact-field.liquid                        |   7 +-
+ blocks/contact-form.liquid                         |  43 +-
+ blocks/eyebrow.liquid                              |   3 +
+ blocks/faq_category.liquid                         |   6 +-
+ blocks/faq_item.liquid                             |  30 +-
+ blocks/gallery-strip-overlay-group.liquid          |   2 +-
+ blocks/header.liquid                               |   6 +-
+ blocks/heading.liquid                              |  24 +-
+ blocks/location-item.liquid                        |   2 +-
+ blocks/marquee.liquid                              |   4 +-
+ blocks/previous-and-next-posts.liquid              |   2 +-
+ blocks/product-buy-buttons.liquid                  |   3 +
+ blocks/product-list.liquid                         |   6 +-
+ blocks/slideshow-slide.liquid                      |  33 +-
+ blocks/text.liquid                                 |   5 +-
+ blocks/timeline-list.liquid                        |  10 +-
+ blocks/timeline-slide.liquid                       |   2 +-
+ docs/audits/404-reference-2026-10-06.md            |  48 ++
+ docs/audits/about-us-reference-2026-10-06.md       |  50 ++
+ docs/audits/contact-reference-2026-10-06.md        |  48 ++
+ docs/audits/faq-reference-2026-10-06.md            |  73 ++
+ docs/audits/marquee-parallax-2026-10-06.md         |  13 +
+ docs/audits/outbound-base-sync-2026-10-06.md       |   8 +
+ docs/audits/pages-outbound-base-sync-2026-10-06.md |  36 +
+ docs/audits/quick-add-media-zoom-2026-10-06.md     |  42 +
+ .../audits/search-outbound-base-sync-2026-10-06.md |  25 +
+ docs/audits/search-reference-2026-10-06.md         | 105 +++
+ docs/qa/performance-regressions-2026-10-06.md      |  17 +
+ docs/theme-customization-policy.md                 |   5 +-
+ layout/password.liquid                             |   8 +-
+ layout/theme.liquid                                |  23 +-
+ locales/en.default.json                            |  18 +-
+ locales/en.default.schema.json                     |  42 +-
+ scripts/theme-base-sync.cjs                        | 151 +++-
+ sections/404.liquid                                | 212 ++++-
+ sections/announcement-bar.liquid                   |  33 +-
+ sections/blog-posts.liquid                         | 199 +----
+ sections/bundle-builder.liquid                     |  12 +-
+ sections/cart-drawer.liquid                        |  13 +-
+ sections/collection-list-thumbnails.liquid         |  20 +-
+ sections/collection-list.liquid                    | 176 +---
+ sections/collection-tabs.liquid                    |  18 +-
+ sections/collections-with-tabs.liquid              |  19 +-
+ sections/collections.liquid                        |   2 +-
+ sections/comparison-table-custom.liquid            |   2 +-
+ sections/contact-form-custom.liquid                |   4 +-
+ sections/email-signup-dual-image.liquid            |   6 +-
+ sections/email-signup-form.liquid                  |   8 +-
+ sections/email-signup-single-image.liquid          |   6 +-
+ sections/faq-image-accordion.liquid                |   6 +-
+ sections/featured-blog-posts.liquid                | 142 +---
+ sections/featured-collection-banner.liquid         |   8 +-
+ sections/featured-collection.liquid                | 247 +-----
+ sections/gallery-carousel.liquid                   |   3 +-
+ sections/gallery-custom.liquid                     |   3 +-
+ sections/gallery-full-width-strip.liquid           |   2 +-
+ sections/header.liquid                             |  18 +-
+ sections/hotspot-full-width-carousel.liquid        |   4 +-
+ sections/hotspot-gallery.liquid                    |  14 +-
+ sections/hotspot.liquid                            |   9 +-
+ sections/icon-text-cards.liquid                    |   3 +-
+ sections/icon-text-inline.liquid                   |   3 +-
+ sections/image-comparison-custom.liquid            |   2 +-
+ sections/image-comparison-split-custom.liquid      |   6 +-
+ sections/image-text-card-grid.liquid               |  23 +-
+ sections/image-text-split-layout.liquid            |   6 +-
+ sections/location-list.liquid                      |  26 +-
+ sections/location-map.liquid                       |  26 +-
+ sections/parallax.liquid                           |   2 +-
+ sections/password.liquid                           | 222 ++++-
+ sections/quick-add.liquid                          |  11 +-
+ sections/quick-view.liquid                         |  11 +-
+ sections/recently-viewed-card.liquid               |  42 +
+ sections/related-posts.liquid                      |   8 +-
+ sections/rich-text.liquid                          |   6 +-
+ sections/scrolling-cards.liquid                    |  12 +-
+ sections/scrolling-text-star-separator.liquid      |  40 +-
+ sections/search-overlay.liquid                     |  44 +-
+ sections/search.liquid                             | 549 ++-----------
+ sections/shop-the-look-section.liquid              |   2 +-
+ sections/testimonial-carousel.liquid               |  15 +-
+ sections/testimonials-background-custom.liquid     |   9 +-
+ sections/testimonials-horizontal-custom.liquid     |  11 +-
+ sections/text-marquee-custom.liquid                | 322 +++++---
+ sections/timeline.liquid                           |  28 +-
+ snippets/css-variables.liquid                      |  25 +-
+ snippets/deferred-stylesheet.liquid                |  11 +
+ snippets/form-field.liquid                         |   2 +-
+ snippets/heading-size-token.liquid                 |  18 +-
+ snippets/product-card-quick-add.liquid             |  12 +-
+ snippets/product-card-swatches.liquid              |   3 +
+ snippets/product-card.liquid                       |   3 +
+ snippets/search-filters.liquid                     | 101 +++
+ snippets/search-query-fields.liquid                |   8 +
+ snippets/section-content-slot.liquid               |  13 +
+ snippets/slideshow-image.liquid                    | 121 +++
+ snippets/variant-picker.liquid                     |  12 +
+ templates/404.json                                 |  12 +-
+ templates/index.json                               |   9 +-
+ templates/index.spinel-sync.json                   |  12 +-
+ templates/page.about-us.json                       | 891 +++++++++++++++++++++
+ templates/page.contact.json                        |   4 +-
+ templates/page.faqs.json                           | 633 +++++++++++++++
+ templates/password.json                            |  10 +-
+ templates/product.json                             | 330 +++++++-
+ templates/search.json                              |   9 +-
+ tests/cart-drawer-add.test.cjs                     |  53 +-
+ tests/faq-item.test.cjs                            |  35 +
+ tests/heading-size-sync.test.cjs                   |  42 +
+ tests/overlay-product-modules.test.cjs             |  26 +
+ tests/product-media-pointer.test.cjs               |  44 +
+ tests/recently-viewed.test.cjs                     |  56 ++
+ tests/search-history.test.cjs                      |  35 +
+ tests/search-page.test.cjs                         |  84 ++
+ tests/search-suggestions.test.cjs                  |  52 ++
+ tests/section-content.test.cjs                     | 111 +++
+ tests/slideshow-image.test.cjs                     |  66 ++
+ tests/theme-base-sync.test.cjs                     |  81 ++
+ 149 files changed, 6181 insertions(+), 1861 deletions(-)
+```
+
 
 ### 2026-10-06 — Update from personal main
 
@@ -654,3 +820,14 @@ Owner approved main schema for conflicts outside homepage. Updated Blog static h
 ### 2026-10-06 — Theme branch renamed
 
 - Renamed `theme/assen-theme` to `theme/essen-theme` locally and on GitHub at the owner's request. Renamed this customization record to match the theme slug and updated branch/command references; storefront implementation and saved theme composition remain unchanged.
+
+
+### 2026-10-07 — Approved merge of current personal main
+
+- Owner approved retaining custom behavior while integrating current base logic. Reviewed overlaps were merged by behavior, without replacing custom implementations.
+- Carousel retains contained N + 2/7 desktop/mobile preview, insufficient-item guard and cloned loops; fade uses one slide and zero gap when previews are inactive. Preview opts into slide transition.
+- Product-card inventory data is added alongside 5:4 media and the per-product material metafield. Retain 20px purchase gap, color-button/selected-value picker controls, two-media modes, 4:5 and 5:4 collection crops, announcement close behavior and custom locale keys. Import base inventory, pointer tolerance, heading-token and critical-CSS changes.
+- Keep saved schemas/presets/compositions except new setting defaults, additive approved schema compatibility, and migration/removal of position_vertical explicitly approved by the owner. Existing password title remains for an empty saved block composition. Existing marquee direction/alignment values are migrated, including legacy mobile space-between support.
+
+- Schema review: differences for Carousel ratios, Image card desktop/mobile heights, Press item ratio and Collection thumbnails ratios are additive custom 5:4/4:5 values. Every main value remains available, and the existing Liquid/CSS mappings remain intact. Keep these definitions.
+- Validation: all 194 Node tests pass; full Theme Check passes with zero errors and 40 warnings. Customization coverage includes 38 implementation files. Saved-value audit confirms only approved position_vertical removal; global settings schema remains unchanged. Tests resolve locale keys and permit retained theme wording, and test unset Quantity defaults independently of its custom label default. Live Shopify storefront/editor was not exercised.

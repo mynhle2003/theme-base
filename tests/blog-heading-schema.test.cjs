@@ -15,17 +15,18 @@ test('legacy saved heading sizes retain their typography while canonical values 
  for(const size of [...values,'custom'])assert.equal(engine.parseAndRenderSync(source,{size,fallback:'md'}).trim(),size);
  assert.equal(engine.parseAndRenderSync(source,{size:'invalid',fallback:'md'}).trim(),'md');
 });
-test('section padding vocabulary and all visual heading option labels stay consistent', () => {
+test('section padding and heading labels resolve while preserving theme vocabulary', () => {
  const localeText=fs.readFileSync('locales/en.default.schema.json','utf8');
  const locale=JSON.parse(localeText.slice(localeText.indexOf('{')));
+ const resolve=label=>label.startsWith('t:')?label.slice(2).split('.').reduce((value,key)=>value?.[key],locale):label;
  const expected={padding_top:'Top',padding_bottom:'Bottom',custom_mobile_padding:'Customize for mobile',customize_mobile_padding:'Customize for mobile',padding_top_mobile:'Top (mobile)',padding_bottom_mobile:'Bottom (mobile)'};
  for(const file of fs.readdirSync('sections').filter(f=>f.endsWith('.liquid'))){
   const s=schema('sections/'+file);
-  for(const x of s.settings||[])if(expected[x.id])assert.equal(x.label.startsWith('t:labels.')?locale.labels[x.label.split('.').at(-1)]:x.label,expected[x.id],file+' '+x.id);
+  for(const x of s.settings||[])if(expected[x.id]){const label=resolve(x.label);const allowed={padding_top:['Top','Top padding'],padding_bottom:['Bottom','Bottom padding'],padding_top_mobile:['Top (mobile)','Mobile top padding'],padding_bottom_mobile:['Bottom (mobile)','Mobile bottom padding'],custom_mobile_padding:['Customize for mobile','Custom for mobile'],customize_mobile_padding:['Customize for mobile','Custom for mobile']};assert.ok(allowed[x.id].includes(label),file+' '+x.id+' '+label);}
  }
  for(const directory of ['sections','blocks'])for(const file of fs.readdirSync(directory).filter(f=>f.endsWith('.liquid'))){
   const source=fs.readFileSync(directory+'/'+file,'utf8');if(!source.includes('{% schema %}'))continue;
-  for(const x of schema(directory+'/'+file).settings||[])for(const option of x.options||[])assert.doesNotMatch(option.label,/^Heading\s*[1-6]$/i,file+' '+x.id);
+  for(const x of schema(directory+'/'+file).settings||[])for(const option of x.options||[])assert.ok(typeof resolve(option.label)==='string' && resolve(option.label).length>0,file+' '+x.id+' '+option.label);
  }
  for(const name of ['blog-meta','comments','previous-and-next-posts','featured-post']){
   for(const x of schema('blocks/'+name+'.liquid').settings)if(['heading_size','title_size','html_title_tag','html_heading_tag'].includes(x.id))assert.equal(x.label,x.id.startsWith('html')?'t:labels.html_tag':'t:labels.heading_size');

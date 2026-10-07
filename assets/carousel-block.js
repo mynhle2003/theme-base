@@ -573,8 +573,9 @@ const initialize = (root) => {
   // that require centered-slide runtime must opt in explicitly on their root.
   const useCenteredSlidePreview = root.dataset.showNextSlidePreviewOnDesktop === 'true';
   const transition = root.dataset.transition === 'fade' ? 'fade' : 'slide';
-  const fade = transition === 'fade' && !useCenteredSlidePreview;
   const containedLoop = containedPreview && (desktopSlidesPerView > desktopColumns || mobileSlidesPerView > mobileColumns);
+  const fade = transition === 'fade' && !useCenteredSlidePreview && !containedLoop;
+  if (fade) viewport.dataset.swiperNextSlidePreview = 'false';
   const manualLoop = (manualLoopRequested || containedLoop) && loop ? createManualLoop(viewport) : null;
   const paginationModules = pagination && !manualLoop ? [Pagination] : [];
   const modules = fade ? [EffectFade, ...paginationModules] : paginationModules;
@@ -585,12 +586,12 @@ const initialize = (root) => {
     ...(fade ? { fadeEffect: { crossFade: true } } : {}),
     preventInteractionOnTransition: true,
     speed: prefersReducedMotion() ? 0 : 600,
-    slidesPerView: mobileSlidesPerView,
-    spaceBetween: number(root.dataset.swiperGapMobile, 12),
+    slidesPerView: fade ? 1 : mobileSlidesPerView,
+    spaceBetween: fade ? 0 : number(root.dataset.swiperGapMobile, 12),
     breakpoints: {
       [desktopBreakpoint]: {
-        slidesPerView: desktopSlidesPerView,
-        spaceBetween: number(root.dataset.swiperGapDesktop, 16),
+        slidesPerView: fade ? 1 : desktopSlidesPerView,
+        spaceBetween: fade ? 0 : number(root.dataset.swiperGapDesktop, 16),
         ...(useCenteredSlidePreview ? { centeredSlides: true, spaceBetween: 24 } : {})
       }
     },

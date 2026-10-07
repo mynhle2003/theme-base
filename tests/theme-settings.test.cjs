@@ -95,7 +95,7 @@ test('Footer consumes global social URLs and no longer references follow-us menu
   assert.doesNotMatch(read('sections/footer-group.json'), /follow-us/);
   assert.doesNotMatch(read('sections/footer.liquid'), /follow-us/);
   assert.match(read('blocks/social-links.liquid'), /\{%\s*render 'social-links'(?:\s*,[\s\S]*?)?\s*%\}/);
-  assert.match(read('blocks/_column.liquid'), /\{ "type": "social-links" \}/);
+  assert.ok(JSON.parse(read("blocks/_column.liquid").match(/{% schema %}([\s\S]*?){% endschema %}/)[1]).blocks.some(block => block.type === "social-links"));
 });
 
 test('social links omit blank URLs and escape configured URLs', () => {

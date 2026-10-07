@@ -484,6 +484,10 @@
         {
           "value": "xs",
           "label": "t:options.heading_size.xs"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.heading_size.custom"
         }
       ],
       "default": "sm"
@@ -719,6 +723,17 @@
       "unit": "px",
       "default": 50,
       "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "custom_heading_size",
+      "label": "Custom size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ section.settings.heading_size == 'custom' }}"
     }
   ],
   "presets": [
@@ -744,7 +759,10 @@
         {
           "type": "collection-thumbnail"
         }
-      ]
+      ],
+      "settings": {
+        "custom_heading_size": 24
+      }
     }
   ]
 }
