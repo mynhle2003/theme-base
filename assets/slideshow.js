@@ -1,4 +1,5 @@
-import { EffectFade, Pagination } from './swiper-loader.js';
+import EffectFade from './swiper-12.2.0-effect-fade.min.mjs';
+import Pagination from './swiper-12.2.0-pagination.min.mjs';
 import { createSwiperCarousel, destroySwiperCarousel } from './swiper-carousel.js';
 
 const states = new WeakMap();
@@ -313,6 +314,16 @@ const startAutoplay = (root, swiper, loop) => {
   let previous = null;
   let frame = 0;
   let touching = false;
+  let inViewport = !('IntersectionObserver' in window);
+  let destroyed = false;
+  const schedule = () => {
+    if (!destroyed && !frame && inViewport && !document.hidden) frame = window.requestAnimationFrame(tick);
+  };
+  const suspend = () => {
+    window.cancelAnimationFrame(frame);
+    frame = 0;
+    previous = null;
+  };
   const paint = () => {
     const progress = Math.max(0, Math.min(1, elapsed / delay));
     root.style.setProperty('--slideshow-autoplay-progress', String(progress));
@@ -330,8 +341,17 @@ const startAutoplay = (root, swiper, loop) => {
   };
   const touchStart = () => { touching = true; previous = null; };
   const touchEnd = () => { touching = false; previous = null; };
-  const visibilityChange = () => { previous = null; };
+  const visibilityChange = () => {
+    if (document.hidden) suspend();
+    else schedule();
+  };
+  const observer = 'IntersectionObserver' in window ? new window.IntersectionObserver((entries) => {
+    inViewport = entries.some((entry) => entry.isIntersecting);
+    if (inViewport) schedule();
+    else suspend();
+  }) : null;
   const tick = (now) => {
+    frame = 0;
     const paused = document.hidden || !isVisible(root) || reducedMotion() ||
       (pauseOnHover && root.matches(':hover')) ||
       Boolean(root.querySelector(':focus-visible')) || touching || swiper.isLocked || swiper.animating;
@@ -347,7 +367,7 @@ const startAutoplay = (root, swiper, loop) => {
         paint();
       }
     }
-    frame = window.requestAnimationFrame(tick);
+    schedule();
   };
   // The timer and both pagination styles share one clock, including pauses.
   swiper.on('activeIndexChange realIndexChange', reset);
@@ -355,10 +375,13 @@ const startAutoplay = (root, swiper, loop) => {
   swiper.on('touchEnd', touchEnd);
   document.addEventListener('visibilitychange', visibilityChange);
   paint();
-  frame = window.requestAnimationFrame(tick);
+  observer?.observe(root);
+  schedule();
   return {
     destroy() {
-      window.cancelAnimationFrame(frame);
+      destroyed = true;
+      suspend();
+      observer?.disconnect();
       swiper.off('activeIndexChange realIndexChange', reset);
       swiper.off('touchStart', touchStart);
       swiper.off('touchEnd', touchEnd);

@@ -1,3 +1,5 @@
+{% render 'header-localization-styles' %}
+
 {% liquid
   assign country_selector_label = 'localization.country_label' | t
   assign language_selector_label = 'localization.language_label' | t
@@ -218,7 +220,7 @@
               <details class="header-localization__details" data-header-submenu-trigger="click" data-localization-dialog-id="{{ country_dialog_id }}">
                 <summary class="header-localization__summary" aria-controls="{{ country_dialog_id }}" aria-expanded="false">
                   <span class="header-localization__country">
-                    {{ localization.country | image_url: width: 24 | image_tag: class: 'header-localization__flag', alt: '' }}
+                    {% render 'localization-flag', country: localization.country %}
                     <span>{{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}</span>
                   </span>
                   {% render 'icon', icon: 'chevron-down', class: 'header-localization__icon' %}
@@ -229,7 +231,7 @@
                     <div class="header-localization__country-list">
                       {% for country in localization.available_countries %}
                         <button class="header-localization__country-option{% if country.iso_code == localization.country.iso_code %} is-selected{% endif %}" type="submit" name="country_code" value="{{ country.iso_code }}">
-                          {{ country | image_url: width: 24 | image_tag: class: 'header-localization__flag', alt: '' }}
+                          {% render 'localization-flag', country: country %}
                           <span class="header-localization__country-name">{{ country.name }}</span><span class="header-localization__country-currency">{{ country.currency.iso_code }} {{ country.currency.symbol }}</span>
                         </button>
                       {% endfor %}

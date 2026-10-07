@@ -70,9 +70,21 @@
 {% endcapture %}
 {% assign featured_product_style = featured_product_style | strip %}
 
+{% liquid
+  assign defer_product_runtime = false
+  if section.index > 2 and request.design_mode == false
+    assign defer_product_runtime = true
+  endif
+%}
+{% if defer_product_runtime %}
+  {% render 'deferred-stylesheet', filename: 'product-information.css' %}
+  {% render 'deferred-stylesheet', filename: 'product-information-extras.css' %}
+  {% render 'deferred-stylesheet', filename: 'product-media.css' %}
+{% else %}
   {{ 'product-information.css' | asset_url | stylesheet_tag }}
   {{ 'product-information-extras.css' | asset_url | stylesheet_tag }}
   {{ 'product-media.css' | asset_url | stylesheet_tag }}
+{% endif %}
   <div
     class="section-spacing product-information featured-product color-scheme section-color-scope {{ featured_product_scheme }}"
     data-product-information
@@ -93,12 +105,21 @@
     </div>
   </div>
 
+{% if defer_product_runtime %}
+  <script data-theme-module="{{ 'variant-picker.js' | asset_url }}"></script>
+  <script data-theme-module="{{ 'product-buy-buttons.js' | asset_url }}"></script>
+  <script data-theme-module="{{ 'product-description.js' | asset_url }}"></script>
+  <script data-theme-module="{{ 'product-inventory.js' | asset_url }}"></script>
+  <script data-theme-module="{{ 'product-media.js' | asset_url }}"></script>
+  <script data-theme-module="{{ 'product-information-extras.js' | asset_url }}"></script>
+{% else %}
   <script type="module" src="{{ 'variant-picker.js' | asset_url }}"></script>
   <script type="module" src="{{ 'product-buy-buttons.js' | asset_url }}"></script>
   <script type="module" src="{{ 'product-description.js' | asset_url }}"></script>
   <script type="module" src="{{ 'product-inventory.js' | asset_url }}"></script>
   <script type="module" src="{{ 'product-media.js' | asset_url }}"></script>
   <script type="module" src="{{ 'product-information-extras.js' | asset_url }}"></script>
+{% endif %}
 
 {% stylesheet %}
   .featured-product {

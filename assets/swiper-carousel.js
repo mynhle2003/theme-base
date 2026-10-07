@@ -1,4 +1,5 @@
-import { A11y, Swiper } from './swiper-loader.js';
+import A11y from './swiper-12.2.0-a11y.min.mjs';
+import Swiper from './swiper-12.2.0.min.mjs';
 
 const instances = new WeakMap();
 const CONTROL_EVENTS = ['afterInit', 'fromEdge', 'lock', 'resize', 'slideChange', 'toEdge', 'unlock', 'update'];

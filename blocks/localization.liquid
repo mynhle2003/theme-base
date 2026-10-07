@@ -81,7 +81,7 @@
           <summary class="header-localization__summary" aria-controls="{{ country_dialog_id }}" aria-expanded="false">
             <span class="header-localization__country">
               {% if show_country_flag %}
-                {{ localization.country | image_url: width: 24 | image_tag: class: 'header-localization__flag', alt: '' }}
+                {% render 'localization-flag', country: localization.country %}
               {% endif %}
               {% if show_country_name %}
                 <span>{{ localization.country.name }}</span>
@@ -104,7 +104,7 @@
                     value="{{ country.iso_code }}"
                   >
                     {% if show_country_flag %}
-                      {{ country | image_url: width: 24 | image_tag: class: 'header-localization__flag', alt: '' }}
+                      {% render 'localization-flag', country: country %}
                     {% endif %}
                     <span class="header-localization__country-name">{{ country.name }}</span>
                     <span class="header-localization__country-currency">{{ country.currency.iso_code }} {{ country.currency.symbol }}</span>

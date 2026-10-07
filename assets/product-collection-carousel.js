@@ -1,4 +1,4 @@
-import { Pagination } from './swiper-loader.js';
+import Pagination from './swiper-12.2.0-pagination.min.mjs';
 import { createSwiperCarousel, destroySwiperCarousel } from './swiper-carousel.js';
 
 const instances = new WeakMap();

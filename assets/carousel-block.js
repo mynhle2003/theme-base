@@ -1,4 +1,5 @@
-import { EffectFade, Pagination } from './swiper-loader.js';
+import EffectFade from './swiper-12.2.0-effect-fade.min.mjs';
+import Pagination from './swiper-12.2.0-pagination.min.mjs';
 import { createSwiperCarousel, destroySwiperCarousel } from './swiper-carousel.js';
 
 const instances = new WeakMap();

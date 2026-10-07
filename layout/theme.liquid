@@ -41,10 +41,16 @@
     <script src="{{ 'theme-module-loader.js' | asset_url }}" defer></script>
     <script src="{{ 'accordion-details.js' | asset_url }}" defer></script>
     <script src="{{ 'product-card-variants.js' | asset_url }}" defer></script>
-    <script src="{{ 'share.js' | asset_url }}" defer></script>
+    {% if request.design_mode or content_for_layout contains 'data-share' %}
+      <script src="{{ 'share.js' | asset_url }}" defer></script>
+    {% endif %}
     <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
-    <script src="{{ 'scroll-to.js' | asset_url }}" defer></script>
-    <script src="{{ 'hero.js' | asset_url }}" defer></script>
+    {% if request.design_mode or content_for_layout contains '<scroll-to-block' %}
+      <script src="{{ 'scroll-to.js' | asset_url }}" defer></script>
+    {% endif %}
+    {% if request.design_mode or content_for_layout contains 'data-hero-parallax=' %}
+      <script src="{{ 'hero.js' | asset_url }}" defer></script>
+    {% endif %}
     {% if request.design_mode %}
       <script type="module" src="{{ 'timeline-list.js' | asset_url }}"></script>
     {% endif %}

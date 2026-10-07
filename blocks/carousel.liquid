@@ -78,7 +78,8 @@
   endif
 
   assign carousel_border_type = block.settings.border_type | default: 'solid'
-  unless carousel_border_type == 'none' or carousel_border_type == 'solid' or carousel_border_type == 'dashed' or carousel_border_type == 'dotted' or carousel_border_type == 'double'
+  assign valid_carousel_border_type = 'none|solid|dashed|dotted|double' | split: '|'
+  unless valid_carousel_border_type contains carousel_border_type
     assign carousel_border_type = 'none'
   endunless
   assign carousel_border_thickness = block.settings.border_thickness | default: 1 | plus: 0
@@ -86,7 +87,8 @@
     assign carousel_border_thickness = 1
   endif
   assign carousel_corner_radius = block.settings.corner_radius | default: 'square'
-  unless carousel_corner_radius == 'square' or carousel_corner_radius == 'slightly_rounded' or carousel_corner_radius == 'rounded' or carousel_corner_radius == 'pill'
+  assign valid_carousel_corner_radius = 'square|slightly_rounded|rounded|pill' | split: '|'
+  unless valid_carousel_corner_radius contains carousel_corner_radius
     assign carousel_corner_radius = 'square'
   endunless
   assign image_text_card_radius = '0px'
@@ -99,7 +101,8 @@
       assign image_text_card_radius = '999px'
   endcase
   assign image_text_card_toggle_icon = block.settings.image_text_card_toggle_icon | default: 'plus'
-  unless image_text_card_toggle_icon == 'plus' or image_text_card_toggle_icon == 'arrow' or image_text_card_toggle_icon == 'chevron'
+  assign valid_image_text_card_toggle_icon = 'plus|arrow|chevron' | split: '|'
+  unless valid_image_text_card_toggle_icon contains image_text_card_toggle_icon
     assign image_text_card_toggle_icon = 'plus'
   endunless
   assign image_text_card_icon_size = block.settings.image_text_card_icon_size | default: 24 | plus: 0
@@ -107,7 +110,8 @@
     assign image_text_card_icon_size = 24
   endif
   assign image_text_card_heading_tag = block.settings.image_text_card_heading_tag | default: 'h4'
-  unless image_text_card_heading_tag == 'div' or image_text_card_heading_tag == 'h1' or image_text_card_heading_tag == 'h2' or image_text_card_heading_tag == 'h3' or image_text_card_heading_tag == 'h4' or image_text_card_heading_tag == 'h5' or image_text_card_heading_tag == 'h6'
+  assign valid_image_text_card_heading_tag = 'div|h1|h2|h3|h4|h5|h6' | split: '|'
+  unless valid_image_text_card_heading_tag contains image_text_card_heading_tag
     assign image_text_card_heading_tag = 'h4'
   endunless
 
@@ -121,11 +125,13 @@
   endif
 
   assign carousel_navigation_style = block.settings.navigation_style | default: 'secondary'
-  unless carousel_navigation_style == 'primary' or carousel_navigation_style == 'secondary' or carousel_navigation_style == 'outline'
+  assign valid_carousel_navigation_style = 'primary|secondary|outline' | split: '|'
+  unless valid_carousel_navigation_style contains carousel_navigation_style
     assign carousel_navigation_style = 'secondary'
   endunless
   assign carousel_navigation_icon = block.settings.navigation_icon | default: 'chevron'
-  unless carousel_navigation_icon == 'chevron' or carousel_navigation_icon == 'arrow' or carousel_navigation_icon == 'long_arrow'
+  assign valid_carousel_navigation_icon = 'chevron|arrow|long_arrow' | split: '|'
+  unless valid_carousel_navigation_icon contains carousel_navigation_icon
     assign carousel_navigation_icon = 'chevron'
   endunless
   assign carousel_navigation_behavior = block.settings.navigation_behavior | default: 'always'
@@ -138,11 +144,13 @@
     assign carousel_controls_style = 'standard'
   endunless
   assign carousel_controls_alignment = block.settings.controls_alignment | default: 'center'
-  unless carousel_controls_alignment == 'left' or carousel_controls_alignment == 'center' or carousel_controls_alignment == 'right'
+  assign valid_carousel_controls_alignment = 'left|center|right' | split: '|'
+  unless valid_carousel_controls_alignment contains carousel_controls_alignment
     assign carousel_controls_alignment = 'center'
   endunless
   assign carousel_controls_alignment_mobile = block.settings.controls_alignment_mobile | default: carousel_controls_alignment
-  unless carousel_controls_alignment_mobile == 'left' or carousel_controls_alignment_mobile == 'center' or carousel_controls_alignment_mobile == 'right'
+  assign valid_carousel_controls_alignment_mobile = 'left|center|right' | split: '|'
+  unless valid_carousel_controls_alignment_mobile contains carousel_controls_alignment_mobile
     assign carousel_controls_alignment_mobile = carousel_controls_alignment
   endunless
 
