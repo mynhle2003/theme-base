@@ -78,13 +78,18 @@
   {% if image != blank %}
     {% if mobile_image != blank %}
       {% capture mobile_srcset %}
-        {% assign responsive_widths = image_widths | default: '400, 600, 800, 1200, 1600, 2400' | split: ', ' %}
+        {% assign responsive_widths = image_widths | default: '400, 600, 800, 1200, 1600, 2400' | split: ',' %}
+        {% assign previous_width = 0 %}
         {% for responsive_width in responsive_widths %}
-          {{ mobile_image | image_url: width: responsive_width }}{% unless forloop.last %}, {% endunless %}
+          {% assign candidate_width = responsive_width | strip | plus: 0 | at_most: mobile_image.width %}
+          {% if candidate_width > previous_width %}
+            {% if previous_width > 0 %}, {% endif %}{{ mobile_image | image_url: width: candidate_width }} {{ candidate_width }}w
+            {% assign previous_width = candidate_width %}
+          {% endif %}
         {% endfor %}
       {% endcapture %}
       <picture>
-        <source media="(max-width: 767.98px)" srcset="{{ mobile_srcset | strip }}">
+        <source media="(max-width: 767.98px)" srcset="{{ mobile_srcset | strip }}"{% if image_sizes != blank %} sizes="{{ image_sizes | escape }}"{% endif %} width="{{ mobile_image.width }}" height="{{ mobile_image.height }}">
         {% if image_widths != blank or image_sizes != blank %}
           {% if has_image_height %}
             {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: widths: image_widths, sizes: image_sizes, alt: image_alt }}
