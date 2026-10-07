@@ -86,7 +86,7 @@
               {% if show_country_name %}
                 <span>{{ localization.country.name }}</span>
               {% else %}
-                <span>{{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}</span>
+                <span>{{ localization.country.currency.iso_code }}</span>
               {% endif %}
             </span>
             {% render 'icon', icon: 'chevron-down', class: 'header-localization__icon' %}
@@ -173,6 +173,35 @@
       opacity: 0;
       visibility: visible;
       transform: translateY(-0.5rem);
+    }
+  }
+
+  /* Theme-specific footer controls. Header has no localization-block class. */
+  .localization-block.header-localization {
+    flex-wrap: wrap;
+    gap: 10px;
+    color: var(--heading-color);
+  }
+
+  .localization-block .header-localization__summary {
+    gap: 8px;
+    min-height: 42px;
+    padding: 10px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    line-height: 1.5;
+  }
+
+  .localization-block .header-localization__icon {
+    --icon-width: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .localization-block .header-localization__details:is([open], .is-submenu-closing)::after {
+      inset-block-start: auto;
+      inset-block-end: 100%;
+      width: 100%;
+      height: 0.75rem;
     }
   }
 
