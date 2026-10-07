@@ -1,6 +1,291 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"8169f12ce76e4a0e473ef1c1fbb429735fd51216"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"bedb4bd5745825c137bba98d56736d591fcb0042"} -->
 
 # Base update history
+
+## 2026-10-07 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `8169f12ce76e4a0e473ef1c1fbb429735fd51216`
+- Updated through team commit: `bedb4bd5745825c137bba98d56736d591fcb0042`
+- Team commits included: 112
+- Source changes:
+
+```text
+assets/carousel-block.js                           |    9 +-
+ assets/cart-drawer.js                              |  155 ++-
+ assets/component-overlay.css                       |   80 +-
+ assets/component-search-suggestions.css            |   35 +
+ assets/critical.css                                |  233 ++++-
+ assets/header.js                                   |   11 +-
+ assets/password-page.js                            |   27 +
+ assets/product-buy-buttons.js                      |   29 +
+ assets/product-card-variants.js                    |    8 +
+ assets/product-media.js                            |   10 +-
+ assets/quick-add.js                                |    8 +-
+ assets/quick-view.js                               |    8 +-
+ assets/recently-viewed.js                          |   54 +
+ assets/search-page.js                              |   56 ++
+ assets/search-suggestions.js                       |   96 ++
+ assets/variant-picker.js                           |   18 +-
+ blocks/_collection-count.liquid                    |    4 +-
+ blocks/_collection-filter.liquid                   |   36 +-
+ blocks/_collection-sort.liquid                     |   28 +-
+ blocks/_collection-toolbar.liquid                  |    9 +-
+ blocks/_search-input.liquid                        |  220 +++++
+ blocks/_search-products.liquid                     |  148 +++
+ blocks/_search-results.liquid                      |  155 +++
+ blocks/banner.liquid                               |    2 +-
+ blocks/blog-grid.liquid                            |   51 +-
+ blocks/blog-list.liquid                            |    6 +-
+ blocks/carousel.liquid                             |   20 +-
+ blocks/collection-list-items.liquid                |    8 +-
+ blocks/collection-thumbnail.liquid                 |   12 +-
+ blocks/collections-with-tabs-item.liquid           |    4 +-
+ blocks/comparison-table.liquid                     |    2 +-
+ blocks/contact-field.liquid                        |    7 +-
+ blocks/contact-form.liquid                         |   30 +-
+ blocks/eyebrow.liquid                              |    3 +
+ blocks/faq_category.liquid                         |    6 +-
+ blocks/faq_item.liquid                             |   30 +-
+ blocks/gallery-strip-overlay-group.liquid          |    2 +-
+ blocks/header.liquid                               |    8 +-
+ blocks/heading.liquid                              |   29 +-
+ blocks/image-card.liquid                           |    2 +-
+ blocks/location-item.liquid                        |    2 +-
+ blocks/marquee-item.liquid                         |    2 +-
+ blocks/marquee.liquid                              |   10 +-
+ blocks/press-item.liquid                           |    2 +-
+ blocks/previous-and-next-posts.liquid              |    2 +-
+ blocks/product-buy-buttons.liquid                  |    3 +
+ blocks/product-list.liquid                         |    6 +-
+ blocks/scrolling-card.liquid                       |    2 +-
+ blocks/slide.liquid                                |    2 +-
+ blocks/slideshow-slide.liquid                      |   33 +-
+ blocks/tab-layout.liquid                           |    2 +-
+ blocks/testimonial-item.liquid                     |    2 +-
+ blocks/text.liquid                                 |    5 +-
+ blocks/timeline-list.liquid                        |   10 +-
+ blocks/timeline-slide.liquid                       |    2 +-
+ config/settings_schema.json                        |   54 +-
+ docs/audits/404-reference-2026-10-06.md            |   48 +
+ docs/audits/about-us-reference-2026-10-06.md       |   50 +
+ docs/audits/contact-reference-2026-10-06.md        |   48 +
+ docs/audits/faq-reference-2026-10-06.md            |   73 ++
+ docs/audits/marquee-parallax-2026-10-06.md         |   13 +
+ docs/audits/outbound-base-sync-2026-10-06.md       |    8 +
+ docs/audits/pages-outbound-base-sync-2026-10-06.md |   36 +
+ docs/audits/quick-add-media-zoom-2026-10-06.md     |   42 +
+ .../audits/search-outbound-base-sync-2026-10-06.md |   25 +
+ docs/audits/search-reference-2026-10-06.md         |  105 ++
+ docs/qa/performance-regressions-2026-10-06.md      |   17 +
+ layout/password.liquid                             |    8 +-
+ layout/theme.liquid                                |   23 +-
+ locales/en.default.json                            |   18 +-
+ locales/en.default.schema.json                     |   24 +-
+ sections/404.liquid                                |  231 ++++-
+ sections/announcement-bar.liquid                   |   33 +-
+ sections/blog-posts.liquid                         |  201 +---
+ sections/bundle-builder.liquid                     |    2 +-
+ sections/cart-drawer.liquid                        |   13 +-
+ sections/collection-list-thumbnails.liquid         |    2 +-
+ sections/collection-list.liquid                    |  176 +---
+ sections/collection-tabs.liquid                    |   20 +-
+ sections/collections-with-tabs.liquid              |    9 +-
+ sections/collections.liquid                        |    4 +-
+ sections/comparison-table-custom.liquid            |    2 +-
+ sections/contact-form-custom.liquid                |    2 +-
+ sections/contact-information.liquid                |    8 +-
+ sections/countdown.liquid                          |    2 +-
+ sections/divider.liquid                            |    2 +-
+ sections/email-signup-dual-image.liquid            |    2 +-
+ sections/email-signup-form.liquid                  |    4 +-
+ sections/email-signup-single-image.liquid          |    2 +-
+ sections/faq-accordion.liquid                      |    2 +-
+ sections/faq-image-accordion.liquid                |    2 +-
+ sections/featured-blog-posts.liquid                |  138 +--
+ sections/featured-collection-banner.liquid         |    4 +-
+ sections/featured-collection.liquid                |  249 +----
+ sections/footer.liquid                             |    2 +-
+ sections/gallery-full-width-strip.liquid           |    2 +-
+ sections/header.liquid                             |   18 +-
+ sections/hero.liquid                               |    2 +-
+ sections/hotspot-full-width-carousel.liquid        |    6 +-
+ sections/hotspot-gallery.liquid                    |   14 +-
+ sections/hotspot.liquid                            |    9 +-
+ sections/icon-text-cards.liquid                    |   10 +-
+ sections/icon-text-inline.liquid                   |   12 +-
+ sections/image-cards.liquid                        |    4 +-
+ sections/image-comparison-custom.liquid            |    2 +-
+ sections/image-comparison-split-custom.liquid      |    6 +-
+ sections/image-text-card-grid.liquid               |    2 +-
+ sections/image-text-split-layout.liquid            |    2 +-
+ sections/location-list.liquid                      |    8 +-
+ sections/location-map.liquid                       |    8 +-
+ sections/parallax.liquid                           |    2 +-
+ sections/password.liquid                           |  145 ++-
+ sections/press.liquid                              |    8 +-
+ sections/quick-add.liquid                          |   11 +-
+ sections/quick-view.liquid                         |   11 +-
+ sections/recently-viewed-card.liquid               |   38 +
+ sections/related-posts.liquid                      |    8 +-
+ sections/rich-text.liquid                          |    6 +-
+ sections/scrolling-cards.liquid                    |   20 +-
+ sections/scrolling-text-star-separator.liquid      |   40 +-
+ sections/search-overlay.liquid                     |   44 +-
+ sections/search.liquid                             |  573 ++---------
+ sections/shop-the-look-section.liquid              |    4 +-
+ sections/testimonial-carousel.liquid               |    8 +-
+ sections/testimonials-background-custom.liquid     |    6 +-
+ sections/testimonials-horizontal-custom.liquid     |    8 +-
+ sections/text-marquee-custom.liquid                |  276 +++---
+ sections/timeline.liquid                           |   24 +-
+ snippets/css-variables.liquid                      |   25 +-
+ snippets/deferred-stylesheet.liquid                |   11 +
+ snippets/form-field.liquid                         |    2 +-
+ snippets/heading-size-token.liquid                 |   18 +-
+ snippets/product-card-quick-add.liquid             |   12 +-
+ snippets/product-card-swatches.liquid              |    3 +
+ snippets/product-card.liquid                       |    3 +
+ snippets/search-filters.liquid                     |  101 ++
+ snippets/search-query-fields.liquid                |    8 +
+ snippets/section-content-slot.liquid               |   13 +
+ snippets/slideshow-image.liquid                    |  121 +++
+ snippets/variant-picker.liquid                     |   12 +
+ templates/404.json                                 |   49 +-
+ templates/page.about-us.json                       |  888 +++++++++++++++++
+ templates/page.contact.json                        | 1045 ++++++++------------
+ templates/page.faqs.json                           |  633 ++++++++++++
+ templates/password.json                            |   55 ++
+ templates/search.json                              |   72 +-
+ tests/cart-drawer-add.test.cjs                     |   53 +-
+ tests/faq-item.test.cjs                            |   35 +
+ tests/heading-size-sync.test.cjs                   |   42 +
+ tests/overlay-product-modules.test.cjs             |   26 +
+ tests/product-media-pointer.test.cjs               |   44 +
+ tests/recently-viewed.test.cjs                     |   56 ++
+ tests/search-history.test.cjs                      |   35 +
+ tests/search-page.test.cjs                         |   84 ++
+ tests/search-suggestions.test.cjs                  |   52 +
+ tests/section-content.test.cjs                     |  111 +++
+ tests/slideshow-image.test.cjs                     |   66 ++
+ 157 files changed, 6010 insertions(+), 2450 deletions(-)
+```
+
+- Included team commits:
+  - `aa4772a95883f6052725c490fd225f1c4e5bea6a` — fix(cart): show inventory limit instead of cart error
+  - `1f5a1ae006ab98f30a38ce9fe518de5a0c260026` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `f7fbab725f55e080f409ae1943f468d37169779b` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `b03bcdbd566f751e5d8e3bc06bd93f1991744872` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `59f9720c08e07847becb01a3f4fe105c9f1c88cd` — Fix Quick add gallery click tolerance for lightbox
+  - `3be8e195ca8fa733bd9314e40ac3a507fc1767e0` — Merge remote-tracking branch 'origin/codex/spinel-chieutt-dev' into codex/spinel-chieutt-dev
+  - `c4d61938e687e5b328a285d0a86b759a9cf05504` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `8c7ca53d99f9c3c66bcde3c499b0f878665292eb` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `a6ffc340de5ce2380f70266fc6b3db02b17f636f` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `27058b6f3e0e744981e78c20ca343d53b86a62ef` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `d6a7abb93a94b73aabf0632c0012974f28960769` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `fd2872fcb28171fed941c0adbf3dff655ee8dab1` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `7683a0da376d360cc84519c21d89e5db37eeca8d` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `582c3a771a95b2375d11b364c90714ed62b2627c` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `6658e8b28bc6af0c15e05bb11a5c70d814c402d8` — Load versioned gallery modules in product overlays
+  - `edf1aac44b2e50ba7e87d8bcc0462bdd5e804cc5` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `108e7a0996140fd4c731fd62b68959095372edfc` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `08f00d5205e3458ea20897d2755ff03a50aed9b8` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `8e193a8fe253b30574211c9f49d9c6afb0dedd39` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `4b2a2f93795fd3c3653d57c0662911913872d6a7` — Adjust About Us section colors and label
+  - `89641d31c798c17b91647637dfc5313d39e14c20` — feat(faq): add editable FAQ page and fix answers
+  - `efaf9ce6d5d4f0952199630cc60620e571ca0a50` — feat(faq): add editable FAQ page and fix answers
+  - `5540b5261b84acacc7762361cd9e2ad23ea84444` — Merge FAQ commit 89641d31 from Spinel development
+  - `49bea02441b3fcd30f17ad7baaa95fd11b9f6f6c` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `8110ab1f589784372cdd80f9c0e6a1db2c0e4bc3` — Merge About Us instance adjustments into theme-base dev
+  - `98d2372bd3ee032a987d289bb633fe6f2ccfd675` — Merge remote-tracking branch 'origin/dev' into dev
+  - `6ef1d86b9b5eca0cf35683fb0b57e67e4163e795` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `e9b5997e166bda9faa4fb499a5750f185065c587` — fix: show faq on storefront empty
+  - `99155ced2b945a99c0a101d96538750be98178c9` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `c3e4554f94faffd87d5a1a7a59dcda2b4287f0c9` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `d4ccd385c67c8df606e5de92ac126de6ab600784` — Merge branch 'dev' of https://github.com/Chieu2507/shopify-theme-base into dev
+  - `cc385545e9011a6d107db110033cb7a3588ae484` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `6e81ba5fc69346ad3527bf1f458f537745abc87f` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `ef390c11cb8f64a7d6136cb2a8a5c7ae7a80f6dc` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `cdd98f3e97a5ea5a94fbed9c07ccb05793da3bc2` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `d4b18692fe7bcc95f80d46a76a9e1989ded4de9b` — Restore Quick add lightbox fixes after base merge
+  - `d0401951c96fbc3aad2af720b88e17d3e2def94d` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `6872e8f59ff77eac45f71f6d01127b10b438d84b` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `07f738d27e9ba46cc6a895d58f984769c79c6083` — Refine Contact layout and shared marquee and form behavior
+  - `3cb47282538257d5d60171db1fd9fa00c75e0ba9` — Merge remote-tracking branch 'origin/codex/spinel-chieutt-dev' into HEAD
+  - `93b6634621c774d29d3af829762ed31017e45bdd` — Merge remote-tracking branch 'theme-base/dev' into HEAD
+  - `4021fd9d2da1371b8bcd494e34c4f737465e1e81` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `dbb5fed99e3e0cf7746f13408be47b5c297cc6d9` — Preserve base layout until recently viewed section is committed
+  - `0850b3af2dac78a6134627d11ac5e09a78d4ad39` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `f10553562eca035eeda88bb78cad6f02bede68ac` — Implement editable password landing page and password drawer
+  - `36a189dab182ca19f7aad05073eb85a625ddf01a` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `bd8c96ca462c32980f706b4b9abf6586daa9c479` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `30b2d0d7c39696c0b57b2819fb84a2f33fd1d619` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `e5679314f8952c4cdb33e56db1d1b8d513cec6c9` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `8976ea49743fa1bd459fa7a2dee0b5941abc2ea1` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `9d7eba1f568f55be8e53fa203f1b8bf5aad7411b` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `58d475cd7614d2605e0dc70e5fc864860967fd4f` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `2bb600a2dee44054d01217ac381bd8ae1405d04d` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `511982e2f2349c6205ee56e1d2cb8d88e32e9881` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `885cc104329b0a191242e54ab46d9057c75d36bd` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `89279ece52f583f06ee19ea8a0e72497bd965065` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `41a0a96cd187d9078ed895abaca29a3ab8d1fd05` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `3849e8742ec888e29c53b038b961662aea8fa9e9` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `258610068b7227347782d1ecffaf8db74673eb7e` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `b876201e95747cc75c57b5e20e8beb445df84f20` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `d779f62cbe2ea5576c5e31c4dce74f01005242f4` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `4e6f1200722bf974467ccf7332fcccf21598ee1c` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `0cdc484d9474170155863af6c4b5b24e2ee95e58` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `5f8a457b629717fecae35845df7d8951718f460d` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `da160bdfb4dd5c1948eacdc156dd214128784fa2` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `e0510c6723ec0b2240938c1093f36597926a1351` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `626c8b84b8a89175d3fd3d0d8810a85b7d6b457e` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `092d6fe92cb480020be7c8c80479eee603edd666` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `ad0a0e7bef57dfb828c39692bc9c97c5267553c3` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `4b264cc746235e3b01cd948b253f205dae2cd0e1` — fix: carousel style
+  - `4e0f02a30534e0c6c04e33e449d6af4d07a68c46` — Merge branch 'dev' of https://github.com/Chieu2507/shopify-theme-base into dev
+  - `549566e4797b6b7037f3badf42f0d28fd8b372b7` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `eee875d859a419e7bd803f4857f21a069c7dfd34` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `aa31ff91711dcde781937aeba9153a55b97a8ac4` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `126e85369aedbdb2ba6bcca371c5aba46583c4a3` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `b805daed8f77bc7d1a0e4d972302df9007af05e7` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `40f90b47ba37af443e6d520380f27514876e9601` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `fb1a03da015c630b5c528b8f57045bcec595a4ce` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `97f3b854c5f20a9fe4e6e350a64e46e40662675b` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `83b531289f0b391f3f8f8659bbd7a2eba2f2ecb8` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `a5663d36ac26b06ce25e4aa0f31379f1e1abe9cf` — Build editable 404 page with responsive appearance controls
+  - `b48ae2de23ea1974597c24c67e08e9199b0bf9d3` — Add editable Default Page title and appearance settings
+  - `a349d4ce3a8e9966256d1425cc00036c152f6971` — Keep article pagination outer container square
+  - `0a8add9ba0d13a284eebbbf82421d2a2de018b1a` — Add persistent Recently Viewed product cards and lifecycle tests
+  - `f3b9306db5865b0c5bbf51c8cfb69f60eae92815` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `ad5a7fbc9f3689da427f79473598d8b6a1a6bbae` — Merge latest development theme history before scoped feature push
+  - `ae83560ded6069f17f7fa03b1ea52fc82d0bb210` — Merge latest Theme Editor Search settings without staging local Search work
+  - `9692361be82586cd3a8dee58b0aea88416015b77` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `6c1fac90b19c3c937e460671ad5f6b7f1c759e1e` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `ae2cc621d67e6d37aae9ce7ca28974558de3ee99` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `07861e8a97ca0d59f2403a1cc2959ad6e4fa04a9` — Sync nine requested page implementations to theme-base dev
+  - `e14a3461c8acf1316a1eae21457bd7374edf9dae` — Preserve latest development history without expanding page sync scope
+  - `34b3536fa23d9601d814df342e7e44e41f8cdefc` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `20a91d5631a9ec2dbd1b0a268125a83ffe191ab3` — Finalize Search heading, empty states, defaults and validation
+  - `0e956b59cc73adec3fc7ba0a632aef1de325467d` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `9c4fbae5fd4ce787aaa8a1084fac7099086ccc7f` — Merge remote-tracking branch 'origin/codex/spinel-chieutt-dev' into codex/spinel-chieutt-dev
+  - `a56c338ee2e88b5f9ce470553cdb8af47141e523` — Merge completed Search and shared dependencies into base dev
+  - `04b299c510a35926a7a6af75dcd36e06f24ea2fa` — Fix canonical padding labels and cart overlay test fixtures
+  - `b888541dc68cb968dcb66c63ffb4673b280bd66b` — Merge baseline validation fixes into base dev
+  - `d31881ede5b85827e422d77b7e0d95d1b3ef4423` — perf: prioritize responsive slideshow LCP and defer overlay styles
+  - `655508074edc245b00e07a8915661141c6fa9aee` — Merge theme-base/dev performance updates into Spinel development
+  - `c74a839c82d21d954f25335bb690285c5077595f` — fix: preserve overlay readiness and responsive slideshow artwork
+  - `58edd486229ec95bb9d0f6f3d87533e588dc9898` — perf: defer quick overlay styles and right-size mobile hero images
+  - `87b329a5a4a726cdc40bbb966afd30b31566e17d` — fix: stabilize home overlay header before first paint
+  - `b4635c98132abd5e75afc2bc1eb73747c0ba1c97` — Merge origin/dev with local performance and CLS fixes
+  - `2f42a2d21b79731e57a65cd882510007cac96c3c` — fix: stabilize announcement layout before section styles load
+  - `8fc32b1ae8bcca5e01310d83aa6c5cdd50f6bab2` — fix: normalize collection heading size options and saved values
+  - `3019ba2522a26941ac77ea9498f15993d375eb2f` — fix: align typography labels and thumbnail custom size
+  - `d5886b9670c9231bc4291570ccaa80d78e236a95` — feat: add global button colors and weight, map heading Display to tag typography
+  - `853a6a9ced1fd3609c15ca678a02150ea37a5482` — Merge branch 'dev' of https://github.com/Chieu2507/shopify-theme-base into dev
+  - `2dad3d3d2634434c88affa3df1d4997cde4f374a` — fix(sections): collapse empty content and reuse list layout
+  - `bedb4bd5745825c137bba98d56736d591fcb0042` — fix(sections): isolate scrolling text layout styles
+
 
 ## 2026-10-06 — Update from upstream/dev
 
