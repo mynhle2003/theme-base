@@ -206,6 +206,8 @@
         root_attributes: shop_the_look_products_carousel_attributes,
         aria_label: shop_the_look_products_aria_label,
         pagination: shop_the_look_products_pagination,
+        show_next_slide_preview: block.settings.show_next_slide_preview_on_desktop,
+        show_next_slide_preview_on_mobile: block.settings.show_next_slide_preview_on_mobile,
         autoplay: shop_the_look_products_autoplay_enabled,
         pause_on_hover: shop_the_look_products_autoplay_pause_on_hover,
         autoplay_delay: shop_the_look_products_autoplay_delay
@@ -313,6 +315,14 @@
   }
 
   @media (min-width: 768px) {
+    .shop-the-look-section--media-left .shop-the-look-products__items[data-swiper-next-slide-preview='true'] {
+      clip-path: inset(0 calc(-1 * var(--swiper-carousel-preview-size)) 0 0);
+    }
+
+    .shop-the-look-section--media-right .shop-the-look-products__items[data-swiper-next-slide-preview='true'] {
+      clip-path: inset(0 0 0 calc(-1 * var(--swiper-carousel-preview-size)));
+    }
+
     .shop-the-look-products--single-column .shop-the-look-products__items {
       max-width: 38.4rem;
     }
@@ -633,6 +643,20 @@
       "default": "1"
     },
     {
+      "type": "checkbox",
+      "id": "show_next_slide_preview_on_desktop",
+      "label": "t:labels.show_next_slide_preview_on_desktop",
+      "default": false,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_next_slide_preview_on_mobile",
+      "label": "t:labels.show_next_slide_preview_on_mobile",
+      "default": false,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
       "type": "header",
       "content": "t:general.products_gap"
     },
@@ -818,6 +842,8 @@
         "navigation_icon": "chevron",
         "columns_desktop": "1",
         "columns_mobile": "1",
+        "show_next_slide_preview_on_desktop": false,
+        "show_next_slide_preview_on_mobile": true,
         "product_gap_desktop": 4,
         "product_gap_mobile": 4,
         "show_navigation_on_desktop": true,
