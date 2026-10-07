@@ -187,6 +187,21 @@
   .gallery-custom__content--direction-horizontal > * {
     max-width: 100%;
   }
+
+  /* Gallery owns card geometry; shared Marquee owns motion and editor lifecycle. */
+  .gallery-custom .marquee--block .marquee__track > .marquee-item-layout {
+    flex: 0 0 448px;
+    width: 448px;
+    max-width: 448px;
+  }
+
+  @media (max-width: 767.98px) {
+    .gallery-custom .marquee--block .marquee__track > .marquee-item-layout {
+      flex-basis: 256px;
+      width: 256px;
+      max-width: 256px;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -199,9 +214,6 @@
     ]
   },
   "blocks": [
-    {
-      "type": "carousel"
-    },
     {
       "type": "header"
     },
@@ -512,43 +524,38 @@
       },
       "blocks": [
         {
-          "type": "carousel",
+          "type": "marquee",
           "settings": {
-            "columns_desktop": "4",
-            "columns_mobile": "1",
+            "animation_direction": "backward",
+            "animation_speed": 1,
             "gap_desktop": 0,
             "gap_mobile": 0,
-            "width": "fill",
-            "show_navigation_on_desktop": false,
-            "show_pagination_on_desktop": false,
-            "show_pagination_on_mobile": false,
-            "autoplay": false,
             "padding_top": 0,
             "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
             "customize_mobile_padding": true,
-            "show_next_slide_preview_on_desktop": true,
-            "show_next_slide_preview_on_mobile": true,
-            "pagination_padding_desktop": 48,
-            "pagination_padding_mobile": 36,
-            "loop": false,
             "padding_top_mobile": 0,
             "padding_bottom_mobile": 0,
-            "transition_style": "slide"
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
           },
           "blocks": [
             {
-              "type": "slide",
+              "type": "marquee-item",
               "settings": {
                 "direction": "vertical",
+                "position": "top",
+                "alignment": "left",
                 "gap_desktop": 0,
                 "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false,
+                "border_type": "none",
+                "corner_radius": "square",
                 "padding_top": 0,
                 "padding_bottom": 0,
                 "padding_left": 0,
-                "padding_right": 0
+                "padding_right": 0,
+                "customize_mobile_padding": false
               },
               "blocks": [
                 {
@@ -569,18 +576,20 @@
               ]
             },
             {
-              "type": "slide",
+              "type": "marquee-item",
               "settings": {
                 "direction": "vertical",
+                "position": "top",
+                "alignment": "left",
                 "gap_desktop": 0,
                 "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false,
+                "border_type": "none",
+                "corner_radius": "square",
                 "padding_top": 0,
                 "padding_bottom": 0,
                 "padding_left": 0,
-                "padding_right": 0
+                "padding_right": 0,
+                "customize_mobile_padding": false
               },
               "blocks": [
                 {
@@ -601,18 +610,20 @@
               ]
             },
             {
-              "type": "slide",
+              "type": "marquee-item",
               "settings": {
                 "direction": "vertical",
+                "position": "top",
+                "alignment": "left",
                 "gap_desktop": 0,
                 "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false,
+                "border_type": "none",
+                "corner_radius": "square",
                 "padding_top": 0,
                 "padding_bottom": 0,
                 "padding_left": 0,
-                "padding_right": 0
+                "padding_right": 0,
+                "customize_mobile_padding": false
               },
               "blocks": [
                 {
@@ -633,18 +644,20 @@
               ]
             },
             {
-              "type": "slide",
+              "type": "marquee-item",
               "settings": {
                 "direction": "vertical",
+                "position": "top",
+                "alignment": "left",
                 "gap_desktop": 0,
                 "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false,
+                "border_type": "none",
+                "corner_radius": "square",
                 "padding_top": 0,
                 "padding_bottom": 0,
                 "padding_left": 0,
-                "padding_right": 0
+                "padding_right": 0,
+                "customize_mobile_padding": false
               },
               "blocks": [
                 {
@@ -665,18 +678,20 @@
               ]
             },
             {
-              "type": "slide",
+              "type": "marquee-item",
               "settings": {
                 "direction": "vertical",
+                "position": "top",
+                "alignment": "left",
                 "gap_desktop": 0,
                 "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false,
+                "border_type": "none",
+                "corner_radius": "square",
                 "padding_top": 0,
                 "padding_bottom": 0,
                 "padding_left": 0,
-                "padding_right": 0
+                "padding_right": 0,
+                "customize_mobile_padding": false
               },
               "blocks": [
                 {
@@ -697,18 +712,20 @@
               ]
             },
             {
-              "type": "slide",
+              "type": "marquee-item",
               "settings": {
                 "direction": "vertical",
+                "position": "top",
+                "alignment": "left",
                 "gap_desktop": 0,
                 "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false,
+                "border_type": "none",
+                "corner_radius": "square",
                 "padding_top": 0,
                 "padding_bottom": 0,
                 "padding_left": 0,
-                "padding_right": 0
+                "padding_right": 0,
+                "customize_mobile_padding": false
               },
               "blocks": [
                 {
