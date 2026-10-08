@@ -897,19 +897,6 @@
         "alignment_mobile": "left"
       },
       "blocks": {
-        "top-divider": {
-          "type": "divider",
-          "settings": {
-            "style": "solid",
-            "thickness": "thin",
-            "color": "custom",
-            "custom_color": "#e6e6e6",
-            "width": "full",
-            "alignment": "left",
-            "desktop_spacing": 0,
-            "mobile_spacing": 0
-          }
-        },
         "marquee": {
           "type": "marquee",
           "settings": {
@@ -919,13 +906,14 @@
             "gap_mobile": 32,
             "padding_top": 28,
             "padding_bottom": 28,
-            "padding_left": 0,
-            "padding_right": 0,
             "customize_mobile_padding": true,
             "padding_top_mobile": 24,
             "padding_bottom_mobile": 24,
-            "padding_left_mobile": 0,
-            "padding_right_mobile": 0
+            "show_top_divider": true,
+            "enable_parallax": true,
+            "alignment": "center",
+            "width": "fill",
+            "color_type": "inherit"
           },
           "blocks": {
             "text-1-text": {
@@ -1039,7 +1027,6 @@
         }
       },
       "block_order": [
-        "top-divider",
         "marquee"
       ]
     },

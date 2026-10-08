@@ -41,3 +41,9 @@ The source Icon picker has a broader catalog (including checks/badges, heart, co
 ## Requested override — 2026-10-08
 
 Removed the entire Size group (desktop/mobile width) and Height option from local `_marquee-group` at the user's request. Its width now fits its contents and its height is automatic; obsolete width variables and Fill-height class are removed. No saved Group instances use these settings in current templates/presets. The source observations above remain the audit evidence; this is an intentional local override.
+
+## Parent Marquee follow-up — 2026-10-08
+
+Observed parent options are rebuilt: top/bottom divider, blurred edges, parallax, Top/Center/Bottom alignment, Speed **0.1–2x** (step 0.1), Left/Right, gaps **0–200px desktop** (step 2)/**0–100px mobile**, Fill/Custom desktop width **10–100%**, inherited/color scheme and vertical padding/mobile overrides. Side-padding and direct background controls are removed. Text marquee no longer offers a standalone Divider: the preset/homepage use Show top divider on Marquee. A Marquee - Heading preset contains one Heading only.
+
+Actual local CSS/JS passed 18 browser assertions at desktop, repeated at 375px, for short/long/tiny single headings, including seam continuity, viewport coverage, constant pixel velocity and editor-safe clones; another seven assertions cover idempotent load, Inspector pause, scroll while paused, eased scroll (peak frame displacement 2.55px in the fixture), unload and reload. Speed maps to 60px/s at 1x in this implementation; source pixel velocity/easing remain unverified because the preview DOM was inaccessible and direct storefront preview required a password. This follow-up does not change the source theme.
