@@ -89,9 +89,10 @@ test('legacy scheme data receives a non-empty fallback for every normalized toke
 test('Footer consumes global social URLs and no longer references follow-us menu', () => {
   const footerGroup = JSON.parse(read('sections/footer-group.json').replace(/^\/\*[\s\S]*?\*\/\s*/, ''));
   const footer = footerGroup.sections.footer;
-  const socialBlock = footer.blocks['footer-row-primary'].blocks['footer-row-primary-column-3'].blocks['footer-social-menu'];
+  const collectBlocks = (owner) => Object.values(owner.blocks || {}).flatMap(block => [block, ...collectBlocks(block)]);
+  const socialBlocks = collectBlocks(footer).filter(block => block.type === 'social-links');
 
-  assert.equal(socialBlock.type, 'social-links');
+  assert.ok(socialBlocks.length > 0, 'Footer composition must include global social links');
   assert.doesNotMatch(read('sections/footer-group.json'), /follow-us/);
   assert.doesNotMatch(read('sections/footer.liquid'), /follow-us/);
   assert.match(read('blocks/social-links.liquid'), /\{%\s*render 'social-links'(?:\s*,[\s\S]*?)?\s*%\}/);

@@ -89,6 +89,15 @@
   @media (max-width: 767.98px) {
     .faq-section--horizontal.faq-section--vertical-mobile .faq-section__content > .faq-accordion--width-custom { flex-basis: auto; }
   }
+  .faq-section .group--horizontal:has(> .images-block) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  @media (max-width: 767.98px) {
+    .faq-section .group--horizontal.group--mobile-vertical:has(> .images-block) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -106,6 +115,9 @@
     },
     {
       "type": "faq_accordion"
+    },
+    {
+      "type": "images"
     }
   ],
   "settings": [
@@ -395,55 +407,39 @@
           },
           "blocks": [
             {
-              "type": "group",
+              "type": "images",
               "settings": {
-                "direction": "horizontal",
-                "alignment": "left",
-                "alignment_mobile": "left",
-                "width": "custom",
-                "width_mobile": "fill",
-                "height": "fit",
-                "gap_desktop": 0,
-                "gap_mobile": 0,
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none",
-                "position_horizontal": "center",
-                "horizontal_alignment": "center",
-                "customize_mobile_alignment": false,
-                "width_custom": 50
+                "height_desktop": 540,
+                "height_mobile": 300,
+                "customize_mobile": true
               },
               "blocks": [
                 {
                   "type": "image",
+                  "id": "first",
+                  "static": true,
                   "settings": {
-                    "image_ratio_desktop": "custom",
-                    "image_ratio_custom_width_desktop": 1,
-                    "image_ratio_custom_height_desktop": 1,
-                    "image_ratio_mobile": "custom",
-                    "image_ratio_custom_width_mobile": 1,
-                    "image_ratio_custom_height_mobile": 1,
-                    "width_desktop": "custom",
-                    "width_mobile": "custom",
+                    "image_ratio_desktop": "square",
+                    "image_ratio_mobile": "square",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
                     "corner_radius": "square",
-                    "width_custom_desktop": 45,
-                    "width_custom_mobile": 45
+                    "image": "shopify://shop_images/elara-figma-faq-pool.avif",
+                    "mobile_image": "shopify://shop_images/elara-figma-faq-pool.avif"
                   }
                 },
                 {
                   "type": "image",
+                  "id": "second",
+                  "static": true,
                   "settings": {
-                    "image_ratio_desktop": "custom",
-                    "image_ratio_custom_width_desktop": 2,
-                    "image_ratio_custom_height_desktop": 3,
-                    "image_ratio_mobile": "custom",
-                    "image_ratio_custom_width_mobile": 2,
-                    "image_ratio_custom_height_mobile": 3,
-                    "width_desktop": "custom",
-                    "width_mobile": "custom",
+                    "image_ratio_desktop": "ratio_2_3",
+                    "image_ratio_mobile": "ratio_2_3",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
                     "corner_radius": "square",
-                    "width_custom_desktop": 46,
-                    "width_custom_mobile": 46
+                    "image": "shopify://shop_images/elara-figma-faq-earrings.avif",
+                    "mobile_image": "shopify://shop_images/elara-figma-faq-earrings.avif"
                   }
                 }
               ]
@@ -477,7 +473,7 @@
                     {
                       "type": "faq_answer_text",
                       "settings": {
-                        "text": "<p>Once your order ships, you’ll receive a confirmation email with a tracking link so you can follow your package in real time. Please contact our support team immediately with your order number and a photo of the item.</p>"
+                        "text": "<p>Once your order ships, you\u2019ll receive a confirmation email with a tracking link so you can follow your package in real time. Please contact our support team immediately with your order number and a photo of the item.</p>"
                       }
                     }
                   ]
@@ -517,7 +513,7 @@
                 {
                   "type": "faq_item",
                   "settings": {
-                    "question": "Can I change or cancel my order after it’s been placed?",
+                    "question": "Can I change or cancel my order after it\u2019s been placed?",
                     "show_question_icon": false,
                     "initially_open": false
                   },

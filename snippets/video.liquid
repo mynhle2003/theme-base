@@ -163,11 +163,21 @@
     pointer-events: auto;
   }
 
-  .video__play svg {
-    display: block;
+  .video__play-icon,
+  .video__pause-icon {
     width: 45%;
     height: 45%;
+  }
+
+  .video__play-icon {
+    display: block;
     margin-left: 4%;
+  }
+
+  .video__play svg {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 
   .video__play:focus-visible {

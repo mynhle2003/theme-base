@@ -1,17 +1,9 @@
 {% liquid
-  assign testimonial_direction = block.settings.direction | default: 'horizontal'
-  unless testimonial_direction == 'horizontal' or testimonial_direction == 'vertical'
-    assign testimonial_direction = 'horizontal'
-  endunless
+  assign testimonial_direction = 'horizontal'
 
   assign testimonial_position = block.settings.position | default: 'center'
   unless testimonial_position == 'top' or testimonial_position == 'center' or testimonial_position == 'bottom'
     assign testimonial_position = 'center'
-  endunless
-
-  assign testimonial_alignment = block.settings.alignment | default: 'center'
-  unless testimonial_alignment == 'left' or testimonial_alignment == 'center' or testimonial_alignment == 'right' or testimonial_alignment == 'space-between'
-    assign testimonial_alignment = 'center'
   endunless
 
   assign testimonial_alignment_mobile = block.settings.alignment_mobile | default: 'center'
@@ -64,7 +56,7 @@
 {% endcapture %}
 
 <article
-  class="testimonial-item testimonial-item--{{ testimonial_direction }} testimonial-item--position-{{ testimonial_position }} testimonial-item--align-{{ testimonial_alignment }} testimonial-item--radius-{{ testimonial_radius }} testimonial-item--shadow-{{ testimonial_shadow }}{% if block.settings.vertical_on_mobile and testimonial_direction == 'horizontal' %} testimonial-item--vertical-mobile{% endif %}{% if block.settings.overlay_color != blank %} testimonial-item--has-overlay{% endif %} swiper-slide"
+  class="testimonial-item testimonial-item--{{ testimonial_direction }} testimonial-item--position-{{ testimonial_position }} testimonial-item--radius-{{ testimonial_radius }} testimonial-item--shadow-{{ testimonial_shadow }}{% if block.settings.vertical_on_mobile and testimonial_direction == 'horizontal' %} testimonial-item--vertical-mobile{% endif %}{% if block.settings.overlay_color != blank %} testimonial-item--has-overlay{% endif %} swiper-slide"
   style="{{ testimonial_style | strip }}"
   {{ block.shopify_attributes }}
 >
@@ -170,22 +162,6 @@
     },
     {
       "type": "select",
-      "id": "direction",
-      "label": "Direction",
-      "options": [
-        {
-          "value": "horizontal",
-          "label": "Horizontal"
-        },
-        {
-          "value": "vertical",
-          "label": "Vertical"
-        }
-      ],
-      "default": "horizontal"
-    },
-    {
-      "type": "select",
       "id": "position",
       "label": "Position",
       "options": [
@@ -205,35 +181,10 @@
       "default": "center"
     },
     {
-      "type": "select",
-      "id": "alignment",
-      "label": "Alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        },
-        {
-          "value": "space-between",
-          "label": "Space between"
-        }
-      ],
-      "default": "center"
-    },
-    {
       "type": "checkbox",
       "id": "vertical_on_mobile",
       "label": "Vertical on mobile",
-      "default": true,
-      "visible_if": "{{ block.settings.direction == 'horizontal' }}"
+      "default": true
     },
     {
       "type": "select",
@@ -254,7 +205,7 @@
         }
       ],
       "default": "center",
-      "visible_if": "{{ block.settings.direction == 'vertical' or block.settings.vertical_on_mobile }}"
+      "visible_if": "{{ block.settings.vertical_on_mobile }}"
     },
     {
       "type": "header",
@@ -282,7 +233,7 @@
     },
     {
       "type": "header",
-      "content": "Appearance"
+      "content": "Border"
     },
     {
       "type": "range",
@@ -373,9 +324,7 @@
       "name": "Testimonial item",
       "category": "Trust & social proof",
       "settings": {
-        "direction": "horizontal",
         "position": "center",
-        "alignment": "center",
         "vertical_on_mobile": true,
         "alignment_mobile": "center",
         "gap_desktop": 80,

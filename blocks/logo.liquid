@@ -87,7 +87,11 @@
   style="{{ logo_style_attribute }}"
   {{ block.shopify_attributes }}
 >
-  {% if logo_image != blank %}
+  {% if logo_style == 'default' %}
+    <store-name-wordmark class="logo-block__wordmark">
+      <span class="logo-block__wordmark-line"><span class="logo-block__wordmark-name">{{ shop.name | escape }}</span><span class="logo-block__wordmark-dots" aria-hidden="true">...</span></span>
+    </store-name-wordmark>
+  {% elsif logo_image != blank %}
     {{
       logo_image
       | image_url: width: 2400
@@ -125,6 +129,46 @@
     object-fit: contain;
   }
 
+  .logo-block__wordmark {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    container-type: inline-size;
+  }
+
+  .logo-block__wordmark-line {
+    display: flex;
+    align-items: baseline;
+    width: 100%;
+    white-space: nowrap;
+    font-family: var(--font-heading-family);
+    font-weight: 400;
+    font-size: 15cqw;
+    line-height: 1.4;
+    padding-block: 0.05em;
+    letter-spacing: 1.1cqw;
+    text-transform: uppercase;
+    color: #e5dfd7;
+  }
+
+  .logo-block__wordmark-name {
+    display: block;
+    flex: 1 1 0%;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .logo-block__wordmark-dots {
+    display: none;
+    flex-shrink: 0;
+    letter-spacing: 0;
+  }
+
+  .logo-block__wordmark[data-truncated] .logo-block__wordmark-dots {
+    display: block;
+  }
+
   .logo-block .site-logo__fallback {
     display: block;
     min-width: 0;
@@ -142,6 +186,39 @@
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  if (!customElements.get('store-name-wordmark')) {
+    customElements.define('store-name-wordmark', class extends HTMLElement {
+      connectedCallback() {
+        this.nameElement = this.querySelector('.logo-block__wordmark-name');
+        this.lineElement = this.querySelector('.logo-block__wordmark-line');
+        if (!this.nameElement || !this.lineElement) return;
+        this.observer = new ResizeObserver(() => this.updateTruncation());
+        this.observer.observe(this.lineElement);
+        this.observer.observe(this.nameElement);
+        this.updateTruncation();
+        document.fonts.ready.then(() => {
+          if (this.isConnected) this.updateTruncation();
+        });
+      }
+
+      updateTruncation() {
+        const textRange = document.createRange();
+        textRange.selectNodeContents(this.nameElement);
+        const textWidth = textRange.getBoundingClientRect().width;
+        const availableWidth = this.lineElement.getBoundingClientRect().width;
+        if (availableWidth > 0) {
+          this.toggleAttribute('data-truncated', textWidth > availableWidth);
+        }
+      }
+
+      disconnectedCallback() {
+        this.observer?.disconnect();
+      }
+    });
+  }
+{% endjavascript %}
 
 {% schema %}
 {

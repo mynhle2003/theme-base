@@ -48,14 +48,66 @@
   assign aspect_ratio_desktop_setting = block.settings.aspect_ratio_desktop | default: block.settings.aspect_ratio | default: 'original'
   assign aspect_ratio_desktop = 'auto'
   case aspect_ratio_desktop_setting
+    when 'ratio_1_1'
+      assign aspect_ratio_desktop = '1 / 1'
+    when 'ratio_4_5'
+      assign aspect_ratio_desktop = '4 / 5'
+    when 'ratio_5_4'
+      assign aspect_ratio_desktop = '5 / 4'
+    when 'ratio_6_7'
+      assign aspect_ratio_desktop = '6 / 7'
+    when 'ratio_7_6'
+      assign aspect_ratio_desktop = '7 / 6'
+    when 'ratio_5_7'
+      assign aspect_ratio_desktop = '5 / 7'
+    when 'ratio_7_5'
+      assign aspect_ratio_desktop = '7 / 5'
+    when 'ratio_2_3'
+      assign aspect_ratio_desktop = '2 / 3'
+    when 'ratio_3_2'
+      assign aspect_ratio_desktop = '3 / 2'
+    when 'ratio_4_3'
+      assign aspect_ratio_desktop = '4 / 3'
+    when 'ratio_3_4'
+      assign aspect_ratio_desktop = '3 / 4'
+    when 'ratio_2_1'
+      assign aspect_ratio_desktop = '2 / 1'
+    when 'ratio_1_2'
+      assign aspect_ratio_desktop = '1 / 2'
+    when 'ratio_16_9'
+      assign aspect_ratio_desktop = '16 / 9'
+    when 'ratio_9_16'
+      assign aspect_ratio_desktop = '9 / 16'
+    when 'ratio_12_5'
+      assign aspect_ratio_desktop = '12 / 5'
+    when 'ratio_5_12'
+      assign aspect_ratio_desktop = '5 / 12'
+    when 'ratio_48_17'
+      assign aspect_ratio_desktop = '48 / 17'
+    when 'ratio_17_48'
+      assign aspect_ratio_desktop = '17 / 48'
+    when 'ratio_5_8'
+      assign aspect_ratio_desktop = '5 / 8'
+    when 'ratio_8_5'
+      assign aspect_ratio_desktop = '8 / 5'
     when 'square'
       assign aspect_ratio_desktop = '1'
+    when 'portrait_tall'
+      assign aspect_ratio_desktop = '5 / 7'
     when 'portrait'
       assign aspect_ratio_desktop = '0.8'
     when 'landscape'
       assign aspect_ratio_desktop = '1.3333'
     when 'wide'
       assign aspect_ratio_desktop = '1.7778'
+    when 'portrait_6_7'
+      assign aspect_ratio_desktop = '6 / 7'
+    when 'portrait_2_3'
+      assign aspect_ratio_desktop = '2 / 3'
+    when 'landscape_5_4'
+      assign aspect_ratio_desktop = '5 / 4'
+    when 'wide_2_1'
+      assign aspect_ratio_desktop = '2 / 1'
     when 'custom'
       assign aspect_ratio_desktop = block.settings.custom_aspect_ratio_desktop | default: block.settings.custom_aspect_ratio | default: 1 | plus: 0
       if aspect_ratio_desktop < 0.3 or aspect_ratio_desktop > 3
@@ -82,14 +134,66 @@
   assign aspect_ratio_mobile_setting = block.settings.aspect_ratio_mobile | default: aspect_ratio_desktop_setting | default: 'original'
   assign aspect_ratio_mobile = 'auto'
   case aspect_ratio_mobile_setting
+    when 'ratio_1_1'
+      assign aspect_ratio_mobile = '1 / 1'
+    when 'ratio_4_5'
+      assign aspect_ratio_mobile = '4 / 5'
+    when 'ratio_5_4'
+      assign aspect_ratio_mobile = '5 / 4'
+    when 'ratio_6_7'
+      assign aspect_ratio_mobile = '6 / 7'
+    when 'ratio_7_6'
+      assign aspect_ratio_mobile = '7 / 6'
+    when 'ratio_5_7'
+      assign aspect_ratio_mobile = '5 / 7'
+    when 'ratio_7_5'
+      assign aspect_ratio_mobile = '7 / 5'
+    when 'ratio_2_3'
+      assign aspect_ratio_mobile = '2 / 3'
+    when 'ratio_3_2'
+      assign aspect_ratio_mobile = '3 / 2'
+    when 'ratio_4_3'
+      assign aspect_ratio_mobile = '4 / 3'
+    when 'ratio_3_4'
+      assign aspect_ratio_mobile = '3 / 4'
+    when 'ratio_2_1'
+      assign aspect_ratio_mobile = '2 / 1'
+    when 'ratio_1_2'
+      assign aspect_ratio_mobile = '1 / 2'
+    when 'ratio_16_9'
+      assign aspect_ratio_mobile = '16 / 9'
+    when 'ratio_9_16'
+      assign aspect_ratio_mobile = '9 / 16'
+    when 'ratio_12_5'
+      assign aspect_ratio_mobile = '12 / 5'
+    when 'ratio_5_12'
+      assign aspect_ratio_mobile = '5 / 12'
+    when 'ratio_48_17'
+      assign aspect_ratio_mobile = '48 / 17'
+    when 'ratio_17_48'
+      assign aspect_ratio_mobile = '17 / 48'
+    when 'ratio_5_8'
+      assign aspect_ratio_mobile = '5 / 8'
+    when 'ratio_8_5'
+      assign aspect_ratio_mobile = '8 / 5'
     when 'square'
       assign aspect_ratio_mobile = '1'
+    when 'portrait_tall'
+      assign aspect_ratio_mobile = '5 / 7'
     when 'portrait'
       assign aspect_ratio_mobile = '0.8'
     when 'landscape'
       assign aspect_ratio_mobile = '1.3333'
     when 'wide'
       assign aspect_ratio_mobile = '1.7778'
+    when 'portrait_6_7'
+      assign aspect_ratio_mobile = '6 / 7'
+    when 'portrait_2_3'
+      assign aspect_ratio_mobile = '2 / 3'
+    when 'landscape_5_4'
+      assign aspect_ratio_mobile = '5 / 4'
+    when 'wide_2_1'
+      assign aspect_ratio_mobile = '2 / 1'
     when 'custom'
       assign aspect_ratio_mobile = block.settings.custom_aspect_ratio_mobile | default: block.settings.custom_aspect_ratio_desktop | default: block.settings.custom_aspect_ratio | default: 1 | plus: 0
       if aspect_ratio_mobile < 0.3 or aspect_ratio_mobile > 3
@@ -240,15 +344,19 @@
   style="{{ video_style }}"
   {{ block.shopify_attributes }}
 >
-  {% render 'video',
-    video: uploaded_video,
-    external_video: external_video,
-    poster: block.settings.cover_image,
-    autoplay: block.settings.autoplay,
-    loop: block.settings.loop_video,
-    play_label: video_play_label,
-    class: 'video-block__media'
-  %}
+  {% if block.settings.use_cover_as_fallback and has_video_media == false and block.settings.cover_image != blank %}
+    {% render 'image', image: block.settings.cover_image, class: 'video-block__media video-block__poster', width: 1600, widths: '320, 480, 640, 800, 1200, 1600', sizes: '(min-width: 768px) 25vw, 100vw' %}
+  {% else %}
+    {% render 'video',
+      video: uploaded_video,
+      external_video: external_video,
+      poster: block.settings.cover_image,
+      autoplay: block.settings.autoplay,
+      loop: block.settings.loop_video,
+      play_label: video_play_label,
+      class: 'video-block__media'
+    %}
+  {% endif %}
 </div>
 
 {% stylesheet %}
@@ -260,6 +368,12 @@
     padding-bottom: var(--video-block-padding-bottom, 0px);
     padding-left: var(--video-block-padding-left, 0px);
   }
+
+  .video-block__poster,
+  .video-block__poster > picture,
+  .video-block__poster img { display: block; width: 100%; height: 100%; }
+  .video-block__poster { overflow: hidden; }
+  .video-block__poster img { object-fit: cover; }
 
   .video-block__media {
     aspect-ratio: var(--video-block-ratio, auto);
@@ -356,6 +470,13 @@
     },
     {
       "type": "checkbox",
+      "id": "use_cover_as_fallback",
+      "label": "Use cover image when video is empty",
+      "default": false,
+      "info": "Displays the cover without a play button until a video is selected."
+    },
+    {
+      "type": "checkbox",
       "id": "show_video_first_mobile",
       "label": "t:labels.show_video_first_mobile",
       "default": false
@@ -435,6 +556,94 @@
         {
           "value": "custom",
           "label": "t:options.aspect_ratio.custom"
+        },
+        {
+          "value": "portrait_tall",
+          "label": "Portrait (5:7)"
+        },
+        {
+          "value": "ratio_1_1",
+          "label": "1:1"
+        },
+        {
+          "value": "ratio_4_5",
+          "label": "4:5"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "5:4"
+        },
+        {
+          "value": "ratio_6_7",
+          "label": "6:7"
+        },
+        {
+          "value": "ratio_7_6",
+          "label": "7:6"
+        },
+        {
+          "value": "ratio_5_7",
+          "label": "5:7"
+        },
+        {
+          "value": "ratio_7_5",
+          "label": "7:5"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "2:3"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "3:2"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "4:3"
+        },
+        {
+          "value": "ratio_3_4",
+          "label": "3:4"
+        },
+        {
+          "value": "ratio_2_1",
+          "label": "2:1"
+        },
+        {
+          "value": "ratio_1_2",
+          "label": "1:2"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "16:9"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "9:16"
+        },
+        {
+          "value": "ratio_12_5",
+          "label": "12:5"
+        },
+        {
+          "value": "ratio_5_12",
+          "label": "5:12"
+        },
+        {
+          "value": "ratio_48_17",
+          "label": "48:17"
+        },
+        {
+          "value": "ratio_17_48",
+          "label": "17:48"
+        },
+        {
+          "value": "ratio_5_8",
+          "label": "5:8"
+        },
+        {
+          "value": "ratio_8_5",
+          "label": "8:5"
         }
       ],
       "default": "original"
@@ -525,6 +734,94 @@
         {
           "value": "custom",
           "label": "t:options.aspect_ratio.custom"
+        },
+        {
+          "value": "portrait_tall",
+          "label": "Portrait (5:7)"
+        },
+        {
+          "value": "ratio_1_1",
+          "label": "1:1"
+        },
+        {
+          "value": "ratio_4_5",
+          "label": "4:5"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "5:4"
+        },
+        {
+          "value": "ratio_6_7",
+          "label": "6:7"
+        },
+        {
+          "value": "ratio_7_6",
+          "label": "7:6"
+        },
+        {
+          "value": "ratio_5_7",
+          "label": "5:7"
+        },
+        {
+          "value": "ratio_7_5",
+          "label": "7:5"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "2:3"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "3:2"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "4:3"
+        },
+        {
+          "value": "ratio_3_4",
+          "label": "3:4"
+        },
+        {
+          "value": "ratio_2_1",
+          "label": "2:1"
+        },
+        {
+          "value": "ratio_1_2",
+          "label": "1:2"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "16:9"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "9:16"
+        },
+        {
+          "value": "ratio_12_5",
+          "label": "12:5"
+        },
+        {
+          "value": "ratio_5_12",
+          "label": "5:12"
+        },
+        {
+          "value": "ratio_48_17",
+          "label": "48:17"
+        },
+        {
+          "value": "ratio_17_48",
+          "label": "17:48"
+        },
+        {
+          "value": "ratio_5_8",
+          "label": "5:8"
+        },
+        {
+          "value": "ratio_8_5",
+          "label": "8:5"
         }
       ],
       "default": "original"

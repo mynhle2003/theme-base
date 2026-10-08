@@ -10,9 +10,10 @@
   assign icon_size = block.settings.icon_size | default: 24 | plus: 0
   assign gallery_product = block.settings.product
   assign gallery_media_ratio = '1'
-  if block.settings.image_ratio == 'portrait_tall'
-    assign gallery_media_ratio = '5 / 7'
-  endif
+  capture gallery_media_ratio
+    render 'image-ratio-value', setting: block.settings.image_ratio, fallback_ratio: '1'
+  endcapture
+  assign gallery_media_ratio = gallery_media_ratio | strip
 %}
 
 <article class="gallery-item swiper-slide{% if gallery_product != blank %} gallery-item--product{% endif %}" style="--gallery-item-social-background: {{ social_background | escape }}; --gallery-item-icon-size: {{ icon_size }}px; --gallery-item-media-ratio: {{ gallery_media_ratio }};" {{ block.shopify_attributes }}>
@@ -104,6 +105,90 @@
         {
           "value": "portrait_tall",
           "label": "5:7 portrait"
+        },
+        {
+          "value": "ratio_1_1",
+          "label": "1:1"
+        },
+        {
+          "value": "ratio_4_5",
+          "label": "4:5"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "5:4"
+        },
+        {
+          "value": "ratio_6_7",
+          "label": "6:7"
+        },
+        {
+          "value": "ratio_7_6",
+          "label": "7:6"
+        },
+        {
+          "value": "ratio_5_7",
+          "label": "5:7"
+        },
+        {
+          "value": "ratio_7_5",
+          "label": "7:5"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "2:3"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "3:2"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "4:3"
+        },
+        {
+          "value": "ratio_3_4",
+          "label": "3:4"
+        },
+        {
+          "value": "ratio_2_1",
+          "label": "2:1"
+        },
+        {
+          "value": "ratio_1_2",
+          "label": "1:2"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "16:9"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "9:16"
+        },
+        {
+          "value": "ratio_12_5",
+          "label": "12:5"
+        },
+        {
+          "value": "ratio_5_12",
+          "label": "5:12"
+        },
+        {
+          "value": "ratio_48_17",
+          "label": "48:17"
+        },
+        {
+          "value": "ratio_17_48",
+          "label": "17:48"
+        },
+        {
+          "value": "ratio_5_8",
+          "label": "5:8"
+        },
+        {
+          "value": "ratio_8_5",
+          "label": "8:5"
         }
       ],
       "default": "square"

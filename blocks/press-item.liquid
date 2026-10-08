@@ -6,7 +6,7 @@
 
 {% liquid
   assign press_item_ratio = block.settings.image_ratio | default: 'original'
-  unless press_item_ratio == 'original' or press_item_ratio == 'square' or press_item_ratio == 'portrait' or press_item_ratio == 'landscape' or press_item_ratio == 'wide'
+  unless press_item_ratio == 'original' or press_item_ratio == 'square' or press_item_ratio == 'portrait' or press_item_ratio == 'landscape' or press_item_ratio == 'wide' or press_item_ratio == 'wide_2_1' or press_item_ratio == 'ratio_1_1' or press_item_ratio == 'ratio_4_5' or press_item_ratio == 'ratio_5_4' or press_item_ratio == 'ratio_6_7' or press_item_ratio == 'ratio_7_6' or press_item_ratio == 'ratio_5_7' or press_item_ratio == 'ratio_7_5' or press_item_ratio == 'ratio_2_3' or press_item_ratio == 'ratio_3_2' or press_item_ratio == 'ratio_4_3' or press_item_ratio == 'ratio_3_4' or press_item_ratio == 'ratio_2_1' or press_item_ratio == 'ratio_1_2' or press_item_ratio == 'ratio_16_9' or press_item_ratio == 'ratio_9_16' or press_item_ratio == 'ratio_12_5' or press_item_ratio == 'ratio_5_12' or press_item_ratio == 'ratio_48_17' or press_item_ratio == 'ratio_17_48' or press_item_ratio == 'ratio_5_8' or press_item_ratio == 'ratio_8_5'
     assign press_item_ratio = 'original'
   endunless
 
@@ -15,12 +15,56 @@
     assign press_item_ratio_value = block.settings.image.aspect_ratio | default: 'auto'
   endif
   case press_item_ratio
+    when 'ratio_1_1'
+      assign press_item_ratio_value = '1 / 1'
+    when 'ratio_4_5'
+      assign press_item_ratio_value = '4 / 5'
+    when 'ratio_5_4'
+      assign press_item_ratio_value = '5 / 4'
+    when 'ratio_6_7'
+      assign press_item_ratio_value = '6 / 7'
+    when 'ratio_7_6'
+      assign press_item_ratio_value = '7 / 6'
+    when 'ratio_5_7'
+      assign press_item_ratio_value = '5 / 7'
+    when 'ratio_7_5'
+      assign press_item_ratio_value = '7 / 5'
+    when 'ratio_2_3'
+      assign press_item_ratio_value = '2 / 3'
+    when 'ratio_3_2'
+      assign press_item_ratio_value = '3 / 2'
+    when 'ratio_4_3'
+      assign press_item_ratio_value = '4 / 3'
+    when 'ratio_3_4'
+      assign press_item_ratio_value = '3 / 4'
+    when 'ratio_2_1'
+      assign press_item_ratio_value = '2 / 1'
+    when 'ratio_1_2'
+      assign press_item_ratio_value = '1 / 2'
+    when 'ratio_16_9'
+      assign press_item_ratio_value = '16 / 9'
+    when 'ratio_9_16'
+      assign press_item_ratio_value = '9 / 16'
+    when 'ratio_12_5'
+      assign press_item_ratio_value = '12 / 5'
+    when 'ratio_5_12'
+      assign press_item_ratio_value = '5 / 12'
+    when 'ratio_48_17'
+      assign press_item_ratio_value = '48 / 17'
+    when 'ratio_17_48'
+      assign press_item_ratio_value = '17 / 48'
+    when 'ratio_5_8'
+      assign press_item_ratio_value = '5 / 8'
+    when 'ratio_8_5'
+      assign press_item_ratio_value = '8 / 5'
     when 'square'
       assign press_item_ratio_value = '1'
     when 'portrait'
       assign press_item_ratio_value = '0.8'
     when 'landscape'
       assign press_item_ratio_value = '1.3333'
+    when 'wide_2_1'
+      assign press_item_ratio_value = '2 / 1'
     when 'wide'
       assign press_item_ratio_value = '1.7778'
   endcase
@@ -169,6 +213,90 @@
         {
           "value": "wide",
           "label": "t:options.image_ratio.wide"
+        },
+        {
+          "value": "ratio_1_1",
+          "label": "1:1"
+        },
+        {
+          "value": "ratio_4_5",
+          "label": "4:5"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "5:4"
+        },
+        {
+          "value": "ratio_6_7",
+          "label": "6:7"
+        },
+        {
+          "value": "ratio_7_6",
+          "label": "7:6"
+        },
+        {
+          "value": "ratio_5_7",
+          "label": "5:7"
+        },
+        {
+          "value": "ratio_7_5",
+          "label": "7:5"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "2:3"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "3:2"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "4:3"
+        },
+        {
+          "value": "ratio_3_4",
+          "label": "3:4"
+        },
+        {
+          "value": "ratio_2_1",
+          "label": "2:1"
+        },
+        {
+          "value": "ratio_1_2",
+          "label": "1:2"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "16:9"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "9:16"
+        },
+        {
+          "value": "ratio_12_5",
+          "label": "12:5"
+        },
+        {
+          "value": "ratio_5_12",
+          "label": "5:12"
+        },
+        {
+          "value": "ratio_48_17",
+          "label": "48:17"
+        },
+        {
+          "value": "ratio_17_48",
+          "label": "17:48"
+        },
+        {
+          "value": "ratio_5_8",
+          "label": "5:8"
+        },
+        {
+          "value": "ratio_8_5",
+          "label": "8:5"
         }
       ],
       "default": "original"

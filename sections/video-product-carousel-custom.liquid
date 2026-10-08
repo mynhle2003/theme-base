@@ -1,0 +1,536 @@
+{% liquid
+  assign video_product_carousel_alignment = 'start'
+  case section.settings.alignment
+    when 'center'
+      assign video_product_carousel_alignment = 'center'
+    when 'right'
+      assign video_product_carousel_alignment = 'end'
+  endcase
+
+  assign video_product_carousel_alignment_mobile = video_product_carousel_alignment
+  if section.settings.customize_mobile_alignment
+    assign video_product_carousel_alignment_mobile = 'start'
+    case section.settings.alignment_mobile
+      when 'center'
+        assign video_product_carousel_alignment_mobile = 'center'
+      when 'right'
+        assign video_product_carousel_alignment_mobile = 'end'
+    endcase
+  endif
+
+  assign padding_top = section.settings.padding_top | default: 0 | plus: 0
+  assign padding_bottom = section.settings.padding_bottom | default: 0 | plus: 0
+  assign padding_top_mobile = section.settings.padding_top_mobile | default: 0 | plus: 0
+  assign padding_bottom_mobile = section.settings.padding_bottom_mobile | default: 0 | plus: 0
+  assign video_product_carousel_gap_desktop = section.settings.content_gap | default: 16 | plus: 0
+  assign video_product_carousel_gap_mobile = video_product_carousel_gap_desktop
+  if section.settings.customize_mobile_gap
+    assign video_product_carousel_gap_mobile = section.settings.content_gap_mobile | default: video_product_carousel_gap_desktop | plus: 0
+  endif
+
+  assign video_product_carousel_container_width = 'page-width'
+  case section.settings.section_width
+    when 'full_width'
+      assign video_product_carousel_container_width = 'full-width'
+  endcase
+
+  assign video_product_carousel_scheme = section.settings.color_scheme | default: 'scheme-1'
+  if section.settings.color_scheme.id != blank
+    assign video_product_carousel_scheme = section.settings.color_scheme.id
+  endif
+  assign video_product_carousel_scheme = video_product_carousel_scheme | default: 'scheme-1' | handleize
+%}
+
+{% capture video_product_carousel_style %}
+  {% if video_product_carousel_alignment != 'start' %}--flex-align: {{ video_product_carousel_alignment }};{% endif %}
+  {% if section.settings.customize_mobile_alignment and video_product_carousel_alignment_mobile != video_product_carousel_alignment %}--flex-align-mobile: {{ video_product_carousel_alignment_mobile }};{% endif %}
+  {% if section.settings.background_color != blank %}--video-product-carousel-background-color: {{ section.settings.background_color | escape }};{% endif %}
+  {% if padding_top != 0 %}--video-product-carousel-padding-top: {{ padding_top }}px;{% endif %}
+  {% if padding_bottom != 0 %}--video-product-carousel-padding-bottom: {{ padding_bottom }}px;{% endif %}
+  {% if section.settings.customize_mobile_padding %}
+    {% if padding_top_mobile != padding_top %}--video-product-carousel-padding-top-mobile: {{ padding_top_mobile }}px;{% endif %}
+    {% if padding_bottom_mobile != padding_bottom %}--video-product-carousel-padding-bottom-mobile: {{ padding_bottom_mobile }}px;{% endif %}
+  {% endif %}
+{% endcapture %}
+{% assign video_product_carousel_style = video_product_carousel_style | strip %}
+
+{% capture video_product_carousel_content_style %}
+  {% render 'layout-flow-style',
+    direction: 'column',
+    wrap: 'nowrap',
+    align_items: 'var(--flex-align, flex-start)',
+    align_items_mobile: 'var(--flex-align-mobile, var(--flex-align, flex-start))',
+    gap: video_product_carousel_gap_desktop,
+    gap_mobile: video_product_carousel_gap_mobile
+  %}
+{% endcapture %}
+{% assign video_product_carousel_content_style = video_product_carousel_content_style | strip %}
+
+<div
+    class="section-spacing video-product-carousel video-product-carousel__spacing color-scheme section-color-scope {{ video_product_carousel_scheme }}"
+    {% if video_product_carousel_style != blank %}style="{{ video_product_carousel_style }}"{% endif %}
+  >
+    {% if section.settings.background_image != blank %}
+      <div class="video-product-carousel__background" aria-hidden="true">
+        {{ section.settings.background_image | image_url: width: 2000 | image_tag }}
+      </div>
+    {% endif %}
+
+    <div class="container {{ video_product_carousel_container_width }} video-product-carousel__container">
+      <div class="video-product-carousel__content layout-flow layout-flow--responsive align-content" style="{{ video_product_carousel_content_style }}">
+        {% content_for 'blocks' %}
+      </div>
+    </div>
+</div>
+
+{% stylesheet %}
+  .video-product-carousel {
+    width: 100%;
+    min-width: 0;
+  }
+  .video-product-carousel__spacing {
+    position: relative;
+    overflow: clip;
+    width: 100%;
+    padding-top: var(--video-product-carousel-padding-top, 0px);
+    padding-bottom: var(--video-product-carousel-padding-bottom, 0px);
+    background-color: var(--video-product-carousel-background-color, var(--background-color));
+  }
+  .video-product-carousel__container {
+    position: relative;
+    z-index: 1;
+  }
+  .video-product-carousel__background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .video-product-carousel__background img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .video-product-carousel__content {
+    min-width: 0;
+  }
+
+  @media (max-width: 767.98px) {
+    .video-product-carousel__spacing {
+      padding-top: var(--video-product-carousel-padding-top-mobile, var(--video-product-carousel-padding-top, 0px));
+      padding-bottom: var(--video-product-carousel-padding-bottom-mobile, var(--video-product-carousel-padding-bottom, 0px));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Video product carousel",
+  "class": "section-video-product-carousel",
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
+  "blocks": [
+    {
+      "type": "header"
+    },
+    {
+      "type": "carousel"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:general.layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:labels.section_width",
+      "options": [
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        }
+      ],
+      "default": "page_width"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_alignment",
+      "label": "t:labels.customize_mobile_alignment",
+      "default": false
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment_mobile",
+      "label": "t:labels.mobile_alignment",
+      "default": "left",
+      "visible_if": "{{ section.settings.customize_mobile_alignment }}"
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "t:labels.content_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_gap",
+      "label": "t:labels.customize_mobile_layout",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "content_gap_mobile",
+      "label": "t:labels.mobile_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32,
+      "visible_if": "{{ section.settings.customize_mobile_gap }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "background_color",
+      "label": "t:labels.background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:labels.background_image"
+    },
+    {
+      "type": "header",
+      "content": "t:general.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:labels.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:labels.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.customize_mobile_padding",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "video-product-carousel-custom",
+      "category": "Custom",
+      "settings": {
+        "section_width": "page_width",
+        "alignment": "center",
+        "content_gap": 48,
+        "color_scheme": "scheme-1",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56,
+        "customize_mobile_gap": true,
+        "content_gap_mobile": 32
+      },
+      "blocks": [
+        {
+          "type": "header",
+          "settings": {
+            "inherit_alignment": true,
+            "width": "fill",
+            "gap_desktop": 8,
+            "gap_mobile": 8
+          },
+          "blocks": [
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Your inspiration, our creation</p>",
+                "heading_size": "xl",
+                "html_tag": "h2"
+              }
+            }
+          ]
+        },
+        {
+          "type": "carousel",
+          "settings": {
+            "columns_desktop": "4",
+            "columns_mobile": "1",
+            "gap_desktop": 20,
+            "gap_mobile": 16,
+            "width": "fill",
+            "show_next_slide_preview_on_mobile": true,
+            "show_navigation_on_desktop": false,
+            "show_pagination_on_desktop": false,
+            "show_pagination_on_mobile": true,
+            "pagination_type": "progress_bar",
+            "pagination_padding_mobile": 36,
+            "autoplay": false,
+            "transition_style": "slide"
+          },
+          "blocks": [
+            {
+              "type": "slide",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "left",
+                "gap_desktop": 8,
+                "gap_mobile": 8,
+                "height": "fit"
+              },
+              "blocks": [
+                {
+                  "type": "video",
+                  "settings": {
+                    "cover_image": "shopify://shop_images/elara-inspiration-1.avif",
+                    "video": "shopify://files/videos/elara-inspiration-1.mp4",
+                    "use_cover_as_fallback": true,
+                    "video_source": "uploaded",
+                    "autoplay": false,
+                    "loop_video": true,
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "aspect_ratio_desktop": "portrait_tall",
+                    "aspect_ratio_mobile": "portrait_tall",
+                    "play_button_size_desktop": 50,
+                    "play_button_size_mobile": 44
+                  }
+                },
+                {
+                  "type": "product-card-compact",
+                  "settings": {
+                    "product": "elara-curly-molten-mini-initial",
+                    "enable_boxed_layout": true,
+                    "image_ratio": "square",
+                    "thumbnail_width": 70,
+                    "thumbnail_width_mobile": 50,
+                    "show_price": true,
+                    "content_gap": 4,
+                    "content_gap_mobile": 4,
+                    "gap": 12,
+                    "gap_mobile": 12,
+                    "button_style": "primary",
+                    "padding": 16,
+                    "padding_mobile": 12
+                  }
+                }
+              ]
+            },
+            {
+              "type": "slide",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "left",
+                "gap_desktop": 8,
+                "gap_mobile": 8,
+                "height": "fit"
+              },
+              "blocks": [
+                {
+                  "type": "video",
+                  "settings": {
+                    "cover_image": "shopify://shop_images/elara-inspiration-2.avif",
+                    "video": "shopify://files/videos/elara-inspiration-2.mp4",
+                    "use_cover_as_fallback": true,
+                    "video_source": "uploaded",
+                    "autoplay": false,
+                    "loop_video": true,
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "aspect_ratio_desktop": "portrait_tall",
+                    "aspect_ratio_mobile": "portrait_tall",
+                    "play_button_size_desktop": 50,
+                    "play_button_size_mobile": 44
+                  }
+                },
+                {
+                  "type": "product-card-compact",
+                  "settings": {
+                    "product": "elara-savi-triple-ridge-hoop-earrings",
+                    "enable_boxed_layout": true,
+                    "image_ratio": "square",
+                    "thumbnail_width": 70,
+                    "thumbnail_width_mobile": 50,
+                    "show_price": true,
+                    "content_gap": 4,
+                    "content_gap_mobile": 4,
+                    "gap": 12,
+                    "gap_mobile": 12,
+                    "button_style": "primary",
+                    "padding": 16,
+                    "padding_mobile": 12
+                  }
+                }
+              ]
+            },
+            {
+              "type": "slide",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "left",
+                "gap_desktop": 8,
+                "gap_mobile": 8,
+                "height": "fit"
+              },
+              "blocks": [
+                {
+                  "type": "video",
+                  "settings": {
+                    "cover_image": "shopify://shop_images/elara-inspiration-3.avif",
+                    "video": "shopify://files/videos/elara-inspiration-3.mp4",
+                    "use_cover_as_fallback": true,
+                    "video_source": "uploaded",
+                    "autoplay": false,
+                    "loop_video": true,
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "aspect_ratio_desktop": "portrait_tall",
+                    "aspect_ratio_mobile": "portrait_tall",
+                    "play_button_size_desktop": 50,
+                    "play_button_size_mobile": 44
+                  }
+                },
+                {
+                  "type": "product-card-compact",
+                  "settings": {
+                    "product": "elara-tennis-eternity-stacking-ring",
+                    "enable_boxed_layout": true,
+                    "image_ratio": "square",
+                    "thumbnail_width": 70,
+                    "thumbnail_width_mobile": 50,
+                    "show_price": true,
+                    "content_gap": 4,
+                    "content_gap_mobile": 4,
+                    "gap": 12,
+                    "gap_mobile": 12,
+                    "button_style": "primary",
+                    "padding": 16,
+                    "padding_mobile": 12
+                  }
+                }
+              ]
+            },
+            {
+              "type": "slide",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "left",
+                "gap_desktop": 8,
+                "gap_mobile": 8,
+                "height": "fit"
+              },
+              "blocks": [
+                {
+                  "type": "video",
+                  "settings": {
+                    "cover_image": "shopify://shop_images/elara-inspiration-4.avif",
+                    "video": "shopify://files/videos/elara-inspiration-4.mp4",
+                    "use_cover_as_fallback": true,
+                    "video_source": "uploaded",
+                    "autoplay": false,
+                    "loop_video": true,
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "aspect_ratio_desktop": "portrait_tall",
+                    "aspect_ratio_mobile": "portrait_tall",
+                    "play_button_size_desktop": 50,
+                    "play_button_size_mobile": 44
+                  }
+                },
+                {
+                  "type": "product-card-compact",
+                  "settings": {
+                    "product": "elara-magma-gemstone-charm",
+                    "enable_boxed_layout": true,
+                    "image_ratio": "square",
+                    "thumbnail_width": 70,
+                    "thumbnail_width_mobile": 50,
+                    "show_price": true,
+                    "content_gap": 4,
+                    "content_gap_mobile": 4,
+                    "gap": 12,
+                    "gap_mobile": 12,
+                    "button_style": "primary",
+                    "padding": 16,
+                    "padding_mobile": 12
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "max_blocks": 2
+}
+{% endschema %}

@@ -9,7 +9,7 @@
   @param {string} [horizontal_alignment] - flex-start, center, flex-end or space-between
   @param {boolean} [mobile_vertical] - whether the horizontal flow stacks on mobile
   @param {string} [mobile_alignment] - start, center or end
-  @param {string} [mobile_justify] - flex-start, center, flex-end or space-between
+  @param {string} [mobile_justify] - Legacy main-axis value; mobile stacking resets to flex-start
   @param {number} [gap] - Gap in pixels for the default breakpoint
   @param {number} [gap_mobile] - Gap in pixels below the mobile breakpoint
   @param {string} [gap_value] - CSS gap value for the default breakpoint
@@ -27,6 +27,9 @@
   assign layout_flow_horizontal_alignment = horizontal_alignment | default: 'flex-start'
   assign layout_flow_mobile_alignment = mobile_alignment
   assign layout_flow_mobile_justify = mobile_justify | default: 'flex-start'
+  if mobile_vertical
+    assign layout_flow_mobile_justify = 'flex-start'
+  endif
 %}
 
 --layout-flow-wrap: {{ layout_flow_wrap }};
@@ -47,11 +50,12 @@
       {% when 'end' %}--layout-flow-align-items-mobile: flex-end;
       {% else %}--layout-flow-align-items-mobile: flex-start;
     {% endcase %}
-    {% unless layout_flow_mobile_justify == 'flex-start' %}--layout-flow-justify-content-mobile: {{ layout_flow_mobile_justify }};{% endunless %}
+    --layout-flow-justify-content-mobile: {{ layout_flow_mobile_justify }};
   {% else %}
     --layout-flow-wrap-mobile: nowrap;
   {% endif %}
 {% else %}
+  --layout-flow-justify-content-mobile: flex-start;
   {% case layout_flow_alignment %}
     {% when 'center' %}--layout-flow-align-items: center;
     {% when 'end' %}--layout-flow-align-items: flex-end;

@@ -4,6 +4,48 @@
   assign stacked_bands_desktop_ratio_setting = section.settings.image_ratio | default: 'auto'
   assign stacked_bands_desktop_ratio = stacked_bands_auto_ratio
   case stacked_bands_desktop_ratio_setting
+    when 'ratio_1_1'
+      assign stacked_bands_desktop_ratio = 1 | times: 1.0 | divided_by: 1
+    when 'ratio_4_5'
+      assign stacked_bands_desktop_ratio = 4 | times: 1.0 | divided_by: 5
+    when 'ratio_5_4'
+      assign stacked_bands_desktop_ratio = 5 | times: 1.0 | divided_by: 4
+    when 'ratio_6_7'
+      assign stacked_bands_desktop_ratio = 6 | times: 1.0 | divided_by: 7
+    when 'ratio_7_6'
+      assign stacked_bands_desktop_ratio = 7 | times: 1.0 | divided_by: 6
+    when 'ratio_5_7'
+      assign stacked_bands_desktop_ratio = 5 | times: 1.0 | divided_by: 7
+    when 'ratio_7_5'
+      assign stacked_bands_desktop_ratio = 7 | times: 1.0 | divided_by: 5
+    when 'ratio_2_3'
+      assign stacked_bands_desktop_ratio = 2 | times: 1.0 | divided_by: 3
+    when 'ratio_3_2'
+      assign stacked_bands_desktop_ratio = 3 | times: 1.0 | divided_by: 2
+    when 'ratio_4_3'
+      assign stacked_bands_desktop_ratio = 4 | times: 1.0 | divided_by: 3
+    when 'ratio_3_4'
+      assign stacked_bands_desktop_ratio = 3 | times: 1.0 | divided_by: 4
+    when 'ratio_2_1'
+      assign stacked_bands_desktop_ratio = 2 | times: 1.0 | divided_by: 1
+    when 'ratio_1_2'
+      assign stacked_bands_desktop_ratio = 1 | times: 1.0 | divided_by: 2
+    when 'ratio_16_9'
+      assign stacked_bands_desktop_ratio = 16 | times: 1.0 | divided_by: 9
+    when 'ratio_9_16'
+      assign stacked_bands_desktop_ratio = 9 | times: 1.0 | divided_by: 16
+    when 'ratio_12_5'
+      assign stacked_bands_desktop_ratio = 12 | times: 1.0 | divided_by: 5
+    when 'ratio_5_12'
+      assign stacked_bands_desktop_ratio = 5 | times: 1.0 | divided_by: 12
+    when 'ratio_48_17'
+      assign stacked_bands_desktop_ratio = 48 | times: 1.0 | divided_by: 17
+    when 'ratio_17_48'
+      assign stacked_bands_desktop_ratio = 17 | times: 1.0 | divided_by: 48
+    when 'ratio_5_8'
+      assign stacked_bands_desktop_ratio = 5 | times: 1.0 | divided_by: 8
+    when 'ratio_8_5'
+      assign stacked_bands_desktop_ratio = 8 | times: 1.0 | divided_by: 5
     when 'square'
       assign stacked_bands_desktop_ratio = 1
     when 'portrait'
@@ -21,6 +63,48 @@
   if section.settings.customize_mobile_image
     assign stacked_bands_mobile_ratio_setting = section.settings.image_ratio_mobile | default: stacked_bands_desktop_ratio_setting
     case stacked_bands_mobile_ratio_setting
+      when 'ratio_1_1'
+        assign stacked_bands_mobile_ratio = 1 | times: 1.0 | divided_by: 1
+      when 'ratio_4_5'
+        assign stacked_bands_mobile_ratio = 4 | times: 1.0 | divided_by: 5
+      when 'ratio_5_4'
+        assign stacked_bands_mobile_ratio = 5 | times: 1.0 | divided_by: 4
+      when 'ratio_6_7'
+        assign stacked_bands_mobile_ratio = 6 | times: 1.0 | divided_by: 7
+      when 'ratio_7_6'
+        assign stacked_bands_mobile_ratio = 7 | times: 1.0 | divided_by: 6
+      when 'ratio_5_7'
+        assign stacked_bands_mobile_ratio = 5 | times: 1.0 | divided_by: 7
+      when 'ratio_7_5'
+        assign stacked_bands_mobile_ratio = 7 | times: 1.0 | divided_by: 5
+      when 'ratio_2_3'
+        assign stacked_bands_mobile_ratio = 2 | times: 1.0 | divided_by: 3
+      when 'ratio_3_2'
+        assign stacked_bands_mobile_ratio = 3 | times: 1.0 | divided_by: 2
+      when 'ratio_4_3'
+        assign stacked_bands_mobile_ratio = 4 | times: 1.0 | divided_by: 3
+      when 'ratio_3_4'
+        assign stacked_bands_mobile_ratio = 3 | times: 1.0 | divided_by: 4
+      when 'ratio_2_1'
+        assign stacked_bands_mobile_ratio = 2 | times: 1.0 | divided_by: 1
+      when 'ratio_1_2'
+        assign stacked_bands_mobile_ratio = 1 | times: 1.0 | divided_by: 2
+      when 'ratio_16_9'
+        assign stacked_bands_mobile_ratio = 16 | times: 1.0 | divided_by: 9
+      when 'ratio_9_16'
+        assign stacked_bands_mobile_ratio = 9 | times: 1.0 | divided_by: 16
+      when 'ratio_12_5'
+        assign stacked_bands_mobile_ratio = 12 | times: 1.0 | divided_by: 5
+      when 'ratio_5_12'
+        assign stacked_bands_mobile_ratio = 5 | times: 1.0 | divided_by: 12
+      when 'ratio_48_17'
+        assign stacked_bands_mobile_ratio = 48 | times: 1.0 | divided_by: 17
+      when 'ratio_17_48'
+        assign stacked_bands_mobile_ratio = 17 | times: 1.0 | divided_by: 48
+      when 'ratio_5_8'
+        assign stacked_bands_mobile_ratio = 5 | times: 1.0 | divided_by: 8
+      when 'ratio_8_5'
+        assign stacked_bands_mobile_ratio = 8 | times: 1.0 | divided_by: 5
       when 'square'
         assign stacked_bands_mobile_ratio = 1
       when 'portrait'
@@ -276,6 +360,90 @@
         {
           "value": "custom",
           "label": "Custom"
+        },
+        {
+          "value": "ratio_1_1",
+          "label": "1:1"
+        },
+        {
+          "value": "ratio_4_5",
+          "label": "4:5"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "5:4"
+        },
+        {
+          "value": "ratio_6_7",
+          "label": "6:7"
+        },
+        {
+          "value": "ratio_7_6",
+          "label": "7:6"
+        },
+        {
+          "value": "ratio_5_7",
+          "label": "5:7"
+        },
+        {
+          "value": "ratio_7_5",
+          "label": "7:5"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "2:3"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "3:2"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "4:3"
+        },
+        {
+          "value": "ratio_3_4",
+          "label": "3:4"
+        },
+        {
+          "value": "ratio_2_1",
+          "label": "2:1"
+        },
+        {
+          "value": "ratio_1_2",
+          "label": "1:2"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "16:9"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "9:16"
+        },
+        {
+          "value": "ratio_12_5",
+          "label": "12:5"
+        },
+        {
+          "value": "ratio_5_12",
+          "label": "5:12"
+        },
+        {
+          "value": "ratio_48_17",
+          "label": "48:17"
+        },
+        {
+          "value": "ratio_17_48",
+          "label": "17:48"
+        },
+        {
+          "value": "ratio_5_8",
+          "label": "5:8"
+        },
+        {
+          "value": "ratio_8_5",
+          "label": "8:5"
         }
       ],
       "default": "auto"
@@ -339,6 +507,90 @@
         {
           "value": "custom",
           "label": "Custom"
+        },
+        {
+          "value": "ratio_1_1",
+          "label": "1:1"
+        },
+        {
+          "value": "ratio_4_5",
+          "label": "4:5"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "5:4"
+        },
+        {
+          "value": "ratio_6_7",
+          "label": "6:7"
+        },
+        {
+          "value": "ratio_7_6",
+          "label": "7:6"
+        },
+        {
+          "value": "ratio_5_7",
+          "label": "5:7"
+        },
+        {
+          "value": "ratio_7_5",
+          "label": "7:5"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "2:3"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "3:2"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "4:3"
+        },
+        {
+          "value": "ratio_3_4",
+          "label": "3:4"
+        },
+        {
+          "value": "ratio_2_1",
+          "label": "2:1"
+        },
+        {
+          "value": "ratio_1_2",
+          "label": "1:2"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "16:9"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "9:16"
+        },
+        {
+          "value": "ratio_12_5",
+          "label": "12:5"
+        },
+        {
+          "value": "ratio_5_12",
+          "label": "5:12"
+        },
+        {
+          "value": "ratio_48_17",
+          "label": "48:17"
+        },
+        {
+          "value": "ratio_17_48",
+          "label": "17:48"
+        },
+        {
+          "value": "ratio_5_8",
+          "label": "5:8"
+        },
+        {
+          "value": "ratio_8_5",
+          "label": "8:5"
         }
       ],
       "default": "auto",

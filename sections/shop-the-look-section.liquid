@@ -34,7 +34,7 @@
   if shop_the_look_image_block != blank
     assign shop_the_look_image_ratio_desktop = shop_the_look_image_block.settings.image_ratio_desktop | default: 'auto'
   endif
-  unless shop_the_look_image_ratio_desktop == 'auto' or shop_the_look_image_ratio_desktop == 'square' or shop_the_look_image_ratio_desktop == 'portrait' or shop_the_look_image_ratio_desktop == 'landscape' or shop_the_look_image_ratio_desktop == 'wide' or shop_the_look_image_ratio_desktop == 'custom'
+  unless shop_the_look_image_ratio_desktop == 'auto' or shop_the_look_image_ratio_desktop == 'square' or shop_the_look_image_ratio_desktop == 'portrait' or shop_the_look_image_ratio_desktop == 'landscape' or shop_the_look_image_ratio_desktop == 'wide' or shop_the_look_image_ratio_desktop == 'portrait_6_7' or shop_the_look_image_ratio_desktop == 'portrait_tall' or shop_the_look_image_ratio_desktop == 'portrait_2_3' or shop_the_look_image_ratio_desktop == 'landscape_5_4' or shop_the_look_image_ratio_desktop == 'wide_2_1' or shop_the_look_image_ratio_desktop == 'custom' or shop_the_look_image_ratio_desktop == 'ratio_1_1' or shop_the_look_image_ratio_desktop == 'ratio_4_5' or shop_the_look_image_ratio_desktop == 'ratio_5_4' or shop_the_look_image_ratio_desktop == 'ratio_6_7' or shop_the_look_image_ratio_desktop == 'ratio_7_6' or shop_the_look_image_ratio_desktop == 'ratio_5_7' or shop_the_look_image_ratio_desktop == 'ratio_7_5' or shop_the_look_image_ratio_desktop == 'ratio_2_3' or shop_the_look_image_ratio_desktop == 'ratio_3_2' or shop_the_look_image_ratio_desktop == 'ratio_4_3' or shop_the_look_image_ratio_desktop == 'ratio_3_4' or shop_the_look_image_ratio_desktop == 'ratio_2_1' or shop_the_look_image_ratio_desktop == 'ratio_1_2' or shop_the_look_image_ratio_desktop == 'ratio_16_9' or shop_the_look_image_ratio_desktop == 'ratio_9_16' or shop_the_look_image_ratio_desktop == 'ratio_12_5' or shop_the_look_image_ratio_desktop == 'ratio_5_12' or shop_the_look_image_ratio_desktop == 'ratio_48_17' or shop_the_look_image_ratio_desktop == 'ratio_17_48' or shop_the_look_image_ratio_desktop == 'ratio_5_8' or shop_the_look_image_ratio_desktop == 'ratio_8_5'
     assign shop_the_look_image_ratio_desktop = 'auto'
   endunless
 
@@ -436,10 +436,10 @@
             "image": "shopify://shop_images/elara-figma-shop-the-look.avif",
             "mobile_image": "shopify://shop_images/elara-figma-shop-the-look.avif",
             "alt_text": "Gold necklace and hoop earrings styled together",
-            "image_ratio_desktop": "custom",
+            "image_ratio_desktop": "ratio_6_7",
             "image_ratio_custom_width_desktop": 6,
             "image_ratio_custom_height_desktop": 7,
-            "image_ratio_mobile": "custom",
+            "image_ratio_mobile": "ratio_6_7",
             "image_ratio_custom_width_mobile": 6,
             "image_ratio_custom_height_mobile": 7,
             "width_desktop": "fill",

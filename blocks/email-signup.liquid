@@ -93,8 +93,9 @@
   endcase
 
   assign button_label = block.settings.button_label | default: '' | strip
+  assign button_aria_label = blank
   if button_label == blank
-    assign button_label = 'email_signup.submit' | t
+    assign button_aria_label = 'email_signup.submit' | t
   endif
 
   assign input_placeholder = block.settings.input_placeholder | default: '' | strip
@@ -249,6 +250,7 @@
 {% capture email_signup_button %}
   {% render 'theme-button',
     label: button_label,
+    aria_label: button_aria_label,
     type: 'submit',
     variant: button_style,
     icon: button_icon,
@@ -1175,7 +1177,7 @@
         "limit_width_mobile": false,
         "max_width_mobile": 480,
         "field_height": "large",
-        "button_label": "Submit",
+        "button_label": "",
         "button_style": "primary",
         "show_icon": true,
         "icon": "arrow_right",

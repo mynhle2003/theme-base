@@ -153,12 +153,17 @@
     width_mobile: header_size_width_mobile,
     max_width_mobile: header_size_max_width_mobile
   %}
-  {% unless header_inherit_alignment %}
+  {% if header_inherit_alignment %}
+    --header-align: var(--flex-align, start);
+    --header-align-mobile: var(--flex-align-mobile, var(--flex-align, start));
+    --header-text-align: var(--text-align-default, var(--text-align, inherit));
+    --header-text-align-mobile: var(--text-align-default, var(--text-align, inherit));
+  {% else %}
     --header-align: {{ header_alignment }};
     --header-text-align: {{ header_text_alignment }};
-    {% if block.settings.customize_mobile_alignment %}--header-align-mobile: {{ header_alignment_mobile }};{% endif %}
-    {% if block.settings.customize_mobile_alignment %}--header-text-align-mobile: {{ header_text_alignment_mobile }};{% endif %}
-  {% endunless %}
+    --header-align-mobile: {{ header_alignment_mobile }};
+    --header-text-align-mobile: {{ header_text_alignment_mobile }};
+  {% endif %}
   {% if padding_top != 0 %}--header-padding-top: {{ padding_top }}px;{% endif %}
   {% if padding_bottom != 0 %}--header-padding-bottom: {{ padding_bottom }}px;{% endif %}
   {% if padding_left != 0 %}--header-padding-left: {{ padding_left }}px;{% endif %}
@@ -187,7 +192,7 @@
 {% stylesheet %}
   .block-header {
     min-width: 0;
-    text-align: var(--header-text-align, inherit);
+    text-align: var(--header-text-align, var(--text-align-default, inherit));
     padding-top: var(--header-padding-top, 0px);
     padding-right: var(--header-padding-right, 0px);
     padding-bottom: var(--header-padding-bottom, 0px);
@@ -199,12 +204,12 @@
   }
 
   .block-header > :is(.heading-block, .text-block, .eyebrow-block) {
-    text-align: var(--header-text-align, inherit);
+    text-align: var(--header-text-align, var(--text-align-default, inherit));
   }
 
   @media (max-width: 767.98px) {
     .block-header {
-      text-align: var(--header-text-align-mobile, var(--header-text-align, inherit));
+      text-align: var(--header-text-align-mobile, var(--header-text-align, var(--text-align-default, inherit)));
       padding-top: var(--header-padding-top-mobile, var(--header-padding-top, 0px));
       padding-right: var(--header-padding-right-mobile, var(--header-padding-right, 0px));
       padding-bottom: var(--header-padding-bottom-mobile, var(--header-padding-bottom, 0px));
@@ -212,7 +217,7 @@
     }
 
     .block-header > :is(.heading-block, .text-block, .eyebrow-block) {
-      text-align: var(--header-text-align-mobile, var(--header-text-align, inherit));
+      text-align: var(--header-text-align-mobile, var(--header-text-align, var(--text-align-default, inherit)));
     }
   }
 {% endstylesheet %}

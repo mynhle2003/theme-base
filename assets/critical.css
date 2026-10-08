@@ -2743,6 +2743,22 @@ legend {
   gap: var(--layout-flow-gap);
 }
 
+.layout-flow--horizontal > .height-fill {
+  height: auto;
+  align-self: stretch;
+}
+.layout-flow--vertical > .height-fill {
+  height: auto;
+  flex: 1 1 0%;
+}
+@media (max-width: 767.98px) {
+  .layout-flow--mobile-vertical > .height-fill {
+    height: auto;
+    align-self: stretch;
+    flex: 0 1 auto;
+  }
+}
+
 @media (max-width: 767.98px) {
   .layout-flow--responsive {
     flex-flow: var(--layout-flow-direction-mobile, var(--layout-flow-direction)) var(--layout-flow-wrap-mobile, var(--layout-flow-wrap));
@@ -3172,7 +3188,11 @@ legend {
     --flex-align-mobile: end;
     --text-align-default: right;
   }
-  .section-list-layout[data-mobile-alignment='left'] { --flex-align-mobile: start; }
+  .section-list-layout[data-mobile-alignment='left'] {
+    --section-list-align: flex-start;
+    --flex-align-mobile: start;
+    --text-align-default: left;
+  }
   .section-list-layout:not(.section-list-layout--inline-actions) > .section-list-layout__actions,
   .section-list-layout:not(.section-list-layout--inline-actions) .collection-list-view-all,
   .section-list-layout:not(.section-list-layout--inline-actions) .collection-list-view-all__button--mobile { width: 100%; }

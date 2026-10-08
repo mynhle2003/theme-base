@@ -217,19 +217,21 @@
     text-align: right;
   }
 
-  .email-signup-form--position-left .email-signup-form__content > .block-header {
-    --header-align: flex-start !important;
-    --header-text-align: left !important;
-  }
+  @media (min-width: 768px) {
+    .email-signup-form--position-left .email-signup-form__content {
+      --flex-align: start;
+      --text-align-default: left;
+    }
 
-  .email-signup-form--position-center .email-signup-form__content > .block-header {
-    --header-align: center !important;
-    --header-text-align: center !important;
-  }
+    .email-signup-form--position-center .email-signup-form__content {
+      --flex-align: center;
+      --text-align-default: center;
+    }
 
-  .email-signup-form--position-right .email-signup-form__content > .block-header {
-    --header-align: flex-end !important;
-    --header-text-align: right !important;
+    .email-signup-form--position-right .email-signup-form__content {
+      --flex-align: end;
+      --text-align-default: right;
+    }
   }
 
   .email-signup-form--layout-vertical .email-signup-form__content > .block-header {
@@ -249,6 +251,10 @@
   }
 
   @media (max-width: 767.98px) {
+    .email-signup-form__content {
+      --text-align-default: var(--flex-align-mobile, var(--flex-align, start));
+    }
+
     .email-signup-form--layout-vertical .email-signup-form__content {
       flex-direction: column;
     }

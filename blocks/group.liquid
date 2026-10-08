@@ -233,10 +233,14 @@
     assign group_scheme = group_scheme | default: 'scheme-1' | handleize
   endif
 
-  assign group_class = 'group size-style layout-flow layout-flow--responsive group--' | append: group_direction
+  assign group_class = 'group size-style layout-flow layout-flow--responsive layout-flow--' | append: group_direction | append: ' group--' | append: group_direction
   assign group_class = group_class | append: ' group--align-' | append: group_alignment
   assign group_class = group_class | append: ' group--width-' | append: group_width_mode
+  assign group_class = group_class | append: ' group--width-mobile-' | append: group_width_mobile_mode
   assign group_class = group_class | append: ' group--height-' | append: group_height_mode
+  if group_height_mode == 'fill'
+    assign group_class = group_class | append: ' height-fill'
+  endif
   assign group_class = group_class | append: ' group--radius-' | append: group_radius
   assign group_class = group_class | append: ' group--shadow-' | append: group_shadow
   assign group_class = group_class | append: ' group--border-' | append: group_border_type
@@ -246,7 +250,7 @@
     assign group_class = group_class | append: ' color-scheme ' | append: group_scheme
   endif
   if group_vertical_on_mobile
-    assign group_class = group_class | append: ' group--mobile-vertical'
+    assign group_class = group_class | append: ' group--mobile-vertical layout-flow--mobile-vertical'
   endif
   if group_backdrop_blur > 0
     assign group_class = group_class | append: ' backdrop-blur'
@@ -345,8 +349,21 @@
     isolation: isolate;
   }
 
-  .group--horizontal > .group--width-fill {
-    flex: 1 1 0%;
+  @media (min-width: 768px) {
+    .group--horizontal > .group--width-fill { flex: 1 1 0%; }
+    .group--horizontal:has(> .group--width-fill):not(:has(> :not(.group--width-fill))) {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 767.98px) {
+    .group--horizontal:not(.group--mobile-vertical) > .group--width-mobile-fill { flex: 1 1 0%; }
+    .group--horizontal:not(.group--mobile-vertical):has(> .group--width-mobile-fill):not(:has(> :not(.group--width-mobile-fill))) {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
+    }
   }
 
   .group.group--appearance-inherit {
@@ -371,7 +388,8 @@
   }
 
   .group--height-fill {
-    --group-height: 100%;
+    --group-height: auto;
+    align-self: stretch;
   }
 
   .group--radius-square {
@@ -511,31 +529,6 @@
     },
     {
       "type": "select",
-      "id": "position",
-      "label": "t:labels.position",
-      "options": [
-        {
-          "value": "top",
-          "label": "t:options.position.top"
-        },
-        {
-          "value": "center",
-          "label": "t:options.alignment.center"
-        },
-        {
-          "value": "bottom",
-          "label": "t:options.position.bottom"
-        },
-        {
-          "value": "space-between",
-          "label": "t:options.alignment.space_between"
-        }
-      ],
-      "default": "center",
-      "visible_if": "{{ block.settings.direction == 'vertical' and block.settings.height == 'fill' }}"
-    },
-    {
-      "type": "select",
       "id": "position_horizontal",
       "label": "t:labels.position",
       "options": [
@@ -607,6 +600,31 @@
       ],
       "default": "left",
       "visible_if": "{{ block.settings.direction == 'vertical' }}"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "t:labels.position",
+      "options": [
+        {
+          "value": "top",
+          "label": "t:options.position.top"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "bottom",
+          "label": "t:options.position.bottom"
+        },
+        {
+          "value": "space-between",
+          "label": "t:options.alignment.space_between"
+        }
+      ],
+      "default": "center",
+      "visible_if": "{{ block.settings.direction == 'vertical' and block.settings.height == 'fill' }}"
     },
     {
       "type": "select",

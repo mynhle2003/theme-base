@@ -66,11 +66,11 @@
   height: auto;
 }
 
-.product-media-gallery[data-main-image-ratio='square'] .product-media--image {
-  aspect-ratio: 1;
+.product-media-gallery[data-main-image-ratio]:not([data-main-image-ratio='auto']) .product-media--image {
+  aspect-ratio: var(--product-media-main-image-ratio, 1);
 }
 
-.product-media-gallery[data-main-image-ratio='square'] .product-media--image > img {
+.product-media-gallery[data-main-image-ratio]:not([data-main-image-ratio='auto']) .product-media--image > img {
   height: 100%;
   object-fit: cover;
 }

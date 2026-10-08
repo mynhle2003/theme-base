@@ -251,6 +251,19 @@
     overflow: clip;
   }
 
+  .image-card--height-desktop-ratio_5_4 { --image-card-ratio: 5 / 4; }
+  .image-card--height-desktop-ratio_6_7 { --image-card-ratio: 6 / 7; }
+  .image-card--height-desktop-ratio_7_6 { --image-card-ratio: 7 / 6; }
+  .image-card--height-desktop-ratio_5_7 { --image-card-ratio: 5 / 7; }
+  .image-card--height-desktop-ratio_7_5 { --image-card-ratio: 7 / 5; }
+  .image-card--height-desktop-ratio_2_1 { --image-card-ratio: 2 / 1; }
+  .image-card--height-desktop-ratio_1_2 { --image-card-ratio: 1 / 2; }
+  .image-card--height-desktop-ratio_12_5 { --image-card-ratio: 12 / 5; }
+  .image-card--height-desktop-ratio_5_12 { --image-card-ratio: 5 / 12; }
+  .image-card--height-desktop-ratio_48_17 { --image-card-ratio: 48 / 17; }
+  .image-card--height-desktop-ratio_17_48 { --image-card-ratio: 17 / 48; }
+  .image-card--height-desktop-ratio_5_8 { --image-card-ratio: 5 / 8; }
+  .image-card--height-desktop-ratio_8_5 { --image-card-ratio: 8 / 5; }
   .image-card--height-desktop-ratio_4_5 {
     --image-card-ratio: 0.8;
   }
@@ -404,7 +417,20 @@
       flex: 0 0 var(--image-card-width-mobile, var(--image-card-width, 100%));
     }
 
-    .image-card--height-mobile-ratio_4_5 {
+    .image-card--height-mobile-ratio_5_4 { --image-card-ratio-mobile: 5 / 4; }
+    .image-card--height-mobile-ratio_6_7 { --image-card-ratio-mobile: 6 / 7; }
+    .image-card--height-mobile-ratio_7_6 { --image-card-ratio-mobile: 7 / 6; }
+    .image-card--height-mobile-ratio_5_7 { --image-card-ratio-mobile: 5 / 7; }
+    .image-card--height-mobile-ratio_7_5 { --image-card-ratio-mobile: 7 / 5; }
+    .image-card--height-mobile-ratio_2_1 { --image-card-ratio-mobile: 2 / 1; }
+    .image-card--height-mobile-ratio_1_2 { --image-card-ratio-mobile: 1 / 2; }
+    .image-card--height-mobile-ratio_12_5 { --image-card-ratio-mobile: 12 / 5; }
+    .image-card--height-mobile-ratio_5_12 { --image-card-ratio-mobile: 5 / 12; }
+    .image-card--height-mobile-ratio_48_17 { --image-card-ratio-mobile: 48 / 17; }
+    .image-card--height-mobile-ratio_17_48 { --image-card-ratio-mobile: 17 / 48; }
+    .image-card--height-mobile-ratio_5_8 { --image-card-ratio-mobile: 5 / 8; }
+    .image-card--height-mobile-ratio_8_5 { --image-card-ratio-mobile: 8 / 5; }
+  .image-card--height-mobile-ratio_4_5 {
       --image-card-ratio-mobile: 0.8;
     }
 
@@ -671,6 +697,58 @@
         {
           "value": "ratio_9_16",
           "label": "t:options.image_card_height.ratio_9_16"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "5:4"
+        },
+        {
+          "value": "ratio_6_7",
+          "label": "6:7"
+        },
+        {
+          "value": "ratio_7_6",
+          "label": "7:6"
+        },
+        {
+          "value": "ratio_5_7",
+          "label": "5:7"
+        },
+        {
+          "value": "ratio_7_5",
+          "label": "7:5"
+        },
+        {
+          "value": "ratio_2_1",
+          "label": "2:1"
+        },
+        {
+          "value": "ratio_1_2",
+          "label": "1:2"
+        },
+        {
+          "value": "ratio_12_5",
+          "label": "12:5"
+        },
+        {
+          "value": "ratio_5_12",
+          "label": "5:12"
+        },
+        {
+          "value": "ratio_48_17",
+          "label": "48:17"
+        },
+        {
+          "value": "ratio_17_48",
+          "label": "17:48"
+        },
+        {
+          "value": "ratio_5_8",
+          "label": "5:8"
+        },
+        {
+          "value": "ratio_8_5",
+          "label": "8:5"
         }
       ],
       "default": "ratio_1_1",
@@ -762,6 +840,58 @@
         {
           "value": "ratio_9_16",
           "label": "t:options.image_card_height.ratio_9_16"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "5:4"
+        },
+        {
+          "value": "ratio_6_7",
+          "label": "6:7"
+        },
+        {
+          "value": "ratio_7_6",
+          "label": "7:6"
+        },
+        {
+          "value": "ratio_5_7",
+          "label": "5:7"
+        },
+        {
+          "value": "ratio_7_5",
+          "label": "7:5"
+        },
+        {
+          "value": "ratio_2_1",
+          "label": "2:1"
+        },
+        {
+          "value": "ratio_1_2",
+          "label": "1:2"
+        },
+        {
+          "value": "ratio_12_5",
+          "label": "12:5"
+        },
+        {
+          "value": "ratio_5_12",
+          "label": "5:12"
+        },
+        {
+          "value": "ratio_48_17",
+          "label": "48:17"
+        },
+        {
+          "value": "ratio_17_48",
+          "label": "17:48"
+        },
+        {
+          "value": "ratio_5_8",
+          "label": "5:8"
+        },
+        {
+          "value": "ratio_8_5",
+          "label": "8:5"
         }
       ],
       "default": "ratio_1_1",
