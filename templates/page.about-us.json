@@ -400,6 +400,7 @@
     },
     "commitments": {
       "type": "text-marquee-custom",
+      "name": "Text marquee (custom)",
       "settings": {
         "section_width": "full_width",
         "color_scheme": "scheme-3",
@@ -420,72 +421,44 @@
             "gap_mobile": 32
           },
           "blocks": {
-            "ethical": {
-              "type": "marquee-item",
+            "ethical-title": {
+              "type": "_marquee-heading",
               "settings": {
-                "direction": "horizontal",
-                "position": "center",
-                "gap_desktop": 48,
-                "gap_mobile": 32
-              },
-              "blocks": {
-                "title": {
-                  "type": "heading",
-                  "settings": {
-                    "text": "<p>ETHICALLY SOURCED DIAMONDS</p>",
-                    "heading_size": "lg",
-                    "html_tag": "div",
-                    "width": "fill"
-                  }
-                },
-                "separator": {
-                  "type": "icon",
-                  "settings": {
-                    "icon": "diamond",
-                    "icon_width": 48
-                  }
-                }
-              },
-              "block_order": [
-                "title",
-                "separator"
-              ]
+                "text": "ETHICALLY SOURCED DIAMONDS",
+                "heading_size": "lg",
+                "color_role": "heading",
+                "opacity": 100
+              }
             },
-            "warranty": {
-              "type": "marquee-item",
+            "ethical-separator": {
+              "type": "_marquee-icon",
               "settings": {
-                "direction": "horizontal",
-                "position": "center",
-                "gap_desktop": 48,
-                "gap_mobile": 32
-              },
-              "blocks": {
-                "title": {
-                  "type": "heading",
-                  "settings": {
-                    "text": "<p>LIFETIME WARRANTY</p>",
-                    "heading_size": "lg",
-                    "html_tag": "div",
-                    "width": "fill"
-                  }
-                },
-                "separator": {
-                  "type": "icon",
-                  "settings": {
-                    "icon": "diamond",
-                    "icon_width": 48
-                  }
-                }
-              },
-              "block_order": [
-                "title",
-                "separator"
-              ]
+                "icon": "diamond",
+                "icon_width": 48
+              }
+            },
+            "warranty-title": {
+              "type": "_marquee-heading",
+              "settings": {
+                "text": "LIFETIME WARRANTY",
+                "heading_size": "lg",
+                "color_role": "heading",
+                "opacity": 100
+              }
+            },
+            "warranty-separator": {
+              "type": "_marquee-icon",
+              "settings": {
+                "icon": "diamond",
+                "icon_width": 48
+              }
             }
           },
           "block_order": [
-            "ethical",
-            "warranty"
+            "ethical-title",
+            "ethical-separator",
+            "warranty-title",
+            "warranty-separator"
           ]
         }
       },

@@ -123,11 +123,11 @@
 
   .marquee--block .marquee__track {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
     gap: var(--marquee-gap, 48px);
-    width: max-content;
+    width: 100%;
     min-width: 0;
     max-width: none;
     animation: none;
@@ -135,6 +135,8 @@
   }
 
   .marquee--block.marquee--ready .marquee__track {
+    width: max-content;
+    flex-wrap: nowrap;
     animation: marquee-scroll-left var(--marquee-duration) linear infinite;
   }
 
@@ -169,24 +171,18 @@
     flex: 0 0 auto;
   }
 
-  .marquee--block .marquee__track > .marquee-item-layout {
-    width: fit-content;
-    max-width: max-content;
+  /* Every Basic block is a direct track child; no item/group wrapper. */
+  .marquee--block .marquee__track > [data-content-empty] { display: none; }
+
+  .marquee--block.marquee--inspector-hover .marquee__track,
+  .marquee--block.marquee--editor-paused .marquee__track {
+    animation-play-state: paused;
   }
 
-  .marquee--block .marquee__track > .marquee-item-layout--horizontal {
-    flex-wrap: nowrap;
-  }
-
-  /* Percentage widths are circular inside a fit-content horizontal item. */
-  .marquee--block .marquee__track > .marquee-item-layout--horizontal > * {
-    width: fit-content;
-    flex: 0 0 auto;
-  }
-
-  /* Marquee items are transparent by default; an Item background setting can override this. */
-  .marquee--block .marquee__track > .marquee-item-layout {
-    --group-background-color: transparent;
+  .marquee--block.marquee--static .marquee__track {
+    width: 100%;
+    flex-wrap: wrap;
+    will-change: auto;
   }
 
   .marquee--block:hover .marquee__track,
@@ -205,11 +201,26 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .marquee--block .marquee__track,
     .marquee--block.marquee--ready .marquee__track {
       animation: none;
       transform: none;
+      width: 100%;
+      flex-wrap: wrap;
+      will-change: auto;
     }
   }
+  [data-marquee-animation='fade']{animation:mq-enter-fade .6s ease both;}
+  [data-marquee-animation='scale']{animation:mq-enter-scale .6s ease both;}
+  [data-marquee-animation='slide_left']{animation:mq-enter-left .6s ease both;}
+  [data-marquee-animation='slide_right']{animation:mq-enter-right .6s ease both;}
+  [data-marquee-animation='slide_bottom']{animation:mq-enter-bottom .6s ease both;}
+  @keyframes mq-enter-fade{from{opacity:0;}to{opacity:1;}}
+  @keyframes mq-enter-scale{from{scale:.85;opacity:0;}to{scale:1;opacity:1;}}
+  @keyframes mq-enter-left{from{translate:-24px 0;opacity:0;}to{translate:0;opacity:1;}}
+  @keyframes mq-enter-right{from{translate:24px 0;opacity:0;}to{translate:0;opacity:1;}}
+  @keyframes mq-enter-bottom{from{translate:0 24px;opacity:0;}to{translate:0;opacity:1;}}
+  @media(prefers-reduced-motion:reduce){[data-marquee-animation]{animation:none;}}
 {% endstylesheet %}
 
 {% javascript %}
@@ -227,6 +238,8 @@
         // Hidden/inert copies cannot enter the shared reveal lifecycle.
         // Render their content immediately instead of inheriting opacity: 0.
         element.classList.remove('reveal-pending');
+        element.removeAttribute('data-marquee-animation');
+        if (element.hasAttribute('data-countdown-announcement')) element.removeAttribute('aria-live');
         if (element.hasAttribute('data-block-animation') || element.hasAttribute('data-component-reveal')) {
           element.setAttribute('data-block-animation', 'none');
           element.removeAttribute('data-component-reveal');
@@ -238,7 +251,7 @@
     };
 
     const initialize = (marquee) => {
-      if (!marquee || instances.has(marquee) || reducedMotion.matches) return;
+      if (!marquee || instances.has(marquee) || reducedMotion.matches || marquee.classList.contains('marquee--static')) return;
 
       const track = marquee.querySelector('.marquee__track');
       const viewport = marquee.querySelector('.marquee__viewport');
@@ -246,6 +259,9 @@
 
       let frame = 0;
       let scrollFrame = 0;
+      let pointerFrame = 0;
+      let inspectorActive = Boolean(window.Shopify?.inspectMode);
+      let pointerPosition = null;
       let lastScrollY = window.scrollY;
       let destroyed = false;
       let measuredLayout = '';
@@ -261,7 +277,7 @@
         if (destroyed) return;
         mutationObserver.disconnect();
         track.querySelectorAll('[data-marquee-clone]').forEach((clone) => clone.remove());
-        const items = originalItems();
+        const items = originalItems().filter((item) => item.getClientRects().length && item.getBoundingClientRect().width > 0);
         resizeObserver.disconnect();
         resizeObserver.observe(viewport);
         items.forEach((item) => resizeObserver.observe(item));
@@ -310,6 +326,7 @@
         if (mutations.some((mutation) => {
           const element = mutation.target.nodeType === Node.ELEMENT_NODE ? mutation.target : mutation.target.parentElement;
           if (element?.closest('[data-marquee-clone]')) return false;
+          if (element?.closest('[data-countdown-value], [data-countdown-announcement], [data-coupon-status]')) return false;
           if (mutation.type === 'attributes') {
             if (mutation.target === track) return false;
             if (mutation.attributeName.startsWith('data-shopify-editor')) return false;
@@ -321,6 +338,52 @@
         if (layoutSignature() !== measuredLayout) scheduleSync();
       });
 
+      // Inspector overlays can receive the pointer instead of a marquee child.
+      // Capture its coordinates in the preview document, then test this instance.
+      const updateInspectorHover = () => {
+        if (!inspectorActive || !pointerPosition) {
+          marquee.classList.remove('marquee--inspector-hover');
+          return;
+        }
+        const bounds = marquee.getBoundingClientRect();
+        const { x, y } = pointerPosition;
+        marquee.classList.toggle('marquee--inspector-hover',
+          x >= bounds.left && x < bounds.right && y >= bounds.top && y < bounds.bottom);
+      };
+      const handlePointerMove = (event) => {
+        if (event.pointerType === 'touch') return;
+        pointerPosition = { x: event.clientX, y: event.clientY };
+        if (!inspectorActive || pointerFrame) return;
+        pointerFrame = requestAnimationFrame(() => {
+          pointerFrame = 0;
+          if (!destroyed) updateInspectorHover();
+        });
+      };
+      const clearPointer = () => {
+        pointerPosition = null;
+        marquee.classList.remove('marquee--inspector-hover');
+      };
+      const handlePointerOut = (event) => {
+        if (!event.relatedTarget) clearPointer();
+      };
+      const activateInspector = () => {
+        inspectorActive = true;
+        updateInspectorHover();
+      };
+      const deactivateInspector = () => {
+        inspectorActive = false;
+        updateInspectorHover();
+      };
+      const editorMode = Boolean(window.Shopify?.designMode);
+      if (editorMode) {
+        document.addEventListener('pointermove', handlePointerMove, true);
+        document.addEventListener('pointerout', handlePointerOut, true);
+        document.addEventListener('shopify:inspector:activate', activateInspector);
+        document.addEventListener('shopify:inspector:deactivate', deactivateInspector);
+        window.addEventListener('blur', clearPointer);
+        window.addEventListener('resize', updateInspectorHover);
+      }
+
       const handleScroll = () => {
         if (scrollFrame || destroyed) return;
         scrollFrame = requestAnimationFrame(() => {
@@ -328,6 +391,8 @@
           const scrollY = window.scrollY;
           const delta = Math.max(-50, Math.min(50, scrollY - lastScrollY));
           lastScrollY = scrollY;
+          if (editorMode) updateInspectorHover();
+          if (marquee.matches(':hover, :focus-within') || marquee.classList.contains('marquee--editor-paused') || marquee.classList.contains('marquee--inspector-hover')) return;
           const bounds = viewport.getBoundingClientRect();
           const distance = parseFloat(track.style.getPropertyValue('--marquee-loop-distance'));
           if (!delta || !distance || bounds.bottom <= 0 || bounds.top >= window.innerHeight) return;
@@ -353,6 +418,16 @@
           destroyed = true;
           cancelAnimationFrame(frame);
           cancelAnimationFrame(scrollFrame);
+          cancelAnimationFrame(pointerFrame);
+          clearPointer();
+          if (editorMode) {
+            document.removeEventListener('pointermove', handlePointerMove, true);
+            document.removeEventListener('pointerout', handlePointerOut, true);
+            document.removeEventListener('shopify:inspector:activate', activateInspector);
+            document.removeEventListener('shopify:inspector:deactivate', deactivateInspector);
+            window.removeEventListener('blur', clearPointer);
+            window.removeEventListener('resize', updateInspectorHover);
+          }
           if (scrollReactive) window.removeEventListener('scroll', handleScroll);
           resizeObserver.disconnect();
           mutationObserver.disconnect();
@@ -386,6 +461,13 @@
       else initializeRoot();
     });
 
+    const pauseSelection = (event, paused) => {
+      const marquee = event.target.closest?.(selector);
+      if (marquee) marquee.classList.toggle('marquee--editor-paused', paused);
+    };
+    document.addEventListener('shopify:block:select', (event) => pauseSelection(event, true));
+    document.addEventListener('shopify:block:deselect', (event) => pauseSelection(event, false));
+
     document.addEventListener('shopify:section:load', (event) => initializeRoot(event.target));
     document.addEventListener('shopify:section:unload', (event) => destroyRoot(event.target));
 
@@ -403,7 +485,31 @@
   "tag": null,
   "blocks": [
     {
-      "type": "marquee-item"
+      "type": "_marquee-heading"
+    },
+    {
+      "type": "_marquee-text"
+    },
+    {
+      "type": "_marquee-image"
+    },
+    {
+      "type": "_marquee-icon"
+    },
+    {
+      "type": "_marquee-button"
+    },
+    {
+      "type": "_marquee-countdown-timer"
+    },
+    {
+      "type": "_marquee-coupon-code"
+    },
+    {
+      "type": "_marquee-divider"
+    },
+    {
+      "type": "_marquee-group"
     }
   ],
   "settings": [
@@ -571,88 +677,58 @@
       "category": "t:general.content",
       "blocks": [
         {
-          "type": "marquee-item",
-          "name": "t:general.item",
+          "type": "_marquee-heading",
           "settings": {
-            "direction": "horizontal",
-            "position": "center"
-          },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Diamond statement</p>",
-                "heading_size": "md",
-                "html_tag": "div"
-              }
-            },
-            {
-              "type": "image",
-              "settings": {
-                "image_ratio_desktop": "custom",
-                "image_ratio_custom_width_desktop": 2,
-                "image_ratio_custom_height_desktop": 1,
-                "width_desktop": "fill",
-                "corner_radius": "square"
-              }
-            }
-          ]
+            "text": "Diamond statement",
+            "heading_size": "md",
+            "color_role": "heading",
+            "opacity": 100
+          }
         },
         {
-          "type": "marquee-item",
-          "name": "t:general.item",
+          "type": "_marquee-image",
           "settings": {
-            "direction": "horizontal",
-            "position": "center"
-          },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Birthstone</p>",
-                "heading_size": "md",
-                "html_tag": "div"
-              }
-            },
-            {
-              "type": "image",
-              "settings": {
-                "image_ratio_desktop": "custom",
-                "image_ratio_custom_width_desktop": 2,
-                "image_ratio_custom_height_desktop": 1,
-                "width_desktop": "fill",
-                "corner_radius": "square"
-              }
-            }
-          ]
+            "corner_radius": "square",
+            "width_custom_desktop": 120,
+            "width_custom_mobile": 80,
+            "image_ratio": "original"
+          }
         },
         {
-          "type": "marquee-item",
-          "name": "t:general.item",
+          "type": "_marquee-heading",
           "settings": {
-            "direction": "horizontal",
-            "position": "center"
-          },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Diamond statement</p>",
-                "heading_size": "md",
-                "html_tag": "div"
-              }
-            },
-            {
-              "type": "image",
-              "settings": {
-                "image_ratio_desktop": "custom",
-                "image_ratio_custom_width_desktop": 2,
-                "image_ratio_custom_height_desktop": 1,
-                "width_desktop": "fill",
-                "corner_radius": "square"
-              }
-            }
-          ]
+            "text": "Birthstone",
+            "heading_size": "md",
+            "color_role": "heading",
+            "opacity": 100
+          }
+        },
+        {
+          "type": "_marquee-image",
+          "settings": {
+            "corner_radius": "square",
+            "width_custom_desktop": 120,
+            "width_custom_mobile": 80,
+            "image_ratio": "original"
+          }
+        },
+        {
+          "type": "_marquee-heading",
+          "settings": {
+            "text": "Diamond statement",
+            "heading_size": "md",
+            "color_role": "heading",
+            "opacity": 100
+          }
+        },
+        {
+          "type": "_marquee-image",
+          "settings": {
+            "corner_radius": "square",
+            "width_custom_desktop": 120,
+            "width_custom_mobile": 80,
+            "image_ratio": "original"
+          }
         }
       ]
     }

@@ -492,11 +492,11 @@
   "presets": [
     {
       "name": "t:general.gallery_custom",
+      "category": "t:general.media",
       "settings": {
         "section_width": "full_width_no_padding",
         "direction": "vertical",
         "alignment": "center",
-        "customize_mobile_alignment": true,
         "alignment_mobile": "center",
         "gap_desktop": 56,
         "gap_mobile": 36,
@@ -515,16 +515,19 @@
             "max_width": 770,
             "customize_mobile_size": true,
             "width_mobile": "fill",
+            "inherit_alignment": false,
             "alignment": "center",
-            "customize_mobile_alignment": true,
-            "alignment_mobile": "center",
             "gap_desktop": 16,
             "gap_mobile": 12,
+            "padding_top": 0,
+            "padding_bottom": 0,
             "padding_left": 0,
             "padding_right": 0,
             "customize_mobile_padding": true,
             "padding_left_mobile": 16,
-            "padding_right_mobile": 16
+            "padding_right_mobile": 16,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0
           },
           "blocks": [
             {
@@ -533,9 +536,7 @@
                 "text": "<p>@Malandra_luxury</p>",
                 "heading_size": "xl",
                 "html_tag": "h2",
-                "width": "fill",
-                "customize_mobile_size": true,
-                "width_mobile": "fill"
+                "width": "fill"
               }
             },
             {
@@ -559,198 +560,68 @@
             "padding_bottom": 0,
             "padding_left": 0,
             "padding_right": 0,
-            "customize_mobile_padding": true,
-            "padding_top_mobile": 0,
-            "padding_bottom_mobile": 0,
-            "padding_left_mobile": 0,
-            "padding_right_mobile": 0
+            "customize_mobile_padding": false
           },
           "blocks": [
             {
-              "type": "marquee-item",
+              "type": "_marquee-image",
               "settings": {
-                "direction": "horizontal",
-                "position": "center",
-                "horizontal_alignment": "center",
-                "customize_mobile_alignment": false,
-                "gap_desktop": 0,
-                "gap_mobile": 0
-              },
-              "blocks": [
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "ratio_1_1",
-                    "image_ratio_custom_width_desktop": 1,
-                    "image_ratio_custom_height_desktop": 1,
-                    "image_ratio_mobile": "ratio_1_1",
-                    "image_ratio_custom_width_mobile": 1,
-                    "image_ratio_custom_height_mobile": 1,
-                    "width_desktop": "fit",
-                    "width_mobile": "fit",
-                    "corner_radius": "square",
-                    "limit_width_desktop": true,
-                    "max_width_desktop": 304,
-                    "limit_width_mobile": true,
-                    "max_width_mobile": 304
-                  }
-                }
-              ]
+                "image_ratio": "ratio_1_1",
+                "width_custom_desktop": 300,
+                "width_custom_mobile": 300,
+                "corner_radius": "square",
+                "image": "shopify://shop_images/elara-figma-testimonial.avif"
+              }
             },
             {
-              "type": "marquee-item",
+              "type": "_marquee-image",
               "settings": {
-                "direction": "horizontal",
-                "position": "center",
-                "horizontal_alignment": "center",
-                "customize_mobile_alignment": false,
-                "gap_desktop": 0,
-                "gap_mobile": 0
-              },
-              "blocks": [
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "ratio_1_1",
-                    "image_ratio_custom_width_desktop": 1,
-                    "image_ratio_custom_height_desktop": 1,
-                    "image_ratio_mobile": "ratio_1_1",
-                    "image_ratio_custom_width_mobile": 1,
-                    "image_ratio_custom_height_mobile": 1,
-                    "width_desktop": "fit",
-                    "width_mobile": "fit",
-                    "corner_radius": "square",
-                    "limit_width_desktop": true,
-                    "max_width_desktop": 352,
-                    "limit_width_mobile": true,
-                    "max_width_mobile": 352
-                  }
-                }
-              ]
+                "image_ratio": "ratio_1_1",
+                "width_custom_desktop": 350,
+                "width_custom_mobile": 350,
+                "corner_radius": "square",
+                "image": "shopify://shop_images/elara-figma-gallery-2.avif"
+              }
             },
             {
-              "type": "marquee-item",
+              "type": "_marquee-image",
               "settings": {
-                "direction": "horizontal",
-                "position": "center",
-                "horizontal_alignment": "center",
-                "customize_mobile_alignment": false,
-                "gap_desktop": 0,
-                "gap_mobile": 0
-              },
-              "blocks": [
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "ratio_1_1",
-                    "image_ratio_custom_width_desktop": 1,
-                    "image_ratio_custom_height_desktop": 1,
-                    "image_ratio_mobile": "ratio_1_1",
-                    "image_ratio_custom_width_mobile": 1,
-                    "image_ratio_custom_height_mobile": 1,
-                    "width_desktop": "fit",
-                    "width_mobile": "fit",
-                    "corner_radius": "square",
-                    "limit_width_desktop": true,
-                    "max_width_desktop": 304,
-                    "limit_width_mobile": true,
-                    "max_width_mobile": 304
-                  }
-                }
-              ]
+                "image_ratio": "ratio_1_1",
+                "width_custom_desktop": 300,
+                "width_custom_mobile": 300,
+                "corner_radius": "square",
+                "image": "shopify://shop_images/elara-figma-gallery-3.avif"
+              }
             },
             {
-              "type": "marquee-item",
+              "type": "_marquee-image",
               "settings": {
-                "direction": "horizontal",
-                "position": "center",
-                "horizontal_alignment": "center",
-                "customize_mobile_alignment": false,
-                "gap_desktop": 0,
-                "gap_mobile": 0
-              },
-              "blocks": [
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "ratio_1_1",
-                    "image_ratio_custom_width_desktop": 1,
-                    "image_ratio_custom_height_desktop": 1,
-                    "image_ratio_mobile": "ratio_1_1",
-                    "image_ratio_custom_width_mobile": 1,
-                    "image_ratio_custom_height_mobile": 1,
-                    "width_desktop": "fit",
-                    "width_mobile": "fit",
-                    "corner_radius": "square",
-                    "limit_width_desktop": true,
-                    "max_width_desktop": 352,
-                    "limit_width_mobile": true,
-                    "max_width_mobile": 352
-                  }
-                }
-              ]
+                "image_ratio": "ratio_1_1",
+                "width_custom_desktop": 350,
+                "width_custom_mobile": 350,
+                "corner_radius": "square",
+                "image": "shopify://shop_images/elara-figma-gallery-4.avif"
+              }
             },
             {
-              "type": "marquee-item",
+              "type": "_marquee-image",
               "settings": {
-                "direction": "horizontal",
-                "position": "center",
-                "horizontal_alignment": "center",
-                "customize_mobile_alignment": false,
-                "gap_desktop": 0,
-                "gap_mobile": 0
-              },
-              "blocks": [
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "ratio_1_1",
-                    "image_ratio_custom_width_desktop": 1,
-                    "image_ratio_custom_height_desktop": 1,
-                    "image_ratio_mobile": "ratio_1_1",
-                    "image_ratio_custom_width_mobile": 1,
-                    "image_ratio_custom_height_mobile": 1,
-                    "width_desktop": "fit",
-                    "width_mobile": "fit",
-                    "corner_radius": "square",
-                    "limit_width_desktop": true,
-                    "max_width_desktop": 304,
-                    "limit_width_mobile": true,
-                    "max_width_mobile": 304
-                  }
-                }
-              ]
+                "image_ratio": "ratio_1_1",
+                "width_custom_desktop": 300,
+                "width_custom_mobile": 300,
+                "corner_radius": "square",
+                "image": "shopify://shop_images/elara-figma-gallery-5.avif"
+              }
             },
             {
-              "type": "marquee-item",
+              "type": "_marquee-image",
               "settings": {
-                "direction": "horizontal",
-                "position": "center",
-                "horizontal_alignment": "center",
-                "customize_mobile_alignment": false,
-                "gap_desktop": 0,
-                "gap_mobile": 0
-              },
-              "blocks": [
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "ratio_1_1",
-                    "image_ratio_custom_width_desktop": 1,
-                    "image_ratio_custom_height_desktop": 1,
-                    "image_ratio_mobile": "ratio_1_1",
-                    "image_ratio_custom_width_mobile": 1,
-                    "image_ratio_custom_height_mobile": 1,
-                    "width_desktop": "fit",
-                    "width_mobile": "fit",
-                    "corner_radius": "square",
-                    "limit_width_desktop": true,
-                    "max_width_desktop": 352,
-                    "limit_width_mobile": true,
-                    "max_width_mobile": 352
-                  }
-                }
-              ]
+                "image_ratio": "ratio_1_1",
+                "width_custom_desktop": 350,
+                "width_custom_mobile": 350,
+                "corner_radius": "square",
+                "image": "shopify://shop_images/elara-figma-gallery-6.avif"
+              }
             }
           ]
         }
