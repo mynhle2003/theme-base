@@ -7,21 +7,21 @@
       assign section_alignment = 'end'
   endcase
 
-  assign section_alignment_mobile = 'start'
-  case section.settings.alignment_mobile
-    when 'center'
-      assign section_alignment_mobile = 'center'
-    when 'right'
-      assign section_alignment_mobile = 'end'
-  endcase
+  assign section_alignment_mobile = section_alignment
+  if section.settings.customize_mobile_alignment
+    assign section_alignment_mobile = 'start'
+    case section.settings.alignment_mobile
+      when 'center'
+        assign section_alignment_mobile = 'center'
+      when 'right'
+        assign section_alignment_mobile = 'end'
+    endcase
+  endif
 
   assign padding_top = section.settings.padding_top | default: 0 | plus: 0
   assign padding_bottom = section.settings.padding_bottom | default: 0 | plus: 0
   assign padding_top_mobile = section.settings.padding_top_mobile | default: 0 | plus: 0
   assign padding_bottom_mobile = section.settings.padding_bottom_mobile | default: 0 | plus: 0
-  assign content_gap = section.settings.gap_desktop | default: section.settings.content_gap | default: 16 | plus: 0
-  assign content_gap_mobile = section.settings.gap_mobile | default: section.settings.content_gap_mobile | default: content_gap | plus: 0
-
   assign section_width = 'page-width'
   assign container_width = 'page-width'
   if section.settings.section_width == 'full_width'
@@ -40,10 +40,8 @@
 %}
 
 {% capture section_style %}
-  --flex-align: {{ section_alignment }};
-  --flex-align-mobile: {{ section_alignment_mobile }};
-  --testimonial-align: {{ section_alignment }};
-  --testimonial-align-mobile: {{ section_alignment_mobile }};
+  {% if section_alignment != 'start' %}--flex-align: {{ section_alignment }};{% endif %}
+  {% if section.settings.customize_mobile_alignment and section_alignment_mobile != section_alignment %}--flex-align-mobile: {{ section_alignment_mobile }};{% endif %}
   {% if section.settings.background_color != blank %}--testimonial-carousel-background-color: {{ section.settings.background_color | escape }};{% endif %}
   {% if padding_top != 0 %}--testimonial-carousel-padding-top: {{ padding_top }}px;{% endif %}
   {% if padding_bottom != 0 %}--testimonial-carousel-padding-bottom: {{ padding_bottom }}px;{% endif %}
@@ -53,19 +51,8 @@
   {% endif %}
 {% endcapture %}
 
-{% capture content_style %}
-  {% render 'layout-flow-style',
-    direction: 'column',
-    wrap: 'nowrap',
-    align_items: 'var(--flex-align, flex-start)',
-    align_items_mobile: 'var(--flex-align-mobile, var(--flex-align, flex-start))',
-    gap: content_gap,
-    gap_mobile: content_gap_mobile
-  %}
-{% endcapture %}
 
-<script src="{{ 'elara-testimonial-carousel.js' | asset_url }}" type="module"></script>
-<elara-testimonial-carousel class="testimonial-carousel testimonial-carousel--{{ section_width }} testimonial-carousel--malandra">
+<div class="testimonial-carousel testimonial-carousel--{{ section_width }}">
   <div class="section-spacing testimonial-carousel__spacing color-scheme section-color-scope {{ color_scheme }}"{% if section_style != blank %} style="{{ section_style | strip }}"{% endif %}>
     {% if section.settings.background_image != blank %}
       <div class="testimonial-carousel__background" aria-hidden="true">
@@ -74,21 +61,14 @@
     {% endif %}
 
     <div class="container {{ container_width }} testimonial-carousel__container">
-      <div class="testimonial-carousel__content layout-flow layout-flow--responsive align-content" style="{{ content_style | strip }}">
+      <div class="testimonial-carousel__content align-content">
         {% content_for 'blocks' %}
       </div>
     </div>
   </div>
-</elara-testimonial-carousel>
+</div>
 
 {% stylesheet %}
-  .testimonial-carousel--malandra {
-    --testimonial-left-shaft: url("data:image/svg+xml,%3Csvg%20preserveAspectRatio%3D%22none%22%20overflow%3D%22visible%22%20style%3D%22display%3A%20block%3B%22%20width%3D%2223.8781%22%20height%3D%224.81346%22%20viewBox%3D%220%200%2023.8781%204.81346%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cg%20id%3D%22Group%22%3E%0A%3Cpath%20id%3D%22Vector%22%20d%3D%22M23.3846%204.81346H0.492308C0.22%204.81346%200%204.59346%200%204.32115C0%204.04885%200.22%203.82885%200.492308%203.82885H22.1954L19.2077%200.841154C19.0154%200.648846%2019.0154%200.336538%2019.2077%200.144231C19.4%20-0.0480769%2019.7123%20-0.0480769%2019.9046%200.144231L23.7338%203.97346C23.8754%204.115%2023.9169%204.32577%2023.84%204.51038C23.7631%204.69346%2023.5831%204.81346%2023.3846%204.81346Z%22%20fill%3D%22%23B3B3B3%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E");
-    --testimonial-left-tip: url("data:image/svg+xml,%3Csvg%20preserveAspectRatio%3D%22none%22%20overflow%3D%22visible%22%20style%3D%22display%3A%20block%3B%22%20width%3D%224.81923%22%20height%3D%224.81962%22%20viewBox%3D%220%200%204.81923%204.81962%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cg%20id%3D%22Group%22%3E%0A%3Cpath%20id%3D%22Vector%22%20d%3D%22M0.491925%204.81962C0.365771%204.81962%200.239615%204.77192%200.144231%204.675C-0.0480769%204.48269%20-0.0480769%204.17038%200.144231%203.97808L3.97808%200.144231C4.17039%20-0.0480769%204.48269%20-0.0480769%204.675%200.144231C4.86731%200.336538%204.86731%200.648847%204.675%200.841155L0.841155%204.675C0.744232%204.77192%200.618078%204.81962%200.491925%204.81962Z%22%20fill%3D%22%23B3B3B3%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E");
-    --testimonial-right-shaft: url("data:image/svg+xml,%3Csvg%20preserveAspectRatio%3D%22none%22%20overflow%3D%22visible%22%20style%3D%22display%3A%20block%3B%22%20width%3D%2223.8781%22%20height%3D%224.81346%22%20viewBox%3D%220%200%2023.8781%204.81346%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cg%20id%3D%22Group%22%3E%0A%3Cpath%20id%3D%22Vector%22%20d%3D%22M23.3846%204.81346H0.492308C0.22%204.81346%200%204.59346%200%204.32115C0%204.04885%200.22%203.82885%200.492308%203.82885H22.1954L19.2077%200.841154C19.0154%200.648846%2019.0154%200.336538%2019.2077%200.144231C19.4%20-0.0480769%2019.7123%20-0.0480769%2019.9046%200.144231L23.7338%203.97346C23.8754%204.115%2023.9169%204.32577%2023.84%204.51038C23.7631%204.69346%2023.5831%204.81346%2023.3846%204.81346Z%22%20fill%3D%22%23181818%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E");
-    --testimonial-right-tip: url("data:image/svg+xml,%3Csvg%20preserveAspectRatio%3D%22none%22%20overflow%3D%22visible%22%20style%3D%22display%3A%20block%3B%22%20width%3D%224.81923%22%20height%3D%224.81962%22%20viewBox%3D%220%200%204.81923%204.81962%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cg%20id%3D%22Group%22%3E%0A%3Cpath%20id%3D%22Vector%22%20d%3D%22M0.491925%204.81962C0.365771%204.81962%200.239615%204.77192%200.144231%204.675C-0.0480769%204.48269%20-0.0480769%204.17038%200.144231%203.97808L3.97808%200.144231C4.17039%20-0.0480769%204.48269%20-0.0480769%204.675%200.144231C4.86731%200.336538%204.86731%200.648847%204.675%200.841155L0.841155%204.675C0.744232%204.77192%200.618078%204.81962%200.491925%204.81962Z%22%20fill%3D%22%23181818%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E");
-    --testimonial-star: url("data:image/svg+xml,%3Csvg%20preserveAspectRatio%3D%22none%22%20overflow%3D%22visible%22%20style%3D%22display%3A%20block%3B%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cg%20id%3D%22star%22%3E%0A%3Cpath%20id%3D%22Vector%22%20d%3D%22M7.99995%2012.1126L4.76836%2014.049C4.6256%2014.1394%204.47635%2014.1781%204.32061%2014.1652C4.16487%2014.1523%204.02859%2014.1006%203.91179%2014.0103C3.79498%2013.9199%203.70414%2013.8071%203.63925%2013.6718C3.57435%2013.5365%203.56138%2013.3847%203.60031%2013.2164L4.45688%209.55655L1.59516%207.09732C1.46538%206.98113%201.3844%206.84868%201.35221%206.69997C1.32002%206.55125%201.32963%206.40615%201.38102%206.26466C1.43242%206.12318%201.51029%206.00699%201.61463%205.91611C1.71898%205.82523%201.86174%205.76714%202.04291%205.74184L5.8196%205.41265L7.27966%201.96585C7.34455%201.81094%207.44526%201.69475%207.58179%201.6173C7.71832%201.53984%207.85771%201.50111%207.99995%201.50111C8.14219%201.50111%208.28158%201.53984%208.41811%201.6173C8.55464%201.69475%208.65536%201.81094%208.72025%201.96585L10.1803%205.41265L13.957%205.74184C14.1387%205.76765%2014.2814%205.82575%2014.3853%205.91611C14.4891%206.00648%2014.567%206.12266%2014.6189%206.26466C14.6708%206.40667%2014.6807%206.55203%2014.6485%206.70074C14.6163%206.84946%2014.535%206.98165%2014.4047%207.09732L11.543%209.55655L12.3996%2013.2164C12.4385%2013.3842%2012.4256%2013.536%2012.3607%2013.6718C12.2958%2013.8076%2012.2049%2013.9204%2012.0881%2014.0103C11.9713%2014.1001%2011.835%2014.1518%2011.6793%2014.1652C11.5236%2014.1786%2011.3743%2014.1399%2011.2315%2014.049L7.99995%2012.1126Z%22%20fill%3D%22%234D4D4D%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E");
-  }
   .testimonial-carousel { width: 100%; min-width: 0; }
   .testimonial-carousel__spacing {
     position: relative;
@@ -104,144 +84,20 @@
   .testimonial-carousel__background img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .testimonial-carousel__content { min-width: 0; }
   .testimonial-carousel .carousel-block__container { position: relative; }
-  .testimonial-carousel .carousel-block__fraction-controls {
-    position: absolute;
-    left: calc(50% + var(--testimonial-controls-gap-half, 40px));
-    right: auto;
-    bottom: 0;
-    z-index: 3;
-    width: calc(50% - var(--testimonial-controls-gap-half, 40px));
-    margin-top: 0;
-    padding-inline: 0;
-  }
-  @media (min-width: 768px) {
-    .testimonial-carousel .testimonial-item--horizontal.testimonial-item--position-bottom > .group {
-      padding-bottom: 56px !important;
-    }
-  }
+  .testimonial-carousel .testimonial-split-arrow { display: block; width: 24px; height: 24px; position: relative; }
+  .testimonial-carousel .testimonial-split-arrow--previous { transform: scaleX(-1); }
+  .testimonial-carousel .testimonial-split-arrow > span { position: absolute; }
+  .testimonial-carousel .testimonial-split-arrow__shaft { left: 0.26%; top: 31.98%; }
+  .testimonial-carousel .testimonial-split-arrow__tip { left: 79.67%; top: 47.93%; }
   @media (max-width: 767.98px) {
-    .testimonial-carousel__spacing {
-      padding-top: var(--testimonial-carousel-padding-top-mobile, var(--testimonial-carousel-padding-top, 0px));
-      padding-bottom: var(--testimonial-carousel-padding-bottom-mobile, var(--testimonial-carousel-padding-bottom, 0px));
-    }
-    .testimonial-carousel .carousel-block__fraction-controls {
-      position: static;
-      width: 100%;
-      margin-top: 1rem;
-      padding-inline: 0;
-    }
-  }
-
-  .testimonial-carousel { display: block; }
-  .testimonial-carousel--malandra .testimonial-item--horizontal.swiper-slide {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 0;
-    background: transparent;
-  }
-  .testimonial-carousel--malandra .testimonial-item > .group {
-    height: auto;
-    padding: 0 clamp(32px, 5vw, 96px) 72px;
-    gap: 36px;
-    align-items: var(--testimonial-align, start);
-    text-align: var(--testimonial-align, start);
-  }
-  .testimonial-carousel--malandra .testimonial-item > .group .eyebrow-block {
-    margin: 0;
-    font-family: var(--font-body-family);
-    font-size: 14px;
-    line-height: 1.5;
-    letter-spacing: 1.5px;
-    color: #636363;
-  }
-  .testimonial-carousel--malandra .testimonial-item .group {
-    align-items: var(--testimonial-align, start);
-    text-align: var(--testimonial-align, start);
-    --text-align-default: var(--testimonial-align, start);
-  }
-  .testimonial-carousel--malandra .testimonial-item .heading-block {
-    font-size: 26px;
-    line-height: 1.4;
-    font-weight: 400;
-    letter-spacing: 0;
-    color: #181818;
-  }
-  .testimonial-carousel--malandra .testimonial-item .text-block {
-    font-size: 14px;
-    line-height: 1.5;
-    letter-spacing: 0;
-    color: #636363;
-  }
-  .testimonial-carousel--malandra .testimonial-item .icon-block:has(svg[viewBox="0 0 144 24"]) {
-    width: 88px;
-    height: 16px;
-    padding: 0;
-    background-image: var(--testimonial-star);
-    background-size: 16px 16px;
-    background-repeat: space no-repeat;
-  }
-  .testimonial-carousel--malandra .testimonial-item .icon-block svg[viewBox="0 0 144 24"] { visibility: hidden; }
-  .testimonial-carousel--malandra .testimonial-item > .image-block { align-self: stretch; }
-  .testimonial-carousel--malandra .testimonial-item > .image-block .image-block__media { aspect-ratio: var(--image-block-ratio, 5 / 4); }
-  @media (max-width: 767.98px) {
-    .testimonial-carousel--malandra .testimonial-item > .image-block .image-block__media { aspect-ratio: var(--image-block-ratio-mobile, var(--image-block-ratio, 5 / 4)); }
-  }
-  .testimonial-carousel--malandra .carousel-block__fraction { display: none; }
-  .testimonial-carousel--malandra .carousel-block__fraction-controls {
-    left: var(--testimonial-controls-left, 5%);
-    top: var(--testimonial-controls-top, auto);
-    bottom: auto;
-    width: var(--testimonial-controls-width, 40%);
-    justify-content: var(--testimonial-align, start);
-    gap: 16px;
-  }
-  .testimonial-carousel--malandra .carousel-block__fraction-button { position: relative; }
-  .testimonial-carousel--malandra .carousel-block__fraction-button svg { visibility: hidden; }
-  .testimonial-carousel--malandra .carousel-block__fraction-button::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: var(--testimonial-right-shaft), var(--testimonial-right-tip);
-    background-size: 23.8781px 4.81346px, 4.81923px 4.81962px;
-    background-position: 0.0624px 7.6752px, 19.1208px 11.5032px;
-    background-repeat: no-repeat;
-    pointer-events: none;
-  }
-  .testimonial-carousel--malandra [data-carousel-fraction-previous]::before {
-    background-image: var(--testimonial-left-shaft), var(--testimonial-left-tip);
-    transform: scaleX(-1);
-  }
-  @media (max-width: 767.98px) {
-    .testimonial-carousel--malandra .testimonial-item--horizontal.swiper-slide {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 40px;
-    }
-    .testimonial-carousel--malandra .testimonial-item > .image-block { order: -1; }
-    .testimonial-carousel--malandra .testimonial-item > .group {
-      padding: 0 16px;
-      gap: 24px;
-      justify-content: start;
-    }
-    .testimonial-carousel--malandra .testimonial-item .group {
-      align-items: var(--testimonial-align-mobile, start);
-      text-align: var(--testimonial-align-mobile, start);
-      --text-align-default: var(--testimonial-align-mobile, start);
-    }
-    .testimonial-carousel--malandra .testimonial-item .heading-block { font-size: 22px; }
-    .testimonial-carousel--malandra .carousel-block__fraction-controls {
-      position: static;
-      margin-top: 24px;
-      padding-inline: 16px;
-      width: 100%;
-      justify-content: var(--testimonial-align-mobile, start);
-    }
+    .testimonial-carousel__spacing { padding-top: var(--testimonial-carousel-padding-top-mobile, var(--testimonial-carousel-padding-top, 0px)); padding-bottom: var(--testimonial-carousel-padding-bottom-mobile, var(--testimonial-carousel-padding-bottom, 0px)); }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "Testimonial: Carousel",
-  "class": "section-kernel",
+  "name": "Testimonial: split",
+  "class": "section-testimonial-split",
   "enabled_on": {
     "templates": [
       "*"
@@ -249,77 +105,10 @@
   },
   "blocks": [
     {
-      "type": "carousel"
-    },
-    {
-      "type": "header"
-    },
-    {
-      "type": "heading"
-    },
-    {
-      "type": "editorial-text"
-    },
-    {
-      "type": "eyebrow"
-    },
-    {
-      "type": "text"
-    },
-    {
-      "type": "image"
-    },
-    {
-      "type": "image-card"
-    },
-    {
-      "type": "video"
-    },
-    {
-      "type": "button"
-    },
-    {
-      "type": "buttons"
-    },
-    {
-      "type": "icon"
-    },
-    {
-      "type": "divider"
-    },
-    {
-      "type": "spacer"
-    },
-    {
-      "type": "group"
-    },
-    {
-      "type": "marquee"
-    },
-    {
-      "type": "row"
-    },
-    {
-      "type": "grid"
-    },
-    {
-      "type": "email-signup"
-    },
-    {
-      "type": "contact-form"
-    },
-    {
-      "type": "product-list"
-    },
-    {
-      "type": "countdown-timer"
+      "type": "carousel_split"
     }
   ],
   "settings": [
-    {
-      "type": "header",
-      "content": "t:general.layout"
-    },
     {
       "type": "select",
       "id": "section_width",
@@ -341,72 +130,23 @@
       "default": "page_width"
     },
     {
-      "type": "select",
+      "type": "text_alignment",
       "id": "alignment",
-      "label": "Alignment",
-      "default": "left",
-      "options": [
-        {
-          "value": "left",
-          "label": "t:options.alignment.left"
-        },
-        {
-          "value": "center",
-          "label": "t:options.alignment.center"
-        },
-        {
-          "value": "right",
-          "label": "t:options.alignment.right"
-        }
-      ]
+      "label": "t:labels.alignment",
+      "default": "left"
     },
     {
-      "type": "select",
+      "type": "checkbox",
+      "id": "customize_mobile_alignment",
+      "label": "t:labels.customize_mobile_alignment",
+      "default": false
+    },
+    {
+      "type": "text_alignment",
       "id": "alignment_mobile",
-      "label": "Alignment (mobile)",
+      "label": "t:labels.mobile_alignment",
       "default": "left",
-      "options": [
-        {
-          "value": "left",
-          "label": "t:options.alignment.left"
-        },
-        {
-          "value": "center",
-          "label": "t:options.alignment.center"
-        },
-        {
-          "value": "right",
-          "label": "t:options.alignment.right"
-        }
-      ]
-    },
-    {
-      "type": "header",
-      "content": "t:general.gap"
-    },
-    {
-      "type": "range",
-      "id": "gap_desktop",
-      "label": "Desktop gap",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "gap_mobile",
-      "label": "Mobile gap",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 12
-    },
-    {
-      "type": "header",
-      "content": "t:general.appearance"
+      "visible_if": "{{ section.settings.customize_mobile_alignment }}"
     },
     {
       "type": "color_scheme",
@@ -480,456 +220,203 @@
   ],
   "presets": [
     {
-      "name": "Testimonial: Carousel",
+      "name": "Testimonial: split",
       "category": "Trust & social proof",
+      "settings": {
+        "section_width": "full_width_no_padding",
+        "color_scheme": "scheme-4"
+      },
       "blocks": [
         {
-          "type": "carousel",
+          "type": "carousel_split",
           "settings": {
-            "columns_desktop": "1",
-            "columns_mobile": "1",
-            "width": "fill",
-            "gap_desktop": 0,
-            "gap_mobile": 0,
-            "show_next_slide_preview_on_desktop": false,
-            "show_next_slide_preview_on_mobile": false,
-            "controls_style": "fraction",
-            "controls_alignment": "left",
-            "controls_alignment_mobile": "left",
-            "navigation_icon": "long_arrow",
             "loop": false,
-            "autoplay": false,
-            "show_pagination_on_desktop": false,
-            "show_pagination_on_mobile": false,
-            "pagination_padding_desktop": 48,
-            "pagination_padding_mobile": 36,
-            "show_navigation_on_desktop": true,
-            "transition_style": "slide"
+            "transition_style": "fade"
           },
           "blocks": [
             {
-              "type": "testimonial-item",
-              "settings": {
-                "position": "center",
-                "vertical_on_mobile": true,
-                "alignment_mobile": "left",
-                "gap_desktop": 0,
-                "gap_mobile": 40,
-                "border_thickness": 0,
-                "corner_radius": "square",
-                "shadow": "none"
-              },
+              "type": "_slide_split",
               "blocks": [
                 {
+                  "type": "image",
+                  "id": "image",
+                  "static": true,
+                  "settings": {
+                    "image": "shopify://shop_images/elara-figma-testimonial.avif",
+                    "image_ratio_desktop": "ratio_5_4",
+                    "image_ratio_mobile": "ratio_5_4",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill"
+                  }
+                },
+                {
                   "type": "group",
+                  "id": "content",
+                  "static": true,
                   "settings": {
                     "direction": "vertical",
-                    "position": "center",
                     "alignment": "left",
-                    "alignment_mobile": "left",
                     "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fill",
-                    "gap_desktop": 20,
-                    "gap_mobile": 8,
+                    "gap_desktop": 0,
+                    "gap_mobile": 0,
                     "appearance_type": "inherit",
                     "border_type": "none",
                     "corner_radius": "square",
-                    "shadow": "none",
-                    "padding_left": 96,
-                    "padding_right": 96,
-                    "padding_bottom": 72,
-                    "customize_mobile_padding": true,
-                    "padding_top_mobile": 0,
-                    "padding_bottom_mobile": 16,
-                    "padding_left_mobile": 16,
-                    "padding_right_mobile": 16
+                    "shadow": "none"
                   },
                   "blocks": [
                     {
                       "type": "eyebrow",
                       "settings": {
-                        "text": "<p>FROM THE PEOPLE</p>",
-                        "color": "#636363"
+                        "text": "<p>FROM THE PEOPLE</p>"
                       }
                     },
                     {
-                      "type": "group",
+                      "type": "icon",
                       "settings": {
-                        "direction": "vertical",
-                        "position": "top",
-                        "alignment": "left",
-                        "alignment_mobile": "left",
-                        "width": "fill",
-                        "width_mobile": "fill",
-                        "height": "fit",
-                        "gap_desktop": 20,
-                        "gap_mobile": 20,
-                        "appearance_type": "inherit",
-                        "border_type": "none",
-                        "corner_radius": "square",
-                        "shadow": "none"
-                      },
-                      "blocks": [
-                        {
-                          "type": "group",
-                          "settings": {
-                            "direction": "vertical",
-                            "position": "top",
-                            "alignment": "left",
-                            "alignment_mobile": "left",
-                            "width": "fill",
-                            "width_mobile": "fill",
-                            "height": "fit",
-                            "gap_desktop": 10,
-                            "gap_mobile": 10,
-                            "appearance_type": "inherit",
-                            "border_type": "none",
-                            "corner_radius": "square",
-                            "shadow": "none"
-                          },
-                          "blocks": [
-                            {
-                              "type": "icon",
-                              "settings": {
-                                "source": "library",
-                                "icon": "five-stars",
-                                "icon_width": 88,
-                                "custom_mobile": false
-                              }
-                            },
-                            {
-                              "type": "heading",
-                              "settings": {
-                                "text": "<p>“The necklace looks amazing! Thank you so much for all of your help and outstanding customer service. What I love most is the attention to detail. Every gem sparkles beautifully honour”</p>",
-                                "heading_size": "lg",
-                                "html_tag": "div",
-                                "width": "fill",
-                                "customize_mobile_size": true,
-                                "width_mobile": "fill"
-                              }
-                            }
-                          ]
-                        },
-                        {
-                          "type": "text",
-                          "settings": {
-                            "text": "<p>— Madison P, London</p>",
-                            "text_size": "sm",
-                            "width": "fill",
-                            "customize_mobile_size": true,
-                            "width_mobile": "fill"
-                          }
-                        }
-                      ]
+                        "source": "library",
+                        "icon": "five-stars",
+                        "icon_width": 88,
+                        "custom_mobile": false
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>“The necklace looks amazing! Thank you so much for all of your help and outstanding customer service. What I love most is the attention to detail. Every gem sparkles beautifully honour”</p>",
+                        "heading_size": "display",
+                        "html_tag": "h3",
+                        "width": "fill"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>— Madison P, London</p>",
+                        "text_size": "sm",
+                        "width": "fill"
+                      }
                     }
                   ]
-                },
-                {
-                  "type": "image",
-                  "settings": {
-                    "show_image_first_mobile": true,
-                    "image_ratio_desktop": "custom",
-                    "image_ratio_custom_width_desktop": 5,
-                    "image_ratio_custom_height_desktop": 4,
-                    "image_ratio_mobile": "custom",
-                    "image_ratio_custom_width_mobile": 5,
-                    "image_ratio_custom_height_mobile": 4,
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "corner_radius": "square"
-                  }
                 }
-              ]
+              ],
+              "settings": {
+                "position_horizontal": "center",
+                "horizontal_alignment": "left",
+                "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 40,
+                "height": "fill",
+                "appearance_type": "scheme",
+                "color_scheme": "scheme-4",
+                "border_type": "none",
+                "corner_radius": "square",
+                "shadow": "none",
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": false,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              }
             },
             {
-              "type": "testimonial-item",
-              "settings": {
-                "position": "center",
-                "vertical_on_mobile": true,
-                "alignment_mobile": "left",
-                "gap_desktop": 0,
-                "gap_mobile": 40,
-                "border_thickness": 0,
-                "corner_radius": "square",
-                "shadow": "none"
-              },
+              "type": "_slide_split",
               "blocks": [
                 {
+                  "type": "image",
+                  "id": "image",
+                  "static": true,
+                  "settings": {
+                    "image": "shopify://shop_images/elara-figma-testimonial-slide-2.avif",
+                    "image_ratio_desktop": "ratio_5_4",
+                    "image_ratio_mobile": "ratio_5_4",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill"
+                  }
+                },
+                {
                   "type": "group",
+                  "id": "content",
+                  "static": true,
                   "settings": {
                     "direction": "vertical",
-                    "position": "center",
                     "alignment": "left",
-                    "alignment_mobile": "left",
                     "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fill",
-                    "gap_desktop": 20,
-                    "gap_mobile": 8,
+                    "gap_desktop": 0,
+                    "gap_mobile": 0,
                     "appearance_type": "inherit",
                     "border_type": "none",
                     "corner_radius": "square",
-                    "shadow": "none",
-                    "padding_left": 96,
-                    "padding_right": 96,
-                    "padding_bottom": 72,
-                    "customize_mobile_padding": true,
-                    "padding_top_mobile": 0,
-                    "padding_bottom_mobile": 16,
-                    "padding_left_mobile": 16,
-                    "padding_right_mobile": 16
+                    "shadow": "none"
                   },
                   "blocks": [
                     {
                       "type": "eyebrow",
                       "settings": {
-                        "text": "<p>FROM THE PEOPLE</p>",
-                        "color": "#636363"
+                        "text": "<p>FROM THE PEOPLE</p>"
                       }
                     },
                     {
-                      "type": "group",
+                      "type": "icon",
                       "settings": {
-                        "direction": "vertical",
-                        "position": "top",
-                        "alignment": "left",
-                        "alignment_mobile": "left",
-                        "width": "fill",
-                        "width_mobile": "fill",
-                        "height": "fit",
-                        "gap_desktop": 20,
-                        "gap_mobile": 20,
-                        "appearance_type": "inherit",
-                        "border_type": "none",
-                        "corner_radius": "square",
-                        "shadow": "none"
-                      },
-                      "blocks": [
-                        {
-                          "type": "group",
-                          "settings": {
-                            "direction": "vertical",
-                            "position": "top",
-                            "alignment": "left",
-                            "alignment_mobile": "left",
-                            "width": "fill",
-                            "width_mobile": "fill",
-                            "height": "fit",
-                            "gap_desktop": 10,
-                            "gap_mobile": 10,
-                            "appearance_type": "inherit",
-                            "border_type": "none",
-                            "corner_radius": "square",
-                            "shadow": "none"
-                          },
-                          "blocks": [
-                            {
-                              "type": "icon",
-                              "settings": {
-                                "source": "library",
-                                "icon": "five-stars",
-                                "icon_width": 88,
-                                "custom_mobile": false
-                              }
-                            },
-                            {
-                              "type": "heading",
-                              "settings": {
-                                "text": "<p>“The necklace looks amazing! Thank you so much for all of your help and outstanding customer service. What I love most is the attention to detail. Every gem sparkles beautifully honour”</p>",
-                                "heading_size": "lg",
-                                "html_tag": "div",
-                                "width": "fill",
-                                "customize_mobile_size": true,
-                                "width_mobile": "fill"
-                              }
-                            }
-                          ]
-                        },
-                        {
-                          "type": "text",
-                          "settings": {
-                            "text": "<p>— Madison P, London</p>",
-                            "text_size": "sm",
-                            "width": "fill",
-                            "customize_mobile_size": true,
-                            "width_mobile": "fill"
-                          }
-                        }
-                      ]
+                        "source": "library",
+                        "icon": "five-stars",
+                        "icon_width": 88,
+                        "custom_mobile": false
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>\"They created a gorgeous piece for me! I have so much of their jewelry so it was difficult, but they outdid themselves again with something totally different than anything I have!\"</p>",
+                        "heading_size": "display",
+                        "html_tag": "h3",
+                        "width": "fill"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>— Rachel L, USA</p>",
+                        "text_size": "sm",
+                        "width": "fill"
+                      }
                     }
                   ]
-                },
-                {
-                  "type": "image",
-                  "settings": {
-                    "show_image_first_mobile": true,
-                    "image_ratio_desktop": "custom",
-                    "image_ratio_custom_width_desktop": 5,
-                    "image_ratio_custom_height_desktop": 4,
-                    "image_ratio_mobile": "custom",
-                    "image_ratio_custom_width_mobile": 5,
-                    "image_ratio_custom_height_mobile": 4,
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "corner_radius": "square"
-                  }
                 }
-              ]
-            },
-            {
-              "type": "testimonial-item",
+              ],
               "settings": {
-                "position": "center",
-                "vertical_on_mobile": true,
+                "position_horizontal": "center",
+                "horizontal_alignment": "left",
                 "alignment_mobile": "left",
                 "gap_desktop": 0,
                 "gap_mobile": 40,
-                "border_thickness": 0,
+                "height": "fill",
+                "appearance_type": "scheme",
+                "color_scheme": "scheme-4",
+                "border_type": "none",
                 "corner_radius": "square",
-                "shadow": "none"
-              },
-              "blocks": [
-                {
-                  "type": "group",
-                  "settings": {
-                    "direction": "vertical",
-                    "position": "center",
-                    "alignment": "left",
-                    "alignment_mobile": "left",
-                    "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fill",
-                    "gap_desktop": 20,
-                    "gap_mobile": 8,
-                    "appearance_type": "inherit",
-                    "border_type": "none",
-                    "corner_radius": "square",
-                    "shadow": "none",
-                    "padding_left": 96,
-                    "padding_right": 96,
-                    "padding_bottom": 72,
-                    "customize_mobile_padding": true,
-                    "padding_top_mobile": 0,
-                    "padding_bottom_mobile": 16,
-                    "padding_left_mobile": 16,
-                    "padding_right_mobile": 16
-                  },
-                  "blocks": [
-                    {
-                      "type": "eyebrow",
-                      "settings": {
-                        "text": "<p>FROM THE PEOPLE</p>",
-                        "color": "#636363"
-                      }
-                    },
-                    {
-                      "type": "group",
-                      "settings": {
-                        "direction": "vertical",
-                        "position": "top",
-                        "alignment": "left",
-                        "alignment_mobile": "left",
-                        "width": "fill",
-                        "width_mobile": "fill",
-                        "height": "fit",
-                        "gap_desktop": 20,
-                        "gap_mobile": 20,
-                        "appearance_type": "inherit",
-                        "border_type": "none",
-                        "corner_radius": "square",
-                        "shadow": "none"
-                      },
-                      "blocks": [
-                        {
-                          "type": "group",
-                          "settings": {
-                            "direction": "vertical",
-                            "position": "top",
-                            "alignment": "left",
-                            "alignment_mobile": "left",
-                            "width": "fill",
-                            "width_mobile": "fill",
-                            "height": "fit",
-                            "gap_desktop": 10,
-                            "gap_mobile": 10,
-                            "appearance_type": "inherit",
-                            "border_type": "none",
-                            "corner_radius": "square",
-                            "shadow": "none"
-                          },
-                          "blocks": [
-                            {
-                              "type": "icon",
-                              "settings": {
-                                "source": "library",
-                                "icon": "five-stars",
-                                "icon_width": 88,
-                                "custom_mobile": false
-                              }
-                            },
-                            {
-                              "type": "heading",
-                              "settings": {
-                                "text": "<p>“The necklace looks amazing! Thank you so much for all of your help and outstanding customer service. What I love most is the attention to detail. Every gem sparkles beautifully honour”</p>",
-                                "heading_size": "lg",
-                                "html_tag": "div",
-                                "width": "fill",
-                                "customize_mobile_size": true,
-                                "width_mobile": "fill"
-                              }
-                            }
-                          ]
-                        },
-                        {
-                          "type": "text",
-                          "settings": {
-                            "text": "<p>— Madison P, London</p>",
-                            "text_size": "sm",
-                            "width": "fill",
-                            "customize_mobile_size": true,
-                            "width_mobile": "fill"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "image",
-                  "settings": {
-                    "show_image_first_mobile": true,
-                    "image_ratio_desktop": "custom",
-                    "image_ratio_custom_width_desktop": 5,
-                    "image_ratio_custom_height_desktop": 4,
-                    "image_ratio_mobile": "custom",
-                    "image_ratio_custom_width_mobile": 5,
-                    "image_ratio_custom_height_mobile": 4,
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "corner_radius": "square"
-                  }
-                }
-              ]
+                "shadow": "none",
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": false,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              }
             }
           ]
         }
-      ],
-      "settings": {
-        "section_width": "full_width_no_padding",
-        "alignment": "left",
-        "alignment_mobile": "left",
-        "color_scheme": "scheme-4",
-        "background_color": "#f9f9f9",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 56,
-        "gap_desktop": 0,
-        "gap_mobile": 0
-      }
+      ]
     }
-  ]
+  ],
+  "max_blocks": 1
 }
 {% endschema %}
