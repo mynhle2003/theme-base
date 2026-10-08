@@ -10,6 +10,7 @@
   @param {boolean} [show_sale_badge] - Whether sale status may be displayed
   @param {boolean} [show_sold_out_badge] - Whether sold-out status may be displayed
   @param {boolean} [show_manual_badges] - Whether configured badges may be displayed
+  @param {boolean} [show_tags] - Product-card switch for up to three product tags
   @param {string} [context] - Rendering surface, product-card or product-page
   @param {string} [attributes] - Attributes for the selectable block wrapper
   @param {string} [sale_badge_type] - Optional resolved sale badge format
@@ -92,7 +93,7 @@
   endif
 
   assign custom_tag_badges_visible = false
-  if show_manual_badges and settings.badge_custom_enabled and product != blank
+  if context != 'product-card' and show_manual_badges and settings.badge_custom_enabled and product != blank
     for product_tag in product.tags limit: 12
       assign clean_product_tag = product_tag | strip
       assign normalized_tag = clean_product_tag | downcase
@@ -117,6 +118,30 @@
   endif
 %}
 
+{% capture product_tag_badges %}
+  {% if context == 'product-card' and show_tags and product != blank %}
+    {% assign product_tag_count = 0 %}
+    {% for product_tag in product.tags %}
+      {% assign product_tag_label = product_tag | strip %}
+      {% assign product_tag_prefix = product_tag_label | downcase | slice: 0, 6 %}
+      {% if product_tag_prefix == 'badge:' %}
+        {% assign product_tag_label = product_tag_label | slice: 6, 255 | strip %}
+      {% endif %}
+      {% if product_tag_label != blank %}
+        {% assign product_tag_tone = 'tag' %}
+        {% if product_tag_count == 1 %}
+          {% assign product_tag_tone = 'tag-secondary' %}
+        {% endif %}
+        {% render 'badge', text: product_tag_label, tone: product_tag_tone %}
+        {% assign product_tag_count = product_tag_count | plus: 1 %}
+        {% if product_tag_count == 3 %}{% break %}{% endif %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endcapture %}
+{% assign product_tag_badges = product_tag_badges | strip %}
+{% if product_tag_badges != blank %}{% assign has_visible_badge = true %}{% endif %}
+
 {% if has_visible_badge %}
   {% assign badges_class = 'product-card__badges' %}
   {% if context == 'product-page' %}
@@ -137,6 +162,7 @@
     {% if collection_rule_3_visible %}
       {% render 'badge', text: settings.badge_collection_label_3, tone: 'manual' %}
     {% endif %}
+    {{ product_tag_badges }}
     {% if custom_tag_badges_visible %}
       {% assign rendered_manual_labels = '|' %}
       {% assign manual_tag_count = 0 %}

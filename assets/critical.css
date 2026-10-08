@@ -1864,6 +1864,21 @@ legend {
 .product-card__media-overlay .product-card__badges {
   position: static;
   max-width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.product-card__media-overlay .product-badge {
+  min-height: 22px;
+  padding: 2px 8px;
+  border-width: 0;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  line-height: 1.5;
+  text-transform: uppercase;
 }
 
 .product-card__media .product-card__secondary-image {
@@ -2658,6 +2673,16 @@ legend {
   border-color: var(--accent-color);
   background: var(--accent-color);
   color: var(--background-color);
+}
+
+.product-badge--tag {
+  background: var(--badge-tag-background);
+  color: var(--badge-tag-color);
+}
+
+.product-badge--tag-secondary {
+  background: var(--badge-tag-secondary-background);
+  color: var(--badge-tag-secondary-color);
 }
 
 .price {

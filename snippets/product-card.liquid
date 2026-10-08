@@ -233,6 +233,8 @@
       {% render 'product-badges',
         product: product,
         show_sale_badge: show_sale_badge,
+        show_tags: settings.product_card_show_tags,
+        context: 'product-card',
         show_sold_out_badge: show_sold_out_badge,
         show_manual_badges: true
       %}
