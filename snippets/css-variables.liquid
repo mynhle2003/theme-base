@@ -393,10 +393,10 @@
   endif
   assign icon_thickness = settings.icon_thickness
   if icon_thickness == blank
-    assign icon_thickness = 120
+    assign icon_thickness = 100
   endif
   assign icon_thickness_scale = icon_thickness | divided_by: 100.0
-  assign icon_stroke_width = icon_thickness_scale | times: 1.5
+  assign icon_stroke_width = icon_thickness_scale | times: 1.25
 
   assign button_radius = 'var(--radius-square)'
   case settings.button_radius_style

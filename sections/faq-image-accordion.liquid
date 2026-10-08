@@ -93,7 +93,15 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
+  .section-faq-image-accordion .group--horizontal:has(> .images-block) > .faq-accordion--style-simple {
+    box-sizing: border-box;
+    padding-right: 80px;
+    --faq-divider-color: #ccc;
+  }
   @media (max-width: 767.98px) {
+    .section-faq-image-accordion .group--horizontal:has(> .images-block) > .faq-accordion--style-simple {
+      padding-right: 0;
+    }
     .faq-section .group--horizontal.group--mobile-vertical:has(> .images-block) {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -450,16 +458,16 @@
                 "style": "simple",
                 "icon": "chevron",
                 "dividers": true,
-                "question_font_size": "xs",
-                "answer_font_size": "sm",
-                "gap_desktop": 0,
-                "gap_mobile": 0,
+                "question_font_size": "sm",
+                "gap_desktop": 20,
+                "gap_mobile": 20,
                 "width": "fill",
                 "padding": "custom",
                 "padding_top": 20,
                 "padding_bottom": 20,
                 "padding_left": 0,
-                "padding_right": 0
+                "padding_right": 0,
+                "question_font": "heading"
               },
               "blocks": [
                 {
@@ -471,9 +479,11 @@
                   },
                   "blocks": [
                     {
-                      "type": "faq_answer_text",
+                      "type": "text",
                       "settings": {
-                        "text": "<p>Once your order ships, you\u2019ll receive a confirmation email with a tracking link so you can follow your package in real time. Please contact our support team immediately with your order number and a photo of the item.</p>"
+                        "text": "<p>Once your order ships, you’ll receive a confirmation email with a tracking link so you can follow your package in real time. Please contact our support team immediately with your order number and a photo of the item.</p>",
+                        "text_size": "sm",
+                        "width": "fill"
                       }
                     }
                   ]
@@ -487,9 +497,11 @@
                   },
                   "blocks": [
                     {
-                      "type": "faq_answer_text",
+                      "type": "text",
                       "settings": {
-                        "text": ""
+                        "text": "<p>Select the items you would like to purchase, choose the available options, and add them to your cart. Review your cart, then proceed to checkout to enter your delivery and payment details.</p>",
+                        "text_size": "sm",
+                        "width": "fill"
                       }
                     }
                   ]
@@ -503,9 +515,11 @@
                   },
                   "blocks": [
                     {
-                      "type": "faq_answer_text",
+                      "type": "text",
                       "settings": {
-                        "text": ""
+                        "text": "<p>Available shipping methods, delivery estimates, and costs are shown at checkout after you enter your delivery address. Please review these options before completing your order.</p>",
+                        "text_size": "sm",
+                        "width": "fill"
                       }
                     }
                   ]
@@ -513,15 +527,17 @@
                 {
                   "type": "faq_item",
                   "settings": {
-                    "question": "Can I change or cancel my order after it\u2019s been placed?",
+                    "question": "Can I change or cancel my order after it’s been placed?",
                     "show_question_icon": false,
                     "initially_open": false
                   },
                   "blocks": [
                     {
-                      "type": "faq_answer_text",
+                      "type": "text",
                       "settings": {
-                        "text": ""
+                        "text": "<p>Please contact our support team as soon as possible with your order number and the changes you would like to make. We will check your order status and let you know whether a change or cancellation is possible.</p>",
+                        "text_size": "sm",
+                        "width": "fill"
                       }
                     }
                   ]
@@ -535,9 +551,11 @@
                   },
                   "blocks": [
                     {
-                      "type": "faq_answer_text",
+                      "type": "text",
                       "settings": {
-                        "text": ""
+                        "text": "<p>Check the latest updates using your tracking link. If your package appears delayed or lost, contact our support team with your order number and tracking details so we can help you check its status.</p>",
+                        "text_size": "sm",
+                        "width": "fill"
                       }
                     }
                   ]
@@ -551,9 +569,11 @@
                   },
                   "blocks": [
                     {
-                      "type": "faq_answer_text",
+                      "type": "text",
                       "settings": {
-                        "text": ""
+                        "text": "<p>Enter your delivery address at checkout to see whether shipping is available to your country and which delivery options apply. Contact our support team if you need help checking your destination.</p>",
+                        "text_size": "sm",
+                        "width": "fill"
                       }
                     }
                   ]
