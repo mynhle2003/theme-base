@@ -55,6 +55,18 @@
 
   assign image_card_height_desktop = block.settings.height_desktop | default: 'ratio_1_1'
   assign image_card_height_mobile = block.settings.height_mobile | default: 'ratio_1_1'
+  if image_card_height_desktop == 'custom'
+    capture image_card_ratio_desktop
+      render 'image-ratio-value', setting: 'custom', fallback_ratio: 'auto', custom_width: block.settings.height_desktop_custom_width, custom_height: block.settings.height_desktop_custom_height
+    endcapture
+    assign image_card_ratio_desktop = image_card_ratio_desktop | strip
+  endif
+  if image_card_height_mobile == 'custom'
+    capture image_card_ratio_mobile
+      render 'image-ratio-value', setting: 'custom', fallback_ratio: 'auto', custom_width: block.settings.height_mobile_custom_width, custom_height: block.settings.height_mobile_custom_height
+    endcapture
+    assign image_card_ratio_mobile = image_card_ratio_mobile | strip
+  endif
   assign image_card_position_desktop = block.settings.position_desktop | default: 'top_center'
   assign image_card_position_mobile = block.settings.position_mobile | default: 'top_center'
 
@@ -152,6 +164,8 @@
 %}
 
 {% capture image_card_style %}
+  {% if image_card_height_desktop == 'custom' %}--image-card-ratio: {{ image_card_ratio_desktop }};{% endif %}
+  {% if image_card_height_mobile == 'custom' %}--image-card-ratio-mobile: {{ image_card_ratio_mobile }};{% endif %}
   {% if image_card_width_desktop != '100%' %}--image-card-width: {{ image_card_width_desktop }};{% endif %}
   {% if image_card_max_width_desktop != '100%' %}--image-card-max-width: {{ image_card_max_width_desktop }};{% endif %}
   {% if image_card_padding_top != 0 %}--image-card-padding-top: {{ image_card_padding_top }}px;{% endif %}
@@ -668,91 +682,61 @@
         },
         {
           "value": "ratio_1_1",
-          "label": "t:options.image_card_height.ratio_1_1"
+          "label": "Square (1:1)"
         },
         {
           "value": "ratio_4_5",
-          "label": "t:options.image_card_height.ratio_4_5"
-        },
-        {
-          "value": "ratio_3_2",
-          "label": "t:options.image_card_height.ratio_3_2"
-        },
-        {
-          "value": "ratio_4_3",
-          "label": "t:options.image_card_height.ratio_4_3"
-        },
-        {
-          "value": "ratio_16_9",
-          "label": "t:options.image_card_height.ratio_16_9"
-        },
-        {
-          "value": "ratio_2_3",
-          "label": "t:options.image_card_height.ratio_2_3"
+          "label": "Portrait (4:5)"
         },
         {
           "value": "ratio_3_4",
-          "label": "t:options.image_card_height.ratio_3_4"
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
         },
         {
           "value": "ratio_9_16",
-          "label": "t:options.image_card_height.ratio_9_16"
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
         },
         {
           "value": "ratio_5_4",
-          "label": "5:4"
+          "label": "Landscape (5:4)"
         },
         {
-          "value": "ratio_6_7",
-          "label": "6:7"
-        },
-        {
-          "value": "ratio_7_6",
-          "label": "7:6"
-        },
-        {
-          "value": "ratio_5_7",
-          "label": "5:7"
-        },
-        {
-          "value": "ratio_7_5",
-          "label": "7:5"
-        },
-        {
-          "value": "ratio_2_1",
-          "label": "2:1"
-        },
-        {
-          "value": "ratio_1_2",
-          "label": "1:2"
-        },
-        {
-          "value": "ratio_12_5",
-          "label": "12:5"
-        },
-        {
-          "value": "ratio_5_12",
-          "label": "5:12"
-        },
-        {
-          "value": "ratio_48_17",
-          "label": "48:17"
-        },
-        {
-          "value": "ratio_17_48",
-          "label": "17:48"
-        },
-        {
-          "value": "ratio_5_8",
-          "label": "5:8"
-        },
-        {
-          "value": "ratio_8_5",
-          "label": "8:5"
+          "value": "custom",
+          "label": "t:options.image_ratio.custom"
         }
       ],
       "default": "ratio_1_1",
       "visible_if": "{{ block.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "number",
+      "id": "height_desktop_custom_width",
+      "label": "W",
+      "default": 16,
+      "visible_if": "{{ block.settings.device == 'desktop' and block.settings.height_desktop == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "height_desktop_custom_height",
+      "label": "H",
+      "default": 9,
+      "visible_if": "{{ block.settings.device == 'desktop' and block.settings.height_desktop == 'custom' }}"
     },
     {
       "type": "select",
@@ -811,91 +795,61 @@
         },
         {
           "value": "ratio_1_1",
-          "label": "t:options.image_card_height.ratio_1_1"
+          "label": "Square (1:1)"
         },
         {
           "value": "ratio_4_5",
-          "label": "t:options.image_card_height.ratio_4_5"
-        },
-        {
-          "value": "ratio_3_2",
-          "label": "t:options.image_card_height.ratio_3_2"
-        },
-        {
-          "value": "ratio_4_3",
-          "label": "t:options.image_card_height.ratio_4_3"
-        },
-        {
-          "value": "ratio_16_9",
-          "label": "t:options.image_card_height.ratio_16_9"
-        },
-        {
-          "value": "ratio_2_3",
-          "label": "t:options.image_card_height.ratio_2_3"
+          "label": "Portrait (4:5)"
         },
         {
           "value": "ratio_3_4",
-          "label": "t:options.image_card_height.ratio_3_4"
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
         },
         {
           "value": "ratio_9_16",
-          "label": "t:options.image_card_height.ratio_9_16"
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
         },
         {
           "value": "ratio_5_4",
-          "label": "5:4"
+          "label": "Landscape (5:4)"
         },
         {
-          "value": "ratio_6_7",
-          "label": "6:7"
-        },
-        {
-          "value": "ratio_7_6",
-          "label": "7:6"
-        },
-        {
-          "value": "ratio_5_7",
-          "label": "5:7"
-        },
-        {
-          "value": "ratio_7_5",
-          "label": "7:5"
-        },
-        {
-          "value": "ratio_2_1",
-          "label": "2:1"
-        },
-        {
-          "value": "ratio_1_2",
-          "label": "1:2"
-        },
-        {
-          "value": "ratio_12_5",
-          "label": "12:5"
-        },
-        {
-          "value": "ratio_5_12",
-          "label": "5:12"
-        },
-        {
-          "value": "ratio_48_17",
-          "label": "48:17"
-        },
-        {
-          "value": "ratio_17_48",
-          "label": "17:48"
-        },
-        {
-          "value": "ratio_5_8",
-          "label": "5:8"
-        },
-        {
-          "value": "ratio_8_5",
-          "label": "8:5"
+          "value": "custom",
+          "label": "t:options.image_ratio.custom"
         }
       ],
       "default": "ratio_1_1",
       "visible_if": "{{ block.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "number",
+      "id": "height_mobile_custom_width",
+      "label": "W",
+      "default": 16,
+      "visible_if": "{{ block.settings.device == 'mobile' and block.settings.height_mobile == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "height_mobile_custom_height",
+      "label": "H",
+      "default": 9,
+      "visible_if": "{{ block.settings.device == 'mobile' and block.settings.height_mobile == 'custom' }}"
     },
     {
       "type": "header",

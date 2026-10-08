@@ -22,11 +22,11 @@
   <label class="form__label{% if quantity_label == blank %} visually-hidden{% endif %}" for="{{ form_id }}-quantity">{% if quantity_label != blank %}{{ quantity_label | escape }}{% else %}{{ 'accessibility.quantity' | t }}{% endif %}</label>
   <div class="product-buy-buttons__quantity-control">
     <button class="product-buy-buttons__quantity-button" type="button" aria-label="{{ 'cart.decrease' | t | escape }}" aria-controls="{{ form_id }}-quantity" data-quantity-decrease>
-      {% render 'icon', icon: 'minus', bare: true %}
+      {% render 'quantity-icon', icon: 'minus' %}
     </button>
     <input id="{{ form_id }}-quantity" class="form__control form__control--input" type="number" name="quantity" value="{{ quantity_min }}" min="{{ quantity_min }}" step="{{ quantity_step }}" inputmode="numeric" autocomplete="off"{% if quantity_max != blank %} max="{{ quantity_max }}"{% endif %} data-quantity-input>
     <button class="product-buy-buttons__quantity-button" type="button" aria-label="{{ 'cart.increase' | t | escape }}" aria-controls="{{ form_id }}-quantity" data-quantity-increase>
-      {% render 'icon', icon: 'plus', bare: true %}
+      {% render 'quantity-icon', icon: 'plus' %}
     </button>
   </div>
 </div>

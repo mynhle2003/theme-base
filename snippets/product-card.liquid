@@ -25,8 +25,11 @@
     assign card_style = 'standard'
   endunless
 
-  assign card_ratio = settings.product_card_ratio | default: 'natural'
-  unless card_ratio == 'natural' or card_ratio == 'square' or card_ratio == 'portrait' or card_ratio == 'landscape' or card_ratio == 'ratio_1_1' or card_ratio == 'ratio_4_5' or card_ratio == 'ratio_5_4' or card_ratio == 'ratio_6_7' or card_ratio == 'ratio_7_6' or card_ratio == 'ratio_5_7' or card_ratio == 'ratio_7_5' or card_ratio == 'ratio_2_3' or card_ratio == 'ratio_3_2' or card_ratio == 'ratio_4_3' or card_ratio == 'ratio_3_4' or card_ratio == 'ratio_2_1' or card_ratio == 'ratio_1_2' or card_ratio == 'ratio_16_9' or card_ratio == 'ratio_9_16' or card_ratio == 'ratio_12_5' or card_ratio == 'ratio_5_12' or card_ratio == 'ratio_48_17' or card_ratio == 'ratio_17_48' or card_ratio == 'ratio_5_8' or card_ratio == 'ratio_8_5'
+  assign card_ratio = settings.product_card_ratio | default: 'original'
+  if card_ratio == 'original'
+    assign card_ratio = 'natural'
+  endif
+  unless card_ratio == 'custom' or card_ratio == 'natural' or card_ratio == 'square' or card_ratio == 'portrait' or card_ratio == 'landscape' or card_ratio == 'ratio_1_1' or card_ratio == 'ratio_4_5' or card_ratio == 'ratio_5_4' or card_ratio == 'ratio_6_7' or card_ratio == 'ratio_7_6' or card_ratio == 'ratio_5_7' or card_ratio == 'ratio_7_5' or card_ratio == 'ratio_2_3' or card_ratio == 'ratio_3_2' or card_ratio == 'ratio_4_3' or card_ratio == 'ratio_3_4' or card_ratio == 'ratio_2_1' or card_ratio == 'ratio_1_2' or card_ratio == 'ratio_16_9' or card_ratio == 'ratio_9_16' or card_ratio == 'ratio_12_5' or card_ratio == 'ratio_5_12' or card_ratio == 'ratio_48_17' or card_ratio == 'ratio_17_48' or card_ratio == 'ratio_5_8' or card_ratio == 'ratio_8_5'
     assign card_ratio = 'natural'
   endunless
 

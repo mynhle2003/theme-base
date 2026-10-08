@@ -106,6 +106,12 @@
         assign collection_card_ratio = 1
       endif
   endcase
+  if collection_card_ratio_setting == 'custom' and block.settings.ratio_custom_width != blank and block.settings.ratio_custom_height != blank
+    capture collection_card_ratio
+      render 'image-ratio-value', setting: 'custom', fallback_ratio: 'auto', custom_width: block.settings.ratio_custom_width, custom_height: block.settings.ratio_custom_height
+    endcapture
+    assign collection_card_ratio = collection_card_ratio | strip
+  endif
   assign collection_card_gap_desktop = block.settings.gap_desktop | default: 4 | plus: 0
   assign collection_card_gap_mobile = block.settings.gap_mobile | default: collection_card_gap_desktop | plus: 0
   if collection_card_gap_desktop < 0 or collection_card_gap_desktop > 40

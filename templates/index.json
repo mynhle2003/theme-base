@@ -263,14 +263,14 @@
             "open_in_new_tab": false,
             "alt_text": "Gold necklace and hoop earrings styled together",
             "device": "desktop",
-            "image_ratio_desktop": "ratio_6_7",
+            "image_ratio_desktop": "custom",
             "image_ratio_custom_width_desktop": 6,
             "image_ratio_custom_height_desktop": 7,
             "width_desktop": "fill",
             "width_custom_desktop": 100,
             "limit_width_desktop": false,
             "max_width_desktop": 1600,
-            "image_ratio_mobile": "ratio_6_7",
+            "image_ratio_mobile": "custom",
             "image_ratio_custom_width_mobile": 6,
             "image_ratio_custom_height_mobile": 7,
             "width_mobile": "fill",
@@ -630,8 +630,7 @@
               "type": "collection-card",
               "static": true,
               "settings": {
-                "ratio": "portrait_6_7",
-                "ratio_custom": 0.9,
+                "ratio": "custom",
                 "placement": "on_image",
                 "alignment": "left",
                 "gap_desktop": 12,
@@ -644,7 +643,9 @@
                 "padding_top": 28,
                 "padding_bottom": 28,
                 "padding_left": 28,
-                "padding_right": 28
+                "padding_right": 28,
+                "ratio_custom_width": 6,
+                "ratio_custom_height": 7
               },
               "blocks": {
                 "title": {
@@ -1307,10 +1308,10 @@
                   "type": "image",
                   "settings": {
                     "show_image_first_mobile": true,
-                    "image_ratio_desktop": "ratio_5_4",
+                    "image_ratio_desktop": "custom",
                     "image_ratio_custom_width_desktop": 5,
                     "image_ratio_custom_height_desktop": 4,
-                    "image_ratio_mobile": "ratio_5_4",
+                    "image_ratio_mobile": "custom",
                     "image_ratio_custom_width_mobile": 5,
                     "image_ratio_custom_height_mobile": 4,
                     "width_desktop": "fill",
@@ -1460,10 +1461,10 @@
                   "type": "image",
                   "settings": {
                     "show_image_first_mobile": true,
-                    "image_ratio_desktop": "ratio_5_4",
+                    "image_ratio_desktop": "custom",
                     "image_ratio_custom_width_desktop": 5,
                     "image_ratio_custom_height_desktop": 4,
-                    "image_ratio_mobile": "ratio_5_4",
+                    "image_ratio_mobile": "custom",
                     "image_ratio_custom_width_mobile": 5,
                     "image_ratio_custom_height_mobile": 4,
                     "width_desktop": "fill",
@@ -1613,10 +1614,10 @@
                   "type": "image",
                   "settings": {
                     "show_image_first_mobile": true,
-                    "image_ratio_desktop": "ratio_5_4",
+                    "image_ratio_desktop": "custom",
                     "image_ratio_custom_width_desktop": 5,
                     "image_ratio_custom_height_desktop": 4,
-                    "image_ratio_mobile": "ratio_5_4",
+                    "image_ratio_mobile": "custom",
                     "image_ratio_custom_width_mobile": 5,
                     "image_ratio_custom_height_mobile": 4,
                     "width_desktop": "fill",
@@ -1649,7 +1650,7 @@
       "settings": {
         "section_width": "full_width_no_padding",
         "gap_desktop": 0,
-        "gap_mobile": 30,
+        "gap_mobile": 0,
         "color_scheme": "scheme-1",
         "padding_top": 0,
         "padding_bottom": 0,
@@ -1673,8 +1674,8 @@
             "width": "fill",
             "width_mobile": "fill",
             "height": "fill",
-            "gap_desktop": 20,
-            "gap_mobile": 20,
+            "gap_desktop": 0,
+            "gap_mobile": 0,
             "border_type": "none",
             "corner_radius": "square",
             "shadow": "none",
@@ -1687,12 +1688,14 @@
               "type": "image",
               "settings": {
                 "image_ratio_desktop": "fill_height",
-                "image_ratio_mobile": "original",
+                "image_ratio_mobile": "custom",
                 "width_desktop": "fill",
                 "width_mobile": "fill",
                 "corner_radius": "square",
                 "image": "shopify://shop_images/elara-figma-editorial-necklaces.avif",
-                "mobile_image": "shopify://shop_images/elara-figma-editorial-necklaces.avif"
+                "mobile_image": "shopify://shop_images/elara-figma-editorial-necklaces.avif",
+                "image_ratio_custom_width_mobile": 5,
+                "image_ratio_custom_height_mobile": 4
               }
             }
           },
@@ -1708,9 +1711,9 @@
             "alignment_mobile": "center",
             "width": "fill",
             "width_mobile": "fill",
-            "height": "fit",
+            "height": "fill",
             "gap_desktop": 20,
-            "gap_mobile": 20,
+            "gap_mobile": 24,
             "border_type": "none",
             "corner_radius": "square",
             "shadow": "none",
@@ -1718,46 +1721,52 @@
             "padding_bottom": 64,
             "padding_left": 64,
             "padding_right": 64,
-            "customize_mobile_padding": false,
-            "padding_top_mobile": 64,
-            "padding_bottom_mobile": 64,
-            "padding_left_mobile": 64,
-            "padding_right_mobile": 64,
-            "position": "top"
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 56,
+            "padding_bottom_mobile": 56,
+            "padding_left_mobile": 20,
+            "padding_right_mobile": 20,
+            "position": "center"
           },
           "blocks": {
             "heading-1": {
               "type": "heading",
               "settings": {
                 "text": "<p>Lighting Ridge Opals</p>",
-                "heading_size": "xl",
+                "heading_size": "custom",
                 "html_tag": "h2",
                 "width": "fit",
                 "customize_mobile_size": true,
                 "width_mobile": "fit",
-                "padding_bottom": 0,
-                "customize_mobile_padding": false,
-                "padding_bottom_mobile": 0
+                "padding_bottom": 20,
+                "customize_mobile_padding": true,
+                "padding_bottom_mobile": 12,
+                "custom_heading_size": 34
               }
             },
             "image-2": {
               "type": "image",
               "settings": {
-                "image_ratio_desktop": "original",
-                "image_ratio_mobile": "original",
+                "image_ratio_desktop": "ratio_4_5",
+                "image_ratio_mobile": "ratio_4_5",
                 "width_desktop": "fill",
                 "width_mobile": "fill",
                 "corner_radius": "square",
-                "limit_width_desktop": false,
+                "limit_width_desktop": true,
                 "max_width_desktop": 384,
-                "limit_width_mobile": false,
+                "limit_width_mobile": true,
                 "max_width_mobile": 256,
                 "image": "shopify://shop_images/elara-figma-editorial-ring.avif",
                 "mobile_image": "shopify://shop_images/elara-figma-editorial-ring.avif",
                 "image_ratio_custom_width_desktop": 4,
                 "image_ratio_custom_height_desktop": 5,
                 "image_ratio_custom_width_mobile": 4,
-                "image_ratio_custom_height_mobile": 5
+                "image_ratio_custom_height_mobile": 5,
+                "padding_left": 2,
+                "padding_right": 2,
+                "customize_mobile_padding": true,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
               }
             },
             "button-2": {
@@ -1787,15 +1796,12 @@
       ]
     },
     "popular_item_heading": {
-      "type": "custom-section",
+      "type": "rich-text",
       "settings": {
         "section_width": "page_width",
         "alignment": "center",
         "customize_mobile_alignment": true,
         "alignment_mobile": "center",
-        "content_gap": 0,
-        "customize_mobile_gap": true,
-        "content_gap_mobile": 0,
         "color_scheme": "scheme-1",
         "padding_top": 20,
         "padding_bottom": 48,
@@ -1804,7 +1810,14 @@
         "padding_bottom_mobile": 40
       },
       "blocks": {
-        "heading-1": {
+        "eyebrow": {
+          "type": "eyebrow",
+          "static": true,
+          "settings": {
+            "text": ""
+          }
+        },
+        "heading": {
           "type": "heading",
           "settings": {
             "text": "<p>See Our Popular Item</p>",
@@ -1813,12 +1826,17 @@
             "width": "fill",
             "customize_mobile_size": true,
             "width_mobile": "fill"
+          },
+          "static": true
+        },
+        "text": {
+          "type": "text",
+          "static": true,
+          "settings": {
+            "text": ""
           }
         }
-      },
-      "block_order": [
-        "heading-1"
-      ]
+      }
     },
     "featured_product_popular": {
       "type": "featured-product",
@@ -1842,7 +1860,7 @@
           "static": true,
           "settings": {
             "desktop_layout": "bottom_thumbnails",
-            "mobile_layout": "slider",
+            "mobile_layout": "thumbnails",
             "full_width_media": false,
             "autoplay": false,
             "loop_video": false,
@@ -1850,10 +1868,11 @@
             "gap": 16,
             "gap_mobile": 10,
             "bottom_thumbnail_width": 80,
-            "thumbnail_ratio": "square",
-            "mobile_show_pagination": true,
+            "thumbnail_ratio": "ratio_1_1",
+            "mobile_show_pagination": false,
             "mobile_pagination_type": "bullets",
-            "main_image_ratio": "square"
+            "main_image_ratio": "ratio_1_1",
+            "thumbnail_width_mobile": 48
           }
         },
         "product-details": {
@@ -1915,11 +1934,116 @@
                     "custom_font_size": 22,
                     "font_weight": "500"
                   }
+                },
+                "rating": {
+                  "type": "group",
+                  "settings": {
+                    "direction": "horizontal",
+                    "position_horizontal": "center",
+                    "horizontal_alignment": "left",
+                    "customize_mobile_alignment": false,
+                    "width": "fit",
+                    "width_mobile": "fit",
+                    "height": "fit",
+                    "gap_desktop": 8,
+                    "gap_mobile": 8,
+                    "border_type": "none",
+                    "corner_radius": "square",
+                    "shadow": "none"
+                  },
+                  "blocks": {
+                    "stars": {
+                      "type": "group",
+                      "settings": {
+                        "direction": "horizontal",
+                        "position_horizontal": "center",
+                        "horizontal_alignment": "left",
+                        "customize_mobile_alignment": false,
+                        "width": "fit",
+                        "width_mobile": "fit",
+                        "height": "fit",
+                        "gap_desktop": 2,
+                        "gap_mobile": 2,
+                        "border_type": "none",
+                        "corner_radius": "square",
+                        "shadow": "none"
+                      },
+                      "blocks": {
+                        "star-1": {
+                          "type": "icon",
+                          "settings": {
+                            "source": "library",
+                            "icon": "star",
+                            "icon_width": 16,
+                            "icon_padding": 0
+                          }
+                        },
+                        "star-2": {
+                          "type": "icon",
+                          "settings": {
+                            "source": "library",
+                            "icon": "star",
+                            "icon_width": 16,
+                            "icon_padding": 0
+                          }
+                        },
+                        "star-3": {
+                          "type": "icon",
+                          "settings": {
+                            "source": "library",
+                            "icon": "star",
+                            "icon_width": 16,
+                            "icon_padding": 0
+                          }
+                        },
+                        "star-4": {
+                          "type": "icon",
+                          "settings": {
+                            "source": "library",
+                            "icon": "star",
+                            "icon_width": 16,
+                            "icon_padding": 0
+                          }
+                        },
+                        "star-5": {
+                          "type": "icon",
+                          "settings": {
+                            "source": "library",
+                            "icon": "star",
+                            "icon_width": 16,
+                            "icon_padding": 0
+                          }
+                        }
+                      },
+                      "block_order": [
+                        "star-1",
+                        "star-2",
+                        "star-3",
+                        "star-4",
+                        "star-5"
+                      ]
+                    },
+                    "review-count": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>(56)</p>",
+                        "text_size": "sm",
+                        "width": "fit",
+                        "customize_mobile_size": true,
+                        "width_mobile": "fit"
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "stars",
+                    "review-count"
+                  ]
                 }
               },
               "block_order": [
                 "product-title-1",
-                "product-price-2"
+                "product-price-2",
+                "rating"
               ]
             },
             "product-description-2": {
@@ -1932,7 +2056,7 @@
             "product-inventory-3": {
               "type": "product-inventory",
               "settings": {
-                "display_mode": "status_and_count"
+                "show_low_stock_quantity": true
               }
             },
             "product-variant-picker-4": {
@@ -1944,8 +2068,9 @@
             "product-buy-buttons-5": {
               "type": "product-buy-buttons",
               "settings": {
-                "gap_desktop": 16,
-                "gap_mobile": 16
+                "show_back_in_stock_button": false,
+                "gap_desktop": 20,
+                "gap_mobile": 20
               },
               "blocks": {
                 "quantity": {
@@ -1975,9 +2100,63 @@
             "button-view-details-6": {
               "type": "button-view-details",
               "settings": {
-                "label": "View details",
-                "show_icon": false
+                "label": "View more details",
+                "show_icon": false,
+                "padding_top": 12,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 4
               }
+            },
+            "share-links": {
+              "type": "group",
+              "settings": {
+                "direction": "horizontal",
+                "position_horizontal": "center",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": false,
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 16,
+                "gap_mobile": 16,
+                "border_type": "none",
+                "corner_radius": "square",
+                "shadow": "none",
+                "padding_top": 12,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 4
+              },
+              "blocks": {
+                "share-label": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Share</p>",
+                    "text_size": "md",
+                    "width": "fit",
+                    "customize_mobile_size": true,
+                    "width_mobile": "fit"
+                  }
+                },
+                "social-links": {
+                  "type": "social-links",
+                  "settings": {
+                    "display_mode": "icon",
+                    "direction": "horizontal",
+                    "gap_desktop": 12,
+                    "gap_mobile": 12,
+                    "icon_width": 24,
+                    "padding": 0,
+                    "border_thickness": 0,
+                    "corner_radius": "square",
+                    "shadow": "none",
+                    "color_type": "inherit"
+                  }
+                }
+              },
+              "block_order": [
+                "share-label",
+                "social-links"
+              ]
             }
           },
           "block_order": [
@@ -1986,6 +2165,7 @@
             "product-inventory-3",
             "product-variant-picker-4",
             "product-buy-buttons-5",
+            "share-links",
             "button-view-details-6"
           ]
         }
@@ -2028,12 +2208,14 @@
             "press-item-1": {
               "type": "press-item",
               "settings": {
-                "image_ratio": "ratio_2_1",
+                "image_ratio": "custom",
                 "corner_radius": "square",
                 "image_width_desktop": 120,
                 "image_width_mobile": 100,
                 "image": "shopify://shop_images/elara-press-mejuri-2x1.png",
-                "alt_text": "Mejuri"
+                "alt_text": "Mejuri",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1
               },
               "blocks": {
                 "heading-1": {
@@ -2055,12 +2237,14 @@
             "press-item-2": {
               "type": "press-item",
               "settings": {
-                "image_ratio": "ratio_2_1",
+                "image_ratio": "custom",
                 "corner_radius": "square",
                 "image_width_desktop": 120,
                 "image_width_mobile": 100,
                 "image": "shopify://shop_images/elara-press-lagos-2x1.png",
-                "alt_text": "Lagos"
+                "alt_text": "Lagos",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1
               },
               "blocks": {
                 "heading-1": {
@@ -2082,12 +2266,14 @@
             "press-item-3": {
               "type": "press-item",
               "settings": {
-                "image_ratio": "ratio_2_1",
+                "image_ratio": "custom",
                 "corner_radius": "square",
                 "image_width_desktop": 120,
                 "image_width_mobile": 100,
                 "image": "shopify://shop_images/elara-press-pandora-2x1.png",
-                "alt_text": "Pandora"
+                "alt_text": "Pandora",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1
               },
               "blocks": {
                 "heading-1": {
@@ -2109,12 +2295,14 @@
             "press-item-4": {
               "type": "press-item",
               "settings": {
-                "image_ratio": "ratio_2_1",
+                "image_ratio": "custom",
                 "corner_radius": "square",
                 "image_width_desktop": 120,
                 "image_width_mobile": 100,
                 "image": "shopify://shop_images/elara-press-marie-claire-2x1.png",
-                "alt_text": "Marie Claire"
+                "alt_text": "Marie Claire",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1
               },
               "blocks": {
                 "heading-1": {
@@ -2136,12 +2324,14 @@
             "press-item-5": {
               "type": "press-item",
               "settings": {
-                "image_ratio": "ratio_2_1",
+                "image_ratio": "custom",
                 "corner_radius": "square",
                 "image_width_desktop": 120,
                 "image_width_mobile": 100,
                 "image": "shopify://shop_images/elara-press-guess-2x1.png",
-                "alt_text": "Guess"
+                "alt_text": "Guess",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1
               },
               "blocks": {
                 "heading-1": {
@@ -2254,7 +2444,7 @@
             "blog-card": {
               "type": "blog-card",
               "settings": {
-                "ratio": "landscape",
+                "ratio": "ratio_4_3",
                 "media_layout": "stacked",
                 "alignment": "center",
                 "position": "flex-start",
@@ -2433,10 +2623,10 @@
                 "first": {
                   "type": "image",
                   "settings": {
-                    "image_ratio_desktop": "square",
+                    "image_ratio_desktop": "ratio_1_1",
                     "image_ratio_custom_width_desktop": 1,
                     "image_ratio_custom_height_desktop": 1,
-                    "image_ratio_mobile": "square",
+                    "image_ratio_mobile": "ratio_1_1",
                     "image_ratio_custom_width_mobile": 1,
                     "image_ratio_custom_height_mobile": 1,
                     "width_desktop": "fill",
@@ -2718,10 +2908,10 @@
                 "image-1": {
                   "type": "image",
                   "settings": {
-                    "image_ratio_desktop": "square",
+                    "image_ratio_desktop": "ratio_1_1",
                     "image_ratio_custom_width_desktop": 1,
                     "image_ratio_custom_height_desktop": 1,
-                    "image_ratio_mobile": "square",
+                    "image_ratio_mobile": "ratio_1_1",
                     "image_ratio_custom_width_mobile": 1,
                     "image_ratio_custom_height_mobile": 1,
                     "width_desktop": "fit",
@@ -2754,10 +2944,10 @@
                 "image-1": {
                   "type": "image",
                   "settings": {
-                    "image_ratio_desktop": "square",
+                    "image_ratio_desktop": "ratio_1_1",
                     "image_ratio_custom_width_desktop": 1,
                     "image_ratio_custom_height_desktop": 1,
-                    "image_ratio_mobile": "square",
+                    "image_ratio_mobile": "ratio_1_1",
                     "image_ratio_custom_width_mobile": 1,
                     "image_ratio_custom_height_mobile": 1,
                     "width_desktop": "fit",
@@ -2790,10 +2980,10 @@
                 "image-1": {
                   "type": "image",
                   "settings": {
-                    "image_ratio_desktop": "square",
+                    "image_ratio_desktop": "ratio_1_1",
                     "image_ratio_custom_width_desktop": 1,
                     "image_ratio_custom_height_desktop": 1,
-                    "image_ratio_mobile": "square",
+                    "image_ratio_mobile": "ratio_1_1",
                     "image_ratio_custom_width_mobile": 1,
                     "image_ratio_custom_height_mobile": 1,
                     "width_desktop": "fit",
@@ -2826,10 +3016,10 @@
                 "image-1": {
                   "type": "image",
                   "settings": {
-                    "image_ratio_desktop": "square",
+                    "image_ratio_desktop": "ratio_1_1",
                     "image_ratio_custom_width_desktop": 1,
                     "image_ratio_custom_height_desktop": 1,
-                    "image_ratio_mobile": "square",
+                    "image_ratio_mobile": "ratio_1_1",
                     "image_ratio_custom_width_mobile": 1,
                     "image_ratio_custom_height_mobile": 1,
                     "width_desktop": "fit",
@@ -2862,10 +3052,10 @@
                 "image-1": {
                   "type": "image",
                   "settings": {
-                    "image_ratio_desktop": "square",
+                    "image_ratio_desktop": "ratio_1_1",
                     "image_ratio_custom_width_desktop": 1,
                     "image_ratio_custom_height_desktop": 1,
-                    "image_ratio_mobile": "square",
+                    "image_ratio_mobile": "ratio_1_1",
                     "image_ratio_custom_width_mobile": 1,
                     "image_ratio_custom_height_mobile": 1,
                     "width_desktop": "fit",
@@ -2898,10 +3088,10 @@
                 "image-1": {
                   "type": "image",
                   "settings": {
-                    "image_ratio_desktop": "square",
+                    "image_ratio_desktop": "ratio_1_1",
                     "image_ratio_custom_width_desktop": 1,
                     "image_ratio_custom_height_desktop": 1,
-                    "image_ratio_mobile": "square",
+                    "image_ratio_mobile": "ratio_1_1",
                     "image_ratio_custom_width_mobile": 1,
                     "image_ratio_custom_height_mobile": 1,
                     "width_desktop": "fit",
@@ -3014,10 +3204,14 @@
                     "loop_video": true,
                     "width_desktop": "fill",
                     "width_mobile": "fill",
-                    "aspect_ratio_desktop": "portrait_tall",
-                    "aspect_ratio_mobile": "portrait_tall",
+                    "aspect_ratio_desktop": "custom",
+                    "aspect_ratio_mobile": "custom",
                     "play_button_size_desktop": 50,
-                    "play_button_size_mobile": 44
+                    "play_button_size_mobile": 44,
+                    "aspect_ratio_desktop_custom_width": 5,
+                    "aspect_ratio_desktop_custom_height": 7,
+                    "aspect_ratio_mobile_custom_width": 5,
+                    "aspect_ratio_mobile_custom_height": 7
                   }
                 },
                 "product": {
@@ -3025,7 +3219,7 @@
                   "settings": {
                     "product": "elara-curly-molten-mini-initial",
                     "enable_boxed_layout": true,
-                    "image_ratio": "square",
+                    "image_ratio": "ratio_1_1",
                     "thumbnail_width": 70,
                     "thumbnail_width_mobile": 50,
                     "show_price": true,
@@ -3065,10 +3259,14 @@
                     "loop_video": true,
                     "width_desktop": "fill",
                     "width_mobile": "fill",
-                    "aspect_ratio_desktop": "portrait_tall",
-                    "aspect_ratio_mobile": "portrait_tall",
+                    "aspect_ratio_desktop": "custom",
+                    "aspect_ratio_mobile": "custom",
                     "play_button_size_desktop": 50,
-                    "play_button_size_mobile": 44
+                    "play_button_size_mobile": 44,
+                    "aspect_ratio_desktop_custom_width": 5,
+                    "aspect_ratio_desktop_custom_height": 7,
+                    "aspect_ratio_mobile_custom_width": 5,
+                    "aspect_ratio_mobile_custom_height": 7
                   }
                 },
                 "product": {
@@ -3076,7 +3274,7 @@
                   "settings": {
                     "product": "elara-savi-triple-ridge-hoop-earrings",
                     "enable_boxed_layout": true,
-                    "image_ratio": "square",
+                    "image_ratio": "ratio_1_1",
                     "thumbnail_width": 70,
                     "thumbnail_width_mobile": 50,
                     "show_price": true,
@@ -3116,10 +3314,14 @@
                     "loop_video": true,
                     "width_desktop": "fill",
                     "width_mobile": "fill",
-                    "aspect_ratio_desktop": "portrait_tall",
-                    "aspect_ratio_mobile": "portrait_tall",
+                    "aspect_ratio_desktop": "custom",
+                    "aspect_ratio_mobile": "custom",
                     "play_button_size_desktop": 50,
-                    "play_button_size_mobile": 44
+                    "play_button_size_mobile": 44,
+                    "aspect_ratio_desktop_custom_width": 5,
+                    "aspect_ratio_desktop_custom_height": 7,
+                    "aspect_ratio_mobile_custom_width": 5,
+                    "aspect_ratio_mobile_custom_height": 7
                   }
                 },
                 "product": {
@@ -3127,7 +3329,7 @@
                   "settings": {
                     "product": "elara-tennis-eternity-stacking-ring",
                     "enable_boxed_layout": true,
-                    "image_ratio": "square",
+                    "image_ratio": "ratio_1_1",
                     "thumbnail_width": 70,
                     "thumbnail_width_mobile": 50,
                     "show_price": true,
@@ -3167,10 +3369,14 @@
                     "loop_video": true,
                     "width_desktop": "fill",
                     "width_mobile": "fill",
-                    "aspect_ratio_desktop": "portrait_tall",
-                    "aspect_ratio_mobile": "portrait_tall",
+                    "aspect_ratio_desktop": "custom",
+                    "aspect_ratio_mobile": "custom",
                     "play_button_size_desktop": 50,
-                    "play_button_size_mobile": 44
+                    "play_button_size_mobile": 44,
+                    "aspect_ratio_desktop_custom_width": 5,
+                    "aspect_ratio_desktop_custom_height": 7,
+                    "aspect_ratio_mobile_custom_width": 5,
+                    "aspect_ratio_mobile_custom_height": 7
                   }
                 },
                 "product": {
@@ -3178,7 +3384,7 @@
                   "settings": {
                     "product": "elara-magma-gemstone-charm",
                     "enable_boxed_layout": true,
-                    "image_ratio": "square",
+                    "image_ratio": "ratio_1_1",
                     "thumbnail_width": 70,
                     "thumbnail_width_mobile": 50,
                     "show_price": true,

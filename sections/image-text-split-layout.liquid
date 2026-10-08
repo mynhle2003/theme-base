@@ -537,7 +537,7 @@
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 0,
         "gap_desktop": 0,
-        "gap_mobile": 30,
+        "gap_mobile": 0,
         "direction": "horizontal",
         "customize_mobile_alignment": true,
         "height": "fit",
@@ -555,8 +555,8 @@
             "width": "fill",
             "width_mobile": "fill",
             "height": "fill",
-            "gap_desktop": 20,
-            "gap_mobile": 20,
+            "gap_desktop": 0,
+            "gap_mobile": 0,
             "border_type": "none",
             "corner_radius": "square",
             "shadow": "none",
@@ -569,10 +569,12 @@
               "type": "image",
               "settings": {
                 "image_ratio_desktop": "fill_height",
-                "image_ratio_mobile": "original",
+                "image_ratio_mobile": "custom",
                 "width_desktop": "fill",
                 "width_mobile": "fill",
-                "corner_radius": "square"
+                "corner_radius": "square",
+                "image_ratio_custom_width_mobile": 5,
+                "image_ratio_custom_height_mobile": 4
               }
             }
           ]
@@ -585,9 +587,9 @@
             "alignment_mobile": "center",
             "width": "fill",
             "width_mobile": "fill",
-            "height": "fit",
+            "height": "fill",
             "gap_desktop": 20,
-            "gap_mobile": 20,
+            "gap_mobile": 24,
             "border_type": "none",
             "corner_radius": "square",
             "shadow": "none",
@@ -595,44 +597,50 @@
             "padding_bottom": 64,
             "padding_left": 64,
             "padding_right": 64,
-            "customize_mobile_padding": false,
-            "padding_top_mobile": 64,
-            "padding_bottom_mobile": 64,
-            "padding_left_mobile": 64,
-            "padding_right_mobile": 64,
-            "position": "top"
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 56,
+            "padding_bottom_mobile": 56,
+            "padding_left_mobile": 20,
+            "padding_right_mobile": 20,
+            "position": "center"
           },
           "blocks": [
             {
               "type": "heading",
               "settings": {
                 "text": "<p>Lighting Ridge Opals</p>",
-                "heading_size": "xl",
+                "heading_size": "custom",
                 "html_tag": "h2",
                 "width": "fit",
                 "customize_mobile_size": true,
                 "width_mobile": "fit",
-                "padding_bottom": 0,
-                "customize_mobile_padding": false,
-                "padding_bottom_mobile": 0
+                "padding_bottom": 20,
+                "customize_mobile_padding": true,
+                "padding_bottom_mobile": 12,
+                "custom_heading_size": 34
               }
             },
             {
               "type": "image",
               "settings": {
-                "image_ratio_desktop": "original",
-                "image_ratio_mobile": "original",
+                "image_ratio_desktop": "ratio_4_5",
+                "image_ratio_mobile": "ratio_4_5",
                 "width_desktop": "fill",
                 "width_mobile": "fill",
                 "corner_radius": "square",
-                "limit_width_desktop": false,
+                "limit_width_desktop": true,
                 "max_width_desktop": 384,
-                "limit_width_mobile": false,
+                "limit_width_mobile": true,
                 "max_width_mobile": 256,
                 "image_ratio_custom_width_desktop": 4,
                 "image_ratio_custom_height_desktop": 5,
                 "image_ratio_custom_width_mobile": 4,
-                "image_ratio_custom_height_mobile": 5
+                "image_ratio_custom_height_mobile": 5,
+                "padding_left": 2,
+                "padding_right": 2,
+                "customize_mobile_padding": true,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
               }
             },
             {

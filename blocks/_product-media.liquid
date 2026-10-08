@@ -15,10 +15,10 @@
   assign selected_media_found = false
   assign media_main_image_ratio = block.settings.main_image_ratio | default: 'auto'
   capture media_main_image_ratio_value
-    render 'image-ratio-value', setting: media_main_image_ratio, fallback_ratio: 'auto'
+    render 'image-ratio-value', setting: media_main_image_ratio, fallback_ratio: 'auto', custom_width: block.settings.main_image_ratio_custom_width, custom_height: block.settings.main_image_ratio_custom_height
   endcapture
   assign media_main_image_ratio_value = media_main_image_ratio_value | strip
-  unless media_main_image_ratio == 'square' or media_main_image_ratio == 'ratio_1_1' or media_main_image_ratio == 'ratio_4_5' or media_main_image_ratio == 'ratio_5_4' or media_main_image_ratio == 'ratio_6_7' or media_main_image_ratio == 'ratio_7_6' or media_main_image_ratio == 'ratio_5_7' or media_main_image_ratio == 'ratio_7_5' or media_main_image_ratio == 'ratio_2_3' or media_main_image_ratio == 'ratio_3_2' or media_main_image_ratio == 'ratio_4_3' or media_main_image_ratio == 'ratio_3_4' or media_main_image_ratio == 'ratio_2_1' or media_main_image_ratio == 'ratio_1_2' or media_main_image_ratio == 'ratio_16_9' or media_main_image_ratio == 'ratio_9_16' or media_main_image_ratio == 'ratio_12_5' or media_main_image_ratio == 'ratio_5_12' or media_main_image_ratio == 'ratio_48_17' or media_main_image_ratio == 'ratio_17_48' or media_main_image_ratio == 'ratio_5_8' or media_main_image_ratio == 'ratio_8_5'
+  unless media_main_image_ratio == 'custom' or media_main_image_ratio == 'square' or media_main_image_ratio == 'ratio_1_1' or media_main_image_ratio == 'ratio_4_5' or media_main_image_ratio == 'ratio_5_4' or media_main_image_ratio == 'ratio_6_7' or media_main_image_ratio == 'ratio_7_6' or media_main_image_ratio == 'ratio_5_7' or media_main_image_ratio == 'ratio_7_5' or media_main_image_ratio == 'ratio_2_3' or media_main_image_ratio == 'ratio_3_2' or media_main_image_ratio == 'ratio_4_3' or media_main_image_ratio == 'ratio_3_4' or media_main_image_ratio == 'ratio_2_1' or media_main_image_ratio == 'ratio_1_2' or media_main_image_ratio == 'ratio_16_9' or media_main_image_ratio == 'ratio_9_16' or media_main_image_ratio == 'ratio_12_5' or media_main_image_ratio == 'ratio_5_12' or media_main_image_ratio == 'ratio_48_17' or media_main_image_ratio == 'ratio_17_48' or media_main_image_ratio == 'ratio_5_8' or media_main_image_ratio == 'ratio_8_5'
     assign media_main_image_ratio = 'auto'
   endunless
 
@@ -75,8 +75,8 @@
   if media_gap_mobile < 0 or media_gap_mobile > 40
     assign media_gap_mobile = 10
   endif
-  assign media_thumbnail_gap = media_gap | plus: 4
-  assign media_thumbnail_gap_mobile = media_gap_mobile | plus: 2
+  assign media_thumbnail_gap = media_gap
+  assign media_thumbnail_gap_mobile = media_gap_mobile
   assign media_thumbnail_width = block.settings.bottom_thumbnail_width | default: 72 | plus: 0
   if media_thumbnail_width < 48 or media_thumbnail_width > 200
     assign media_thumbnail_width = 72
@@ -205,7 +205,7 @@
   data-current-variant-id="{{ current_variant.id | default: '' }}"
   data-current-variant-media-id="{{ current_variant.featured_media.id | default: '' }}"
   data-filter-variant-media="{{ settings.variant_picker_only_selected_media }}"
-  style="--product-media-main-image-ratio: {{ media_main_image_ratio_value }};--product-media-thumbnail-aspect-ratio: {{ media_thumbnail_ratio }};--product-media-thumbnail-width: {{ media_thumbnail_width }}px;--product-media-thumbnail-width-mobile: {{ media_thumbnail_width_mobile }}px;--product-media-thumbnail-gap: {{ media_thumbnail_gap }}px;--product-media-thumbnail-gap-mobile: {{ media_thumbnail_gap_mobile }}px;{% if media_gap != 12 %}--product-media-gap: {{ media_gap }}px;{% endif %}{% if media_gap_mobile != 10 %}--product-media-gap-mobile: {{ media_gap_mobile }}px;{% endif %}"
+  style="--product-media-main-image-ratio: {{ media_main_image_ratio_value }};--product-media-thumbnail-aspect-ratio: {{ media_thumbnail_ratio }};--product-media-thumbnail-width: {{ media_thumbnail_width }}px;--product-media-thumbnail-width-mobile: {{ media_thumbnail_width_mobile }}px;--product-media-thumbnail-gap: {{ media_thumbnail_gap }}px;--product-media-thumbnail-gap-mobile: {{ media_thumbnail_gap_mobile }}px;--product-media-gap: {{ media_gap }}px;--product-media-gap-mobile: {{ media_gap_mobile }}px;"
   {{ block.shopify_attributes }}
 >
   {% if media_product != blank and media_product.media.size > 0 %}
@@ -322,99 +322,65 @@
       "label": "Main image ratio",
       "options": [
         {
-          "value": "auto",
-          "label": "Original image"
-        },
-        {
-          "value": "square",
-          "label": "Square"
+          "value": "original",
+          "label": "Original"
         },
         {
           "value": "ratio_1_1",
-          "label": "1:1"
+          "label": "Square (1:1)"
         },
         {
           "value": "ratio_4_5",
-          "label": "4:5"
-        },
-        {
-          "value": "ratio_5_4",
-          "label": "5:4"
-        },
-        {
-          "value": "ratio_6_7",
-          "label": "6:7"
-        },
-        {
-          "value": "ratio_7_6",
-          "label": "7:6"
-        },
-        {
-          "value": "ratio_5_7",
-          "label": "5:7"
-        },
-        {
-          "value": "ratio_7_5",
-          "label": "7:5"
-        },
-        {
-          "value": "ratio_2_3",
-          "label": "2:3"
-        },
-        {
-          "value": "ratio_3_2",
-          "label": "3:2"
-        },
-        {
-          "value": "ratio_4_3",
-          "label": "4:3"
+          "label": "Portrait (4:5)"
         },
         {
           "value": "ratio_3_4",
-          "label": "3:4"
+          "label": "Portrait (3:4)"
         },
         {
-          "value": "ratio_2_1",
-          "label": "2:1"
-        },
-        {
-          "value": "ratio_1_2",
-          "label": "1:2"
-        },
-        {
-          "value": "ratio_16_9",
-          "label": "16:9"
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
         },
         {
           "value": "ratio_9_16",
-          "label": "9:16"
+          "label": "Portrait (9:16)"
         },
         {
-          "value": "ratio_12_5",
-          "label": "12:5"
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
         },
         {
-          "value": "ratio_5_12",
-          "label": "5:12"
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
         },
         {
-          "value": "ratio_48_17",
-          "label": "48:17"
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
         },
         {
-          "value": "ratio_17_48",
-          "label": "17:48"
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
         },
         {
-          "value": "ratio_5_8",
-          "label": "5:8"
-        },
-        {
-          "value": "ratio_8_5",
-          "label": "8:5"
+          "value": "custom",
+          "label": "t:options.image_ratio.custom"
         }
       ],
-      "default": "auto"
+      "default": "original"
+    },
+    {
+      "type": "number",
+      "id": "main_image_ratio_custom_width",
+      "label": "W",
+      "default": 16,
+      "visible_if": "{{ block.settings.main_image_ratio == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "main_image_ratio_custom_height",
+      "label": "H",
+      "default": 9,
+      "visible_if": "{{ block.settings.main_image_ratio == 'custom' }}"
     },
     {
       "type": "paragraph",
@@ -473,115 +439,51 @@
       "label": "t:labels.thumbnail_aspect_ratio",
       "options": [
         {
-          "value": "auto",
-          "label": "t:options.image_ratio.auto"
+          "value": "original",
+          "label": "Original"
         },
         {
-          "value": "square",
-          "label": "t:options.image_ratio.square"
+          "value": "ratio_1_1",
+          "label": "Square (1:1)"
         },
         {
-          "value": "portrait",
-          "label": "t:options.image_ratio.portrait"
+          "value": "ratio_4_5",
+          "label": "Portrait (4:5)"
         },
         {
-          "value": "landscape",
-          "label": "t:options.image_ratio.landscape"
+          "value": "ratio_3_4",
+          "label": "Portrait (3:4)"
         },
         {
-          "value": "wide",
-          "label": "t:options.image_ratio.wide"
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
         },
         {
           "value": "custom",
           "label": "t:options.image_ratio.custom"
-        },
-        {
-          "value": "ratio_1_1",
-          "label": "1:1"
-        },
-        {
-          "value": "ratio_4_5",
-          "label": "4:5"
-        },
-        {
-          "value": "ratio_5_4",
-          "label": "5:4"
-        },
-        {
-          "value": "ratio_6_7",
-          "label": "6:7"
-        },
-        {
-          "value": "ratio_7_6",
-          "label": "7:6"
-        },
-        {
-          "value": "ratio_5_7",
-          "label": "5:7"
-        },
-        {
-          "value": "ratio_7_5",
-          "label": "7:5"
-        },
-        {
-          "value": "ratio_2_3",
-          "label": "2:3"
-        },
-        {
-          "value": "ratio_3_2",
-          "label": "3:2"
-        },
-        {
-          "value": "ratio_4_3",
-          "label": "4:3"
-        },
-        {
-          "value": "ratio_3_4",
-          "label": "3:4"
-        },
-        {
-          "value": "ratio_2_1",
-          "label": "2:1"
-        },
-        {
-          "value": "ratio_1_2",
-          "label": "1:2"
-        },
-        {
-          "value": "ratio_16_9",
-          "label": "16:9"
-        },
-        {
-          "value": "ratio_9_16",
-          "label": "9:16"
-        },
-        {
-          "value": "ratio_12_5",
-          "label": "12:5"
-        },
-        {
-          "value": "ratio_5_12",
-          "label": "5:12"
-        },
-        {
-          "value": "ratio_48_17",
-          "label": "48:17"
-        },
-        {
-          "value": "ratio_17_48",
-          "label": "17:48"
-        },
-        {
-          "value": "ratio_5_8",
-          "label": "5:8"
-        },
-        {
-          "value": "ratio_8_5",
-          "label": "8:5"
         }
       ],
-      "default": "auto"
+      "default": "original"
     },
     {
       "type": "number",

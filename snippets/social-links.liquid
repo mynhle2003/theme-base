@@ -29,7 +29,7 @@
   endif
   assign social_shadow = shadow | default: 'extra_small'
 
-  assign social_names = 'facebook,instagram,tiktok,youtube,pinterest,x,linkedin' | split: ','
+  assign social_names = 'facebook,instagram,pinterest,tiktok,youtube,x,linkedin' | split: ','
   assign has_social_links = false
   for social_name in social_names
     assign social_key = 'social_' | append: social_name

@@ -128,6 +128,18 @@
       endif
     endif
   endif
+  if use_image_ratio != true and image_card_height_desktop == 'custom'
+    capture image_card_ratio_desktop
+      render 'image-ratio-value', setting: 'custom', fallback_ratio: 'auto', custom_width: media_card_block.settings.height_desktop_custom_width, custom_height: media_card_block.settings.height_desktop_custom_height
+    endcapture
+    assign image_card_ratio_desktop = image_card_ratio_desktop | strip
+  endif
+  if use_image_ratio != true and image_card_height_mobile == 'custom'
+    capture image_card_ratio_mobile
+      render 'image-ratio-value', setting: 'custom', fallback_ratio: 'auto', custom_width: media_card_block.settings.height_mobile_custom_width, custom_height: media_card_block.settings.height_mobile_custom_height
+    endcapture
+    assign image_card_ratio_mobile = image_card_ratio_mobile | strip
+  endif
   assign image_card_position_desktop = media_card_block.settings.position_desktop | default: 'top_center'
   assign image_card_position_mobile = media_card_block.settings.position_mobile | default: 'top_center'
 
@@ -244,10 +256,10 @@
   {% if image_card_radius == 'custom' %}--image-card-custom-radius: {{ image_card_custom_radius }}px;{% endif %}
   {% if image_card_width_mobile != image_card_width_desktop %}--image-card-width-mobile: {{ image_card_width_mobile }};{% endif %}
   {% if image_card_max_width_mobile != image_card_max_width_desktop %}--image-card-max-width-mobile: {{ image_card_max_width_mobile }};{% endif %}
-  {% if use_image_ratio or image_card_height_desktop == 'adapt' %}
+  {% if use_image_ratio or image_card_height_desktop == 'adapt' or image_card_height_desktop == 'custom' %}
     {% unless image_card_ratio_desktop == 1 or image_card_ratio_desktop == '1' %}--image-card-ratio: {{ image_card_ratio_desktop }};{% endunless %}
   {% endif %}
-  {% if use_image_ratio or image_card_height_mobile == 'adapt' %}
+  {% if use_image_ratio or image_card_height_mobile == 'adapt' or image_card_height_mobile == 'custom' %}
     {% unless image_card_ratio_mobile == 1 or image_card_ratio_mobile == '1' %}--image-card-ratio-mobile: {{ image_card_ratio_mobile }};{% endunless %}
   {% endif %}
   {% if media_card_block.settings.customize_mobile_padding %}
