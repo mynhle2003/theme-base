@@ -12,91 +12,58 @@
   "name": "t:general.header",
   "sections": {
     "announcement-bar": {
-      "type": "announcement-bar",
+      "type": "announcement-bar-static",
       "settings": {
-        "type": "slider",
-        "speed": 1,
-        "direction": "left",
-        "autoplay": 5,
-        "pause_on_hover": true,
-        "navigation_behavior": "show_on_hover",
-        "navigation_icon": "arrow",
-        "font_size": "sm",
         "background_type": "none",
         "overlay": false,
         "gap": 16,
         "color_scheme": "scheme-3",
         "bottom_separator": false,
-        "padding_top": 8,
-        "padding_right": 0,
-        "padding_bottom": 8,
-        "padding_left": 0,
-        "overlay_color": "#00000033"
+        "padding_top": 10,
+        "padding_bottom": 10,
+        "overlay_color": "#00000033",
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 8,
+        "padding_bottom_mobile": 8,
+        "alignment": "center",
+        "alignment_mobile": "center"
       },
       "blocks": {
+        "announcement-social": {
+          "type": "_announcement-social-links",
+          "static": true,
+          "settings": {
+            "gap": 12
+          }
+        },
         "announcement-text": {
-          "type": "announcement-text",
+          "type": "text",
           "settings": {
-            "text": "Free shipping for all orders over $100.00",
+            "text": "<p>Free shipping worldwide on orders over $150 USD</p>",
             "width": "fill",
-            "text_color": "",
-            "max_width": 640
+            "text_color": "#ffffff",
+            "max_width": 640,
+            "text_size": "sm"
           },
           "blocks": {}
         },
-        "discount-code": {
-          "type": "discount-code",
+        "announcement-localization": {
+          "type": "_header-localization",
           "settings": {
-            "message": "<p>50% off - use code:</p>",
-            "discount_code": "BIG50",
-            "button_label": "Shop now",
-            "button_style": "tertiary",
-            "show_icon": false,
-            "gap_desktop": 16,
-            "gap_mobile": 12,
-            "message_color": "",
-            "button_link": "",
-            "button_open_in_new_tab": false,
-            "icon": "arrow_right",
-            "icon_position": "after",
-            "icon_size": "inherit",
-            "icon_width": 20
+            "dropdown_trigger": "click",
+            "show_country_selector": true,
+            "show_country_name": true,
+            "show_country_flag": true,
+            "show_language_selector": false,
+            "font_size": "xs",
+            "show_currency_with_name": true
           },
-          "blocks": {}
-        },
-        "announcement-countdown-timer": {
-          "type": "announcement-countdown-timer",
-          "settings": {
-            "message": "<p>Hurry up! Sale ends in:</p>",
-            "style": "inline",
-            "type": "fixed_time",
-            "end_time": "2026-12-25 12:00",
-            "button_label": "Shop now",
-            "button_style": "tertiary",
-            "show_icon": false,
-            "color_type": "inherit",
-            "hide_when_expired": true,
-            "gap_desktop": 16,
-            "gap_mobile": 12,
-            "message_color": "",
-            "corner_radius": "square",
-            "duration_hours": 24,
-            "duration_minutes": 0,
-            "number_color": "",
-            "button_link": "",
-            "button_open_in_new_tab": false,
-            "icon": "arrow_right",
-            "icon_position": "after",
-            "icon_size": "inherit",
-            "icon_width": 20
-          },
-          "blocks": {}
+          "blocks": {},
+          "static": true
         }
       },
       "block_order": [
-        "announcement-text",
-        "discount-code",
-        "announcement-countdown-timer"
+        "announcement-text"
       ]
     },
     "header": {
@@ -252,18 +219,6 @@
               "settings": {},
               "blocks": {}
             },
-            "header-localization": {
-              "type": "_header-localization",
-              "settings": {
-                "dropdown_trigger": "click",
-                "show_country_selector": true,
-                "show_country_name": false,
-                "show_country_flag": true,
-                "show_language_selector": false,
-                "font_size": "md"
-              },
-              "blocks": {}
-            },
             "header-divider": {
               "type": "_header-divider",
               "settings": {
@@ -310,7 +265,6 @@
             "header-menu",
             "header-logo",
             "header-menu-toggle",
-            "header-localization",
             "header-divider",
             "header-search",
             "header-account",

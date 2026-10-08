@@ -69,13 +69,13 @@
     {% if has_localization %}
       {% if has_country_selector %}
         <details class="header-localization__details" data-header-submenu-trigger="{{ localization_trigger }}" data-localization-dialog-id="{{ country_dialog_id }}">
-          <summary class="header-localization__summary" aria-controls="{{ country_dialog_id }}" aria-expanded="false">
+          <summary class="header-localization__summary" aria-controls="{{ country_dialog_id }}" {% unless section.type == 'announcement-bar-static' %}aria-expanded="false"{% endunless %}>
             <span class="header-localization__country">
               {% if show_country_flag %}
                 {{ localization.country | image_url: width: 24 | image_tag: class: 'header-localization__flag', alt: '' }}
               {% endif %}
               {% if show_country_name %}
-                <span>{{ localization.country.name }}</span>
+                <span>{{ localization.country.name }}{% if block.settings.show_currency_with_name %} ({{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}){% endif %}</span>
               {% else %}
                 <span>{{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}</span>
               {% endif %}
@@ -110,7 +110,7 @@
 
       {% if has_language_selector %}
         <details class="header-localization__details header-localization__details--language" data-header-submenu-trigger="{{ localization_trigger }}" data-localization-dialog-id="{{ language_dialog_id }}">
-          <summary class="header-localization__summary" aria-controls="{{ language_dialog_id }}" aria-expanded="false">
+          <summary class="header-localization__summary" aria-controls="{{ language_dialog_id }}" {% unless section.type == 'announcement-bar-static' %}aria-expanded="false"{% endunless %}>
             <span class="header-localization__language">{{ localization.language.endonym_name }}</span>
             {% render 'icon', icon: 'chevron-down', class: 'header-localization__icon' %}
           </summary>
@@ -427,6 +427,13 @@
       "label": "Show country name",
       "default": false,
       "visible_if": "{{ block.settings.show_country_selector }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_currency_with_name",
+      "label": "Show currency with country name",
+      "default": false,
+      "visible_if": "{{ block.settings.show_country_selector and block.settings.show_country_name }}"
     },
     {
       "type": "checkbox",

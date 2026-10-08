@@ -1,0 +1,35 @@
+{% doc %}
+  Compact social links for the desktop announcement side slot.
+  @example
+  {% content_for 'block', type: '_announcement-social-links', id: 'announcement-social' %}
+{% enddoc %}
+{% assign social_names = 'facebook,instagram,pinterest' | split: ',' %}
+<div class="announcement-social-links" style="--announcement-social-gap: {{ block.settings.gap }}px;" {{ block.shopify_attributes }}>
+  {% for social_name in social_names %}
+    {% liquid
+      assign social_key = 'social_' | append: social_name
+      assign social_label_key = 'social.' | append: social_name
+      assign social_icon = 'announcement-social-' | append: social_name
+    %}
+    {% if settings[social_key] != blank %}
+      <a href="{{ settings[social_key] | escape }}" aria-label="{{ social_label_key | t | escape }}"{% if settings.social_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+        {% render 'icon', icon: social_icon, bare: true %}
+      </a>
+    {% endif %}
+  {% endfor %}
+</div>
+{% stylesheet %}
+  .announcement-social-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--announcement-social-gap, 12px); }
+  .announcement-social-links a { display: flex; align-items: center; }
+  .announcement-social-links svg { display: block; width: 16px; height: 16px; }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "Social links",
+  "tag": null,
+  "settings": [
+    { "type": "paragraph", "content": "t:social_links_settings.manage_links" },
+    { "type": "range", "id": "gap", "label": "Gap", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 12 }
+  ]
+}
+{% endschema %}
