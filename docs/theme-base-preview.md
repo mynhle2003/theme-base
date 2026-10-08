@@ -34,7 +34,10 @@ phải mật khẩu Shopify Admin. Mật khẩu không được ghi vào log ho�
 Sau khi CLI kết nối, preview storefront và Theme Editor tự mở trong trình duyệt.
 Nếu chạy trong môi trường không tương tác, có thể đặt `SHOPIFY_FLAG_STORE_PASSWORD`
 trước khi chạy `preview start`. Nếu CLI báo không có quyền vào store, supervisor
-dừng và chờ sửa domain/quyền thay vì tự lặp lại đăng nhập.
+dừng và chờ sửa domain/quyền thay vì tự lặp lại đăng nhập. Lỗi GraphQL 401/403
+hoặc CLI báo credentials không còn hiệu lực cũng dừng ngay, lưu nguyên nhân vào
+`preview status` và yêu cầu đăng nhập lại trước khi chạy `preview start`. Lỗi 401
+chỉ ở Hot Reload không tự kết luận phiên CLI đã hết hiệu lực.
 
 `preview status` hiển thị lỗi gần nhất; `preview logs` chỉ in 40 dòng cuối và ẩn
 mã xác thực Shopify.

@@ -329,6 +329,11 @@ function assertThemeRoot() {
   }
 }
 
+function hasAuthenticationFailure(output) {
+  const normalized = output.replace(/\u001b\[[0-9;]*m/g, "").replace(/[│\s]+/g, " ");
+  return /GraphQL Error \(Code:\s*(?:401|403)\)|currently available CLI credentials are invalid|Service is not valid for authentication/i.test(normalized);
+}
+
 async function supervise(runtime) {
   let backoff = 2000;
   let stopRetry = false;
@@ -338,7 +343,7 @@ async function supervise(runtime) {
     try {
       await runtime.verify();
       if (runtime.stopping()) break;
-      port = await findFreePort();
+      port = await (runtime.findFreePort || findFreePort)();
       child = runtime.start(port);
       runtime.setChild(child, port);
       const startedAt = Date.now();
@@ -347,6 +352,11 @@ async function supervise(runtime) {
 
       while (!runtime.stopping()) {
         runtime.guard();
+        if (child.authenticationFailed) {
+          const error = new Error(`Shopify CLI không xác thực được với ${runtime.store} (401/403 hoặc credentials hết hiệu lực); đăng nhập lại cùng tài khoản trước khi chạy preview start.`);
+          error.noRetry = true;
+          throw error;
+        }
         if (child.accessDenied) {
           const error = new Error(`Shopify CLI từ chối quyền truy cập ${runtime.store}; kiểm tra domain cửa hàng và quyền tài khoản.`);
           error.noRetry = true;
@@ -468,6 +478,7 @@ async function run(store) {
             const output = chunk.replace(/\u001b\[[0-9;]*m/g, "");
             destination.write(chunk);
             recentOutput = `${recentOutput}${output}`.slice(-2048);
+            if (hasAuthenticationFailure(recentOutput)) child.authenticationFailed = true;
             if (/not authorized to use the CLI to develop in the provided store/i.test(recentOutput)) {
               child.accessDenied = true;
             }
@@ -775,7 +786,11 @@ async function main(args) {
   throw new Error(`Lệnh không hỗ trợ: ${action}. Chạy node theme-base preview help.`);
 }
 
-main(process.argv.slice(2)).catch((error) => {
-  console.error(`\nLỗi: ${error.message}`);
-  process.exitCode = 1;
-});
+if (require.main === module) {
+  main(process.argv.slice(2)).catch((error) => {
+    console.error(`\nLỗi: ${error.message}`);
+    process.exitCode = 1;
+  });
+}
+
+module.exports = { hasAuthenticationFailure, supervise };
