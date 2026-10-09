@@ -27,20 +27,10 @@
     assign heading_tag = 'h2'
   endunless
   if heading_size == 'display'
-    case heading_tag
-      when 'h1'
-        assign heading_size = 'display'
-      when 'h3'
-        assign heading_size = 'lg'
-      when 'h4'
-        assign heading_size = 'md'
-      when 'h5'
-        assign heading_size = 'sm'
-      when 'h6'
-        assign heading_size = 'xs'
-      else
-        assign heading_size = 'xl'
-    endcase
+    assign heading_size = heading_tag
+    if heading_tag == 'div'
+      assign heading_size = 'h2'
+    endif
   endif
 
   assign heading_width_mode = block.settings.width | default: 'fit'

@@ -749,33 +749,57 @@
     --font-body-line-height: {{ body_leading }};
     --font-body-letter-spacing: 0em;
     --font-body-text-transform: none;
-    --font-heading-xs: {{ heading_6_size_desktop }}px;
-    --font-heading-sm: {{ heading_5_size_desktop }}px;
-    --font-heading-md: {{ heading_4_size_desktop }}px;
-    --font-heading-lg: {{ heading_3_size_desktop }}px;
-    --font-heading-xl: {{ heading_2_size_desktop }}px;
+    --font-heading-h1: {{ heading_1_size_desktop }}px;
+    --font-heading-h1-line-height: {{ heading_1_line_height }};
+    --font-heading-h1-text-transform: {{ heading_1_text_case }};
+    --font-heading-h1-letter-spacing: {{ heading_1_letter_spacing }};
+    --font-heading-h2: {{ heading_2_size_desktop }}px;
+    --font-heading-h2-line-height: {{ heading_2_line_height }};
+    --font-heading-h2-text-transform: {{ heading_2_text_case }};
+    --font-heading-h2-letter-spacing: {{ heading_2_letter_spacing }};
+    --font-heading-h3: {{ heading_3_size_desktop }}px;
+    --font-heading-h3-line-height: {{ heading_3_line_height }};
+    --font-heading-h3-text-transform: {{ heading_3_text_case }};
+    --font-heading-h3-letter-spacing: {{ heading_3_letter_spacing }};
+    --font-heading-h4: {{ heading_4_size_desktop }}px;
+    --font-heading-h4-line-height: {{ heading_4_line_height }};
+    --font-heading-h4-text-transform: {{ heading_4_text_case }};
+    --font-heading-h4-letter-spacing: {{ heading_4_letter_spacing }};
+    --font-heading-h5: {{ heading_5_size_desktop }}px;
+    --font-heading-h5-line-height: {{ heading_5_line_height }};
+    --font-heading-h5-text-transform: {{ heading_5_text_case }};
+    --font-heading-h5-letter-spacing: {{ heading_5_letter_spacing }};
+    --font-heading-h6: {{ heading_6_size_desktop }}px;
+    --font-heading-h6-line-height: {{ heading_6_line_height }};
+    --font-heading-h6-text-transform: {{ heading_6_text_case }};
+    --font-heading-h6-letter-spacing: {{ heading_6_letter_spacing }};
+    --font-heading-xs: {{ heading_5_size_desktop }}px;
+    --font-heading-sm: {{ heading_4_size_desktop }}px;
+    --font-heading-md: {{ heading_3_size_desktop }}px;
+    --font-heading-lg: {{ heading_2_size_desktop }}px;
+    --font-heading-xl: {{ heading_1_size_desktop }}px;
     --font-heading-display: {{ heading_1_size_desktop }}px;
-    --font-heading-xs-line-height: {{ heading_6_line_height }};
-    --font-heading-sm-line-height: {{ heading_5_line_height }};
-    --font-heading-md-line-height: {{ heading_4_line_height }};
-    --font-heading-lg-line-height: {{ heading_3_line_height }};
-    --font-heading-xl-line-height: {{ heading_2_line_height }};
+    --font-heading-xs-line-height: {{ heading_5_line_height }};
+    --font-heading-sm-line-height: {{ heading_4_line_height }};
+    --font-heading-md-line-height: {{ heading_3_line_height }};
+    --font-heading-lg-line-height: {{ heading_2_line_height }};
+    --font-heading-xl-line-height: {{ heading_1_line_height }};
     --font-heading-display-line-height: {{ heading_1_line_height }};
-    --font-heading-xs-text-transform: {{ heading_6_text_case }};
-    --font-heading-sm-text-transform: {{ heading_5_text_case }};
-    --font-heading-md-text-transform: {{ heading_4_text_case }};
-    --font-heading-lg-text-transform: {{ heading_3_text_case }};
-    --font-heading-xl-text-transform: {{ heading_2_text_case }};
+    --font-heading-xs-text-transform: {{ heading_5_text_case }};
+    --font-heading-sm-text-transform: {{ heading_4_text_case }};
+    --font-heading-md-text-transform: {{ heading_3_text_case }};
+    --font-heading-lg-text-transform: {{ heading_2_text_case }};
+    --font-heading-xl-text-transform: {{ heading_1_text_case }};
     --font-heading-display-text-transform: {{ heading_1_text_case }};
     --font-heading-custom: var(--font-heading-md);
     --font-heading-custom-line-height: var(--font-heading-md-line-height);
     --font-heading-custom-text-transform: var(--font-heading-md-text-transform);
     --font-heading-display-letter-spacing: {{ heading_1_letter_spacing }};
-    --font-heading-xl-letter-spacing: {{ heading_2_letter_spacing }};
-    --font-heading-lg-letter-spacing: {{ heading_3_letter_spacing }};
-    --font-heading-md-letter-spacing: {{ heading_4_letter_spacing }};
-    --font-heading-sm-letter-spacing: {{ heading_5_letter_spacing }};
-    --font-heading-xs-letter-spacing: {{ heading_6_letter_spacing }};
+    --font-heading-xl-letter-spacing: {{ heading_1_letter_spacing }};
+    --font-heading-lg-letter-spacing: {{ heading_2_letter_spacing }};
+    --font-heading-md-letter-spacing: {{ heading_3_letter_spacing }};
+    --font-heading-sm-letter-spacing: {{ heading_4_letter_spacing }};
+    --font-heading-xs-letter-spacing: {{ heading_5_letter_spacing }};
     --font-heading-custom-letter-spacing: var(--font-heading-md-letter-spacing);
     --font-heading-letter-spacing: {{ heading_letter_spacing }};
     --font-eyebrow-size: {{ eyebrow_size }}px;
@@ -785,12 +809,12 @@
     --font-eyebrow-weight: 500;
     --type-body-size: var(--font-body-md);
     --type-body-leading: var(--font-body-line-height);
-    --type-heading-1-size: var(--font-heading-display);
-    --type-heading-2-size: var(--font-heading-xl);
-    --type-heading-3-size: var(--font-heading-lg);
-    --type-heading-4-size: var(--font-heading-md);
-    --type-heading-5-size: var(--font-heading-sm);
-    --type-heading-6-size: var(--font-heading-xs);
+    --type-heading-1-size: var(--font-heading-h1);
+    --type-heading-2-size: var(--font-heading-h2);
+    --type-heading-3-size: var(--font-heading-h3);
+    --type-heading-4-size: var(--font-heading-h4);
+    --type-heading-5-size: var(--font-heading-h5);
+    --type-heading-6-size: var(--font-heading-h6);
     --type-role-title-size: var(--font-heading-xl);
     --type-role-subtitle-size: var(--font-heading-md);
     --type-role-body-size: var(--font-body-md);
@@ -1041,23 +1065,37 @@
 
   @media (min-width: 768px) and (max-width: 1149.98px) {
     :root {
-      --font-heading-xs: {{ heading_6_size_desktop }}px;
-      --font-heading-sm: {{ heading_5_size_tablet }}px;
-      --font-heading-md: {{ heading_4_size_desktop }}px;
-      --font-heading-lg: {{ heading_3_size_tablet }}px;
-      --font-heading-xl: {{ heading_2_size_tablet }}px;
+      --font-heading-h1: {{ heading_1_size_tablet }}px;
+      --font-heading-h2: {{ heading_2_size_tablet }}px;
+      --font-heading-h3: {{ heading_3_size_tablet }}px;
+      --font-heading-h4: {{ heading_4_size_desktop }}px;
+      --font-heading-h5: {{ heading_5_size_tablet }}px;
+      --font-heading-h6: {{ heading_6_size_desktop }}px;
+
+      --font-heading-xs: {{ heading_5_size_desktop }}px;
+      --font-heading-sm: {{ heading_4_size_tablet }}px;
+      --font-heading-md: {{ heading_3_size_desktop }}px;
+      --font-heading-lg: {{ heading_2_size_tablet }}px;
+      --font-heading-xl: {{ heading_1_size_tablet }}px;
       --font-heading-display: {{ heading_1_size_tablet }}px;
-      --font-heading-xl-line-height: {{ heading_2_line_height_tablet }};
+      --font-heading-lg-line-height: {{ heading_2_line_height_tablet }};
     }
   }
 
   @media (max-width: 767.98px) {
     :root {
-      --font-heading-xs: {{ heading_6_size_mobile }}px;
-      --font-heading-sm: {{ heading_5_size_mobile }}px;
-      --font-heading-md: {{ heading_4_size_mobile }}px;
-      --font-heading-lg: {{ heading_3_size_mobile }}px;
-      --font-heading-xl: {{ heading_2_size_mobile }}px;
+      --font-heading-h1: {{ heading_1_size_mobile }}px;
+      --font-heading-h2: {{ heading_2_size_mobile }}px;
+      --font-heading-h3: {{ heading_3_size_mobile }}px;
+      --font-heading-h4: {{ heading_4_size_mobile }}px;
+      --font-heading-h5: {{ heading_5_size_mobile }}px;
+      --font-heading-h6: {{ heading_6_size_mobile }}px;
+
+      --font-heading-xs: {{ heading_5_size_mobile }}px;
+      --font-heading-sm: {{ heading_4_size_mobile }}px;
+      --font-heading-md: {{ heading_3_size_mobile }}px;
+      --font-heading-lg: {{ heading_2_size_mobile }}px;
+      --font-heading-xl: {{ heading_1_size_mobile }}px;
       --font-heading-display: {{ heading_1_size_mobile }}px;
     }
   }
