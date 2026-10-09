@@ -4,6 +4,8 @@
 
 {% if settings.favicon != blank %}
   <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64 }}">
+{% elsif settings.logo != blank %}
+  <link rel="icon" href="{{ settings.logo | image_url: width: 64 }}">
 {% endif %}
 
 {%- liquid

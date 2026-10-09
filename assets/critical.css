@@ -3077,6 +3077,15 @@ legend {
   }
 }
 
+/* Reserve the server-rendered overlay header geometry before section CSS. */
+.section-header:has(.header-top[data-header-overlap-first-section]) {
+  position: relative;
+  height: 0;
+  margin-block-end: 0;
+  overflow: visible;
+  z-index: var(--z-drawer, 200);
+}
+
 /* Announcement geometry is required before section CSS and its module load. */
 .announcement-bar { --announcement-bar-loop-distance: 0px; position: relative; width: 100%; overflow: hidden; color: var(--body-color); background: var(--announcement-bar-background, var(--background-color)); padding: var(--announcement-bar-padding-top, 8px) var(--announcement-bar-padding-right, 0px) var(--announcement-bar-padding-bottom, 8px) var(--announcement-bar-padding-left, 0px); }
 .announcement-bar__inner { position: relative; z-index: 1; display: flex; align-items: center; width: 100%; min-height: 2rem; }
