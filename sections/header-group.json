@@ -46,20 +46,6 @@
             "text_size": "sm"
           },
           "blocks": {}
-        },
-        "announcement-localization": {
-          "type": "_header-localization",
-          "settings": {
-            "dropdown_trigger": "click",
-            "show_country_selector": true,
-            "show_country_name": true,
-            "show_country_flag": true,
-            "show_language_selector": false,
-            "font_size": "xs",
-            "show_currency_with_name": true
-          },
-          "blocks": {},
-          "static": true
         }
       },
       "block_order": [
@@ -219,6 +205,18 @@
               "settings": {},
               "blocks": {}
             },
+            "header-localization": {
+              "type": "_header-localization",
+              "settings": {
+                "dropdown_trigger": "click",
+                "show_country_selector": true,
+                "show_country_name": false,
+                "show_country_flag": true,
+                "show_language_selector": false,
+                "font_size": "md"
+              },
+              "blocks": {}
+            },
             "header-divider": {
               "type": "_header-divider",
               "settings": {
@@ -265,6 +263,7 @@
             "header-menu",
             "header-logo",
             "header-menu-toggle",
+            "header-localization",
             "header-divider",
             "header-search",
             "header-account",

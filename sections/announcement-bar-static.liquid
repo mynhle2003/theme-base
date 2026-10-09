@@ -52,9 +52,6 @@
     <div class="announcement-bar-static__content">
       {% content_for 'blocks' %}
     </div>
-    <div class="announcement-bar-static__localization">
-      {% content_for 'block', type: '_header-localization', id: 'announcement-localization' %}
-    </div>
   </div>
 </div>
 
@@ -63,17 +60,10 @@
   .announcement-bar-static--bottom-separator { border-bottom: 1px solid var(--border-color); }
   .announcement-bar-static__layout { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr); align-items: center; column-gap: var(--announcement-bar-gap, 16px); }
   .announcement-bar-static__social { min-width: 0; }
-  .announcement-bar-static__localization { justify-self: end; min-width: 0; }
   .announcement-bar-static__content { --text-align-default: var(--announcement-static-alignment, center); display: grid; justify-items: var(--announcement-static-alignment, center); gap: var(--announcement-bar-gap, 16px); min-width: 0; text-align: var(--text-align-default); overflow-wrap: anywhere; }
-  .announcement-bar-static .header-localization__details { --header-submenu-offset: var(--section-padding-bottom, 0px); }
-  .announcement-bar-static .header-localization__panel { inset-inline-start: auto; inset-inline-end: 0; max-width: calc(100vw - 32px); }
-  .announcement-bar-static .header-localization__flag,
-  .announcement-bar-static .header-localization__icon { width: 16px; height: 16px; }
-  .announcement-bar-static .header-localization__summary { gap: 4px; }
-  .announcement-bar-static .header-localization__country { gap: 6px; }
   @media (max-width: 767.98px) {
     .announcement-bar-static__layout { grid-template-columns: minmax(0, 1fr); }
-    .announcement-bar-static__social, .announcement-bar-static__localization { display: none; }
+    .announcement-bar-static__social { display: none; }
     .announcement-bar-static__content { --text-align-default: var(--announcement-static-alignment-mobile, var(--announcement-static-alignment, center)); justify-items: var(--text-align-default); }
   }
 {% endstylesheet %}
@@ -102,9 +92,6 @@
     },
     {
       "type": "_announcement-social-links"
-    },
-    {
-      "type": "_header-localization"
     }
   ],
   "settings": [
@@ -320,16 +307,6 @@
             "width": "fill",
             "text_size": "sm",
             "text_color": "#ffffff"
-          }
-        },
-        {
-          "type": "_header-localization",
-          "id": "announcement-localization",
-          "static": true,
-          "settings": {
-            "show_country_name": true,
-            "show_currency_with_name": true,
-            "font_size": "xs"
           }
         }
       ]
