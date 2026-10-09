@@ -25,6 +25,14 @@
   if collections_background_heading_custom_size_mobile < 10 or collections_background_heading_custom_size_mobile > 100
     assign collections_background_heading_custom_size_mobile = 24
   endif
+  capture collections_background_heading_size
+    render 'heading-size-token', size: collections_background_heading_size, fallback: 'xl', html_tag: section.settings.heading_tag
+  endcapture
+  assign collections_background_heading_size = collections_background_heading_size | strip
+  capture collections_background_heading_size_mobile
+    render 'heading-size-token', size: collections_background_heading_size_mobile, fallback: 'xl', html_tag: section.settings.heading_tag
+  endcapture
+  assign collections_background_heading_size_mobile = collections_background_heading_size_mobile | strip
 %}
 
 {% capture collections_background_style %}
@@ -713,7 +721,11 @@
         {
           "type": "collection-background-item"
         }
-      ]
+      ],
+      "settings": {
+        "heading_size": "xl",
+        "heading_size_mobile": "md"
+      }
     }
   ]
 }

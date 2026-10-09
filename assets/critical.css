@@ -864,6 +864,10 @@ h1 {
 }
 
 h2 {
+  --font-heading-display: var(--font-heading-xl);
+  --font-heading-display-line-height: var(--font-heading-xl-line-height);
+  --font-heading-display-letter-spacing: var(--font-heading-xl-letter-spacing);
+  --font-heading-display-text-transform: var(--font-heading-xl-text-transform);
   font-size: var(--font-heading-xl);
   line-height: var(--font-heading-xl-line-height);
   letter-spacing: var(--font-heading-xl-letter-spacing);
@@ -871,6 +875,10 @@ h2 {
 }
 
 h3 {
+  --font-heading-display: var(--font-heading-lg);
+  --font-heading-display-line-height: var(--font-heading-lg-line-height);
+  --font-heading-display-letter-spacing: var(--font-heading-lg-letter-spacing);
+  --font-heading-display-text-transform: var(--font-heading-lg-text-transform);
   font-size: var(--font-heading-lg);
   line-height: var(--font-heading-lg-line-height);
   letter-spacing: var(--font-heading-lg-letter-spacing);
@@ -878,6 +886,10 @@ h3 {
 }
 
 h4 {
+  --font-heading-display: var(--font-heading-md);
+  --font-heading-display-line-height: var(--font-heading-md-line-height);
+  --font-heading-display-letter-spacing: var(--font-heading-md-letter-spacing);
+  --font-heading-display-text-transform: var(--font-heading-md-text-transform);
   font-size: var(--font-heading-md);
   line-height: var(--font-heading-md-line-height);
   letter-spacing: var(--font-heading-md-letter-spacing);
@@ -885,6 +897,10 @@ h4 {
 }
 
 h5 {
+  --font-heading-display: var(--font-heading-sm);
+  --font-heading-display-line-height: var(--font-heading-sm-line-height);
+  --font-heading-display-letter-spacing: var(--font-heading-sm-letter-spacing);
+  --font-heading-display-text-transform: var(--font-heading-sm-text-transform);
   font-size: var(--font-heading-sm);
   line-height: var(--font-heading-sm-line-height);
   letter-spacing: var(--font-heading-sm-letter-spacing);
@@ -892,6 +908,10 @@ h5 {
 }
 
 h6 {
+  --font-heading-display: var(--font-heading-xs);
+  --font-heading-display-line-height: var(--font-heading-xs-line-height);
+  --font-heading-display-letter-spacing: var(--font-heading-xs-letter-spacing);
+  --font-heading-display-text-transform: var(--font-heading-xs-text-transform);
   font-size: var(--font-heading-xs);
   line-height: var(--font-heading-xs-line-height);
   letter-spacing: var(--font-heading-xs-letter-spacing);
@@ -944,6 +964,13 @@ h6 {
   line-height: var(--font-heading-xl-line-height);
   letter-spacing: var(--font-heading-xl-letter-spacing);
   text-transform: var(--font-heading-xl-text-transform);
+}
+
+:where(.heading-display:not(h1)) {
+  --font-heading-display: var(--font-heading-xl);
+  --font-heading-display-line-height: var(--font-heading-xl-line-height);
+  --font-heading-display-letter-spacing: var(--font-heading-xl-letter-spacing);
+  --font-heading-display-text-transform: var(--font-heading-xl-text-transform);
 }
 
 .heading-display,

@@ -23,6 +23,14 @@
   if section.settings.button_show_icon
     assign band_button_icon = section.settings.button_icon | default: 'arrow'
   endif
+  capture band_heading_size
+    render 'heading-size-token', size: band_heading_size, fallback: 'xl', html_tag: band_heading_tag
+  endcapture
+  assign band_heading_size = band_heading_size | strip
+  capture band_heading_size_mobile
+    render 'heading-size-token', size: band_heading_size_mobile, fallback: 'xl', html_tag: band_heading_tag
+  endcapture
+  assign band_heading_size_mobile = band_heading_size_mobile | strip
 %}
 
 <div id="images-with-text-scroll-{{ block.id }}" class="images-with-text-scroll__item" data-stacked-band {{ block.shopify_attributes }}>

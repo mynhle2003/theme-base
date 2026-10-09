@@ -48,10 +48,10 @@
   endif
   assign faq_accordion_scheme = faq_accordion_scheme | handleize
 
-  unless faq_question_font_size == 'display' or faq_question_font_size == 'xl' or faq_question_font_size == 'lg' or faq_question_font_size == 'md' or faq_question_font_size == 'sm' or faq_question_font_size == 'xs'
+  unless faq_question_font_size == 'display' or faq_question_font_size == 'xl' or faq_question_font_size == 'lg' or faq_question_font_size == 'md' or faq_question_font_size == 'sm' or faq_question_font_size == 'xs' or faq_question_font_size == 'custom'
     assign faq_question_font_size = 'xs'
   endunless
-  unless faq_question_font_size_mobile == 'display' or faq_question_font_size_mobile == 'xl' or faq_question_font_size_mobile == 'lg' or faq_question_font_size_mobile == 'md' or faq_question_font_size_mobile == 'sm' or faq_question_font_size_mobile == 'xs'
+  unless faq_question_font_size_mobile == 'display' or faq_question_font_size_mobile == 'xl' or faq_question_font_size_mobile == 'lg' or faq_question_font_size_mobile == 'md' or faq_question_font_size_mobile == 'sm' or faq_question_font_size_mobile == 'xs' or faq_question_font_size_mobile == 'custom'
     assign faq_question_font_size_mobile = faq_question_font_size
   endunless
 
@@ -116,10 +116,10 @@
   --faq-item-question-weight: var(--font-{{ faq_question_font }}-weight);
   --faq-item-question-style: var(--font-{{ faq_question_font }}-style);
   {% if faq_question_font == 'heading' %}
-    --faq-item-question-size: var(--font-heading-{{ faq_question_font_size }});
-    --faq-item-question-line-height: var(--font-heading-{{ faq_question_font_size }}-line-height);
-    --faq-item-question-letter-spacing: var(--font-heading-{{ faq_question_font_size }}-letter-spacing);
-    --faq-item-question-text-transform: var(--font-heading-{{ faq_question_font_size }}-text-transform);
+    --faq-item-question-size: {% if faq_question_font_size == 'custom' %}{{ block.settings.custom_question_font_size | default: 16 | at_least: 10 | at_most: 100 }}px{% else %}var(--font-heading-{{ faq_question_font_size }}){% endif %};
+    --faq-item-question-line-height: var(--font-heading-{% if faq_question_font_size == 'custom' %}xs{% else %}{{ faq_question_font_size }}{% endif %}-line-height);
+    --faq-item-question-letter-spacing: var(--font-heading-{% if faq_question_font_size == 'custom' %}xs{% else %}{{ faq_question_font_size }}{% endif %}-letter-spacing);
+    --faq-item-question-text-transform: var(--font-heading-{% if faq_question_font_size == 'custom' %}xs{% else %}{{ faq_question_font_size }}{% endif %}-text-transform);
   {% else %}
     --faq-item-question-size: var(--font-body-{{ block.settings.question_body_font_size | default: 'md' }});
     --faq-item-question-line-height: var(--font-body-line-height);
@@ -129,10 +129,10 @@
 
   {% if block.settings.customize_mobile_font_size %}
     {% if faq_question_font == 'heading' %}
-      --faq-item-question-size-mobile: var(--font-heading-{{ faq_question_font_size_mobile }});
-      --faq-item-question-line-height-mobile: var(--font-heading-{{ faq_question_font_size_mobile }}-line-height);
-      --faq-item-question-letter-spacing-mobile: var(--font-heading-{{ faq_question_font_size_mobile }}-letter-spacing);
-      --faq-item-question-text-transform-mobile: var(--font-heading-{{ faq_question_font_size_mobile }}-text-transform);
+      --faq-item-question-size-mobile: {% if faq_question_font_size_mobile == 'custom' %}{{ block.settings.custom_question_font_size_mobile | default: 14 | at_least: 10 | at_most: 100 }}px{% else %}var(--font-heading-{{ faq_question_font_size_mobile }}){% endif %};
+      --faq-item-question-line-height-mobile: var(--font-heading-{% if faq_question_font_size_mobile == 'custom' %}xs{% else %}{{ faq_question_font_size_mobile }}{% endif %}-line-height);
+      --faq-item-question-letter-spacing-mobile: var(--font-heading-{% if faq_question_font_size_mobile == 'custom' %}xs{% else %}{{ faq_question_font_size_mobile }}{% endif %}-letter-spacing);
+      --faq-item-question-text-transform-mobile: var(--font-heading-{% if faq_question_font_size_mobile == 'custom' %}xs{% else %}{{ faq_question_font_size_mobile }}{% endif %}-text-transform);
     {% else %}
       --faq-item-question-size-mobile: var(--font-body-{{ block.settings.question_body_font_size_mobile | default: 'md' }});
     {% endif %}
@@ -308,10 +308,22 @@
         {
           "value": "xs",
           "label": "t:options.heading_size.xs"
-        }
+        },
+        { "value": "custom", "label": "t:options.heading_size.custom" }
       ],
       "default": "sm",
       "visible_if": "{{ block.settings.question_font == 'heading' }}"
+    },
+    {
+      "type": "range",
+      "id": "custom_question_font_size",
+      "label": "t:labels.font_size_desktop",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ block.settings.question_font == 'heading' and block.settings.question_font_size == 'custom' }}"
     },
     {
       "type": "select",
@@ -660,10 +672,22 @@
         {
           "value": "xs",
           "label": "t:options.heading_size.xs"
-        }
+        },
+        { "value": "custom", "label": "t:options.heading_size.custom" }
       ],
       "default": "xs",
       "visible_if": "{{ false }}"
+    },
+    {
+      "type": "range",
+      "id": "custom_question_font_size_mobile",
+      "label": "t:labels.font_size_mobile",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 14,
+      "visible_if": "{{ block.settings.question_font == 'heading' and block.settings.question_font_size_mobile == 'custom' }}"
     },
     {
       "type": "select",
@@ -714,9 +738,9 @@
         "style": "simple",
         "icon": "chevron",
         "dividers": true,
-        "question_font_size": "sm",
+        "question_font_size": "xs",
         "customize_mobile_font_size": false,
-        "question_font_size_mobile": "xs",
+        "question_font_size_mobile": "custom",
         "gap_desktop": 20,
         "gap_mobile": 20,
         "width": "fill",
@@ -728,7 +752,8 @@
         "device": "desktop",
         "max_width": 850,
         "color_type": "color_scheme",
-        "color_scheme": "scheme-2"
+        "color_scheme": "scheme-2",
+        "custom_question_font_size_mobile": 14
       },
       "blocks": [
         {

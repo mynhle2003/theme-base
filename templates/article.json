@@ -23,13 +23,19 @@
         "padding_bottom_mobile": 60
       },
       "blocks": {
-        "blog-meta": { "type": "blog-meta", "static": true, "settings": {} },
+        "blog-meta": { "type": "blog-meta", "static": true, "settings": {
+          "title_size": "lg"
+        } },
         "featured-image": { "type": "featured-image", "static": true, "settings": {} },
         "content": { "type": "content", "static": true, "settings": {} },
         "tags-and-sharing": { "type": "tags-and-sharing", "static": true, "settings": {} },
         "divider": { "type": "divider", "static": true, "settings": {} },
-        "previous-and-next-posts": { "type": "previous-and-next-posts", "static": true, "settings": {} },
-        "comments": { "type": "comments", "static": true, "settings": {} }
+        "previous-and-next-posts": { "type": "previous-and-next-posts", "static": true, "settings": {
+          "title_size": "xs"
+        } },
+        "comments": { "type": "comments", "static": true, "settings": {
+          "heading_size": "md"
+        } }
       }
     }
   },
