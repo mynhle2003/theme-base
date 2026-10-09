@@ -1,6 +1,8 @@
 {% liquid
   assign width = block.settings.width_custom_desktop | default: 300
+  assign width = width | at_least: 50 | at_most: 500
   assign mobile_width = block.settings.width_custom_mobile | default: 50
+  assign mobile_width = mobile_width | at_least: 50 | at_most: 500
   capture ratio
     render 'image-ratio-value', setting: block.settings.image_ratio
   endcapture
@@ -97,24 +99,18 @@
       "content": "Width"
     },
     {
-      "type": "range",
+      "type": "number",
       "id": "width_custom_desktop",
-      "label": "Desktop",
-      "min": 50,
-      "max": 400,
-      "step": 5,
+      "label": "Desktop (px)",
       "default": 300,
-      "unit": "px"
+      "info": "50–500 px. Values outside this range are limited when displayed."
     },
     {
-      "type": "range",
+      "type": "number",
       "id": "width_custom_mobile",
-      "label": "Mobile",
-      "min": 50,
-      "max": 400,
-      "step": 5,
+      "label": "Mobile (px)",
       "default": 50,
-      "unit": "px"
+      "info": "50–500 px. Values outside this range are limited when displayed."
     },
     {
       "type": "header",

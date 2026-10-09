@@ -160,11 +160,14 @@
 %}
 {% if block.settings.text != blank or request.design_mode %}
   <lh-editorial-text
-    class="{{ editorial_text_class }}"
+    class="{{ editorial_text_class }} block-animation"
     data-editorial-reveal="{{ block.settings.enable_scroll_reveal }}"
     data-editorial-speed="{{ block.settings.scroll_speed | default: 'medium' }}"
     data-editorial-opacity="{{ block.settings.start_opacity | default: 30 }}"
     {% if editorial_text_style != blank %}style="{{ editorial_text_style }}"{% endif %}
+    {% if block.settings.animation_type != blank and block.settings.animation_type != 'none' %}
+      {% render 'block-animation-attributes', block: block %}
+    {% endif %}
     {{ block.shopify_attributes }}
   >
     <div class="editorial-text-block__base">{{ editorial_content }}</div>
@@ -360,6 +363,52 @@
       "unit": "px",
       "default": 480,
       "visible_if": "{{ block.settings.customize_mobile_size and block.settings.width_mobile == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.animation"
+    },
+    {
+      "type": "select",
+      "id": "animation_type",
+      "label": "t:labels.type",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.block_animation.none"
+        },
+        {
+          "value": "fade",
+          "label": "t:options.block_animation.fade"
+        },
+        {
+          "value": "scale",
+          "label": "t:options.block_animation.scale"
+        },
+        {
+          "value": "slide-left",
+          "label": "t:options.block_animation.slide_left"
+        },
+        {
+          "value": "slide-right",
+          "label": "t:options.block_animation.slide_right"
+        },
+        {
+          "value": "slide-bottom",
+          "label": "t:options.block_animation.slide_bottom"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "animation_delay",
+      "label": "t:labels.animation_delay",
+      "min": 0,
+      "max": 2000,
+      "step": 50,
+      "unit": "ms",
+      "default": 0
     },
     {
       "type": "header",
@@ -800,7 +849,9 @@
         "image_width_mobile_5": 100,
         "image_new_tab_5": false,
         "corner_radius": "inherit",
-        "custom_corner_radius": 0
+        "custom_corner_radius": 0,
+        "animation_type": "none",
+        "animation_delay": 0
       }
     }
   ]

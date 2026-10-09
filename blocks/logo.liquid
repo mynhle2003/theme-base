@@ -1,8 +1,7 @@
 {% doc %}
   Renders the store logo for reusable surfaces such as the Footer.
 
-  Logo artwork defaults to Theme settings; a block image overrides it. A store-name
-  wordmark uses shop.name, never a design-reference brand. The block controls whether the
+  Logo artwork comes from Theme settings. The block controls whether the
   default or transparent artwork is used, its desktop/mobile width when
   customized, whether the logo fills its parent, and its local padding.
 
@@ -35,18 +34,6 @@
   if logo_style == 'transparent' and settings.logo_transparent != blank
     assign logo_image = settings.logo_transparent
   endif
-
-  if block.settings.custom_logo != blank
-    assign logo_image = block.settings.custom_logo
-  endif
-
-  assign logo_wordmark = false
-  if block.settings.show_store_name and block.settings.custom_logo == blank
-    assign logo_wordmark = true
-  endif
-  assign logo_name = shop.name | upcase
-  assign logo_letters = logo_name | split: ''
-  assign logo_letter_count = logo_letters.size | at_least: 1
 
   assign logo_block_width = '100%'
   assign logo_block_width_mobile = '100%'
@@ -100,13 +87,7 @@
   style="{{ logo_style_attribute }}"
   {{ block.shopify_attributes }}
 >
-  {% if logo_wordmark %}
-    <span class="logo-block__wordmark" style="--logo-letter-count: {{ logo_letter_count }};" aria-hidden="true">
-      {% for letter in logo_letters %}
-        <span class="logo-block__letter">{% if letter == ' ' %}&nbsp;{% else %}{{ letter | escape }}{% endif %}</span>
-      {% endfor %}
-    </span>
-  {% elsif logo_image != blank %}
+  {% if logo_image != blank %}
     {{
       logo_image
       | image_url: width: 2400
@@ -144,25 +125,6 @@
     object-fit: contain;
   }
 
-  .logo-block__wordmark {
-    container-type: inline-size;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    aspect-ratio: 1835 / 345;
-    color: var(--heading-color);
-    font-family: var(--font-heading-family);
-    font-weight: 700;
-    line-height: 1;
-  }
-
-  .logo-block__letter {
-    font-size: min(12vw, calc(85cqi / var(--logo-letter-count)));
-    flex: 0 1 auto;
-    min-width: 0;
-  }
-
   .logo-block .site-logo__fallback {
     display: block;
     min-width: 0;
@@ -187,19 +149,6 @@
   "tag": null,
   "settings": [
     {
-      "type": "image_picker",
-      "id": "custom_logo",
-      "label": "Custom logo",
-      "info": "Overrides the theme logo for this block only."
-    },
-    {
-      "type": "checkbox",
-      "id": "show_store_name",
-      "label": "Show store name as a wide wordmark",
-      "info": "Uses the actual store name. A custom logo image takes priority.",
-      "default": false
-    },
-    {
       "type": "paragraph",
       "content": "t:info.logo_block"
     },
@@ -208,14 +157,8 @@
       "id": "style",
       "label": "t:labels.style",
       "options": [
-        {
-          "value": "default",
-          "label": "t:options.logo_style.default"
-        },
-        {
-          "value": "transparent",
-          "label": "t:options.logo_style.transparent"
-        }
+        { "value": "default", "label": "t:options.logo_style.default" },
+        { "value": "transparent", "label": "t:options.logo_style.transparent" }
       ],
       "default": "default"
     },
@@ -224,14 +167,8 @@
       "id": "width",
       "label": "t:labels.width",
       "options": [
-        {
-          "value": "fill",
-          "label": "t:options.width.fill"
-        },
-        {
-          "value": "custom",
-          "label": "t:options.width.custom"
-        }
+        { "value": "fill", "label": "t:options.width.fill" },
+        { "value": "custom", "label": "t:options.width.custom" }
       ],
       "default": "fill"
     },

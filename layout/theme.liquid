@@ -13,6 +13,22 @@
     {% # Inlined CSS Variables %}
     {% render 'css-variables' %}
 
+    {% unless settings.motion_block_animations == false %}
+      <script>
+        // Prepare entrance effects before body content can reach its first paint.
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window && typeof Element.prototype.animate === 'function') {
+          const boot = { expired: false };
+          window[Symbol.for('theme.blockAnimationsBoot')] = boot;
+          document.documentElement.classList.add('block-animations-enabled');
+          boot.release = () => {
+            boot.expired = true;
+            document.documentElement.classList.remove('block-animations-enabled');
+          };
+          boot.timer = setTimeout(boot.release, 8000);
+        }
+      </script>
+    {% endunless %}
+
     {% comment %}
       Font preloading:
       1. Preconnect to font CDN for faster connection
@@ -39,6 +55,7 @@
     {% render 'swiper-stylesheet' %}
     <script src="{{ 'header.js' | asset_url }}" defer></script>
     <script src="{{ 'theme-module-loader.js' | asset_url }}" defer></script>
+    <script src="{{ 'block-animations.js' | asset_url }}" defer onerror="window[Symbol.for('theme.blockAnimationsBoot')]?.release()"></script>
     <script src="{{ 'accordion-details.js' | asset_url }}" defer></script>
     <script src="{{ 'product-card-variants.js' | asset_url }}" defer></script>
     {% if request.design_mode or content_for_layout contains 'data-share' %}

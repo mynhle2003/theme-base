@@ -36,16 +36,9 @@
       assign section_alignment = 'start'
   endcase
 
-  assign section_height_mode = section.settings.height | default: 'fit'
-  unless section_height_mode == 'fit' or section_height_mode == 'fill'
-    assign section_height_mode = 'fit'
-  endunless
-
   assign section_position_source = 'top'
   if section_direction == 'horizontal'
-    assign section_position_source = section.settings.position_horizontal | default: section.settings.position | default: 'center'
-  elsif section_height_mode == 'fill'
-    assign section_position_source = section.settings.position | default: 'center'
+    assign section_position_source = section.settings.position_horizontal | default: 'center'
   endif
   assign section_position_name = section_position_source
   case section_position_name
@@ -71,7 +64,7 @@
     assign section_mobile_alignment_enabled = true
   endif
   assign section_alignment_mobile_source = section.settings.alignment_mobile | default: 'left'
-  unless section_alignment_mobile_source == 'left' or section_alignment_mobile_source == 'center' or section_alignment_mobile_source == 'right' or section_alignment_mobile_source == 'space-between'
+  unless section_alignment_mobile_source == 'left' or section_alignment_mobile_source == 'center' or section_alignment_mobile_source == 'right'
     assign section_alignment_mobile_source = 'left'
   endunless
   if section_mobile_alignment_enabled
@@ -79,9 +72,6 @@
       when 'center'
         assign section_alignment_mobile = 'center'
         assign section_justify_mobile = 'center'
-      when 'space-between'
-        assign section_alignment_mobile = 'start'
-        assign section_justify_mobile = 'space-between'
       when 'right'
         assign section_alignment_mobile = 'end'
         assign section_justify_mobile = 'flex-end'
@@ -141,21 +131,20 @@
     gap: section_gap_desktop,
     gap_mobile: section_gap_mobile
   %}
-  {% if section_vertical_on_mobile and section_justify_mobile == 'flex-start' and section_justify != 'flex-start' %}--layout-flow-justify-content-mobile: flex-start;{% endif %}
   --text-marquee-custom-align: {{ section_alignment }};
   {% if section_mobile_alignment_enabled %}--text-marquee-custom-align-mobile: {{ section_alignment_mobile }};{% endif %}
 {% endcapture %}
 {% assign section_content_style = section_content_style | strip %}
 
 <div
-  class="text-marquee-custom color-scheme {{ color_scheme }} text-marquee-custom--height-{{ section_height_mode }}"
+  class="section-spacing text-marquee-custom text-marquee-custom--{{ section_direction }}{% if section_vertical_on_mobile %} text-marquee-custom--mobile-vertical{% endif %} color-scheme {{ color_scheme }}"
   {% if section_style != blank %}style="{{ section_style }}"{% endif %}
 >
   {% if section.settings.background_image != blank %}
     <div class="text-marquee-custom__background" aria-hidden="true"></div>
   {% endif %}
   <div class="container {{ section_container_width }} text-marquee-custom__container">
-    <div class="text-marquee-custom__content layout-flow layout-flow--responsive" style="{{ section_content_style }}">
+    <div class="text-marquee-custom__content layout-flow layout-flow--responsive layout-flow--{{ section_direction }}{% if section_vertical_on_mobile %} layout-flow--mobile-vertical{% endif %}" style="{{ section_content_style }}">
       {% content_for 'blocks' %}
     </div>
   </div>
@@ -202,11 +191,6 @@
     text-align: var(--flex-align);
   }
 
-  .section-text-marquee-custom .text-marquee-custom--height-fill,
-  .section-text-marquee-custom .text-marquee-custom--height-fill > .text-marquee-custom__container,
-  .section-text-marquee-custom .text-marquee-custom--height-fill > .text-marquee-custom__container > .text-marquee-custom__content {
-    height: 100%;
-  }
 
   .section-text-marquee-custom .text-marquee-custom__content > * {
     min-width: 0;
@@ -233,7 +217,7 @@
 
 {% schema %}
 {
-  "name": "Scrolling Text Images",
+  "name": "Text marquee (custom)",
   "class": "section-text-marquee-custom",
   "enabled_on": {
     "templates": [
@@ -267,9 +251,6 @@
     },
     {
       "type": "icon"
-    },
-    {
-      "type": "divider"
     },
     {
       "type": "spacer"
@@ -377,31 +358,6 @@
     },
     {
       "type": "select",
-      "id": "position",
-      "label": "t:labels.position",
-      "options": [
-        {
-          "value": "top",
-          "label": "t:options.position.top"
-        },
-        {
-          "value": "center",
-          "label": "t:options.alignment.center"
-        },
-        {
-          "value": "bottom",
-          "label": "t:options.position.bottom"
-        },
-        {
-          "value": "space-between",
-          "label": "t:options.alignment.space_between"
-        }
-      ],
-      "default": "top",
-      "visible_if": "{{ section.settings.direction == 'vertical' and section.settings.height == 'fill' }}"
-    },
-    {
-      "type": "select",
       "id": "alignment",
       "label": "t:labels.alignment",
       "options": [
@@ -416,10 +372,6 @@
         {
           "value": "right",
           "label": "t:options.alignment.right"
-        },
-        {
-          "value": "space-between",
-          "label": "t:options.alignment.space_between"
         }
       ],
       "default": "left",
@@ -441,10 +393,6 @@
         {
           "value": "right",
           "label": "t:options.alignment.right"
-        },
-        {
-          "value": "space-between",
-          "label": "t:options.alignment.space_between"
         }
       ],
       "default": "left",
@@ -497,7 +445,7 @@
     },
     {
       "type": "header",
-      "content": "t:general.padding"
+      "content": "Section padding"
     },
     {
       "type": "range",
@@ -546,27 +494,11 @@
       "unit": "px",
       "default": 0,
       "visible_if": "{{ section.settings.customize_mobile_padding }}"
-    },
-    {
-      "type": "select",
-      "id": "height",
-      "label": "t:labels.height",
-      "options": [
-        {
-          "value": "fit",
-          "label": "t:options.width.fit"
-        },
-        {
-          "value": "fill",
-          "label": "t:options.width.fill"
-        }
-      ],
-      "default": "fill"
     }
   ],
   "presets": [
     {
-      "name": "Scrolling Text Images",
+      "name": "Text marquee (custom)",
       "category": "t:general.content",
       "blocks": [
         {
@@ -574,18 +506,13 @@
           "settings": {
             "animation_direction": "backward",
             "animation_speed": 1,
-            "background_color": "#f0f0f0",
-            "gap_desktop": 16,
-            "gap_mobile": 16,
-            "padding_top": 0,
-            "padding_bottom": 0,
-            "padding_left": 0,
-            "padding_right": 0,
+            "gap_desktop": 32,
+            "gap_mobile": 32,
+            "padding_top": 20,
+            "padding_bottom": 20,
             "customize_mobile_padding": true,
-            "padding_top_mobile": 0,
-            "padding_bottom_mobile": 0,
-            "padding_left_mobile": 0,
-            "padding_right_mobile": 0,
+            "padding_top_mobile": 20,
+            "padding_bottom_mobile": 20,
             "show_top_divider": false,
             "show_bottom_divider": false,
             "show_blurred_edges": false,
@@ -598,109 +525,58 @@
           },
           "blocks": [
             {
-              "type": "marquee-item",
+              "type": "_marquee-text",
               "settings": {
-                "direction": "horizontal",
-                "position": "center",
-                "horizontal_alignment": "left",
-                "customize_mobile_alignment": false,
-                "gap_desktop": 16,
-                "gap_mobile": 16
-              },
-              "blocks": [
-                {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Free 30-day returns</p>",
-                    "text_size": "sm",
-                    "text_color": "#111111",
-                    "width": "fit",
-                    "padding_left": 16,
-                    "padding_right": 16
-                  }
-                },
-                {
-                  "type": "icon",
-                  "settings": {
-                    "source": "custom",
-                    "icon": "square",
-                    "icon_width": 6,
-                    "icon_padding": 0,
-                    "custom_mobile": false,
-                    "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>"
-                  }
-                }
-              ]
+                "text": "<p>Free 30-day returns</p>",
+                "text_size": "sm"
+              }
             },
             {
-              "type": "marquee-item",
+              "type": "_marquee-icon",
               "settings": {
-                "direction": "horizontal",
-                "position": "center",
-                "horizontal_alignment": "left",
-                "customize_mobile_alignment": false,
-                "gap_desktop": 16,
-                "gap_mobile": 16
-              },
-              "blocks": [
-                {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Fast shipping</p>",
-                    "text_size": "sm",
-                    "text_color": "#111111",
-                    "width": "fit",
-                    "padding_left": 16,
-                    "padding_right": 16
-                  }
-                },
-                {
-                  "type": "icon",
-                  "settings": {
-                    "source": "custom",
-                    "icon": "square",
-                    "icon_width": 6,
-                    "icon_padding": 0,
-                    "custom_mobile": false,
-                    "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>"
-                  }
-                }
-              ]
+                "source": "custom",
+                "icon": "square",
+                "icon_width": 6,
+                "icon_padding": 0,
+                "custom_mobile": false,
+                "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>"
+              }
             },
             {
-              "type": "marquee-item",
+              "type": "_marquee-text",
               "settings": {
-                "direction": "horizontal",
-                "position": "center",
-                "horizontal_alignment": "left",
-                "customize_mobile_alignment": false,
-                "gap_desktop": 16,
-                "gap_mobile": 16
-              },
-              "blocks": [
-                {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Easy exchanges</p>",
-                    "text_size": "sm",
-                    "text_color": "#111111",
-                    "width": "fit",
-                    "padding_left": 16,
-                    "padding_right": 16
-                  }
-                },
-                {
-                  "type": "icon",
-                  "settings": {
-                    "source": "custom",
-                    "icon": "square",
-                    "icon_width": 6,
-                    "icon_padding": 0,
-                    "custom_mobile": false,
-                    "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>"
-                  }
-                }
-              ]
+                "text": "<p>Fast shipping</p>",
+                "text_size": "sm"
+              }
+            },
+            {
+              "type": "_marquee-icon",
+              "settings": {
+                "source": "custom",
+                "icon": "square",
+                "icon_width": 6,
+                "icon_padding": 0,
+                "custom_mobile": false,
+                "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>"
+              }
+            },
+            {
+              "type": "_marquee-text",
+              "settings": {
+                "text": "<p>Easy exchanges</p>",
+                "text_size": "sm"
+              }
+            },
+            {
+              "type": "_marquee-icon",
+              "settings": {
+                "source": "custom",
+                "icon": "square",
+                "icon_width": 6,
+                "icon_padding": 0,
+                "custom_mobile": false,
+                "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>"
+              }
             }
           ]
         }
@@ -712,14 +588,13 @@
         "gap_mobile": 0,
         "color_scheme": "scheme-1",
         "background_color": "#f0f0f0",
-        "padding_top": 20,
-        "padding_bottom": 20,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 20,
-        "padding_bottom_mobile": 20,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": false,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
         "position_horizontal": "center",
         "horizontal_alignment": "left",
-        "height": "fill",
         "alignment": "left",
         "alignment_mobile": "left"
       }
