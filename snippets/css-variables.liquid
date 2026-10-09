@@ -129,23 +129,17 @@
   assign body_xl_size = 20
   assign body_xxl_size = 24
   assign body_leading = '1.5'
-  case settings.type_body_leading
-    when 'normal'
-      assign body_leading = '1.5'
-    when 'relaxed'
-      assign body_leading = '1.6'
-    when 'loose'
-      assign body_leading = '1.75'
-  endcase
+  capture body_leading
+    render 'css-token-value', setting: settings.type_body_leading, values: 'normal=1.5|relaxed=1.6|loose=1.75', fallback: body_leading
+  endcapture
+  assign body_leading = body_leading | strip
 
   assign heading_weight = heading_font.weight | default: '400'
   assign heading_letter_spacing = '0px'
-  case settings.type_letter_spacing
-    when 'tight'
-      assign heading_letter_spacing = '-0.2px'
-    when 'relaxed'
-      assign heading_letter_spacing = '0.2px'
-  endcase
+  capture heading_letter_spacing
+    render 'css-token-value', setting: settings.type_letter_spacing, values: 'tight=-0.2px|relaxed=0.2px', fallback: heading_letter_spacing
+  endcapture
+  assign heading_letter_spacing = heading_letter_spacing | strip
 
   assign heading_1_letter_spacing = '-1.28px'
   assign heading_2_letter_spacing = '-0.8px'
@@ -172,124 +166,88 @@
   assign heading_6_size_mobile = settings.type_heading_6_size_mobile | default: 14
 
   assign heading_1_line_height = '1.2'
-  case settings.type_heading_1_line_height
-    when 'tight'
-      assign heading_1_line_height = '1.1'
-    when 'normal'
-      assign heading_1_line_height = '1.2'
-    when 'relaxed'
-      assign heading_1_line_height = '1.3'
-  endcase
+  capture heading_1_line_height
+    render 'css-token-value', setting: settings.type_heading_1_line_height, values: 'tight=1.1|normal=1.2|relaxed=1.3', fallback: heading_1_line_height
+  endcapture
+  assign heading_1_line_height = heading_1_line_height | strip
   assign heading_2_line_height = '1.2'
-  case settings.type_heading_2_line_height
-    when 'tight'
-      assign heading_2_line_height = '1.1'
-    when 'normal'
-      assign heading_2_line_height = '1.2'
-    when 'relaxed'
-      assign heading_2_line_height = '1.3'
-  endcase
+  capture heading_2_line_height
+    render 'css-token-value', setting: settings.type_heading_2_line_height, values: 'tight=1.1|normal=1.2|relaxed=1.3', fallback: heading_2_line_height
+  endcapture
+  assign heading_2_line_height = heading_2_line_height | strip
   assign heading_2_line_height_tablet = heading_2_line_height
-  if settings.type_heading_2_line_height == 'normal'
-    assign heading_2_line_height_tablet = '1.3'
-  endif
+  capture heading_2_line_height_tablet
+    render 'css-token-value', setting: settings.type_heading_2_line_height, values: 'normal=1.3', fallback: heading_2_line_height_tablet
+  endcapture
+  assign heading_2_line_height_tablet = heading_2_line_height_tablet | strip
   assign heading_3_line_height = '1.3'
-  case settings.type_heading_3_line_height
-    when 'tight'
-      assign heading_3_line_height = '1.2'
-    when 'normal'
-      assign heading_3_line_height = '1.3'
-    when 'relaxed'
-      assign heading_3_line_height = '1.4'
-  endcase
+  capture heading_3_line_height
+    render 'css-token-value', setting: settings.type_heading_3_line_height, values: 'tight=1.2|normal=1.3|relaxed=1.4', fallback: heading_3_line_height
+  endcapture
+  assign heading_3_line_height = heading_3_line_height | strip
   assign heading_4_line_height = '1.4'
-  case settings.type_heading_4_line_height
-    when 'tight'
-      assign heading_4_line_height = '1.3'
-    when 'normal'
-      assign heading_4_line_height = '1.4'
-    when 'relaxed'
-      assign heading_4_line_height = '1.5'
-  endcase
+  capture heading_4_line_height
+    render 'css-token-value', setting: settings.type_heading_4_line_height, values: 'tight=1.3|normal=1.4|relaxed=1.5', fallback: heading_4_line_height
+  endcapture
+  assign heading_4_line_height = heading_4_line_height | strip
   assign heading_5_line_height = '1.5'
-  case settings.type_heading_5_line_height
-    when 'tight'
-      assign heading_5_line_height = '1.4'
-    when 'normal'
-      assign heading_5_line_height = '1.5'
-    when 'relaxed'
-      assign heading_5_line_height = '1.6'
-  endcase
+  capture heading_5_line_height
+    render 'css-token-value', setting: settings.type_heading_5_line_height, values: 'tight=1.4|normal=1.5|relaxed=1.6', fallback: heading_5_line_height
+  endcapture
+  assign heading_5_line_height = heading_5_line_height | strip
   assign heading_6_line_height = '1.5'
-  case settings.type_heading_6_line_height
-    when 'tight'
-      assign heading_6_line_height = '1.4'
-    when 'normal'
-      assign heading_6_line_height = '1.5'
-    when 'relaxed'
-      assign heading_6_line_height = '1.6'
-  endcase
+  capture heading_6_line_height
+    render 'css-token-value', setting: settings.type_heading_6_line_height, values: 'tight=1.4|normal=1.5|relaxed=1.6', fallback: heading_6_line_height
+  endcapture
+  assign heading_6_line_height = heading_6_line_height | strip
 
   assign heading_1_text_case = 'none'
-  if settings.type_heading_1_case == 'uppercase'
-    assign heading_1_text_case = 'uppercase'
-  elsif settings.type_heading_1_case == 'capitalize'
-    assign heading_1_text_case = 'capitalize'
-  endif
+  capture heading_1_text_case
+    render 'css-token-value', setting: settings.type_heading_1_case, values: 'uppercase=uppercase|capitalize=capitalize', fallback: heading_1_text_case
+  endcapture
+  assign heading_1_text_case = heading_1_text_case | strip
   assign heading_2_text_case = 'none'
-  if settings.type_heading_2_case == 'uppercase'
-    assign heading_2_text_case = 'uppercase'
-  elsif settings.type_heading_2_case == 'capitalize'
-    assign heading_2_text_case = 'capitalize'
-  endif
+  capture heading_2_text_case
+    render 'css-token-value', setting: settings.type_heading_2_case, values: 'uppercase=uppercase|capitalize=capitalize', fallback: heading_2_text_case
+  endcapture
+  assign heading_2_text_case = heading_2_text_case | strip
   assign heading_3_text_case = 'none'
-  if settings.type_heading_3_case == 'uppercase'
-    assign heading_3_text_case = 'uppercase'
-  elsif settings.type_heading_3_case == 'capitalize'
-    assign heading_3_text_case = 'capitalize'
-  endif
+  capture heading_3_text_case
+    render 'css-token-value', setting: settings.type_heading_3_case, values: 'uppercase=uppercase|capitalize=capitalize', fallback: heading_3_text_case
+  endcapture
+  assign heading_3_text_case = heading_3_text_case | strip
   assign heading_4_text_case = 'none'
-  if settings.type_heading_4_case == 'uppercase'
-    assign heading_4_text_case = 'uppercase'
-  elsif settings.type_heading_4_case == 'capitalize'
-    assign heading_4_text_case = 'capitalize'
-  endif
+  capture heading_4_text_case
+    render 'css-token-value', setting: settings.type_heading_4_case, values: 'uppercase=uppercase|capitalize=capitalize', fallback: heading_4_text_case
+  endcapture
+  assign heading_4_text_case = heading_4_text_case | strip
   assign heading_5_text_case = 'none'
-  if settings.type_heading_5_case == 'uppercase'
-    assign heading_5_text_case = 'uppercase'
-  elsif settings.type_heading_5_case == 'capitalize'
-    assign heading_5_text_case = 'capitalize'
-  endif
+  capture heading_5_text_case
+    render 'css-token-value', setting: settings.type_heading_5_case, values: 'uppercase=uppercase|capitalize=capitalize', fallback: heading_5_text_case
+  endcapture
+  assign heading_5_text_case = heading_5_text_case | strip
   assign heading_6_text_case = 'none'
-  if settings.type_heading_6_case == 'uppercase'
-    assign heading_6_text_case = 'uppercase'
-  elsif settings.type_heading_6_case == 'capitalize'
-    assign heading_6_text_case = 'capitalize'
-  endif
+  capture heading_6_text_case
+    render 'css-token-value', setting: settings.type_heading_6_case, values: 'uppercase=uppercase|capitalize=capitalize', fallback: heading_6_text_case
+  endcapture
+  assign heading_6_text_case = heading_6_text_case | strip
 
   assign eyebrow_size = settings.type_eyebrow_size | default: 12
   assign eyebrow_line_height = '1.5'
-  case settings.type_eyebrow_line_height
-    when 'tight'
-      assign eyebrow_line_height = '1.3'
-    when 'normal'
-      assign eyebrow_line_height = '1.5'
-    when 'relaxed'
-      assign eyebrow_line_height = '1.6'
-  endcase
+  capture eyebrow_line_height
+    render 'css-token-value', setting: settings.type_eyebrow_line_height, values: 'tight=1.3|normal=1.5|relaxed=1.6', fallback: eyebrow_line_height
+  endcapture
+  assign eyebrow_line_height = eyebrow_line_height | strip
   assign eyebrow_letter_spacing = '0em'
-  case settings.type_eyebrow_letter_spacing
-    when 'relaxed'
-      assign eyebrow_letter_spacing = '0.02em'
-    when 'loose'
-      assign eyebrow_letter_spacing = '0.08em'
-    when 'extra_loose'
-      assign eyebrow_letter_spacing = '0.2em'
-  endcase
+  capture eyebrow_letter_spacing
+    render 'css-token-value', setting: settings.type_eyebrow_letter_spacing, values: 'relaxed=0.02em|loose=0.08em|extra_loose=0.2em', fallback: eyebrow_letter_spacing
+  endcapture
+  assign eyebrow_letter_spacing = eyebrow_letter_spacing | strip
   assign eyebrow_text_case = 'none'
-  if settings.type_eyebrow_case == 'uppercase'
-    assign eyebrow_text_case = 'uppercase'
-  endif
+  capture eyebrow_text_case
+    render 'css-token-value', setting: settings.type_eyebrow_case, values: 'uppercase=uppercase', fallback: eyebrow_text_case
+  endcapture
+  assign eyebrow_text_case = eyebrow_text_case | strip
 
   assign motion_image_zoom = 1.04
   assign product_card_image_zoom = 1.06
@@ -307,74 +265,46 @@
   endif
 
   assign radius_badges_subheadings = 'var(--radius-square)'
-  case settings.radius_badges_subheadings
-    when 'slightly_rounded'
-      assign radius_badges_subheadings = 'var(--radius-slight)'
-    when 'rounded'
-      assign radius_badges_subheadings = 'var(--radius-rounded)'
-    when 'pill'
-      assign radius_badges_subheadings = 'var(--radius-pill)'
-  endcase
+  capture radius_badges_subheadings
+    render 'css-token-value', setting: settings.radius_badges_subheadings, values: 'slightly_rounded=var(--radius-slight)|rounded=var(--radius-rounded)|pill=var(--radius-pill)', fallback: radius_badges_subheadings
+  endcapture
+  assign radius_badges_subheadings = radius_badges_subheadings | strip
 
   assign radius_variant_pickers = 'var(--radius-square)'
-  case settings.radius_variant_pickers
-    when 'slightly_rounded'
-      assign radius_variant_pickers = 'var(--radius-slight)'
-    when 'rounded'
-      assign radius_variant_pickers = 'var(--radius-rounded)'
-    when 'pill'
-      assign radius_variant_pickers = 'var(--radius-pill)'
-  endcase
+  capture radius_variant_pickers
+    render 'css-token-value', setting: settings.radius_variant_pickers, values: 'slightly_rounded=var(--radius-slight)|rounded=var(--radius-rounded)|pill=var(--radius-pill)', fallback: radius_variant_pickers
+  endcapture
+  assign radius_variant_pickers = radius_variant_pickers | strip
 
   assign radius_swatches = 'var(--radius-square)'
-  case settings.radius_swatches
-    when 'slightly_rounded'
-      assign radius_swatches = 'var(--radius-slight)'
-    when 'rounded'
-      assign radius_swatches = 'var(--radius-rounded)'
-    when 'pill'
-      assign radius_swatches = 'var(--radius-pill)'
-  endcase
+  capture radius_swatches
+    render 'css-token-value', setting: settings.radius_swatches, values: 'slightly_rounded=var(--radius-slight)|rounded=var(--radius-rounded)|pill=var(--radius-pill)', fallback: radius_swatches
+  endcapture
+  assign radius_swatches = radius_swatches | strip
 
   assign radius_navigation = 'var(--radius-square)'
-  case settings.radius_navigation
-    when 'slightly_rounded'
-      assign radius_navigation = 'var(--radius-slight)'
-    when 'rounded'
-      assign radius_navigation = '6px'
-    when 'pill'
-      assign radius_navigation = 'var(--radius-pill)'
-  endcase
+  capture radius_navigation
+    render 'css-token-value', setting: settings.radius_navigation, values: 'slightly_rounded=var(--radius-slight)|rounded=6px|pill=var(--radius-pill)', fallback: radius_navigation
+  endcapture
+  assign radius_navigation = radius_navigation | strip
 
   assign radius_tags = 'var(--radius-square)'
-  case settings.radius_tags
-    when 'slightly_rounded'
-      assign radius_tags = 'var(--radius-slight)'
-    when 'rounded'
-      assign radius_tags = 'var(--radius-rounded)'
-    when 'pill'
-      assign radius_tags = 'var(--radius-pill)'
-  endcase
+  capture radius_tags
+    render 'css-token-value', setting: settings.radius_tags, values: 'slightly_rounded=var(--radius-slight)|rounded=var(--radius-rounded)|pill=var(--radius-pill)', fallback: radius_tags
+  endcapture
+  assign radius_tags = radius_tags | strip
 
   assign media_container_radius = 'var(--radius-square)'
-  case settings.radius_media_containers
-    when 'slightly_rounded'
-      assign media_container_radius = 'var(--radius-slight)'
-    when 'rounded'
-      assign media_container_radius = 'var(--radius-rounded)'
-    when 'extra_rounded'
-      assign media_container_radius = 'var(--radius-extra)'
-  endcase
+  capture media_container_radius
+    render 'css-token-value', setting: settings.radius_media_containers, values: 'slightly_rounded=var(--radius-slight)|rounded=var(--radius-rounded)|extra_rounded=var(--radius-extra)', fallback: media_container_radius
+  endcapture
+  assign media_container_radius = media_container_radius | strip
 
   assign drawer_radius = 'var(--radius-square)'
-  case settings.radius_drawers
-    when 'slightly_rounded'
-      assign drawer_radius = 'var(--radius-slight)'
-    when 'rounded'
-      assign drawer_radius = 'var(--radius-rounded)'
-    when 'extra_rounded'
-      assign drawer_radius = 'var(--radius-extra)'
-  endcase
+  capture drawer_radius
+    render 'css-token-value', setting: settings.radius_drawers, values: 'slightly_rounded=var(--radius-slight)|rounded=var(--radius-rounded)|extra_rounded=var(--radius-extra)', fallback: drawer_radius
+  endcapture
+  assign drawer_radius = drawer_radius | strip
 
   assign overlay_close_radius = 'var(--radius-square)'
   if settings.radius_drawers == 'slightly_rounded' or settings.radius_drawers == 'rounded' or settings.radius_drawers == 'extra_rounded'
@@ -382,14 +312,10 @@
   endif
 
   assign bottom_sheet_radius = 'var(--radius-square)'
-  case settings.radius_bottom_sheets
-    when 'slightly_rounded'
-      assign bottom_sheet_radius = 'var(--radius-slight)'
-    when 'rounded'
-      assign bottom_sheet_radius = 'var(--radius-rounded)'
-    when 'extra_rounded'
-      assign bottom_sheet_radius = 'var(--radius-extra)'
-  endcase
+  capture bottom_sheet_radius
+    render 'css-token-value', setting: settings.radius_bottom_sheets, values: 'slightly_rounded=var(--radius-slight)|rounded=var(--radius-rounded)|extra_rounded=var(--radius-extra)', fallback: bottom_sheet_radius
+  endcapture
+  assign bottom_sheet_radius = bottom_sheet_radius | strip
 
   assign overlay_radius = drawer_radius
   assign border_width = settings.shape_border_width
@@ -404,14 +330,10 @@
   assign icon_stroke_width = icon_thickness_scale | times: 1.5
 
   assign button_radius = 'var(--radius-square)'
-  case settings.button_radius_style
-    when 'slightly_rounded'
-      assign button_radius = 'var(--radius-slight)'
-    when 'rounded'
-      assign button_radius = 'var(--radius-rounded)'
-    when 'pill'
-      assign button_radius = 'var(--radius-pill)'
-  endcase
+  capture button_radius
+    render 'css-token-value', setting: settings.button_radius_style, values: 'slightly_rounded=var(--radius-slight)|rounded=var(--radius-rounded)|pill=var(--radius-pill)', fallback: button_radius
+  endcapture
+  assign button_radius = button_radius | strip
 
   assign icon_button_radius = 'var(--radius-square)'
   if settings.button_radius_style == 'slightly_rounded' or settings.button_radius_style == 'rounded' or settings.button_radius_style == 'pill'
@@ -434,42 +356,42 @@
       assign button_font_size_mobile = settings.button_font_size_mobile
   endcase
   assign button_letter_spacing = '0em'
-  case settings.button_letter_spacing
-    when 'relaxed'
-      assign button_letter_spacing = '0.02em'
-    when 'loose'
-      assign button_letter_spacing = '0.08em'
-    when 'reference'
-      assign button_letter_spacing = '1.2px'
-    when 'extra_loose'
-      assign button_letter_spacing = '0.14em'
-  endcase
+  capture button_letter_spacing
+    render 'css-token-value', setting: settings.button_letter_spacing, values: 'relaxed=0.02em|loose=0.08em|reference=1.2px|extra_loose=0.14em', fallback: button_letter_spacing
+  endcapture
+  assign button_letter_spacing = button_letter_spacing | strip
 
   assign button_primary_font_family = 'var(--font-body-family)'
-  if settings.button_primary_font == 'heading'
-    assign button_primary_font_family = 'var(--font-heading-family)'
-  endif
+  capture button_primary_font_family
+    render 'css-token-value', setting: settings.button_primary_font, values: 'heading=var(--font-heading-family)', fallback: button_primary_font_family
+  endcapture
+  assign button_primary_font_family = button_primary_font_family | strip
   assign button_secondary_font_family = 'var(--font-body-family)'
-  if settings.button_secondary_font == 'heading'
-    assign button_secondary_font_family = 'var(--font-heading-family)'
-  endif
+  capture button_secondary_font_family
+    render 'css-token-value', setting: settings.button_secondary_font, values: 'heading=var(--font-heading-family)', fallback: button_secondary_font_family
+  endcapture
+  assign button_secondary_font_family = button_secondary_font_family | strip
   assign button_tertiary_font_family = 'var(--font-body-family)'
-  if settings.button_tertiary_font == 'heading'
-    assign button_tertiary_font_family = 'var(--font-heading-family)'
-  endif
+  capture button_tertiary_font_family
+    render 'css-token-value', setting: settings.button_tertiary_font, values: 'heading=var(--font-heading-family)', fallback: button_tertiary_font_family
+  endcapture
+  assign button_tertiary_font_family = button_tertiary_font_family | strip
 
   assign button_primary_text_case = 'uppercase'
-  if settings.button_primary_text_case == 'original'
-    assign button_primary_text_case = 'none'
-  endif
+  capture button_primary_text_case
+    render 'css-token-value', setting: settings.button_primary_text_case, values: 'original=none', fallback: button_primary_text_case
+  endcapture
+  assign button_primary_text_case = button_primary_text_case | strip
   assign button_secondary_text_case = 'uppercase'
-  if settings.button_secondary_text_case == 'original'
-    assign button_secondary_text_case = 'none'
-  endif
+  capture button_secondary_text_case
+    render 'css-token-value', setting: settings.button_secondary_text_case, values: 'original=none', fallback: button_secondary_text_case
+  endcapture
+  assign button_secondary_text_case = button_secondary_text_case | strip
   assign button_tertiary_text_case = 'uppercase'
-  if settings.button_tertiary_text_case == 'original'
-    assign button_tertiary_text_case = 'none'
-  endif
+  capture button_tertiary_text_case
+    render 'css-token-value', setting: settings.button_tertiary_text_case, values: 'original=none', fallback: button_tertiary_text_case
+  endcapture
+  assign button_tertiary_text_case = button_tertiary_text_case | strip
 
   assign button_primary_border_width = settings.button_primary_border_width | default: 1
   assign button_secondary_border_width = settings.button_secondary_border_width | default: 1
@@ -501,80 +423,37 @@
     assign input_border_width = 1
   endif
   assign input_radius = 'var(--radius-rounded)'
-  case settings.input_radius_style
-    when 'square'
-      assign input_radius = 'var(--radius-square)'
-    when 'slightly_rounded'
-      assign input_radius = 'var(--radius-slight)'
-    when 'pill'
-      assign input_radius = 'var(--radius-pill)'
-  endcase
+  capture input_radius
+    render 'css-token-value', setting: settings.input_radius_style, values: 'square=var(--radius-square)|slightly_rounded=var(--radius-slight)|pill=var(--radius-pill)', fallback: input_radius
+  endcapture
+  assign input_radius = input_radius | strip
 
   assign form_label_font_size = 'var(--font-body-md)'
-  case settings.form_label_typography
-    when 'xs'
-      assign form_label_font_size = 'var(--font-body-xs)'
-    when 'sm', 'body-sm'
-      assign form_label_font_size = 'var(--font-body-sm)'
-    when 'md', 'body-md'
-      assign form_label_font_size = 'var(--font-body-md)'
-    when 'lg', 'body-lg'
-      assign form_label_font_size = 'var(--font-body-lg)'
-    when 'xl'
-      assign form_label_font_size = 'var(--font-body-xl)'
-    when 'xxl'
-      assign form_label_font_size = 'var(--font-body-xxl)'
-  endcase
+  capture form_label_font_size
+    render 'css-token-value', setting: settings.form_label_typography, values: 'xs=var(--font-body-xs)|sm=var(--font-body-sm)|body-sm=var(--font-body-sm)|md=var(--font-body-md)|body-md=var(--font-body-md)|lg=var(--font-body-lg)|body-lg=var(--font-body-lg)|xl=var(--font-body-xl)|xxl=var(--font-body-xxl)', fallback: form_label_font_size
+  endcapture
+  assign form_label_font_size = form_label_font_size | strip
   assign form_input_font_size = 'var(--font-body-md)'
-  case settings.form_input_typography
-    when 'xs'
-      assign form_input_font_size = 'var(--font-body-xs)'
-    when 'sm', 'body-sm'
-      assign form_input_font_size = 'var(--font-body-sm)'
-    when 'md', 'body-md'
-      assign form_input_font_size = 'var(--font-body-md)'
-    when 'lg', 'body-lg'
-      assign form_input_font_size = 'var(--font-body-lg)'
-    when 'xl'
-      assign form_input_font_size = 'var(--font-body-xl)'
-    when 'xxl'
-      assign form_input_font_size = 'var(--font-body-xxl)'
-  endcase
+  capture form_input_font_size
+    render 'css-token-value', setting: settings.form_input_typography, values: 'xs=var(--font-body-xs)|sm=var(--font-body-sm)|body-sm=var(--font-body-sm)|md=var(--font-body-md)|body-md=var(--font-body-md)|lg=var(--font-body-lg)|body-lg=var(--font-body-lg)|xl=var(--font-body-xl)|xxl=var(--font-body-xxl)', fallback: form_input_font_size
+  endcapture
+  assign form_input_font_size = form_input_font_size | strip
   assign form_helper_font_size = 'var(--font-body-md)'
-  case settings.form_helper_typography
-    when 'xs'
-      assign form_helper_font_size = 'var(--font-body-xs)'
-    when 'sm', 'body-sm'
-      assign form_helper_font_size = 'var(--font-body-sm)'
-    when 'md', 'body-md'
-      assign form_helper_font_size = 'var(--font-body-md)'
-    when 'lg', 'body-lg'
-      assign form_helper_font_size = 'var(--font-body-lg)'
-    when 'xl'
-      assign form_helper_font_size = 'var(--font-body-xl)'
-    when 'xxl'
-      assign form_helper_font_size = 'var(--font-body-xxl)'
-  endcase
+  capture form_helper_font_size
+    render 'css-token-value', setting: settings.form_helper_typography, values: 'xs=var(--font-body-xs)|sm=var(--font-body-sm)|body-sm=var(--font-body-sm)|md=var(--font-body-md)|body-md=var(--font-body-md)|lg=var(--font-body-lg)|body-lg=var(--font-body-lg)|xl=var(--font-body-xl)|xxl=var(--font-body-xxl)', fallback: form_helper_font_size
+  endcapture
+  assign form_helper_font_size = form_helper_font_size | strip
   assign form_error_font_size = 'var(--font-body-md)'
-  case settings.form_error_typography
-    when 'xs'
-      assign form_error_font_size = 'var(--font-body-xs)'
-    when 'sm', 'body-sm'
-      assign form_error_font_size = 'var(--font-body-sm)'
-    when 'md', 'body-md'
-      assign form_error_font_size = 'var(--font-body-md)'
-    when 'lg', 'body-lg'
-      assign form_error_font_size = 'var(--font-body-lg)'
-    when 'xl'
-      assign form_error_font_size = 'var(--font-body-xl)'
-    when 'xxl'
-      assign form_error_font_size = 'var(--font-body-xxl)'
-  endcase
+  capture form_error_font_size
+    render 'css-token-value', setting: settings.form_error_typography, values: 'xs=var(--font-body-xs)|sm=var(--font-body-sm)|body-sm=var(--font-body-sm)|md=var(--font-body-md)|body-md=var(--font-body-md)|lg=var(--font-body-lg)|body-lg=var(--font-body-lg)|xl=var(--font-body-xl)|xxl=var(--font-body-xxl)', fallback: form_error_font_size
+  endcapture
+  assign form_error_font_size = form_error_font_size | strip
 
   assign product_card_style = 'standard'
-  if settings.product_card_style == 'card'
-    assign product_card_style = 'card'
-  endif
+  capture product_card_style
+    render 'css-token-value', setting: settings.product_card_style, values: 'card=card', fallback: product_card_style
+  endcapture
+  assign product_card_style = product_card_style | strip
   assign product_card_border_width = 0
   assign product_card_shadow = 'none'
   if product_card_style == 'card'
@@ -582,45 +461,34 @@
     if product_card_border_width < 0 or product_card_border_width > 3
       assign product_card_border_width = 0
     endif
-    case settings.product_card_shadow
-      when 'soft'
-        assign product_card_shadow = '0 0.75rem 1.5rem color-mix(in srgb, var(--shadow-color) 14%, transparent)'
-      when 'strong'
-        assign product_card_shadow = '0 1rem 2rem color-mix(in srgb, var(--shadow-color) 22%, transparent)'
-    endcase
+    capture product_card_shadow
+    render 'css-token-value', setting: settings.product_card_shadow, values: 'soft=0 0.75rem 1.5rem color-mix(in srgb, var(--shadow-color) 14%, transparent)|strong=0 1rem 2rem color-mix(in srgb, var(--shadow-color) 22%, transparent)', fallback: product_card_shadow
+  endcapture
+  assign product_card_shadow = product_card_shadow | strip
   endif
   assign product_card_title_font_family = 'var(--font-heading-family)'
-  if settings.product_card_title_font == 'body'
-    assign product_card_title_font_family = 'var(--font-body-family)'
-  endif
+  capture product_card_title_font_family
+    render 'css-token-value', setting: settings.product_card_title_font, values: 'body=var(--font-body-family)', fallback: product_card_title_font_family
+  endcapture
+  assign product_card_title_font_family = product_card_title_font_family | strip
   assign product_card_title_size_desktop = settings.product_card_title_size_desktop | default: 20
   assign product_card_title_size_mobile = settings.product_card_title_size_mobile | default: 18
   assign product_card_ratio = settings.product_card_ratio | default: 'natural'
   assign product_card_image_ratio = 'auto'
-  case product_card_ratio
-    when 'square'
-      assign product_card_image_ratio = '1 / 1'
-    when 'portrait'
-      assign product_card_image_ratio = '4 / 5'
-    when 'ratio_5_4'
-      assign product_card_image_ratio = '5 / 4'
-    when 'landscape'
-      assign product_card_image_ratio = '4 / 3'
-  endcase
+  capture product_card_image_ratio
+    render 'css-token-value', setting: product_card_ratio, values: 'square=1 / 1|portrait=4 / 5|ratio_5_4=5 / 4|landscape=4 / 3', fallback: product_card_image_ratio
+  endcapture
+  assign product_card_image_ratio = product_card_image_ratio | strip
   assign product_card_alignment = 'left'
-  case settings.product_card_alignment
-    when 'center'
-      assign product_card_alignment = 'center'
-    when 'right'
-      assign product_card_alignment = 'right'
-  endcase
+  capture product_card_alignment
+    render 'css-token-value', setting: settings.product_card_alignment, values: 'center=center|right=right', fallback: product_card_alignment
+  endcapture
+  assign product_card_alignment = product_card_alignment | strip
   assign product_card_content_alignment = 'flex-start'
-  case product_card_alignment
-    when 'center'
-      assign product_card_content_alignment = 'center'
-    when 'right'
-      assign product_card_content_alignment = 'flex-end'
-  endcase
+  capture product_card_content_alignment
+    render 'css-token-value', setting: product_card_alignment, values: 'center=center|right=flex-end', fallback: product_card_content_alignment
+  endcapture
+  assign product_card_content_alignment = product_card_content_alignment | strip
   assign product_card_title_line_limit = 'none'
   case settings.product_card_title_line_limit
     when '1', '2', '3'
@@ -654,9 +522,10 @@
     assign product_card_quick_add_mobile = 0
   endif
   assign product_card_quick_add_style = 'text'
-  if settings.product_card_quick_add_style == 'icon'
-    assign product_card_quick_add_style = 'icon'
-  endif
+  capture product_card_quick_add_style
+    render 'css-token-value', setting: settings.product_card_quick_add_style, values: 'icon=icon', fallback: product_card_quick_add_style
+  endcapture
+  assign product_card_quick_add_style = product_card_quick_add_style | strip
   assign product_card_quick_add_full_width = 1
   if settings.product_card_quick_add_full_width == false
     assign product_card_quick_add_full_width = 0
@@ -696,32 +565,29 @@
     assign product_card_swatches_enabled = 0
   endif
   assign product_card_swatch_position = 'bottom'
-  if settings.product_card_swatch_position == 'top'
-    assign product_card_swatch_position = 'top'
-  endif
+  capture product_card_swatch_position
+    render 'css-token-value', setting: settings.product_card_swatch_position, values: 'top=top', fallback: product_card_swatch_position
+  endcapture
+  assign product_card_swatch_position = product_card_swatch_position | strip
   assign product_card_swatch_type = 'color'
-  if settings.product_card_swatch_type == 'variant_image'
-    assign product_card_swatch_type = 'variant_image'
-  endif
+  capture product_card_swatch_type
+    render 'css-token-value', setting: settings.product_card_swatch_type, values: 'variant_image=variant_image', fallback: product_card_swatch_type
+  endcapture
+  assign product_card_swatch_type = product_card_swatch_type | strip
   assign product_card_swatch_limit = settings.product_card_swatch_limit | default: 4 | plus: 0
   assign product_card_swatch_gap = settings.product_card_swatch_gap | default: 8
   assign product_card_swatch_width_desktop = settings.product_card_swatch_width_desktop | default: 30
   assign product_card_swatch_width_mobile = settings.product_card_swatch_width_mobile | default: 30
   assign product_card_swatch_ratio = '3 / 1'
-  case settings.product_card_swatch_ratio
-    when '1_1'
-      assign product_card_swatch_ratio = '1 / 1'
-    when '3_2'
-      assign product_card_swatch_ratio = '3 / 2'
-    when '2_1'
-      assign product_card_swatch_ratio = '2 / 1'
-    when '3_1'
-      assign product_card_swatch_ratio = '3 / 1'
-  endcase
+  capture product_card_swatch_ratio
+    render 'css-token-value', setting: settings.product_card_swatch_ratio, values: '1_1=1 / 1|3_2=3 / 2|2_1=2 / 1|3_1=3 / 1', fallback: product_card_swatch_ratio
+  endcapture
+  assign product_card_swatch_ratio = product_card_swatch_ratio | strip
   assign product_card_swatch_selected_style = 'border'
-  if settings.product_card_swatch_selected_style == 'underline'
-    assign product_card_swatch_selected_style = 'underline'
-  endif
+  capture product_card_swatch_selected_style
+    render 'css-token-value', setting: settings.product_card_swatch_selected_style, values: 'underline=underline', fallback: product_card_swatch_selected_style
+  endcapture
+  assign product_card_swatch_selected_style = product_card_swatch_selected_style | strip
 
   assign variant_height_desktop = settings.variant_picker_height_desktop
   if variant_height_desktop == nil
@@ -753,21 +619,19 @@
   assign swatch_width_desktop = settings.swatch_width_desktop | default: 40
   assign swatch_width_mobile = settings.swatch_width_mobile | default: 40
   assign swatch_height_ratio = '3 / 1'
-  case settings.swatch_height_ratio
-    when '1_1'
-      assign swatch_height_ratio = '1 / 1'
-    when '3_2'
-      assign swatch_height_ratio = '3 / 2'
-    when '2_1'
-      assign swatch_height_ratio = '2 / 1'
-  endcase
-  if swatch_style == 'variant_image'
-    assign swatch_height_ratio = '1 / 1'
-  endif
+  capture swatch_height_ratio
+    render 'css-token-value', setting: settings.swatch_height_ratio, values: '1_1=1 / 1|3_2=3 / 2|2_1=2 / 1', fallback: swatch_height_ratio
+  endcapture
+  assign swatch_height_ratio = swatch_height_ratio | strip
+  capture swatch_height_ratio
+    render 'css-token-value', setting: swatch_style, values: 'variant_image=1 / 1', fallback: swatch_height_ratio
+  endcapture
+  assign swatch_height_ratio = swatch_height_ratio | strip
   assign swatch_selected_style = 'underline'
-  if settings.swatch_selected_style == 'border'
-    assign swatch_selected_style = 'border'
-  endif
+  capture swatch_selected_style
+    render 'css-token-value', setting: settings.swatch_selected_style, values: 'border=border', fallback: swatch_selected_style
+  endcapture
+  assign swatch_selected_style = swatch_selected_style | strip
   assign swatch_radius = radius_swatches
 
   assign badge_radius = radius_badges_subheadings
@@ -804,14 +668,10 @@
     assign overlay_popover_border_width = 0
   endif
   assign overlay_popover_shadow = 'none'
-  case settings.overlay_popover_shadow
-    when 'small'
-      assign overlay_popover_shadow = '0 0.25rem 0.75rem color-mix(in srgb, var(--overlay-shadow-color) 12%, transparent)'
-    when 'medium'
-      assign overlay_popover_shadow = '0 0.5rem 1.25rem color-mix(in srgb, var(--overlay-shadow-color) 18%, transparent)'
-    when 'large'
-      assign overlay_popover_shadow = '0 1rem 2rem color-mix(in srgb, var(--overlay-shadow-color) 24%, transparent)'
-  endcase
+  capture overlay_popover_shadow
+    render 'css-token-value', setting: settings.overlay_popover_shadow, values: 'small=0 0.25rem 0.75rem color-mix(in srgb, var(--overlay-shadow-color) 12%, transparent)|medium=0 0.5rem 1.25rem color-mix(in srgb, var(--overlay-shadow-color) 18%, transparent)|large=0 1rem 2rem color-mix(in srgb, var(--overlay-shadow-color) 24%, transparent)', fallback: overlay_popover_shadow
+  endcapture
+  assign overlay_popover_shadow = overlay_popover_shadow | strip
   assign overlay_drawer_padding_desktop = '0px'
   if settings.overlay_drawer_padding_desktop
     assign overlay_drawer_padding_desktop = '1.5rem'
@@ -845,25 +705,7 @@
 %}
 
 {% style %}
-  {% if button_font_weight != 'inherit' %}
-    {% if body_font != blank %}{{ body_font | font_modify: 'weight', button_font_weight | font_face: font_display: 'swap' }}{% endif %}
-    {% if heading_font != blank %}{{ heading_font | font_modify: 'weight', button_font_weight | font_face: font_display: 'swap' }}{% endif %}
-  {% endif %}
-  {% # Loads font variants with display: swap. %}
-  {% if body_font != blank %}
-    {{ body_font | font_face: font_display: 'swap' }}
-    {{ body_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
-    {{ body_font | font_modify: 'weight', 'bold' | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
-    {{ body_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
-  {% endif %}
-  {% if heading_font != blank %}
-    {{ heading_font | font_face: font_display: 'swap' }}
-    {{ heading_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
-  {% endif %}
-  {% if accent_font != blank %}
-    {{ accent_font | font_face: font_display: 'swap' }}
-    {{ accent_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
-  {% endif %}
+  {% render 'font-faces', body_font: body_font, heading_font: heading_font, accent_font: accent_font, button_font_weight: button_font_weight %}
 
   :root {
     --header-height: 0px;
