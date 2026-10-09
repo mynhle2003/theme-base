@@ -1,9 +1,17 @@
+{% liquid
+  assign menu_toggle_position = block.settings.position | default: 'left'
+  unless menu_toggle_position == 'left' or menu_toggle_position == 'center' or menu_toggle_position == 'right'
+    assign menu_toggle_position = 'left'
+  endunless
+%}
+
 <button
   class="header-menu-toggle btn btn--unstyled"
   type="button"
   aria-expanded="false"
   aria-controls="HeaderMobileDrawer-{{ section.id }}"
   aria-label="Open menu"
+  data-header-position="{{ menu_toggle_position }}"
   data-header-menu-toggle
   {{ block.shopify_attributes }}
 >
@@ -53,6 +61,10 @@
   }
 
   @media (max-width: 991.98px) {
+    .header-top[data-layout-ready='true'] .header__column--center:has(.header-menu-toggle[data-header-position='center']) {
+      justify-content: center;
+    }
+
     .header-menu-toggle.btn {
       display: inline-flex;
       width: 24px;
@@ -67,7 +79,23 @@
 {
   "name": "t:general.header_menu_toggle",
   "tag": null,
-  "settings": [],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:info.header_menu_toggle"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "t:labels.position",
+      "options": [
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "right", "label": "t:options.alignment.right" }
+      ],
+      "default": "left"
+    }
+  ],
   "presets": [
     {
       "name": "t:general.header_menu_toggle",

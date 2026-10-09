@@ -1,6 +1,103 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"0cf058f77772357ca87fc95b705c979e04d44ad1"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"4630424526e712d334c06359f3cfbb6e14d6da05"} -->
 
 # Base update history
+
+## 2026-10-09 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `0cf058f77772357ca87fc95b705c979e04d44ad1`
+- Updated through team commit: `4630424526e712d334c06359f3cfbb6e14d6da05`
+- Team commits included: 19
+- Source changes:
+
+```text
+assets/component-blocks-image-card.css         | 261 +++++++++++++
+ assets/component-collection-card.css           |   1 +
+ assets/component-sections-promo-grid.css       |  46 +++
+ assets/critical.css                            |  46 ++-
+ assets/header.js                               |   3 +-
+ assets/product-information.css                 | 137 ++++++-
+ assets/product-media.js                        |  24 +-
+ assets/promo-grid.js                           |  12 +
+ assets/section-collection.css                  |   6 +-
+ assets/section-parallax.css                    |   1 -
+ blocks/_header-menu-toggle.liquid              |  30 +-
+ blocks/_mega-menu-banner.liquid                | 506 ++++++++++++++++++++----
+ blocks/banner.liquid                           | 107 ++++-
+ blocks/collection-background-item.liquid       | 103 ++++-
+ blocks/collection-card.liquid                  |   2 +-
+ blocks/collection-promo.liquid                 | 348 +++++++++++++----
+ blocks/gallery-image.liquid                    | 269 +++++++++++--
+ blocks/gallery-strip-feature-item.liquid       | 114 +++++-
+ blocks/group.liquid                            | 305 ++++++++++++---
+ blocks/image-card.liquid                       | 306 ++++++++++++---
+ blocks/image.liquid                            | 249 ++++++++++--
+ blocks/marquee-item.liquid                     |  64 ++-
+ blocks/parallax-item.liquid                    |  46 ++-
+ blocks/product-buy-quantity.liquid             | 151 ++++++-
+ blocks/product-callout.liquid                  | 470 ++++++++++++++++++----
+ blocks/product-inventory.liquid                | 238 ++++++++++--
+ blocks/product-variant-picker.liquid           | 263 +++++++++++++
+ blocks/promo-card-custom.liquid                | 486 +++++++++++++++++++++++
+ blocks/promo-card.liquid                       |  32 +-
+ blocks/scrolling-card.liquid                   | 203 ++++++++--
+ blocks/slideshow-slide.liquid                  | 442 +++++++++++++++++++--
+ blocks/testimonial-item.liquid                 | 263 +++++++++++--
+ blocks/video.liquid                            | 197 ++++++++--
+ locales/en.default.json                        |   7 +-
+ locales/en.default.schema.json                 |  17 +-
+ sections/announcement-bar.liquid               | 404 +++++++++++++++++--
+ sections/collection-banner.liquid              |  32 +-
+ sections/collection-page-links.liquid          | 221 +++++++++--
+ sections/contact-form-custom.liquid            |  94 ++++-
+ sections/footer-group.json                     |   9 +-
+ sections/header-group.json                     |   4 +-
+ sections/hero.liquid                           | 367 +++++++++++++----
+ sections/image-cards.liquid                    |  20 +-
+ sections/overlay-group.json                    |  10 +-
+ sections/promo-grid-custom.liquid              | 519 +++++++++++++++++++++++++
+ sections/scroll-reading-text.liquid            | 146 +++++--
+ sections/slideshow.liquid                      |   9 +
+ sections/testimonials-background-custom.liquid | 143 +++++--
+ snippets/collection-card-render.liquid         |  16 +
+ snippets/image-card-content.liquid             | 259 ++++++++++++
+ snippets/media-card.liquid                     |   6 +-
+ snippets/overlay-background.liquid             |  30 ++
+ snippets/product-inventory-status.liquid       |  38 +-
+ templates/collection.json                      |  16 +-
+ templates/index.json                           |  66 ++--
+ templates/index.spinel-sync.json               |  66 ++--
+ templates/page.about-us.json                   |  21 +-
+ templates/page.contact.json                    |  18 +-
+ templates/page.faqs.json                       |  15 +-
+ templates/product.json                         | 347 +++++++++++++++--
+ tests/image-height.test.cjs                    |  28 ++
+ tests/product-media-variant.test.cjs           |  83 ++++
+ 62 files changed, 7756 insertions(+), 986 deletions(-)
+```
+
+- Included team commits:
+  - `74d87ca89e2ae2ffe5532e3a5d86b477ff66899f` — Merge Promo cards and shared product entrance animation from theme-base/dev
+  - `ca2c7af86bd628865ef351e9095ba5c99153c2a5` — Merge theme-base/dev mobile View all visibility controls
+  - `eaa84cdea22577409088c4476e70fd8c377aa201` — Merge theme-base/dev marquee and accordion updates into Spinel development
+  - `023aa11da05715bb56b240975c5b716f76e0f0c3` — feat(header): add menu toggle icon and size settings
+  - `a48f80d4a04efa43594875677172a9ba3a0161da` — Merge remote-tracking branch 'theme-base/dev' into codex/spinel-chieutt-dev
+  - `4ff26bad5225a6338064c0fdd772579b57b12505` — fix(header): restore menu toggle controls and position
+  - `3f991d097911c126e9c3d43bde662be8a911b97d` — Fix slideshow autoplay bullet width and equal visual spacing
+  - `cf6a00c2264b3f3893bd7d35883cdc4fbd6c0ec6` — Add independent media corner radius to collection cards
+  - `6500b736017d3b67d8491802c28706c179671e30` — feat: add shared solid and gradient overlays to image and video blocks
+  - `e14d00ff05ab0625affa8247074d799728ed7eee` — Standardize media overlay pickers and simplify image cards
+  - `b5227016a18f24c9b73058942b9c86ef767a3e2f` — fix: apply image zoom motion to slideshow and placeholders
+  - `5d84ba5da78f898b7754f3a6dd838f998f554040` — Keep hero overlay settings independent of nested color schemes
+  - `301ac427625cf2cc6a2123fe5e0d8deebf767df7` — Add responsive Auto and Fill height controls to Image block
+  - `547eb9be31d305319387a0bc9dfcfc30a6d9c7df` — Add configurable Promo grid section and Promo card block
+  - `ae55a05c545900c308951bd47926693914e5c594` — fix(featured-product): preserve carousel position for shared variant media
+  - `46c677e46395b01571f2192b6a2884366b805487` — feat(product-inventory): sync typography, custom colors and animated ring
+  - `fa677f352324c720e50be5cf98164c33438c03e4` — feat(product): add separate variant typography and quantity label controls
+  - `68b088256fcbfb50cc4b29a80e7c7a1778cbbae8` — style(image-card): remove trailing blank line
+  - `4630424526e712d334c06359f3cfbb6e14d6da05` — chore(theme): merge origin/dev updates
+
 
 ## 2026-10-09 — Update from upstream/dev
 
