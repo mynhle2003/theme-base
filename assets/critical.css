@@ -1241,7 +1241,17 @@ p:empty {
   animation: none;
 }
 
-.block-animation.reveal-pending {
+/* Hide valid leaf effects before deferred JS prepares them, without hiding
+   no-JS content or components that own a different motion lifecycle. */
+:where(html.block-animations-enabled) .block-animation:where(:is(
+  [data-block-animation='fade'],
+  [data-block-animation='scale'],
+  [data-block-animation='slide-left'],
+  [data-block-animation='slide-right'],
+  [data-block-animation='slide-bottom'],
+  [data-block-animation='rotate-words']
+):not([data-animation-initialized]):not(:focus-within):not(.announcement-bar *, .marquee *, [data-multi-image] *)),
+:where(html.block-animations-enabled) .block-animation.reveal-pending:where(:not(:focus-within)) {
   opacity: calc(1 - var(--motion-block-animations, 1));
 }
 
@@ -1259,20 +1269,20 @@ p:empty {
   to { transform: none; }
 }
 
-[data-block-animation='rotate-words'].reveal-words-ready .reveal-word {
+:where(html.block-animations-enabled) [data-block-animation='rotate-words'].reveal-words-ready .reveal-word {
   opacity: 0;
   transition: opacity 0s ease var(--block-animation-delay, 0ms);
 }
 
-[data-block-animation='rotate-words'].reveal-words-ready .reveal-word__text {
+:where(html.block-animations-enabled) [data-block-animation='rotate-words'].reveal-words-ready .reveal-word__text {
   transform: translateY(100%);
 }
 
-[data-block-animation='rotate-words'].reveal-words-animated .reveal-word {
+:where(html.block-animations-enabled) [data-block-animation='rotate-words'].reveal-words-animated .reveal-word {
   opacity: 1;
 }
 
-[data-block-animation='rotate-words'].reveal-words-animated .reveal-word__text {
+:where(html.block-animations-enabled) [data-block-animation='rotate-words'].reveal-words-animated .reveal-word__text {
   animation: block-reveal-rotate-words 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   animation-delay: var(--block-animation-delay, 0ms);
 }
@@ -1282,6 +1292,7 @@ p:empty {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .block-animation[data-block-animation],
   .block-animation.reveal-pending {
     opacity: 1;
   }

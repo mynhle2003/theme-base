@@ -3,6 +3,11 @@
   const key = Symbol.for('theme.blockAnimations');
   if (window[key]) return;
   window[key] = true;
+  const boot = window[Symbol.for('theme.blockAnimationsBoot')];
+  // A slow/failed asset may already have exposed the initial page. Do not
+  // hide that content again; later editor renders still preview normally.
+  let skipInitialAnimations = Boolean(boot?.expired);
+  if (!skipInitialAnimations) document.documentElement.classList.add('block-animations-enabled');
   const selector = '[data-block-animation]';
   const controllers = new Map();
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
@@ -60,6 +65,7 @@
         clearTimeout(state.refreshTimer); state.refreshTimer = null;
       }
       state.played = true;
+      element.dataset.animationInitialized = 'true';
       element.classList.remove('reveal-pending');
       if (immediate || !enabled() || typeof element.animate !== 'function') return;
       const delay = Math.round(Math.max(0, Math.min(2000, Number(element.dataset.animationDelay) || 0)) / 50) * 50;
@@ -104,7 +110,10 @@
     }, { threshold: 0.05 }) : null;
     const remove = element => {
       const state = nodes.get(element);
-      if (state) stop(state);
+      if (state) {
+        stop(state);
+        element.dataset.animationInitialized = 'true';
+      }
       observer?.unobserve(element);
       nodes.delete(element);
       element.classList.remove('reveal-pending');
@@ -119,8 +128,9 @@
         remove(element);
         if (type === 'rotate-words') splitWords(element);
         nodes.set(element, { element, type, configuration, played: false, animations: [], refreshTimer: null });
-        if (!enabled() || !observer || typeof element.animate !== 'function') { reveal(element, true); return; }
+        if (skipInitialAnimations || !enabled() || !observer || typeof element.animate !== 'function' || element.contains(document.activeElement)) { reveal(element, true); return; }
         element.classList.add('reveal-pending');
+        element.dataset.animationInitialized = 'true';
         observer.observe(element);
         if (active(element) && inView(element)) {
           if (editor) refresh(element);
@@ -169,6 +179,9 @@
     controllers.set(root, createController(root));
   };
   document.querySelectorAll('.shopify-section').forEach(initialize);
+  skipInitialAnimations = false;
+  document.documentElement.classList.add('block-animations-enabled');
+  if (boot) clearTimeout(boot.timer);
   document.addEventListener('shopify:section:load', event => {
     if (!event.target.matches?.('.shopify-section')) return;
     controllers.get(event.target)?.destroy();
