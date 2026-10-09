@@ -103,16 +103,16 @@
         {% if block.settings.show_price %}{% render 'product-card-price', item: card_product, placeholder: true %}{% endif %}
       </div>
       {% if block.settings.show_add_to_cart %}
-        <div class="product-card-compact__action" data-product-card-quick-add-overlay-wrapper>
+        <div class="product-card-compact__action product-card__action" data-product-card-quick-add-overlay-wrapper>
           {% if card_product == blank or card_product.available == false %}
             {% render 'theme-button', label: add_label, aria_label: accessible_label, icon: 'cart', icon_only: true, disabled: true, variant: block.settings.button_style, class: 'product-card-compact__button' %}
           {% elsif card_product.has_only_default_variant == false %}
             {% capture trigger_attributes %}data-product-card-quick-add-overlay data-product-card-quick-add-url="{{ card_product.url | escape }}" aria-haspopup="dialog" aria-expanded="false"{% endcapture %}
-            {% render 'theme-button', label: add_label, aria_label: accessible_label, url: card_product.url, icon: 'cart', icon_only: true, variant: block.settings.button_style, attributes: trigger_attributes, class: 'product-card-compact__button' %}
+            {% render 'theme-button', label: add_label, aria_label: accessible_label, url: card_product.url, icon: 'cart', icon_only: true, loading_dots: true, variant: block.settings.button_style, attributes: trigger_attributes, class: 'product-card-compact__button product-card__quick-add-button' %}
           {% else %}
             <form action="{{ routes.cart_add_url }}" method="post" data-product-card-quick-add data-inventory-quantity="{{ card_variant.inventory_quantity }}" data-inventory-management="{{ card_variant.inventory_management }}" data-inventory-policy="{{ card_variant.inventory_policy }}">
               <input type="hidden" name="id" value="{{ card_variant.id }}">
-              {% render 'theme-button', type: 'submit', label: add_label, aria_label: accessible_label, icon: 'cart', icon_only: true, loading_dots: true, variant: block.settings.button_style, class: 'product-card-compact__button' %}
+              {% render 'theme-button', type: 'submit', label: add_label, aria_label: accessible_label, icon: 'cart', icon_only: true, loading_dots: true, variant: block.settings.button_style, class: 'product-card-compact__button product-card__quick-add-button' %}
             </form>
           {% endif %}
         </div>
