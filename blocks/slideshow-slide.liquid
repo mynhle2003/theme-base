@@ -28,15 +28,15 @@
   assign slide_mobile_height_preset = section.settings.mobile_height | default: 'small'
   case slide_mobile_height_preset
     when 'extra_small'
-      assign slide_mobile_height = 320
+      assign slide_mobile_height = 457
     when 'small'
-      assign slide_mobile_height = 440
+      assign slide_mobile_height = 629
     when 'medium'
-      assign slide_mobile_height = 560
+      assign slide_mobile_height = 800
     when 'large'
-      assign slide_mobile_height = 680
+      assign slide_mobile_height = 971
     when 'extra_large'
-      assign slide_mobile_height = 820
+      assign slide_mobile_height = 1171
   endcase
   if section.blocks.first != blank and section.blocks.first.id == block.id
     assign slide_image_loading = 'eager'

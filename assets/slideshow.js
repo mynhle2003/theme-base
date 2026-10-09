@@ -230,7 +230,7 @@ const createNumberedPagination = (root, swiper, loop, slideCount) => {
   const update = () => {
     if (swiper.destroyed) return;
     const currentIndex = getCurrentIndex();
-    const autoplayProgress = root.style.getPropertyValue('--slideshow-autoplay-progress').trim();
+    const autoplayProgress = element.style.getPropertyValue('--slideshow-autoplay-progress').trim();
     const hasAutoplayClock = autoplayProgress !== '';
     const progress = hasAutoplayClock ? Math.max(0, Math.min(1, Number(autoplayProgress) || 0)) : 1;
     numbers.forEach((number, index) => {
@@ -307,6 +307,10 @@ const startAutoplay = (root, swiper, loop) => {
   if (root.dataset.autoplay !== 'true' || reducedMotion()) return null;
   const delay = Math.min(60000, Math.max(3000, Number(root.dataset.autoplayDelay) || 6000));
   const pauseOnHover = root.dataset.pauseOnHover !== 'false';
+  const pagination = root.querySelector('[data-slideshow-pagination]');
+  const numberedProgress = pagination?.dataset.paginationType === 'numbers'
+    ? [...pagination.querySelectorAll('.slideshow__pagination-number')].map(number => ({ number, svg: number.querySelector('svg') }))
+    : [];
 
   const index = () => loop ? loop.logicalIndex(swiper.activeIndex) : swiper.realIndex;
   let current = index();
@@ -326,9 +330,11 @@ const startAutoplay = (root, swiper, loop) => {
   };
   const paint = () => {
     const progress = Math.max(0, Math.min(1, elapsed / delay));
-    root.style.setProperty('--slideshow-autoplay-progress', String(progress));
-    root.querySelectorAll('[data-slideshow-pagination][data-pagination-type="numbers"] .slideshow__pagination-number').forEach((number) => {
-      number.querySelector('svg')?.style.setProperty('--percent', number.getAttribute('aria-current') === 'true' ? String(progress) : '0');
+    // Only pagination consumes progress. Inheriting it from the slideshow root
+    // invalidates styles for all media and content descendants every frame.
+    pagination?.style.setProperty('--slideshow-autoplay-progress', String(progress));
+    numberedProgress.forEach(({ number, svg }) => {
+      svg?.style.setProperty('--percent', number.getAttribute('aria-current') === 'true' ? String(progress) : '0');
     });
   };
   const reset = () => {
@@ -386,7 +392,7 @@ const startAutoplay = (root, swiper, loop) => {
       swiper.off('touchStart', touchStart);
       swiper.off('touchEnd', touchEnd);
       document.removeEventListener('visibilitychange', visibilityChange);
-      root.style.removeProperty('--slideshow-autoplay-progress');
+      pagination?.style.removeProperty('--slideshow-autoplay-progress');
     },
   };
 };
