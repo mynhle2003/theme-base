@@ -1,3 +1,7 @@
+{% doc %}
+  Shared styles for the owner and its dependent markup.
+{% enddoc %}
+
 {% stylesheet %}
   @keyframes header-surface-enter {
     from {
@@ -25,12 +29,8 @@
     }
   }
 
-  .localization-block {
-    display: inline-flex;
-    max-width: 100%;
-  }
-
   .header-localization {
+    display: inline-flex;
     flex: 0 0 auto;
     align-items: center;
     gap: 10px;
@@ -122,28 +122,30 @@
       box-shadow var(--motion-duration-slow) var(--motion-ease-standard);
   }
 
-  .header-localization__details[open]:not(.is-submenu-closing) > .header-localization__panel,
-  .header-localization--trigger-hover .header-localization__details:not(.is-submenu-closing):hover > .header-localization__panel,
-  .header-localization--trigger-hover .header-localization__details:not(.is-submenu-closing):focus-within > .header-localization__panel {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transform: translateY(0);
-    transition-delay: 0s;
-  }
+  @media (min-width: 768px) {
+    .header-localization__details[open]:not(.is-submenu-closing) > .header-localization__panel,
+    .header-localization--trigger-hover .header-localization__details:not(.is-submenu-closing):hover > .header-localization__panel,
+    .header-localization--trigger-hover .header-localization__details:not(.is-submenu-closing):focus-within > .header-localization__panel {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+      transition-delay: 0s;
+    }
 
-  .header-localization__details[open]:not(.is-submenu-closing) > .header-localization__panel,
-  .header-localization--trigger-hover .header-localization__details:not(.is-submenu-closing):hover > .header-localization__panel,
-  .header-localization--trigger-hover .header-localization__details:not(.is-submenu-closing):focus-within > .header-localization__panel {
-    animation: header-surface-enter var(--motion-duration-slow) var(--motion-ease-standard) both;
-  }
+    .header-localization__details[open]:not(.is-submenu-closing) > .header-localization__panel,
+    .header-localization--trigger-hover .header-localization__details:not(.is-submenu-closing):hover > .header-localization__panel,
+    .header-localization--trigger-hover .header-localization__details:not(.is-submenu-closing):focus-within > .header-localization__panel {
+      animation: header-surface-enter var(--motion-duration-slow) var(--motion-ease-standard) both;
+    }
 
-  .header-localization__details.is-submenu-closing > .header-localization__panel {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: none;
-    transform: translateY(0);
-    animation: header-surface-exit var(--motion-duration-slow) var(--motion-ease-standard) both;
+    .header-localization__details.is-submenu-closing > .header-localization__panel {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: none;
+      transform: translateY(0);
+      animation: header-surface-exit var(--motion-duration-slow) var(--motion-ease-standard) both;
+    }
   }
 
   .header-localization__form {
@@ -206,11 +208,6 @@
   }
 
   @media (min-width: 768px) {
-    .localization-block .header-localization__panel {
-      inset-block-start: auto;
-      inset-block-end: calc(100% + 0.75rem);
-    }
-
     .header-localization--hide-language-desktop .header-localization__details--language,
     .header-localization--mobile-language-only {
       display: none;
@@ -242,6 +239,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .header-localization__icon,
+    .header-localization__details.is-submenu-closing .header-localization__icon,
     .header-localization__panel {
       transition-duration: 0.01ms;
       transition-delay: 0s;

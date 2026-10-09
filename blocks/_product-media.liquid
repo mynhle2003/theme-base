@@ -18,12 +18,14 @@
     render 'image-ratio-value', setting: media_main_image_ratio, fallback_ratio: 'auto', custom_width: block.settings.main_image_ratio_custom_width, custom_height: block.settings.main_image_ratio_custom_height
   endcapture
   assign media_main_image_ratio_value = media_main_image_ratio_value | strip
-  unless media_main_image_ratio == 'custom' or media_main_image_ratio == 'square' or media_main_image_ratio == 'ratio_1_1' or media_main_image_ratio == 'ratio_4_5' or media_main_image_ratio == 'ratio_5_4' or media_main_image_ratio == 'ratio_6_7' or media_main_image_ratio == 'ratio_7_6' or media_main_image_ratio == 'ratio_5_7' or media_main_image_ratio == 'ratio_7_5' or media_main_image_ratio == 'ratio_2_3' or media_main_image_ratio == 'ratio_3_2' or media_main_image_ratio == 'ratio_4_3' or media_main_image_ratio == 'ratio_3_4' or media_main_image_ratio == 'ratio_2_1' or media_main_image_ratio == 'ratio_1_2' or media_main_image_ratio == 'ratio_16_9' or media_main_image_ratio == 'ratio_9_16' or media_main_image_ratio == 'ratio_12_5' or media_main_image_ratio == 'ratio_5_12' or media_main_image_ratio == 'ratio_48_17' or media_main_image_ratio == 'ratio_17_48' or media_main_image_ratio == 'ratio_5_8' or media_main_image_ratio == 'ratio_8_5'
+  assign media_main_image_ratio_allowed_values = 'custom|square|ratio_1_1|ratio_4_5|ratio_5_4|ratio_6_7|ratio_7_6|ratio_5_7|ratio_7_5|ratio_2_3|ratio_3_2|ratio_4_3|ratio_3_4|ratio_2_1|ratio_1_2|ratio_16_9|ratio_9_16|ratio_12_5|ratio_5_12|ratio_48_17|ratio_17_48|ratio_5_8|ratio_8_5' | split: '|'
+  unless media_main_image_ratio_allowed_values contains media_main_image_ratio
     assign media_main_image_ratio = 'auto'
   endunless
 
   assign media_desktop_layout = block.settings.desktop_layout | default: 'left_thumbnails'
-  unless media_desktop_layout == 'left_thumbnails' or media_desktop_layout == 'bottom_thumbnails' or media_desktop_layout == 'grid' or media_desktop_layout == 'stacked' or media_desktop_layout == 'stacked_thumbnails' or media_desktop_layout == 'two_column_grid'
+  assign media_desktop_layout_allowed_values = 'left_thumbnails|bottom_thumbnails|grid|stacked|stacked_thumbnails|two_column_grid' | split: '|'
+  unless media_desktop_layout_allowed_values contains media_desktop_layout
     assign media_desktop_layout = 'left_thumbnails'
   endunless
 
@@ -63,7 +65,8 @@
   endif
 
   assign media_zoom = block.settings.zoom | default: 'open_lightbox'
-  unless media_zoom == 'open_lightbox' or media_zoom == 'click_hover' or media_zoom == 'none'
+  assign media_zoom_allowed_values = 'open_lightbox|click_hover|none' | split: '|'
+  unless media_zoom_allowed_values contains media_zoom
     assign media_zoom = 'open_lightbox'
   endunless
 
@@ -174,7 +177,8 @@
   endif
 
   assign media_container_radius = settings.radius_media_containers | default: 'square'
-  unless media_container_radius == 'square' or media_container_radius == 'slightly_rounded' or media_container_radius == 'rounded' or media_container_radius == 'extra_rounded'
+  assign media_container_radius_allowed_values = 'square|slightly_rounded|rounded|extra_rounded' | split: '|'
+  unless media_container_radius_allowed_values contains media_container_radius
     assign media_container_radius = 'square'
   endunless
 
@@ -261,10 +265,10 @@
 
         <div class="media-gallery__controls swiper-carousel__navigation--show_on_hover{% if media_controls_color_scheme != blank %} color-scheme {{ media_controls_color_scheme }}{% endif %}">
           {% if media_product.media.size > 1 %}
-            <button class="media-gallery__navigation media-gallery__navigation--previous product-media-gallery__navigation product-media-gallery__navigation--previous btn btn-secondary btn--secondary btn--icon swiper-nav-button swiper-nav-button--prev" type="button" aria-label="{{ 'products.previous_media' | t | escape }}" data-product-media-previous>
+            <button class="media-gallery__navigation media-gallery__navigation--previous product-media-gallery__navigation product-media-gallery__navigation--previous btn btn-primary btn--primary btn--icon swiper-nav-button swiper-nav-button--prev" type="button" aria-label="{{ 'products.previous_media' | t | escape }}" data-product-media-previous>
               {% render 'carousel-navigation-icon', icon: 'chevron', direction: 'previous' %}
             </button>
-            <button class="media-gallery__navigation media-gallery__navigation--next product-media-gallery__navigation product-media-gallery__navigation--next btn btn-secondary btn--secondary btn--icon swiper-nav-button swiper-nav-button--next" type="button" aria-label="{{ 'products.next_media' | t | escape }}" data-product-media-next>
+            <button class="media-gallery__navigation media-gallery__navigation--next product-media-gallery__navigation product-media-gallery__navigation--next btn btn-primary btn--primary btn--icon swiper-nav-button swiper-nav-button--next" type="button" aria-label="{{ 'products.next_media' | t | escape }}" data-product-media-next>
               {% render 'carousel-navigation-icon', icon: 'chevron', direction: 'next' %}
             </button>
           {% endif %}

@@ -1,3 +1,5 @@
+{% render 'localization-styles' %}
+
 {% liquid
   assign country_selector_label = 'localization.country_label' | t
   assign language_selector_label = 'localization.language_label' | t
@@ -203,7 +205,7 @@
       </div>
       <footer class="header__mobile-drawer-footer">
         {% if shop.customer_accounts_enabled %}
-          <shopify-account class="header__mobile-drawer-account body-text" menu="customer-account-main-menu">
+          <shopify-account class="header__mobile-drawer-account body-text" {% if linklists['customer-account-main-menu'].links != blank %}menu="customer-account-main-menu"{% endif %}>
             <span slot="signed-out-avatar" class="header__mobile-drawer-account-avatar">
               <span>{{ 'customers.login.submit' | t }}</span>
             </span>

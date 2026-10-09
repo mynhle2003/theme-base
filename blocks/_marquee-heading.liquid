@@ -11,7 +11,7 @@
   assign text_case = block.settings.text_case | default: 'none'
   assign plain_text = block.settings.text | strip_html | strip
 %}
-<div class="marquee-heading-block heading-text heading-{{ size }}{% if block.settings.outline %} marquee-heading-block--outline{% endif %}" style="--mq-color:var(--{% if role == 'heading' %}heading{% else %}body{% endif %}-color);--mq-opacity:{{ opacity }};{% if size == 'custom' %}--mq-font:var(--font-{{ font_role }}-family);--mq-font-style:var(--font-{{ font_role }}-style);--mq-font-weight:var(--font-{{ font_role }}-weight);--mq-size:{{ font_size }}px;--mq-size-mobile:{{ mobile_size }}px;--mq-case:{{ text_case }};{% render 'marquee-letter-spacing', value: block.settings.letter_spacing %}{% endif %}" {% if plain_text == blank %}data-content-empty{% endif %} {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+<div class="marquee-heading-block heading-text heading-{{ size }}{% if block.settings.outline %} marquee-heading-block--outline{% endif %}" style="--mq-color:var(--heading-block-color, var(--{% if role == 'heading' %}heading{% else %}body{% endif %}-color));{% if block.settings.text_color != blank %}--heading-block-color:{{ block.settings.text_color | escape }};{% endif %}--mq-opacity:{{ opacity }};{% if size == 'custom' %}--mq-font:var(--font-{{ font_role }}-family);--mq-font-style:var(--font-{{ font_role }}-style);--mq-font-weight:var(--font-{{ font_role }}-weight);--mq-size:{{ font_size }}px;--mq-size-mobile:{{ mobile_size }}px;--mq-case:{{ text_case }};{% render 'marquee-letter-spacing', value: block.settings.letter_spacing %}{% endif %}" {% if plain_text == blank %}data-content-empty{% endif %} {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
 {% stylesheet %}
 .marquee-heading-block{flex:0 0 auto;width:max-content;max-width:none;margin:0;overflow-wrap:normal;color:var(--mq-color);opacity:var(--mq-opacity,1);} .marquee-heading-block.heading-custom{font-family:var(--mq-font);font-style:var(--mq-font-style);font-weight:var(--mq-font-weight);font-size:var(--mq-size);line-height:1.2;letter-spacing:var(--mq-tracking,0em);text-transform:var(--mq-case);} .marquee-heading-block--outline{-webkit-text-stroke:1px var(--mq-color);color:transparent;} .marquee-heading-block a{color:inherit;} @media(max-width:767.98px){.marquee-heading-block.heading-custom{font-size:var(--mq-size-mobile);}}
 {% endstylesheet %}
@@ -194,20 +194,11 @@
       "content": "Color"
     },
     {
-      "type": "select",
-      "id": "color_role",
-      "label": "Text color",
-      "options": [
-        {
-          "value": "heading",
-          "label": "Heading"
-        },
-        {
-          "value": "text",
-          "label": "Text"
-        }
-      ],
-      "default": "heading"
+      "type": "color",
+      "alpha": true,
+      "id": "text_color",
+      "label": "t:labels.text_color",
+      "info": "t:info.heading_text_color"
     },
     {
       "type": "range",

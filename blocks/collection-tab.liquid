@@ -8,6 +8,8 @@
   {% content_for 'block', type: 'collection-tab', id: 'collection-tab' %}
 {% enddoc %}
 
+{% render 'tab-layout-styles' %}
+
 {% liquid
   assign collection_tab_collection = block.settings.collection
   assign collection_tab_label = block.settings.label | strip

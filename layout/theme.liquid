@@ -26,7 +26,11 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
 
       {% comment %} Preload the base font variant for initial page render {% endcomment %}
-      {{ settings.type_primary_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
+      {% if settings.type_primary_font.family contains 'Kaisei Decol' and settings.type_primary_font.weight == 400 and settings.type_primary_font.style == 'normal' %}
+        {{ 'kaisei-decol-latin-400.woff2' | asset_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
+      {% else %}
+        {{ settings.type_primary_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
+      {% endif %}
     {% endunless %}
 
     {% # Load and preload the critical CSS %}

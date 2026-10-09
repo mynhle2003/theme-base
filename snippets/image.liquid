@@ -17,6 +17,7 @@
   @param {number} [height] - The highest resolution height of the image to be rendered
   @param {string} [crop] - The crop position of the image
   @param {string} [widths] - Optional responsive image widths
+  @param {string} [loading] - Optional explicit eager/lazy loading strategy
   @param {string} [sizes] - Optional responsive image sizes
   @param {string} [placeholder] - Optional Shopify placeholder name when no image is selected
 
@@ -87,29 +88,29 @@
         <source media="(max-width: 767.98px)" srcset="{{ mobile_srcset | strip }}">
         {% if image_widths != blank or image_sizes != blank %}
           {% if has_image_height %}
-            {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: widths: image_widths, sizes: image_sizes, alt: image_alt }}
+            {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: widths: image_widths, sizes: image_sizes, loading: loading, alt: image_alt }}
           {% else %}
-            {{ image | image_url: width: width | image_tag: widths: image_widths, sizes: image_sizes, alt: image_alt }}
+            {{ image | image_url: width: width | image_tag: widths: image_widths, sizes: image_sizes, loading: loading, alt: image_alt }}
           {% endif %}
         {% else %}
           {% if has_image_height %}
-            {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: alt: image_alt }}
+            {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: loading: loading, alt: image_alt }}
           {% else %}
-            {{ image | image_url: width: width | image_tag: alt: image_alt }}
+            {{ image | image_url: width: width | image_tag: loading: loading, alt: image_alt }}
           {% endif %}
         {% endif %}
       </picture>
     {% elsif image_widths != blank or image_sizes != blank %}
       {% if has_image_height %}
-        {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: widths: image_widths, sizes: image_sizes, alt: image_alt }}
+        {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: widths: image_widths, sizes: image_sizes, loading: loading, alt: image_alt }}
       {% else %}
-        {{ image | image_url: width: width | image_tag: widths: image_widths, sizes: image_sizes, alt: image_alt }}
+        {{ image | image_url: width: width | image_tag: widths: image_widths, sizes: image_sizes, loading: loading, alt: image_alt }}
       {% endif %}
     {% else %}
       {% if has_image_height %}
-        {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: alt: image_alt }}
+        {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: loading: loading, alt: image_alt }}
       {% else %}
-        {{ image | image_url: width: width | image_tag: alt: image_alt }}
+        {{ image | image_url: width: width | image_tag: loading: loading, alt: image_alt }}
       {% endif %}
     {% endif %}
   {% else %}

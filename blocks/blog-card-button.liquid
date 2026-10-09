@@ -36,6 +36,7 @@
   endif
 
   assign blog_card_button_label = 'products.read_more' | t
+  assign blog_card_button_aria_label = blog_card_button_label | append: ': ' | append: blog_card_button_article.title
 
   assign blog_card_button_padding_top = block.settings.padding_top | default: 0 | plus: 0
   assign blog_card_button_padding_bottom = block.settings.padding_bottom | default: 0 | plus: 0
@@ -60,6 +61,8 @@
 >
   {% render 'theme-button',
     label: blog_card_button_label,
+    label_suffix: blog_card_button_article.title,
+    aria_label: blog_card_button_aria_label,
     url: blog_card_button_article.url,
     force_link: true,
     variant: blog_card_button_style,

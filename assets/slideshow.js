@@ -313,11 +313,22 @@ const startAutoplay = (root, swiper, loop) => {
   let previous = null;
   let frame = 0;
   let touching = false;
+  let hovered = false;
+  let focused = false;
+  let inViewport = true;
+  let lastPaint = -Infinity;
+  const pagination = root.querySelector('[data-slideshow-pagination]');
+  const numbers = [...(pagination?.querySelectorAll('.slideshow__pagination-number') || [])]
+    .map((number) => ({ number, svg: number.querySelector('svg') }));
+  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const controller = new AbortController();
+  const options = { signal: controller.signal };
   const paint = () => {
     const progress = Math.max(0, Math.min(1, elapsed / delay));
-    root.style.setProperty('--slideshow-autoplay-progress', String(progress));
-    root.querySelectorAll('[data-slideshow-pagination][data-pagination-type="numbers"] .slideshow__pagination-number').forEach((number) => {
-      number.querySelector('svg')?.style.setProperty('--percent', number.getAttribute('aria-current') === 'true' ? String(progress) : '0');
+    // Keep this changing token on the small control subtree, not every slide.
+    pagination?.style.setProperty('--slideshow-autoplay-progress', String(progress));
+    numbers.forEach(({ number, svg }) => {
+      svg?.style.setProperty('--percent', number.getAttribute('aria-current') === 'true' ? String(progress) : '0');
     });
   };
   const reset = () => {
@@ -330,16 +341,26 @@ const startAutoplay = (root, swiper, loop) => {
   };
   const touchStart = () => { touching = true; previous = null; };
   const touchEnd = () => { touching = false; previous = null; };
-  const visibilityChange = () => { previous = null; };
+  const canTick = () => document.readyState === 'complete' && !document.hidden && inViewport && !motionQuery.matches;
+  const visibilityChange = () => {
+    previous = null;
+    if (!canTick()) {
+      window.cancelAnimationFrame(frame);
+      frame = 0;
+    } else if (!frame) frame = window.requestAnimationFrame(tick);
+  };
   const tick = (now) => {
-    const paused = document.hidden || !isVisible(root) || reducedMotion() ||
-      (pauseOnHover && root.matches(':hover')) ||
-      Boolean(root.querySelector(':focus-visible')) || touching || swiper.isLocked || swiper.animating;
+    frame = 0;
+    if (!canTick()) return;
+    const paused = (pauseOnHover && hovered) || focused || touching || swiper.isLocked || swiper.animating;
     if (paused) previous = null;
     else {
       if (previous !== null) elapsed = Math.min(delay, elapsed + now - previous);
       previous = now;
-      paint();
+      if (now - lastPaint >= 32) {
+        paint();
+        lastPaint = now;
+      }
       if (elapsed >= delay) {
         elapsed = 0;
         previous = null;
@@ -353,17 +374,29 @@ const startAutoplay = (root, swiper, loop) => {
   swiper.on('activeIndexChange realIndexChange', reset);
   swiper.on('touchStart', touchStart);
   swiper.on('touchEnd', touchEnd);
-  document.addEventListener('visibilitychange', visibilityChange);
+  document.addEventListener('visibilitychange', visibilityChange, options);
+  window.addEventListener('load', visibilityChange, options);
+  root.addEventListener('mouseenter', () => { hovered = true; previous = null; }, options);
+  root.addEventListener('mouseleave', () => { hovered = false; previous = null; }, options);
+  root.addEventListener('focusin', () => { focused = true; previous = null; }, options);
+  root.addEventListener('focusout', (event) => { focused = root.contains(event.relatedTarget); previous = null; }, options);
+  motionQuery.addEventListener('change', visibilityChange, options);
+  const viewportObserver = 'IntersectionObserver' in window ? new IntersectionObserver(([entry]) => {
+    inViewport = entry.isIntersecting;
+    visibilityChange();
+  }) : null;
+  viewportObserver?.observe(root);
   paint();
-  frame = window.requestAnimationFrame(tick);
+  visibilityChange();
   return {
     destroy() {
       window.cancelAnimationFrame(frame);
       swiper.off('activeIndexChange realIndexChange', reset);
       swiper.off('touchStart', touchStart);
       swiper.off('touchEnd', touchEnd);
-      document.removeEventListener('visibilitychange', visibilityChange);
-      root.style.removeProperty('--slideshow-autoplay-progress');
+      controller.abort();
+      viewportObserver?.disconnect();
+      pagination?.style.removeProperty('--slideshow-autoplay-progress');
     },
   };
 };

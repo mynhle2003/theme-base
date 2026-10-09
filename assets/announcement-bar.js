@@ -86,6 +86,9 @@ const initSlider = (root, slides, track) => {
   let isAnimating = false;
   let lastMoveAt = 0;
   let firstClone = null;
+  let transitionTimer = 0;
+  let resetFrame = 0;
+  let sizeFrame = 0;
   const transitionDuration = () => {
     const duration = parseFloat(getComputedStyle(track).transitionDuration || '0');
     return Number.isFinite(duration) ? duration * 1000 : 420;
@@ -103,17 +106,30 @@ const initSlider = (root, slides, track) => {
     clone.style.visibility = 'hidden';
     clone.style.opacity = '0';
     clone.style.pointerEvents = 'none';
-    track.append(clone);
-    const height = clone.scrollHeight || clone.offsetHeight;
-    clone.remove();
-    return height;
+    return clone;
   };
   const syncSize = () => {
     const activeSlide = slides[activeIndex];
     if (!activeSlide) return;
-    slideHeight = Math.max(...slides.map(measureSlideHeight), 0);
-    root.style.setProperty('--announcement-slider-height', `${slideHeight}px`);
+    // Insert all measurement copies before reading layout once for the batch.
+    const measurements = slides.map(measureSlideHeight);
+    const fragment = document.createDocumentFragment();
+    measurements.forEach((clone) => fragment.append(clone));
+    track.append(fragment);
+    const nextHeight = Math.max(...measurements.map((clone) => clone.scrollHeight || clone.offsetHeight), 0);
+    measurements.forEach((clone) => clone.remove());
+    if (nextHeight !== slideHeight) {
+      slideHeight = nextHeight;
+      root.style.setProperty('--announcement-slider-height', `${slideHeight}px`);
+    }
     track.style.setProperty('--announcement-slider-offset', `${visualIndex * slideHeight}px`);
+  };
+  const scheduleSize = () => {
+    if (sizeFrame) return;
+    sizeFrame = window.requestAnimationFrame(() => {
+      sizeFrame = 0;
+      syncSize();
+    });
   };
   const setActive = (index, state = 'active') => {
     activeIndex = index;
@@ -124,7 +140,7 @@ const initSlider = (root, slides, track) => {
       slide.inert = !active;
       slide.dataset.announcementState = active ? state : 'idle';
     });
-    syncSize();
+    track.style.setProperty('--announcement-slider-offset', `${visualIndex * slideHeight}px`);
   };
   const move = (direction) => {
     const now = Date.now();
@@ -144,14 +160,18 @@ const initSlider = (root, slides, track) => {
     nextSlide.dataset.announcementState = 'enter';
     nextSlide.setAttribute('aria-hidden', 'false');
     track.style.setProperty('--announcement-slider-offset', `${nextIndex * slideHeight}px`);
-    window.setTimeout(() => {
+    transitionTimer = window.setTimeout(() => {
+      transitionTimer = 0;
       if (isLoop) {
         track.classList.add('announcement-bar--slider-reset');
         visualIndex = 0;
         track.style.setProperty('--announcement-slider-offset', '0px');
         nextSlide.dataset.announcementActive = 'false';
         nextSlide.setAttribute('aria-hidden', 'true');
-        window.requestAnimationFrame(() => track.classList.remove('announcement-bar--slider-reset'));
+        resetFrame = window.requestAnimationFrame(() => {
+          resetFrame = 0;
+          track.classList.remove('announcement-bar--slider-reset');
+        });
         setActive(0);
       } else {
         visualIndex = nextIndex;
@@ -192,10 +212,10 @@ const initSlider = (root, slides, track) => {
   const resume = (event) => {
     if (!pauseOnHover) return;
     if (event.type === 'mouseleave') isHovered = false;
-    if (event.type === 'focusout') isFocused = false;
+    if (event.type === 'focusout') isFocused = root.contains(event.relatedTarget);
     restart();
   };
-  const resizeObserver = new ResizeObserver(syncSize);
+  const resizeObserver = new ResizeObserver(scheduleSize);
   slides.forEach((slide) => resizeObserver.observe(slide));
   previous?.addEventListener('click', onPrevious);
   next?.addEventListener('click', onNext);
@@ -214,8 +234,15 @@ const initSlider = (root, slides, track) => {
     track.append(firstClone);
   }
   setActive(0);
+  syncSize();
   restart();
-  return { previous, next, onPrevious, onNext, stop, pause, resume, pauseOnHover, resizeObserver, firstClone };
+  const cancelPending = () => {
+    window.clearTimeout(transitionTimer);
+    window.cancelAnimationFrame(resetFrame);
+    window.cancelAnimationFrame(sizeFrame);
+    track.classList.remove('announcement-bar--slider-reset');
+  };
+  return { cancelPending, previous, next, onPrevious, onNext, stop, pause, resume, pauseOnHover, resizeObserver, firstClone };
 };
 
 const initScrolling = (root, track) => {
@@ -224,6 +251,7 @@ const initScrolling = (root, track) => {
   let clones = [];
   let isSyncing = false;
   let mutationObserver;
+  let syncFrame = 0;
 
   const syncClones = () => {
     if (isSyncing) return;
@@ -238,42 +266,54 @@ const initScrolling = (root, track) => {
     }
 
     const appendCloneSet = () => {
+      const fragment = document.createDocumentFragment();
       originalSlides.forEach((slide) => {
-        const clone = slide.cloneNode(true);
+        const clone = sanitizeEditorAttributes(slide.cloneNode(true));
         disableEntranceAnimation(clone);
         setFocusableState(clone);
         clone.dataset.announcementClone = 'true';
-        track.append(clone);
+        clone.inert = true;
+        fragment.append(clone);
         clones.push(clone);
       });
+      return fragment;
     };
 
-    appendCloneSet();
+    track.append(appendCloneSet());
     const firstClone = clones[0];
     const loopDistance = firstClone.getBoundingClientRect().left - track.getBoundingClientRect().left;
-    let cloneSetCount = 1;
-    while (track.scrollWidth < (viewport?.clientWidth || 0) + loopDistance && cloneSetCount < 100) {
-      appendCloneSet();
-      cloneSetCount += 1;
-    }
+    // Each extra set adds one loop distance; calculate before inserting.
+    const extraSets = loopDistance > 0
+      ? Math.min(99, Math.max(0, Math.ceil(((viewport?.clientWidth || 0) + loopDistance - track.scrollWidth) / loopDistance)))
+      : 0;
+    const fragment = document.createDocumentFragment();
+    for (let index = 0; index < extraSets; index += 1) fragment.append(appendCloneSet());
+    track.append(fragment);
     track.style.setProperty('--announcement-bar-loop-distance', `${loopDistance}px`);
     root.classList.add('announcement-bar--ready');
     mutationObserver?.observe(track, { attributes: true, childList: true, subtree: true });
     isSyncing = false;
   };
 
+  const scheduleSync = () => {
+    if (syncFrame) return;
+    syncFrame = window.requestAnimationFrame(() => {
+      syncFrame = 0;
+      syncClones();
+    });
+  };
   mutationObserver = new MutationObserver((mutations) => {
     if (mutations.some((mutation) => {
       if (mutation.type === 'attributes' && (mutation.attributeName === 'class' || mutation.attributeName === 'style')) return false;
       if (mutation.type === 'attributes' && mutation.attributeName.startsWith('data-shopify-editor')) return false;
       return !mutation.target.closest?.('[data-announcement-clone]');
-    })) syncClones();
+    })) scheduleSync();
   });
 
-  const resizeObserver = new ResizeObserver(() => syncClones());
+  const resizeObserver = new ResizeObserver(scheduleSync);
   resizeObserver.observe(viewport || track);
   syncClones();
-  return { clones, resizeObserver, mutationObserver };
+  return { clones, resizeObserver, mutationObserver, cancelSync: () => window.cancelAnimationFrame(syncFrame) };
 };
 
 const init = (root) => {
@@ -303,6 +343,8 @@ const destroy = (root) => {
   state.onClick && root.removeEventListener('click', state.onClick);
   state.clearCopyTimer?.();
   state.stop?.();
+  state.cancelPending?.();
+  state.cancelSync?.();
   state.sliderResizeObserver?.disconnect();
   if (state.pauseOnHover) {
     root.removeEventListener('mouseenter', state.pause);

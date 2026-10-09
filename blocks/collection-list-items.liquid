@@ -203,10 +203,13 @@
   {{ block.shopify_attributes }}
 >
   {% if collection_list_navigation_position == 'top' %}{{ collection_list_navigation }}{% endif %}
+  {% capture collection_list_image_sizes %}(min-width: 768px) {{ 100.0 | divided_by: collection_list_desktop_columns }}vw, {{ 100.0 | divided_by: collection_list_mobile_columns }}vw{% endcapture %}
+  {% assign collection_list_image_loading = 'lazy' %}
+  {% if section.index <= 2 %}{% assign collection_list_image_loading = 'eager' %}{% endif %}
   {% capture collection_list_items %}
     {% for collection in collection_list_source_items %}
       <div class="{% if collection_list_layout == 'carousel' %}swiper-slide {% endif %}collection-card-list__item">
-        {% content_for 'block', type: 'collection-card', id: 'collection-card', closest.collection: collection, placeholder: collection_list_is_placeholder %}
+        {% content_for 'block', type: 'collection-card', id: 'collection-card', closest.collection: collection, placeholder: collection_list_is_placeholder, image_loading: collection_list_image_loading, image_sizes: collection_list_image_sizes %}
       </div>
     {% endfor %}
   {% endcapture %}

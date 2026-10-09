@@ -28,7 +28,7 @@
 %}
 
 {% if shop.customer_accounts_enabled %}
-  <shopify-account class="{{ account_class }}" menu="customer-account-main-menu" {{ block.shopify_attributes }}>
+  <shopify-account class="{{ account_class }}" {% if linklists['customer-account-main-menu'].links != blank %}menu="customer-account-main-menu"{% endif %} {{ block.shopify_attributes }}>
     <span slot="signed-out-avatar" class="header-account__avatar" aria-label="{{ account_label | escape }}">
       {% unless account_type == 'text' %}<span class="icon" aria-hidden="true">
         {% render 'icon', icon: 'user', bare: true %}

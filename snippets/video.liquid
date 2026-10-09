@@ -20,6 +20,10 @@
   assign video_pause_label = 'video.pause' | t
   assign video_width = video.preview_image.width | default: 1600
   assign video_height = video.preview_image.height
+  assign video_deferred = false
+  if section.index > 2 and request.design_mode == false
+    assign video_deferred = true
+  endif
   assign video_is_placeholder = true
   if video_autoplay
     assign video_muted = true
@@ -37,12 +41,23 @@
   endif
 %}
 
-<theme-video class="video{% if video_is_placeholder %} placeholder-image{% endif %} {{ class }}" data-video-media>
+<theme-video class="video{% if video_is_placeholder %} placeholder-image{% endif %} {{ class }}" data-video-media{% if video_deferred %} data-video-deferred data-video-autoplay="{{ video_autoplay }}"{% endif %}>
   {% if video != blank %}
-    {{ video | video_tag: image_size: '1600x', autoplay: video_autoplay, loop: video_loop, muted: video_muted, controls: true, loading: 'lazy', width: video_width, height: video_height }}
+    {% if video_deferred %}
+      {% capture deferred_video_markup %}{{ video | video_tag: image_size: '800x', autoplay: false, loop: video_loop, muted: video_muted, controls: true, preload: 'none', loading: 'lazy', width: video_width, height: video_height }}{% endcapture %}
+      {{ deferred_video_markup | replace: '<source src=', '<source data-src=' | replace: '<img ', '<img alt="" ' }}
+      <noscript>
+        <style>theme-video[data-video-deferred] > video { display: none; }</style>
+        {% capture fallback_video_markup %}{{ video | video_tag: image_size: '800x', autoplay: false, loop: video_loop, muted: video_muted, controls: true, preload: 'none', width: video_width, height: video_height }}{% endcapture %}
+        {{ fallback_video_markup | replace: '<img ', '<img alt="" ' }}
+      </noscript>
+    {% else %}
+      {% capture native_video_markup %}{{ video | video_tag: image_size: '1600x', autoplay: video_autoplay, loop: video_loop, muted: video_muted, controls: true, preload: 'none', loading: 'lazy', width: video_width, height: video_height }}{% endcapture %}
+      {{ native_video_markup | replace: '<img ', '<img alt="" ' }}
+    {% endif %}
     {% if poster != blank and video_autoplay == false %}
       <div class="video__cover" data-video-cover aria-hidden="true">
-        {{ poster | image_url: width: 1600 | image_tag: alt: '' }}
+        {{ poster | image_url: width: 1600 | image_tag: widths: '320, 480, 640, 800, 1200, 1600', sizes: '(min-width: 768px) 25vw, 100vw', loading: 'lazy', alt: '' }}
       </div>
     {% endif %}
     {% if video_autoplay == false %}
@@ -259,11 +274,36 @@
           video.pause();
         }
 
-        const playButton = this.querySelector('[data-video-play]');
-        if (!playButton) return;
-
         this.abortController = new AbortController();
         const eventOptions = { signal: this.abortController.signal };
+        const hydrate = () => {
+          const sources = video.querySelectorAll('source[data-src]');
+          if (!sources.length) return;
+          sources.forEach((source) => {
+            source.src = source.dataset.src;
+            source.removeAttribute('data-src');
+          });
+          video.load();
+        };
+        if (this.hasAttribute('data-video-deferred')) {
+          const autoplay = this.dataset.videoAutoplay === 'true' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if ('IntersectionObserver' in window) {
+            this.videoObserver = new IntersectionObserver(([entry]) => {
+              if (entry.isIntersecting) {
+                hydrate();
+                if (autoplay) video.play()?.catch(() => {});
+                else this.videoObserver.unobserve(this);
+              } else if (autoplay) video.pause();
+            }, { rootMargin: '200px 0px' });
+            this.videoObserver.observe(this);
+          } else {
+            hydrate();
+            if (autoplay) video.play()?.catch(() => {});
+          }
+          video.addEventListener('play', hydrate, eventOptions);
+        }
+        const playButton = this.querySelector('[data-video-play]');
+        if (!playButton) return;
 
         const hideNativeControls = () => {
           video.controls = false;
@@ -288,6 +328,7 @@
 
         playButton.addEventListener('click', () => {
           if (video.paused || video.ended) {
+            hydrate();
             const playPromise = video.play();
             playPromise?.catch(() => {});
           } else {
@@ -307,6 +348,9 @@
       }
 
       disconnectedCallback() {
+        this.videoObserver?.disconnect();
+        this.videoObserver = null;
+        this.querySelector('video')?.pause();
         this.abortController?.abort();
         this.abortController = null;
       }

@@ -26,48 +26,11 @@
   assign image_text_card_ratio_setting = block.settings.image_text_card_ratio | default: 'auto'
   assign image_text_card_ratio = '6 / 7'
   case image_text_card_ratio_setting
-    when 'ratio_1_1'
-      assign image_text_card_ratio = '1 / 1'
-    when 'ratio_4_5'
-      assign image_text_card_ratio = '4 / 5'
-    when 'ratio_5_4'
-      assign image_text_card_ratio = '5 / 4'
-    when 'ratio_6_7'
-      assign image_text_card_ratio = '6 / 7'
-    when 'ratio_7_6'
-      assign image_text_card_ratio = '7 / 6'
-    when 'ratio_5_7'
-      assign image_text_card_ratio = '5 / 7'
-    when 'ratio_7_5'
-      assign image_text_card_ratio = '7 / 5'
-    when 'ratio_2_3'
-      assign image_text_card_ratio = '2 / 3'
-    when 'ratio_3_2'
-      assign image_text_card_ratio = '3 / 2'
-    when 'ratio_4_3'
-      assign image_text_card_ratio = '4 / 3'
-    when 'ratio_3_4'
-      assign image_text_card_ratio = '3 / 4'
-    when 'ratio_2_1'
-      assign image_text_card_ratio = '2 / 1'
-    when 'ratio_1_2'
-      assign image_text_card_ratio = '1 / 2'
-    when 'ratio_16_9'
-      assign image_text_card_ratio = '16 / 9'
-    when 'ratio_9_16'
-      assign image_text_card_ratio = '9 / 16'
-    when 'ratio_12_5'
-      assign image_text_card_ratio = '12 / 5'
-    when 'ratio_5_12'
-      assign image_text_card_ratio = '5 / 12'
-    when 'ratio_48_17'
-      assign image_text_card_ratio = '48 / 17'
-    when 'ratio_17_48'
-      assign image_text_card_ratio = '17 / 48'
-    when 'ratio_5_8'
-      assign image_text_card_ratio = '5 / 8'
-    when 'ratio_8_5'
-      assign image_text_card_ratio = '8 / 5'
+    when 'ratio_1_1', 'ratio_4_5', 'ratio_5_4', 'ratio_6_7', 'ratio_7_6', 'ratio_5_7', 'ratio_7_5', 'ratio_2_3', 'ratio_3_2', 'ratio_4_3', 'ratio_3_4', 'ratio_2_1', 'ratio_1_2', 'ratio_16_9', 'ratio_9_16', 'ratio_12_5', 'ratio_5_12', 'ratio_48_17', 'ratio_17_48', 'ratio_5_8', 'ratio_8_5'
+      capture image_text_card_ratio
+        render 'image-ratio-value', setting: image_text_card_ratio_setting
+      endcapture
+      assign image_text_card_ratio = image_text_card_ratio | strip
     when 'square'
       assign image_text_card_ratio = '1 / 1'
     when 'portrait'
@@ -163,7 +126,8 @@
   endif
 
   assign carousel_border_type = block.settings.border_type | default: 'solid'
-  unless carousel_border_type == 'none' or carousel_border_type == 'solid' or carousel_border_type == 'dashed' or carousel_border_type == 'dotted' or carousel_border_type == 'double'
+  assign carousel_border_type_allowed_values = 'none|solid|dashed|dotted|double' | split: '|'
+  unless carousel_border_type_allowed_values contains carousel_border_type
     assign carousel_border_type = 'none'
   endunless
   assign carousel_border_thickness = block.settings.border_thickness | default: 1 | plus: 0
@@ -171,7 +135,8 @@
     assign carousel_border_thickness = 1
   endif
   assign carousel_corner_radius = block.settings.corner_radius | default: 'square'
-  unless carousel_corner_radius == 'square' or carousel_corner_radius == 'slightly_rounded' or carousel_corner_radius == 'rounded' or carousel_corner_radius == 'pill'
+  assign carousel_corner_radius_allowed_values = 'square|slightly_rounded|rounded|pill' | split: '|'
+  unless carousel_corner_radius_allowed_values contains carousel_corner_radius
     assign carousel_corner_radius = 'square'
   endunless
   assign image_text_card_radius = '0px'
@@ -184,7 +149,8 @@
       assign image_text_card_radius = '999px'
   endcase
   assign image_text_card_toggle_icon = block.settings.image_text_card_toggle_icon | default: 'plus'
-  unless image_text_card_toggle_icon == 'plus' or image_text_card_toggle_icon == 'arrow' or image_text_card_toggle_icon == 'chevron'
+  assign image_text_card_toggle_icon_allowed_values = 'plus|arrow|chevron' | split: '|'
+  unless image_text_card_toggle_icon_allowed_values contains image_text_card_toggle_icon
     assign image_text_card_toggle_icon = 'plus'
   endunless
   assign image_text_card_icon_size = block.settings.image_text_card_icon_size | default: 24 | plus: 0
@@ -192,7 +158,8 @@
     assign image_text_card_icon_size = 24
   endif
   assign image_text_card_heading_tag = block.settings.image_text_card_heading_tag | default: 'h4'
-  unless image_text_card_heading_tag == 'div' or image_text_card_heading_tag == 'h1' or image_text_card_heading_tag == 'h2' or image_text_card_heading_tag == 'h3' or image_text_card_heading_tag == 'h4' or image_text_card_heading_tag == 'h5' or image_text_card_heading_tag == 'h6'
+  assign image_text_card_heading_tag_allowed_values = 'div|h1|h2|h3|h4|h5|h6' | split: '|'
+  unless image_text_card_heading_tag_allowed_values contains image_text_card_heading_tag
     assign image_text_card_heading_tag = 'h4'
   endunless
 
@@ -206,11 +173,13 @@
   endif
 
   assign carousel_navigation_style = block.settings.navigation_style | default: 'secondary'
-  unless carousel_navigation_style == 'primary' or carousel_navigation_style == 'secondary' or carousel_navigation_style == 'outline'
+  assign carousel_navigation_style_allowed_values = 'primary|secondary|outline' | split: '|'
+  unless carousel_navigation_style_allowed_values contains carousel_navigation_style
     assign carousel_navigation_style = 'secondary'
   endunless
   assign carousel_navigation_icon = block.settings.navigation_icon | default: 'chevron'
-  unless carousel_navigation_icon == 'chevron' or carousel_navigation_icon == 'arrow' or carousel_navigation_icon == 'long_arrow'
+  assign carousel_navigation_icon_allowed_values = 'chevron|arrow|long_arrow' | split: '|'
+  unless carousel_navigation_icon_allowed_values contains carousel_navigation_icon
     assign carousel_navigation_icon = 'chevron'
   endunless
   assign carousel_navigation_behavior = block.settings.navigation_behavior | default: 'always'
@@ -223,11 +192,13 @@
     assign carousel_controls_style = 'standard'
   endunless
   assign carousel_controls_alignment = block.settings.controls_alignment | default: 'center'
-  unless carousel_controls_alignment == 'left' or carousel_controls_alignment == 'center' or carousel_controls_alignment == 'right'
+  assign carousel_controls_alignment_allowed_values = 'left|center|right' | split: '|'
+  unless carousel_controls_alignment_allowed_values contains carousel_controls_alignment
     assign carousel_controls_alignment = 'center'
   endunless
   assign carousel_controls_alignment_mobile = block.settings.controls_alignment_mobile | default: carousel_controls_alignment
-  unless carousel_controls_alignment_mobile == 'left' or carousel_controls_alignment_mobile == 'center' or carousel_controls_alignment_mobile == 'right'
+  assign carousel_controls_alignment_mobile_allowed_values = 'left|center|right' | split: '|'
+  unless carousel_controls_alignment_mobile_allowed_values contains carousel_controls_alignment_mobile
     assign carousel_controls_alignment_mobile = carousel_controls_alignment
   endunless
 

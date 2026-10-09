@@ -12,7 +12,7 @@
   "name": "t:general.header",
   "sections": {
     "announcement-bar": {
-      "type": "announcement-bar-static",
+      "type": "announcement-bar",
       "settings": {
         "background_type": "none",
         "overlay": false,
@@ -26,7 +26,18 @@
         "padding_top_mobile": 8,
         "padding_bottom_mobile": 8,
         "alignment": "center",
-        "alignment_mobile": "center"
+        "alignment_mobile": "center",
+        "type": "slider",
+        "speed": 1,
+        "direction": "left",
+        "autoplay": 5,
+        "pause_on_hover": true,
+        "navigation_behavior": "show_on_hover",
+        "navigation_icon": "arrow",
+        "font_size": "sm",
+        "padding_left": 0,
+        "padding_right": 0,
+        "show_social_links_desktop": true
       },
       "blocks": {
         "announcement-social": {

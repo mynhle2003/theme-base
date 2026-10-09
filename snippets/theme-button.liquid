@@ -20,6 +20,7 @@
   @param {boolean} [icon_only] - Hide the visible label when the icon is the control
   @param {boolean} [open_in_new_tab] - Whether links should open in a new tab
   @param {boolean} [force_link] - Render a link while its destination is assigned dynamically
+  @param {string} [label_suffix] - Optional visually hidden context appended to the visible label
   @param {string} [aria_label] - Optional accessible name when it differs from the visible label
   @param {string} [attributes] - Optional HTML attributes owned by the caller
   @param {string} [motion_speed] - Motion token: fast, standard, or slow
@@ -113,7 +114,7 @@
 {% capture button_content %}
   <span class="btn__label{% if button_icon_name != blank %} btn__label--icon{% endif %}">
     {% if button_icon_name != blank and button_icon_position == 'before' %}{{ button_icon_markup }}{% endif %}
-    <span class="btn__text{% if icon_only %} visually-hidden{% endif %}">{{ label | escape }}</span>
+    <span class="btn__text{% if icon_only %} visually-hidden{% endif %}">{{ label | escape }}{% if label_suffix != blank %}<span class="visually-hidden">: {{ label_suffix | escape }}</span>{% endif %}</span>
     {% if button_icon_name != blank and button_icon_position == 'after' %}{{ button_icon_markup }}{% endif %}
   </span>
 {% endcapture %}

@@ -3,6 +3,8 @@
   slide media and local content placement; nested Theme Blocks supply content.
 {% enddoc %}
 
+{% render 'hero-styles' %}
+
 {% liquid
   assign slide_layout = block.settings.layout | default: 'classic'
   assign slide_media_type = block.settings.media_type | default: 'image'

@@ -47,48 +47,13 @@
   assign comparison_ratio_desktop_setting = block.settings.image_ratio_desktop | default: 'original'
   assign comparison_ratio_desktop = 1.7778
   case comparison_ratio_desktop_setting
-    when 'ratio_1_1'
-      assign comparison_ratio_desktop = 1 | times: 1.0 | divided_by: 1
-    when 'ratio_4_5'
-      assign comparison_ratio_desktop = 4 | times: 1.0 | divided_by: 5
-    when 'ratio_5_4'
-      assign comparison_ratio_desktop = 5 | times: 1.0 | divided_by: 4
-    when 'ratio_6_7'
-      assign comparison_ratio_desktop = 6 | times: 1.0 | divided_by: 7
-    when 'ratio_7_6'
-      assign comparison_ratio_desktop = 7 | times: 1.0 | divided_by: 6
-    when 'ratio_5_7'
-      assign comparison_ratio_desktop = 5 | times: 1.0 | divided_by: 7
-    when 'ratio_7_5'
-      assign comparison_ratio_desktop = 7 | times: 1.0 | divided_by: 5
-    when 'ratio_2_3'
-      assign comparison_ratio_desktop = 2 | times: 1.0 | divided_by: 3
-    when 'ratio_3_2'
-      assign comparison_ratio_desktop = 3 | times: 1.0 | divided_by: 2
-    when 'ratio_4_3'
-      assign comparison_ratio_desktop = 4 | times: 1.0 | divided_by: 3
-    when 'ratio_3_4'
-      assign comparison_ratio_desktop = 3 | times: 1.0 | divided_by: 4
-    when 'ratio_2_1'
-      assign comparison_ratio_desktop = 2 | times: 1.0 | divided_by: 1
-    when 'ratio_1_2'
-      assign comparison_ratio_desktop = 1 | times: 1.0 | divided_by: 2
-    when 'ratio_16_9'
-      assign comparison_ratio_desktop = 16 | times: 1.0 | divided_by: 9
-    when 'ratio_9_16'
-      assign comparison_ratio_desktop = 9 | times: 1.0 | divided_by: 16
-    when 'ratio_12_5'
-      assign comparison_ratio_desktop = 12 | times: 1.0 | divided_by: 5
-    when 'ratio_5_12'
-      assign comparison_ratio_desktop = 5 | times: 1.0 | divided_by: 12
-    when 'ratio_48_17'
-      assign comparison_ratio_desktop = 48 | times: 1.0 | divided_by: 17
-    when 'ratio_17_48'
-      assign comparison_ratio_desktop = 17 | times: 1.0 | divided_by: 48
-    when 'ratio_5_8'
-      assign comparison_ratio_desktop = 5 | times: 1.0 | divided_by: 8
-    when 'ratio_8_5'
-      assign comparison_ratio_desktop = 8 | times: 1.0 | divided_by: 5
+    when 'ratio_1_1', 'ratio_4_5', 'ratio_5_4', 'ratio_6_7', 'ratio_7_6', 'ratio_5_7', 'ratio_7_5', 'ratio_2_3', 'ratio_3_2', 'ratio_4_3', 'ratio_3_4', 'ratio_2_1', 'ratio_1_2', 'ratio_16_9', 'ratio_9_16', 'ratio_12_5', 'ratio_5_12', 'ratio_48_17', 'ratio_17_48', 'ratio_5_8', 'ratio_8_5'
+      capture comparison_ratio_desktop
+        render 'image-ratio-value', setting: comparison_ratio_desktop_setting
+      endcapture
+      assign comparison_ratio_desktop = comparison_ratio_desktop | strip
+      assign comparison_ratio_parts = comparison_ratio_desktop | split: ' / '
+      assign comparison_ratio_desktop = comparison_ratio_parts.first | times: 1.0 | divided_by: comparison_ratio_parts.last
     when 'square'
       assign comparison_ratio_desktop = 1
     when 'portrait'
@@ -126,48 +91,13 @@
   assign comparison_ratio_mobile_setting = block.settings.image_ratio_mobile | default: 'original'
   assign comparison_ratio_mobile = comparison_ratio_desktop
   case comparison_ratio_mobile_setting
-    when 'ratio_1_1'
-      assign comparison_ratio_mobile = 1 | times: 1.0 | divided_by: 1
-    when 'ratio_4_5'
-      assign comparison_ratio_mobile = 4 | times: 1.0 | divided_by: 5
-    when 'ratio_5_4'
-      assign comparison_ratio_mobile = 5 | times: 1.0 | divided_by: 4
-    when 'ratio_6_7'
-      assign comparison_ratio_mobile = 6 | times: 1.0 | divided_by: 7
-    when 'ratio_7_6'
-      assign comparison_ratio_mobile = 7 | times: 1.0 | divided_by: 6
-    when 'ratio_5_7'
-      assign comparison_ratio_mobile = 5 | times: 1.0 | divided_by: 7
-    when 'ratio_7_5'
-      assign comparison_ratio_mobile = 7 | times: 1.0 | divided_by: 5
-    when 'ratio_2_3'
-      assign comparison_ratio_mobile = 2 | times: 1.0 | divided_by: 3
-    when 'ratio_3_2'
-      assign comparison_ratio_mobile = 3 | times: 1.0 | divided_by: 2
-    when 'ratio_4_3'
-      assign comparison_ratio_mobile = 4 | times: 1.0 | divided_by: 3
-    when 'ratio_3_4'
-      assign comparison_ratio_mobile = 3 | times: 1.0 | divided_by: 4
-    when 'ratio_2_1'
-      assign comparison_ratio_mobile = 2 | times: 1.0 | divided_by: 1
-    when 'ratio_1_2'
-      assign comparison_ratio_mobile = 1 | times: 1.0 | divided_by: 2
-    when 'ratio_16_9'
-      assign comparison_ratio_mobile = 16 | times: 1.0 | divided_by: 9
-    when 'ratio_9_16'
-      assign comparison_ratio_mobile = 9 | times: 1.0 | divided_by: 16
-    when 'ratio_12_5'
-      assign comparison_ratio_mobile = 12 | times: 1.0 | divided_by: 5
-    when 'ratio_5_12'
-      assign comparison_ratio_mobile = 5 | times: 1.0 | divided_by: 12
-    when 'ratio_48_17'
-      assign comparison_ratio_mobile = 48 | times: 1.0 | divided_by: 17
-    when 'ratio_17_48'
-      assign comparison_ratio_mobile = 17 | times: 1.0 | divided_by: 48
-    when 'ratio_5_8'
-      assign comparison_ratio_mobile = 5 | times: 1.0 | divided_by: 8
-    when 'ratio_8_5'
-      assign comparison_ratio_mobile = 8 | times: 1.0 | divided_by: 5
+    when 'ratio_1_1', 'ratio_4_5', 'ratio_5_4', 'ratio_6_7', 'ratio_7_6', 'ratio_5_7', 'ratio_7_5', 'ratio_2_3', 'ratio_3_2', 'ratio_4_3', 'ratio_3_4', 'ratio_2_1', 'ratio_1_2', 'ratio_16_9', 'ratio_9_16', 'ratio_12_5', 'ratio_5_12', 'ratio_48_17', 'ratio_17_48', 'ratio_5_8', 'ratio_8_5'
+      capture comparison_ratio_mobile
+        render 'image-ratio-value', setting: comparison_ratio_mobile_setting
+      endcapture
+      assign comparison_ratio_mobile = comparison_ratio_mobile | strip
+      assign comparison_ratio_parts = comparison_ratio_mobile | split: ' / '
+      assign comparison_ratio_mobile = comparison_ratio_parts.first | times: 1.0 | divided_by: comparison_ratio_parts.last
     when 'square'
       assign comparison_ratio_mobile = 1
     when 'portrait'
@@ -233,7 +163,8 @@
   endif
 
   assign comparison_font = block.settings.font | default: 'body'
-  unless comparison_font == 'body' or comparison_font == 'heading' or comparison_font == 'accent'
+  assign comparison_font_allowed_values = 'body|heading|accent' | split: '|'
+  unless comparison_font_allowed_values contains comparison_font
     assign comparison_font = 'body'
   endunless
   assign comparison_font_family = 'var(--font-body-family)'
@@ -253,7 +184,8 @@
   endif
 
   assign comparison_font_size = block.settings.font_size | default: 'md'
-  unless comparison_font_size == 'xs' or comparison_font_size == 'sm' or comparison_font_size == 'md' or comparison_font_size == 'lg' or comparison_font_size == 'xl' or comparison_font_size == 'xxl'
+  assign comparison_font_size_allowed_values = 'xs|sm|md|lg|xl|xxl' | split: '|'
+  unless comparison_font_size_allowed_values contains comparison_font_size
     assign comparison_font_size = 'md'
   endunless
   assign comparison_font_size_token = 'var(--font-body-md)'
@@ -271,7 +203,8 @@
   endcase
 
   assign comparison_letter_spacing = block.settings.letter_spacing | default: 'normal'
-  unless comparison_letter_spacing == 'tight' or comparison_letter_spacing == 'normal' or comparison_letter_spacing == 'relaxed' or comparison_letter_spacing == 'loose' or comparison_letter_spacing == 'extra_loose'
+  assign comparison_letter_spacing_allowed_values = 'tight|normal|relaxed|loose|extra_loose' | split: '|'
+  unless comparison_letter_spacing_allowed_values contains comparison_letter_spacing
     assign comparison_letter_spacing = 'normal'
   endunless
   assign comparison_letter_spacing_token = '0em'

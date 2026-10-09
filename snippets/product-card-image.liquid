@@ -25,6 +25,15 @@
     assign image_alt = image.alt
   endif
 
+  assign card_image_loading = 'lazy'
+  if section.index <= 2 and request.page_type != 'index'
+    assign card_image_loading = 'eager'
+  endif
+  assign card_image_sizes = 'auto, 100vw'
+  if card_image_loading == 'eager'
+    assign card_image_sizes = '100vw'
+  endif
+
   assign has_secondary_image = false
   if secondary_image_enabled != false and secondary_image != blank
     assign has_secondary_image = true
@@ -43,6 +52,9 @@
     {% render 'image',
       image: image,
       class: 'product-card__image',
+      widths: '160, 240, 320, 480, 640, 800',
+      sizes: card_image_sizes,
+      loading: card_image_loading,
       width: width,
       height: height,
       crop: crop,
@@ -52,6 +64,9 @@
       {% render 'image',
         image: secondary_image,
         class: 'product-card__secondary-image',
+        widths: '160, 240, 320, 480, 640, 800',
+        sizes: 'auto, 100vw',
+        loading: 'lazy',
         width: width,
         height: height,
         crop: crop,

@@ -11,6 +11,8 @@
   unless announcement_direction == 'left' or announcement_direction == 'right'
     assign announcement_direction = 'left'
   endunless
+  assign announcement_alignment = section.settings.alignment | default: 'center'
+  assign announcement_alignment_mobile = section.settings.alignment_mobile | default: announcement_alignment
   assign announcement_gap = section.settings.gap | default: 16 | plus: 0
   assign announcement_padding_top = section.settings.padding_top | default: 8 | plus: 0
   assign announcement_padding_right = section.settings.padding_right | default: 0 | plus: 0
@@ -54,14 +56,14 @@
 <script type="module" src="{{ 'announcement-bar.js' | asset_url }}"></script>
 
 <div
-  class="announcement-bar announcement-bar--{{ announcement_type }} announcement-bar--direction-{{ announcement_direction }} announcement-bar--navigation-{{ announcement_navigation_behavior }} color-scheme section-color-scope body-text body-{{ announcement_font_size }} {{ announcement_color_scheme }}{% if announcement_speed == 0 %} announcement-bar--static{% endif %}{% if section.settings.bottom_separator %} announcement-bar--bottom-separator{% endif %}"
+  class="announcement-bar announcement-bar--{{ announcement_type }}{% if section.settings.show_social_links_desktop %} announcement-bar--social-desktop{% endif %} announcement-bar--direction-{{ announcement_direction }} announcement-bar--navigation-{{ announcement_navigation_behavior }} color-scheme section-color-scope body-text body-{{ announcement_font_size }} {{ announcement_color_scheme }}{% if announcement_speed == 0 %} announcement-bar--static{% endif %}{% if section.settings.bottom_separator %} announcement-bar--bottom-separator{% endif %}"
   data-announcement-bar
   data-announcement-type="{{ announcement_type }}"
   data-announcement-speed="{{ announcement_speed }}"
   data-announcement-direction="{{ announcement_direction }}"
   data-announcement-autoplay="{{ announcement_autoplay | times: 1000 }}"
   data-announcement-pause-on-hover="{{ announcement_pause_on_hover }}"
-  style="--announcement-bar-gap: {{ announcement_gap }}px; --announcement-bar-speed: {{ announcement_speed }}; --announcement-bar-padding-top: {{ announcement_padding_top }}px; --announcement-bar-padding-right: {{ announcement_padding_right }}px; --announcement-bar-padding-bottom: {{ announcement_padding_bottom }}px; --announcement-bar-padding-left: {{ announcement_padding_left }}px;{% if announcement_overlay and section.settings.overlay_color != blank %} --announcement-bar-overlay-color: {{ section.settings.overlay_color | escape }};{% endif %}"
+  style="--announcement-alignment: {{ announcement_alignment }}; --announcement-alignment-mobile: {{ announcement_alignment_mobile }};{% if section.settings.customize_mobile_padding %} --announcement-padding-top-mobile: {{ section.settings.padding_top_mobile }}px; --announcement-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;{% endif %} --announcement-bar-gap: {{ announcement_gap }}px; --announcement-bar-speed: {{ announcement_speed }}; --announcement-bar-padding-top: {{ announcement_padding_top }}px; --announcement-bar-padding-right: {{ announcement_padding_right }}px; --announcement-bar-padding-bottom: {{ announcement_padding_bottom }}px; --announcement-bar-padding-left: {{ announcement_padding_left }}px;{% if announcement_overlay and section.settings.overlay_color != blank %} --announcement-bar-overlay-color: {{ section.settings.overlay_color | escape }};{% endif %}"
 >
   {% if announcement_background_type == 'image' and section.settings.background_image != blank %}
     <div class="announcement-bar__background" aria-hidden="true">
@@ -69,22 +71,41 @@
       {% if announcement_overlay %}<div class="announcement-bar__overlay"></div>{% endif %}
     </div>
   {% endif %}
-  <div class="announcement-bar__inner">
-    <button class="announcement-bar__control announcement-bar__control--previous" type="button" data-announcement-previous aria-label="Previous announcement">
-      {% render 'carousel-navigation-icon', icon: announcement_navigation_icon, direction: 'previous' %}
-    </button>
-    <div class="announcement-bar__viewport" data-announcement-viewport>
-      <div class="announcement-bar__slides" data-announcement-track>
-        {% content_for 'blocks' %}
+  <div class="announcement-bar__layout{% if section.settings.show_social_links_desktop %} container full-width{% endif %}">
+    {% if section.settings.show_social_links_desktop %}
+      <div class="announcement-bar__social">
+        {% content_for 'block', type: '_announcement-social-links', id: 'announcement-social' %}
       </div>
+    {% endif %}
+    <div class="announcement-bar__inner">
+      <button class="announcement-bar__control announcement-bar__control--previous" type="button" data-announcement-previous aria-label="Previous announcement">
+        {% render 'carousel-navigation-icon', icon: announcement_navigation_icon, direction: 'previous' %}
+      </button>
+      <div class="announcement-bar__viewport" data-announcement-viewport>
+        <div class="announcement-bar__slides" data-announcement-track>
+          {% content_for 'blocks' %}
+        </div>
+      </div>
+      <button class="announcement-bar__control announcement-bar__control--next" type="button" data-announcement-next aria-label="Next announcement">
+        {% render 'carousel-navigation-icon', icon: announcement_navigation_icon, direction: 'next' %}
+      </button>
     </div>
-    <button class="announcement-bar__control announcement-bar__control--next" type="button" data-announcement-next aria-label="Next announcement">
-      {% render 'carousel-navigation-icon', icon: announcement_navigation_icon, direction: 'next' %}
-    </button>
   </div>
 </div>
 
 {% stylesheet %}
+  .announcement-bar__layout { position: relative; z-index: 1; }
+  .announcement-bar--social-desktop .announcement-bar__layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr); align-items: center; gap: var(--announcement-bar-gap, 16px); }
+  .announcement-bar__social, .announcement-bar__inner { min-width: 0; }
+  .announcement-bar--single .announcement-bar__control { display: none; }
+  .announcement-bar--slider.announcement-bar--single .announcement-bar__viewport { flex: 1 1 auto; width: 100%; max-width: 100%; }
+  .announcement-bar--slider .announcement-bar__slides > .text-block { --text-align-default: var(--announcement-alignment, center); text-align: var(--text-align-default); justify-content: var(--text-align-default); }
+  @media (max-width: 767.98px) {
+    .announcement-bar { padding-top: var(--announcement-padding-top-mobile, var(--announcement-bar-padding-top, 8px)); padding-bottom: var(--announcement-padding-bottom-mobile, var(--announcement-bar-padding-bottom, 8px)); }
+    .announcement-bar--social-desktop .announcement-bar__layout { grid-template-columns: minmax(0, 1fr); }
+    .announcement-bar__social { display: none; }
+    .announcement-bar--slider .announcement-bar__slides > .text-block { --text-align-default: var(--announcement-alignment-mobile, var(--announcement-alignment, center)); }
+  }
   .announcement-bar--slider .announcement-bar__viewport { transition: height var(--motion-duration-standard) var(--motion-ease-standard); }
   .announcement-bar--slider .announcement-bar__slides { transition: transform 420ms var(--motion-ease-standard); will-change: transform; }
   .announcement-bar--slider .announcement-bar__slides.announcement-bar--slider-reset { transition: none; }
@@ -118,13 +139,16 @@
   "max_blocks": 4,
   "blocks": [
     {
-      "type": "announcement-text"
-    },
-    {
       "type": "discount-code"
     },
     {
       "type": "announcement-countdown-timer"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "_announcement-social-links"
     }
   ],
   "settings": [
@@ -141,6 +165,52 @@
     {
       "type": "header",
       "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_links_desktop",
+      "label": "Show social links on desktop",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Position",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "alignment_mobile",
+      "label": "Position (mobile)",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
     },
     {
       "type": "select",
@@ -391,6 +461,34 @@
       "step": 1,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.customize_mobile_padding",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
     }
   ],
   "presets": [
@@ -398,6 +496,18 @@
       "name": "Announcement bar",
       "category": "t:general.header",
       "settings": {
+        "background_type": "none",
+        "overlay": false,
+        "gap": 16,
+        "color_scheme": "scheme-3",
+        "bottom_separator": false,
+        "padding_top": 10,
+        "padding_bottom": 10,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 8,
+        "padding_bottom_mobile": 8,
+        "alignment": "center",
+        "alignment_mobile": "center",
         "type": "slider",
         "speed": 1,
         "direction": "left",
@@ -406,45 +516,26 @@
         "navigation_behavior": "show_on_hover",
         "navigation_icon": "arrow",
         "font_size": "sm",
-        "background_type": "none",
-        "overlay": false,
-        "gap": 16,
-        "color_scheme": "scheme-3",
-        "bottom_separator": false,
-        "padding_top": 8,
+        "padding_left": 0,
         "padding_right": 0,
-        "padding_bottom": 8,
-        "padding_left": 0
+        "show_social_links_desktop": true
       },
       "blocks": [
         {
-          "type": "announcement-text",
+          "type": "_announcement-social-links",
+          "id": "announcement-social",
+          "static": true,
           "settings": {
-            "text": "Free shipping for all orders over $100.00",
-            "width": "fill"
+            "gap": 12
           }
         },
         {
-          "type": "discount-code",
+          "type": "text",
           "settings": {
-            "message": "<p>50% off - use code:</p>",
-            "discount_code": "BIG50",
-            "button_label": "Shop now",
-            "button_style": "tertiary",
-            "show_icon": false
-          }
-        },
-        {
-          "type": "announcement-countdown-timer",
-          "settings": {
-            "message": "<p>Hurry up! Sale ends in:</p>",
-            "style": "inline",
-            "type": "fixed_time",
-            "end_time": "2026-12-25 12:00",
-            "button_label": "Shop now",
-            "button_style": "tertiary",
-            "show_icon": false,
-            "color_type": "inherit"
+            "text": "<p>Free shipping worldwide on orders over $150 USD</p>",
+            "width": "fill",
+            "text_size": "sm",
+            "text_color": "#ffffff"
           }
         }
       ]

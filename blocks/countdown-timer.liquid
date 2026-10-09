@@ -12,22 +12,26 @@
 
 {% liquid
   assign countdown_style = block.settings.style | default: 'with_labels'
-  unless countdown_style == 'with_labels' or countdown_style == 'inline' or countdown_style == 'inline_superscript' or countdown_style == 'numbers_only'
+  assign countdown_style_allowed_values = 'with_labels|inline|inline_superscript|numbers_only' | split: '|'
+  unless countdown_style_allowed_values contains countdown_style
     assign countdown_style = 'with_labels'
   endunless
 
   assign countdown_inline_font = block.settings.font | default: 'accent'
-  unless countdown_inline_font == 'body' or countdown_inline_font == 'heading' or countdown_inline_font == 'accent'
+  assign countdown_inline_font_allowed_values = 'body|heading|accent' | split: '|'
+  unless countdown_inline_font_allowed_values contains countdown_inline_font
     assign countdown_inline_font = 'accent'
   endunless
 
   assign countdown_inline_font_size = block.settings.font_size | default: 'md'
-  unless countdown_inline_font_size == 'xs' or countdown_inline_font_size == 'sm' or countdown_inline_font_size == 'md' or countdown_inline_font_size == 'lg' or countdown_inline_font_size == 'xl' or countdown_inline_font_size == 'xxl'
+  assign countdown_inline_font_size_allowed_values = 'xs|sm|md|lg|xl|xxl' | split: '|'
+  unless countdown_inline_font_size_allowed_values contains countdown_inline_font_size
     assign countdown_inline_font_size = 'md'
   endunless
 
   assign countdown_inline_letter_spacing = block.settings.letter_spacing | default: 'normal'
-  unless countdown_inline_letter_spacing == 'normal' or countdown_inline_letter_spacing == 'relaxed' or countdown_inline_letter_spacing == 'loose' or countdown_inline_letter_spacing == 'extra_loose'
+  assign countdown_inline_letter_spacing_allowed_values = 'normal|relaxed|loose|extra_loose' | split: '|'
+  unless countdown_inline_letter_spacing_allowed_values contains countdown_inline_letter_spacing
     assign countdown_inline_letter_spacing = 'normal'
   endunless
 
@@ -179,7 +183,8 @@
     when 'heading_6'
       assign countdown_number_size = 'xs'
   endcase
-  unless countdown_number_size == 'display' or countdown_number_size == 'xl' or countdown_number_size == 'lg' or countdown_number_size == 'md' or countdown_number_size == 'sm' or countdown_number_size == 'xs' or countdown_number_size == 'custom'
+  assign countdown_number_size_allowed_values = 'display|xl|lg|md|sm|xs|custom' | split: '|'
+  unless countdown_number_size_allowed_values contains countdown_number_size
     assign countdown_number_size = 'md'
   endunless
   assign countdown_number_custom_size = block.settings.custom_number_size | default: 24 | plus: 0
@@ -231,7 +236,8 @@
     when 'medium'
       assign countdown_label_size = 'md'
   endcase
-  unless countdown_label_size == 'xs' or countdown_label_size == 'sm' or countdown_label_size == 'md' or countdown_label_size == 'lg' or countdown_label_size == 'xl' or countdown_label_size == 'xxl'
+  assign countdown_label_size_allowed_values = 'xs|sm|md|lg|xl|xxl' | split: '|'
+  unless countdown_label_size_allowed_values contains countdown_label_size
     assign countdown_label_size = 'sm'
   endunless
   assign countdown_label_font_size = 'var(--font-body-sm)'
@@ -264,7 +270,8 @@
   endif
 
   assign countdown_corner_radius = block.settings.corner_radius | default: 'square'
-  unless countdown_corner_radius == 'square' or countdown_corner_radius == 'slightly_rounded' or countdown_corner_radius == 'rounded' or countdown_corner_radius == 'pill'
+  assign countdown_corner_radius_allowed_values = 'square|slightly_rounded|rounded|pill' | split: '|'
+  unless countdown_corner_radius_allowed_values contains countdown_corner_radius
     assign countdown_corner_radius = 'square'
   endunless
   assign countdown_radius = 'var(--radius-square)'
