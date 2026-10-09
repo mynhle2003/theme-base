@@ -65,17 +65,36 @@ const buildOptions = (carousel, scope) => {
     carousel.querySelector('[data-product-collection-pagination]') ||
     carousel.querySelector('[data-swiper-pagination]');
   const paginationType = getPaginationType(pagination?.dataset.paginationType || carousel.dataset.swiperPaginationType);
+  const blogAutoHeight = Boolean(carousel.closest('[data-blog-posts]')) && getMobileSlidesPerView(carousel) === 1;
   const options = {
+    autoHeight: blogAutoHeight,
     slidesPerView: getMobileSlidesPerView(carousel),
     spaceBetween: toNumber(carousel.dataset.swiperGapMobile, 0),
     breakpoints: {
       [desktopBreakpoint]: {
+        autoHeight: false,
         slidesPerView: getSlidesPerView(carousel.dataset.swiperColumnsDesktop),
         spaceBetween: toNumber(carousel.dataset.swiperGapDesktop, 0),
       },
     },
     controls: getControls(carousel, scope),
   };
+
+  if (blogAutoHeight) {
+    options.on = {
+      breakpoint(swiper, parameters) {
+        swiper.el.classList.toggle('swiper-autoheight', Boolean(parameters.autoHeight));
+        if (!parameters.autoHeight) {
+          swiper.wrapperEl.style.height = '';
+        } else {
+          // Measure after the mobile CSS and active-slide state have settled.
+          window.requestAnimationFrame(() => {
+            if (!swiper.destroyed && swiper.params.autoHeight) swiper.updateAutoHeight(0);
+          });
+        }
+      },
+    };
+  }
 
   if (pagination) {
     options.modules = [Pagination];

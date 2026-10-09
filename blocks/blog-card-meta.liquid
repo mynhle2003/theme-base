@@ -120,7 +120,7 @@
   --blog-card-meta-icon-size: {{ blog_card_meta_icon_size }}px;
   --blog-card-meta-icon-gap: {{ blog_card_meta_icon_gap }}px;
   {% if blog_card_meta_padding_top != 0 %}--blog-card-meta-padding-top: {{ blog_card_meta_padding_top }}px;{% endif %}
-  {% if blog_card_meta_padding_bottom != 0 %}--blog-card-meta-padding-bottom: {{ blog_card_meta_padding_bottom }}px;{% endif %}
+  {% if blog_card_meta_padding_bottom != 4 %}--blog-card-meta-padding-bottom: {{ blog_card_meta_padding_bottom }}px;{% endif %}
   {% if blog_card_meta_color != blank %}--blog-card-meta-color: {{ blog_card_meta_color | escape }};{% endif %}
   {% if block.settings.customize_mobile_padding %}
     {% if blog_card_meta_padding_top_mobile != blog_card_meta_padding_top %}--blog-card-meta-padding-top-mobile: {{ blog_card_meta_padding_top_mobile }}px;{% endif %}

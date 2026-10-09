@@ -80,6 +80,15 @@
   }
 
   @media (max-width: 767.98px) {
+    /* Essen: natural article height and compact text action from the mobile frame. */
+    .blog-posts .swiper-autoheight > .swiper-wrapper { align-items: flex-start; }
+    .blog-posts .blog-card-tag--style-outline .blog-card-tag__label { padding-block: 3px; }
+    .blog-posts__actions, .blog-posts__actions .collection-list-view-all { display: flex; }
+    .blog-posts .collection-list-view-all__button--mobile.btn-tertiary {
+      min-height: 0;
+      line-height: 1.5;
+      padding-bottom: 2px;
+    }
     .blog-posts {
       padding-top: var(--blog-posts-padding-top-mobile, var(--blog-posts-padding-top, 0px));
       padding-bottom: var(--blog-posts-padding-bottom-mobile, var(--blog-posts-padding-bottom, 0px));
