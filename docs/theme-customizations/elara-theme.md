@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"8f3ac3c9345da36c73b2e1fea3ed4e6303e47d0d"} -->
+<!-- theme-base-sync-state: {"sha":"729be6cfc3a31211b3107df8b9a6206860e406c9"} -->
 # Customization record: elara-theme
 
 Theme branch: `theme/elara-theme`
@@ -115,6 +115,25 @@ This table records current implementation differences from personal `main`: Liqu
 | `blocks/slide.liquid` | Appearance supports scheme plus custom background color/image. | Color group retains Inherit/Color scheme; removed custom background settings and their Liquid/CSS consumers. | User requested the same simplified Color contract for Slide and Slide split on 2026-10-08. | Preserve scheme inheritance; review upstream changes to background options before merging. |
 | `snippets/testimonial-split-arrow.liquid` | Generic composition; no private split contract. | Original Figma shaft/tip exports composed in a 24px directional wrapper, preserving dimensions; accessible controls have 44px effective targets. | User requested Figma split rebuild on 2026-10-08. | Preserve private slot IDs, original inline SVG snippets and fixed layout; review overlapping upstream changes before merging. |
 | `blocks/testimonial-item.liquid` | Legacy reusable testimonial item. | Deleted because no template instances use it; removed explicit registrations from Carousel and Gallery header group. | User requested deleting the unused block. | Keep it deleted and migrate any upstream usage to the owning approved block before merging. |
+| `assets/cart-drawer.css` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `assets/section-collection.css` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/_collection-sort.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/_collection-toolbar.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/_header-menu.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/collection-tab.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/countdown-timer.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/gallery-strip-feature-item.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/gallery-strip-item.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/localization.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/product-list-banner.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/tab-layout.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/tabs-view-all-button.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/view-all-button.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `sections/blog-posts.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `sections/cart-drawer.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `sections/featured-blog-posts.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `sections/featured-collection.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `sections/hero.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
 
 ## Figma catalog and card composition — 2026-10-07
 
@@ -250,6 +269,67 @@ Media verification: restarted the existing development preview after stale CLI u
 - Keep saved schemas/presets/compositions except new setting defaults, additive approved schema compatibility, and migration/removal of position_vertical explicitly approved by the owner. Existing password title remains for an empty saved block composition. Existing marquee direction/alignment values are migrated, including legacy mobile space-between support.
 
 ## Base sync history
+
+### 2026-10-09 — Update from personal main
+
+- Previous main commit: `8f3ac3c9345da36c73b2e1fea3ed4e6303e47d0d`
+- Updated through main commit: `729be6cfc3a31211b3107df8b9a6206860e406c9`
+- Main commits included: 1
+- Included main commits:
+  - `729be6cfc3a31211b3107df8b9a6206860e406c9` — chore(base): update base with 23 upstream commits through 0cf058f7
+- Change summary:
+
+```text
+assets/block-animations.js                     | 169 +++++++++
+ assets/hero.js                                 |   2 +-
+ assets/product-list-promos.js                  |  89 +++++
+ blocks/_announcement-social-links.liquid       |  16 +-
+ blocks/_comparison-table-features.liquid       |   9 +-
+ blocks/_search-products.liquid                 |   4 +-
+ blocks/banner.liquid                           |  88 ++---
+ blocks/parallax-item.liquid                    |   4 +-
+ blocks/promo-card.liquid                       | 455 +++++++++++++++++++++++++
+ blocks/tabs-view-all-button.liquid             |  12 +-
+ blocks/timeline-list.liquid                    |  27 +-
+ blocks/timeline-slide.liquid                   |   4 +-
+ blocks/view-all-button.liquid                  |   9 +-
+ docs/content-creation-workflow.md              | 197 +++++++++++
+ docs/elara-blocks-build-plan.md                |  44 +++
+ docs/phase-2-theme-settings.md                 |   4 +
+ docs/product-card-compact-build-plan.md        |  31 ++
+ docs/promo-card.md                             |  20 ++
+ locales/en.default.schema.json                 |   8 +-
+ sections/blog-posts.liquid                     |   3 +-
+ sections/collection-tabs.liquid                |   3 +-
+ sections/email-signup-dual-image.liquid        |   4 +-
+ sections/email-signup-single-image.liquid      |   2 +-
+ sections/featured-blog-posts.liquid            |   3 +-
+ sections/featured-collection-banner.liquid     |   4 +-
+ sections/featured-collection-horizontal.liquid |   3 +-
+ sections/featured-collection.liquid            |   3 +-
+ sections/hotspot-gallery.liquid                |   7 +-
+ sections/image-comparison-split-custom.liquid  |   4 +-
+ sections/image-text-card-grid.liquid           |   5 +-
+ sections/parallax.liquid                       |  24 +-
+ sections/testimonials-background-custom.liquid |  18 +-
+ sections/testimonials-horizontal-custom.liquid |   7 +-
+ sections/timeline.liquid                       |  22 +-
+ snippets/comparison-table-column-shell.liquid  |   6 +
+ snippets/font-faces.liquid                     |  30 ++
+ snippets/gallery-strip-item-styles.liquid      |  24 ++
+ snippets/hero-styles.liquid                    | 276 +++++++++++++++
+ snippets/localization-styles.liquid            | 251 ++++++++++++++
+ snippets/product-list-promo-items.liquid       |  24 ++
+ snippets/product-list-promo-styles.liquid      |   7 +
+ snippets/search-filters.liquid                 | 101 ------
+ snippets/tab-layout-styles.liquid              | 146 ++++++++
+ templates/collection.json                      |   3 +-
+ templates/index.json                           |  13 +-
+ templates/index.spinel-sync.json               |   9 +-
+ templates/page.about-us.json                   |   3 +-
+ 47 files changed, 1932 insertions(+), 265 deletions(-)
+```
+
 
 ### 2026-10-07 — Update from personal main
 
@@ -976,3 +1056,63 @@ User requested returning Localization from Announcement bar to Header as on pers
 Validation: changed Liquid schemas and Header group JSON parse successfully; saved Localization settings match the previous announcement instance and block order matches `main`. Theme Check passes across 353 files with zero errors and 41 warnings. Customization coverage passes for 91 files; `git diff --check` passes. Live storefront/Theme Editor rendering was not verified.
 
 Localization preset correction — 2026-10-09: user requested the Header Localization configuration exactly as on personal `main`. Saved Header group Localization now matches the main block: click trigger, country selector/flag enabled, country name and desktop language selector disabled, Medium font size. Removed the saved announcement-specific currency-with-name override; the optional custom setting remains available with default false. Header preset Localization entry already matches main. This supersedes the settings-preservation note above.
+
+## Reviewed base sync decisions — 2026-10-09
+
+Owner instruction: implement updates for both themes, preserve presets and current layout for used sections, add new options in main order (ABC/ACB), and retain existing configured values. Source: personal main `729be6cfc3a31211b3107df8b9a6206860e406c9`; previous theme HEAD: `c987610b2ff78ab8df5ec17070969c6cca2c6f59`.
+
+The normal update command stopped on overlapping implementation paths. This reviewed sync uses the same schema/default/composition/history and release checks, with explicit compatibility resolutions. Main implementation changes that could change layout or invalidate legacy controls are held on the paths below. The matching theme schema, allowed children, retained settings and saved values remain compatible with the theme implementation. New optional mobile-hide controls are wired in both View all blocks without importing main's different overflow visibility rules.
+
+Held implementation/layout paths:
+- `assets/critical.css`
+- `blocks/_collection-sort.liquid`
+- `blocks/_collection-toolbar.liquid`
+- `blocks/_header-menu.liquid`
+- `blocks/_marquee-group.liquid`
+- `blocks/collection-tab.liquid`
+- `blocks/countdown-timer.liquid`
+- `blocks/faq_accordion.liquid`
+- `blocks/faq_item.liquid`
+- `blocks/gallery-strip-feature-item.liquid`
+- `blocks/gallery-strip-item.liquid`
+- `blocks/localization.liquid`
+- `blocks/marquee.liquid`
+- `blocks/product-card-compact.liquid`
+- `blocks/product-list-banner.liquid`
+- `blocks/product-list.liquid`
+- `blocks/slideshow-slide.liquid`
+- `blocks/tab-layout.liquid`
+- `blocks/tabs-view-all-button.liquid`
+- `blocks/testimonial-item.liquid`
+- `blocks/view-all-button.liquid`
+- `layout/theme.liquid`
+- `sections/blog-posts.liquid`
+- `sections/cart-drawer.liquid`
+- `sections/faq-image-accordion.liquid`
+- `sections/featured-blog-posts.liquid`
+- `sections/featured-collection.liquid`
+- `sections/hero.liquid`
+- `sections/text-marquee-custom.liquid`
+- `snippets/css-variables.liquid`
+- `snippets/icon.liquid`
+- `snippets/image-ratio-value.liquid`
+- `snippets/product-collection-grid.liquid`
+- `assets/cart-drawer.css`
+- `assets/component-overlay.css`
+- `assets/section-collection.css`
+
+New settings and base defaults:
+- `blocks/tabs-view-all-button.liquid` / `self` / `hide_view_all_mobile`: false
+- `blocks/view-all-button.liquid` / `self` / `hide_view_all_mobile`: false
+
+Settings retained because removal was not individually approved:
+- `sections/text-marquee-custom.liquid` / `section` / `position`
+- `sections/text-marquee-custom.liquid` / `section` / `height`
+
+Reviewed schema differences: existing definitions/allow-lists are retained together with their compatible theme implementation:
+- blocks/collection-tab.liquid: danh sách block được phép khác main (theme: product-card; main: promo-card)
+- blocks/marquee.liquid: danh sách block được phép khác main (theme: _marquee-button, _marquee-countdown-timer, _marquee-coupon-code, _marquee-divider, _marquee-group, _marquee-heading, _marquee-icon, _marquee-image, _marquee-text; main: _marquee-button, _marquee-countdown-timer, _marquee-coupon-code, _marquee-divider, _marquee-group, _marquee-heading, _marquee-icon, _marquee-image, _marquee-text, marquee-item)
+- blocks/product-list.liquid: danh sách block được phép khác main (theme: product-card; main: promo-card)
+- sections/faq-image-accordion.liquid: danh sách block được phép khác main (theme: faq_accordion, group, images; main: faq_accordion, group)
+
+Validation before release: saved template/group/settings values and block/section order match the previous theme except declared new defaults; protected presets and existing setting definitions are unchanged; changed JavaScript parses. Local browser fixture uses actual pre/post CSS and passes 16 default-layout comparisons at 1440/1024/768/390px, plus optional mobile hide/width controls. Shared layout CSS and theme token consumers are held. Live Shopify storefront and Theme Editor rendering were not verified in this Git sync; no store upload or publication. Full Theme Check and customization coverage are required before commit. Tests and generated evidence remain local and are excluded from delivery.
