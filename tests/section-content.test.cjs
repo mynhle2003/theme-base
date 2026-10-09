@@ -93,7 +93,9 @@ test('list sections omit absent slots and keep existing classes and resource hoo
     assert.doesNotMatch(html, /class="section-content-slot/);
     assert.match(html, /section-content-surface/);
     assert.match(html, /section-list-layout/);
-    const filled = render(`sections/${type}.liquid`, { slots: { header: '<div class="block-header"><h2>Title</h2></div>', 'view-all-button': '<a href="/news">View all</a>' } });
+    const resource = { url: '/news', articles_count: 100, products_count: 100 };
+    const child = { 'featured-collection': 'product-list', 'blog-posts': 'blog-list', 'featured-blog-posts': 'blog-grid' }[type];
+    const filled = render(`sections/${type}.liquid`, { section: { settings: { blog: resource }, blocks: [{ type: child, settings: { collection: resource } }] }, slots: { header: '<div class="block-header"><h2>Title</h2></div>', 'view-all-button': '<a href="/news">View all</a>' } });
     assert.match(filled, new RegExp(`${type}__header section-list-layout__header`));
     assert.match(filled, new RegExp(`${type}__actions section-list-layout__actions`));
     if (type === 'featured-collection') assert.match(filled, /data-featured-collection-actions/);

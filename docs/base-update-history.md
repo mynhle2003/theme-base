@@ -1,6 +1,121 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"bedb4bd5745825c137bba98d56736d591fcb0042"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"0cf058f77772357ca87fc95b705c979e04d44ad1"} -->
 
 # Base update history
+
+## 2026-10-09 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `bedb4bd5745825c137bba98d56736d591fcb0042`
+- Updated through team commit: `0cf058f77772357ca87fc95b705c979e04d44ad1`
+- Team commits included: 23
+- Source changes:
+
+```text
+assets/block-animations.js                    | 169 +++++
+ assets/cart-drawer.css                        |   1 +
+ assets/component-overlay.css                  |   2 -
+ assets/critical.css                           |  15 +-
+ assets/hero.js                                |   2 +-
+ assets/product-list-promos.js                 |  89 +++
+ assets/section-collection.css                 |   5 +
+ blocks/_collection-sort.liquid                |   7 -
+ blocks/_collection-toolbar.liquid             |   1 +
+ blocks/_comparison-table-features.liquid      |   9 +-
+ blocks/_header-menu.liquid                    |  28 +-
+ blocks/_marquee-button.liquid                 | 162 +++++
+ blocks/_marquee-countdown-timer.liquid        | 990 ++++++++++++++++++++++++++
+ blocks/_marquee-coupon-code.liquid            | 134 ++++
+ blocks/_marquee-divider.liquid                | 149 ++++
+ blocks/_marquee-group.liquid                  | 307 ++++++++
+ blocks/_marquee-heading.liquid                | 231 ++++++
+ blocks/_marquee-icon.liquid                   | 477 +++++++++++++
+ blocks/_marquee-image.liquid                  | 171 +++++
+ blocks/_marquee-text.liquid                   | 140 ++++
+ blocks/_search-products.liquid                |   4 +-
+ blocks/collection-tab.liquid                  |  19 +-
+ blocks/countdown-timer.liquid                 |   3 +-
+ blocks/faq_accordion.liquid                   | 788 ++++++++++++++++++--
+ blocks/faq_item.liquid                        | 234 +++++-
+ blocks/gallery-strip-feature-item.liquid      |   1 +
+ blocks/gallery-strip-item.liquid              |  25 +-
+ blocks/localization.liquid                    | 252 +------
+ blocks/marquee.liquid                         | 653 ++++++++++++-----
+ blocks/product-card-compact.liquid            | 538 ++++++++++++++
+ blocks/product-list-banner.liquid             |   2 +-
+ blocks/product-list.liquid                    |  16 +-
+ blocks/promo-card.liquid                      | 455 ++++++++++++
+ blocks/slideshow-slide.liquid                 |   5 +-
+ blocks/tab-layout.liquid                      | 154 +---
+ blocks/tabs-view-all-button.liquid            |  40 +-
+ blocks/testimonial-item.liquid                |   7 -
+ blocks/view-all-button.liquid                 |  12 +-
+ docs/content-creation-workflow.md             | 197 +++++
+ docs/elara-blocks-build-plan.md               |  44 ++
+ docs/phase-2-theme-settings.md                |   4 +
+ docs/product-card-compact-build-plan.md       |  31 +
+ docs/promo-card.md                            |  20 +
+ layout/theme.liquid                           |  26 +-
+ locales/en.default.json                       |   4 +
+ locales/en.default.schema.json                |   1 +
+ sections/blog-posts.liquid                    |  16 +-
+ sections/cart-drawer.liquid                   |   5 +-
+ sections/faq-accordion.liquid                 |  10 +-
+ sections/faq-image-accordion.liquid           |  10 +-
+ sections/featured-blog-posts.liquid           |  20 +-
+ sections/featured-collection.liquid           |  18 +-
+ sections/hero.liquid                          | 277 +------
+ sections/overlay-group.json                   |   2 +-
+ sections/scrolling-text-star-separator.liquid | 161 -----
+ sections/text-marquee-custom.liquid           | 351 ++++++---
+ snippets/comparison-table-column-shell.liquid |   6 +
+ snippets/css-variables.liquid                 |  25 +-
+ snippets/font-faces.liquid                    |  30 +
+ snippets/gallery-strip-item-styles.liquid     |  24 +
+ snippets/hero-styles.liquid                   | 276 +++++++
+ snippets/icon.liquid                          |   3 +-
+ snippets/image-ratio-value.liquid             |  14 +
+ snippets/localization-styles.liquid           | 251 +++++++
+ snippets/marquee-letter-spacing.liquid        |  23 +
+ snippets/product-collection-grid.liquid       |   7 +-
+ snippets/product-list-promo-items.liquid      |  24 +
+ snippets/product-list-promo-styles.liquid     |   7 +
+ snippets/search-filters.liquid                | 101 ---
+ snippets/tab-layout-styles.liquid             | 146 ++++
+ templates/search.json                         |   9 +
+ tests/collection-tab-promo.test.cjs           |  38 +
+ tests/product-card-animation.test.cjs         |  92 +++
+ tests/product-list-promo.test.cjs             |  83 +++
+ tests/section-content.test.cjs                |   4 +-
+ tests/view-all-blog.test.cjs                  | 124 +++-
+ 76 files changed, 7323 insertions(+), 1458 deletions(-)
+```
+
+- Included team commits:
+  - `ff37c0a27a43c73cb2b1a2f24d777e623f96c99f` — Update from Shopify for theme spinel-theme/codex/spinel-chieutt-dev
+  - `1f7a3119f1f54c6413e666ce97570fc712993496` — Merge remote-tracking branch 'origin/codex/spinel-chieutt-dev' into codex/spinel-chieutt-dev
+  - `88b6ab6e0e74153b6ff77e0e4b325799b702c454` — Merge theme-base/dev announcement and performance updates
+  - `f8421fb50ceb54294bba69868219e7508b7d9180` — fix: align typography labels and add custom collection title size
+  - `157895a4aef42eace5ae52857de4e2e8c56319e4` — fix: normalize collection heading size options and saved values
+  - `5b27d71dcd9e71d0eea54de236ce9a800199fb1a` — Merge remote-tracking branch 'origin/codex/spinel-chieutt-dev' into HEAD
+  - `439c891316512858313b135a938d2a80083f1292` — docs: add content creation workflow and product lifestyle guidance
+  - `4bec722122e0508eb7f89040691432700b73b503` — docs: require a dedicated blog for each template
+  - `196d8156bc9fc26de10b28802b674ec7e6d0e45e` — docs: require four product images with lifestyle and alternate views
+  - `25f7d5e686c30428fbecaed5df21970b96863824` — Fix mobile navigation drawer responsive dimensions
+  - `cd01144b124a83399665f51657d5f41c6c531c8b` — Merge remote-tracking branch 'origin/codex/spinel-chieutt-dev' into codex/spinel-chieutt-dev
+  - `252788b0f5d8177eec704fccd56ee513516aa70c` — Fix responsive drawer padding and corner behavior
+  - `f409d8bab385c5140d5e455353c33ada705b75b8` — Show resource View all actions only when items exceed display limits
+  - `04d2af5cb9f0d7b0df332f316b4b155a8dd0aa39` — Merge theme-base/dev while preserving resource action visibility
+  - `8e0d35175be0ad15d8f844e97772bbfab96c6489` — Add Promo cards with shared product entrance animation
+  - `b0b1b65b35f18f4061a098f6bb2549f525ecc93b` — Add mobile visibility controls to View all blocks
+  - `46050ad818ed85498bc66890905b29f7dbe5c4ac` — feat(theme): rebuild marquee and accordion blocks from Elara
+  - `d38b834a178aa66fdca5484526c53d1dc016649c` — chore(theme): remove local block regression tests from tracking
+  - `560fec046f0f9d6ce67339d2a16312f360c66d5b` — fix(accordion): use Text blocks for preset answers and remove legacy controls
+  - `3a2f0336c993c12ddb838968c5f181b5aee6e842` — fix(theme): optimize assets and correct editor group order
+  - `e21ea484770e7c91e9b8fd8dc3fa648070ee8ee0` — feat(product-card): add optimized compact product block
+  - `74f3095fe0fe0515e8266b0f9c371a70fb59da8d` — Revert "feat(product-card): add optimized compact product block"
+  - `0cf058f77772357ca87fc95b705c979e04d44ad1` — feat(product-card): add compact block and document its contract
+
 
 ## 2026-10-07 — Update from upstream/dev
 
