@@ -90,9 +90,12 @@
 {% assign icon_style = icon_style | strip | replace: '\n', ' ' %}
 
 <div
-  class="{{ icon_class }}"
+  class="{{ icon_class }} block-animation"
   style="{{ icon_style }}"
-  {{ block.shopify_attributes }}
+  {% if block.settings.animation_type != blank and block.settings.animation_type != 'none' %}
+      {% render 'block-animation-attributes', block: block %}
+    {% endif %}
+    {{ block.shopify_attributes }}
 >
   {% render 'icon',
     icon: icon_name,
@@ -382,6 +385,52 @@
     },
     {
       "type": "header",
+      "content": "t:general.animation"
+    },
+    {
+      "type": "select",
+      "id": "animation_type",
+      "label": "t:labels.type",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.block_animation.none"
+        },
+        {
+          "value": "fade",
+          "label": "t:options.block_animation.fade"
+        },
+        {
+          "value": "scale",
+          "label": "t:options.block_animation.scale"
+        },
+        {
+          "value": "slide-left",
+          "label": "t:options.block_animation.slide_left"
+        },
+        {
+          "value": "slide-right",
+          "label": "t:options.block_animation.slide_right"
+        },
+        {
+          "value": "slide-bottom",
+          "label": "t:options.block_animation.slide_bottom"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "animation_delay",
+      "label": "t:labels.animation_delay",
+      "min": 0,
+      "max": 2000,
+      "step": 50,
+      "unit": "ms",
+      "default": 0
+    },
+    {
+      "type": "header",
       "content": "t:general.padding"
     },
     {
@@ -486,7 +535,9 @@
         "icon_width": 24,
         "icon_padding": 0,
         "custom_mobile": false,
-        "customize_mobile_padding": false
+        "customize_mobile_padding": false,
+        "animation_type": "slide-bottom",
+        "animation_delay": 50
       }
     }
   ]

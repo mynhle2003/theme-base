@@ -1236,6 +1236,65 @@ p:empty {
   animation-fill-mode: backwards;
 }
 
+/* Explicit leaf effects own the entrance instead of the legacy parent effect. */
+.motion-block:has([data-block-animation]) {
+  animation: none;
+}
+
+.block-animation.reveal-pending {
+  opacity: calc(1 - var(--motion-block-animations, 1));
+}
+
+[data-block-animation='rotate-words'] .reveal-word {
+  display: inline-block;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% + 7px), 0 calc(100% + 7px));
+}
+
+[data-block-animation='rotate-words'] .reveal-word__text {
+  display: inline-block;
+}
+
+@keyframes block-reveal-rotate-words {
+  from { transform: translateY(110%) rotate(10deg); }
+  to { transform: none; }
+}
+
+[data-block-animation='rotate-words'].reveal-words-ready .reveal-word {
+  opacity: 0;
+  transition: opacity 0s ease var(--block-animation-delay, 0ms);
+}
+
+[data-block-animation='rotate-words'].reveal-words-ready .reveal-word__text {
+  transform: translateY(100%);
+}
+
+[data-block-animation='rotate-words'].reveal-words-animated .reveal-word {
+  opacity: 1;
+}
+
+[data-block-animation='rotate-words'].reveal-words-animated .reveal-word__text {
+  animation: block-reveal-rotate-words 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: var(--block-animation-delay, 0ms);
+}
+
+[data-block-animation='rotate-words'] a :is(.reveal-word, .reveal-word__text) {
+  text-decoration: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .block-animation.reveal-pending {
+    opacity: 1;
+  }
+  [data-block-animation='rotate-words'].reveal-words-ready .reveal-word {
+    opacity: 1;
+    transition: none;
+  }
+  [data-block-animation='rotate-words'].reveal-words-ready .reveal-word__text {
+    transform: none;
+    animation: none;
+  }
+}
+
 .btn,
 button.btn,
 input.btn,
