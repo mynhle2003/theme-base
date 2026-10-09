@@ -294,6 +294,10 @@ async function acquireLock(store) {
     log(`Dọn process Shopify CLI cũ thuộc preview này: PID ${owner.childPid}`);
     // The command match above ties this process to this repo/store/port.
     await killProcessGroup(owner.childPid);
+  } else if (owner.childPid && !processAlive(owner.childPid) &&
+      owner.port && portBelongsToSupervisor(owner.port, owner.childPid)) {
+    log(`Dọn nhóm process preview còn giữ cổng ${owner.port}: ${owner.childPid}`);
+    await killProcessGroup(owner.childPid, true);
   } else if (owner.childPid && processAlive(owner.childPid)) {
     throw new Error(`PID ${owner.childPid} còn sống nhưng không khớp lệnh preview; giữ nguyên để tránh dừng nhầm.`);
   }
@@ -412,7 +416,7 @@ async function run(store) {
   process.on("SIGTERM", requestStop);
   process.on("SIGINT", requestStop);
   const save = (childPid, port) => {
-    owner = { ...owner, childPid, port };
+    owner = { ...owner, childPid, port, editorUrl: null };
     writeOwner(owner);
   };
   const setEditorUrl = (editorUrl) => {
@@ -603,6 +607,8 @@ async function start(store) {
   let storePassword = process.env.SHOPIFY_FLAG_STORE_PASSWORD || null;
   let supervisorPid = null;
   let interrupted = false;
+  let recoveryBackoff = 2000;
+  const branch = currentBranch();
   const interrupt = () => {
     interrupted = true;
     if (supervisorPid && processAlive(supervisorPid)) {
@@ -614,8 +620,11 @@ async function start(store) {
     }
   };
   process.on("SIGINT", interrupt);
+  process.on("SIGTERM", interrupt);
   try {
     for (;;) {
+      if (interrupted) return;
+      assertBranch(branch);
       saveLastError(null);
       const logOffset = fs.existsSync(LOG) ? fs.statSync(LOG).size : 0;
       const follower = createLogFollower(logOffset);
@@ -627,11 +636,14 @@ async function start(store) {
         stdio: ["ignore", fd, fd],
       });
       fs.closeSync(fd);
+      let spawnError = null;
+      child.on("error", (error) => { spawnError = error; });
       child.unref();
       supervisorPid = child.pid;
       if (interrupted) interrupt();
       const startedAt = Date.now();
       let lockSeen = false;
+      let ready = false;
       let shownError = null;
       log(`Đang chờ Shopify CLI kết nối ${store}; hoàn tất đăng nhập trong trình duyệt nếu được yêu cầu.`);
 
@@ -646,20 +658,16 @@ async function start(store) {
           follower.flush();
           return;
         }
+        if (spawnError) throw new Error(`Không chạy được supervisor: ${spawnError.message}`);
         const owner = readOwner();
         if (owner?.pid === child.pid) {
           lockSeen = true;
-          if (owner.editorUrl && owner.port) {
+          if (!ready && owner.editorUrl && owner.port) {
+            ready = true;
             log(`Preview: http://127.0.0.1:${owner.port}/`);
             log(`Theme Editor: ${owner.editorUrl}`);
             log(`Supervisor PID ${child.pid}; branch ${owner.branch}; store ${store}.`);
             log("Đang theo dõi thay đổi file và hiển thị log Shopify CLI. Nhấn Ctrl+C để dừng preview.");
-            while (processAlive(child.pid)) {
-              follower.poll();
-              await sleep(250);
-            }
-            follower.flush();
-            return;
           }
         }
         const latestError = readLastError()?.message;
@@ -674,7 +682,23 @@ async function start(store) {
             storePassword = await promptStorePassword();
             break;
           }
-          throw new Error(message);
+          // A clean exit means stop, branch change, or a non-retryable CLI error.
+          // Only unexpected supervisor exits are recovered by the foreground launcher.
+          if (child.exitCode === 0) {
+            if (!ready && latestError) throw new Error(message);
+            return;
+          }
+          assertBranch(branch);
+          if (owner && owner.pid !== child.pid && processAlive(owner.pid)) {
+            throw new Error("Một phiên preview khác đang giữ lock; không tự khởi động chồng phiên.");
+          }
+          if (Date.now() - startedAt >= 60000) recoveryBackoff = 2000;
+          log(`Supervisor thoát bất thường (${child.signalCode || child.exitCode || "mất process"}); tự khởi động lại sau ${recoveryBackoff / 1000} giây.`);
+          const retryAt = Date.now() + recoveryBackoff;
+          while (!interrupted && Date.now() < retryAt) await sleep(250);
+          if (interrupted) return;
+          recoveryBackoff = Math.min(recoveryBackoff * 2, 60000);
+          break;
         }
         if (!lockSeen && Date.now() - startedAt >= 20000) {
           interrupt();
@@ -685,6 +709,7 @@ async function start(store) {
     }
   } finally {
     process.off("SIGINT", interrupt);
+    process.off("SIGTERM", interrupt);
   }
 }
 

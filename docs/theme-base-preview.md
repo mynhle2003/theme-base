@@ -25,6 +25,11 @@ Nếu gõ nhầm `lauyouthub-template-v2`, lệnh tự chuẩn hóa thành store
 Shopify CLI `theme dev` theo dõi checkout hiện tại và tự đồng bộ các thay đổi file
 lên development theme của store. Supervisor tự khởi động lại CLI sau khi tiến trình
 bị thoát hoặc cổng bị mất; thời gian chờ tăng dần tối đa 60 giây khi lỗi lặp lại.
+Khi terminal `preview start` còn mở, launcher cũng tự khởi động lại supervisor nếu
+supervisor thoát bất thường. Phiên cũ được dọn theo process/store/cổng đã ghi trong
+lock; process con còn giữ cổng sau khi CLI chính chết cũng được dọn trước khi chạy lại.
+Dừng bằng `Ctrl+C`, `preview stop`, đổi nhánh hoặc lỗi quyền truy cập không kích hoạt
+phục hồi. Nếu đóng terminal và cả launcher lẫn supervisor đã dừng, chạy `start` lại.
 `preview start` hoạt động như `shopify theme dev`: chờ Shopify CLI đăng nhập và
 kết nối xong mới in link Preview và Theme Editor, sau đó giữ terminal mở để hiện
 log liên tục và theo dõi thay đổi file. Nhấn `Ctrl+C` để dừng phiên preview. Nếu
