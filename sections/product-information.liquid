@@ -76,15 +76,9 @@
 {% endcapture %}
 {% assign product_information_style = product_information_style | strip %}
 
-{% if section.index > 3 and request.design_mode == false %}
-  {% render 'deferred-stylesheet', filename: 'product-information.css' %}
-  {% render 'deferred-stylesheet', filename: 'product-information-extras.css' %}
-  {% render 'deferred-stylesheet', filename: 'product-media.css' %}
-{% else %}
-  {{ 'product-information.css' | asset_url | stylesheet_tag }}
-  {{ 'product-information-extras.css' | asset_url | stylesheet_tag }}
-  {{ 'product-media.css' | asset_url | stylesheet_tag }}
-{% endif %}
+{{ 'product-information.css' | asset_url | stylesheet_tag }}
+{{ 'product-information-extras.css' | asset_url | stylesheet_tag }}
+{{ 'product-media.css' | asset_url | stylesheet_tag }}
 <div
   class="section-spacing product-information color-scheme section-color-scope {{ product_information_scheme }}"
   data-product-information
