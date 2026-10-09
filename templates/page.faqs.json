@@ -1,7 +1,47 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "header": {
       "type": "rich-text",
+      "blocks": {
+        "eyebrow": {
+          "type": "eyebrow",
+          "static": true,
+          "settings": {
+            "text": "<p>[ FAQS ]</p>",
+            "animation_type": "slide-bottom",
+            "animation_delay": 50
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "static": true,
+          "settings": {
+            "text": "<p>Frequently asked questions</p>",
+            "heading_size": "xl",
+            "html_tag": "h1",
+            "animation_type": "rotate-words",
+            "animation_delay": 50
+          }
+        },
+        "text": {
+          "type": "text",
+          "static": true,
+          "settings": {
+            "text": "",
+            "animation_type": "slide-bottom",
+            "animation_delay": 100
+          }
+        }
+      },
       "settings": {
         "section_width": "page_width",
         "alignment": "center",
@@ -11,72 +51,30 @@
         "customize_mobile_padding": true,
         "padding_top_mobile": 70,
         "padding_bottom_mobile": 30
-      },
-      "blocks": {
-        "eyebrow": {
-          "type": "eyebrow",
-          "settings": {
-            "text": "<p>[ FAQS ]</p>",
-            "animation_type": "slide-bottom",
-            "animation_delay": 50
-          },
-          "static": true
-        },
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "text": "<p>Frequently asked questions</p>",
-            "html_tag": "h1",
-            "heading_size": "xl",
-            "animation_type": "rotate-words",
-            "animation_delay": 50
-          },
-          "static": true
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "",
-            "animation_type": "slide-bottom",
-            "animation_delay": 100
-          },
-          "static": true
-        }
-      },
-      "block_order": []
+      }
     },
     "faq": {
       "type": "faq-accordion",
-      "settings": {
-        "section_width": "page_width",
-        "layout": "vertical",
-        "alignment": "center",
-        "gap_desktop": 40,
-        "gap_mobile": 30,
-        "color_scheme": "scheme-1",
-        "padding_top": 0,
-        "padding_bottom": 100
-      },
       "blocks": {
         "category_1": {
           "type": "group",
+          "name": "Jewelry & Materials",
           "settings": {
             "direction": "vertical",
             "alignment": "left",
-            "width": "fill",
             "gap_desktop": 24,
             "gap_mobile": 24,
+            "width": "fill",
             "limit_width": true,
             "max_width": 1100
           },
-          "name": "Jewelry & Materials",
           "blocks": {
             "heading": {
               "type": "heading",
               "settings": {
                 "text": "<p>Jewelry & Materials</p>",
-                "html_tag": "h2",
                 "heading_size": "lg",
+                "html_tag": "h2",
                 "animation_type": "rotate-words",
                 "animation_delay": 50
               }
@@ -88,17 +86,14 @@
                 "icon": "chevron",
                 "dividers": true,
                 "question_font_size": "sm",
+                "gap_desktop": 20,
+                "gap_mobile": 20,
                 "width": "fill",
-                "question_font": "heading",
+                "limit_width": true,
+                "max_width": 850,
                 "border_thickness": 0,
                 "shadow": "none",
                 "padding": "large",
-                "gap_desktop": 20,
-                "gap_mobile": 20,
-                "device": "desktop",
-                "limit_width": true,
-                "max_width": 850,
-                "color_type": "color_scheme",
                 "color_scheme": "scheme-2"
               },
               "blocks": {
@@ -186,23 +181,23 @@
         },
         "category_2": {
           "type": "group",
+          "name": "Ring Sizing",
           "settings": {
             "direction": "vertical",
             "alignment": "left",
-            "width": "fill",
             "gap_desktop": 24,
             "gap_mobile": 24,
+            "width": "fill",
             "limit_width": true,
             "max_width": 1100
           },
-          "name": "Ring Sizing",
           "blocks": {
             "heading": {
               "type": "heading",
               "settings": {
                 "text": "<p>Ring Sizing</p>",
-                "html_tag": "h2",
                 "heading_size": "lg",
+                "html_tag": "h2",
                 "animation_type": "rotate-words",
                 "animation_delay": 50
               }
@@ -214,17 +209,14 @@
                 "icon": "chevron",
                 "dividers": true,
                 "question_font_size": "sm",
+                "gap_desktop": 20,
+                "gap_mobile": 20,
                 "width": "fill",
-                "question_font": "heading",
+                "limit_width": true,
+                "max_width": 850,
                 "border_thickness": 0,
                 "shadow": "none",
                 "padding": "large",
-                "gap_desktop": 20,
-                "gap_mobile": 20,
-                "device": "desktop",
-                "limit_width": true,
-                "max_width": 850,
-                "color_type": "color_scheme",
                 "color_scheme": "scheme-2"
               },
               "blocks": {
@@ -312,23 +304,23 @@
         },
         "category_3": {
           "type": "group",
+          "name": "Orders & Shipping",
           "settings": {
             "direction": "vertical",
             "alignment": "left",
-            "width": "fill",
             "gap_desktop": 24,
             "gap_mobile": 24,
+            "width": "fill",
             "limit_width": true,
             "max_width": 1100
           },
-          "name": "Orders & Shipping",
           "blocks": {
             "heading": {
               "type": "heading",
               "settings": {
                 "text": "<p>Orders & Shipping</p>",
-                "html_tag": "h2",
                 "heading_size": "lg",
+                "html_tag": "h2",
                 "animation_type": "rotate-words",
                 "animation_delay": 50
               }
@@ -340,17 +332,14 @@
                 "icon": "chevron",
                 "dividers": true,
                 "question_font_size": "sm",
+                "gap_desktop": 20,
+                "gap_mobile": 20,
                 "width": "fill",
-                "question_font": "heading",
+                "limit_width": true,
+                "max_width": 850,
                 "border_thickness": 0,
                 "shadow": "none",
                 "padding": "large",
-                "gap_desktop": 20,
-                "gap_mobile": 20,
-                "device": "desktop",
-                "limit_width": true,
-                "max_width": 850,
-                "color_type": "color_scheme",
                 "color_scheme": "scheme-2"
               },
               "blocks": {
@@ -438,23 +427,23 @@
         },
         "category_4": {
           "type": "group",
+          "name": "Returns & Exchanges",
           "settings": {
             "direction": "vertical",
             "alignment": "left",
-            "width": "fill",
             "gap_desktop": 24,
             "gap_mobile": 24,
+            "width": "fill",
             "limit_width": true,
             "max_width": 1100
           },
-          "name": "Returns & Exchanges",
           "blocks": {
             "heading": {
               "type": "heading",
               "settings": {
                 "text": "<p>Returns & Exchanges</p>",
-                "html_tag": "h2",
                 "heading_size": "lg",
+                "html_tag": "h2",
                 "animation_type": "rotate-words",
                 "animation_delay": 50
               }
@@ -466,17 +455,14 @@
                 "icon": "chevron",
                 "dividers": true,
                 "question_font_size": "sm",
+                "gap_desktop": 20,
+                "gap_mobile": 20,
                 "width": "fill",
-                "question_font": "heading",
+                "limit_width": true,
+                "max_width": 850,
                 "border_thickness": 0,
                 "shadow": "none",
                 "padding": "large",
-                "gap_desktop": 20,
-                "gap_mobile": 20,
-                "device": "desktop",
-                "limit_width": true,
-                "max_width": 850,
-                "color_type": "color_scheme",
                 "color_scheme": "scheme-2"
               },
               "blocks": {
@@ -564,23 +550,23 @@
         },
         "category_5": {
           "type": "group",
+          "name": "Jewelry Care",
           "settings": {
             "direction": "vertical",
             "alignment": "left",
-            "width": "fill",
             "gap_desktop": 24,
             "gap_mobile": 24,
+            "width": "fill",
             "limit_width": true,
             "max_width": 1100
           },
-          "name": "Jewelry Care",
           "blocks": {
             "heading": {
               "type": "heading",
               "settings": {
                 "text": "<p>Jewelry Care</p>",
-                "html_tag": "h2",
                 "heading_size": "lg",
+                "html_tag": "h2",
                 "animation_type": "rotate-words",
                 "animation_delay": 50
               }
@@ -592,17 +578,14 @@
                 "icon": "chevron",
                 "dividers": true,
                 "question_font_size": "sm",
+                "gap_desktop": 20,
+                "gap_mobile": 20,
                 "width": "fill",
-                "question_font": "heading",
+                "limit_width": true,
+                "max_width": 850,
                 "border_thickness": 0,
                 "shadow": "none",
                 "padding": "large",
-                "gap_desktop": 20,
-                "gap_mobile": 20,
-                "device": "desktop",
-                "limit_width": true,
-                "max_width": 850,
-                "color_type": "color_scheme",
                 "color_scheme": "scheme-2"
               },
               "blocks": {
@@ -695,10 +678,68 @@
         "category_3",
         "category_4",
         "category_5"
-      ]
+      ],
+      "settings": {
+        "section_width": "page_width",
+        "layout": "vertical",
+        "alignment": "center",
+        "gap_desktop": 40,
+        "gap_mobile": 30,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 100
+      }
     },
     "support": {
       "type": "rich-text",
+      "blocks": {
+        "eyebrow": {
+          "type": "eyebrow",
+          "static": true,
+          "settings": {
+            "text": "",
+            "animation_type": "slide-bottom",
+            "animation_delay": 50
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "static": true,
+          "settings": {
+            "text": "<p>We're Here to Help</p>",
+            "heading_size": "lg",
+            "html_tag": "h2",
+            "animation_type": "rotate-words",
+            "animation_delay": 50
+          }
+        },
+        "text": {
+          "type": "text",
+          "static": true,
+          "settings": {
+            "text": "<p>Can't find what you're looking for? Our team is always happy to help with questions about our pieces, sizing, orders, or anything else.</p>",
+            "width": "custom",
+            "max_width": 640,
+            "animation_type": "slide-bottom",
+            "animation_delay": 100
+          }
+        },
+        "contact": {
+          "type": "button",
+          "settings": {
+            "button_label": "Contact us",
+            "button_link": "shopify://pages/contact",
+            "button_style": "primary",
+            "show_icon": false,
+            "animation_type": "slide-bottom",
+            "animation_delay": 300,
+            "padding_top": 16
+          }
+        }
+      },
+      "block_order": [
+        "contact"
+      ],
       "settings": {
         "section_width": "page_width",
         "alignment": "center",
@@ -708,55 +749,7 @@
         "customize_mobile_padding": true,
         "padding_top_mobile": 50,
         "padding_bottom_mobile": 50
-      },
-      "blocks": {
-        "eyebrow": {
-          "type": "eyebrow",
-          "settings": {
-            "text": "",
-            "animation_type": "slide-bottom",
-            "animation_delay": 50
-          },
-          "static": true
-        },
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "text": "<p>We're Here to Help</p>",
-            "html_tag": "h2",
-            "heading_size": "lg",
-            "animation_type": "rotate-words",
-            "animation_delay": 50
-          },
-          "static": true
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Can't find what you're looking for? Our team is always happy to help with questions about our pieces, sizing, orders, or anything else.</p>",
-            "width": "custom",
-            "max_width": 640,
-            "animation_type": "slide-bottom",
-            "animation_delay": 100
-          },
-          "static": true
-        },
-        "contact": {
-          "type": "button",
-          "settings": {
-            "button_label": "Contact us",
-            "button_link": "shopify://pages/contact",
-            "button_style": "primary",
-            "show_icon": false,
-            "padding_top": 16,
-            "animation_type": "slide-bottom",
-            "animation_delay": 300
-          }
-        }
-      },
-      "block_order": [
-        "contact"
-      ]
+      }
     }
   },
   "order": [
