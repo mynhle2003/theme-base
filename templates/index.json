@@ -518,6 +518,7 @@
             "columns_desktop": "4",
             "columns_mobile": "1",
             "show_next_slide_preview_on_desktop": true,
+            "show_next_slide_preview_on_mobile": true,
             "product_gap_desktop": 20,
             "product_gap_mobile": 12,
             "show_navigation_on_desktop": false,
@@ -813,7 +814,9 @@
                 "button_label": "shop now",
                 "button_link": "shopify://collections/best-sellers-elara",
                 "button_style": "primary",
-                "show_icon": false
+                "show_icon": false,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 16
               }
             }
           },
@@ -833,6 +836,7 @@
             "columns_desktop": "3",
             "columns_mobile": "1",
             "show_next_slide_preview_on_desktop": true,
+            "show_next_slide_preview_on_mobile": true,
             "product_gap_desktop": 20,
             "product_gap_mobile": 20,
             "show_navigation_on_desktop": false,
@@ -2258,171 +2262,193 @@
                 }
               }
             },
-            "faq-accordion-2": {
-              "type": "faq_accordion",
+            "accordion-group": {
+              "type": "group",
               "settings": {
-                "style": "simple",
-                "icon": "chevron",
-                "dividers": true,
-                "question_font_size": "sm",
-                "gap_desktop": 20,
-                "gap_mobile": 20,
+                "direction": "vertical",
+                "alignment": "left",
                 "width": "fill",
-                "padding": "large",
-                "padding_top": 20,
-                "padding_bottom": 20,
-                "padding_left": 0,
-                "padding_right": 0,
-                "question_font": "heading",
-                "border_thickness": 0,
-                "shadow": "none",
-                "device": "desktop",
-                "limit_width": true,
-                "max_width": 850,
-                "color_type": "color_scheme",
-                "color_scheme": "scheme-2"
+                "width_mobile": "fill",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "padding_right": 80,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
               },
               "blocks": {
-                "faq-item-1": {
-                  "type": "faq_item",
+                "faq-accordion-2": {
+                  "type": "faq_accordion",
                   "settings": {
-                    "question": "How can I track the status of my order?",
-                    "show_question_icon": false,
-                    "initially_open": true
+                    "style": "simple",
+                    "icon": "chevron",
+                    "dividers": true,
+                    "question_font_size": "sm",
+                    "gap_desktop": 20,
+                    "gap_mobile": 20,
+                    "width": "fill",
+                    "padding": "large",
+                    "padding_top": 20,
+                    "padding_bottom": 20,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "question_font": "heading",
+                    "border_thickness": 0,
+                    "shadow": "none",
+                    "device": "desktop",
+                    "limit_width": true,
+                    "max_width": 850,
+                    "color_type": "color_scheme",
+                    "color_scheme": "scheme-2"
                   },
                   "blocks": {
-                    "faq-answer-text-1": {
-                      "type": "text",
+                    "faq-item-1": {
+                      "type": "faq_item",
                       "settings": {
-                        "text": "<p>Once your order ships, you’ll receive a confirmation email with a tracking link so you can follow your package in real time. Please contact our support team immediately with your order number and a photo of the item.</p>",
-                        "text_size": "sm",
-                        "width": "fill"
-                      }
+                        "question": "How can I track the status of my order?",
+                        "show_question_icon": false,
+                        "initially_open": true
+                      },
+                      "blocks": {
+                        "faq-answer-text-1": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Once your order ships, you’ll receive a confirmation email with a tracking link so you can follow your package in real time. Please contact our support team immediately with your order number and a photo of the item.</p>",
+                            "text_size": "sm",
+                            "width": "fill"
+                          }
+                        }
+                      },
+                      "block_order": [
+                        "faq-answer-text-1"
+                      ]
+                    },
+                    "faq-item-2": {
+                      "type": "faq_item",
+                      "settings": {
+                        "question": "How do I place an order on your website?",
+                        "show_question_icon": false,
+                        "initially_open": false
+                      },
+                      "blocks": {
+                        "faq-answer-text-1": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Select the items you would like to purchase, choose the available options, and add them to your cart. Review your cart, then proceed to checkout to enter your delivery and payment details.</p>",
+                            "text_size": "sm",
+                            "width": "fill"
+                          }
+                        }
+                      },
+                      "block_order": [
+                        "faq-answer-text-1"
+                      ]
+                    },
+                    "faq-item-3": {
+                      "type": "faq_item",
+                      "settings": {
+                        "question": "What shipping options do you offer?",
+                        "show_question_icon": false,
+                        "initially_open": false
+                      },
+                      "blocks": {
+                        "faq-answer-text-1": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Available shipping methods, delivery estimates, and costs are shown at checkout after you enter your delivery address. Please review these options before completing your order.</p>",
+                            "text_size": "sm",
+                            "width": "fill"
+                          }
+                        }
+                      },
+                      "block_order": [
+                        "faq-answer-text-1"
+                      ]
+                    },
+                    "faq-item-4": {
+                      "type": "faq_item",
+                      "settings": {
+                        "question": "Can I change or cancel my order after it’s been placed?",
+                        "show_question_icon": false,
+                        "initially_open": false
+                      },
+                      "blocks": {
+                        "faq-answer-text-1": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Please contact our support team as soon as possible with your order number and the changes you would like to make. We will check your order status and let you know whether a change or cancellation is possible.</p>",
+                            "text_size": "sm",
+                            "width": "fill"
+                          }
+                        }
+                      },
+                      "block_order": [
+                        "faq-answer-text-1"
+                      ]
+                    },
+                    "faq-item-5": {
+                      "type": "faq_item",
+                      "settings": {
+                        "question": "What should I do if my package is delayed or lost?",
+                        "show_question_icon": false,
+                        "initially_open": false
+                      },
+                      "blocks": {
+                        "faq-answer-text-1": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Check the latest updates using your tracking link. If your package appears delayed or lost, contact our support team with your order number and tracking details so we can help you check its status.</p>",
+                            "text_size": "sm",
+                            "width": "fill"
+                          }
+                        }
+                      },
+                      "block_order": [
+                        "faq-answer-text-1"
+                      ]
+                    },
+                    "faq-item-6": {
+                      "type": "faq_item",
+                      "settings": {
+                        "question": "Do you offer international shipping for orders outside my country?",
+                        "show_question_icon": false,
+                        "initially_open": false
+                      },
+                      "blocks": {
+                        "faq-answer-text-1": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Enter your delivery address at checkout to see whether shipping is available to your country and which delivery options apply. Contact our support team if you need help checking your destination.</p>",
+                            "text_size": "sm",
+                            "width": "fill"
+                          }
+                        }
+                      },
+                      "block_order": [
+                        "faq-answer-text-1"
+                      ]
                     }
                   },
                   "block_order": [
-                    "faq-answer-text-1"
-                  ]
-                },
-                "faq-item-2": {
-                  "type": "faq_item",
-                  "settings": {
-                    "question": "How do I place an order on your website?",
-                    "show_question_icon": false,
-                    "initially_open": false
-                  },
-                  "blocks": {
-                    "faq-answer-text-1": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>Select the items you would like to purchase, choose the available options, and add them to your cart. Review your cart, then proceed to checkout to enter your delivery and payment details.</p>",
-                        "text_size": "sm",
-                        "width": "fill"
-                      }
-                    }
-                  },
-                  "block_order": [
-                    "faq-answer-text-1"
-                  ]
-                },
-                "faq-item-3": {
-                  "type": "faq_item",
-                  "settings": {
-                    "question": "What shipping options do you offer?",
-                    "show_question_icon": false,
-                    "initially_open": false
-                  },
-                  "blocks": {
-                    "faq-answer-text-1": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>Available shipping methods, delivery estimates, and costs are shown at checkout after you enter your delivery address. Please review these options before completing your order.</p>",
-                        "text_size": "sm",
-                        "width": "fill"
-                      }
-                    }
-                  },
-                  "block_order": [
-                    "faq-answer-text-1"
-                  ]
-                },
-                "faq-item-4": {
-                  "type": "faq_item",
-                  "settings": {
-                    "question": "Can I change or cancel my order after it’s been placed?",
-                    "show_question_icon": false,
-                    "initially_open": false
-                  },
-                  "blocks": {
-                    "faq-answer-text-1": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>Please contact our support team as soon as possible with your order number and the changes you would like to make. We will check your order status and let you know whether a change or cancellation is possible.</p>",
-                        "text_size": "sm",
-                        "width": "fill"
-                      }
-                    }
-                  },
-                  "block_order": [
-                    "faq-answer-text-1"
-                  ]
-                },
-                "faq-item-5": {
-                  "type": "faq_item",
-                  "settings": {
-                    "question": "What should I do if my package is delayed or lost?",
-                    "show_question_icon": false,
-                    "initially_open": false
-                  },
-                  "blocks": {
-                    "faq-answer-text-1": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>Check the latest updates using your tracking link. If your package appears delayed or lost, contact our support team with your order number and tracking details so we can help you check its status.</p>",
-                        "text_size": "sm",
-                        "width": "fill"
-                      }
-                    }
-                  },
-                  "block_order": [
-                    "faq-answer-text-1"
-                  ]
-                },
-                "faq-item-6": {
-                  "type": "faq_item",
-                  "settings": {
-                    "question": "Do you offer international shipping for orders outside my country?",
-                    "show_question_icon": false,
-                    "initially_open": false
-                  },
-                  "blocks": {
-                    "faq-answer-text-1": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>Enter your delivery address at checkout to see whether shipping is available to your country and which delivery options apply. Contact our support team if you need help checking your destination.</p>",
-                        "text_size": "sm",
-                        "width": "fill"
-                      }
-                    }
-                  },
-                  "block_order": [
-                    "faq-answer-text-1"
+                    "faq-item-1",
+                    "faq-item-2",
+                    "faq-item-3",
+                    "faq-item-4",
+                    "faq-item-5",
+                    "faq-item-6"
                   ]
                 }
               },
               "block_order": [
-                "faq-item-1",
-                "faq-item-2",
-                "faq-item-3",
-                "faq-item-4",
-                "faq-item-5",
-                "faq-item-6"
+                "faq-accordion-2"
               ]
             }
           },
           "block_order": [
             "group-1",
-            "faq-accordion-2"
+            "accordion-group"
           ]
         }
       },
