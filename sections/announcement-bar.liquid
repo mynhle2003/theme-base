@@ -56,7 +56,7 @@
 <script type="module" src="{{ 'announcement-bar.js' | asset_url }}"></script>
 
 <div
-  class="announcement-bar announcement-bar--{{ announcement_type }}{% if section.settings.show_social_links_desktop %} announcement-bar--social-desktop{% endif %} announcement-bar--direction-{{ announcement_direction }} announcement-bar--navigation-{{ announcement_navigation_behavior }} color-scheme section-color-scope body-text body-{{ announcement_font_size }} {{ announcement_color_scheme }}{% if announcement_speed == 0 %} announcement-bar--static{% endif %}{% if section.settings.bottom_separator %} announcement-bar--bottom-separator{% endif %}"
+  class="announcement-bar announcement-bar--{{ announcement_type }}{% if announcement_type == 'slider' and section.blocks.size < 2 %} announcement-bar--single{% endif %}{% if section.settings.show_social_links_desktop %} announcement-bar--social-desktop{% endif %} announcement-bar--direction-{{ announcement_direction }} announcement-bar--navigation-{{ announcement_navigation_behavior }} color-scheme section-color-scope body-text body-{{ announcement_font_size }} {{ announcement_color_scheme }}{% if announcement_speed == 0 %} announcement-bar--static{% endif %}{% if section.settings.bottom_separator %} announcement-bar--bottom-separator{% endif %}"
   data-announcement-bar
   data-announcement-type="{{ announcement_type }}"
   data-announcement-speed="{{ announcement_speed }}"
