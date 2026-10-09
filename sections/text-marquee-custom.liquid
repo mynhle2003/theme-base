@@ -324,6 +324,59 @@
     },
     {
       "type": "select",
+      "id": "position_horizontal",
+      "label": "t:labels.position",
+      "options": [
+        {
+          "value": "top",
+          "label": "t:options.position.top"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "bottom",
+          "label": "t:options.position.bottom"
+        }
+      ],
+      "default": "center",
+      "visible_if": "{{ section.settings.direction == 'horizontal' }}"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment",
+      "label": "t:labels.alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        },
+        {
+          "value": "space-between",
+          "label": "t:options.alignment.space_between"
+        }
+      ],
+      "default": "left",
+      "visible_if": "{{ section.settings.direction == 'horizontal' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_alignment",
+      "label": "t:labels.vertical_on_mobile",
+      "default": true,
+      "visible_if": "{{ section.settings.direction == 'horizontal' }}"
+    },
+    {
+      "type": "select",
       "id": "position",
       "label": "t:labels.position",
       "options": [
@@ -371,13 +424,6 @@
       ],
       "default": "left",
       "visible_if": "{{ section.settings.direction == 'vertical' }}"
-    },
-    {
-      "type": "checkbox",
-      "id": "customize_mobile_alignment",
-      "label": "t:labels.vertical_on_mobile",
-      "default": true,
-      "visible_if": "{{ section.settings.direction == 'horizontal' }}"
     },
     {
       "type": "select",
@@ -503,52 +549,6 @@
     },
     {
       "type": "select",
-      "id": "position_horizontal",
-      "label": "t:labels.position",
-      "options": [
-        {
-          "value": "top",
-          "label": "t:options.position.top"
-        },
-        {
-          "value": "center",
-          "label": "t:options.alignment.center"
-        },
-        {
-          "value": "bottom",
-          "label": "t:options.position.bottom"
-        }
-      ],
-      "default": "center",
-      "visible_if": "{{ section.settings.direction == 'horizontal' }}"
-    },
-    {
-      "type": "select",
-      "id": "horizontal_alignment",
-      "label": "t:labels.alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "t:options.alignment.left"
-        },
-        {
-          "value": "center",
-          "label": "t:options.alignment.center"
-        },
-        {
-          "value": "right",
-          "label": "t:options.alignment.right"
-        },
-        {
-          "value": "space-between",
-          "label": "t:options.alignment.space_between"
-        }
-      ],
-      "default": "left",
-      "visible_if": "{{ section.settings.direction == 'horizontal' }}"
-    },
-    {
-      "type": "select",
       "id": "height",
       "label": "t:labels.height",
       "options": [
@@ -585,7 +585,16 @@
             "padding_top_mobile": 0,
             "padding_bottom_mobile": 0,
             "padding_left_mobile": 0,
-            "padding_right_mobile": 0
+            "padding_right_mobile": 0,
+            "show_top_divider": false,
+            "show_bottom_divider": false,
+            "show_blurred_edges": false,
+            "enable_parallax": true,
+            "alignment": "center",
+            "width": "fill",
+            "custom_width": 50,
+            "color_type": "inherit",
+            "color_scheme": "scheme-1"
           },
           "blocks": [
             {

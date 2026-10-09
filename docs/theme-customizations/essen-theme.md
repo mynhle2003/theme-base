@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"8f3ac3c9345da36c73b2e1fea3ed4e6303e47d0d"} -->
+<!-- theme-base-sync-state: {"sha":"729be6cfc3a31211b3107df8b9a6206860e406c9"} -->
 # Customization record: essen-theme
 
 Theme branch: `theme/essen-theme`
@@ -207,6 +207,19 @@ Record every theme-specific change here before committing the code. During base 
 | `snippets/product-media.liquid` | Shared gallery/carousel resource loading. | Use automatic rendered-width sizes only for lazy images, with the existing breakpoint fallback and a 320px candidate; preserve eager priority. | Reduce mobile startup requests and oversized images. | Preserve gallery/navigation/editor behavior and verify upstream module exports and image loading contracts. |
 
 | `snippets/media-background.liquid` | Responsive artwork starts with a large candidate. | Add 240px and 320px image candidates for small mobile cards. | Reduce oversized downloads while preserving desktop sources. | Preserve ratios, art direction, alt text and editor settings. |
+| `assets/cart-drawer.css` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `b89b6aeb` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `assets/section-collection.css` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `b89b6aeb` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/faq_accordion.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `b89b6aeb` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/faq_item.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `b89b6aeb` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/marquee.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `b89b6aeb` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/tabs-view-all-button.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `b89b6aeb` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/view-all-button.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `b89b6aeb` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `sections/blog-posts.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `b89b6aeb` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `sections/featured-blog-posts.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `b89b6aeb` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `sections/featured-collection.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `b89b6aeb` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `sections/scrolling-text-star-separator.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `b89b6aeb` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/faq_accordion.liquid` | Main changes typography/sizing or marquee composition and may alter legacy layouts. | Add compatible new control consumers while keeping the existing default typography, answer blocks, padding, dimensions, speed units and loop lifecycle. FAQ mobile defaults inherit legacy width until a mobile override is selected; Marquee default parallax remains active. | Owner requested all new options with preserved current layout on 2026-10-09. | Preserve legacy defaults and child composition; new controls affect presentation only when selected. |
+| `blocks/marquee.liquid` | Main changes typography/sizing or marquee composition and may alter legacy layouts. | Add compatible new control consumers while keeping the existing default typography, answer blocks, padding, dimensions, speed units and loop lifecycle. FAQ mobile defaults inherit legacy width until a mobile override is selected; Marquee default parallax remains active. | Owner requested all new options with preserved current layout on 2026-10-09. | Preserve legacy defaults and child composition; new controls affect presentation only when selected. |
 
 ## Base update decisions
 
@@ -215,6 +228,71 @@ Record every theme-specific change here before committing the code. During base 
 | `d887dac2d2f637e2aae15f59272634f8fd3d1e32` | `blocks/collection-card.liquid`, `sections/cart.liquid`, `sections/collections.liquid`, `blocks/product-variant-picker.liquid`, `templates/cart.json`, `templates/list-collections.json` | Dùng implementation collection-card/cart/collections từ main; giữ 5:4 của Assen trong renderer dùng chung; nhập composition defaults đã duyệt; xóa `color_option_display`, `grid_item_width`, `grid_gap` cùng giá trị đã lưu trong preset/template theo xác nhận riêng. Sau đồng bộ, bỏ header `Swatches` mồ côi và khớp options `swatch_style` với main theo yêu cầu bổ sung. | Theme owner, 2026-10-06 |
 
 ## Base sync history
+
+### 2026-10-09 — Update from personal main
+
+- Previous main commit: `8f3ac3c9345da36c73b2e1fea3ed4e6303e47d0d`
+- Updated through main commit: `729be6cfc3a31211b3107df8b9a6206860e406c9`
+- Main commits included: 1
+- Included main commits:
+  - `729be6cfc3a31211b3107df8b9a6206860e406c9` — chore(base): update base with 23 upstream commits through 0cf058f7
+- Change summary:
+
+```text
+assets/block-animations.js                     | 169 +++++
+ assets/product-list-promos.js                  |  89 +++
+ blocks/_marquee-button.liquid                  | 162 ++++
+ blocks/_marquee-countdown-timer.liquid         | 990 +++++++++++++++++++++++++
+ blocks/_marquee-coupon-code.liquid             | 134 ++++
+ blocks/_marquee-divider.liquid                 | 149 ++++
+ blocks/_marquee-group.liquid                   | 307 ++++++++
+ blocks/_marquee-heading.liquid                 | 231 ++++++
+ blocks/_marquee-icon.liquid                    | 477 ++++++++++++
+ blocks/_marquee-image.liquid                   | 171 +++++
+ blocks/_marquee-text.liquid                    | 140 ++++
+ blocks/faq_accordion.liquid                    | 427 ++++++++---
+ blocks/faq_item.liquid                         |   3 +
+ blocks/marquee.liquid                          | 139 +++-
+ blocks/product-card-compact.liquid             | 538 ++++++++++++++
+ blocks/product-list.liquid                     |  62 +-
+ blocks/promo-card.liquid                       | 455 ++++++++++++
+ blocks/tabs-view-all-button.liquid             |  12 +-
+ blocks/view-all-button.liquid                  |   9 +-
+ docs/content-creation-workflow.md              | 197 +++++
+ docs/elara-blocks-build-plan.md                |  44 ++
+ docs/phase-2-theme-settings.md                 |   4 +
+ docs/product-card-compact-build-plan.md        |  31 +
+ docs/promo-card.md                             |  20 +
+ locales/en.default.json                        |   4 +
+ locales/en.default.schema.json                 |   3 +-
+ sections/blog-posts.liquid                     |   3 +-
+ sections/collection-list.liquid                |   3 +-
+ sections/collection-tabs.liquid                |   3 +-
+ sections/faq-accordion.liquid                  |  12 +-
+ sections/faq-image-accordion.liquid            |  62 +-
+ sections/featured-blog-posts.liquid            |   3 +-
+ sections/featured-collection.liquid            |   3 +-
+ sections/gallery-custom.liquid                 |  11 +-
+ sections/image-text-card-grid.liquid           |   3 +-
+ sections/scrolling-text-star-separator.liquid  |  11 +-
+ sections/testimonial-carousel.liquid           |   3 +-
+ sections/testimonials-background-custom.liquid |   3 +-
+ sections/testimonials-horizontal-custom.liquid |   3 +-
+ sections/text-marquee-custom.liquid            | 117 +--
+ snippets/comparison-table-column-shell.liquid  |   6 +
+ snippets/font-faces.liquid                     |  30 +
+ snippets/localization-styles.liquid            | 251 +++++++
+ snippets/marquee-letter-spacing.liquid         |  23 +
+ snippets/product-list-promo-items.liquid       |  24 +
+ snippets/product-list-promo-styles.liquid      |   7 +
+ templates/collection.json                      |   3 +-
+ templates/index.json                           |  34 +-
+ templates/index.spinel-sync.json               |   9 +-
+ templates/page.about-us.json                   |  14 +-
+ templates/page.faqs.json                       |  60 +-
+ 51 files changed, 5414 insertions(+), 254 deletions(-)
+```
+
 
 ### 2026-10-07 — Update from personal main
 
@@ -958,3 +1036,106 @@ Owner approved main schema for conflicts outside homepage. Updated Blog static h
 - Observed draft mobile report at 15:05: Performance 68, Best Practices 77, FCP 2.3s, LCP 2.7s, TBT 620ms, CLS 0, Speed Index 25.6s. Lighthouse timed out; baseline is incomplete. Draft resource paths use t/18 and retain the old Swiper barrel and immediate Featured product runtimes.
 
 - Validation: 50 focused tests pass; Theme Check inspects 340 files with zero errors and the six existing schema/complexity warnings; git diff --check passes. Local 390px preview confirms auto sizes/small candidates, six deferred Featured product markers and gallery initialization plus quantity interaction after scrolling. Draft has not been pushed.
+
+## Reviewed base sync decisions — 2026-10-09
+
+Owner instruction: implement updates for both themes, preserve presets and current layout for used sections, add new options in main order (ABC/ACB), and retain existing configured values. Source: personal main `729be6cfc3a31211b3107df8b9a6206860e406c9`; previous theme HEAD: `b89b6aeb811cdccc383ce7c526b61f3f08f48145`.
+
+The normal update command stopped on overlapping implementation paths. This reviewed sync uses the same schema/default/composition/history and release checks, with explicit compatibility resolutions. Main implementation changes that could change layout or invalidate legacy controls are held on the paths below. The matching theme schema, allowed children, retained settings and saved values remain compatible with the theme implementation. New optional mobile-hide controls are wired in both View all blocks without importing main's different overflow visibility rules.
+
+Additive child compatibility: FAQ rows retain their legacy child types; {"blocks/faq_item.liquid":["text"]} records explicitly added shared child types needed by imported unused presets. Existing saved children and preset values stay unchanged.
+
+Held implementation/layout paths:
+- `assets/critical.css`
+- `assets/hero.js`
+- `blocks/_collection-toolbar.liquid`
+- `blocks/_comparison-table-features.liquid`
+- `blocks/_header-menu.liquid`
+- `blocks/_search-products.liquid`
+- `blocks/collection-tab.liquid`
+- `blocks/countdown-timer.liquid`
+- `blocks/faq_accordion.liquid`
+- `blocks/faq_item.liquid`
+- `blocks/gallery-strip-feature-item.liquid`
+- `blocks/localization.liquid`
+- `blocks/marquee.liquid`
+- `blocks/product-list.liquid`
+- `blocks/slideshow-slide.liquid`
+- `blocks/tab-layout.liquid`
+- `blocks/tabs-view-all-button.liquid`
+- `blocks/view-all-button.liquid`
+- `layout/theme.liquid`
+- `sections/blog-posts.liquid`
+- `sections/cart-drawer.liquid`
+- `sections/featured-blog-posts.liquid`
+- `sections/featured-collection.liquid`
+- `sections/scrolling-text-star-separator.liquid`
+- `sections/text-marquee-custom.liquid`
+- `snippets/css-variables.liquid`
+- `snippets/gallery-strip-item-styles.liquid`
+- `snippets/hero-styles.liquid`
+- `snippets/icon.liquid`
+- `snippets/image-ratio-value.liquid`
+- `snippets/tab-layout-styles.liquid`
+- `assets/cart-drawer.css`
+- `assets/component-overlay.css`
+- `assets/section-collection.css`
+
+New settings and base defaults:
+- `blocks/faq_accordion.liquid` / `self` / `question_font`: "heading"
+- `blocks/faq_accordion.liquid` / `self` / `question_body_font_size`: "md"
+- `blocks/faq_accordion.liquid` / `self` / `device`: "desktop"
+- `blocks/faq_accordion.liquid` / `self` / `width_mobile`: "fill"
+- `blocks/faq_accordion.liquid` / `self` / `custom_width_mobile`: 100
+- `blocks/faq_accordion.liquid` / `self` / `limit_width_mobile`: false
+- `blocks/faq_accordion.liquid` / `self` / `max_width_mobile`: 1100
+- `blocks/faq_accordion.liquid` / `self` / `color_type`: "color_scheme"
+- `blocks/faq_accordion.liquid` / `self` / `question_body_font_size_mobile`: "md"
+- `blocks/faq_accordion.liquid` / `self` / `customize_mobile_size`: false
+- `blocks/marquee.liquid` / `self` / `show_top_divider`: false
+- `blocks/marquee.liquid` / `self` / `show_bottom_divider`: false
+- `blocks/marquee.liquid` / `self` / `show_blurred_edges`: false
+- `blocks/marquee.liquid` / `self` / `enable_parallax`: true
+- `blocks/marquee.liquid` / `self` / `alignment`: "center"
+- `blocks/marquee.liquid` / `self` / `width`: "fill"
+- `blocks/marquee.liquid` / `self` / `custom_width`: 50
+- `blocks/marquee.liquid` / `self` / `color_type`: "inherit"
+- `blocks/marquee.liquid` / `self` / `color_scheme`: "scheme-1"
+- `blocks/tabs-view-all-button.liquid` / `self` / `hide_view_all_mobile`: false
+- `blocks/view-all-button.liquid` / `self` / `hide_view_all_mobile`: false
+
+Settings retained because removal was not individually approved:
+- `blocks/faq_accordion.liquid` / `self` / `answer_font_size`
+- `blocks/faq_accordion.liquid` / `self` / `answer_font_size_mobile`
+- `blocks/marquee.liquid` / `self` / `background_color`
+- `blocks/marquee.liquid` / `self` / `padding_left`
+- `blocks/marquee.liquid` / `self` / `padding_right`
+- `blocks/marquee.liquid` / `self` / `padding_left_mobile`
+- `blocks/marquee.liquid` / `self` / `padding_right_mobile`
+- `sections/text-marquee-custom.liquid` / `section` / `position`
+- `sections/text-marquee-custom.liquid` / `section` / `height`
+
+Reviewed schema differences: existing definitions/allow-lists are retained together with their compatible theme implementation:
+- blocks/collection-tab.liquid: danh sách block được phép khác main (theme: product-card; main: promo-card)
+- blocks/faq_accordion.liquid: option self/question_font_size đổi trường ảnh hưởng hành vi visible_if; cần review trước khi cập nhật logic
+- blocks/faq_accordion.liquid: option self/shadow đổi trường ảnh hưởng hành vi options; cần review trước khi cập nhật logic
+- blocks/faq_accordion.liquid: option self/gap_desktop đổi trường ảnh hưởng hành vi visible_if; cần review trước khi cập nhật logic
+- blocks/faq_accordion.liquid: option self/gap_mobile đổi trường ảnh hưởng hành vi visible_if; cần review trước khi cập nhật logic
+- blocks/faq_accordion.liquid: option self/width đổi trường ảnh hưởng hành vi visible_if; cần review trước khi cập nhật logic
+- blocks/faq_accordion.liquid: option self/custom_width đổi trường ảnh hưởng hành vi visible_if; cần review trước khi cập nhật logic
+- blocks/faq_accordion.liquid: option self/limit_width đổi trường ảnh hưởng hành vi visible_if; cần review trước khi cập nhật logic
+- blocks/faq_accordion.liquid: option self/max_width đổi trường ảnh hưởng hành vi visible_if; cần review trước khi cập nhật logic
+- blocks/faq_accordion.liquid: option self/color_scheme đổi trường ảnh hưởng hành vi visible_if; cần review trước khi cập nhật logic
+- blocks/faq_accordion.liquid: option self/customize_mobile_font_size đổi trường ảnh hưởng hành vi visible_if; cần review trước khi cập nhật logic
+- blocks/faq_accordion.liquid: option self/question_font_size_mobile đổi trường ảnh hưởng hành vi visible_if; cần review trước khi cập nhật logic
+- blocks/faq_item.liquid: danh sách block được phép khác main (theme: faq_answer_text; main: @app, @theme)
+- blocks/marquee.liquid: option self/animation_speed đổi trường ảnh hưởng hành vi min, max, step, unit; cần review trước khi cập nhật logic
+- blocks/marquee.liquid: option self/animation_direction đổi trường ảnh hưởng hành vi options; cần review trước khi cập nhật logic
+- blocks/marquee.liquid: option self/gap_desktop đổi trường ảnh hưởng hành vi max, step; cần review trước khi cập nhật logic
+- blocks/marquee.liquid: danh sách block được phép khác main (theme: marquee-item; main: _marquee-button, _marquee-countdown-timer, _marquee-coupon-code, _marquee-divider, _marquee-group, _marquee-heading, _marquee-icon, _marquee-image, _marquee-text, marquee-item)
+- blocks/product-list.liquid: danh sách block được phép khác main (theme: product-card; main: promo-card)
+- sections/text-marquee-custom.liquid: option section/alignment đổi trường ảnh hưởng hành vi options; cần review trước khi cập nhật logic
+- sections/text-marquee-custom.liquid: option section/alignment_mobile đổi trường ảnh hưởng hành vi options; cần review trước khi cập nhật logic
+- sections/text-marquee-custom.liquid: danh sách block được phép khác main (theme: button, buttons, divider, eyebrow, header, heading, icon, image, marquee, scroll-to, spacer, text, video; main: button, buttons, eyebrow, header, heading, icon, image, marquee, scroll-to, spacer, text, video)
+
+Validation before release: saved template/group/settings values and block/section order match the previous theme except declared new defaults; protected presets and existing setting definitions are unchanged; changed JavaScript parses. Local browser fixture uses actual pre/post CSS and passes 16 default-layout comparisons at 1440/1024/768/390px, plus optional mobile hide/width controls. Shared layout CSS and theme token consumers are held. Live Shopify storefront and Theme Editor rendering were not verified in this Git sync; no store upload or publication. Full Theme Check and customization coverage are required before commit. Tests and generated evidence remain local and are excluded from delivery.

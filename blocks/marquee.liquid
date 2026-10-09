@@ -64,7 +64,9 @@
 
 {% capture marquee_style %}
   --marquee-duration: {{ marquee_duration }}s;
-  {% if marquee_background != blank %}--marquee-background-color: {{ marquee_background | escape }};{% endif %}
+  {% if block.settings.width == 'custom' %}--marquee-width: {{ block.settings.custom_width | default: 50 }}%;{% endif %}
+  {% if block.settings.alignment == 'left' %}--marquee-items-align: flex-start;{% elsif block.settings.alignment == 'right' %}--marquee-items-align: flex-end;{% endif %}
+  {% if marquee_background != blank and block.settings.color_type != 'scheme' %}--marquee-background-color: {{ marquee_background | escape }};{% endif %}
   {% if padding_top != 24 %}--marquee-padding-top: {{ padding_top }}px;{% endif %}
   {% if padding_bottom != 24 %}--marquee-padding-bottom: {{ padding_bottom }}px;{% endif %}
   {% if padding_left != 0 %}--marquee-padding-left: {{ padding_left }}px;{% endif %}
@@ -86,7 +88,8 @@
 {% endif %}
 
 <div
-  class="{{ marquee_class }}"
+  class="{{ marquee_class }}{% if block.settings.color_type == 'scheme' %} color-scheme {{ block.settings.color_scheme }}{% endif %}{% if block.settings.show_top_divider %} marquee--top-divider{% endif %}{% if block.settings.show_bottom_divider %} marquee--bottom-divider{% endif %}{% if block.settings.show_blurred_edges %} marquee--blur-edges{% endif %}"
+  data-marquee-parallax="{{ block.settings.enable_parallax }}"
   {{ block.shopify_attributes }}
   {% if marquee_style != blank %}style="{{ marquee_style }}"{% endif %}
 >
@@ -103,7 +106,7 @@
   .marquee--block {
     --marquee-duration: 28s;
     --marquee-loop-distance: 0px;
-    width: 100%;
+    width: var(--marquee-width, 100%);
     overflow: hidden;
     background-color: var(--marquee-background-color, var(--background-color));
     padding-top: var(--marquee-padding-top, 24px);
@@ -124,7 +127,7 @@
   .marquee--block .marquee__track {
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
+    align-items: var(--marquee-items-align, center);
     justify-content: flex-start;
     gap: var(--marquee-gap, 48px);
     width: max-content;
@@ -210,6 +213,9 @@
       transform: none;
     }
   }
+  .marquee--block.marquee--top-divider { border-top: 1px solid var(--border-color); }
+  .marquee--block.marquee--bottom-divider { border-bottom: 1px solid var(--border-color); }
+  .marquee--block.marquee--blur-edges .marquee__viewport { mask-image: linear-gradient(to right, transparent, black 7%, black 93%, transparent); }
 {% endstylesheet %}
 
 {% javascript %}
@@ -345,7 +351,7 @@
         });
       };
       // Reuse the scrolling-text phase shift wherever the marquee block is placed.
-      const scrollReactive = !marquee.classList.contains('marquee--static');
+      const scrollReactive = !marquee.classList.contains('marquee--static') && marquee.dataset.marqueeParallax !== 'false';
       if (scrollReactive) window.addEventListener('scroll', handleScroll, { passive: true });
 
       instances.set(marquee, {
@@ -408,6 +414,59 @@
   ],
   "settings": [
     {
+      "type": "checkbox",
+      "id": "show_top_divider",
+      "label": "Show top divider",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bottom_divider",
+      "label": "Show bottom divider",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_blurred_edges",
+      "label": "Show blurred edges",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Enable parallax effect",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "animation_speed",
+      "label": "t:labels.animation_speed",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
       "type": "header",
       "content": "t:general.animation"
     },
@@ -426,15 +485,6 @@
         }
       ],
       "default": "backward"
-    },
-    {
-      "type": "range",
-      "id": "animation_speed",
-      "label": "t:labels.animation_speed",
-      "min": 0,
-      "max": 3,
-      "step": 1,
-      "default": 1
     },
     {
       "type": "header",
@@ -469,6 +519,56 @@
       "step": 1,
       "unit": "px",
       "default": 32
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Desktop width",
+      "options": [
+        {
+          "value": "fill",
+          "label": "Fill"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "Custom width",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "visible_if": "{{ block.settings.width == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "color_type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "inherit",
+          "label": "Inherit"
+        },
+        {
+          "value": "scheme",
+          "label": "Color scheme"
+        }
+      ],
+      "default": "inherit"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ block.settings.color_type == 'scheme' }}"
     },
     {
       "type": "header",
@@ -660,7 +760,16 @@
         "padding_top_mobile": 24,
         "padding_bottom_mobile": 24,
         "padding_left_mobile": 0,
-        "padding_right_mobile": 0
+        "padding_right_mobile": 0,
+        "show_top_divider": false,
+        "show_bottom_divider": false,
+        "show_blurred_edges": false,
+        "enable_parallax": true,
+        "alignment": "center",
+        "width": "fill",
+        "custom_width": 50,
+        "color_type": "inherit",
+        "color_scheme": "scheme-1"
       }
     }
   ]
