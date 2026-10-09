@@ -203,7 +203,11 @@
   {{ block.shopify_attributes }}
 >
   {% if collection_list_navigation_position == 'top' %}{{ collection_list_navigation }}{% endif %}
-  {% capture collection_list_image_sizes %}(min-width: 768px) {{ 100.0 | divided_by: collection_list_desktop_columns }}vw, {{ 100.0 | divided_by: collection_list_mobile_columns }}vw{% endcapture %}
+  {% assign collection_list_image_mobile_columns = collection_list_mobile_columns %}
+  {% if collection_list_show_next_slide_preview_on_mobile and collection_list_mobile_columns == 1 %}
+    {% assign collection_list_image_mobile_columns = 1.2 %}
+  {% endif %}
+  {% capture collection_list_image_sizes %}(min-width: 768px) {{ 100.0 | divided_by: collection_list_desktop_columns }}vw, {{ 100.0 | divided_by: collection_list_image_mobile_columns }}vw{% endcapture %}
   {% assign collection_list_image_loading = 'lazy' %}
   {% if section.index <= 2 %}{% assign collection_list_image_loading = 'eager' %}{% endif %}
   {% capture collection_list_items %}
