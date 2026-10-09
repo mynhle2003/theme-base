@@ -621,6 +621,25 @@ function removePresetSetting(schema, owner, settingId) {
   }
 }
 
+function orderThemeSettings(originalSettings, mergedSettings, sourceSettings) {
+  const sourceIds = sourceSettings.filter((setting) => typeof setting?.id === "string").map((setting) => setting.id);
+  const sourceIdSet = new Set(sourceIds);
+  const mergedById = new Map(mergedSettings.filter((setting) => typeof setting?.id === "string").map((setting) => [setting.id, setting]));
+  const beforeSetting = new Map();
+  let pending = [];
+  // Keep theme-only controls and editor headings beside the existing control
+  // that follows them. New source controls must not capture trailing custom UI.
+  for (const setting of originalSettings) {
+    if (sourceIdSet.has(setting?.id)) {
+      beforeSetting.set(setting.id, pending);
+      pending = [];
+    } else {
+      pending.push(setting);
+    }
+  }
+  return sourceIds.flatMap((id) => [...(beforeSetting.get(id) || []), mergedById.get(id)]).concat(pending);
+}
+
 function reconcileThemeSchema(file, themeRegion, sourceRegion, baseRegion = null) {
   const schema = cloneJson(themeRegion.schema);
   const source = sourceRegion.schema;
@@ -634,6 +653,7 @@ function reconcileThemeSchema(file, themeRegion, sourceRegion, baseRegion = null
   for (const [owner, sourceGroup] of sourceGroups) {
     let themeGroup = findSchemaGroup(schema, file, owner, owner === "section" || owner === "self");
     if (!themeGroup) continue;
+    const originalSettings = [...themeGroup.settings];
     const themeById = new Map(themeGroup.settings.filter((setting) => setting && typeof setting.id === "string").map((setting) => [setting.id, setting]));
     const sourceById = new Map(sourceGroup.settings.filter((setting) => setting && typeof setting.id === "string").map((setting) => [setting.id, setting]));
     for (const sourceSetting of sourceGroup.settings) {
@@ -686,6 +706,12 @@ function reconcileThemeSchema(file, themeRegion, sourceRegion, baseRegion = null
           findSchemaGroup(baseRegion.schema, file, owner)?.settings.some((setting) => setting.id === currentSetting.id))) {
         removed.push({ file, owner, id: currentSetting.id, label: currentSetting.label || currentSetting.content || currentSetting.id });
       }
+    }
+    const orderedSettings = orderThemeSettings(originalSettings, themeGroup.settings, sourceGroup.settings);
+    if (stableJson(themeGroup.settings) !== stableJson(orderedSettings)) {
+      const ids = orderedSettings.filter((setting) => typeof setting?.id === "string").map((setting) => setting.id);
+      presetChanges.push(`${file}: thứ tự option ${owner} theo main [${ids.join(", ")}]; giữ định nghĩa, option riêng và giá trị preset của theme`);
+      themeGroup.settings.splice(0, themeGroup.settings.length, ...orderedSettings);
     }
   }
 
@@ -804,7 +830,8 @@ function collectUsedThemeFiles(files, readFile) {
   return used;
 }
 
-function updateCompositionSettings(composition, additions, removals, rootFile = null) {
+function updateCompositionSettings(composition, additions, removals, rootFile = null, frozenPaths = new Set()) {
+  if (rootFile && frozenPaths.has(rootFile)) return;
   const apply = (instance, file, owner) => {
     for (const item of additions) {
       if (item.file !== file || item.owner !== owner || !item.hasDefault) continue;
@@ -818,6 +845,7 @@ function updateCompositionSettings(composition, additions, removals, rootFile = 
   const blocks = (instances, sectionFile) => {
     for (const block of Object.values(instances || {})) {
       if (!block || typeof block !== "object") continue;
+      if (frozenPaths.has(`blocks/${block.type}.liquid`)) continue;
       apply(block, sectionFile, `block:${block.type}`);
       apply(block, `blocks/${block.type}.liquid`, "self");
       blocks(block.blocks, sectionFile);
@@ -827,6 +855,7 @@ function updateCompositionSettings(composition, additions, removals, rootFile = 
     for (const section of Object.values(instances || {})) {
       if (!section || typeof section !== "object") continue;
       const file = `sections/${section.type}.liquid`;
+      if (frozenPaths.has(file)) continue;
       apply(section, file, "section");
       blocks(section.blocks, file);
     }
@@ -857,11 +886,12 @@ function protectedThemeSchemaPaths(revision, base, compositionRevision = revisio
 }
 
 function buildThemeMergeTree(base, branch, mainSha, label, historyPath) {
+  const frozenPaths = frozenThemeCustomizationPaths(base, branch);
   const baseFiles = revisionFiles(base).filter(isSectionBlockLiquid);
   const themeFiles = revisionFiles(branch).filter(isSectionBlockLiquid);
   const sourceFiles = revisionFiles(mainSha).filter(isSectionBlockLiquid);
   const protectedPaths = protectedThemeSchemaPaths(branch, base);
-  const deletedFromMain = baseFiles.filter((file) => protectedPaths.has(file) && themeFiles.includes(file) && !sourceFiles.includes(file));
+  const deletedFromMain = baseFiles.filter((file) => !frozenPaths.has(file) && protectedPaths.has(file) && themeFiles.includes(file) && !sourceFiles.includes(file));
   if (deletedFromMain.length) {
     throw new Error(`main đã xóa section/block đang có trong theme; cần review thủ công trước khi cập nhật:\n${deletedFromMain.join("\n")}`);
   }
@@ -871,6 +901,7 @@ function buildThemeMergeTree(base, branch, mainSha, label, historyPath) {
     historyPath,
     ...preservedThemeConfigPaths(base),
     ...preservedThemeConfigPaths(branch),
+    ...frozenPaths,
   ])];
   const baseTree = normalizedSchemaTree(base, schemaFiles);
   const themeTree = normalizedSchemaTree(branch, schemaFiles);
@@ -882,6 +913,7 @@ function buildThemeMergeTree(base, branch, mainSha, label, historyPath) {
 }
 
 function composeThemeResultTree(tree, branch, mainSha, base, schemaRemovals = []) {
+  const frozenPaths = frozenThemeCustomizationPaths(base, branch);
   const paths = revisionFiles(tree).filter(isSectionBlockLiquid);
   const protectedPaths = protectedThemeSchemaPaths(branch, base, tree, mainSha);
   const overrides = {};
@@ -895,6 +927,12 @@ function composeThemeResultTree(tree, branch, mainSha, base, schemaRemovals = []
   for (const file of paths) {
     const mergedContents = revisionFile(tree, file);
     if (!mergedContents?.includes(SCHEMA_MERGE_MARKER)) continue;
+    if (frozenPaths.has(file)) {
+      overrides[file] = revisionFile(branch, file);
+      heldSchemaDifferences.push(`${file}: custom riêng của theme; giữ nguyên implementation, schema và preset`);
+      heldSchemaFiles.push(file);
+      continue;
+    }
     const baseRegion = liquidSchema(revisionFile(base, file), file);
     const themeContents = revisionFile(branch, file);
     const sourceContents = revisionFile(mainSha, file);
@@ -944,6 +982,7 @@ function composeThemeResultTree(tree, branch, mainSha, base, schemaRemovals = []
   }
 
   for (const removal of schemaRemovals) {
+    if (frozenPaths.has(removal.file)) continue;
     const plan = schemaPlans.get(removal.file);
     if (!plan) continue;
     const group = findSchemaGroup(plan.schema, removal.file, removal.owner);
@@ -960,7 +999,7 @@ function composeThemeResultTree(tree, branch, mainSha, base, schemaRemovals = []
 
   // Add new defaults to saved instances and cross-file theme-block presets too.
   for (const [file, plan] of schemaPlans) {
-    updateCompositionSettings(plan.schema, addedSettings, schemaRemovals, file);
+    updateCompositionSettings(plan.schema, addedSettings, schemaRemovals, file, frozenPaths);
     const contents = revisionFile(tree, file);
     overrides[file] = contents.replace(SCHEMA_MERGE_MARKER, renderLiquidSchema(plan.schema, plan.region));
   }
@@ -968,7 +1007,7 @@ function composeThemeResultTree(tree, branch, mainSha, base, schemaRemovals = []
     const contents = revisionFile(tree, file);
     const composition = parseThemeJson(contents, file);
     const before = stableJson(composition);
-    updateCompositionSettings(composition, addedSettings, schemaRemovals);
+    updateCompositionSettings(composition, addedSettings, schemaRemovals, null, frozenPaths);
     if (stableJson(composition) !== before) {
       const header = contents.match(/^\s*\/\*[\s\S]*?\*\/\s*/)?.[0] || "";
       overrides[file] = `${header}${JSON.stringify(composition, null, 2)}\n`;
@@ -1019,8 +1058,8 @@ function worktreeFilesUnder(directory) {
   return files;
 }
 
-function sectionImplementationDependencies(revision, includeWorktree = false) {
-  const sourceFiles = new Set(gitText([
+function sectionImplementationDependencies(revision, includeWorktree = false, roots = null) {
+  const sourceFiles = new Set(roots || gitText([
     "ls-tree", "-r", "--name-only", revision, "--", "sections", "blocks",
   ]).split("\n").filter((file) => /^(sections|blocks)\/.+\.liquid$/i.test(file)));
   if (includeWorktree) {
@@ -1051,6 +1090,30 @@ function sectionImplementationDependencies(revision, includeWorktree = false) {
     }
   }
   return dependencies;
+}
+
+function frozenThemeCustomizationPaths(base, branch) {
+  const changed = new Set(implementationPathsChanged(base, branch));
+  const owners = revisionFiles(branch).filter(isSectionBlockLiquid);
+  const frozen = new Set(changed);
+  for (const file of owners) {
+    const dependencies = sectionImplementationDependencies(branch, false, [file]);
+    if (!changed.has(file) && ![...dependencies].some((dependency) => changed.has(dependency))) continue;
+    frozen.add(file);
+    for (const dependency of dependencies) frozen.add(dependency);
+  }
+  // A frozen composition also keeps its explicitly offered/static child blocks.
+  const childFiles = collectUsedThemeFiles(["templates/__custom-freeze__.liquid"], (file) => {
+    if (file === "templates/__custom-freeze__.liquid") {
+      return [...frozen].filter(isSectionBlockLiquid).map((owner) => owner.startsWith("sections/")
+        ? `{% section '${path.basename(owner, ".liquid")}' %}`
+        : `{% content_for 'block', type: '${path.basename(owner, ".liquid")}', id: 'freeze' %}`).join("\n");
+    }
+    return revisionFile(branch, file);
+  });
+  for (const file of childFiles) frozen.add(file);
+  for (const dependency of sectionImplementationDependencies(branch, false, [...childFiles])) frozen.add(dependency);
+  return frozen;
 }
 
 function sectionImplementation(contents) {
@@ -1150,6 +1213,30 @@ function writeThemeBaseHistory(branch, previousSha, targetSha, changeRange, chan
   fs.writeFileSync(record, `${marker}\n${contents}`, "utf8");
 }
 
+function writeFrozenThemeCustomizationHistory(branch, mainSha, frozenPaths) {
+  if (!frozenPaths.size) return;
+  const record = customizationRecord(branch);
+  const recorded = recordedCustomizationPaths(record);
+  const missing = implementationPathsChanged(mainSha, branch, true)
+    .filter((file) => frozenPaths.has(file) && !recorded.has(file));
+  let contents = fs.readFileSync(record, "utf8");
+  if (missing.length) {
+    const start = contents.indexOf("## Customizations");
+    if (start < 0) throw new Error("Thiếu bảng Customizations để ghi dependency giữ nguyên của custom.");
+    let end = contents.indexOf("\n## ", start + 3);
+    if (end < 0) end = contents.length;
+    const rows = [...contents.slice(start, end).matchAll(/^\|.*\|[ \t]*$/gm)];
+    if (!rows.length) throw new Error("Thiếu bảng Customizations để ghi dependency giữ nguyên của custom.");
+    const last = rows[rows.length - 1];
+    const insert = start + last.index + last[0].length;
+    const additions = missing.map((file) => `| \`${file}\` | Personal main \`${mainSha.slice(0, 8)}\`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |`).join("\n");
+    contents = contents.slice(0, insert) + "\n" + additions + contents.slice(insert);
+  }
+  contents = contents.trimEnd() + `\n\n### Retained custom paths through main ${mainSha.slice(0, 8)}\n\n` +
+    [...frozenPaths].sort().map((file) => `- \`${file}\``).join("\n") + "\n";
+  fs.writeFileSync(record, contents, "utf8");
+}
+
 async function updateOneTheme(branch) {
   if (!gitText(["branch", "--list", "--format=%(refname:short)", branch])) {
     if (!remoteRefExists(branch)) throw new Error(`Không tìm thấy nhánh local hoặc origin/${branch}.`);
@@ -1169,7 +1256,10 @@ async function updateOneTheme(branch) {
   }
 
   const range = sourceChangeRange(base, mainSha);
-  const overlaps = overlappingChanges(branch, base);
+  const frozenPaths = frozenThemeCustomizationPaths(base, branch);
+  console.log("\nCustom riêng của theme được giữ nguyên, không cập nhật từ main:");
+  for (const file of [...frozenPaths].sort()) console.log(`  ${file}`);
+  const overlaps = overlappingChanges(branch, base).filter((file) => !frozenPaths.has(file));
   if (overlaps.length) {
     console.error(`\nDừng cập nhật ${branch}: các file implementation cùng được sửa ở theme và main, cần bạn review từng file trước:`);
     console.error(overlaps.join("\n"));
@@ -1256,6 +1346,7 @@ async function updateOneTheme(branch) {
   let committed = false;
   try {
     writeThemeBaseHistory(branch, base, mainSha, range, changeSummary);
+    writeFrozenThemeCustomizationHistory(branch, mainSha, frozenPaths);
     git(["add", "--", path.relative(ROOT, customizationRecord(branch))]);
     verifyCustomizationRecord(branch, true);
     checkDiffAndTheme();
@@ -1377,7 +1468,7 @@ function help() {
     `  node theme-base check-custom <slug>  # validates section/block code differences only\n` +
     `  node theme-base preview start --store <store>\n` +
     `  node theme-base preview status|logs|stop\n\n` +
-    `Only upstream/main and upstream/dev are fetched. update-base and safe theme updates commit and push after Theme Check. Theme updates preserve used/custom section and block presets, add new defaults to presets and saved instances, and ask before removing their upstream settings. Unused section/block schemas and presets follow main. Overlapping custom implementation changes stop for review.`);
+    `Only upstream/main and upstream/dev are fetched. update-base and safe theme updates commit and push after Theme Check. Custom sections/blocks and their dependencies stay unchanged. Other used sections/blocks preserve preset values, add new defaults to presets and saved instances, and ask before removing their upstream settings. Unused non-custom section/block schemas and presets follow main. Structural rebuilds require a validated migration from old preset data; incompatible mappings stop for review.`);
 }
 
 async function main() {
@@ -1409,4 +1500,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { reconcileThemeSchema, collectUsedThemeFiles, updateCompositionSettings, composeThemeResultTree, buildThemeMergeTree };
+module.exports = { reconcileThemeSchema, collectUsedThemeFiles, updateCompositionSettings, composeThemeResultTree, buildThemeMergeTree, frozenThemeCustomizationPaths };
