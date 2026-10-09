@@ -79,13 +79,18 @@
   {% if image != blank %}
     {% if mobile_image != blank %}
       {% capture mobile_srcset %}
-        {% assign responsive_widths = image_widths | default: '400, 600, 800, 1200, 1600, 2400' | split: ', ' %}
+        {% assign responsive_widths = image_widths | default: '400, 600, 800, 1200, 1600, 2400' | split: ',' %}
+        {% assign mobile_max_width = width | default: mobile_image.width | at_most: mobile_image.width %}
         {% for responsive_width in responsive_widths %}
-          {{ mobile_image | image_url: width: responsive_width }}{% unless forloop.last %}, {% endunless %}
+          {% assign candidate_width = responsive_width | strip | plus: 0 %}
+          {% if candidate_width > 0 and candidate_width < mobile_max_width %}
+            {{ mobile_image | image_url: width: candidate_width }} {{ candidate_width }}w,
+          {% endif %}
         {% endfor %}
+        {{ mobile_image | image_url: width: mobile_max_width }} {{ mobile_max_width }}w
       {% endcapture %}
       <picture>
-        <source media="(max-width: 767.98px)" srcset="{{ mobile_srcset | strip }}">
+        <source media="(max-width: 767.98px)" srcset="{{ mobile_srcset | strip }}" sizes="{{ image_sizes | default: '100vw' | escape }}">
         {% if image_widths != blank or image_sizes != blank %}
           {% if has_image_height %}
             {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: widths: image_widths, sizes: image_sizes, loading: loading, alt: image_alt }}

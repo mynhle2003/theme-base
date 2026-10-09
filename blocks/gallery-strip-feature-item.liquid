@@ -6,6 +6,12 @@
   assign alt_text = block.settings.alt_text
   assign link = block.settings.link
   assign open_in_new_tab = block.settings.open_in_new_tab
+  assign image_loading = 'lazy'
+  assign image_sizes = 'auto, (min-width: 768px) 20vw, 100vw'
+  if section.index != blank and section.index <= 2
+    assign image_loading = 'eager'
+    assign image_sizes = '(min-width: 768px) 20vw, 100vw'
+  endif
   assign show_overlay = block.settings.show_overlay | default: 'always'
   unless show_overlay == 'always' or show_overlay == 'hover'
     assign show_overlay = 'always'
@@ -23,7 +29,8 @@
     class: 'gallery-strip-item__image',
     width: 1600,
     widths: '320, 480, 640, 800, 1200, 1600',
-    sizes: '20vw'
+    sizes: image_sizes,
+    loading: image_loading
   %}
   <div class="gallery-strip-feature-item__overlay" aria-hidden="true"></div>
   <div class="gallery-strip-item__content">
