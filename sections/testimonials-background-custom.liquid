@@ -1,3 +1,5 @@
+{% capture effective_overlay %}{% render 'overlay-background', overlay_settings: section.settings, color_id: 'overlay', enabled_id: 'show_overlay', style_id: 'overlay_style' %}{% endcapture %}
+{% assign effective_overlay = effective_overlay | strip %}
 {% liquid
   assign testimonials_background_custom_alignment = 'start'
   case section.settings.alignment
@@ -90,7 +92,7 @@
     {% if testimonials_background_custom_padding_top_mobile != testimonials_background_custom_padding_top %}--section-padding-top-mobile: {{ testimonials_background_custom_padding_top_mobile }}px;{% endif %}
     {% if testimonials_background_custom_padding_bottom_mobile != testimonials_background_custom_padding_bottom %}--section-padding-bottom-mobile: {{ testimonials_background_custom_padding_bottom_mobile }}px;{% endif %}
   {% endif %}
-  {% if testimonials_background_custom_media_type != 'none' and section.settings.overlay != blank %}--overlay-color: {{ section.settings.overlay | escape }};{% endif %}
+  {% if testimonials_background_custom_media_type != 'none' and effective_overlay != blank %}--overlay-color: {{ effective_overlay | default: 'transparent' | escape }};{% endif %}
 {% endcapture %}
 {% assign testimonials_background_custom_style = testimonials_background_custom_style | strip %}
 
@@ -138,7 +140,7 @@
               {{ 'lifestyle-1' | placeholder_svg_tag: 'testimonials-background-custom__placeholder' }}
             {% endif %}
           </div>
-          {% if section.settings.overlay != blank %}<div class="overlay testimonials-background-custom__overlay" aria-hidden="true"></div>{% endif %}
+          {% if effective_overlay != blank %}<div class="overlay testimonials-background-custom__overlay" aria-hidden="true"></div>{% endif %}
         </div>
       {% endif %}
 
@@ -458,12 +460,43 @@
       "visible_if": "{{ section.settings.media_type == 'video' }}"
     },
     {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "default": true,
+      "label": "t:labels.show_overlay",
+      "visible_if": "{{ section.settings.media_type != 'none' }}"
+    },
+    {
+      "type": "select",
+      "id": "overlay_style",
+      "label": "t:labels.overlay_style",
+      "options": [
+        {
+          "value": "solid",
+          "label": "t:options.overlay_style.solid"
+        },
+        {
+          "value": "gradient",
+          "label": "t:options.overlay_style.gradient"
+        }
+      ],
+      "default": "solid",
+      "visible_if": "{{ section.settings.media_type != 'none' and section.settings.show_overlay }}"
+    },
+    {
       "type": "color",
       "id": "overlay",
-      "label": "t:labels.overlay",
+      "label": "t:labels.overlay_color",
       "alpha": true,
       "default": "#0000001A",
-      "visible_if": "{{ section.settings.media_type != 'none' }}"
+      "visible_if": "{{ section.settings.media_type != 'none' and section.settings.show_overlay and section.settings.overlay_style == 'solid' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "overlay_gradient",
+      "default": "linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.52))",
+      "label": "t:labels.overlay_gradient",
+      "visible_if": "{{ section.settings.media_type != 'none' and section.settings.show_overlay and section.settings.overlay_style == 'gradient' }}"
     },
     {
       "type": "select",
@@ -576,7 +609,8 @@
         "padding_bottom": 96,
         "customize_mobile_padding": true,
         "padding_top_mobile": 64,
-        "padding_bottom_mobile": 64
+        "padding_bottom_mobile": 64,
+        "show_overlay": true
       },
       "blocks": [
         {
@@ -628,9 +662,7 @@
                     "icon_width": 80,
                     "icon_padding": 0,
                     "custom_mobile": false,
-                    "padding_bottom": 16,
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 50
+                    "padding_bottom": 16
                   }
                 },
                 {
@@ -640,9 +672,7 @@
                     "heading_size": "display",
                     "width": "fit",
                     "customize_mobile_size": false,
-                    "width_mobile": "fit",
-                    "animation_type": "rotate-words",
-                    "animation_delay": 50
+                    "width_mobile": "fit"
                   }
                 },
                 {
@@ -685,9 +715,7 @@
                     "icon_width": 80,
                     "icon_padding": 0,
                     "custom_mobile": false,
-                    "padding_bottom": 16,
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 50
+                    "padding_bottom": 16
                   }
                 },
                 {
@@ -697,9 +725,7 @@
                     "heading_size": "display",
                     "width": "fit",
                     "customize_mobile_size": false,
-                    "width_mobile": "fit",
-                    "animation_type": "rotate-words",
-                    "animation_delay": 50
+                    "width_mobile": "fit"
                   }
                 },
                 {
@@ -742,9 +768,7 @@
                     "icon_width": 80,
                     "icon_padding": 0,
                     "custom_mobile": false,
-                    "padding_bottom": 16,
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 50
+                    "padding_bottom": 16
                   }
                 },
                 {
@@ -754,9 +778,7 @@
                     "heading_size": "display",
                     "width": "fit",
                     "customize_mobile_size": false,
-                    "width_mobile": "fit",
-                    "animation_type": "rotate-words",
-                    "animation_delay": 50
+                    "width_mobile": "fit"
                   }
                 },
                 {

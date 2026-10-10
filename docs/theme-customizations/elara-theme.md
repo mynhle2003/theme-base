@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"729be6cfc3a31211b3107df8b9a6206860e406c9"} -->
+<!-- theme-base-sync-state: {"sha":"fafdc8de4c9c60757949e90f6c50320b1bf361bf"} -->
 # Customization record: elara-theme
 
 Theme branch: `theme/elara-theme`
@@ -155,6 +155,19 @@ This table records current implementation differences from personal `main`: Liqu
 | `sections/featured-blog-posts.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
 | `sections/featured-collection.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
 | `sections/hero.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `assets/component-collection-card.css` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
+| `assets/product-media.js` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
+| `assets/section-parallax.css` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
+| `blocks/_header-menu-toggle.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
+| `blocks/_mega-menu-banner.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
+| `blocks/collection-background-item.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
+| `blocks/collection-promo.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
+| `blocks/gallery-image.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
+| `blocks/parallax-item.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
+| `blocks/product-callout.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
+| `blocks/product-variant-picker.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
+| `blocks/promo-card.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
+| `blocks/scrolling-card.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
 
 ## Figma catalog and card composition — 2026-10-07
 
@@ -290,6 +303,54 @@ Media verification: restarted the existing development preview after stale CLI u
 - Keep saved schemas/presets/compositions except new setting defaults, additive approved schema compatibility, and migration/removal of position_vertical explicitly approved by the owner. Existing password title remains for an empty saved block composition. Existing marquee direction/alignment values are migrated, including legacy mobile space-between support.
 
 ## Base sync history
+
+### 2026-10-10 — Update from personal main
+
+- Previous main commit: `729be6cfc3a31211b3107df8b9a6206860e406c9`
+- Updated through main commit: `fafdc8de4c9c60757949e90f6c50320b1bf361bf`
+- Included main commits:
+  - b996ced23c9679b33c545e237347445071348461 fix(sync): preserve custom theme compositions and source option order
+  - fafdc8de4c9c60757949e90f6c50320b1bf361bf chore(base): update base with 19 upstream commits through 46304245
+- Existing custom implementations, schemas, presets and dependencies remain unchanged. Homepage IDs, order, content and existing settings are validated before commit.
+- Reviewed the three solid/gradient overlay visibility mappings. Duplicate inventory locale keys were normalized with identical values. Removed upstream options were retained.
+
+```text
+assets/component-blocks-image-card.css         | 261 +++++++++++++
+ assets/component-sections-promo-grid.css       |  46 +++
+ assets/critical.css                            |  46 ++-
+ assets/header.js                               |   3 +-
+ assets/promo-grid.js                           |  12 +
+ blocks/location-item.liquid                    |  12 +-
+ blocks/marquee-item.liquid                     |  45 ++-
+ blocks/promo-card-custom.liquid                | 486 +++++++++++++++++++++++
+ docs/theme-customization-policy.md             |  10 +
+ scripts/theme-base-sync.cjs                    | 109 +++++-
+ sections/collection-banner.liquid              |  34 +-
+ sections/collection-page-links.liquid          |  76 +++-
+ sections/contact-form-custom.liquid            |  44 ++-
+ sections/email-signup-dual-image.liquid        |   8 +-
+ sections/email-signup-single-image.liquid      |   8 +-
+ sections/gallery-full-width-strip.liquid       |   8 +-
+ sections/gallery-image-grid.liquid             |  12 +-
+ sections/image-comparison-split-custom.liquid  |  24 +-
+ sections/image-text-card-grid.liquid           |   8 +-
+ sections/location-list.liquid                  |  48 +--
+ sections/location-map.liquid                   |  52 +--
+ sections/promo-grid-custom.liquid              | 519 +++++++++++++++++++++++++
+ sections/scroll-reading-text.liquid            |  46 ++-
+ sections/testimonials-background-custom.liquid |  68 ++--
+ sections/testimonials-horizontal-custom.liquid |  32 +-
+ sections/timeline.liquid                       |  68 +---
+ snippets/image-card-content.liquid             | 259 ++++++++++++
+ snippets/overlay-background.liquid             |  30 ++
+ templates/collection.json                      |  28 +-
+ templates/index.spinel-sync.json               |   6 +-
+ templates/page.contact.json                    |   5 +-
+ tests/image-height.test.cjs                    |  28 ++
+ tests/product-media-variant.test.cjs           |  83 ++++
+ 33 files changed, 2255 insertions(+), 269 deletions(-)
+```
+
 
 ### 2026-10-09 — Update from personal main
 
@@ -1191,3 +1252,336 @@ Reproduced the reported flash using the actual previous runtime/CSS in Chrome wi
 Validation: Chrome fixtures pass initial paint for all six effects, delayed-runtime handoff, final rotated-word visibility, focus, below-fold gating, disabled global motion, simulated reduced-motion preference, error/late-runtime recovery, simulated editor boot and a real script-disabled sandbox frame. Browser reproduction uses a local fixture, not live Shopify save/reload. The 37 lifecycle, 27 editor-refresh, 54 schema/render and 11 bootstrap capability/timeout/error checks pass (129 assertions); JavaScript syntax, diff whitespace and customization coverage pass. Theme Check: zero errors, five existing settings-count warnings. Fixtures remain in /tmp. No commit, push or publication.
 
 Typography scale correction — 2026-10-09: Theme Settings headings H1–H5 are labeled Extra large through Extra small; setting IDs, numeric values and H6 controls remain. Preset Heading sizes shift H2–H5 to preserve their old effective Hn role; existing XS choices remain XS, now following H5, without changing semantic HTML tags; slideshow headings explicitly use XL. Figma connector required reauthentication, so neither supplied frame was available for verifying numeric sizes or visual fidelity. No store push or Git commit/push.
+
+### Retained custom paths through main fafdc8de
+
+- `assets/announcement-bar.js`
+- `assets/breadcrumbs.css`
+- `assets/bundle-builder.js`
+- `assets/bundle-summary.css`
+- `assets/carousel-block.js`
+- `assets/cart-drawer-recommendations.js`
+- `assets/cart-drawer.css`
+- `assets/cart-page.css`
+- `assets/cart-page.js`
+- `assets/collections-with-background.js`
+- `assets/collections-with-tabs.js`
+- `assets/comparison-table.css`
+- `assets/comparison-table.js`
+- `assets/component-bouncing-dots.css`
+- `assets/component-collection-card.css`
+- `assets/component-pagination.css`
+- `assets/component-search-suggestions.css`
+- `assets/component-social-links.css`
+- `assets/editorial-text.js`
+- `assets/featured-collection-banner.css`
+- `assets/hotspot-full-width-carousel.css`
+- `assets/image-comparison.css`
+- `assets/image-text-card-grid.js`
+- `assets/image-text-stacked-bands.js`
+- `assets/marquee-countdown-timer.css`
+- `assets/product-buy-buttons.js`
+- `assets/product-callout.css`
+- `assets/product-collection-carousel.js`
+- `assets/product-description.js`
+- `assets/product-information-extras.css`
+- `assets/product-information-extras.js`
+- `assets/product-information.css`
+- `assets/product-inventory.js`
+- `assets/product-media.css`
+- `assets/product-media.js`
+- `assets/quick-add.js`
+- `assets/quick-view.js`
+- `assets/search-page.js`
+- `assets/section-collection.css`
+- `assets/section-collection.js`
+- `assets/section-parallax.css`
+- `assets/section-parallax.js`
+- `assets/slideshow.js`
+- `assets/swiper-12.2.0-effect-fade.min.css`
+- `assets/timeline-list.css`
+- `assets/timeline-list.js`
+- `assets/variant-picker.js`
+- `blocks/_announcement-social-links.liquid`
+- `blocks/_bundle-product-list.liquid`
+- `blocks/_bundle-summary.liquid`
+- `blocks/_cart-content.liquid`
+- `blocks/_cart-order-summary.liquid`
+- `blocks/_cart-summary.liquid`
+- `blocks/_collection-columns.liquid`
+- `blocks/_collection-count.liquid`
+- `blocks/_collection-filter.liquid`
+- `blocks/_collection-pagination.liquid`
+- `blocks/_collection-products.liquid`
+- `blocks/_collection-sort.liquid`
+- `blocks/_collection-toolbar.liquid`
+- `blocks/_collections-list.liquid`
+- `blocks/_collections-page-card.liquid`
+- `blocks/_column.liquid`
+- `blocks/_comparison-table-features.liquid`
+- `blocks/_header-account.liquid`
+- `blocks/_header-cart.liquid`
+- `blocks/_header-localization.liquid`
+- `blocks/_header-logo.liquid`
+- `blocks/_header-menu-toggle.liquid`
+- `blocks/_header-menu.liquid`
+- `blocks/_header-search.liquid`
+- `blocks/_marquee-button.liquid`
+- `blocks/_marquee-countdown-timer.liquid`
+- `blocks/_marquee-coupon-code.liquid`
+- `blocks/_marquee-divider.liquid`
+- `blocks/_marquee-group.liquid`
+- `blocks/_marquee-heading.liquid`
+- `blocks/_marquee-icon.liquid`
+- `blocks/_marquee-image.liquid`
+- `blocks/_marquee-text.liquid`
+- `blocks/_mega-menu-banner.liquid`
+- `blocks/_mega-menu-banners.liquid`
+- `blocks/_overlay-product-media.liquid`
+- `blocks/_product-collection-grid.liquid`
+- `blocks/_product-details.liquid`
+- `blocks/_product-media.liquid`
+- `blocks/_search-input.liquid`
+- `blocks/_search-products.liquid`
+- `blocks/_search-results.liquid`
+- `blocks/_slide_split.liquid`
+- `blocks/announcement-countdown-timer.liquid`
+- `blocks/banner.liquid`
+- `blocks/blog-card-button.liquid`
+- `blocks/blog-card-description.liquid`
+- `blocks/blog-card-meta.liquid`
+- `blocks/blog-card-tag.liquid`
+- `blocks/blog-card-title.liquid`
+- `blocks/blog-card.liquid`
+- `blocks/blog-grid.liquid`
+- `blocks/blog-list.liquid`
+- `blocks/blog-meta.liquid`
+- `blocks/blog-tag-filter.liquid`
+- `blocks/button-view-details.liquid`
+- `blocks/button.liquid`
+- `blocks/buttons.liquid`
+- `blocks/carousel.liquid`
+- `blocks/carousel_split.liquid`
+- `blocks/cart-free-shipping.liquid`
+- `blocks/cart-items.liquid`
+- `blocks/cart-order-note.liquid`
+- `blocks/cart-shipping-estimator.liquid`
+- `blocks/collection-background-item.liquid`
+- `blocks/collection-card-button.liquid`
+- `blocks/collection-card-description.liquid`
+- `blocks/collection-card-title.liquid`
+- `blocks/collection-card.liquid`
+- `blocks/collection-list-items.liquid`
+- `blocks/collection-promo.liquid`
+- `blocks/collection-tab.liquid`
+- `blocks/collection-thumbnail.liquid`
+- `blocks/collections-with-tabs-item.liquid`
+- `blocks/comments.liquid`
+- `blocks/comparison-table-column.liquid`
+- `blocks/comparison-table-row-value.liquid`
+- `blocks/comparison-table-row.liquid`
+- `blocks/comparison-table.liquid`
+- `blocks/contact-field.liquid`
+- `blocks/contact-form.liquid`
+- `blocks/content.liquid`
+- `blocks/countdown-timer.liquid`
+- `blocks/discount-code.liquid`
+- `blocks/divider.liquid`
+- `blocks/editorial-text.liquid`
+- `blocks/email-signup.liquid`
+- `blocks/eyebrow.liquid`
+- `blocks/faq_accordion.liquid`
+- `blocks/faq_answer_text.liquid`
+- `blocks/faq_item.liquid`
+- `blocks/featured-image.liquid`
+- `blocks/featured-post.liquid`
+- `blocks/first-card.liquid`
+- `blocks/gallery-hotspot.liquid`
+- `blocks/gallery-image.liquid`
+- `blocks/gallery-item.liquid`
+- `blocks/gallery-strip-feature-item.liquid`
+- `blocks/gallery-strip-item.liquid`
+- `blocks/gallery-strip-overlay-group.liquid`
+- `blocks/grid.liquid`
+- `blocks/group.liquid`
+- `blocks/header.liquid`
+- `blocks/heading.liquid`
+- `blocks/hotspot.liquid`
+- `blocks/icon.liquid`
+- `blocks/image-card.liquid`
+- `blocks/image-comparison.liquid`
+- `blocks/image-text-card-grid-item.liquid`
+- `blocks/image-text-stacked-band.liquid`
+- `blocks/image.liquid`
+- `blocks/images.liquid`
+- `blocks/localization.liquid`
+- `blocks/logo.liquid`
+- `blocks/marquee.liquid`
+- `blocks/menu.liquid`
+- `blocks/pagination.liquid`
+- `blocks/parallax-item.liquid`
+- `blocks/payment-icons.liquid`
+- `blocks/policy-links.liquid`
+- `blocks/popup.liquid`
+- `blocks/press-item.liquid`
+- `blocks/press-quotes.liquid`
+- `blocks/previous-and-next-posts.liquid`
+- `blocks/product-accordion.liquid`
+- `blocks/product-badges.liquid`
+- `blocks/product-buy-accelerated-checkout.liquid`
+- `blocks/product-buy-add-to-cart.liquid`
+- `blocks/product-buy-buttons.liquid`
+- `blocks/product-buy-quantity.liquid`
+- `blocks/product-callout-gallery.liquid`
+- `blocks/product-callout.liquid`
+- `blocks/product-card-compact.liquid`
+- `blocks/product-card.liquid`
+- `blocks/product-description.liquid`
+- `blocks/product-inventory.liquid`
+- `blocks/product-list-banner.liquid`
+- `blocks/product-list.liquid`
+- `blocks/product-pickup-availability.liquid`
+- `blocks/product-price.liquid`
+- `blocks/product-recommendations.liquid`
+- `blocks/product-sticky-add-to-cart.liquid`
+- `blocks/product-title.liquid`
+- `blocks/product-variant-picker.liquid`
+- `blocks/promo-card.liquid`
+- `blocks/row.liquid`
+- `blocks/scroll-to.liquid`
+- `blocks/scrolling-card.liquid`
+- `blocks/shop-the-look-product.liquid`
+- `blocks/shop-the-look-products.liquid`
+- `blocks/slide.liquid`
+- `blocks/slideshow-slide.liquid`
+- `blocks/social-links.liquid`
+- `blocks/spacer.liquid`
+- `blocks/tab-layout.liquid`
+- `blocks/tabs-view-all-button.liquid`
+- `blocks/tags-and-sharing.liquid`
+- `blocks/testimonial-item.liquid`
+- `blocks/text.liquid`
+- `blocks/timeline-list.liquid`
+- `blocks/timeline-slide.liquid`
+- `blocks/video.liquid`
+- `blocks/view-all-button.liquid`
+- `sections/404.liquid`
+- `sections/announcement-bar.liquid`
+- `sections/article.liquid`
+- `sections/blog-posts.liquid`
+- `sections/breadcrumbs.liquid`
+- `sections/bundle-builder.liquid`
+- `sections/cart-drawer.liquid`
+- `sections/cart.liquid`
+- `sections/collection-page-breadcrumb.liquid`
+- `sections/collection-tabs.liquid`
+- `sections/collection.liquid`
+- `sections/collections-with-background.liquid`
+- `sections/collections-with-tabs.liquid`
+- `sections/comparison-table-custom.liquid`
+- `sections/countdown.liquid`
+- `sections/email-signup-form.liquid`
+- `sections/faq-image-accordion.liquid`
+- `sections/featured-blog-posts.liquid`
+- `sections/featured-collection-banner.liquid`
+- `sections/featured-collection-horizontal.liquid`
+- `sections/featured-collection.liquid`
+- `sections/featured-product.liquid`
+- `sections/footer.liquid`
+- `sections/gallery-custom.liquid`
+- `sections/hello-world.liquid`
+- `sections/hero.liquid`
+- `sections/hotspot-full-width-carousel.liquid`
+- `sections/hotspot-gallery.liquid`
+- `sections/hotspot.liquid`
+- `sections/image-comparison-custom.liquid`
+- `sections/image-text-split-layout.liquid`
+- `sections/image-text-stacked-bands.liquid`
+- `sections/parallax.liquid`
+- `sections/password.liquid`
+- `sections/press.liquid`
+- `sections/product-information.liquid`
+- `sections/product.liquid`
+- `sections/quick-add.liquid`
+- `sections/quick-view.liquid`
+- `sections/recently-viewed-card.liquid`
+- `sections/related-posts.liquid`
+- `sections/search-overlay.liquid`
+- `sections/search.liquid`
+- `sections/shop-the-look-section.liquid`
+- `sections/slideshow.liquid`
+- `sections/testimonial-carousel.liquid`
+- `sections/text-marquee-custom.liquid`
+- `sections/video-product-carousel-custom.liquid`
+- `snippets/accordion-details.liquid`
+- `snippets/badge.liquid`
+- `snippets/block-animation-attributes.liquid`
+- `snippets/carousel-navigation-icon.liquid`
+- `snippets/cart-surface-style.liquid`
+- `snippets/collection-card-render.liquid`
+- `snippets/collection-column-icon.liquid`
+- `snippets/comparison-table-column-content.liquid`
+- `snippets/comparison-table-column-shell.liquid`
+- `snippets/comparison-table-row-content.liquid`
+- `snippets/comparison-table-row-value-content.liquid`
+- `snippets/comparison-table-value.liquid`
+- `snippets/component-overlay.liquid`
+- `snippets/deferred-stylesheet.liquid`
+- `snippets/form-field.liquid`
+- `snippets/gallery-strip-item-styles.liquid`
+- `snippets/heading-size-token.liquid`
+- `snippets/hero-styles.liquid`
+- `snippets/icon.liquid`
+- `snippets/image-comparison.liquid`
+- `snippets/image-ratio-value.liquid`
+- `snippets/image.liquid`
+- `snippets/layout-flow-group-style.liquid`
+- `snippets/layout-flow-style.liquid`
+- `snippets/localization-overlay.liquid`
+- `snippets/localization-styles.liquid`
+- `snippets/marquee-letter-spacing.liquid`
+- `snippets/media-background.liquid`
+- `snippets/media-card.liquid`
+- `snippets/pagination-pages.liquid`
+- `snippets/pickup-availability-stores.liquid`
+- `snippets/price.liquid`
+- `snippets/product-badges.liquid`
+- `snippets/product-callout-hotspot.liquid`
+- `snippets/product-callout-runtime.liquid`
+- `snippets/product-card-image.liquid`
+- `snippets/product-card-placeholder.liquid`
+- `snippets/product-card-price.liquid`
+- `snippets/product-card-quick-add-overlay.liquid`
+- `snippets/product-card-quick-add.liquid`
+- `snippets/product-card-quick-view.liquid`
+- `snippets/product-card-swatches.liquid`
+- `snippets/product-card-title.liquid`
+- `snippets/product-card.liquid`
+- `snippets/product-collection-grid.liquid`
+- `snippets/product-hotspot.liquid`
+- `snippets/product-inventory-status.liquid`
+- `snippets/product-list-promo-items.liquid`
+- `snippets/product-list-promo-styles.liquid`
+- `snippets/product-media-lightbox.liquid`
+- `snippets/product-media.liquid`
+- `snippets/quantity-icon.liquid`
+- `snippets/search-query-fields.liquid`
+- `snippets/section-content-slot.liquid`
+- `snippets/share-button.liquid`
+- `snippets/shoppy-x-ray.liquid`
+- `snippets/size-style.liquid`
+- `snippets/slideshow-image.liquid`
+- `snippets/social-icon.liquid`
+- `snippets/social-links.liquid`
+- `snippets/swatch-option.liquid`
+- `snippets/swatch.liquid`
+- `snippets/swiper-carousel.liquid`
+- `snippets/swiper-navigation.liquid`
+- `snippets/swiper-pagination.liquid`
+- `snippets/tab-layout-styles.liquid`
+- `snippets/testimonial-split-arrow.liquid`
+- `snippets/theme-button.liquid`
+- `snippets/tooltip.liquid`
+- `snippets/variant-picker.liquid`
+- `snippets/video.liquid`
+- `snippets/view-all-button.liquid`
