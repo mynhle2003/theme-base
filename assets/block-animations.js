@@ -141,7 +141,7 @@
     const mutations = new MutationObserver(records => {
       if (records.some(record => record.type === 'childList' || ['data-block-animation', 'data-animation-delay'].includes(record.attributeName))) scan();
       records.forEach(record => {
-        if (record.type !== 'attributes' || !record.target.matches('[role="tabpanel"], .slideshow__swiper .swiper-slide')) return;
+        if (record.type !== 'attributes' || !record.target.matches('[role="tabpanel"], .slideshow__swiper .swiper-slide, .press-item[data-carousel-slide]')) return;
         nodes.forEach((state, element) => {
           if (!record.target.contains(element)) return;
           if (!active(element)) {

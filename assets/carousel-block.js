@@ -334,6 +334,9 @@ const initializeReveal = (root) => {
     } catch {
       return false;
     } finally {
+      // Selection classes own the resting state. A finished forwards-filled
+      // exit must not keep a slide transparent when it becomes active again.
+      animation.cancel();
       if (state.slideAnimation === animation) state.slideAnimation = null;
     }
   };
