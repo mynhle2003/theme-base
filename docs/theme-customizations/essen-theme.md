@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"729be6cfc3a31211b3107df8b9a6206860e406c9"} -->
+<!-- theme-base-sync-state: {"sha":"fafdc8de4c9c60757949e90f6c50320b1bf361bf"} -->
 # Customization record: essen-theme
 
 Theme branch: `theme/essen-theme`
@@ -254,6 +254,22 @@ Record every theme-specific change here before committing the code. During base 
 | `assets/section-hotspot-full-width-carousel.css` | CSS previously owned by `sections/hotspot-full-width-carousel.liquid` stylesheet block. | Preserve the existing declarations in an explicitly loaded component asset. | Avoid downloading unused CSS on pages where the component is absent. | Keep asset and owner reference together; preserve source order and existing responsive behavior. |
 | `blocks/_marquee-countdown-timer.liquid` | Personal main includes component CSS in the compiled stylesheet. | Load unchanged CSS from assets/component-marquee-countdown-timer.css only when this component renders, instead of including it in the global compiled stylesheet. | Reduce homepage render-blocking CSS without changing component markup/settings. | Keep synchronous owner loading for editor, Section Rendering API and storefront; review dependent selectors together. |
 | `assets/component-marquee-countdown-timer.css` | CSS previously owned by `blocks/_marquee-countdown-timer.liquid` stylesheet block. | Preserve the existing declarations in an explicitly loaded component asset. | Avoid downloading unused CSS on pages where the component is absent. | Keep asset and owner reference together; preserve source order and existing responsive behavior. |
+| `assets/component-collection-card.css` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `assets/section-parallax.css` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `blocks/_header-menu-toggle.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `blocks/_mega-menu-banner.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `blocks/collection-background-item.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `blocks/collection-promo.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `blocks/gallery-image.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `blocks/group.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `blocks/parallax-item.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `blocks/product-buy-quantity.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `blocks/product-callout.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `blocks/product-inventory.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `blocks/promo-card.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `blocks/scrolling-card.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `snippets/media-card.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `snippets/product-inventory-status.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
 
 ## Base update decisions
 
@@ -262,6 +278,64 @@ Record every theme-specific change here before committing the code. During base 
 | `d887dac2d2f637e2aae15f59272634f8fd3d1e32` | `blocks/collection-card.liquid`, `sections/cart.liquid`, `sections/collections.liquid`, `blocks/product-variant-picker.liquid`, `templates/cart.json`, `templates/list-collections.json` | Dùng implementation collection-card/cart/collections từ main; giữ 5:4 của Assen trong renderer dùng chung; nhập composition defaults đã duyệt; xóa `color_option_display`, `grid_item_width`, `grid_gap` cùng giá trị đã lưu trong preset/template theo xác nhận riêng. Sau đồng bộ, bỏ header `Swatches` mồ côi và khớp options `swatch_style` với main theo yêu cầu bổ sung. | Theme owner, 2026-10-06 |
 
 ## Base sync history
+
+### 2026-10-10 — Update from personal main
+
+- Previous main commit: `729be6cfc3a31211b3107df8b9a6206860e406c9`
+- Updated through main commit: `fafdc8de4c9c60757949e90f6c50320b1bf361bf`
+- Main commits included: 2
+- Included main commits:
+  - `b996ced23c9679b33c545e237347445071348461` — fix(sync): preserve custom theme compositions and source option order
+  - `fafdc8de4c9c60757949e90f6c50320b1bf361bf` — chore(base): update base with 19 upstream commits through 46304245
+- Change summary:
+
+```text
+assets/component-blocks-image-card.css         | 261 +++++++++++++
+ assets/component-sections-promo-grid.css       |  46 +++
+ assets/critical.css                            |  46 ++-
+ assets/header.js                               |   3 +-
+ assets/promo-grid.js                           |  12 +
+ blocks/faq_answer_text.liquid                  |   6 +-
+ blocks/location-item.liquid                    |  15 +-
+ blocks/marquee-item.liquid                     |  45 ++-
+ blocks/promo-card-custom.liquid                | 486 +++++++++++++++++++++++
+ docs/theme-customization-policy.md             |  10 +
+ locales/en.default.json                        |   7 +-
+ scripts/theme-base-sync.cjs                    | 109 +++++-
+ sections/bundle-builder.liquid                 |  10 +-
+ sections/collection-banner.liquid              |  34 +-
+ sections/collection-page-links.liquid          |  76 +++-
+ sections/collections-with-tabs.liquid          |   7 +-
+ sections/comparison-table-custom.liquid        |  18 +-
+ sections/contact-form-custom.liquid            |  44 ++-
+ sections/email-signup-dual-image.liquid        |  10 +-
+ sections/email-signup-form.liquid              |  10 +-
+ sections/email-signup-single-image.liquid      |  10 +-
+ sections/faq-image-accordion.liquid            |  36 +-
+ sections/gallery-full-width-strip.liquid       |   8 +-
+ sections/gallery-image-grid.liquid             |  13 +-
+ sections/image-comparison-custom.liquid        |   6 +-
+ sections/image-comparison-split-custom.liquid  |  30 +-
+ sections/image-text-card-grid.liquid           |  10 +-
+ sections/image-text-split-layout.liquid        |  18 +-
+ sections/location-list.liquid                  |  59 +--
+ sections/location-map.liquid                   |  60 +--
+ sections/promo-grid-custom.liquid              | 519 +++++++++++++++++++++++++
+ sections/scroll-reading-text.liquid            |  46 ++-
+ sections/testimonial-carousel.liquid           |  54 +--
+ sections/testimonials-background-custom.liquid |  74 ++--
+ sections/testimonials-horizontal-custom.liquid |  40 +-
+ sections/timeline.liquid                       |  80 ++--
+ snippets/image-card-content.liquid             | 259 ++++++++++++
+ snippets/overlay-background.liquid             |  30 ++
+ templates/collection.json                      |  28 +-
+ templates/index.spinel-sync.json               |   6 +-
+ templates/page.contact.json                    |   5 +-
+ tests/image-height.test.cjs                    |  28 ++
+ tests/product-media-variant.test.cjs           |  83 ++++
+ 43 files changed, 2340 insertions(+), 417 deletions(-)
+```
+
 
 ### 2026-10-09 — Update from personal main
 
@@ -1256,3 +1330,321 @@ Supersedes the earlier interim mapping in this record. Typography group names an
 When Heading size is Display, tags map H1 Display, H2 XL (Figma H1), H3 LG (Figma H2), H4 MD (Figma H3), H5 SM (Figma H4), H6 XS (Figma H5). Non-heading Display classes retain the XL fallback. Shared CSS and the parent-variable resolver implement the same mapping. Explicit sizes remain independent, including the three Slideshow headings fixed at XL. Former 24px/20px Custom selections are corrected to Small (33 settings); 16px unmatched selections remain Custom. Detailed configuration limits are listed in docs/essen-typography-preset-migration.md.
 
 Validation: exact main Typography names/option labels and resolved translation values; current sizes satisfy schema ranges; 54 Chrome computed-style assertions at 1920/1024/375px; Theme Check and customization coverage. No commit/push or store upload.
+
+### Retained custom paths through main fafdc8de
+
+- `assets/announcement-bar.js`
+- `assets/breadcrumbs.css`
+- `assets/carousel-block.js`
+- `assets/cart-drawer-recommendations.js`
+- `assets/cart-drawer.css`
+- `assets/cart-page.css`
+- `assets/cart-page.js`
+- `assets/collection-thumbnails.js`
+- `assets/collections-with-background.js`
+- `assets/comparison-table.js`
+- `assets/component-bundle-summary.css`
+- `assets/component-collection-card.css`
+- `assets/component-comparison-table.css`
+- `assets/component-image-comparison.css`
+- `assets/component-marquee-countdown-timer.css`
+- `assets/component-pagination.css`
+- `assets/component-product-callout.css`
+- `assets/component-search-suggestions.css`
+- `assets/component-social-links.css`
+- `assets/component-timeline-list.css`
+- `assets/editorial-text.js`
+- `assets/image-text-card-grid.js`
+- `assets/image-text-stacked-bands.js`
+- `assets/product-buy-buttons.js`
+- `assets/product-collection-carousel.js`
+- `assets/product-description.js`
+- `assets/product-information-extras.css`
+- `assets/product-information-extras.js`
+- `assets/product-information.css`
+- `assets/product-inventory.js`
+- `assets/product-media.css`
+- `assets/product-media.js`
+- `assets/quick-add.js`
+- `assets/quick-view.js`
+- `assets/search-page.js`
+- `assets/section-collection.css`
+- `assets/section-collection.js`
+- `assets/section-featured-collection-banner.css`
+- `assets/section-hotspot-full-width-carousel.css`
+- `assets/section-parallax.css`
+- `assets/section-parallax.js`
+- `assets/section-zoom-image-banner.css`
+- `assets/section-zoom-image-banner.js`
+- `assets/slideshow.js`
+- `assets/swiper-12.2.0-effect-fade.min.css`
+- `assets/timeline-list.js`
+- `assets/variant-picker.js`
+- `blocks/_bundle-product-list.liquid`
+- `blocks/_bundle-summary.liquid`
+- `blocks/_cart-content.liquid`
+- `blocks/_cart-order-summary.liquid`
+- `blocks/_cart-summary.liquid`
+- `blocks/_collection-columns.liquid`
+- `blocks/_collection-count.liquid`
+- `blocks/_collection-filter.liquid`
+- `blocks/_collection-pagination.liquid`
+- `blocks/_collection-products.liquid`
+- `blocks/_collection-sort.liquid`
+- `blocks/_collection-toolbar.liquid`
+- `blocks/_collections-list.liquid`
+- `blocks/_collections-page-card.liquid`
+- `blocks/_column.liquid`
+- `blocks/_comparison-table-features.liquid`
+- `blocks/_header-account.liquid`
+- `blocks/_header-cart.liquid`
+- `blocks/_header-localization.liquid`
+- `blocks/_header-logo.liquid`
+- `blocks/_header-menu-toggle.liquid`
+- `blocks/_header-menu.liquid`
+- `blocks/_header-search.liquid`
+- `blocks/_marquee-button.liquid`
+- `blocks/_marquee-countdown-timer.liquid`
+- `blocks/_marquee-coupon-code.liquid`
+- `blocks/_marquee-divider.liquid`
+- `blocks/_marquee-group.liquid`
+- `blocks/_marquee-heading.liquid`
+- `blocks/_marquee-icon.liquid`
+- `blocks/_marquee-image.liquid`
+- `blocks/_marquee-text.liquid`
+- `blocks/_mega-menu-banner.liquid`
+- `blocks/_mega-menu-banners.liquid`
+- `blocks/_overlay-product-media.liquid`
+- `blocks/_product-collection-grid.liquid`
+- `blocks/_product-details.liquid`
+- `blocks/_product-media.liquid`
+- `blocks/_search-input.liquid`
+- `blocks/_search-products.liquid`
+- `blocks/_search-results.liquid`
+- `blocks/announcement-countdown-timer.liquid`
+- `blocks/announcement-text.liquid`
+- `blocks/banner.liquid`
+- `blocks/blog-card-button.liquid`
+- `blocks/blog-card-description.liquid`
+- `blocks/blog-card-meta.liquid`
+- `blocks/blog-card-tag.liquid`
+- `blocks/blog-card-title.liquid`
+- `blocks/blog-card.liquid`
+- `blocks/blog-grid.liquid`
+- `blocks/blog-list.liquid`
+- `blocks/blog-meta.liquid`
+- `blocks/blog-tag-filter.liquid`
+- `blocks/button-view-details.liquid`
+- `blocks/button.liquid`
+- `blocks/buttons.liquid`
+- `blocks/carousel.liquid`
+- `blocks/cart-free-shipping.liquid`
+- `blocks/cart-items.liquid`
+- `blocks/cart-order-note.liquid`
+- `blocks/cart-shipping-estimator.liquid`
+- `blocks/collection-background-item.liquid`
+- `blocks/collection-card-button.liquid`
+- `blocks/collection-card-description.liquid`
+- `blocks/collection-card-title.liquid`
+- `blocks/collection-card.liquid`
+- `blocks/collection-list-items.liquid`
+- `blocks/collection-promo.liquid`
+- `blocks/collection-tab.liquid`
+- `blocks/collection-thumbnail.liquid`
+- `blocks/collections-with-tabs-item.liquid`
+- `blocks/comments.liquid`
+- `blocks/comparison-table-column.liquid`
+- `blocks/comparison-table-row-value.liquid`
+- `blocks/comparison-table-row.liquid`
+- `blocks/comparison-table.liquid`
+- `blocks/contact-field.liquid`
+- `blocks/contact-form.liquid`
+- `blocks/content.liquid`
+- `blocks/countdown-timer.liquid`
+- `blocks/discount-code.liquid`
+- `blocks/divider.liquid`
+- `blocks/editorial-text.liquid`
+- `blocks/email-signup.liquid`
+- `blocks/eyebrow.liquid`
+- `blocks/faq_accordion.liquid`
+- `blocks/faq_category.liquid`
+- `blocks/faq_item.liquid`
+- `blocks/featured-image.liquid`
+- `blocks/featured-post.liquid`
+- `blocks/first-card.liquid`
+- `blocks/gallery-hotspot.liquid`
+- `blocks/gallery-image.liquid`
+- `blocks/gallery-item.liquid`
+- `blocks/gallery-strip-feature-item.liquid`
+- `blocks/gallery-strip-item.liquid`
+- `blocks/gallery-strip-overlay-group.liquid`
+- `blocks/grid.liquid`
+- `blocks/group.liquid`
+- `blocks/header.liquid`
+- `blocks/heading.liquid`
+- `blocks/hotspot.liquid`
+- `blocks/icon.liquid`
+- `blocks/image-card.liquid`
+- `blocks/image-comparison.liquid`
+- `blocks/image-text-card-grid-item.liquid`
+- `blocks/image-text-stacked-band.liquid`
+- `blocks/image.liquid`
+- `blocks/localization.liquid`
+- `blocks/logo.liquid`
+- `blocks/marquee.liquid`
+- `blocks/menu.liquid`
+- `blocks/metafield.liquid`
+- `blocks/pagination.liquid`
+- `blocks/parallax-item.liquid`
+- `blocks/payment-icons.liquid`
+- `blocks/policy-links.liquid`
+- `blocks/popup.liquid`
+- `blocks/press-item.liquid`
+- `blocks/press-quotes.liquid`
+- `blocks/previous-and-next-posts.liquid`
+- `blocks/product-accordion.liquid`
+- `blocks/product-badges.liquid`
+- `blocks/product-buy-accelerated-checkout.liquid`
+- `blocks/product-buy-add-to-cart.liquid`
+- `blocks/product-buy-buttons.liquid`
+- `blocks/product-buy-quantity.liquid`
+- `blocks/product-callout-gallery.liquid`
+- `blocks/product-callout.liquid`
+- `blocks/product-card-compact.liquid`
+- `blocks/product-card.liquid`
+- `blocks/product-description.liquid`
+- `blocks/product-inventory.liquid`
+- `blocks/product-list-banner.liquid`
+- `blocks/product-list.liquid`
+- `blocks/product-pickup-availability.liquid`
+- `blocks/product-price.liquid`
+- `blocks/product-recommendations.liquid`
+- `blocks/product-sticky-add-to-cart.liquid`
+- `blocks/product-title.liquid`
+- `blocks/product-variant-picker.liquid`
+- `blocks/promo-card.liquid`
+- `blocks/row.liquid`
+- `blocks/scroll-to.liquid`
+- `blocks/scrolling-card.liquid`
+- `blocks/scrolling-image.liquid`
+- `blocks/shop-the-look-product.liquid`
+- `blocks/shop-the-look-products.liquid`
+- `blocks/slide.liquid`
+- `blocks/slideshow-slide.liquid`
+- `blocks/social-links.liquid`
+- `blocks/spacer.liquid`
+- `blocks/tab-layout.liquid`
+- `blocks/tabs-view-all-button.liquid`
+- `blocks/tags-and-sharing.liquid`
+- `blocks/testimonial-item.liquid`
+- `blocks/text.liquid`
+- `blocks/timeline-list.liquid`
+- `blocks/timeline-slide.liquid`
+- `blocks/video.liquid`
+- `blocks/view-all-button.liquid`
+- `sections/404.liquid`
+- `sections/announcement-bar.liquid`
+- `sections/article.liquid`
+- `sections/blog-posts.liquid`
+- `sections/breadcrumbs.liquid`
+- `sections/cart-drawer.liquid`
+- `sections/cart.liquid`
+- `sections/collection-list-thumbnails.liquid`
+- `sections/collection-page-breadcrumb.liquid`
+- `sections/collection-tabs.liquid`
+- `sections/collection.liquid`
+- `sections/collections-with-background.liquid`
+- `sections/featured-blog-posts.liquid`
+- `sections/featured-collection-banner.liquid`
+- `sections/featured-collection.liquid`
+- `sections/featured-product.liquid`
+- `sections/gallery-custom.liquid`
+- `sections/hero.liquid`
+- `sections/hotspot-full-width-carousel.liquid`
+- `sections/hotspot-gallery.liquid`
+- `sections/hotspot.liquid`
+- `sections/icon-with-text-custom.liquid`
+- `sections/image-text-stacked-bands.liquid`
+- `sections/parallax.liquid`
+- `sections/password.liquid`
+- `sections/product-information.liquid`
+- `sections/product.liquid`
+- `sections/quick-add.liquid`
+- `sections/quick-view.liquid`
+- `sections/recently-viewed-card.liquid`
+- `sections/related-posts.liquid`
+- `sections/scrolling-text-star-separator.liquid`
+- `sections/search-overlay.liquid`
+- `sections/search.liquid`
+- `sections/slideshow.liquid`
+- `sections/zoom-image-banner.liquid`
+- `snippets/accordion-details.liquid`
+- `snippets/badge.liquid`
+- `snippets/block-animation-attributes.liquid`
+- `snippets/carousel-navigation-icon.liquid`
+- `snippets/cart-surface-style.liquid`
+- `snippets/collection-card-render.liquid`
+- `snippets/collection-column-icon.liquid`
+- `snippets/comparison-table-column-content.liquid`
+- `snippets/comparison-table-column-shell.liquid`
+- `snippets/comparison-table-row-content.liquid`
+- `snippets/comparison-table-row-value-content.liquid`
+- `snippets/comparison-table-value.liquid`
+- `snippets/component-overlay.liquid`
+- `snippets/deferred-stylesheet.liquid`
+- `snippets/form-field.liquid`
+- `snippets/gallery-strip-item-styles.liquid`
+- `snippets/header-localization-styles.liquid`
+- `snippets/heading-size-token.liquid`
+- `snippets/hero-styles.liquid`
+- `snippets/icon.liquid`
+- `snippets/image-comparison.liquid`
+- `snippets/image.liquid`
+- `snippets/layout-flow-group-style.liquid`
+- `snippets/layout-flow-style.liquid`
+- `snippets/localization-flag.liquid`
+- `snippets/localization-overlay.liquid`
+- `snippets/marquee-letter-spacing.liquid`
+- `snippets/media-background.liquid`
+- `snippets/media-card.liquid`
+- `snippets/pagination-pages.liquid`
+- `snippets/pickup-availability-stores.liquid`
+- `snippets/price.liquid`
+- `snippets/product-badges.liquid`
+- `snippets/product-callout-hotspot.liquid`
+- `snippets/product-callout-runtime.liquid`
+- `snippets/product-card-image.liquid`
+- `snippets/product-card-metafield.liquid`
+- `snippets/product-card-placeholder.liquid`
+- `snippets/product-card-price.liquid`
+- `snippets/product-card-quick-add-overlay.liquid`
+- `snippets/product-card-quick-add.liquid`
+- `snippets/product-card-quick-view.liquid`
+- `snippets/product-card-swatches.liquid`
+- `snippets/product-card-title.liquid`
+- `snippets/product-card.liquid`
+- `snippets/product-collection-grid.liquid`
+- `snippets/product-hotspot.liquid`
+- `snippets/product-inventory-status.liquid`
+- `snippets/product-list-promo-items.liquid`
+- `snippets/product-list-promo-styles.liquid`
+- `snippets/product-media-lightbox.liquid`
+- `snippets/product-media.liquid`
+- `snippets/search-query-fields.liquid`
+- `snippets/section-content-slot.liquid`
+- `snippets/share-button.liquid`
+- `snippets/size-style.liquid`
+- `snippets/slideshow-image.liquid`
+- `snippets/social-icon.liquid`
+- `snippets/social-links.liquid`
+- `snippets/swatch-option.liquid`
+- `snippets/swatch.liquid`
+- `snippets/swiper-carousel.liquid`
+- `snippets/swiper-navigation.liquid`
+- `snippets/swiper-pagination.liquid`
+- `snippets/tab-layout-styles.liquid`
+- `snippets/theme-button.liquid`
+- `snippets/tooltip.liquid`
+- `snippets/variant-picker.liquid`
+- `snippets/video.liquid`
+- `snippets/view-all-button.liquid`

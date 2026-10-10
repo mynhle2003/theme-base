@@ -1,3 +1,5 @@
+{% capture effective_overlay %}{% render 'overlay-background', overlay_settings: section.settings, color_id: 'overlay_color', enabled_id: 'overlay', style_id: 'overlay_style' %}{% endcapture %}
+{% assign effective_overlay = effective_overlay | strip %}
 {% liquid
   assign section_container_width = 'page-width'
   if section.settings.section_width == 'full_width'
@@ -434,6 +436,44 @@
       "unit": "px",
       "default": 0,
       "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "overlay",
+      "default": true,
+      "label": "t:labels.show_overlay"
+    },
+    {
+      "type": "select",
+      "id": "overlay_style",
+      "label": "t:labels.overlay_style",
+      "options": [
+        {
+          "value": "solid",
+          "label": "t:options.overlay_style.solid"
+        },
+        {
+          "value": "gradient",
+          "label": "t:options.overlay_style.gradient"
+        }
+      ],
+      "default": "solid",
+      "visible_if": "{{ section.settings.overlay }}"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "default": "#00000033",
+      "alpha": true,
+      "label": "t:labels.overlay_color",
+      "visible_if": "{{ section.settings.overlay and section.settings.overlay_style == 'solid' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "overlay_gradient",
+      "default": "linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.52))",
+      "label": "t:labels.overlay_gradient",
+      "visible_if": "{{ section.settings.overlay and section.settings.overlay_style == 'gradient' }}"
     }
   ],
   "presets": [
@@ -441,7 +481,11 @@
       "name": "Scroll reading text",
       "category": "Storytelling",
       "settings": {
-        "color_scheme": "scheme-1"
+        "color_scheme": "scheme-1",
+        "overlay": true,
+        "overlay_style": "solid",
+        "overlay_color": "#00000033",
+        "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.52))"
       },
       "blocks": [
         {
