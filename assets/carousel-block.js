@@ -376,8 +376,8 @@ const initializeReveal = (root) => {
       const didExit = await animateElement(
         currentSlide,
         [
-          { opacity: 1, transform: 'translateY(0)' },
-          { opacity: 0, transform: 'translateY(-10px)' }
+          { opacity: 1 },
+          { opacity: 0 }
         ],
         {
           duration: 250,
@@ -394,8 +394,8 @@ const initializeReveal = (root) => {
       const didEnter = await animateElement(
         nextSlide,
         [
-          { opacity: 0, transform: 'translateY(10px)' },
-          { opacity: 1, transform: 'translateY(0)' }
+          { opacity: 0 },
+          { opacity: 1 }
         ],
         {
           duration: 400,
