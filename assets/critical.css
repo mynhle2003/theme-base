@@ -12,6 +12,8 @@ html {
   /* Keep rem calculations predictable: 1rem = 10px (62.5% of 16px). */
   font-size: 62.5%;
   scroll-behavior: smooth;
+  /* Reserve the scrollbar before page content arrives so the header axis stays fixed. */
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -56,7 +58,8 @@ body {
 .header-top:not([data-layout-ready='true']) .header__blocks > .header-menu,
 .header-top:not([data-layout-ready='true']) .header__blocks > .header-logo {
   position: absolute;
-  inset-block-start: 0;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
   margin-inline: 0;
 }
 
@@ -66,17 +69,17 @@ body {
 
 .header-top:not([data-layout-ready='true']) .header__blocks > .header-logo {
   inset-inline-start: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
 }
 
 .header-top:not([data-layout-ready='true']):has(.header-logo--left) .header__blocks > .header-menu {
   inset-inline-start: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
 }
 
 .header-top:not([data-layout-ready='true']):has(.header-logo--left) .header__blocks > .header-logo {
   inset-inline-start: 0;
-  transform: none;
+  transform: translateY(-50%);
 }
 
 .header-top:not([data-layout-ready='true']) .header__blocks > .header-menu-toggle,
@@ -120,7 +123,6 @@ body {
   .header-account,
   .header-cart
 ) .icon {
-  display: inline-flex;
   width: var(--header-icon-size, var(--icon-size-medium));
   height: var(--header-icon-size, var(--icon-size-medium));
   flex: 0 0 auto;
@@ -138,7 +140,7 @@ body {
 @media (max-width: 991.98px) {
   .header-top:not([data-layout-ready='true']) .header__blocks {
     min-height: var(--button-height-mobile);
-    gap: 0.5rem;
+    gap: var(--header-top-gap, 16px);
   }
 
   .header-top:not([data-layout-ready='true']) .header__blocks > .header-menu {
@@ -151,7 +153,7 @@ body {
     margin-inline-end: auto;
     align-items: center;
     justify-content: center;
-    min-height: var(--button-height-mobile);
+    min-height: 24px;
   }
 
   .header-top:not([data-layout-ready='true']) .header__blocks > :is(
@@ -167,6 +169,15 @@ body {
     .header-cart
   ) {
     min-height: var(--button-height-mobile);
+  }
+
+  /* Keep the centered logo on the same axis before/after column setup. */
+  .header-top[data-logo-position='center'] .header__row {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+
+  .header-top:not([data-layout-ready='true']) .header__blocks > .header-cart {
+    margin-inline: 0;
   }
 
   .header-top:not([data-layout-ready='true']):has(.header-logo--left) .header__blocks > .header-logo {
@@ -3242,6 +3253,16 @@ legend {
   z-index: var(--z-drawer, 200);
 }
 
+/* The overlay scheme supplies text/icon colors, not a painted header surface.
+   Resolve its server-rendered state before header.js adds wrapper classes. */
+.section-header:not([data-sticky-type]):has(.header-top[data-header-overlay]),
+.header.header--overlay {
+  background-color: transparent;
+}
+.section-header:has(.header-top--transparent-scheme) .header-top {
+  background-color: transparent;
+}
+
 /* Announcement geometry is required before section CSS and its module load. */
 .announcement-bar { --announcement-bar-loop-distance: 0px; position: relative; width: 100%; overflow: hidden; color: var(--body-color); background: var(--announcement-bar-background, var(--background-color)); padding: var(--announcement-bar-padding-top, 8px) var(--announcement-bar-padding-right, 0px) var(--announcement-bar-padding-bottom, 8px) var(--announcement-bar-padding-left, 0px); }
 .announcement-bar__inner { position: relative; z-index: 1; display: flex; align-items: center; width: 100%; min-height: 2rem; }
@@ -3262,8 +3283,8 @@ legend {
 /* Stack all slides in one cell until initialization, reserving the tallest
    content without leaving a separate row for hidden discount/countdown blocks. */
 .announcement-bar--slider:not([data-announcement-initialized='true']) .announcement-bar__viewport { height: auto; }
-.announcement-bar--slider:not([data-announcement-initialized='true']) .announcement-bar__slides { display: grid; transform: none; }
-.announcement-bar--slider:not([data-announcement-initialized='true']) .announcement-bar__slides > .text-block { grid-area: 1 / 1; height: auto; visibility: hidden; }
+.announcement-bar--slider:not([data-announcement-initialized='true']) .announcement-bar__slides { display: grid; grid-template-columns: minmax(0, 1fr); transform: none; }
+.announcement-bar--slider:not([data-announcement-initialized='true']) .announcement-bar__slides > .text-block { grid-area: 1 / 1; justify-self: stretch; width: auto; height: auto; visibility: hidden; }
 .announcement-bar--slider:not([data-announcement-initialized='true']) .announcement-bar__slides > .text-block:first-child { display: flex; flex: 0 0 auto; height: auto; opacity: 1; visibility: visible; pointer-events: auto; }
 .announcement-bar--scrolling .announcement-bar__slides { display: flex; flex-wrap: nowrap; align-items: center; gap: var(--announcement-bar-gap, 16px); width: max-content; max-width: max-content; animation: none; }
 .announcement-bar--scrolling .announcement-bar__slides > .text-block { flex: 0 0 auto; width: fit-content; max-width: max-content; padding: 0; white-space: nowrap; }
@@ -3272,6 +3293,23 @@ legend {
 .announcement-bar--single .announcement-bar__control, .announcement-bar--scrolling .announcement-bar__control { visibility: hidden; pointer-events: none; }
 .announcement-bar--slider.announcement-bar--navigation-show_on_hover .announcement-bar__inner > .announcement-bar__control { opacity: 0; }
 .announcement-bar--bottom-separator { border-bottom: 1px solid var(--border-color); }
+/* Header-group geometry must be available before deferred section styles/runtime. */
+.announcement-bar__layout { position: relative; z-index: 1; }
+.announcement-bar--social-desktop .announcement-bar__layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr); align-items: center; gap: var(--announcement-bar-gap, 16px); }
+.announcement-bar__social, .announcement-bar__inner { min-width: 0; }
+.announcement-bar--single .announcement-bar__control { display: none; }
+.announcement-bar--slider.announcement-bar--single .announcement-bar__viewport { flex: 1 1 auto; width: 100%; max-width: 100%; }
+.announcement-bar--slider .announcement-bar__slides > .text-block { --text-align-default: var(--announcement-alignment, center); text-align: var(--text-align-default); justify-content: var(--text-align-default); }
+@media (max-width: 767.98px) {
+  .announcement-bar { padding-top: var(--announcement-padding-top-mobile, var(--announcement-bar-padding-top, 8px)); padding-bottom: var(--announcement-padding-bottom-mobile, var(--announcement-bar-padding-bottom, 8px)); }
+  .announcement-bar--social-desktop .announcement-bar__layout { grid-template-columns: minmax(0, 1fr); }
+  .announcement-bar__social { display: none; }
+  .announcement-bar--slider .announcement-bar__slides > .text-block { --text-align-default: var(--announcement-alignment-mobile, var(--announcement-alignment, center)); }
+}
+.announcement-social-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--announcement-social-gap, 12px); }
+.announcement-social-links a { display: flex; align-items: center; }
+.announcement-social-links svg { display: block; width: 16px; height: 16px; }
+
 
 /* Optional section content: keep editor metadata without reserving gaps or padding. */
 .section-content-scope [data-content-empty],

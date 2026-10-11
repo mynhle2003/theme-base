@@ -49,6 +49,13 @@
       {% endif %}
     {% endunless %}
 
+    {% comment %}Header labels use Accent; start its base face before the first
+      header paint to avoid fallback-font widths shifting the action group.{% endcomment %}
+    {% assign header_accent_font = settings.type_accent_font | default: settings.type_primary_font %}
+    {% if header_accent_font != blank and header_accent_font.system? == false and header_accent_font != settings.type_primary_font %}
+      {{ header_accent_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
+    {% endif %}
+
     {% # Load and preload the critical CSS %}
     {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
     <link rel="stylesheet" href="{{ 'component-overlay.css' | asset_url }}" media="print" onload="this.media='all'">
