@@ -1589,3 +1589,9 @@ Typography scale correction — 2026-10-09: Theme Settings headings H1–H5 are 
 - `snippets/variant-picker.liquid`
 - `snippets/video.liquid`
 - `snippets/view-all-button.liquid`
+
+## Quantity Forms Input style binding (2026-10-11)
+
+Compared the current theme with personal main: layout/theme.liquid maps settings.input_style to the body input-style--solid/outline class; critical.css maps that class to --input-border-width and --input-background-color. Removed the Featured product hardcoded border, radius, background and text color from assets/product-information.css so Default Quantity consumes those form tokens. The numeric input inherits the control text color. Explicit Default in the Featured product preset; homepage already uses Default. Keep 109x44px size, typography, icons and purchase layout. Verified the running localhost preview: Solid Quantity border 0px, background matches the inherited form token and size remains 109x44px.
+
+At the owner's request, configured Forms through settings_data.json to match the Figma Quantity reference: Outline, Square, 44px desktop/mobile height and 1px border, with scheme-1 Border set to #e6e6e6. The running preview confirms the Outline body class, transparent control background over the white scheme surface, square corners, #e6e6e6 border and 109x44px geometry. Shared Forms and scheme-1 border consumers follow these settings. No additional CSS override was added for this configuration.
