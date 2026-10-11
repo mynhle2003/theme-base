@@ -15,7 +15,7 @@ function fixture(type = 'bullets') {
   };
   const slides = [{ hidden: false }, { hidden: false }, { hidden: false }];
   const main = {};
-  vm.runInNewContext(fs.readFileSync('assets/product-media.js', 'utf8').replace(/^import .*;\n/gm, ''), {
+  vm.runInNewContext(fs.readFileSync('assets/product-media.js', 'utf8').replace(/^import .*;\r?\n/gm, ''), {
     HTMLElement: class {}, Pagination: 'Pagination', Thumbs: 'Thumbs',
     customElements: { get() {}, define(name, value) { Gallery = value; } },
     window: { matchMedia() { return { matches: false }; } },

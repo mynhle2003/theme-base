@@ -5,7 +5,7 @@ const vm = require('node:vm');
 
 function fixture({ featured = true, filtered = false, activeIndex = 1 } = {}) {
   let Gallery;
-  vm.runInNewContext(fs.readFileSync('assets/product-media.js', 'utf8').replace(/^import .*;\n/gm, ''), {
+  vm.runInNewContext(fs.readFileSync('assets/product-media.js', 'utf8').replace(/^import .*;\r?\n/gm, ''), {
     HTMLElement: class {},
     customElements: { get() {}, define(name, value) { Gallery = value; } },
     window: { requestAnimationFrame(callback) { callback(); } },

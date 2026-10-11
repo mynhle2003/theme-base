@@ -316,20 +316,16 @@ const startAutoplay = (root, swiper, loop) => {
   let hovered = false;
   let focused = false;
   let inViewport = true;
-  let lastPaint = -Infinity;
   const pagination = root.querySelector('[data-slideshow-pagination]');
-  const numbers = [...(pagination?.querySelectorAll('.slideshow__pagination-number') || [])]
-    .map((number) => ({ number, svg: number.querySelector('svg') }));
   const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   const controller = new AbortController();
   const options = { signal: controller.signal };
-  const paint = () => {
-    const progress = Math.max(0, Math.min(1, elapsed / delay));
-    // Keep this changing token on the small control subtree, not every slide.
-    pagination?.style.setProperty('--slideshow-autoplay-progress', String(progress));
-    numbers.forEach(({ number, svg }) => {
-      svg?.style.setProperty('--percent', number.getAttribute('aria-current') === 'true' ? String(progress) : '0');
-    });
+  const paint = (running = false) => {
+    // CSS owns the progress animation. Only change its playback state when
+    // pausing/resuming, rather than invalidating styles on every timer frame.
+    if (!pagination) return;
+    const state = running ? 'running' : 'paused';
+    if (pagination.dataset.autoplayClock !== state) pagination.dataset.autoplayClock = state;
   };
   const reset = () => {
     // Moving from a clone to its original is still the same logical slide.
@@ -345,22 +341,20 @@ const startAutoplay = (root, swiper, loop) => {
   const visibilityChange = () => {
     previous = null;
     if (!canTick()) {
-      window.cancelAnimationFrame(frame);
+      window.clearTimeout(frame);
       frame = 0;
-    } else if (!frame) frame = window.requestAnimationFrame(tick);
+      paint(false);
+    } else if (!frame) frame = window.setTimeout(tick, 100);
   };
-  const tick = (now) => {
+  const tick = (now = performance.now()) => {
     frame = 0;
     if (!canTick()) return;
     const paused = (pauseOnHover && hovered) || focused || touching || swiper.isLocked || swiper.animating;
+    paint(!paused);
     if (paused) previous = null;
     else {
       if (previous !== null) elapsed = Math.min(delay, elapsed + now - previous);
       previous = now;
-      if (now - lastPaint >= 32) {
-        paint();
-        lastPaint = now;
-      }
       if (elapsed >= delay) {
         elapsed = 0;
         previous = null;
@@ -368,9 +362,11 @@ const startAutoplay = (root, swiper, loop) => {
         paint();
       }
     }
-    frame = window.requestAnimationFrame(tick);
+    // The progress runs independently in CSS; polling the slide timer at 10 Hz
+    // avoids keeping a JavaScript animation frame alive throughout page load.
+    frame = window.setTimeout(tick, Math.min(100, Math.max(1, delay - elapsed)));
   };
-  // The timer and both pagination styles share one clock, including pauses.
+  // Keep slide timing and CSS progress paused together.
   swiper.on('activeIndexChange realIndexChange', reset);
   swiper.on('touchStart', touchStart);
   swiper.on('touchEnd', touchEnd);
@@ -390,13 +386,13 @@ const startAutoplay = (root, swiper, loop) => {
   visibilityChange();
   return {
     destroy() {
-      window.cancelAnimationFrame(frame);
+      window.clearTimeout(frame);
       swiper.off('activeIndexChange realIndexChange', reset);
       swiper.off('touchStart', touchStart);
       swiper.off('touchEnd', touchEnd);
       controller.abort();
       viewportObserver?.disconnect();
-      pagination?.style.removeProperty('--slideshow-autoplay-progress');
+      if (pagination) delete pagination.dataset.autoplayClock;
     },
   };
 };
