@@ -1,9 +1,13 @@
-<!-- theme-base-sync-state: {"sha":"fafdc8de4c9c60757949e90f6c50320b1bf361bf"} -->
+<!-- theme-base-sync-state: {"sha":"75baa7c890ee43f9a7c97ad3aee49961ea295f2f"} -->
 # Customization record: elara-theme
 
 Theme branch: `theme/elara-theme`
 Personal base at creation: `d887dac2d2f637e2aae15f59272634f8fd3d1e32`
 Theme update source: this repository's `main` branch
+
+## CLI base update — 2026-10-11
+
+Applied main commit `75baa7c` (Windows preview and theme sync support). This source range changes only CLI scripts and their Windows tests. Preserved theme implementations and existing preview authentication/supervisor exports when resolving the module export overlap.
 
 ## Customizations
 
