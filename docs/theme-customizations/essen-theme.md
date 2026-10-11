@@ -1,9 +1,13 @@
-<!-- theme-base-sync-state: {"sha":"fafdc8de4c9c60757949e90f6c50320b1bf361bf"} -->
+<!-- theme-base-sync-state: {"sha":"75baa7c890ee43f9a7c97ad3aee49961ea295f2f"} -->
 # Customization record: essen-theme
 
 Theme branch: `theme/essen-theme`
 Personal base at creation: `fa304936dd536d9d2d7ac46f9b2361947c955ce0`
 Theme update source: this repository's `main` branch
+
+## CLI base update — 2026-10-11
+
+Applied main commit `75baa7c` (Windows preview and theme sync support). This source range changes only CLI scripts and their Windows tests. Preserved theme implementations and the existing preview recovery behavior.
 Team base source for personal main: https://github.com/Chieu2507/shopify-theme-base (only `main` or `dev`)
 
 Record every theme-specific change here before committing the code. During base updates, review any overlapping paths and describe the expected behavior before resolving.

@@ -70,11 +70,18 @@ function parseStartArgs(args) {
 }
 
 function readOwner() {
-  try {
-    return JSON.parse(fs.readFileSync(LOCK, "utf8"));
-  } catch (error) {
-    if (error.code === "ENOENT") return null;
-    throw error;
+  // An exclusive lock file can briefly be empty before its creator writes it.
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    try {
+      return JSON.parse(fs.readFileSync(LOCK, "utf8"));
+    } catch (error) {
+      if (error.code === "ENOENT") return null;
+      if (error instanceof SyntaxError && attempt < 9) {
+        Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 50);
+        continue;
+      }
+      throw error;
+    }
   }
 }
 
@@ -119,6 +126,11 @@ function processAlive(pid) {
 function processCommand(pid) {
   if (!processAlive(pid)) return "";
   try {
+    if (process.platform === "win32") {
+      return execFileSync("powershell.exe", ["-NoProfile", "-NonInteractive", "-Command",
+        `(Get-CimInstance Win32_Process -Filter 'ProcessId = ${Number(pid)}').CommandLine`],
+      { encoding: "utf8", timeout: 10000, windowsHide: true }).trim();
+    }
     return execFileSync("ps", ["-p", String(pid), "-o", "command="], {
       encoding: "utf8",
       timeout: 5000,
@@ -159,6 +171,18 @@ function clearShopifyFlagOverrides() {
   }
   if (storePassword) env.SHOPIFY_FLAG_STORE_PASSWORD = storePassword;
   return env;
+}
+
+function resolveWindowsCli() {
+  const result = spawnSync("where.exe", ["shopify.cmd"], { encoding: "utf8", windowsHide: true });
+  for (const shim of (result.stdout || "").trim().split(/\r?\n/)) {
+    const packageFile = path.join(path.dirname(shim), "node_modules", "@shopify", "cli", "package.json");
+    if (!fs.existsSync(packageFile)) continue;
+    const pkg = JSON.parse(fs.readFileSync(packageFile, "utf8"));
+    const entry = typeof pkg.bin === "string" ? pkg.bin : pkg.bin?.shopify;
+    if (entry) return path.resolve(path.dirname(packageFile), entry);
+  }
+  throw new Error("Không tìm thấy Shopify CLI trong PATH. Cài npm install -g @shopify/cli và mở terminal mới.");
 }
 
 function extractThemeEditorUrl(output) {
@@ -206,6 +230,14 @@ async function portIsOpen(port) {
 }
 
 function portBelongsToSupervisor(port, childPid) {
+  if (process.platform === "win32") {
+    try {
+      const output = execFileSync("powershell.exe", ["-NoProfile", "-NonInteractive", "-Command",
+        `$listeners = @(Get-NetTCPConnection -LocalPort ${Number(port)} -State Listen -ErrorAction SilentlyContinue); if (!$listeners.Count) { exit 1 }; $processes = @(Get-CimInstance Win32_Process); foreach ($listener in $listeners) { $currentId = $listener.OwningProcess; $seen = @{}; while ($currentId -ne ${Number(childPid)}) { if ($seen.ContainsKey($currentId)) { exit 1 }; $seen[$currentId] = $true; $entry = $processes | Where-Object ProcessId -eq $currentId | Select-Object -First 1; if (!$entry) { exit 1 }; $currentId = $entry.ParentProcessId }; }; 'owned'`],
+      { encoding: "utf8", timeout: 10000, windowsHide: true });
+      return output.trim() === "owned";
+    } catch { return false; }
+  }
   let pids;
   try {
     pids = execFileSync("lsof", ["-nP", "-t", `-iTCP:${port}`, "-sTCP:LISTEN"], {
@@ -245,6 +277,13 @@ function processGroupAlive(pid) {
 }
 
 async function killProcessGroup(pid, allowExitedLeader = false) {
+  if (process.platform === "win32") {
+    if (!processAlive(pid)) return;
+    const result = spawnSync("taskkill.exe", ["/PID", String(pid), "/T", "/F"], { encoding: "utf8", windowsHide: true });
+    if (result.error) throw result.error;
+    if (result.status !== 0 && processAlive(pid)) throw new Error(result.stderr || result.stdout);
+    return;
+  }
   if (!processAlive(pid) && !allowExitedLeader) return;
   if (!processGroupAlive(pid)) return;
   try {
@@ -459,7 +498,9 @@ async function run(store) {
         const args = ["theme", "dev", "--store", store, "--path", ROOT,
           "--host", "127.0.0.1", "--port", String(port), "--nodelete", "--open"];
         log(`Chạy shopify ${args.join(" ")}`);
-        const child = spawn("shopify", args, {
+        // npm's Windows .cmd shim cannot be spawned directly without a shell.
+        const cli = process.platform === "win32" ? resolveWindowsCli() : null;
+        const child = spawn(cli ? process.execPath : "shopify", cli ? [cli, ...args] : args, {
           cwd: ROOT,
           env: clearShopifyFlagOverrides(),
           detached: true,
@@ -613,6 +654,11 @@ async function start(store) {
     interrupted = true;
     if (supervisorPid && processAlive(supervisorPid)) {
       try {
+        if (process.platform === "win32") {
+          const result = spawnSync("taskkill.exe", ["/PID", String(supervisorPid), "/T", "/F"], { encoding: "utf8", windowsHide: true });
+          if (result.status === 0 && readOwner()?.pid === supervisorPid) fs.unlinkSync(LOCK);
+          return;
+        }
         process.kill(supervisorPid, "SIGTERM");
       } catch {
         // The supervisor may have exited while the signal was being sent.
@@ -771,6 +817,12 @@ async function stop() {
     return;
   }
 
+  if (process.platform === "win32") {
+    await killProcessGroup(owner.pid);
+    if (readOwner()?.pid === owner.pid) fs.unlinkSync(LOCK);
+    log("Đã dừng supervisor và tiến trình Shopify CLI thuộc preview.");
+    return;
+  }
   process.kill(owner.pid, "SIGTERM");
   for (let i = 0; i < 80 && processAlive(owner.pid); i += 1) await sleep(250);
   if (processAlive(owner.pid)) throw new Error("Supervisor chưa dừng sau 20 giây; xem status và logs.");
@@ -800,7 +852,9 @@ async function main(args) {
   throw new Error(`Lệnh không hỗ trợ: ${action}. Chạy node theme-base preview help.`);
 }
 
-main(process.argv.slice(2)).catch((error) => {
+if (require.main === module) main(process.argv.slice(2)).catch((error) => {
   console.error(`\nLỗi: ${error.message}`);
   process.exitCode = 1;
 });
+
+module.exports = { processCommand, portBelongsToSupervisor, resolveWindowsCli, readOwner };

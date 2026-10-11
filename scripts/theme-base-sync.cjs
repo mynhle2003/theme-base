@@ -29,6 +29,11 @@ const SHOPIFY_SETTING_TYPES_WITH_IMPLICIT_EMPTY_DEFAULT = new Set([
 ]);
 
 function run(command, args, { allowFailure = false, inherit = false, input, env } = {}) {
+  if (command === "shopify" && process.platform === "win32") {
+    const { resolveWindowsCli } = require("./theme-base-preview.cjs");
+    args = [resolveWindowsCli(), ...args];
+    command = process.execPath;
+  }
   const result = spawnSync(command, args, {
     cwd: ROOT,
     encoding: "utf8",
