@@ -213,6 +213,36 @@
     .slideshow__navigation { display: none; }
   }
   @media (prefers-reduced-motion: reduce) { .slideshow * { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+  /* Let the browser animate progress; the timer only toggles pause/resume. */
+  .slideshow__pagination[data-autoplay-clock] { --slideshow-clock-play-state: paused; }
+  .slideshow__pagination[data-autoplay-clock='running'] { --slideshow-clock-play-state: running; }
+  .slideshow .slideshow__swiper > .slideshow__pagination[data-autoplay-clock][data-pagination-type='bullets'] .swiper-pagination-bullet-active::after {
+    transform-origin: left center;
+    will-change: transform;
+    animation: slideshow-clock-bullet var(--slideshow-autoplay-duration) linear both;
+    animation-play-state: var(--slideshow-clock-play-state);
+  }
+  .slideshow__swiper.swiper-rtl > .slideshow__pagination[data-autoplay-clock][data-pagination-type='bullets'] .swiper-pagination-bullet-active::after { transform-origin: right center; }
+  .slideshow__pagination[data-autoplay-clock] .slideshow__pagination-number[aria-current='true'] circle:last-child {
+    animation: slideshow-clock-number var(--slideshow-autoplay-duration) linear both;
+    animation-play-state: var(--slideshow-clock-play-state);
+  }
+  .slideshow__pagination[data-autoplay-clock] .slideshow__pagination-segment--active .slideshow__pagination-segment-fill {
+    animation: slideshow-clock-segment var(--slideshow-autoplay-duration) linear both;
+    animation-play-state: var(--slideshow-clock-play-state);
+  }
+  @keyframes slideshow-clock-bullet {
+    from { transform: translate(-50%, -50%) scaleX(0); }
+    to { transform: translate(-50%, -50%) scaleX(1); }
+  }
+  @keyframes slideshow-clock-number { from { stroke-dashoffset: 93.6404px; } to { stroke-dashoffset: 0; } }
+  @keyframes slideshow-clock-segment { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @media (prefers-reduced-motion: reduce) {
+    .slideshow .slideshow__swiper > .slideshow__pagination[data-autoplay-clock][data-pagination-type='bullets'] .swiper-pagination-bullet-active::after,
+    .slideshow__pagination[data-autoplay-clock] .slideshow__pagination-number[aria-current='true'] circle:last-child,
+    .slideshow__pagination[data-autoplay-clock] .slideshow__pagination-segment--active .slideshow__pagination-segment-fill { animation: none; }
+    .slideshow__pagination[data-autoplay-clock] .slideshow__pagination-segment--active .slideshow__pagination-segment-fill { transform: scaleX(1); }
+  }
 {% endstylesheet %}
 
 {% schema %}

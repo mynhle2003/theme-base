@@ -1652,3 +1652,17 @@ Validation: exact main Typography names/option labels and resolved translation v
 - `snippets/variant-picker.liquid`
 - `snippets/video.liquid`
 - `snippets/view-all-button.liquid`
+
+## Performance follow-up — 2026-10-11
+
+- `assets/slideshow.js`, `sections/slideshow.liquid`: animate pagination in CSS,
+  poll slide timing at 10 Hz after page load; preserve Essen hover/focus-visible,
+  touch, viewport, visibility and unload behavior. No preset or geometry change.
+- `assets/block-animations.js`: batch visibility reads before startup DOM writes.
+- `assets/critical.css`, `assets/swiper-carousel.css`: move existing overlay
+  pagination geometry into critical CSS so deferred styles do not move controls.
+- `assets/product-media.js`: preserve thumbnail button semantics with Swiper.
+- QA: 28 local scoped tests pass, slideshow schema JSON and diff whitespace pass.
+  Test files are excluded from delivery at the owner's request. Remote baseline
+  Performance is 52 mobile; new-code upload, Theme Check and after measurement
+  await renewed CLI authentication. See `docs/qa/essen-performance-2026-10-11.md`.

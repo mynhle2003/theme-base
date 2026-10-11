@@ -316,7 +316,7 @@ class ProductMediaGallery extends HTMLElement {
         spaceBetween: thumbnailGap,
         direction: mode === 'desktop-carousel-left' ? 'vertical' : 'horizontal',
         watchSlidesProgress: true,
-        a11y: { enabled: true },
+        a11y: { enabled: true, slideRole: 'button' },
       });
     }
 

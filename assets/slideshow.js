@@ -308,9 +308,6 @@ const startAutoplay = (root, swiper, loop) => {
   const delay = Math.min(60000, Math.max(3000, Number(root.dataset.autoplayDelay) || 6000));
   const pauseOnHover = root.dataset.pauseOnHover !== 'false';
   const pagination = root.querySelector('[data-slideshow-pagination]');
-  const numberedProgress = pagination?.dataset.paginationType === 'numbers'
-    ? [...pagination.querySelectorAll('.slideshow__pagination-number')].map(number => ({ number, svg: number.querySelector('svg') }))
-    : [];
 
   const index = () => loop ? loop.logicalIndex(swiper.activeIndex) : swiper.realIndex;
   let current = index();
@@ -321,21 +318,21 @@ const startAutoplay = (root, swiper, loop) => {
   let inViewport = !('IntersectionObserver' in window);
   let destroyed = false;
   const schedule = () => {
-    if (!destroyed && !frame && inViewport && !document.hidden) frame = window.requestAnimationFrame(tick);
+    if (!destroyed && !frame && inViewport && !document.hidden && document.readyState === 'complete') {
+      frame = window.setTimeout(tick, Math.min(100, Math.max(1, delay - elapsed)));
+    }
   };
   const suspend = () => {
-    window.cancelAnimationFrame(frame);
+    window.clearTimeout(frame);
     frame = 0;
     previous = null;
+    paint(false);
   };
-  const paint = () => {
-    const progress = Math.max(0, Math.min(1, elapsed / delay));
-    // Only pagination consumes progress. Inheriting it from the slideshow root
-    // invalidates styles for all media and content descendants every frame.
-    pagination?.style.setProperty('--slideshow-autoplay-progress', String(progress));
-    numberedProgress.forEach(({ number, svg }) => {
-      svg?.style.setProperty('--percent', number.getAttribute('aria-current') === 'true' ? String(progress) : '0');
-    });
+  const paint = (running = false) => {
+    // Progress animates in CSS; only pause/resume changes invalidate styles.
+    if (!pagination) return;
+    const state = running ? 'running' : 'paused';
+    if (pagination.dataset.autoplayClock !== state) pagination.dataset.autoplayClock = state;
   };
   const reset = () => {
     // Moving from a clone to its original is still the same logical slide.
@@ -356,16 +353,16 @@ const startAutoplay = (root, swiper, loop) => {
     if (inViewport) schedule();
     else suspend();
   }) : null;
-  const tick = (now) => {
+  const tick = (now = performance.now()) => {
     frame = 0;
     const paused = document.hidden || !isVisible(root) || reducedMotion() ||
       (pauseOnHover && root.matches(':hover')) ||
       Boolean(root.querySelector(':focus-visible')) || touching || swiper.isLocked || swiper.animating;
+    paint(!paused);
     if (paused) previous = null;
     else {
       if (previous !== null) elapsed = Math.min(delay, elapsed + now - previous);
       previous = now;
-      paint();
       if (elapsed >= delay) {
         elapsed = 0;
         previous = null;
@@ -375,11 +372,12 @@ const startAutoplay = (root, swiper, loop) => {
     }
     schedule();
   };
-  // The timer and both pagination styles share one clock, including pauses.
+  // Keep CSS progress and slide timing paused together without a per-frame task.
   swiper.on('activeIndexChange realIndexChange', reset);
   swiper.on('touchStart', touchStart);
   swiper.on('touchEnd', touchEnd);
   document.addEventListener('visibilitychange', visibilityChange);
+  window.addEventListener('load', schedule);
   paint();
   observer?.observe(root);
   schedule();
@@ -392,7 +390,8 @@ const startAutoplay = (root, swiper, loop) => {
       swiper.off('touchStart', touchStart);
       swiper.off('touchEnd', touchEnd);
       document.removeEventListener('visibilitychange', visibilityChange);
-      pagination?.style.removeProperty('--slideshow-autoplay-progress');
+      window.removeEventListener('load', schedule);
+      if (pagination) delete pagination.dataset.autoplayClock;
     },
   };
 };

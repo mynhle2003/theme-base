@@ -57,9 +57,9 @@
       state.element.classList.remove('reveal-words-ready');
       state.element.classList.remove('reveal-words-animated');
     };
-    const reveal = (element, immediate = false) => {
+    const reveal = (element, immediate = false, prepared = null) => {
       const state = nodes.get(element);
-      if (!state || state.played || (!immediate && !active(element))) return;
+      if (!state || state.played || (!immediate && !(prepared ? prepared.active : active(element)))) return;
       if (state.refreshTimer != null) {
         if (!immediate) return;
         clearTimeout(state.refreshTimer); state.refreshTimer = null;
@@ -67,7 +67,7 @@
       state.played = true;
       element.dataset.animationInitialized = 'true';
       element.classList.remove('reveal-pending');
-      if (immediate || !enabled() || typeof element.animate !== 'function') return;
+      if (immediate || !(prepared ? prepared.motion : enabled()) || typeof element.animate !== 'function') return;
       const delay = Math.round(Math.max(0, Math.min(2000, Number(element.dataset.animationDelay) || 0)) / 50) * 50;
       const options = { duration: 500, delay, easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)', fill: 'backwards' };
       const from = { opacity: 0 };
@@ -119,8 +119,14 @@
       element.classList.remove('reveal-pending');
     };
     const scan = () => {
+      // Read visibility in one pass before splitting words or writing classes.
+      // Alternating each block's layout reads and animation writes forces a
+      // fresh document layout for every block during storefront startup.
+      const motion = enabled();
+      const candidates = [...root.querySelectorAll(selector)];
+      const visible = new Set(candidates.filter(element => active(element) && inView(element)));
       nodes.forEach((state, element) => { if (!root.contains(element) || !element.matches(selector)) remove(element); });
-      root.querySelectorAll(selector).forEach(element => {
+      candidates.forEach(element => {
         const type = element.dataset.blockAnimation;
         if (!types.has(type) || element.closest('.announcement-bar, .marquee, [data-multi-image]')) { remove(element); return; }
         const configuration = `${type}:${element.dataset.animationDelay}`;
@@ -128,13 +134,13 @@
         remove(element);
         if (type === 'rotate-words') splitWords(element);
         nodes.set(element, { element, type, configuration, played: false, animations: [], refreshTimer: null });
-        if (skipInitialAnimations || !enabled() || !observer || typeof element.animate !== 'function' || element.contains(document.activeElement)) { reveal(element, true); return; }
+        if (skipInitialAnimations || !motion || !observer || typeof element.animate !== 'function' || element.contains(document.activeElement)) { reveal(element, true); return; }
         element.classList.add('reveal-pending');
         element.dataset.animationInitialized = 'true';
         observer.observe(element);
-        if (active(element) && inView(element)) {
+        if (visible.has(element)) {
           if (editor) refresh(element);
-          else reveal(element);
+          else reveal(element, false, { active: true, motion });
         }
       });
     };
