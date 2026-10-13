@@ -245,13 +245,6 @@
     isolation: isolate;
   }
 
-  /* Cover fractional-pixel seams against the card's scheme background. */
-  .image-card__media > .background-media:has(.background-media__image) {
-    inset: -1px;
-    width: calc(100% + 2px);
-    height: calc(100% + 2px);
-  }
-
   .image-card--width-desktop-custom {
     flex: 0 0 var(--image-card-width, 100%);
   }
