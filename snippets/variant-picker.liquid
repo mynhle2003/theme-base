@@ -240,7 +240,9 @@
           {% endif %}
           {% if show_size_chart %}
             <button
-              class="variant-picker__size-chart-trigger btn btn-tertiary"
+              class="variant-picker__size-chart-trigger btn btn-tertiary link-underline"
+              data-underline="persistent"
+              data-underline-target="text"
               type="button"
               aria-haspopup="dialog"
               aria-controls="{{ size_chart_dialog_id }}"
