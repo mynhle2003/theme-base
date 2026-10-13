@@ -26,6 +26,10 @@ Quy tắc: `agents-build-themes/skills/build/new/build-theme/references/variant-
 | --- | --- | --- | --- | --- | --- |
 | ARCHE-ESSEN-FORM-INPUT-CSS-001 | 1 | Định nghĩa modifier input ở CSS foundation; hết 7 cảnh báo ValidScopedCSSClass | assets/critical.css — patch local chưa commit | pending — chạy Theme Check và audit CSS ở Essen trước khi áp dụng | Form primitive `.form__control` hiện có; không đổi schema/settings |
 
+| Mã update animation | Revision | Phạm vi | Nguồn | Trạng thái Essen | Dependency |
+| --- | --- | --- | --- | --- | --- |
+| ARCHE-ESSEN-BLOCK-ANIMATION-001 | 1 | Rebuild animation block theo main, đặt lại giá trị preset cũ tương ứng và dọn doc custom animation | Personal `main` tại revision được chọn khi update; không lấy runtime custom Arche làm nguồn | pending — chỉ ghi yêu cầu, chưa rebuild hoặc dọn doc đích | Contract animation trên main và mapping block/setting cũ → mới đã xác minh |
+
 ## Điều kiện bắt buộc trước mọi update variant
 
 Owner yêu cầu ngày 2026-10-13: **theme variant phải kiểm tra lại lỗi/gap ở chính theme đích; chỉ thực hiện update nếu lỗi/gap còn tồn tại**. Quy tắc này áp dụng cho mọi mã trong doc, kể cả update mới thêm sau này.
@@ -34,6 +38,32 @@ Owner yêu cầu ngày 2026-10-13: **theme variant phải kiểm tra lại lỗi
 - Nếu lỗi đã hết, upstream đã có fix tương đương, hoặc contract `(custom)` đã được đáp ứng, ghi `skipped` và lý do/bằng chứng; không copy patch hoặc thay media/preset chỉ để khớp nguồn.
 - Nếu chưa xác minh được lỗi/gap, giữ `pending` và ghi phần QA còn thiếu; không áp dụng thử mù. Contract không tương thích thì ghi `conflict`.
 - Chỉ áp dụng patch nhỏ nhất khi tái hiện được lỗi/gap và có yêu cầu update của owner. Sau sửa, kiểm tra lại ở theme đích rồi mới đánh dấu verified; không dùng QA Arche thay cho QA Essen. Việc ghi doc không cho phép sửa/push/publish Essen.
+
+## ARCHE-ESSEN-BLOCK-ANIMATION-001 — Animation block theo main và khôi phục preset
+
+Yêu cầu tương ứng cho Arche được theo dõi riêng tại [MAIN-ARCHE-BLOCK-ANIMATION-001](main-to-arche.md).
+
+Ngày: 2026-10-13. Revision: 1. Owner yêu cầu bổ sung vào doc update variant. Nguồn implementation là personal `main` của repo theme; chốt branch/commit nguồn và commit đích trong receipt khi thực hiện update. Đích `../essen-theme`, branch `theme/essen-theme`: **pending**, chưa rebuild, sửa preset, dọn doc custom, upload hoặc publish.
+
+### Phạm vi và trình tự áp dụng
+
+1. Audit animation block ở theme đích và contract trên `main` tại revision được chọn. Nếu đích đã theo main, preset đã được bảo toàn và không còn ghi chú custom animation lỗi thời, ghi `skipped` cùng bằng chứng. Nếu main chưa có contract animation thay thế hoặc mapping chưa xác minh được, giữ `pending`/ghi `conflict` theo nguyên nhân; không copy runtime custom Arche để thay main.
+2. Trước rebuild, snapshot giá trị animation cũ của từng block trong section/block presets, template JSON, section-group JSON và saved compositions/settings có liên quan. Ghi đường dẫn, block type/ID, ngữ cảnh và giá trị thực tế, gồm `animation_type`, `animation_delay`, các giá trị `none`/`0` và trường tương đương nếu contract đích dùng ID khác. Snapshot là dữ liệu của theme đích, không lấy cadence/default Arche hoặc Essen build plan để ghi đè.
+3. Rebuild phần implementation/schema animation theo main, rồi **set lại giá trị preset cũ tương ứng** trên block/setting mới bằng mapping tường minh đã kiểm tra. Khôi phục cả saved instances liên quan; giữ content, media, thứ tự và các setting không thuộc animation. Giữ block ID khi contract cho phép. Chỉ dùng default main cho trường mới không có giá trị cũ tương ứng; không reset toàn bộ preset về default main hoặc suy đoán mapping chỉ theo vị trí block. Giá trị/type cũ không còn được hỗ trợ phải được báo rõ để giải quyết trước khi áp dụng.
+4. Sau khi rebuild, khôi phục giá trị và QA đạt, **clear doc custom liên quan đến animation đã được thay bằng main** trong customization record và build plan của theme đích. Xóa hoặc sửa riêng mô tả/entry animation lỗi thời; nếu cùng file còn typography, token/font helpers, performance hoặc custom khác thì giữ record cho phần còn khác main. Không xóa nguyên dòng/file chỉ vì có nhắc animation. Preset-only không tính là custom implementation. Giữ lịch sử/receipt và mã update này để truy vết nguồn main, mapping và QA; dọn mô tả custom đang áp dụng không đồng nghĩa xóa lịch sử.
+
+Owner cho phép đưa phần animation custom cũ về main trong mã update này; đây là ngoại lệ có phạm vi đối với luật giữ custom khi update base. Các custom ngoài animation vẫn theo [Theme customization policy](../theme-customization-policy.md). Không thực hiện cleanup trước khi migration thành công.
+
+### Acceptance và trạng thái
+
+- Implementation animation theo đúng commit main được ghi trong receipt; không còn runtime/schema custom cũ trong phạm vi đã thay thế hoặc dependency dư.
+- Đối chiếu snapshot trước/sau: mỗi giá trị preset/saved instance cũ được khôi phục vào trường tương ứng hoặc có mapping được giải quyết rõ ràng; `none` và delay `0` không bị thay bằng default. Content/media/order và setting ngoài animation giữ nguyên.
+- Parse JSON/schema, chạy Theme Check và customization coverage; QA animation desktop/mobile, motion on/off, reduced motion, nội dung vẫn đọc được, Theme Editor add/remove/duplicate/reorder/select/deselect/save/reload và teardown/reinit theo contract main. Không đánh dấu verified khi chưa có QA đích.
+- Doc custom hiện hành chỉ còn các khác biệt thực tế so với main; ghi receipt cho phần animation trở về main và preset được bảo toàn. Upload preview/publish theo dõi riêng.
+
+| Ngày | Mã | Revision đích | Trạng thái | Bằng chứng |
+| --- | --- | --- | --- | --- |
+| 2026-10-13 | ARCHE-ESSEN-BLOCK-ANIMATION-001 | chưa áp dụng | pending | Chỉ bổ sung yêu cầu rebuild theo main → khôi phục preset cũ tương ứng → dọn doc custom animation sau QA; chưa mutation repo/store Essen. |
 
 ## ARCHE-ESSEN-IMAGE-CARD-001 — Vệt đen ở mép ảnh
 

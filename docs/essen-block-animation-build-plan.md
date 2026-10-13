@@ -1,10 +1,12 @@
+> Arche runtime update: [MAIN-ARCHE-BLOCK-ANIMATION-001](variant-updates/main-to-arche.md). This plan preserves the earlier migration history; its Elara runtime description is no longer active for Arche.
+
 # Essen block animation build plan
 
 Role/placement/context: existing Heading, Text, Button, Eyebrow, Icon and Editorial text in current compositions.
 Ownership: block Type/Delay; global motion and reduced motion control runtime. Existing typography/layout/padding retain ownership.
 Slots: unchanged; no wrappers or new children.
 Output: validated attributes on block roots, shared animation class.
-Runtime: Elara section-scoped controller with editor replay, teardown, hidden-scope gating and boot fallback.
+Runtime: historical Elara controller, superseded in Arche on 2026-10-13 by personal main shared card/block runtime (MAIN-ARCHE-BLOCK-ANIMATION-001). Elara boot fallback and custom word CSS are retired in Arche; saved leaf controls remain compatibility hooks. Essen status is tracked separately in docs/variant-updates/arche-to-essen.md.
 Responsive/accessibility: preserve DOM/order/layout, readable without JS or with motion disabled; focus exposes content.
 QA: schemas, JS syntax, Theme Check, customization coverage and existing kernel regressions. Native editor/store visual QA remains outstanding.
 Defaults: None/0 for existing content; merchant can opt in. Preserve all preset and saved settings.
