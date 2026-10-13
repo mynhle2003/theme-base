@@ -16,6 +16,14 @@ const render = (tags, overrides = {}) => engine.parseAndRender(source, {
 });
 const tones = html => [...html.matchAll(/class="product-badge product-badge--([^"]+)"/g)].map(match => match[1]);
 
+test('status tags do not duplicate badges or consume the custom tag limit', async () => {
+  const html = await render(['Sale', 'soldout', 'Sold out', 'sold-out', 'badge: Sale', 'New', 'Second', 'Third']);
+  assert.deepEqual(tones(html), ['tag', 'tag-secondary', 'tag']);
+  assert.match(html, /New/);
+  assert.match(html, /Third/);
+  assert.doesNotMatch(html, /Sale|soldout|Sold out|sold-out/);
+});
+
 test('disabled, empty and blank-only card tags omit empty badge wrappers', async () => {
   for (const html of [await render(['New'], { show_tags: false }), await render([]), await render([' ', 'badge:', 'BADGE:  '])]) {
     assert.equal(html.trim(), '');

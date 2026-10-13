@@ -2,7 +2,7 @@
 
 Ngày: 2026-10-13. Nguồn: `arche-theme`, branch `theme/arche-theme`, HEAD `f340ad0e3facf5e0ad9c6eba0700ae4e12e0f131` + patch local chưa commit. Đích: `../essen-theme`, branch `theme/essen-theme`, HEAD đã audit `acb809562bf01eb1f301e88439504d3c93bfc141`; chưa áp dụng update.
 
-Theo phạm vi người dùng xác nhận, doc này theo dõi **Variant picker chỉ chuyển ảnh khi đổi swatch**, **fix Gap của Tab Layout**, **Rounded progress** **luật mở theme block bằng `@theme` cho section có `(custom)`** và **fix vệt đen ở mép Image card** (bổ sung theo yêu cầu ngày 2026-10-13). Navigation Only icon/layout Figma, preset `Image cards: carousel (custom)`, ảnh/content và thứ tự slide là custom riêng của Arche, không chuyển sang Essen. Không copy toàn bộ section/template hoặc dùng các phần riêng này làm dependency của Rounded progress.
+Theo phạm vi người dùng xác nhận, doc này theo dõi **Variant picker chỉ chuyển ảnh khi đổi swatch**, **fix Gap của Tab Layout**, **Rounded progress** **luật mở theme block bằng `@theme` cho section có `(custom)`** và **fix vệt đen ở mép Image card** và **fix cảnh báo CSS input dùng chung** (bổ sung theo yêu cầu ngày 2026-10-13). Navigation Only icon/layout Figma, preset `Image cards: carousel (custom)`, ảnh/content và thứ tự slide là custom riêng của Arche, không chuyển sang Essen. Không copy toàn bộ section/template hoặc dùng các phần riêng này làm dependency của Rounded progress.
 
 Quy tắc: `agents-build-themes/skills/build/new/build-theme/references/variant-updates.md`. Giữ mã đã cấp cho từng update; trạng thái code local, QA, upload preview và publish được theo dõi riêng. Lần chỉnh doc này không áp dụng thêm code hay upload vào Essen.
 
@@ -21,6 +21,10 @@ Quy tắc: `agents-build-themes/skills/build/new/build-theme/references/variant-
 | --- | --- | --- | --- | --- | --- |
 | ARCHE-ESSEN-SIZE-GUIDE-001 | 1 | Size guide dùng Button Tertiary; xóa CSS riêng | snippets/variant-picker.liquid; assets/critical.css — commit 314ff1e6 | pending | Shared Tertiary button/underline contract |
 | ARCHE-ESSEN-PRODUCT-CARD-TAGS-001 | 1 | Checkbox Show tags và tối đa ba tag trên Product cards | config/settings_schema.json; snippets/product-card.liquid; snippets/product-badges.liquid; snippets/badge.liquid; snippets/css-variables.liquid; assets/critical.css; locales/en.default.schema.json — patch local trước commit | pending | Shared badge primitive và card context; độc lập Size guide |
+
+| Mã update cảnh báo | Revision | Phạm vi | Nguồn | Trạng thái Essen | Dependency |
+| --- | --- | --- | --- | --- | --- |
+| ARCHE-ESSEN-FORM-INPUT-CSS-001 | 1 | Định nghĩa modifier input ở CSS foundation; hết 7 cảnh báo ValidScopedCSSClass | assets/critical.css — patch local chưa commit | pending — chạy Theme Check và audit CSS ở Essen trước khi áp dụng | Form primitive `.form__control` hiện có; không đổi schema/settings |
 
 ## Điều kiện bắt buộc trước mọi update variant
 
@@ -229,3 +233,67 @@ QA nguồn Show tags: bốn Liquid render tests PASS; full Theme Check 0 errors 
 | --- | --- | --- | --- | --- |
 | 2026-10-13 | ARCHE-ESSEN-SIZE-GUIDE-001 | chưa áp dụng | pending | Commit nguồn 314ff1e6; Essen phải kiểm tra gap trước update. |
 | 2026-10-13 | ARCHE-ESSEN-PRODUCT-CARD-TAGS-001 | chưa áp dụng | pending | Bốn render tests và Theme Check nguồn pass; chưa mutation/upload/publish Essen. |
+
+
+## ARCHE-ESSEN-FORM-INPUT-CSS-001 — Cảnh báo CSS input dùng chung
+
+Ngày: 2026-10-13. Revision: 1. Nguồn: `arche-theme`, branch `theme/arche-theme`, HEAD `98fb9bc1aa0fffe21201f4f7ac68150c322cfc37` + patch local chưa commit. Đích: `essen-theme`, branch dự kiến `theme/essen-theme`; Essen pending, chưa audit/apply/upload/publish trong tác vụ này.
+
+### Nguyên nhân và patch nguồn
+
+- Theme Check trước sửa: 0 errors / 12 warnings. Có 7 `ValidScopedCSSClass`: 6 lần dùng `form__control--input` trong `blocks/product-buy-buttons.liquid`, 1 lần trong `blocks/product-buy-quantity.liquid`.
+- Modifier được dùng bởi form-field, quantity, gift-card recipient, back-in-stock và các input khác. Một số component có selector riêng trong `{% stylesheet %}`, nhưng foundation chưa định nghĩa modifier. Các consumer không render component đó bị checker cảnh báo về dependency CSS ngoài scope.
+- Sửa riêng `assets/critical.css`: thêm selector sau vào **cùng `:where(...)` đang sở hữu style input toàn theme**, giữ nguyên tất cả selector/declaration cũ:
+
+```css
+.form__control.form__control--input:not(.form__control--checkbox):not(.form__control--radio):not([type='checkbox']):not([type='radio']):not([type='hidden'])
+```
+
+- Selector mới là tập con của selector `.form__control:not(...)` hiện có, nằm trong cùng `:where` có specificity 0. Không thêm declaration, không đổi style/cascade hiện tại; modifier nay có owner toàn theme rõ ràng. Giữ các selector riêng của Search, Email signup, Contact form và Header search, cùng markup/runtime hiện có.
+- Không chuyển custom layout/preset/content Arche; không sửa settings merchant hoặc tắt checker.
+
+### Kiểm tra và áp dụng ở Essen
+
+1. Chạy `shopify theme check --output json` ở Essen, kiểm tra các consumer thật và definition của modifier trong CSS global được layout tải. Nếu đã có definition tương đương hoặc không còn cảnh báo/gap này, ghi `skipped` cùng bằng chứng. Chưa xác minh được thì giữ `pending`.
+2. Nếu gap còn tồn tại và owner yêu cầu update Essen, thêm riêng selector vào rule foundation tương ứng của Essen. Audit các exclusion và specificity thực tế, không copy cả `critical.css` của Arche hoặc CSS riêng của component khác. Nếu contract khác, ghi `conflict` và reconcile trước.
+3. Chạy lại Theme Check: `ValidScopedCSSClass` liên quan phải hết; so sánh với baseline để không phát sinh cảnh báo/error mới. Kiểm tra Quantity, recipient/back-in-stock, Search, Email signup và Contact form ở desktop/mobile, bàn phím/focus, input type checkbox/radio/hidden, Theme Editor save/reload. Giá trị, validation và form submit phải giữ nguyên.
+4. Ghi customization record Essen với cùng mã và bằng chứng QA đích; chỉ đánh dấu `verified` sau QA Essen. Upload/publish theo dõi riêng.
+
+### QA nguồn và 5 cảnh báo để xử lý sau
+
+- Sau patch: Theme Check toàn repo **0 errors / 5 warnings**, hết cả 7 `ValidScopedCSSClass`; 18 tests liên quan product controls, overlay product modules và search PASS. `git diff --check` PASS.
+- Kiểm tra selector: alias mới chỉ khớp phần tử đã khớp selector foundation cũ; declaration và specificity không đổi. Chưa chạy QA storefront/Theme Editor trực tiếp; không coi unit tests là QA Essen.
+- Owner xác nhận ngày 2026-10-13: **5 cảnh báo `ExcessiveSettingsCount` xử lý sau**. Giữ `.theme-check.yml` dùng recommended, ngưỡng mặc định 40; không tăng ngưỡng hoặc disable rule. Theo [Shopify](https://shopify.dev/docs/storefronts/themes/tools/theme-check/checks/excessive-settings-count), chỉ settings root có `id` được tính, không tính header/paragraph. Đây là ngưỡng lint về độ phức tạp, không phải giới hạn cứng schema.
+
+| Block nguồn | Settings có id | Trạng thái |
+| --- | --- | --- |
+| `blocks/_bundle-summary.liquid` | 41 | deferred — xử lý sau theo owner |
+| `blocks/_comparison-table-features.liquid` | 41 | deferred — xử lý sau theo owner |
+| `blocks/carousel.liquid` | 55 | deferred — xử lý sau theo owner |
+| `blocks/comparison-table-column.liquid` | 46 | deferred — xử lý sau theo owner |
+| `blocks/editorial-text.liquid` | 55 | deferred — xử lý sau theo owner |
+
+Các settings có consumer trực tiếp hoặc dynamic/snippet; không xóa chỉ để giảm count. Đợt xử lý sau cần thiết kế block con và migration dữ liệu riêng, bảo toàn setting IDs/giá trị và QA editor; phần đó không nằm trong patch CSS này và không phải lệnh update Essen.
+
+| Ngày | Mã | Revision đích | Trạng thái | Bằng chứng |
+| --- | --- | --- | --- | --- |
+| 2026-10-13 | ARCHE-ESSEN-FORM-INPUT-CSS-001 | chưa áp dụng | pending | Arche hết 7 CSS warnings; Essen chưa audit/sửa/upload/publish. |
+
+
+## ARCHE-ESSEN-PRODUCT-BADGES-002 — Tags, Sale và Sold out theo Figma
+
+Ngày 2026-10-13. Owner yêu cầu ghi chú update variant; Essen **pending**, chưa áp dụng. Nguồn: Arche local, chưa commit. Figma desktop 46306:2048; shared Badges 34147:1638, Sold out 34147:1639.
+
+| File | Chuyển thay đổi |
+| --- | --- |
+| assets/critical.css | Card NEW/SALE/SOLD OUT: Poppins từ token font sẵn có, 10px, weight từ badge token (500), uppercase, tracking 1.4px, line-height 1.5, min-height 22px; padding 2px/8px trừ border-width hiện có. Radius dùng --badge-radius, không đóng cứng. Tag border dùng màu nền tương ứng. |
+| snippets/css-variables.liquid | Tag primary text #111111 thay #181818; giữ trắng và secondary tone hiện có. |
+| snippets/product-badges.liquid | Bỏ sale/soldout (kể cả dạng có khoảng trắng, dấu -/_, legacy badge:) trong custom-tag loop; không tính vào giới hạn 3 tag. Giữ automatic sale/sold-out, sold-out precedence và Show tags gating. |
+| config/settings_data.json current | Dùng option sẵn có: product_card_show_tags=true, radius_badges_subheadings=slightly_rounded (4px), badge_sale_background_color=#D94100, badge_sale_text_color=#FFFFFF, badge_sold_out_background_color=#FFFFFF, badge_sold_out_text_color=#111111. Giữ preset khác. |
+| tests/product-card-tags.test.cjs | Thêm regression cho status-tag exclusion và không tiêu hao giới hạn tag. |
+
+Khi update Essen: audit code/settings đích trước, chuyển patch theo diff nhỏ; giữ option màu/bo góc/font/border, không thay bằng CSS hardcoded. Color/radius settings là global nên kiểm tra cả consumers ngoài product card. Không copy nguyên settings_data hoặc ghi đè các customizations khác. Chỉ các thông số card chưa có option mới nằm trong CSS.
+
+Catalog là dữ liệu store, không được chuyển bằng Git: không chạy lại cleanup trên store khác. Với catalog được yêu cầu đồng bộ Figma, chỉ gắn tag đúng product trong nguồn; không thêm New/Bestseller mặc định, badge: prefix, vendor/template hoặc Figma-* marker. Source text new hiện được store tái sử dụng thành New; CSS uppercase hiển thị NEW. Không rename tag dùng chung để đổi case. Sale/Sold out lấy trạng thái commerce, không tạo tag hay đổi stock để giả lập. Quy tắc duy trì tại agents-build-themes/skills/setup-store/store-content-media/references/products.md.
+
+Bằng chứng nguồn: 5 tests PASS, Theme Check 0 errors / 5 existing deferred warnings, diff check PASS; homepage DOM readback xác nhận 11 sản phẩm không còn tag ngoài Figma (ngoại lệ Sale giữ nguyên). Desktop NEW/SALE có 10px, tracking 1.4px, bo góc 4px và cao 22px. Sold-out verified qua source component/Liquid logic; live target sold-out và Theme Editor save/reload phải QA khi áp dụng Essen.
