@@ -454,9 +454,6 @@ const init = (root) => {
   const options = {
     modules: manualLoop ? [] : (fade ? [EffectFade, ...paginationModules] : paginationModules),
     slidesPerView: 1,
-    // Autoplay needs adjacent artwork ready before its unchanged transition
-    // deadline. Keep the first slide's high-priority preload as the LCP hint.
-    lazyPreloadPrevNext: autoplay ? 1 : 0,
     // Keep preview slides visually separate while letting Swiper include the gap
     // in its translate, drag, loop, and pagination calculations.
     spaceBetween: showNextSlidePreview ? 24 : 0,

@@ -223,9 +223,8 @@
         document.body.append(state.sheet);
         state.sheetOverlay = window.ThemeOverlay.get(state.sheet);
       }
-      const scheme = state.callout.dataset.productCalloutContentScheme;
-      const hotspotScheme = state.callout.querySelector('.product-callout__hotspots');
-      state.sheet.className = `component-overlay product-callout__sheet ${scheme ? `color-scheme ${scheme}` : hotspotScheme?.className.replace('product-callout__hotspots', '') || ''}`;
+      const scheme = state.callout.querySelector('.product-callout__hotspots');
+      state.sheet.className = `component-overlay product-callout__sheet ${scheme?.className.replace('product-callout__hotspots', '') || ''}`;
       state.sheet.setAttribute('aria-label', popover.getAttribute('aria-label') || '');
       const content = state.sheet.querySelector('.product-callout__sheet-content');
       content.replaceChildren();
@@ -331,13 +330,6 @@
             action.setAttribute('data-underline', 'persistent');
             action.setAttribute('data-underline-target', 'text');
           }
-        });
-      }
-
-      const contentScheme = callout.dataset.productCalloutContentScheme;
-      if (contentScheme) {
-        callout.querySelectorAll('[data-product-callout-popover]').forEach((popover) => {
-          popover.classList.add('color-scheme', contentScheme);
         });
       }
 
