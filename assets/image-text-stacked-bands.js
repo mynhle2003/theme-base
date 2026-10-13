@@ -12,6 +12,7 @@
     if (state.frame) cancelAnimationFrame(state.frame);
     state.bands.forEach((band) => band.style.removeProperty('--band-sticky-top'));
     root.removeAttribute('data-editor-selection');
+    root.removeAttribute('data-stack-ready');
     states.delete(root);
   };
 
@@ -35,6 +36,7 @@
         return { band, top: Math.min(centeredTop, visibleBottomTop) - paddingTop };
       });
       geometry.forEach(({ band, top }) => band.style.setProperty('--band-sticky-top', `${Math.round(top)}px`));
+      root.setAttribute('data-stack-ready', '');
     };
     const schedule = () => {
       if (!state.frame) state.frame = requestAnimationFrame(measure);
