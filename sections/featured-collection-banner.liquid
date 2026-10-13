@@ -241,42 +241,35 @@
       "name": "Featured collection: Banner",
       "category": "t:general.collection",
       "settings": {
-        "section_width": "page_width",
+        "section_width": "full_width",
         "banner_position": "before",
-        "gap_desktop": 30,
-        "gap_mobile": 20,
+        "gap_desktop": 40,
+        "gap_mobile": 36,
         "color_scheme": "scheme-1",
-        "padding_top": 50,
-        "padding_bottom": 50,
-        "customize_mobile_padding": false
+        "padding_top": 0,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
         {
           "type": "header",
           "settings": {
             "width": "fill",
-            "alignment": "center",
+            "alignment": "left",
             "gap_desktop": 8,
             "gap_mobile": 8
           },
           "blocks": [
             {
-              "type": "eyebrow",
-              "settings": {
-                "text": "<p>SECTION TAG</p>",
-                "animation_type": "slide-bottom",
-                "animation_delay": 50
-              }
-            },
-            {
               "type": "heading",
               "settings": {
-                "text": "<p>Main Heading Text Placeholder</p>",
+                "text": "<p>New release</p>",
                 "heading_size": "lg",
                 "html_tag": "h2",
-                "width": "fit",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
+                "width": "fill",
+                "animation_type": "none"
               }
             }
           ]
@@ -284,64 +277,19 @@
         {
           "type": "banner",
           "settings": {
-            "background_type": "image",
             "show_overlay": false,
-            "color_scheme": "scheme-3",
             "image_ratio_desktop": "square",
             "image_ratio_mobile": "square",
-            "position_desktop": "bottom_left",
-            "position_mobile": "bottom_left",
-            "padding_top": 32,
-            "padding_bottom": 32,
-            "padding_left": 32,
-            "padding_right": 32,
-            "gap_desktop": 20,
-            "gap_mobile": 16
-          },
-          "blocks": [
-            {
-              "type": "eyebrow",
-              "settings": {
-                "text": "<p>Subheading</p>",
-                "animation_type": "slide-bottom",
-                "animation_delay": 50
-              }
-            },
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Your Main Heading Goes Here</p>",
-                "heading_size": "lg",
-                "html_tag": "h2",
-                "width": "fill",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
-              }
-            },
-            {
-              "type": "button",
-              "settings": {
-                "button_label": "Button label",
-                "button_style": "tertiary",
-                "width": "fit",
-                "show_icon": true,
-                "icon": "arrow",
-                "icon_position": "after",
-                "icon_size": "inherit",
-                "animation_type": "slide-bottom",
-                "animation_delay": 150
-              }
-            }
-          ]
+            "color_scheme": "scheme-1"
+          }
         },
         {
           "type": "product-list-banner",
           "settings": {
-            "collection": "",
             "max_products": 6,
             "columns_mobile": "2",
-            "enable_swipe_mobile": true,
-            "gap_horizontal": 12,
+            "enable_swipe_mobile": false,
+            "gap_horizontal": 24,
             "gap_vertical": 28,
             "gap_horizontal_mobile": 8,
             "gap_vertical_mobile": 24
@@ -349,12 +297,12 @@
           "blocks": [
             {
               "type": "product-card",
-              "id": "product-card",
-              "static": true,
               "settings": {
                 "color_type": "inherit",
                 "color_scheme": "scheme-1"
-              }
+              },
+              "id": "product-card",
+              "static": true
             }
           ]
         }
