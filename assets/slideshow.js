@@ -119,7 +119,7 @@ const createSegmentedPagination = (root, swiper, loop, slideCount) => {
     if (controlsId) segment.setAttribute('aria-controls', controlsId);
 
     const fill = document.createElement('span');
-    fill.className = 'slideshow__pagination-segment-fill';
+    fill.className = 'slideshow__pagination-segment-fill rounded-progress-fill';
     fill.setAttribute('aria-hidden', 'true');
     segment.append(fill);
     return segment;
@@ -142,6 +142,7 @@ const createSegmentedPagination = (root, swiper, loop, slideCount) => {
     segments.forEach((segment, index) => {
       const active = index === currentIndex;
       segment.classList.toggle('slideshow__pagination-segment--active', active);
+      segment.firstElementChild.classList.toggle('rounded-progress-fill--active', active);
       if (active) segment.setAttribute('aria-current', 'true');
       else segment.removeAttribute('aria-current');
     });
