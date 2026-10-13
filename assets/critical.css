@@ -1249,6 +1249,22 @@ p:empty {
   align-items: center;
 }
 
+/* Align underlined labels by their cap/baseline edges, not font leading or
+   the decorative stroke. The underline remains absolutely positioned. */
+@supports (text-box-trim: trim-both) {
+  .btn-tertiary.link-underline[data-underline-target='text'] .btn__text {
+    display: block;
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+  }
+
+  .section-list-layout:has(> .section-list-layout__actions .btn-tertiary.link-underline)
+    > .section-list-layout__header .heading-block > p {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+  }
+}
+
 .link-underline[data-underline='persistent'][data-underline-target='text'] .btn__text::after {
   position: absolute;
   inset-block-end: var(--link-underline-offset, -0.25em);
