@@ -77,9 +77,11 @@
 
   .images-with-text-scroll__image {
     display: block;
-    width: 100%;
+    width: var(--band-image-width, 100%);
+    max-width: 100%;
+    justify-self: end;
     height: auto;
-    aspect-ratio: 1;
+    aspect-ratio: var(--band-image-ratio, 1);
     object-fit: cover;
     object-position: center;
   }
@@ -107,6 +109,12 @@
   }
 
   @media (max-width: 1149.98px) {
+    .images-with-text-scroll__image {
+      width: var(--band-image-width-mobile, var(--band-image-width, 100%));
+      aspect-ratio: var(--band-image-ratio-mobile, var(--band-image-ratio, 1));
+      justify-self: center;
+    }
+
     .images-with-text-scroll__text {
       gap: var(--images-with-text-scroll-gap-mobile, 24px);
     }
