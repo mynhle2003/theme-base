@@ -137,6 +137,21 @@
       --page-margin-current: var(--page-margin-mobile);
     }
   }
+
+  /* Theme height calibration: existing fixed choices, scoped to Product callout. */
+  .hotspot-section .product-callout--desktop-extra_small .product-callout__media { min-height: 456px; }
+  .hotspot-section .product-callout--desktop-small .product-callout__media { min-height: 608px; }
+  .hotspot-section .product-callout--desktop-medium .product-callout__media { min-height: 781.714px; }
+  .hotspot-section .product-callout--desktop-large .product-callout__media { min-height: 977px; }
+  .hotspot-section .product-callout--desktop-extra_large .product-callout__media { min-height: 1173px; }
+
+  @media (max-width: 767.98px) {
+    .hotspot-section .product-callout--mobile-extra_small .product-callout__media { min-height: 166px; }
+    .hotspot-section .product-callout--mobile-small .product-callout__media { min-height: 199px; }
+    .hotspot-section .product-callout--mobile-medium .product-callout__media { min-height: 257.25px; }
+    .hotspot-section .product-callout--mobile-large .product-callout__media { min-height: 315px; }
+    .hotspot-section .product-callout--mobile-extra_large .product-callout__media { min-height: 373px; }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -329,7 +344,8 @@
         "padding_bottom": 96,
         "customize_mobile_padding": true,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 56
+        "padding_bottom_mobile": 56,
+        "product_link_label": "quick view"
       },
       "blocks": [
         {
@@ -342,13 +358,16 @@
           "type": "product-callout",
           "settings": {
             "overlay": "#00000000",
-            "desktop_height": "adapt",
-            "mobile_height": "adapt",
+            "desktop_height": "medium",
+            "mobile_height": "medium",
             "heading": "",
             "text": "",
             "button_label": "",
             "hotspot_icon_style": "plus",
-            "hotspot_color_scheme": "scheme-1"
+            "hotspot_color_scheme": "scheme-1",
+            "image": "shopify://shop_images/arche-hotspot-desktop.avif",
+            "mobile_image": "shopify://shop_images/arche-hotspot-mobile.avif",
+            "hotspot_behavior": "click"
           },
           "id": "product-callout",
           "static": true,
@@ -356,21 +375,21 @@
             {
               "type": "hotspot",
               "settings": {
-                "horizontal_position": 51,
-                "vertical_position": 35,
+                "horizontal_position": 60,
+                "vertical_position": 34,
                 "customize_mobile_position": true,
-                "mobile_horizontal_position": 48,
-                "mobile_vertical_position": 42
+                "mobile_horizontal_position": 63,
+                "mobile_vertical_position": 37
               }
             },
             {
               "type": "hotspot",
               "settings": {
-                "horizontal_position": 31,
-                "vertical_position": 57,
+                "horizontal_position": 32,
+                "vertical_position": 54,
                 "customize_mobile_position": true,
-                "mobile_horizontal_position": 29,
-                "mobile_vertical_position": 65
+                "mobile_horizontal_position": 32,
+                "mobile_vertical_position": 57
               }
             }
           ]
