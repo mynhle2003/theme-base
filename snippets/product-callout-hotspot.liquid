@@ -141,7 +141,9 @@
         data-product-callout-hotspot
       >
     {% endif %}
-        <span class="product-callout__hotspot-icon product-callout__hotspot-icon--dot" aria-hidden="true"></span>
+        <span class="product-callout__hotspot-icon product-callout__hotspot-icon--dot" aria-hidden="true">
+          {% if hotspot_section_type == 'hotspot' %}{% render 'hotspot-dot' %}{% endif %}
+        </span>
         <span class="product-callout__hotspot-icon product-callout__hotspot-icon--plus" aria-hidden="true">
           {% render 'icon', icon: 'plus', bare: true %}
         </span>
@@ -161,6 +163,7 @@
       id="{{ hotspot_popover_id }}"
       class="{{ hotspot_popover_class }}"
       data-product-callout-popover
+      data-close-label="{{ 'accessibility.close' | t | escape }}"
       role="dialog"
       aria-label="{{ hotspot_popover_label | escape }}"
       hidden

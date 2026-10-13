@@ -185,7 +185,67 @@
       popover.removeAttribute('inert');
     };
 
+    const isMobileSheet = (state) => state.callout.closest('[data-hotspot-section]') && window.matchMedia('(max-width: 767.98px)').matches;
+
+    const closeSheet = (state, restoreFocus = true) => {
+      const record = state.sheetRecord;
+      if (!record) return;
+      state.sheetRecord = null;
+      if (state.sheet.open) state.sheet.close();
+      record.trigger.setAttribute('aria-expanded', 'false');
+      record.trigger.setAttribute('aria-controls', record.popover.id);
+      record.trigger.removeAttribute('aria-haspopup');
+      record.wrapper.classList.remove('product-callout__hotspot-wrap--active');
+      if (!document.querySelector('.product-callout__sheet[open]')) document.documentElement.classList.remove('product-callout-sheet-open');
+      state.sheet.replaceChildren();
+      if (restoreFocus && record.trigger.isConnected) record.trigger.focus({ preventScroll: true });
+    };
+
+    const openSheet = (state, trigger, wrapper, popover) => {
+      if (state.sheetRecord?.trigger === trigger) { closeSheet(state); return; }
+      closeActive(state, false, true);
+      if (!state.sheet) {
+        state.sheet = document.createElement('dialog');
+        state.sheet.className = 'product-callout__sheet';
+        state.sheet.id = `${popover.id}-sheet`;
+        state.sheet.addEventListener('cancel', (event) => { event.preventDefault(); closeSheet(state); }, { signal: state.controller.signal });
+        state.sheet.addEventListener('close', () => { if (!state.sheet.open) closeSheet(state); }, { signal: state.controller.signal });
+        state.sheet.addEventListener('click', (event) => {
+          const rect = state.sheet.getBoundingClientRect();
+          if (event.target === state.sheet && (event.clientY < rect.top || event.clientY > rect.bottom || event.clientX < rect.left || event.clientX > rect.right)) closeSheet(state);
+        }, { signal: state.controller.signal });
+        document.body.append(state.sheet);
+      }
+      const scheme = state.callout.querySelector('.product-callout__hotspots');
+      state.sheet.className = `product-callout__sheet ${scheme?.className.replace('product-callout__hotspots', '') || ''}`;
+      state.sheet.setAttribute('aria-label', popover.getAttribute('aria-label') || '');
+      state.sheet.setAttribute('aria-modal', 'true');
+      const handle = document.createElement('span');
+      handle.className = 'product-callout__sheet-handle';
+      handle.setAttribute('aria-hidden', 'true');
+      const close = document.createElement('button');
+      close.type = 'button';
+      close.className = 'product-callout__sheet-close';
+      close.textContent = '×';
+      close.setAttribute('aria-label', popover.dataset.closeLabel);
+      close.addEventListener('click', () => closeSheet(state), { once: true });
+      const content = document.createElement('div');
+      content.className = 'product-callout__sheet-content';
+      Array.from(popover.children).forEach((child) => content.append(child.cloneNode(true)));
+      content.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
+      state.sheet.replaceChildren(handle, close, content);
+      state.sheetRecord = { trigger, wrapper, popover };
+      trigger.setAttribute('aria-expanded', 'true');
+      trigger.setAttribute('aria-controls', state.sheet.id);
+      trigger.setAttribute('aria-haspopup', 'dialog');
+      wrapper.classList.add('product-callout__hotspot-wrap--active');
+      document.documentElement.classList.add('product-callout-sheet-open');
+      state.sheet.showModal();
+      close.focus({ preventScroll: true });
+    };
+
     const closeActive = (state, restoreFocus = false, immediate = false) => {
+      closeSheet(state, restoreFocus);
       const active = state.active;
       if (!active) return;
 
@@ -233,6 +293,7 @@
       const wrapper = trigger.closest('[data-product-callout-hotspot-wrap]');
       const popover = wrapper?.querySelector('[data-product-callout-popover]');
       if (!wrapper || !popover) return;
+      if (isMobileSheet(state)) { openSheet(state, trigger, wrapper, popover); return; }
 
       const isActive = state.active?.trigger === trigger;
       if (isActive) {
@@ -272,6 +333,8 @@
         callout,
         controller,
         active: null,
+        sheet: null,
+        sheetRecord: null,
         closing: new Map(),
         positionFrame: null,
         resizeObserver: null,
@@ -281,6 +344,7 @@
       instances.set(callout, state);
 
       const schedulePosition = () => {
+        if (state.sheetRecord && !isMobileSheet(state)) closeSheet(state);
         if (!state.active || state.positionFrame !== null) return;
 
         state.positionFrame = window.requestAnimationFrame(() => {
@@ -305,7 +369,7 @@
       }
 
       const openForHover = (event) => {
-        if (state.hotspotBehavior !== 'hover' || event.pointerType === 'touch') return;
+        if (isMobileSheet(state) || state.hotspotBehavior !== 'hover' || event.pointerType === 'touch') return;
         const trigger = event.currentTarget.querySelector('[data-product-callout-hotspot]');
         if (!trigger) return;
 
@@ -322,7 +386,7 @@
       };
 
       const openForFocus = (event) => {
-        if (state.hotspotBehavior !== 'hover' || event.target !== event.currentTarget.querySelector('[data-product-callout-hotspot]')) return;
+        if (isMobileSheet(state) || state.hotspotBehavior !== 'hover' || event.target !== event.currentTarget.querySelector('[data-product-callout-hotspot]')) return;
 
         state.toggleOnClick = false;
         openPopover(state, event.target);
@@ -418,6 +482,7 @@
       });
       state.closing.clear();
       callout.querySelectorAll('[data-product-callout-popover]').forEach(clearPopoverPosition);
+      state.sheet?.remove();
       state.controller.abort();
       instances.delete(callout);
     };
