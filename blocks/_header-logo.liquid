@@ -23,14 +23,14 @@
   {{ block.shopify_attributes }}
 >
   {% if logo_has_overlay_image %}
-    {{ settings.logo_transparent | image_url: width: logo_width | image_tag: widths: '80, 120, 140, 180, 240, 320, 400', sizes: logo_sizes, class: 'site-logo__image site-logo__image--overlay', alt: shop.name }}
+    {{ settings.logo_transparent | image_url: width: 1200 | image_tag: widths: '120, 180, 240, 320, 420, 600, 900, 1200', sizes: logo_sizes, class: 'site-logo__image site-logo__image--overlay', alt: shop.name }}
   {% endif %}
   {% if logo_image != blank %}
     {{
       logo_image
-      | image_url: width: logo_width
+      | image_url: width: 1200
       | image_tag:
-        widths: '80, 120, 140, 180, 240, 320, 400',
+        widths: '120, 180, 240, 320, 420, 600, 900, 1200',
         sizes: logo_sizes,
         class: 'site-logo__image site-logo__image--base',
         alt: shop.name
