@@ -209,7 +209,7 @@
         state.sheet.className = 'product-callout__sheet';
         state.sheet.id = `${popover.id}-sheet`;
         state.sheet.addEventListener('cancel', (event) => { event.preventDefault(); closeSheet(state); }, { signal: state.controller.signal });
-        state.sheet.addEventListener('close', () => { if (!state.sheet.open) closeSheet(state); }, { signal: state.controller.signal });
+        state.sheet.addEventListener('close', () => closeSheet(state), { signal: state.controller.signal });
         state.sheet.addEventListener('click', (event) => {
           const rect = state.sheet.getBoundingClientRect();
           if (event.target === state.sheet && (event.clientY < rect.top || event.clientY > rect.bottom || event.clientX < rect.left || event.clientX > rect.right)) closeSheet(state);
