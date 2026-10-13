@@ -103,6 +103,7 @@
     assign scrolling_card_backdrop_blur = 0
   endif
 
+  assign scrolling_card_color_type = block.settings.color_type | default: 'color_scheme'
   assign scrolling_card_scheme = block.settings.color_scheme | default: 'scheme-1'
   if block.settings.color_scheme.id != blank
     assign scrolling_card_scheme = block.settings.color_scheme.id
@@ -169,7 +170,7 @@
 {% endcapture %}
 
 <article
-  class="scrolling-card scrolling-card--{{ scrolling_card_direction }} scrolling-card--position-{{ scrolling_card_position }} scrolling-card--align-{{ scrolling_card_alignment }} scrolling-card--radius-{{ scrolling_card_radius_setting }} scrolling-card--shadow-{{ scrolling_card_shadow }}{% if block.settings.vertical_on_mobile and scrolling_card_direction == 'horizontal' %} scrolling-card--vertical-mobile{% endif %}{% if scrolling_card_has_background_media %} scrolling-card--has-background-media{% endif %}{% if block.settings.show_overlay %} scrolling-card--has-overlay{% endif %} color-scheme section-color-scope {{ scrolling_card_scheme }}"
+  class="scrolling-card scrolling-card--{{ scrolling_card_direction }} scrolling-card--position-{{ scrolling_card_position }} scrolling-card--align-{{ scrolling_card_alignment }} scrolling-card--radius-{{ scrolling_card_radius_setting }} scrolling-card--shadow-{{ scrolling_card_shadow }}{% if block.settings.vertical_on_mobile and scrolling_card_direction == 'horizontal' %} scrolling-card--vertical-mobile{% endif %}{% if scrolling_card_has_background_media %} scrolling-card--has-background-media{% endif %}{% if block.settings.show_overlay %} scrolling-card--has-overlay{% endif %}{% if scrolling_card_color_type == 'color_scheme' %} color-scheme section-color-scope {{ scrolling_card_scheme }}{% endif %}"
   style="{{ scrolling_card_style | strip }}"
   {{ block.shopify_attributes }}
 >
@@ -566,10 +567,27 @@
       "content": "Color"
     },
     {
+      "type": "select",
+      "id": "color_type",
+      "label": "t:labels.type",
+      "options": [
+        {
+          "value": "inherit",
+          "label": "t:options.color_type.inherit"
+        },
+        {
+          "value": "color_scheme",
+          "label": "t:options.color_type.color_scheme"
+        }
+      ],
+      "default": "color_scheme"
+    },
+    {
       "type": "color_scheme",
       "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-1"
+      "label": "t:labels.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ block.settings.color_type == 'color_scheme' }}"
     },
     {
       "type": "header",
@@ -669,6 +687,10 @@
   "presets": [
     {
       "name": "Card",
+      "settings": {
+        "color_type": "inherit",
+        "color_scheme": "scheme-1"
+      },
       "blocks": [
         {
           "type": "group",
