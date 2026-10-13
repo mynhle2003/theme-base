@@ -185,6 +185,9 @@
     pointer-events: auto;
   }
   .slideshow__bullet-controls .swiper-pagination-bullet { cursor: pointer; }
+  /* Enlarge the invisible target while preserving the preset's dot centers
+     and total controls width (24px target - 4px margins = 20px visual slot). */
+  .slideshow .slideshow__bullet-controls.swiper > .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet:not(.swiper-pagination-bullet-active) { margin-inline: -2px; }
   .slideshow .slideshow__bullet-controls.swiper > .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet::before { background: var(--swiper-pagination-bullet-inactive-color); }
   .slideshow__bullet-arrow { position: relative; display: grid; place-items: center; flex: 0 0 24px; width: 24px; height: 24px; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: inherit; cursor: pointer; pointer-events: auto; touch-action: manipulation; }
   .slideshow__bullet-arrow::before { content: ''; position: absolute; inset: -4px; }
