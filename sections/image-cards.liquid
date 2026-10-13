@@ -237,9 +237,15 @@
 {
   "name": "t:general.image_cards",
   "class": "section-image-cards",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "image-card" }
+    {
+      "type": "image-card"
+    }
   ],
   "settings": [
     {
@@ -302,8 +308,14 @@
       "id": "direction",
       "label": "t:labels.direction",
       "options": [
-        { "value": "horizontal", "label": "t:options.direction.horizontal" },
-        { "value": "vertical", "label": "t:options.direction.vertical" }
+        {
+          "value": "horizontal",
+          "label": "t:options.direction.horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "t:options.direction.vertical"
+        }
       ],
       "default": "horizontal"
     },
@@ -365,7 +377,7 @@
     {
       "type": "range",
       "id": "padding_top",
-      "label": "t:labels.top_padding",
+      "label": "t:options.position.top",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -375,7 +387,7 @@
     {
       "type": "range",
       "id": "padding_bottom",
-      "label": "t:labels.bottom_padding",
+      "label": "t:options.position.bottom",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -416,61 +428,57 @@
       "name": "t:general.image_cards",
       "category": "t:general.banners",
       "settings": {
-        "section_width": "page_width",
+        "section_width": "full_width",
         "height": "auto",
-        "custom_height": 100,
         "direction": "horizontal",
-        "vertical_on_mobile": true,
+        "vertical_on_mobile": false,
         "gap_desktop": 32,
         "gap_mobile": 8,
         "color_scheme": "scheme-1",
-        "customize_mobile_padding": false,
-        "padding_top": 50,
-        "padding_bottom": 50,
+        "background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
+        "padding_bottom_mobile": 56
       },
       "blocks": [
         {
           "type": "image-card",
           "settings": {
-            "color_scheme": "scheme-3",
+            "background_type": "image",
+            "show_overlay": true,
+            "width_desktop": "custom",
+            "width_custom_desktop": 58,
+            "limit_width_desktop": false,
+            "height_desktop": "fill",
+            "width_mobile": "fill",
+            "limit_width_mobile": false,
+            "height_mobile": "ratio_4_5",
+            "enable_sticky": false,
             "position_desktop": "center_center",
             "position_mobile": "center_center",
+            "gap_desktop": 24,
+            "gap_mobile": 24,
+            "corner_radius": "square",
+            "color_scheme": "scheme-3",
             "padding_top": 32,
             "padding_bottom": 32,
             "padding_left": 32,
-            "padding_right": 32
+            "padding_right": 32,
+            "customize_mobile_padding": false
           },
           "blocks": [
             {
-              "type": "eyebrow",
-              "settings": {
-                "text": "<p>Eyebrow</p>"
-              }
-            },
-            {
               "type": "heading",
               "settings": {
-                "text": "<p>Heading</p>",
-                "heading_size": "display",
-                "html_tag": "h2"
-              }
-            },
-            {
-              "type": "button",
-              "settings": {
-                "button_label": "Button label",
-                "button_style": "primary",
-                "button_open_in_new_tab": false,
-                "show_icon": false,
-                "icon": "arrow",
-                "icon_position": "after",
-                "icon_size": "inherit",
-                "icon_width": 20,
-                "width": "fit",
-                "width_mobile": "fit",
-                "customize_mobile_padding": false
+                "text": "<p>Tops</p>",
+                "heading_size": "lg",
+                "html_tag": "h2",
+                "text_color": "#ffffff",
+                "width": "fill",
+                "animation_type": "rotate-words",
+                "animation_delay": 50
               }
             }
           ]
@@ -478,43 +486,38 @@
         {
           "type": "image-card",
           "settings": {
-            "color_scheme": "scheme-3",
+            "background_type": "image",
+            "show_overlay": true,
+            "width_desktop": "fill",
+            "limit_width_desktop": false,
+            "height_desktop": "ratio_4_5",
+            "width_mobile": "fill",
+            "limit_width_mobile": false,
+            "height_mobile": "ratio_4_5",
+            "enable_sticky": false,
             "position_desktop": "center_center",
             "position_mobile": "center_center",
+            "gap_desktop": 24,
+            "gap_mobile": 24,
+            "corner_radius": "square",
+            "color_scheme": "scheme-3",
             "padding_top": 32,
             "padding_bottom": 32,
             "padding_left": 32,
-            "padding_right": 32
+            "padding_right": 32,
+            "customize_mobile_padding": false
           },
           "blocks": [
             {
-              "type": "eyebrow",
-              "settings": {
-                "text": "<p>Eyebrow</p>"
-              }
-            },
-            {
               "type": "heading",
               "settings": {
-                "text": "<p>Heading</p>",
-                "heading_size": "display",
-                "html_tag": "h2"
-              }
-            },
-            {
-              "type": "button",
-              "settings": {
-                "button_label": "Button label",
-                "button_style": "primary",
-                "button_open_in_new_tab": false,
-                "show_icon": false,
-                "icon": "arrow",
-                "icon_position": "after",
-                "icon_size": "inherit",
-                "icon_width": 20,
-                "width": "fit",
-                "width_mobile": "fit",
-                "customize_mobile_padding": false
+                "text": "<p>Pants</p>",
+                "heading_size": "lg",
+                "html_tag": "h2",
+                "text_color": "#ffffff",
+                "width": "fill",
+                "animation_type": "rotate-words",
+                "animation_delay": 50
               }
             }
           ]

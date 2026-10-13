@@ -2,7 +2,7 @@
   Normalizes an overlay media ratio setting and returns a compact
   `setting|ratio` pair for the caller to split.
 
-  @param {string} [setting] - Ratio preset: auto, square, portrait,
+  @param {string} [setting] - Ratio preset: auto, square, portrait (4:5), ratio_5_4 (5:4),
     landscape, wide, or custom
   @param {string} [fallback] - Preset used when the setting is invalid
   @param {number} [custom_width] - Custom ratio width
@@ -13,7 +13,7 @@
 {% liquid
   assign overlay_ratio_setting = setting | default: fallback | default: 'auto'
   assign overlay_ratio_fallback = fallback | default: 'auto'
-  unless overlay_ratio_setting == 'auto' or overlay_ratio_setting == 'square' or overlay_ratio_setting == 'portrait' or overlay_ratio_setting == 'landscape' or overlay_ratio_setting == 'wide' or overlay_ratio_setting == 'custom'
+  unless overlay_ratio_setting == 'auto' or overlay_ratio_setting == 'square' or overlay_ratio_setting == 'portrait' or overlay_ratio_setting == 'ratio_5_4' or overlay_ratio_setting == 'landscape' or overlay_ratio_setting == 'wide' or overlay_ratio_setting == 'custom'
     assign overlay_ratio_setting = overlay_ratio_fallback
   endunless
 
@@ -25,6 +25,8 @@
       assign overlay_ratio = '1'
     when 'portrait'
       assign overlay_ratio = '0.8'
+    when 'ratio_5_4'
+      assign overlay_ratio = '1.25'
     when 'landscape'
       assign overlay_ratio = '1.3333'
     when 'wide'

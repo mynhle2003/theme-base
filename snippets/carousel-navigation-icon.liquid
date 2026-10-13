@@ -17,32 +17,44 @@
   endunless
 %}
 
-<svg
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
-  focusable="false"
-  aria-hidden="true"
->
-  {% if carousel_navigation_direction == 'previous' %}
-    {% case carousel_navigation_icon %}
-      {% when 'arrow' %}
+{% if carousel_navigation_icon == 'long_arrow' %}
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 14 14"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    focusable="false"
+    aria-hidden="true"
+    style="--swiper-nav-icon-size: 14px;"
+  >
+    <g{% if carousel_navigation_direction == 'next' %} transform="translate(14 0) scale(-1 1)"{% endif %}>
+      <path d="M5.58234 10.9786C5.47151 10.9786 5.36068 10.9378 5.27318 10.8503L1.73234 7.30947C1.56318 7.1403 1.56318 6.8603 1.73234 6.69113L5.27318 3.15031C5.44234 2.98115 5.72234 2.98115 5.89149 3.15031C6.06065 3.31948 6.06065 3.59948 5.89149 3.76865L2.65984 7.0003L5.89149 10.232C6.06065 10.4011 6.06065 10.6811 5.89149 10.8503C5.80984 10.9378 5.69318 10.9786 5.58234 10.9786Z" fill="currentColor"></path>
+      <path d="M11.9584 7.4375H2.14087C1.9017 7.4375 1.70337 7.23917 1.70337 7C1.70337 6.76083 1.9017 6.5625 2.14087 6.5625H11.9584C12.1975 6.5625 12.3959 6.76083 12.3959 7C12.3959 7.23917 12.1975 7.4375 11.9584 7.4375Z" fill="currentColor"></path>
+    </g>
+  </svg>
+{% else %}
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    focusable="false"
+    aria-hidden="true"
+  >
+    {% if carousel_navigation_direction == 'previous' %}
+      {% if carousel_navigation_icon == 'arrow' %}
         <path d="M19 12H5M5 12L12 5M5 12L12 19" stroke="currentColor" stroke-width="var(--icon-stroke-width)" stroke-linecap="round" stroke-linejoin="round"></path>
-      {% when 'long_arrow' %}
-        <path d="M6 8L2 12M2 12L6 16M2 12H22" stroke="currentColor" stroke-width="var(--icon-stroke-width)" stroke-linecap="round" stroke-linejoin="round"></path>
       {% else %}
         <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="var(--icon-stroke-width)" stroke-linecap="round" stroke-linejoin="round"></path>
-    {% endcase %}
-  {% else %}
-    {% case carousel_navigation_icon %}
-      {% when 'arrow' %}
+      {% endif %}
+    {% else %}
+      {% if carousel_navigation_icon == 'arrow' %}
         <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="var(--icon-stroke-width)" stroke-linecap="round" stroke-linejoin="round"></path>
-      {% when 'long_arrow' %}
-        <path d="M18 8L22 12M22 12L18 16M22 12H2" stroke="currentColor" stroke-width="var(--icon-stroke-width)" stroke-linecap="round" stroke-linejoin="round"></path>
       {% else %}
         <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="var(--icon-stroke-width)" stroke-linecap="round" stroke-linejoin="round"></path>
-    {% endcase %}
-  {% endif %}
-</svg>
+      {% endif %}
+    {% endif %}
+  </svg>
+{% endif %}

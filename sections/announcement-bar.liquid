@@ -54,7 +54,7 @@
 <script type="module" src="{{ 'announcement-bar.js' | asset_url }}"></script>
 
 <div
-  class="announcement-bar announcement-bar--{{ announcement_type }} announcement-bar--direction-{{ announcement_direction }} announcement-bar--navigation-{{ announcement_navigation_behavior }} color-scheme section-color-scope body-text body-{{ announcement_font_size }} {{ announcement_color_scheme }}{% if announcement_speed == 0 %} announcement-bar--static{% endif %}{% if section.settings.bottom_separator %} announcement-bar--bottom-separator{% endif %}"
+  class="announcement-bar{% if section.settings.show_close_button %} announcement-bar--dismissible{% endif %} announcement-bar--{{ announcement_type }} announcement-bar--direction-{{ announcement_direction }} announcement-bar--navigation-{{ announcement_navigation_behavior }} color-scheme section-color-scope body-text body-{{ announcement_font_size }} {{ announcement_color_scheme }}{% if announcement_speed == 0 %} announcement-bar--static{% endif %}{% if section.settings.bottom_separator %} announcement-bar--bottom-separator{% endif %}"
   data-announcement-bar
   data-announcement-type="{{ announcement_type }}"
   data-announcement-speed="{{ announcement_speed }}"
@@ -82,9 +82,23 @@
       {% render 'carousel-navigation-icon', icon: announcement_navigation_icon, direction: 'next' %}
     </button>
   </div>
+  {% if section.settings.show_close_button %}
+    <button class="announcement-bar__close" type="button" data-announcement-close aria-label="{{ 'accessibility.close_announcement' | t | escape }}">
+      {% render 'icon', icon: 'close', bare: true %}
+    </button>
+  {% endif %}
 </div>
 
 {% stylesheet %}
+  .announcement-bar[hidden] { display: none; }
+  .announcement-bar--dismissible { --announcement-close-inset: var(--page-margin-desktop, 48px); }
+  .announcement-bar--dismissible .announcement-bar__inner { padding-inline: calc(var(--announcement-close-inset) + 28px); }
+  .announcement-bar__close { position: absolute; z-index: 2; inset-inline-end: max(0px, calc(var(--announcement-close-inset) - 8px)); top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 40px; height: 40px; padding: 8px; border: 0; color: inherit; background: transparent; cursor: pointer; }
+  .announcement-bar__close .icon, .announcement-bar__close svg { display: block; width: 24px; height: 24px; }
+  .announcement-bar__close:hover { opacity: .7; }
+  .announcement-bar__close:focus-visible { outline: 2px solid currentColor; outline-offset: -3px; }
+  @media (max-width: 1023.98px) { .announcement-bar--dismissible { --announcement-close-inset: var(--page-margin-tablet, 32px); } }
+  @media (max-width: 767.98px) { .announcement-bar--dismissible { --announcement-close-inset: var(--page-margin-mobile, 16px); } }
   .announcement-bar--slider .announcement-bar__viewport { transition: height var(--motion-duration-standard) var(--motion-ease-standard); }
   .announcement-bar--slider .announcement-bar__slides { transition: transform 420ms var(--motion-ease-standard); will-change: transform; }
   .announcement-bar--slider .announcement-bar__slides.announcement-bar--slider-reset { transition: none; }
@@ -109,48 +123,330 @@
   "name": "Announcement bar",
   "class": "section-announcement-bar",
   "tag": "div",
-  "enabled_on": { "groups": ["header"] },
+  "enabled_on": {
+    "groups": [
+      "header"
+    ]
+  },
   "limit": 1,
   "max_blocks": 4,
-  "blocks": [{ "type": "announcement-text" }, { "type": "discount-code" }, { "type": "announcement-countdown-timer" }],
-  "settings": [
-    { "type": "header", "content": "Bottom separator" },
-    { "type": "checkbox", "id": "bottom_separator", "label": "Show bottom separator", "default": false },
-    { "type": "header", "content": "Layout" },
-    { "type": "select", "id": "type", "label": "Type", "options": [{ "value": "scrolling", "label": "Scrolling" }, { "value": "slider", "label": "Slider" }], "default": "slider" },
-    { "type": "range", "id": "speed", "label": "Speed", "min": 0, "max": 2, "step": 0.1, "default": 1, "visible_if": "{{ section.settings.type == 'scrolling' }}" },
-    { "type": "select", "id": "direction", "label": "Direction", "options": [{ "value": "left", "label": "Left" }, { "value": "right", "label": "Right" }], "default": "left", "visible_if": "{{ section.settings.type == 'scrolling' }}" },
-    { "type": "range", "id": "autoplay", "label": "Auto-play slider", "min": 1, "max": 10, "step": 1, "unit": "s", "default": 5, "visible_if": "{{ section.settings.type == 'slider' }}" },
-    { "type": "checkbox", "id": "pause_on_hover", "label": "Pause on hover", "default": true, "visible_if": "{{ section.settings.type == 'slider' }}" },
-    { "type": "select", "id": "navigation_behavior", "label": "Navigation behavior", "options": [{ "value": "always", "label": "Always show" }, { "value": "show_on_hover", "label": "Show on hover" }], "default": "show_on_hover", "visible_if": "{{ section.settings.type == 'slider' }}" },
-    { "type": "select", "id": "navigation_icon", "label": "Navigation icon", "options": [{ "value": "chevron", "label": "Chevron" }, { "value": "arrow", "label": "Arrow" }, { "value": "long_arrow", "label": "Long arrow" }], "default": "arrow", "visible_if": "{{ section.settings.type == 'slider' }}" },
-    { "type": "header", "content": "Typography" },
-    { "type": "select", "id": "font_size", "label": "Font size", "options": [{ "value": "xs", "label": "t:options.text_size.xs" }, { "value": "sm", "label": "t:options.text_size.sm" }, { "value": "md", "label": "t:options.text_size.md" }, { "value": "lg", "label": "t:options.text_size.lg" }, { "value": "xl", "label": "t:options.text_size.xl" }, { "value": "xxl", "label": "t:options.text_size.xxl" }], "default": "sm" },
-    { "type": "header", "content": "Background" },
-    { "type": "select", "id": "background_type", "label": "Background", "options": [{ "value": "none", "label": "None" }, { "value": "image", "label": "Image" }], "default": "none" },
-    { "type": "image_picker", "id": "background_image", "label": "Image", "visible_if": "{{ section.settings.background_type == 'image' }}" },
-    { "type": "image_picker", "id": "mobile_background_image", "label": "Mobile image (optional)", "visible_if": "{{ section.settings.background_type == 'image' }}" },
-    { "type": "checkbox", "id": "overlay", "label": "Overlay", "default": false, "visible_if": "{{ section.settings.background_type == 'image' }}" },
-    { "type": "color", "alpha": true, "id": "overlay_color", "label": "Overlay color", "default": "#00000033", "visible_if": "{{ section.settings.background_type == 'image' and section.settings.overlay }}" },
-    { "type": "header", "content": "Gap" },
-    { "type": "range", "id": "gap", "label": "Gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 16 },
-    { "type": "header", "content": "Color" },
-    { "type": "color_scheme", "id": "color_scheme", "label": "t:labels.color_scheme", "default": "scheme-3" },
-    { "type": "header", "content": "Padding" },
-    { "type": "range", "id": "padding_top", "label": "t:labels.top_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 8 },
-    { "type": "range", "id": "padding_right", "label": "t:labels.right_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "padding_bottom", "label": "t:labels.bottom_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 8 },
-    { "type": "range", "id": "padding_left", "label": "t:labels.left_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
+  "blocks": [
+    {
+      "type": "announcement-text"
+    },
+    {
+      "type": "discount-code"
+    },
+    {
+      "type": "announcement-countdown-timer"
+    }
   ],
-  "presets": [{
-    "name": "Announcement bar",
-    "category": "t:general.header",
-    "settings": { "type": "slider", "speed": 1, "direction": "left", "autoplay": 5, "pause_on_hover": true, "navigation_behavior": "show_on_hover", "navigation_icon": "arrow", "font_size": "sm", "background_type": "none", "overlay": false, "gap": 16, "color_scheme": "scheme-3", "bottom_separator": false, "padding_top": 8, "padding_right": 0, "padding_bottom": 8, "padding_left": 0 },
-    "blocks": [
-      { "type": "announcement-text", "settings": { "text": "Free shipping for all orders over $100.00", "width": "fill" } },
-      { "type": "discount-code", "settings": { "message": "<p>50% off - use code:</p>", "discount_code": "BIG50", "button_label": "Shop now", "button_style": "tertiary", "show_icon": false } },
-      { "type": "announcement-countdown-timer", "settings": { "message": "<p>Hurry up! Sale ends in:</p>", "style": "inline", "type": "fixed_time", "end_time": "2026-12-25 12:00", "button_label": "Shop now", "button_style": "tertiary", "show_icon": false, "color_type": "inherit" } }
-    ]
-  }]
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_close_button",
+      "label": "Show close button",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Bottom separator"
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_separator",
+      "label": "Show bottom separator",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "scrolling",
+          "label": "Scrolling"
+        },
+        {
+          "value": "slider",
+          "label": "Slider"
+        }
+      ],
+      "default": "slider"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Speed",
+      "min": 0,
+      "max": 2,
+      "step": 0.1,
+      "default": 1,
+      "visible_if": "{{ section.settings.type == 'scrolling' }}"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Direction",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "visible_if": "{{ section.settings.type == 'scrolling' }}"
+    },
+    {
+      "type": "range",
+      "id": "autoplay",
+      "label": "Auto-play slider",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5,
+      "visible_if": "{{ section.settings.type == 'slider' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true,
+      "visible_if": "{{ section.settings.type == 'slider' }}"
+    },
+    {
+      "type": "select",
+      "id": "navigation_behavior",
+      "label": "Navigation behavior",
+      "options": [
+        {
+          "value": "always",
+          "label": "Always show"
+        },
+        {
+          "value": "show_on_hover",
+          "label": "Show on hover"
+        }
+      ],
+      "default": "show_on_hover",
+      "visible_if": "{{ section.settings.type == 'slider' }}"
+    },
+    {
+      "type": "select",
+      "id": "navigation_icon",
+      "label": "Navigation icon",
+      "options": [
+        {
+          "value": "chevron",
+          "label": "Chevron"
+        },
+        {
+          "value": "arrow",
+          "label": "Arrow"
+        },
+        {
+          "value": "long_arrow",
+          "label": "Long arrow"
+        }
+      ],
+      "default": "arrow",
+      "visible_if": "{{ section.settings.type == 'slider' }}"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "font_size",
+      "label": "Font size",
+      "options": [
+        {
+          "value": "xs",
+          "label": "t:options.text_size.xs"
+        },
+        {
+          "value": "sm",
+          "label": "t:options.text_size.sm"
+        },
+        {
+          "value": "md",
+          "label": "t:options.text_size.md"
+        },
+        {
+          "value": "lg",
+          "label": "t:options.text_size.lg"
+        },
+        {
+          "value": "xl",
+          "label": "t:options.text_size.xl"
+        },
+        {
+          "value": "xxl",
+          "label": "t:options.text_size.xxl"
+        }
+      ],
+      "default": "sm"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Image",
+      "visible_if": "{{ section.settings.background_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Mobile image (optional)",
+      "visible_if": "{{ section.settings.background_type == 'image' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "overlay",
+      "label": "Overlay",
+      "default": false,
+      "visible_if": "{{ section.settings.background_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#00000033",
+      "visible_if": "{{ section.settings.background_type == 'image' and section.settings.overlay }}"
+    },
+    {
+      "type": "header",
+      "content": "Gap"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-3"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar",
+      "category": "t:general.header",
+      "settings": {
+        "show_close_button": true,
+        "type": "slider",
+        "speed": 1,
+        "direction": "left",
+        "autoplay": 5,
+        "pause_on_hover": true,
+        "navigation_behavior": "show_on_hover",
+        "navigation_icon": "arrow",
+        "font_size": "xs",
+        "background_type": "none",
+        "overlay": false,
+        "gap": 16,
+        "color_scheme": "scheme-3",
+        "bottom_separator": false,
+        "padding_top": 8,
+        "padding_right": 0,
+        "padding_bottom": 8,
+        "padding_left": 0
+      },
+      "blocks": [
+        {
+          "type": "announcement-text",
+          "settings": {
+            "text": "FORMA. Minimal Design, Maximum Quality",
+            "width": "fill"
+          }
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

@@ -187,36 +187,96 @@
   .gallery-custom__content--direction-horizontal > * {
     max-width: 100%;
   }
+
+  /* Gallery owns card geometry; shared Marquee owns motion and editor lifecycle. */
+  .gallery-custom .marquee--block .marquee__track > .marquee-item-layout {
+    flex: 0 0 448px;
+    width: 448px;
+    max-width: 448px;
+  }
+
+  @media (max-width: 767.98px) {
+    .gallery-custom .marquee--block .marquee__track > .marquee-item-layout {
+      flex-basis: 256px;
+      width: 256px;
+      max-width: 256px;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.gallery_custom",
   "class": "section-gallery-custom",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "carousel" },
-    { "type": "header" },
-    { "type": "heading" },
-    { "type": "editorial-text" },
-    { "type": "eyebrow" },
-    { "type": "text" },
-    { "type": "image" },
-    { "type": "image-card" },
-    { "type": "video" },
-    { "type": "button" },
-    { "type": "buttons" },
-    { "type": "icon" },
-    { "type": "divider" },
-    { "type": "spacer" },
-    { "type": "group" },
-    { "type": "marquee" },
-    { "type": "row" },
-    { "type": "grid" },
-    { "type": "email-signup" },
-    { "type": "contact-form" },
-    { "type": "product-list" },
-    { "type": "countdown-timer" }
+    {
+      "type": "header"
+    },
+    {
+      "type": "heading"
+    },
+    {
+      "type": "editorial-text"
+    },
+    {
+      "type": "eyebrow"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "image-card"
+    },
+    {
+      "type": "video"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "buttons"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "spacer"
+    },
+    {
+      "type": "group"
+    },
+    {
+      "type": "marquee"
+    },
+    {
+      "type": "row"
+    },
+    {
+      "type": "grid"
+    },
+    {
+      "type": "email-signup"
+    },
+    {
+      "type": "contact-form"
+    },
+    {
+      "type": "product-list"
+    },
+    {
+      "type": "countdown-timer"
+    }
   ],
   "settings": [
     {
@@ -228,9 +288,18 @@
       "id": "section_width",
       "label": "t:labels.section_width",
       "options": [
-        { "value": "page_width", "label": "t:options.section_width.page_width" },
-        { "value": "full_width", "label": "t:options.section_width.full_width" },
-        { "value": "full_width_no_padding", "label": "t:options.section_width.full_width_no_padding" }
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "t:options.section_width.full_width_no_padding"
+        }
       ],
       "default": "full_width_no_padding"
     },
@@ -239,8 +308,14 @@
       "id": "direction",
       "label": "t:labels.direction",
       "options": [
-        { "value": "horizontal", "label": "t:options.direction.horizontal" },
-        { "value": "vertical", "label": "t:options.direction.vertical" }
+        {
+          "value": "horizontal",
+          "label": "t:options.direction.horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "t:options.direction.vertical"
+        }
       ],
       "default": "horizontal"
     },
@@ -249,9 +324,18 @@
       "id": "position",
       "label": "t:labels.position",
       "options": [
-        { "value": "top", "label": "t:options.position.top" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "bottom", "label": "t:options.position.bottom" }
+        {
+          "value": "top",
+          "label": "t:options.position.top"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "bottom",
+          "label": "t:options.position.bottom"
+        }
       ],
       "default": "center",
       "visible_if": "{{ section.settings.direction == 'horizontal' }}"
@@ -261,10 +345,22 @@
       "id": "horizontal_alignment",
       "label": "t:labels.alignment",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "right", "label": "t:options.alignment.right" },
-        { "value": "space-between", "label": "t:options.alignment.space_between" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        },
+        {
+          "value": "space-between",
+          "label": "t:options.alignment.space_between"
+        }
       ],
       "default": "space-between",
       "visible_if": "{{ section.settings.direction == 'horizontal' }}"
@@ -281,9 +377,18 @@
       "id": "alignment",
       "label": "t:labels.alignment",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "right", "label": "t:options.alignment.right" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
       ],
       "default": "left",
       "visible_if": "{{ section.settings.direction == 'vertical' }}"
@@ -293,9 +398,18 @@
       "id": "alignment_mobile",
       "label": "t:labels.alignment_mobile",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "right", "label": "t:options.alignment.right" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
       ],
       "default": "left",
       "visible_if": "{{ section.settings.direction == 'vertical' or section.settings.customize_mobile_alignment }}"
@@ -397,162 +511,112 @@
         "position": "center",
         "horizontal_alignment": "space-between",
         "customize_mobile_alignment": true,
-        "alignment": "center",
-        "alignment_mobile": "center",
-        "gap_desktop": 36,
-        "gap_mobile": 36,
+        "alignment": "left",
+        "alignment_mobile": "left",
+        "gap_desktop": 0,
+        "gap_mobile": 0,
         "color_scheme": "scheme-1",
         "padding_top": 0,
         "padding_bottom": 0,
-        "customize_mobile_padding": false
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
       },
       "blocks": [
         {
-          "type": "carousel",
+          "type": "marquee",
           "settings": {
-            "columns_desktop": "4",
-            "columns_mobile": "1",
+            "animation_direction": "backward",
+            "animation_speed": 1,
             "gap_desktop": 0,
             "gap_mobile": 0,
-            "width": "fill",
-            "show_navigation_on_desktop": false,
-            "show_pagination_on_desktop": false,
-            "show_pagination_on_mobile": false,
-            "autoplay": false,
             "padding_top": 0,
             "padding_bottom": 0,
-            "customize_mobile_padding": false
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "show_top_divider": false,
+            "show_bottom_divider": false,
+            "show_blurred_edges": false,
+            "enable_parallax": true,
+            "alignment": "center",
+            "width": "fill",
+            "custom_width": 50,
+            "color_type": "inherit",
+            "color_scheme": "scheme-1"
           },
           "blocks": [
             {
-              "type": "slide",
+              "type": "_marquee-image",
               "settings": {
-                "direction": "vertical",
-                "gap_desktop": 0,
-                "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false
-              },
-              "blocks": [
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "image_ratio_mobile": "square",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "limit_width_desktop": false,
-                    "limit_width_mobile": false,
-                    "corner_radius": "square",
-                    "customize_mobile_padding": false
-                  }
-                }
-              ]
+                "image_ratio": "ratio_1_1",
+                "width_custom_desktop": 448,
+                "width_custom_mobile": 256,
+                "corner_radius": "square",
+                "image_link": "",
+                "open_in_new_tab": false,
+                "image": "shopify://shop_images/essen-gallery-1.avif"
+              }
             },
             {
-              "type": "slide",
+              "type": "_marquee-image",
               "settings": {
-                "direction": "vertical",
-                "gap_desktop": 0,
-                "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false
-              },
-              "blocks": [
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "image_ratio_mobile": "square",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "limit_width_desktop": false,
-                    "limit_width_mobile": false,
-                    "corner_radius": "square",
-                    "customize_mobile_padding": false
-                  }
-                }
-              ]
+                "image_ratio": "ratio_1_1",
+                "width_custom_desktop": 448,
+                "width_custom_mobile": 256,
+                "corner_radius": "square",
+                "image_link": "",
+                "open_in_new_tab": false,
+                "image": "shopify://shop_images/essen-gallery-2.avif"
+              }
             },
             {
-              "type": "slide",
+              "type": "_marquee-image",
               "settings": {
-                "direction": "vertical",
-                "gap_desktop": 0,
-                "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false
-              },
-              "blocks": [
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "image_ratio_mobile": "square",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "limit_width_desktop": false,
-                    "limit_width_mobile": false,
-                    "corner_radius": "square",
-                    "customize_mobile_padding": false
-                  }
-                }
-              ]
+                "image_ratio": "ratio_1_1",
+                "width_custom_desktop": 448,
+                "width_custom_mobile": 256,
+                "corner_radius": "square",
+                "image_link": "",
+                "open_in_new_tab": false,
+                "image": "shopify://shop_images/essen-gallery-3.avif"
+              }
             },
             {
-              "type": "slide",
+              "type": "_marquee-image",
               "settings": {
-                "direction": "vertical",
-                "gap_desktop": 0,
-                "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false
-              },
-              "blocks": [
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "image_ratio_mobile": "square",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "limit_width_desktop": false,
-                    "limit_width_mobile": false,
-                    "corner_radius": "square",
-                    "customize_mobile_padding": false
-                  }
-                }
-              ]
+                "image_ratio": "ratio_1_1",
+                "width_custom_desktop": 448,
+                "width_custom_mobile": 256,
+                "corner_radius": "square",
+                "image_link": "",
+                "open_in_new_tab": false,
+                "image": "shopify://shop_images/essen-gallery-4.avif"
+              }
             },
             {
-              "type": "slide",
+              "type": "_marquee-image",
               "settings": {
-                "direction": "vertical",
-                "gap_desktop": 0,
-                "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false
-              },
-              "blocks": [
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "image_ratio_mobile": "square",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "limit_width_desktop": false,
-                    "limit_width_mobile": false,
-                    "corner_radius": "square",
-                    "customize_mobile_padding": false
-                  }
-                }
-              ]
+                "image_ratio": "ratio_1_1",
+                "width_custom_desktop": 448,
+                "width_custom_mobile": 256,
+                "corner_radius": "square",
+                "image_link": "",
+                "open_in_new_tab": false,
+                "image": "shopify://shop_images/essen-gallery-5.avif"
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image_ratio": "ratio_1_1",
+                "width_custom_desktop": 448,
+                "width_custom_mobile": 256,
+                "corner_radius": "square",
+                "image_link": "",
+                "open_in_new_tab": false,
+                "image": "shopify://shop_images/essen-gallery-6.avif"
+              }
             }
           ]
         }

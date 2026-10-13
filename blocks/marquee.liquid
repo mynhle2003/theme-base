@@ -88,6 +88,8 @@
   .marquee--block .marquee__track > .marquee-item-layout--horizontal { flex-wrap: nowrap; }
   .marquee--block .marquee__track > .marquee-item-layout--horizontal > * { width: fit-content; flex: 0 0 auto; }
 
+  .marquee--block.section-color-scope { background-color: var(--background-color); }
+
   .marquee--block {
     --marquee-duration: 28s;
     --marquee-loop-distance: 0px;
@@ -95,7 +97,7 @@
     max-width: 100%;
     min-width: 0;
     overflow: hidden;
-    background-color: var(--background-color);
+    background-color: transparent;
     padding-top: var(--marquee-padding-top, 0px);
     padding-bottom: var(--marquee-padding-bottom, 0px);
   }
@@ -539,9 +541,6 @@
     },
     {
       "type": "_marquee-group"
-    },
-    {
-      "type": "marquee-item"
     }
   ],
   "settings": [
@@ -763,9 +762,12 @@
           "type": "_marquee-heading",
           "settings": {
             "text": "Diamond statement",
-            "heading_size": "md",
+            "heading_size": "sm",
             "color_role": "heading",
-            "opacity": 100
+            "opacity": 100,
+            "custom_heading_size": 24,
+            "custom_mobile": true,
+            "custom_heading_size_mobile": 20
           }
         },
         {
@@ -781,9 +783,12 @@
           "type": "_marquee-heading",
           "settings": {
             "text": "Birthstone",
-            "heading_size": "md",
+            "heading_size": "sm",
             "color_role": "heading",
-            "opacity": 100
+            "opacity": 100,
+            "custom_heading_size": 24,
+            "custom_mobile": true,
+            "custom_heading_size_mobile": 20
           }
         },
         {
@@ -799,9 +804,12 @@
           "type": "_marquee-heading",
           "settings": {
             "text": "Diamond statement",
-            "heading_size": "md",
+            "heading_size": "sm",
             "color_role": "heading",
-            "opacity": 100
+            "opacity": 100,
+            "custom_heading_size": 24,
+            "custom_mobile": true,
+            "custom_heading_size_mobile": 20
           }
         },
         {
@@ -853,7 +861,7 @@
           "type": "_marquee-heading",
           "settings": {
             "text": "Welcome to our store",
-            "heading_size": "xl",
+            "heading_size": "lg",
             "color_role": "heading",
             "opacity": 100
           }

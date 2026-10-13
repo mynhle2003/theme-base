@@ -26,22 +26,6 @@
   unless heading_tag == 'div' or heading_tag == 'h1' or heading_tag == 'h2' or heading_tag == 'h3' or heading_tag == 'h4' or heading_tag == 'h5' or heading_tag == 'h6'
     assign heading_tag = 'h2'
   endunless
-  if heading_size == 'display'
-    case heading_tag
-      when 'h1'
-        assign heading_size = 'display'
-      when 'h3'
-        assign heading_size = 'lg'
-      when 'h4'
-        assign heading_size = 'md'
-      when 'h5'
-        assign heading_size = 'sm'
-      when 'h6'
-        assign heading_size = 'xs'
-      else
-        assign heading_size = 'xl'
-    endcase
-  endif
 
   assign heading_width_mode = block.settings.width | default: 'fit'
   unless heading_width_mode == 'fit' or heading_width_mode == 'fill' or heading_width_mode == 'custom'
@@ -127,9 +111,12 @@
 
 {% if block.settings.text != blank %}
   <{{ heading_tag }}
-    class="{{ heading_class }}"
+    class="{{ heading_class }} block-animation"
     {% if heading_style != blank %}style="{{ heading_style }}"{% endif %}
     {% if block_plain_text == blank %}data-content-empty{% endif %}
+    {% if block.settings.animation_type != blank and block.settings.animation_type != 'none' %}
+      {% render 'block-animation-attributes', block: block, allow_rotate_words: true %}
+    {% endif %}
     {{ block.shopify_attributes }}
   >{{ block.settings.text }}</{{ heading_tag }}>
 {% else %}
@@ -192,17 +179,37 @@
       "type": "select",
       "id": "heading_size",
       "label": "t:labels.heading_size",
-      "info": "Display follows the HTML tag typography from Theme Settings. A div uses H2 settings.",
       "options": [
-        { "value": "display", "label": "t:options.heading_size.display" },
-        { "value": "xl", "label": "t:options.heading_size.xl" },
-        { "value": "lg", "label": "t:options.heading_size.lg" },
-        { "value": "md", "label": "t:options.heading_size.md" },
-        { "value": "sm", "label": "t:options.heading_size.sm" },
-        { "value": "xs", "label": "t:options.heading_size.xs" },
-        { "value": "custom", "label": "t:options.heading_size.custom" }
+        {
+          "value": "display",
+          "label": "t:options.heading_size.display"
+        },
+        {
+          "value": "xl",
+          "label": "t:options.heading_size.xl"
+        },
+        {
+          "value": "lg",
+          "label": "t:options.heading_size.lg"
+        },
+        {
+          "value": "md",
+          "label": "t:options.heading_size.md"
+        },
+        {
+          "value": "sm",
+          "label": "t:options.heading_size.sm"
+        },
+        {
+          "value": "xs",
+          "label": "t:options.heading_size.xs"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.heading_size.custom"
+        }
       ],
-      "default": "display"
+      "default": "lg"
     },
     {
       "type": "range",
@@ -221,13 +228,34 @@
       "label": "t:labels.html_tag",
       "info": "t:info.heading_html_tag",
       "options": [
-        { "value": "div", "label": "t:options.html_tag.paragraph" },
-        { "value": "h1", "label": "t:options.html_tag.h1" },
-        { "value": "h2", "label": "t:options.html_tag.h2" },
-        { "value": "h3", "label": "t:options.html_tag.h3" },
-        { "value": "h4", "label": "t:options.html_tag.h4" },
-        { "value": "h5", "label": "t:options.html_tag.h5" },
-        { "value": "h6", "label": "t:options.html_tag.h6" }
+        {
+          "value": "div",
+          "label": "t:options.html_tag.paragraph"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.html_tag.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.html_tag.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.html_tag.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.html_tag.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.html_tag.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.html_tag.h6"
+        }
       ],
       "default": "h2"
     },
@@ -247,9 +275,18 @@
       "id": "width",
       "label": "t:labels.width",
       "options": [
-        { "value": "fit", "label": "t:options.width.fit" },
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "custom", "label": "t:options.width.custom" }
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
       ],
       "default": "fit"
     },
@@ -275,9 +312,18 @@
       "id": "width_mobile",
       "label": "t:labels.mobile_width",
       "options": [
-        { "value": "fit", "label": "t:options.width.fit" },
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "custom", "label": "t:options.width.custom" }
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
       ],
       "default": "fit",
       "visible_if": "{{ block.settings.customize_mobile_size }}"
@@ -292,6 +338,56 @@
       "unit": "px",
       "default": 480,
       "visible_if": "{{ block.settings.customize_mobile_size and block.settings.width_mobile == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.animation"
+    },
+    {
+      "type": "select",
+      "id": "animation_type",
+      "label": "t:labels.type",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.block_animation.none"
+        },
+        {
+          "value": "fade",
+          "label": "t:options.block_animation.fade"
+        },
+        {
+          "value": "scale",
+          "label": "t:options.block_animation.scale"
+        },
+        {
+          "value": "slide-left",
+          "label": "t:options.block_animation.slide_left"
+        },
+        {
+          "value": "slide-right",
+          "label": "t:options.block_animation.slide_right"
+        },
+        {
+          "value": "slide-bottom",
+          "label": "t:options.block_animation.slide_bottom"
+        },
+        {
+          "value": "rotate-words",
+          "label": "t:options.block_animation.rotate_words"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "animation_delay",
+      "label": "t:labels.animation_delay",
+      "min": 0,
+      "max": 2000,
+      "step": 50,
+      "unit": "ms",
+      "default": 0
     },
     {
       "type": "header",
@@ -394,13 +490,15 @@
       "category": "t:general.basic",
       "settings": {
         "text": "<p>Heading</p>",
-        "heading_size": "display",
+        "heading_size": "md",
         "html_tag": "h2",
         "width": "fit",
         "customize_mobile_size": false,
         "max_width": 640,
         "width_mobile": "fit",
-        "max_width_mobile": 480
+        "max_width_mobile": 480,
+        "animation_type": "none",
+        "animation_delay": 0
       }
     }
   ]

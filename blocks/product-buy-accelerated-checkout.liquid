@@ -24,10 +24,23 @@
   "name": "t:general.accelerated_checkout",
   "tag": null,
   "settings": [
-    { "type": "select", "id": "style", "label": "t:labels.style", "info": "t:info.accelerated_checkout_fallback_style", "options": [
-      { "value": "primary", "label": "t:options.button_variant.primary" },
-      { "value": "secondary", "label": "t:options.button_variant.secondary" }
-    ], "default": "primary" }
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:labels.style",
+      "info": "t:info.accelerated_checkout_fallback_style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:options.button_variant.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.button_variant.secondary"
+        }
+      ],
+      "default": "primary"
+    }
   ]
 }
 {% endschema %}

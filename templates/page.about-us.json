@@ -28,9 +28,11 @@
           "type": "heading",
           "settings": {
             "text": "<p>Our Story</p>",
-            "heading_size": "display",
+            "heading_size": "xl",
             "html_tag": "h1",
-            "width": "fill"
+            "width": "fill",
+            "animation_type": "rotate-words",
+            "animation_delay": 50
           }
         }
       },
@@ -63,7 +65,9 @@
             "eyebrow": {
               "type": "eyebrow",
               "settings": {
-                "text": "<p>[ Our philosophy ]</p>"
+                "text": "<p>[ Our philosophy ]</p>",
+                "animation_type": "slide-bottom",
+                "animation_delay": 50
               }
             },
             "statement": {
@@ -79,7 +83,9 @@
                     "text": "<p>We Believe Fine Jewelry Should be More Than an Accent It Is a Timeless Celebration of Your Journey, Strength, and <em>Most Cherished Memories</em></p>",
                     "size": "lg",
                     "width": "fill",
-                    "enable_scroll_reveal": false
+                    "enable_scroll_reveal": false,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 100
                   }
                 }
               },
@@ -158,16 +164,21 @@
                   "type": "heading",
                   "settings": {
                     "text": "<p>Built for Lifetime Elegance</p>",
-                    "heading_size": "md",
+                    "heading_size": "sm",
                     "html_tag": "h2",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "rotate-words",
+                    "animation_delay": 50,
+                    "custom_heading_size": 24
                   }
                 },
                 "text": {
                   "type": "text",
                   "settings": {
                     "text": "<p>Every piece is meticulously handcrafted by master jewelers, combining timeless aesthetics with modern durability. From subtle everyday gold hoops to statement gemstone pieces, we design refined luxury made to complement your unique style and last for generations.</p>",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 100
                   }
                 }
               },
@@ -269,16 +280,21 @@
                   "type": "heading",
                   "settings": {
                     "text": "<p>Stories in Gold</p>",
-                    "heading_size": "md",
+                    "heading_size": "sm",
                     "html_tag": "h2",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "rotate-words",
+                    "animation_delay": 50,
+                    "custom_heading_size": 24
                   }
                 },
                 "text": {
                   "type": "text",
                   "settings": {
                     "text": "<p>We believe every piece tells a story. Our curated gold collections are more than just jewelry; they are meaningful keepsakes, designed to be worn close to your heart as you build your own narrative, day by day.</p>",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 100
                   }
                 }
               },
@@ -358,16 +374,21 @@
                   "type": "heading",
                   "settings": {
                     "text": "<p>Designed for Generations</p>",
-                    "heading_size": "md",
+                    "heading_size": "sm",
                     "html_tag": "h2",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "rotate-words",
+                    "animation_delay": 50,
+                    "custom_heading_size": 24
                   }
                 },
                 "text": {
                   "type": "text",
                   "settings": {
                     "text": "<p>We believe fine jewelry should be more than an accent—it is a wearable archive of your journey. From bold sculptural signets to refined daily essentials, each piece is crafted with intention, timeless art, and structural integrity to be passed down through time.</p>",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 100
                   }
                 }
               },
@@ -403,11 +424,13 @@
       "settings": {
         "section_width": "full_width",
         "color_scheme": "scheme-3",
-        "padding_top": 50,
-        "padding_bottom": 50,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 25,
-        "padding_bottom_mobile": 25
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": false,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "position_horizontal": "center",
+        "horizontal_alignment": "left"
       },
       "blocks": {
         "marquee": {
@@ -415,75 +438,59 @@
           "settings": {
             "animation_speed": 1,
             "gap_desktop": 48,
-            "gap_mobile": 32
+            "gap_mobile": 32,
+            "show_top_divider": false,
+            "show_bottom_divider": false,
+            "show_blurred_edges": false,
+            "enable_parallax": true,
+            "alignment": "center",
+            "width": "fill",
+            "custom_width": 50,
+            "color_type": "inherit",
+            "color_scheme": "scheme-1",
+            "padding_top": 50,
+            "padding_top_mobile": 25,
+            "padding_bottom": 50,
+            "padding_bottom_mobile": 25,
+            "customize_mobile_padding": true
           },
           "blocks": {
-            "ethical": {
-              "type": "marquee-item",
+            "ethical_title": {
+              "type": "_marquee-heading",
               "settings": {
-                "direction": "horizontal",
-                "position": "center",
-                "gap_desktop": 48,
-                "gap_mobile": 32
-              },
-              "blocks": {
-                "title": {
-                  "type": "heading",
-                  "settings": {
-                    "text": "<p>ETHICALLY SOURCED DIAMONDS</p>",
-                    "heading_size": "lg",
-                    "html_tag": "div",
-                    "width": "fill"
-                  }
-                },
-                "separator": {
-                  "type": "icon",
-                  "settings": {
-                    "icon": "diamond",
-                    "icon_width": 48
-                  }
-                }
-              },
-              "block_order": [
-                "title",
-                "separator"
-              ]
+                "text": "ETHICALLY SOURCED DIAMONDS",
+                "heading_size": "md",
+                "opacity": 100
+              }
             },
-            "warranty": {
-              "type": "marquee-item",
+            "ethical_separator": {
+              "type": "_marquee-icon",
               "settings": {
-                "direction": "horizontal",
-                "position": "center",
-                "gap_desktop": 48,
-                "gap_mobile": 32
-              },
-              "blocks": {
-                "title": {
-                  "type": "heading",
-                  "settings": {
-                    "text": "<p>LIFETIME WARRANTY</p>",
-                    "heading_size": "lg",
-                    "html_tag": "div",
-                    "width": "fill"
-                  }
-                },
-                "separator": {
-                  "type": "icon",
-                  "settings": {
-                    "icon": "diamond",
-                    "icon_width": 48
-                  }
-                }
-              },
-              "block_order": [
-                "title",
-                "separator"
-              ]
+                "icon": "diamond",
+                "icon_width": 48
+              }
+            },
+            "warranty_title": {
+              "type": "_marquee-heading",
+              "settings": {
+                "text": "LIFETIME WARRANTY",
+                "heading_size": "md",
+                "opacity": 100
+              }
+            },
+            "warranty_separator": {
+              "type": "_marquee-icon",
+              "settings": {
+                "icon": "diamond",
+                "icon_width": 48
+              }
             }
           },
           "block_order": [
-            "ethical",
-            "warranty"
+            "ethical_title",
+            "ethical_separator",
+            "warranty_title",
+            "warranty_separator"
           ]
         }
       },
@@ -519,16 +526,20 @@
             "eyebrow": {
               "type": "eyebrow",
               "settings": {
-                "text": "<p>[ The journal ]</p>"
+                "text": "<p>[ The journal ]</p>",
+                "animation_type": "slide-bottom",
+                "animation_delay": 50
               }
             },
             "heading": {
               "type": "heading",
               "settings": {
                 "text": "<p>Stories &amp; Craftsmanship</p>",
-                "heading_size": "lg",
+                "heading_size": "md",
                 "html_tag": "h2",
-                "width": "fill"
+                "width": "fill",
+                "animation_type": "rotate-words",
+                "animation_delay": 50
               }
             }
           },
@@ -547,7 +558,8 @@
             "button_height_mobile": "inherit",
             "full_width_mobile": true,
             "show_icon": false,
-            "show_icon_mobile": false
+            "show_icon_mobile": false,
+            "hide_view_all_mobile": false
           },
           "disabled": true
         },
@@ -603,7 +615,7 @@
                   "type": "blog-card-title",
                   "settings": {
                     "line_limit": "no_limit",
-                    "heading_size": "sm",
+                    "heading_size": "xs",
                     "html_tag": "h3",
                     "padding_top": 8,
                     "padding_bottom": 0,
@@ -699,16 +711,21 @@
                   "type": "icon",
                   "settings": {
                     "icon": "shield-check",
-                    "icon_width": 32
+                    "icon_width": 32,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
                   }
                 },
                 "heading": {
                   "type": "heading",
                   "settings": {
                     "text": "<p>Lifetime Warranty</p>",
-                    "heading_size": "xs",
+                    "heading_size": "custom",
                     "html_tag": "h2",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "rotate-words",
+                    "animation_delay": 50,
+                    "custom_heading_size": 16
                   }
                 },
                 "text": {
@@ -716,7 +733,9 @@
                   "settings": {
                     "text": "<p>Covering all repairs &amp; maintenance</p>",
                     "text_size": "sm",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 100
                   }
                 }
               },
@@ -743,16 +762,21 @@
                   "type": "icon",
                   "settings": {
                     "icon": "truck",
-                    "icon_width": 32
+                    "icon_width": 32,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
                   }
                 },
                 "heading": {
                   "type": "heading",
                   "settings": {
                     "text": "<p>Free 30-Day Returns</p>",
-                    "heading_size": "xs",
+                    "heading_size": "custom",
                     "html_tag": "h2",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "rotate-words",
+                    "animation_delay": 50,
+                    "custom_heading_size": 16
                   }
                 },
                 "text": {
@@ -760,7 +784,9 @@
                   "settings": {
                     "text": "<p>Complimentary exchange &amp; full refund</p>",
                     "text_size": "sm",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 100
                   }
                 }
               },
@@ -787,16 +813,21 @@
                   "type": "icon",
                   "settings": {
                     "icon": "diamond",
-                    "icon_width": 32
+                    "icon_width": 32,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
                   }
                 },
                 "heading": {
                   "type": "heading",
                   "settings": {
                     "text": "<p>Ethically Made</p>",
-                    "heading_size": "xs",
+                    "heading_size": "custom",
                     "html_tag": "h2",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "rotate-words",
+                    "animation_delay": 50,
+                    "custom_heading_size": 16
                   }
                 },
                 "text": {
@@ -804,7 +835,9 @@
                   "settings": {
                     "text": "<p>100% conflict-free gems</p>",
                     "text_size": "sm",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 100
                   }
                 }
               },
@@ -831,16 +864,21 @@
                   "type": "icon",
                   "settings": {
                     "icon": "receipt-percent",
-                    "icon_width": 32
+                    "icon_width": 32,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
                   }
                 },
                 "heading": {
                   "type": "heading",
                   "settings": {
                     "text": "<p>Goddess Circle Pricing</p>",
-                    "heading_size": "xs",
+                    "heading_size": "custom",
                     "html_tag": "h2",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "rotate-words",
+                    "animation_delay": 50,
+                    "custom_heading_size": 16
                   }
                 },
                 "text": {
@@ -848,7 +886,9 @@
                   "settings": {
                     "text": "<p>Join for 10% off your order</p>",
                     "text_size": "sm",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 100
                   }
                 }
               },

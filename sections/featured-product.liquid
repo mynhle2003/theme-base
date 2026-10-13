@@ -70,9 +70,21 @@
 {% endcapture %}
 {% assign featured_product_style = featured_product_style | strip %}
 
+{% liquid
+  assign defer_product_runtime = false
+  if section.index > 2 and request.design_mode == false
+    assign defer_product_runtime = true
+  endif
+%}
+{% if defer_product_runtime %}
+  {% render 'deferred-stylesheet', filename: 'product-information.css' %}
+  {% render 'deferred-stylesheet', filename: 'product-information-extras.css' %}
+  {% render 'deferred-stylesheet', filename: 'product-media.css' %}
+{% else %}
   {{ 'product-information.css' | asset_url | stylesheet_tag }}
   {{ 'product-information-extras.css' | asset_url | stylesheet_tag }}
   {{ 'product-media.css' | asset_url | stylesheet_tag }}
+{% endif %}
   <div
     class="section-spacing product-information featured-product color-scheme section-color-scope {{ featured_product_scheme }}"
     data-product-information
@@ -93,12 +105,21 @@
     </div>
   </div>
 
+{% if defer_product_runtime %}
+  <script data-theme-module="{{ 'variant-picker.js' | asset_url }}"></script>
+  <script data-theme-module="{{ 'product-buy-buttons.js' | asset_url }}"></script>
+  <script data-theme-module="{{ 'product-description.js' | asset_url }}"></script>
+  <script data-theme-module="{{ 'product-inventory.js' | asset_url }}"></script>
+  <script data-theme-module="{{ 'product-media.js' | asset_url }}"></script>
+  <script data-theme-module="{{ 'product-information-extras.js' | asset_url }}"></script>
+{% else %}
   <script type="module" src="{{ 'variant-picker.js' | asset_url }}"></script>
   <script type="module" src="{{ 'product-buy-buttons.js' | asset_url }}"></script>
   <script type="module" src="{{ 'product-description.js' | asset_url }}"></script>
   <script type="module" src="{{ 'product-inventory.js' | asset_url }}"></script>
   <script type="module" src="{{ 'product-media.js' | asset_url }}"></script>
   <script type="module" src="{{ 'product-information-extras.js' | asset_url }}"></script>
+{% endif %}
 
 {% stylesheet %}
   .featured-product {
@@ -127,16 +148,34 @@
     position: relative;
     z-index: 1;
   }
+
+  .featured-product .variant-picker__option-header > .variant-picker__label,
+  .featured-product .form__label {
+    color: var(--body-color);
+    font-family: var(--font-body-family);
+    font-size: var(--font-body-sm);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5;
+  }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.featured_product",
   "class": "section-featured-product",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "_product-media" },
-    { "type": "_product-details" }
+    {
+      "type": "_product-media"
+    },
+    {
+      "type": "_product-details"
+    }
   ],
   "settings": [
     {
@@ -159,8 +198,14 @@
       "id": "width",
       "label": "t:labels.width",
       "options": [
-        { "value": "page", "label": "t:options.hero_width.page" },
-        { "value": "full", "label": "t:options.hero_width.full" }
+        {
+          "value": "page",
+          "label": "t:options.hero_width.page"
+        },
+        {
+          "value": "full",
+          "label": "t:options.hero_width.full"
+        }
       ],
       "default": "page"
     },
@@ -169,9 +214,18 @@
       "id": "media_width",
       "label": "t:labels.media_width",
       "options": [
-        { "value": "small", "label": "t:options.size.small" },
-        { "value": "medium", "label": "t:options.size.medium" },
-        { "value": "large", "label": "t:options.size.large" }
+        {
+          "value": "small",
+          "label": "t:options.size.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.size.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.size.large"
+        }
       ],
       "default": "medium"
     },
@@ -348,7 +402,7 @@
                 {
                   "type": "product-title",
                   "settings": {
-                    "heading_size": "xl",
+                    "heading_size": "lg",
                     "html_tag": "h2",
                     "text_case": "original"
                   }
@@ -385,6 +439,174 @@
                 "customize_mobile_padding": false,
                 "padding_top_mobile": 0,
                 "padding_bottom_mobile": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Featured product — Everyday uniform",
+      "category": "t:general.product",
+      "settings": {
+        "sticky_content": true,
+        "width": "full",
+        "media_width": "medium",
+        "gap": 40,
+        "gap_mobile": 28,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56
+      },
+      "blocks": [
+        {
+          "type": "_product-media",
+          "settings": {
+            "desktop_layout": "carousel_two_items",
+            "mobile_layout": "carousel_two_items",
+            "mobile_show_next_slide": false,
+            "mobile_show_pagination": true,
+            "mobile_pagination_type": "progress_bar",
+            "full_width_media": false,
+            "zoom": "open_lightbox",
+            "autoplay": false,
+            "loop_video": false,
+            "gap": 8,
+            "gap_mobile": 8
+          },
+          "id": "product-media",
+          "static": true
+        },
+        {
+          "type": "_product-details",
+          "settings": {
+            "alignment": "left",
+            "limit_width": false,
+            "container_position": "left",
+            "gap_desktop": 24,
+            "gap_mobile": 24,
+            "border_thickness": 0,
+            "corner_radius": "square",
+            "shadow": "none",
+            "appearance_type": "inherit",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0
+          },
+          "id": "product-details",
+          "static": true,
+          "blocks": [
+            {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "left",
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 20,
+                "gap_mobile": 20
+              },
+              "blocks": [
+                {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "alignment": "left",
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "gap_desktop": 8,
+                    "gap_mobile": 8
+                  },
+                  "blocks": [
+                    {
+                      "type": "product-title",
+                      "settings": {
+                        "heading_size": "xs",
+                        "html_tag": "h3",
+                        "text_case": "original"
+                      }
+                    },
+                    {
+                      "type": "metafield",
+                      "settings": {
+                        "key": "custom.material",
+                        "text_size": "sm",
+                        "text_color": "#999999",
+                        "width": "fill"
+                      }
+                    },
+                    {
+                      "type": "product-price",
+                      "settings": {
+                        "font": "body",
+                        "font_size": "lg",
+                        "show_sale_badge": false,
+                        "show_tax_shipping_notice": false
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "divider",
+                  "settings": {
+                    "style": "solid",
+                    "thickness": "thin",
+                    "color": "custom",
+                    "custom_color": "#e6e6e6",
+                    "width": "full",
+                    "desktop_spacing": 0,
+                    "mobile_spacing": 0
+                  }
+                },
+                {
+                  "type": "product-variant-picker",
+                  "settings": {
+                    "show_option_names": true
+                  }
+                },
+                {
+                  "type": "product-buy-buttons",
+                  "settings": {
+                    "gap_desktop": 20,
+                    "gap_mobile": 20,
+                    "show_back_in_stock_button": false,
+                    "show_gift_card_form": false
+                  },
+                  "blocks": [
+                    {
+                      "type": "product-buy-quantity",
+                      "settings": {
+                        "style": "default"
+                      },
+                      "id": "quantity",
+                      "static": true
+                    },
+                    {
+                      "type": "product-buy-add-to-cart",
+                      "settings": {
+                        "show_price": false,
+                        "style": "primary"
+                      },
+                      "id": "add-to-cart",
+                      "static": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "button-view-details",
+              "settings": {
+                "label": "View Full Details",
+                "show_icon": false,
+                "padding_top": 0,
+                "padding_bottom": 0
               }
             }
           ]

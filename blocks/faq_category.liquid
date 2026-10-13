@@ -24,6 +24,14 @@
   unless faq_category_tag == 'div' or faq_category_tag == 'h1' or faq_category_tag == 'h2' or faq_category_tag == 'h3' or faq_category_tag == 'h4' or faq_category_tag == 'h5' or faq_category_tag == 'h6'
     assign faq_category_tag = 'h4'
   endunless
+  capture faq_category_heading_size
+    render 'heading-size-token', size: faq_category_heading_size, fallback: 'xl', html_tag: faq_category_tag
+  endcapture
+  assign faq_category_heading_size = faq_category_heading_size | strip
+  capture faq_category_heading_size_mobile
+    render 'heading-size-token', size: faq_category_heading_size_mobile, fallback: 'xl', html_tag: faq_category_tag
+  endcapture
+  assign faq_category_heading_size_mobile = faq_category_heading_size_mobile | strip
 %}
 
 {% capture faq_category_style %}
@@ -155,8 +163,11 @@
       "settings": {
         "show_title": true,
         "title": "FAQ category",
-        "heading_size": "md",
-        "html_tag": "h4"
+        "heading_size": "sm",
+        "html_tag": "h4",
+        "custom_heading_size": 24,
+        "heading_size_mobile": "sm",
+        "custom_heading_size_mobile": 20
       },
       "blocks": [
         { "type": "faq_item" }

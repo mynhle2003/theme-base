@@ -6,6 +6,9 @@
   @param {string} button_font_weight - Requested button weight or inherit
 {% enddoc %}
 {%- capture font_faces -%}
+  {%- # Essen product-card titles use the actual medium variant. -%}
+  {%- if body_font != blank -%}{{- body_font | font_modify: 'weight', '500' | font_face: font_display: 'swap' -}}<!-- font-face -->{%- endif -%}
+  {%- if heading_font != blank -%}{{- heading_font | font_modify: 'weight', '500' | font_face: font_display: 'swap' -}}<!-- font-face -->{%- endif -%}
   {%- if button_font_weight != 'inherit' -%}
     {%- if body_font != blank -%}{{- body_font | font_modify: 'weight', button_font_weight | font_face: font_display: 'swap' -}}<!-- font-face -->{%- endif -%}
     {%- if heading_font != blank -%}{{- heading_font | font_modify: 'weight', button_font_weight | font_face: font_display: 'swap' -}}<!-- font-face -->{%- endif -%}

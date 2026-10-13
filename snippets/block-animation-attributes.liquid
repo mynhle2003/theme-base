@@ -1,0 +1,21 @@
+{% doc %}
+  Validated entrance animation hooks on an existing block root.
+  None/missing/invalid types produce no runtime hooks. Heading alone supports word rotation.
+  @param {object} block - Owning theme block
+  @param {boolean} [allow_rotate_words] - Heading caller permits word rotation
+{% enddoc %}
+{%- liquid
+  assign animation_types = 'fade,scale,slide-left,slide-right,slide-bottom' | split: ','
+  assign animation_type = block.settings.animation_type | default: 'none'
+  assign animation_enabled = false
+  if animation_types contains animation_type
+    assign animation_enabled = true
+  elsif animation_type == 'rotate-words' and allow_rotate_words
+    assign animation_enabled = true
+  endif
+  assign animation_delay = block.settings.animation_delay | default: 0 | plus: 0 | at_least: 0 | at_most: 2000
+  assign animation_delay = animation_delay | divided_by: 50.0 | round | times: 50
+-%}
+{%- if animation_enabled -%}
+  data-block-animation="{{ animation_type }}" data-animation-delay="{{ animation_delay }}"
+{%- endif -%}

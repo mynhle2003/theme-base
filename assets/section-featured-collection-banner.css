@@ -1,0 +1,81 @@
+.featured-collection-banner__spacing {
+    width: 100%;
+    padding-top: var(--featured-collection-banner-padding-top, 50px);
+    padding-bottom: var(--featured-collection-banner-padding-bottom, 50px);
+  }
+
+  .featured-collection-banner__container {
+    min-width: 0;
+  }
+
+  .container.full-width.featured-collection-banner__container--no-padding {
+    padding-inline: 0;
+  }
+
+  .featured-collection-banner__content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--featured-collection-banner-gap-mobile, 20px);
+    min-width: 0;
+  }
+
+  .featured-collection-banner__content > :is(.block-header, .image-card--featured-collection-banner, .product-list-banner) {
+    min-width: 0;
+    flex: 0 0 100%;
+    order: var(--featured-collection-role-order);
+  }
+
+  .featured-collection-banner__content > :nth-child(1 of .block-header, .image-card--featured-collection-banner, .product-list-banner) { --featured-collection-role-order: 1; }
+  .featured-collection-banner__content > :nth-child(2 of .block-header, .image-card--featured-collection-banner, .product-list-banner) { --featured-collection-role-order: 2; }
+  .featured-collection-banner__content > :nth-child(3 of .block-header, .image-card--featured-collection-banner, .product-list-banner) { --featured-collection-role-order: 3; }
+
+  /* Theme Block drops are lazy; layout reads rendered role classes, not child settings. */
+  .featured-collection-banner__content:not(:has(> .image-card--featured-collection-banner ~ .image-card--featured-collection-banner)):not(:has(> .product-list-banner ~ .product-list-banner)):has(> .image-card--featured-collection-banner:nth-child(1 of .block-header, .image-card--featured-collection-banner, .product-list-banner)):has(> .product-list-banner:nth-child(2 of .block-header, .image-card--featured-collection-banner, .product-list-banner)),
+  .featured-collection-banner__content:not(:has(> .image-card--featured-collection-banner ~ .image-card--featured-collection-banner)):not(:has(> .product-list-banner ~ .product-list-banner)):has(> .image-card--featured-collection-banner:nth-child(2 of .block-header, .image-card--featured-collection-banner, .product-list-banner)):has(> .product-list-banner:nth-child(1 of .block-header, .image-card--featured-collection-banner, .product-list-banner)) { --featured-collection-banner-banner-order: 1; --featured-collection-banner-products-order: 2; }
+
+  .featured-collection-banner__content[data-banner-position="after"]:not(:has(> .image-card--featured-collection-banner ~ .image-card--featured-collection-banner)):not(:has(> .product-list-banner ~ .product-list-banner)):has(> .image-card--featured-collection-banner:nth-child(1 of .block-header, .image-card--featured-collection-banner, .product-list-banner)):has(> .product-list-banner:nth-child(2 of .block-header, .image-card--featured-collection-banner, .product-list-banner)),
+  .featured-collection-banner__content[data-banner-position="after"]:not(:has(> .image-card--featured-collection-banner ~ .image-card--featured-collection-banner)):not(:has(> .product-list-banner ~ .product-list-banner)):has(> .image-card--featured-collection-banner:nth-child(2 of .block-header, .image-card--featured-collection-banner, .product-list-banner)):has(> .product-list-banner:nth-child(1 of .block-header, .image-card--featured-collection-banner, .product-list-banner)) { --featured-collection-banner-banner-order: 2; --featured-collection-banner-products-order: 1; }
+
+  .featured-collection-banner__content:not(:has(> .image-card--featured-collection-banner ~ .image-card--featured-collection-banner)):not(:has(> .product-list-banner ~ .product-list-banner)):has(> .image-card--featured-collection-banner:nth-child(1 of .block-header, .image-card--featured-collection-banner, .product-list-banner)):has(> .product-list-banner:nth-child(3 of .block-header, .image-card--featured-collection-banner, .product-list-banner)),
+  .featured-collection-banner__content:not(:has(> .image-card--featured-collection-banner ~ .image-card--featured-collection-banner)):not(:has(> .product-list-banner ~ .product-list-banner)):has(> .image-card--featured-collection-banner:nth-child(3 of .block-header, .image-card--featured-collection-banner, .product-list-banner)):has(> .product-list-banner:nth-child(1 of .block-header, .image-card--featured-collection-banner, .product-list-banner)) { --featured-collection-banner-banner-order: 1; --featured-collection-banner-products-order: 3; }
+
+  .featured-collection-banner__content[data-banner-position="after"]:not(:has(> .image-card--featured-collection-banner ~ .image-card--featured-collection-banner)):not(:has(> .product-list-banner ~ .product-list-banner)):has(> .image-card--featured-collection-banner:nth-child(1 of .block-header, .image-card--featured-collection-banner, .product-list-banner)):has(> .product-list-banner:nth-child(3 of .block-header, .image-card--featured-collection-banner, .product-list-banner)),
+  .featured-collection-banner__content[data-banner-position="after"]:not(:has(> .image-card--featured-collection-banner ~ .image-card--featured-collection-banner)):not(:has(> .product-list-banner ~ .product-list-banner)):has(> .image-card--featured-collection-banner:nth-child(3 of .block-header, .image-card--featured-collection-banner, .product-list-banner)):has(> .product-list-banner:nth-child(1 of .block-header, .image-card--featured-collection-banner, .product-list-banner)) { --featured-collection-banner-banner-order: 3; --featured-collection-banner-products-order: 1; }
+
+  .featured-collection-banner__content:not(:has(> .image-card--featured-collection-banner ~ .image-card--featured-collection-banner)):not(:has(> .product-list-banner ~ .product-list-banner)):has(> .image-card--featured-collection-banner:nth-child(2 of .block-header, .image-card--featured-collection-banner, .product-list-banner)):has(> .product-list-banner:nth-child(3 of .block-header, .image-card--featured-collection-banner, .product-list-banner)),
+  .featured-collection-banner__content:not(:has(> .image-card--featured-collection-banner ~ .image-card--featured-collection-banner)):not(:has(> .product-list-banner ~ .product-list-banner)):has(> .image-card--featured-collection-banner:nth-child(3 of .block-header, .image-card--featured-collection-banner, .product-list-banner)):has(> .product-list-banner:nth-child(2 of .block-header, .image-card--featured-collection-banner, .product-list-banner)) { --featured-collection-banner-banner-order: 2; --featured-collection-banner-products-order: 3; }
+
+  .featured-collection-banner__content[data-banner-position="after"]:not(:has(> .image-card--featured-collection-banner ~ .image-card--featured-collection-banner)):not(:has(> .product-list-banner ~ .product-list-banner)):has(> .image-card--featured-collection-banner:nth-child(2 of .block-header, .image-card--featured-collection-banner, .product-list-banner)):has(> .product-list-banner:nth-child(3 of .block-header, .image-card--featured-collection-banner, .product-list-banner)),
+  .featured-collection-banner__content[data-banner-position="after"]:not(:has(> .image-card--featured-collection-banner ~ .image-card--featured-collection-banner)):not(:has(> .product-list-banner ~ .product-list-banner)):has(> .image-card--featured-collection-banner:nth-child(3 of .block-header, .image-card--featured-collection-banner, .product-list-banner)):has(> .product-list-banner:nth-child(2 of .block-header, .image-card--featured-collection-banner, .product-list-banner)) { --featured-collection-banner-banner-order: 3; --featured-collection-banner-products-order: 2; }
+
+  .featured-collection-banner__content > .image-card--featured-collection-banner {
+    order: var(--featured-collection-banner-banner-order, var(--featured-collection-role-order));
+  }
+
+  .featured-collection-banner__content > .product-list-banner {
+    order: var(--featured-collection-banner-products-order, var(--featured-collection-role-order));
+  }
+
+  @media (min-width: 768px) {
+    .featured-collection-banner__content {
+      gap: var(--featured-collection-banner-gap-desktop, 30px);
+    }
+
+    .featured-collection-banner__content > :is(.image-card--featured-collection-banner, .product-list-banner) {
+      flex-basis: calc((100% - var(--featured-collection-banner-gap-desktop, 30px)) / 2);
+      position: sticky;
+      top: calc(var(--header-sticky-height, 0px) + var(--sticky-offset-spacing, 16px));
+      align-self: flex-start;
+    }
+
+    .featured-collection-banner__content:not(:has(> :nth-child(2 of .image-card--featured-collection-banner, .product-list-banner))) > :is(.image-card--featured-collection-banner, .product-list-banner) {
+      flex-basis: 100%;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .featured-collection-banner__spacing {
+      padding-top: var(--featured-collection-banner-padding-top-mobile, var(--featured-collection-banner-padding-top, 50px));
+      padding-bottom: var(--featured-collection-banner-padding-bottom-mobile, var(--featured-collection-banner-padding-bottom, 50px));
+    }
+  }

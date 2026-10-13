@@ -84,6 +84,7 @@
       media_gallery_id: media_gallery_id,
       block_id: block.id,
       show_option_names: show_option_names,
+      show_selected_value: block.settings.show_selected_value,
       size_chart_option_name: size_chart_option_name,
       size_chart_page: block.settings.size_chart_page,
       size_chart_desktop_layout: size_chart_desktop_layout,
@@ -113,6 +114,13 @@
       "default": true
     },
     {
+      "type": "checkbox",
+      "id": "show_selected_value",
+      "label": "t:labels.show_selected_value",
+      "default": true,
+      "visible_if": "{{ block.settings.show_option_names }}"
+    },
+    {
       "type": "header",
       "content": "t:general.size_guide"
     },
@@ -140,8 +148,14 @@
       "id": "size_chart_desktop_layout",
       "label": "t:labels.desktop_presentation",
       "options": [
-        { "value": "modal", "label": "t:options.size_guide_layout.modal" },
-        { "value": "drawer", "label": "t:options.size_guide_layout.drawer" }
+        {
+          "value": "modal",
+          "label": "t:options.size_guide_layout.modal"
+        },
+        {
+          "value": "drawer",
+          "label": "t:options.size_guide_layout.drawer"
+        }
       ],
       "default": "modal",
       "visible_if": "{{ block.settings.size_chart_page != blank }}"
@@ -163,8 +177,14 @@
       "id": "size_chart_mobile_layout",
       "label": "t:labels.mobile_presentation",
       "options": [
-        { "value": "bottom_sheet", "label": "t:options.size_guide_layout.bottom_sheet" },
-        { "value": "drawer", "label": "t:options.size_guide_layout.drawer" }
+        {
+          "value": "bottom_sheet",
+          "label": "t:options.size_guide_layout.bottom_sheet"
+        },
+        {
+          "value": "drawer",
+          "label": "t:options.size_guide_layout.drawer"
+        }
       ],
       "default": "bottom_sheet",
       "visible_if": "{{ block.settings.size_chart_page != blank }}"

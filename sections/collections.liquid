@@ -42,26 +42,18 @@
 {% endstylesheet %}
 {% schema %}
 {
-  "name": "Collection list page",
-  "class": "section-collections-page",
+  "name": "t:general.collections_grid",
   "enabled_on": {
     "templates": [
       "list-collections"
     ]
   },
-  "blocks": [
-    {
-      "type": "heading"
-    },
-    {
-      "type": "_collections-list"
-    }
-  ],
-  "max_blocks": 5,
   "settings": [
     {
-      "type": "header",
-      "content": "t:general.layout"
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-1"
     },
     {
       "type": "select",
@@ -119,10 +111,6 @@
       "visible_if": "{{ section.settings.show_top_divider or section.settings.show_bottom_divider }}"
     },
     {
-      "type": "header",
-      "content": "t:general.gap"
-    },
-    {
       "type": "range",
       "id": "gap_desktop",
       "label": "t:labels.desktop_gap",
@@ -143,23 +131,9 @@
       "default": 30
     },
     {
-      "type": "header",
-      "content": "t:general.appearance"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:labels.color_scheme",
-      "default": "scheme-1"
-    },
-    {
       "type": "color",
       "id": "background_color",
       "label": "t:labels.background_color"
-    },
-    {
-      "type": "header",
-      "content": "Section padding"
     },
     {
       "type": "range",
@@ -210,54 +184,16 @@
       "visible_if": "{{ section.settings.customize_mobile_padding }}"
     }
   ],
-  "limit": 1,
-  "presets": [
+  "blocks": [
     {
-      "name": "Collection list page",
-      "blocks": [
-        {
-          "type": "heading",
-          "settings": {
-            "text": "<p>Collections list</p>",
-            "heading_size": "display",
-            "html_tag": "h1"
-          }
-        },
-        {
-          "type": "_collections-list",
-          "id": "collection-list",
-          "static": true,
-          "blocks": [
-            {
-              "type": "_collections-page-card",
-              "id": "collection-card",
-              "static": true,
-              "settings": {
-                "ratio": "landscape_3_2",
-                "color_type": "inherit"
-              },
-              "blocks": [
-                {
-                  "type": "collection-card-title",
-                  "settings": {
-                    "heading_size": "md",
-                    "html_tag": "h2"
-                  }
-                }
-              ]
-            },
-            {
-              "type": "pagination",
-              "id": "pagination",
-              "static": true,
-              "settings": {
-                "padding_top": 10
-              }
-            }
-          ]
-        }
-      ]
+      "type": "heading"
+    },
+    {
+      "type": "_collections-list"
     }
-  ]
+  ],
+  "max_blocks": 5,
+  "limit": 1,
+  "class": "section-collections-page"
 }
 {% endschema %}

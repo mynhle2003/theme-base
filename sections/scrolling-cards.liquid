@@ -146,11 +146,19 @@
 {
   "name": "Scrolling cards",
   "class": "section-scrolling-cards",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "max_blocks": 7,
   "blocks": [
-    { "type": "header" },
-    { "type": "scrolling-card" }
+    {
+      "type": "header"
+    },
+    {
+      "type": "scrolling-card"
+    }
   ],
   "settings": [
     {
@@ -162,9 +170,18 @@
       "id": "section_width",
       "label": "Width",
       "options": [
-        { "value": "page_width", "label": "Page" },
-        { "value": "full_width", "label": "Full" },
-        { "value": "custom", "label": "Custom" }
+        {
+          "value": "page_width",
+          "label": "Page"
+        },
+        {
+          "value": "full_width",
+          "label": "Full"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
       ],
       "default": "page_width"
     },
@@ -226,7 +243,7 @@
     {
       "type": "range",
       "id": "padding_top",
-      "label": "t:labels.top_padding",
+      "label": "Top",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -236,7 +253,7 @@
     {
       "type": "range",
       "id": "padding_bottom",
-      "label": "t:labels.bottom_padding",
+      "label": "Bottom",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -246,13 +263,13 @@
     {
       "type": "checkbox",
       "id": "customize_mobile_padding",
-      "label": "t:labels.customize_mobile_padding",
+      "label": "Customize for mobile",
       "default": false
     },
     {
       "type": "range",
       "id": "padding_top_mobile",
-      "label": "t:labels.mobile_top_padding",
+      "label": "Top (mobile)",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -263,7 +280,7 @@
     {
       "type": "range",
       "id": "padding_bottom_mobile",
-      "label": "t:labels.mobile_bottom_padding",
+      "label": "Bottom (mobile)",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -306,9 +323,11 @@
               "type": "heading",
               "settings": {
                 "text": "<p>Scrolling cards</p>",
-                "heading_size": "display",
+                "heading_size": "md",
                 "html_tag": "h2",
-                "width": "fit"
+                "width": "fit",
+                "animation_type": "rotate-words",
+                "animation_delay": 50
               }
             }
           ]
@@ -357,10 +376,48 @@
                 "shadow": "none"
               },
               "blocks": [
-                { "type": "eyebrow", "settings": { "text": "<p>Eyebrow</p>", "show_background": true, "corner_radius": "pill" } },
-                { "type": "spacer", "settings": { "unit_desktop": "pixel", "size_desktop_px": 80, "show_on_mobile": true, "unit_mobile": "pixel", "size_mobile_px": 40 } },
-                { "type": "heading", "settings": { "text": "<p>Heading</p>", "heading_size": "display", "html_tag": "h3", "width": "fit" } },
-                { "type": "text", "settings": { "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>", "text_size": "sm", "width": "custom", "max_width": 500 } }
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>Eyebrow</p>",
+                    "show_background": true,
+                    "corner_radius": "pill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "spacer",
+                  "settings": {
+                    "unit_desktop": "pixel",
+                    "size_desktop_px": 80,
+                    "show_on_mobile": true,
+                    "unit_mobile": "pixel",
+                    "size_mobile_px": 40
+                  }
+                },
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Heading</p>",
+                    "heading_size": "md",
+                    "html_tag": "h3",
+                    "width": "fit",
+                    "animation_type": "rotate-words",
+                    "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>",
+                    "text_size": "sm",
+                    "width": "custom",
+                    "max_width": 500,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 100
+                  }
+                }
               ]
             },
             {
@@ -419,10 +476,48 @@
                 "shadow": "none"
               },
               "blocks": [
-                { "type": "eyebrow", "settings": { "text": "<p>Eyebrow</p>", "show_background": true, "corner_radius": "pill" } },
-                { "type": "spacer", "settings": { "unit_desktop": "pixel", "size_desktop_px": 80, "show_on_mobile": true, "unit_mobile": "pixel", "size_mobile_px": 40 } },
-                { "type": "heading", "settings": { "text": "<p>Heading</p>", "heading_size": "display", "html_tag": "h3", "width": "fit" } },
-                { "type": "text", "settings": { "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>", "text_size": "sm", "width": "custom", "max_width": 500 } }
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>Eyebrow</p>",
+                    "show_background": true,
+                    "corner_radius": "pill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "spacer",
+                  "settings": {
+                    "unit_desktop": "pixel",
+                    "size_desktop_px": 80,
+                    "show_on_mobile": true,
+                    "unit_mobile": "pixel",
+                    "size_mobile_px": 40
+                  }
+                },
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Heading</p>",
+                    "heading_size": "md",
+                    "html_tag": "h3",
+                    "width": "fit",
+                    "animation_type": "rotate-words",
+                    "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>",
+                    "text_size": "sm",
+                    "width": "custom",
+                    "max_width": 500,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 100
+                  }
+                }
               ]
             },
             {
@@ -481,10 +576,48 @@
                 "shadow": "none"
               },
               "blocks": [
-                { "type": "eyebrow", "settings": { "text": "<p>Eyebrow</p>", "show_background": true, "corner_radius": "pill" } },
-                { "type": "spacer", "settings": { "unit_desktop": "pixel", "size_desktop_px": 80, "show_on_mobile": true, "unit_mobile": "pixel", "size_mobile_px": 40 } },
-                { "type": "heading", "settings": { "text": "<p>Heading</p>", "heading_size": "display", "html_tag": "h3", "width": "fit" } },
-                { "type": "text", "settings": { "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>", "text_size": "sm", "width": "custom", "max_width": 500 } }
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>Eyebrow</p>",
+                    "show_background": true,
+                    "corner_radius": "pill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "spacer",
+                  "settings": {
+                    "unit_desktop": "pixel",
+                    "size_desktop_px": 80,
+                    "show_on_mobile": true,
+                    "unit_mobile": "pixel",
+                    "size_mobile_px": 40
+                  }
+                },
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Heading</p>",
+                    "heading_size": "md",
+                    "html_tag": "h3",
+                    "width": "fit",
+                    "animation_type": "rotate-words",
+                    "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>",
+                    "text_size": "sm",
+                    "width": "custom",
+                    "max_width": 500,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 100
+                  }
+                }
               ]
             },
             {

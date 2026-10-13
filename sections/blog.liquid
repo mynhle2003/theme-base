@@ -218,6 +218,97 @@
       "default": 50,
       "visible_if": "{{ section.settings.customize_mobile_padding }}"
     }
+  ],
+  "presets": [
+    {
+      "name": "Blog posts",
+      "category": "Blog",
+      "blocks": [
+        {
+          "type": "blog-title",
+          "id": "heading",
+          "static": true,
+          "settings": {
+            "html_tag": "h1",
+            "heading_size": "lg"
+          }
+        },
+        {
+          "type": "blog-archive-list",
+          "id": "blog-archive-list",
+          "static": true,
+          "blocks": [
+            {
+              "type": "featured-post",
+              "settings": {
+                "title_size": "lg"
+              }
+            },
+            {
+              "type": "blog-card",
+              "id": "blog-card",
+              "static": true,
+              "blocks": [
+                {
+                  "type": "blog-card-title",
+                  "settings": {
+                    "line_limit": "no_limit",
+                    "heading_size": "xs",
+                    "html_tag": "h3",
+                    "padding_top": 8,
+                    "padding_bottom": 0,
+                    "customize_mobile_padding": false
+                  }
+                },
+                {
+                  "type": "blog-card-meta",
+                  "settings": {
+                    "show_date": true,
+                    "show_author": true,
+                    "size": "sm",
+                    "text_color": "",
+                    "padding_top": 0,
+                    "padding_bottom": 4,
+                    "customize_mobile_padding": false
+                  }
+                },
+                {
+                  "type": "blog-card-description",
+                  "settings": {
+                    "text_limit": "two",
+                    "size": "md",
+                    "padding_top": 0,
+                    "padding_bottom": 6,
+                    "customize_mobile_padding": false
+                  }
+                },
+                {
+                  "type": "blog-card-button",
+                  "settings": {
+                    "style": "tertiary",
+                    "show_icon": false,
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "customize_mobile_padding": false
+                  }
+                }
+              ]
+            },
+            {
+              "type": "pagination"
+            }
+          ]
+        }
+      ],
+      "settings": {
+        "show_top_divider": false,
+        "show_bottom_divider": false,
+        "divider_full_width": false,
+        "gap_desktop": 40,
+        "gap_mobile": 30,
+        "customize_mobile_padding": true
+      }
+    }
   ]
 }
 {% endschema %}

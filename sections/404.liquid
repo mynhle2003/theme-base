@@ -71,7 +71,6 @@
 {% schema %}
 {
   "name": "t:general.404",
-  "class": "section-not-found",
   "enabled_on": {
     "templates": [
       "404"
@@ -79,8 +78,10 @@
   },
   "settings": [
     {
-      "type": "header",
-      "content": "t:general.layout"
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-1"
     },
     {
       "type": "select",
@@ -156,16 +157,6 @@
       "default": 12
     },
     {
-      "type": "header",
-      "content": "t:general.appearance"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:labels.color_scheme",
-      "default": "scheme-1"
-    },
-    {
       "type": "color",
       "alpha": true,
       "id": "background_color",
@@ -202,10 +193,6 @@
       "id": "background_video",
       "label": "t:labels.background_video",
       "visible_if": "{{ section.settings.background_media == 'video' }}"
-    },
-    {
-      "type": "header",
-      "content": "t:general.section_padding"
     },
     {
       "type": "range",

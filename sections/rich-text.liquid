@@ -141,17 +141,39 @@
 {
   "name": "t:general.rich_text",
   "class": "section-rich--text",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "eyebrow" },
-    { "type": "heading" },
-    { "type": "editorial-text" },
-    { "type": "text" },
-    { "type": "image" },
-    { "type": "button" },
-    { "type": "buttons" },
-    { "type": "icon" },
-    { "type": "marquee" }
+    {
+      "type": "eyebrow"
+    },
+    {
+      "type": "heading"
+    },
+    {
+      "type": "editorial-text"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "buttons"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "marquee"
+    }
   ],
   "settings": [
     {
@@ -221,7 +243,7 @@
     {
       "type": "range",
       "id": "padding_top",
-      "label": "t:labels.top_padding",
+      "label": "t:options.position.top",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -231,7 +253,7 @@
     {
       "type": "range",
       "id": "padding_bottom",
-      "label": "t:labels.bottom_padding",
+      "label": "t:options.position.bottom",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -284,7 +306,9 @@
           "id": "eyebrow",
           "static": true,
           "settings": {
-            "text": "<p>New arrivals</p>"
+            "text": "<p>New arrivals</p>",
+            "animation_type": "slide-bottom",
+            "animation_delay": 50
           }
         },
         {
@@ -293,8 +317,10 @@
           "static": true,
           "settings": {
             "text": "<p>Build your base theme</p>",
-            "heading_size": "lg",
-            "html_tag": "h2"
+            "heading_size": "md",
+            "html_tag": "h2",
+            "animation_type": "rotate-words",
+            "animation_delay": 50
           }
         },
         {
@@ -302,8 +328,58 @@
           "id": "text",
           "static": true,
           "settings": {
-            "text": "<p>Use this section to test the shared Section Kernel, global layout width, color scheme, background and responsive padding.</p>"
+            "text": "<p>Use this section to test the shared Section Kernel, global layout width, color scheme, background and responsive padding.</p>",
+            "animation_type": "slide-bottom",
+            "animation_delay": 100
           }
+        }
+      ]
+    },
+    {
+      "name": "Everyday uniform heading",
+      "settings": {
+        "section_width": "full_width",
+        "alignment": "left",
+        "color_scheme": "scheme-1",
+        "padding_top": 80,
+        "padding_bottom": 40,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 36
+      },
+      "blocks": [
+        {
+          "type": "eyebrow",
+          "settings": {
+            "text": "",
+            "animation_type": "slide-bottom",
+            "animation_delay": 50
+          },
+          "id": "eyebrow",
+          "static": true
+        },
+        {
+          "type": "heading",
+          "settings": {
+            "text": "<p>Everyday uniform</p>",
+            "heading_size": "lg",
+            "html_tag": "h2",
+            "width": "fill",
+            "animation_type": "rotate-words",
+            "animation_delay": 50
+          },
+          "id": "heading",
+          "static": true
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "",
+            "animation_type": "slide-bottom",
+            "animation_delay": 100
+          },
+          "id": "text",
+          "static": true
         }
       ]
     }

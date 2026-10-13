@@ -143,11 +143,19 @@
 {
   "name": "t:general.hotspot_product_callout",
   "class": "section-hotspot",
-  "enabled_on": { "templates": ["index"] },
+  "enabled_on": {
+    "templates": [
+      "index"
+    ]
+  },
   "max_blocks": 1,
   "blocks": [
-    { "type": "header" },
-    { "type": "product-callout" }
+    {
+      "type": "header"
+    },
+    {
+      "type": "product-callout"
+    }
   ],
   "settings": [
     {
@@ -159,9 +167,18 @@
       "id": "section_width",
       "label": "t:labels.section_width",
       "options": [
-        { "value": "page_width", "label": "t:options.section_width.page_width" },
-        { "value": "full_width", "label": "t:options.section_width.full_width" },
-        { "value": "full_width_no_padding", "label": "t:options.section_width.full_width_no_padding" }
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "t:options.section_width.full_width_no_padding"
+        }
       ],
       "default": "full_width"
     },
@@ -203,9 +220,18 @@
       "id": "background_media",
       "label": "t:general.media",
       "options": [
-        { "value": "none", "label": "t:options.background_media.none" },
-        { "value": "image", "label": "t:general.image" },
-        { "value": "video", "label": "t:general.video" }
+        {
+          "value": "none",
+          "label": "t:options.background_media.none"
+        },
+        {
+          "value": "image",
+          "label": "t:general.image"
+        },
+        {
+          "value": "video",
+          "label": "t:general.video"
+        }
       ],
       "default": "none",
       "visible_if": "{{ section.settings.section_width != 'full_width_no_padding' }}"
@@ -323,15 +349,19 @@
             {
               "type": "eyebrow",
               "settings": {
-                "text": "<p>SUBHEADING</p>"
+                "text": "<p>SUBHEADING</p>",
+                "animation_type": "slide-bottom",
+                "animation_delay": 50
               }
             },
             {
               "type": "heading",
               "settings": {
                 "text": "<p>Main Heading Text Placeholder</p>",
-                "heading_size": "display",
-                "html_tag": "h2"
+                "heading_size": "lg",
+                "html_tag": "h2",
+                "animation_type": "rotate-words",
+                "animation_delay": 50
               }
             }
           ]
@@ -347,7 +377,7 @@
             "content_color_scheme": "scheme-3",
             "hotspot_color_scheme": "scheme-1",
             "heading": "Heading",
-            "heading_size": "xl",
+            "heading_size": "lg",
             "html_tag": "h2",
             "text": "<p>Add text here.</p>",
             "text_size": "lg",

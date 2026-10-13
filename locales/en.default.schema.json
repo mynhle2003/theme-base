@@ -9,10 +9,10 @@
  */
 {
   "general": {
+    "404": "Not found",
     "search_results": "Search results",
     "search_results_block": "Results",
     "section_padding": "Section padding",
-    "404": "Not found",
     "article": "Article",
     "appearance": "Appearance",
     "block": "Block",
@@ -240,6 +240,7 @@
     "accordion_options": "Accordion options"
   },
   "labels": {
+    "media_corner_radius": "Media corner radius",
     "hide_view_all_on_mobile": "Hide View all on mobile",
     "search_items_per_page": "Items per page",
     "search_tab_typography": "Tab typography",
@@ -256,7 +257,6 @@
     "search_enable_sorting": "Show sorting",
     "search_recently_viewed": "Show recently viewed products",
     "search_recently_viewed_limit": "Recently viewed product count",
-
     "password_boxed": "Enable boxed layout",
     "password_show_footer": "Show footer",
     "icon_accessible_label": "Icon link accessible label",
@@ -646,6 +646,8 @@
     "outline_width": "Outline width",
     "elevation": "Elevation",
     "container_inset": "Container inset",
+    "overlay_style": "Overlay style",
+    "overlay_gradient": "Overlay gradient",
     "overlay_color": "Overlay color",
     "position": "Position",
     "swatch_type": "Swatch type",
@@ -723,9 +725,18 @@
     "description": "Description",
     "question": "Question",
     "answer": "Answer",
-    "initially_open": "Open by default"
+    "initially_open": "Open by default",
+    "show_metafield": "Show metafield",
+    "metafield_key": "Key",
+    "product_card_metafield_color": "Product card metafield",
+    "show_selected_value": "Show selected value",
+    "animation_delay": "Delay"
   },
   "options": {
+    "overlay_style": {
+      "solid": "Solid",
+      "gradient": "Gradient"
+    },
     "product_quantity_style": {
       "default": "Default",
       "custom": "Custom"
@@ -1011,11 +1022,13 @@
       "grid": "Gallery grid",
       "stacked": "Single-column stack",
       "stacked_thumbnails": "Stack + thumbnail rail",
-      "two_column_grid": "Mosaic (two columns)"
+      "two_column_grid": "Mosaic (two columns)",
+      "carousel_two_items": "Carousel 2 items"
     },
     "product_media_mobile_layout": {
       "thumbnails": "Thumb rail",
-      "slider": "Swipe gallery"
+      "slider": "Swipe gallery",
+      "carousel_two_items": "Carousel 2 items"
     },
     "product_media_zoom": {
       "open_lightbox": "Lightbox",
@@ -1070,6 +1083,14 @@
       "pill": "Pill"
     },
     "radius_preset": {
+      "size_2": "Subtly rounded",
+      "size_4": "Slightly rounded",
+      "size_6": "Softly rounded",
+      "size_8": "Rounded",
+      "size_12": "Moderately rounded",
+      "size_16": "Extra rounded",
+      "size_24": "Highly rounded",
+      "size_32": "Ultra rounded",
       "inherit": "Inherit",
       "square": "Square",
       "slightly_rounded": "Slightly rounded",
@@ -1169,6 +1190,7 @@
       "original": "Original",
       "square": "Square - 1:1",
       "portrait": "Portrait - 4:5",
+      "ratio_5_4": "Landscape - 5:4",
       "landscape": "Landscape - 4:3",
       "wide": "Wide - 16:9",
       "custom": "Custom"
@@ -1177,6 +1199,7 @@
       "adapt": "Adapt",
       "ratio_1_1": "Ratio (1:1)",
       "ratio_4_5": "Ratio (4:5)",
+      "ratio_5_4": "Ratio (5:4)",
       "ratio_3_2": "Ratio (3:2)",
       "ratio_4_3": "Ratio (4:3)",
       "ratio_16_9": "Ratio (16:9)",
@@ -1190,10 +1213,11 @@
     },
     "aspect_ratio": {
       "original": "Original",
-      "square": "Square",
-      "portrait": "Portrait",
-      "landscape": "Landscape",
-      "wide": "Wide",
+      "square": "Square - 1:1",
+      "portrait": "Portrait - 4:5",
+      "ratio_5_4": "Landscape - 5:4",
+      "landscape": "Landscape - 4:3",
+      "wide": "Wide - 16:9",
       "custom": "Custom"
     },
     "radius_video": {
@@ -1305,6 +1329,7 @@
     },
     "swatch_type": {
       "color": "Color",
+      "color_button": "Color button",
       "variant_image": "Variant image"
     },
     "swatch_limit": {
@@ -1413,9 +1438,19 @@
       "body": "Body",
       "heading": "Heading",
       "accent": "Accent"
+    },
+    "block_animation": {
+      "none": "None",
+      "fade": "Fade",
+      "scale": "Scale",
+      "slide_left": "Slide from left",
+      "slide_right": "Slide from right",
+      "slide_bottom": "Slide from bottom",
+      "rotate_words": "Rotate words"
     }
   },
   "info": {
+    "product_card_metafield_key": "Enter a key, e.g. custom.material. [Learn more](https://help.shopify.com/en/manual/custom-data/metafields/adding-values-to-metafields)",
     "collection_filter_search_discovery": "Customize filters with the [Search & Discovery app](https://admin.shopify.com/store/spinel-theme/apps/search-and-discovery).",
     "hotspot_gallery_sticky_header": "Keeps the header in view while scrolling through the gallery on tablet and desktop.",
     "mobile_image_optional": "Optional",
@@ -1433,6 +1468,7 @@
     "transparent_overlay_logo": "Displayed when the header is placed over a visual. The default logo is used when this is blank.",
     "favicon": "Use a square image. Shopify serves it as the browser tab icon.",
     "header_logo": "Choose the logo position here. Logo artwork and width are managed in [theme settings](/editor?context=theme&category=logo%20%26%20favicons).",
+    "header_menu_toggle": "Configure the mobile menu in the 'Mobile menu' section",
     "localization_manage_countries": "[Manage countries/regions](https://admin.shopify.com/settings/markets)",
     "localization_manage_languages": "[Manage languages](https://admin.shopify.com/settings/languages)",
     "payment_icons": "Payment icons will appear once you set up payment methods.",

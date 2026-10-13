@@ -20,6 +20,12 @@
 {% enddoc %}
 
 {% liquid
+  assign card_image_loading = blank
+  assign card_image_sizes = '100vw'
+  if section.index > 1 or section.location == 'footer'
+    assign card_image_loading = 'lazy'
+    assign card_image_sizes = 'auto, (min-width: 768px) 33vw, 100vw'
+  endif
   assign image_alt = alt
   if image_alt == blank and image != blank
     assign image_alt = image.alt
@@ -46,7 +52,10 @@
       width: width,
       height: height,
       crop: crop,
-      alt: image_alt
+      alt: image_alt,
+      loading: card_image_loading,
+      widths: '240, 360, 480, 640, 800, 1000, 1280, 1600',
+      sizes: card_image_sizes
     %}
     {% if has_secondary_image %}
       {% render 'image',
@@ -55,7 +64,10 @@
         width: width,
         height: height,
         crop: crop,
-        alt: image_alt
+        alt: image_alt,
+        loading: 'lazy',
+        widths: '240, 360, 480, 640, 800, 1000, 1280, 1600',
+        sizes: 'auto, 100vw'
       %}
     {% endif %}
   {% else %}

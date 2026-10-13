@@ -57,7 +57,7 @@
     {
       "type": "range",
       "id": "padding_top",
-      "label": "t:labels.top_padding",
+      "label": "Top",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -67,7 +67,7 @@
     {
       "type": "range",
       "id": "padding_bottom",
-      "label": "t:labels.bottom_padding",
+      "label": "Bottom",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -77,13 +77,13 @@
     {
       "type": "checkbox",
       "id": "custom_mobile_padding",
-      "label": "t:labels.customize_mobile_padding",
+      "label": "Customize for mobile",
       "default": false
     },
     {
       "type": "range",
       "id": "padding_top_mobile",
-      "label": "t:labels.mobile_top_padding",
+      "label": "Top (mobile)",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -94,19 +94,13 @@
     {
       "type": "range",
       "id": "padding_bottom_mobile",
-      "label": "t:labels.mobile_bottom_padding",
+      "label": "Bottom (mobile)",
       "min": 0,
       "max": 100,
       "step": 1,
       "unit": "px",
       "default": 0,
       "visible_if": "{{ block.settings.custom_mobile_padding }}"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Tags and sharing",
-      "category": "Blog"
     }
   ]
 }

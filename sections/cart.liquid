@@ -12,24 +12,18 @@
 </div>
 {% schema %}
 {
-  "name": "Cart",
+  "name": "t:general.cart",
   "enabled_on": {
     "templates": [
       "cart"
     ]
   },
-  "blocks": [
-    {
-      "type": "_cart-content"
-    },
-    {
-      "type": "_cart-summary"
-    }
-  ],
   "settings": [
     {
-      "type": "header",
-      "content": "Layout"
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-1"
     },
     {
       "type": "select",
@@ -60,10 +54,6 @@
       "default": false
     },
     {
-      "type": "header",
-      "content": "Gap"
-    },
-    {
       "type": "range",
       "id": "gap_desktop",
       "label": "Desktop gap",
@@ -84,23 +74,9 @@
       "default": 30
     },
     {
-      "type": "header",
-      "content": "Appearance"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-1"
-    },
-    {
       "type": "color",
       "id": "background_color",
       "label": "Background color"
-    },
-    {
-      "type": "header",
-      "content": "Section padding"
     },
     {
       "type": "range",
@@ -149,6 +125,14 @@
       "unit": "px",
       "default": 60,
       "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_cart-content"
+    },
+    {
+      "type": "_cart-summary"
     }
   ]
 }

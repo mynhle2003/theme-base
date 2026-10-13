@@ -1,0 +1,8 @@
+{% doc %}
+  Render a decorative country flag using HTTPS, including on HTTP dev previews.
+  @param {country} country - Country to display
+{% enddoc %}
+{% capture flag_markup %}
+  {{ country | image_url: width: 24 | image_tag: class: 'header-localization__flag', alt: '' }}
+{% endcapture %}
+{{ flag_markup | replace: 'src="//', 'src="https://' | replace: 'srcset="//', 'srcset="https://' }}

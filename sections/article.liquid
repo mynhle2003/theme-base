@@ -97,25 +97,99 @@
       "type": "comments"
     }
   ],
-  "max_blocks": 14,
+  "max_blocks": 7,
   "settings": [
-    {
-      "type": "header",
-      "content": "t:general.layout"
-    },
     {
       "type": "range",
       "id": "max_width",
-      "label": "Maximum width",
+      "label": "Max width",
       "min": 400,
       "max": 1600,
       "step": 20,
       "unit": "px",
-      "default": 800
+      "default": 1280
     },
     {
       "type": "header",
-      "content": "Divider"
+      "content": "Gap"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_padding",
+      "label": "Custom for mobile",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top (mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ section.settings.custom_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom (mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 60,
+      "visible_if": "{{ section.settings.custom_mobile_padding }}"
     },
     {
       "type": "checkbox",
@@ -134,40 +208,6 @@
       "id": "divider_full_width",
       "label": "Full-width divider",
       "default": true
-    },
-    {
-      "type": "header",
-      "content": "Gap"
-    },
-    {
-      "type": "range",
-      "id": "gap_desktop",
-      "label": "Desktop gap",
-      "min": 0,
-      "max": 120,
-      "step": 2,
-      "unit": "px",
-      "default": 50
-    },
-    {
-      "type": "range",
-      "id": "gap_mobile",
-      "label": "Mobile gap",
-      "min": 0,
-      "max": 120,
-      "step": 2,
-      "unit": "px",
-      "default": 30
-    },
-    {
-      "type": "header",
-      "content": "t:general.appearance"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-1"
     },
     {
       "type": "color",
@@ -205,58 +245,6 @@
       "id": "background_video",
       "label": "t:labels.background_video",
       "visible_if": "{{ section.settings.background_media == 'video' }}"
-    },
-    {
-      "type": "header",
-      "content": "Section padding"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "t:labels.top_padding",
-      "min": 0,
-      "max": 200,
-      "step": 2,
-      "unit": "px",
-      "default": 100
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "t:labels.bottom_padding",
-      "min": 0,
-      "max": 200,
-      "step": 2,
-      "unit": "px",
-      "default": 120
-    },
-    {
-      "type": "checkbox",
-      "id": "custom_mobile_padding",
-      "label": "t:labels.customize_mobile_padding",
-      "default": false
-    },
-    {
-      "type": "range",
-      "id": "padding_top_mobile",
-      "label": "t:labels.mobile_top_padding",
-      "min": 0,
-      "max": 200,
-      "step": 2,
-      "unit": "px",
-      "default": 50,
-      "visible_if": "{{ section.settings.custom_mobile_padding }}"
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom_mobile",
-      "label": "t:labels.mobile_bottom_padding",
-      "min": 0,
-      "max": 200,
-      "step": 2,
-      "unit": "px",
-      "default": 60,
-      "visible_if": "{{ section.settings.custom_mobile_padding }}"
     }
   ]
 }

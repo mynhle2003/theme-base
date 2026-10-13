@@ -88,8 +88,11 @@
 
 {% if button_label != blank or request.design_mode %}
   <div
-    class="{{ button_class }}"
+    class="{{ button_class }} block-animation"
     {% if button_style_attribute != blank %}style="{{ button_style_attribute }}"{% endif %}
+    {% if block.settings.animation_type != blank and block.settings.animation_type != 'none' %}
+      {% render 'block-animation-attributes', block: block %}
+    {% endif %}
     {{ block.shopify_attributes }}
   >
     {% if button_label != blank %}
@@ -174,9 +177,18 @@
       "id": "button_style",
       "label": "t:labels.style",
       "options": [
-        { "value": "primary", "label": "t:options.button_variant.primary" },
-        { "value": "secondary", "label": "t:options.button_variant.secondary" },
-        { "value": "tertiary", "label": "t:options.button_variant.tertiary" }
+        {
+          "value": "primary",
+          "label": "t:options.button_variant.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.button_variant.secondary"
+        },
+        {
+          "value": "tertiary",
+          "label": "t:options.button_variant.tertiary"
+        }
       ],
       "default": "primary"
     },
@@ -261,8 +273,14 @@
       "id": "icon_size",
       "label": "t:labels.icon_size",
       "options": [
-        { "value": "inherit", "label": "t:options.icon_size.inherit" },
-        { "value": "custom", "label": "t:options.icon_size.custom" }
+        {
+          "value": "inherit",
+          "label": "t:options.icon_size.inherit"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.icon_size.custom"
+        }
       ],
       "default": "inherit",
       "visible_if": "{{ block.settings.show_icon }}"
@@ -287,8 +305,14 @@
       "id": "width",
       "label": "t:labels.width",
       "options": [
-        { "value": "fit", "label": "t:options.width.fit" },
-        { "value": "fill", "label": "t:options.width.fill" }
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        }
       ],
       "default": "fit"
     },
@@ -297,10 +321,62 @@
       "id": "width_mobile",
       "label": "t:labels.mobile_width",
       "options": [
-        { "value": "fit", "label": "t:options.width.fit" },
-        { "value": "fill", "label": "t:options.width.fill" }
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        }
       ],
       "default": "fit"
+    },
+    {
+      "type": "header",
+      "content": "t:general.animation"
+    },
+    {
+      "type": "select",
+      "id": "animation_type",
+      "label": "t:labels.type",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.block_animation.none"
+        },
+        {
+          "value": "fade",
+          "label": "t:options.block_animation.fade"
+        },
+        {
+          "value": "scale",
+          "label": "t:options.block_animation.scale"
+        },
+        {
+          "value": "slide-left",
+          "label": "t:options.block_animation.slide_left"
+        },
+        {
+          "value": "slide-right",
+          "label": "t:options.block_animation.slide_right"
+        },
+        {
+          "value": "slide-bottom",
+          "label": "t:options.block_animation.slide_bottom"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "animation_delay",
+      "label": "t:labels.animation_delay",
+      "min": 0,
+      "max": 2000,
+      "step": 50,
+      "unit": "ms",
+      "default": 0
     },
     {
       "type": "header",
@@ -412,7 +488,9 @@
         "icon_width": 20,
         "width": "fit",
         "width_mobile": "fit",
-        "customize_mobile_padding": false
+        "customize_mobile_padding": false,
+        "animation_type": "none",
+        "animation_delay": 0
       }
     }
   ]

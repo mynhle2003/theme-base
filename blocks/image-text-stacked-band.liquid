@@ -23,6 +23,14 @@
   if section.settings.button_show_icon
     assign band_button_icon = section.settings.button_icon | default: 'arrow'
   endif
+  capture band_heading_size
+    render 'heading-size-token', size: band_heading_size, fallback: 'xl', html_tag: band_heading_tag
+  endcapture
+  assign band_heading_size = band_heading_size | strip
+  capture band_heading_size_mobile
+    render 'heading-size-token', size: band_heading_size_mobile, fallback: 'xl', html_tag: band_heading_tag
+  endcapture
+  assign band_heading_size_mobile = band_heading_size_mobile | strip
 %}
 
 <div id="images-with-text-scroll-{{ block.id }}" class="images-with-text-scroll__item" data-stacked-band {{ block.shopify_attributes }}>
@@ -162,19 +170,77 @@
   "name": "Image text band",
   "tag": null,
   "settings": [
-    { "type": "header", "content": "Image" },
-    { "type": "image_picker", "id": "image", "label": "t:general.image" },
-    { "type": "text", "id": "image_alt", "label": "t:labels.alt_text" },
-    { "type": "header", "content": "Gap" },
-    { "type": "range", "id": "gap_desktop", "label": "t:labels.desktop_gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 16 },
-    { "type": "range", "id": "gap_mobile", "label": "t:labels.mobile_gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 12 },
-    { "type": "header", "content": "Content" },
-    { "type": "richtext", "id": "tag", "label": "Tag" },
-    { "type": "richtext", "id": "heading", "label": "t:labels.heading" },
-    { "type": "richtext", "id": "text", "label": "t:labels.text" },
-    { "type": "header", "content": "Button" },
-    { "type": "text", "id": "button_label", "label": "t:labels.button_label" },
-    { "type": "url", "id": "button_link", "label": "t:labels.link" }
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:general.image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "t:labels.alt_text"
+    },
+    {
+      "type": "header",
+      "content": "Gap"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "t:labels.desktop_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "t:labels.mobile_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "richtext",
+      "id": "tag",
+      "label": "Tag"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "t:labels.heading"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:labels.text"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:labels.button_label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:labels.link"
+    }
   ],
   "presets": [
     {

@@ -1,0 +1,17 @@
+{% doc %}
+  Resolves an exact setting key to a literal CSS token, retaining the caller fallback.
+  @param {string} setting - Saved setting key
+  @param {string} values - Pipe-separated key=value pairs
+  @param {string} fallback - Token for unknown or missing values
+{% enddoc %}
+{%- liquid
+  assign resolved_token = fallback
+  assign token_pairs = values | split: '|'
+  for token_pair in token_pairs
+    assign pair = token_pair | split: '='
+    if pair.first == setting
+      assign resolved_token = pair.last
+      break
+    endif
+  endfor
+-%}{{- resolved_token -}}

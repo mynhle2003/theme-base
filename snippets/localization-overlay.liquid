@@ -28,7 +28,7 @@
             value="{{ country.iso_code }}"
           >
             {% if show_country_flag %}
-              {{ country | image_url: width: 24 | image_tag: class: 'header-localization__flag', alt: '' }}
+              {% render 'localization-flag', country: country %}
             {% endif %}
             <span class="header-localization__country-name">{{ country.name }}</span>
             <span class="header-localization__country-currency">{{ country.currency.iso_code }} {{ country.currency.symbol }}</span>

@@ -22,7 +22,7 @@
 {% endstylesheet %}
 {% schema %}
 {
-  "name": "t:general.search_results",
+  "name": "t:general.search",
   "class": "section-search",
   "enabled_on": {
     "templates": [
@@ -31,8 +31,10 @@
   },
   "settings": [
     {
-      "type": "header",
-      "content": "t:general.layout"
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-1"
     },
     {
       "type": "select",
@@ -51,24 +53,10 @@
       "default": "page"
     },
     {
-      "type": "header",
-      "content": "t:general.appearance"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:labels.color_scheme",
-      "default": "scheme-1"
-    },
-    {
       "type": "color",
       "id": "background_color",
       "label": "t:labels.background_color",
       "alpha": true
-    },
-    {
-      "type": "header",
-      "content": "t:general.section_padding"
     },
     {
       "type": "range",
@@ -118,8 +106,6 @@
       "unit": "px",
       "visible_if": "{{ section.settings.customize_mobile_padding }}"
     }
-  ],
-  "tag": "div",
-  "limit": 1
+  ]
 }
 {% endschema %}

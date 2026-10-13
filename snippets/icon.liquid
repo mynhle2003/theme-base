@@ -26,7 +26,7 @@
   endunless
 
   assign icon_name = icon | default: 'arrow-right'
-  assign registered_icons = 'pencil-square|lock-closed|arrow|arrow-left|arrow-right|paper-airplane|bars-3|bars|grip-vertical|compare|menu|chevron|chevron-down|chevron-left|chevron-right|x-mark|close|eye|magnifying-glass|search|shopping-bag|bag|cart|shopping-cart|cube|user|users|account|truck|shipping|tag|discount|trash|remove|document-text|note|receipt-percent|coupon|share|play|pause|plus|minus|check|check-circle|x-circle|comparison-yes|comparison-no|information-circle|circle|square|triangle|diamond|star|four-stars|five-stars|calendar|calendar-days|clock|comment|chat-bubble|chat-bubble-left-right|shield-check|vertical-rule|funnel|sliders|arrow_right|long_arrow_right|chevron_right|arrow_up_right|circle_arrow|circle_chevron|long_arrow_up|double_chevron|arrow_outline|square_chevron' | split: '|'
+  assign registered_icons = 'pencil-square,lock-closed,arrow,arrow-left,arrow-right,paper-airplane,bars-3,bars,grip-vertical,compare,menu,chevron,chevron-down,chevron-left,chevron-right,x-mark,close,eye,magnifying-glass,search,shopping-bag,bag,cart,shopping-cart,cube,user,users,account,truck,shipping,tag,discount,trash,remove,document-text,note,receipt-percent,coupon,share,play,pause,plus,minus,check,check-circle,x-circle,comparison-yes,comparison-no,information-circle,circle,square,triangle,diamond,star,four-stars,five-stars,calendar,calendar-days,clock,comment,chat-bubble,chat-bubble-left-right,shield-check,vertical-rule,funnel,sliders,arrow_right,long_arrow_right,chevron_right,arrow_up_right,circle_arrow,circle_chevron,long_arrow_up,double_chevron,arrow_outline,square_chevron' | split: ','
   unless registered_icons contains icon_name
     assign icon_name = 'arrow-right'
   endunless

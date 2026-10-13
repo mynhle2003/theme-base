@@ -1,4 +1,5 @@
-{% render 'localization-styles' %}
+{% render 'header-localization-styles' %}
+
 {% liquid
   assign country_selector_label = 'localization.country_label' | t
   assign language_selector_label = 'localization.language_label' | t
@@ -219,7 +220,7 @@
               <details class="header-localization__details" data-header-submenu-trigger="click" data-localization-dialog-id="{{ country_dialog_id }}">
                 <summary class="header-localization__summary" aria-controls="{{ country_dialog_id }}" aria-expanded="false">
                   <span class="header-localization__country">
-                    {{ localization.country | image_url: width: 24 | image_tag: class: 'header-localization__flag', alt: '' }}
+                    {% render 'localization-flag', country: localization.country %}
                     <span>{{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}</span>
                   </span>
                   {% render 'icon', icon: 'chevron-down', class: 'header-localization__icon' %}
@@ -230,7 +231,7 @@
                     <div class="header-localization__country-list">
                       {% for country in localization.available_countries %}
                         <button class="header-localization__country-option{% if country.iso_code == localization.country.iso_code %} is-selected{% endif %}" type="submit" name="country_code" value="{{ country.iso_code }}">
-                          {{ country | image_url: width: 24 | image_tag: class: 'header-localization__flag', alt: '' }}
+                          {% render 'localization-flag', country: country %}
                           <span class="header-localization__country-name">{{ country.name }}</span><span class="header-localization__country-currency">{{ country.currency.iso_code }} {{ country.currency.symbol }}</span>
                         </button>
                       {% endfor %}
@@ -734,10 +735,11 @@
     }
 
     .header__mobile-drawer-surface {
-      position: absolute;
+      position: relative;
       display: flex;
       width: 100%;
-      min-height: 0;
+      height: 100dvh;
+      min-height: 100dvh;
       overflow: hidden;
       border-radius: var(--drawer-radius);
       background: var(--overlay-background-color);
@@ -746,28 +748,18 @@
 
     .header__mobile-drawer.component-overlay[data-mobile-layout='drawer'] .header__mobile-drawer-surface {
       --overlay-rest-transform: translateX(-100%);
-      /* Left-anchored navigation shares the drawer padding settings. */
-      inset: var(--overlay-drawer-inset) auto var(--overlay-drawer-inset) var(--overlay-drawer-inset);
-      width: calc(100% - var(--overlay-drawer-inset) - var(--overlay-drawer-inset));
-      max-width: 40rem;
+      inset: 0 auto 0 0;
+      width: 100%;
+      max-width: 100vw;
+      height: 100dvh;
+      max-height: 100dvh;
       margin: 0;
       border: var(--overlay-popover-border-width) solid var(--overlay-border-color);
-      border-radius: var(--overlay-drawer-edge-radius) var(--drawer-radius) var(--drawer-radius) var(--overlay-drawer-edge-radius);
+      border-radius: 0 var(--drawer-radius) var(--drawer-radius) 0;
       background: var(--overlay-background-color);
       color: var(--overlay-text-color);
       transform: var(--overlay-rest-transform);
       transition: transform var(--overlay-motion-duration, var(--motion-duration-standard)) var(--overlay-motion-ease, var(--motion-ease-standard));
-    }
-
-    @media (max-width: 767.98px) {
-      .header__mobile-drawer.component-overlay[data-mobile-layout='drawer'] .header__mobile-drawer-surface {
-        inset: 0;
-        width: 100%;
-        max-width: 100%;
-        height: 100dvh;
-        max-height: 100dvh;
-        border-radius: 0;
-      }
     }
 
     .header__mobile-drawer.component-overlay[data-state='open'] .header__mobile-drawer-surface {
@@ -1139,7 +1131,11 @@
 {
   "name": "t:general.header_menu",
   "tag": null,
-  "blocks": [{ "type": "_mega-menu-banners" }],
+  "blocks": [
+    {
+      "type": "_mega-menu-banners"
+    }
+  ],
   "settings": [
     {
       "type": "header",
@@ -1172,8 +1168,14 @@
       "id": "dropdown_trigger",
       "label": "t:labels.dropdown_trigger",
       "options": [
-        { "value": "click", "label": "t:options.dropdown_trigger.click" },
-        { "value": "hover", "label": "t:options.dropdown_trigger.hover" }
+        {
+          "value": "click",
+          "label": "t:options.dropdown_trigger.click"
+        },
+        {
+          "value": "hover",
+          "label": "t:options.dropdown_trigger.hover"
+        }
       ],
       "default": "hover"
     },
@@ -1186,9 +1188,18 @@
       "id": "font",
       "label": "t:labels.font",
       "options": [
-        { "value": "body", "label": "t:options.menu_font.body" },
-        { "value": "heading", "label": "t:options.menu_font.heading" },
-        { "value": "accent", "label": "t:options.menu_font.accent" }
+        {
+          "value": "body",
+          "label": "t:options.menu_font.body"
+        },
+        {
+          "value": "heading",
+          "label": "t:options.menu_font.heading"
+        },
+        {
+          "value": "accent",
+          "label": "t:options.menu_font.accent"
+        }
       ],
       "default": "accent"
     },
@@ -1197,12 +1208,30 @@
       "id": "font_size",
       "label": "t:labels.font_size",
       "options": [
-        { "value": "xs", "label": "t:options.menu_font_size.extra_small" },
-        { "value": "sm", "label": "t:options.menu_font_size.small" },
-        { "value": "md", "label": "t:options.menu_font_size.medium" },
-        { "value": "lg", "label": "t:options.menu_font_size.large" },
-        { "value": "xl", "label": "t:options.menu_font_size.extra_large" },
-        { "value": "xxl", "label": "t:options.menu_font_size.double_extra_large" }
+        {
+          "value": "xs",
+          "label": "t:options.menu_font_size.extra_small"
+        },
+        {
+          "value": "sm",
+          "label": "t:options.menu_font_size.small"
+        },
+        {
+          "value": "md",
+          "label": "t:options.menu_font_size.medium"
+        },
+        {
+          "value": "lg",
+          "label": "t:options.menu_font_size.large"
+        },
+        {
+          "value": "xl",
+          "label": "t:options.menu_font_size.extra_large"
+        },
+        {
+          "value": "xxl",
+          "label": "t:options.menu_font_size.double_extra_large"
+        }
       ],
       "default": "md"
     },
@@ -1211,9 +1240,18 @@
       "id": "letter_spacing",
       "label": "t:labels.letter_spacing",
       "options": [
-        { "value": "tight", "label": "t:options.letter_spacing.tight" },
-        { "value": "normal", "label": "t:options.letter_spacing.normal" },
-        { "value": "relaxed", "label": "t:options.letter_spacing.relaxed" }
+        {
+          "value": "tight",
+          "label": "t:options.letter_spacing.tight"
+        },
+        {
+          "value": "normal",
+          "label": "t:options.letter_spacing.normal"
+        },
+        {
+          "value": "relaxed",
+          "label": "t:options.letter_spacing.relaxed"
+        }
       ],
       "default": "normal"
     },
@@ -1222,8 +1260,14 @@
       "id": "text_case",
       "label": "t:labels.text_case",
       "options": [
-        { "value": "original", "label": "t:options.text_case.original" },
-        { "value": "uppercase", "label": "t:options.text_case.uppercase" }
+        {
+          "value": "original",
+          "label": "t:options.text_case.original"
+        },
+        {
+          "value": "uppercase",
+          "label": "t:options.text_case.uppercase"
+        }
       ],
       "default": "original"
     },
@@ -1242,9 +1286,18 @@
       "id": "submenu_font",
       "label": "Font",
       "options": [
-        { "value": "body", "label": "Body" },
-        { "value": "heading", "label": "Heading" },
-        { "value": "accent", "label": "Accent" }
+        {
+          "value": "body",
+          "label": "Body"
+        },
+        {
+          "value": "heading",
+          "label": "Heading"
+        },
+        {
+          "value": "accent",
+          "label": "Accent"
+        }
       ],
       "default": "body"
     },
@@ -1253,11 +1306,26 @@
       "id": "submenu_font_size",
       "label": "Font size",
       "options": [
-        { "value": "sm", "label": "Small" },
-        { "value": "md", "label": "Medium" },
-        { "value": "lg", "label": "Large" },
-        { "value": "xl", "label": "Extra large" },
-        { "value": "xxl", "label": "Double extra large" }
+        {
+          "value": "sm",
+          "label": "Small"
+        },
+        {
+          "value": "md",
+          "label": "Medium"
+        },
+        {
+          "value": "lg",
+          "label": "Large"
+        },
+        {
+          "value": "xl",
+          "label": "Extra large"
+        },
+        {
+          "value": "xxl",
+          "label": "Double extra large"
+        }
       ],
       "default": "md"
     },
@@ -1266,8 +1334,14 @@
       "id": "submenu_text_case",
       "label": "Text case",
       "options": [
-        { "value": "original", "label": "Original" },
-        { "value": "uppercase", "label": "Uppercase" }
+        {
+          "value": "original",
+          "label": "Original"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        }
       ],
       "default": "original"
     },

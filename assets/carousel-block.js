@@ -1,4 +1,5 @@
-import { EffectFade, Pagination } from './swiper-loader.js';
+import EffectFade from './swiper-12.2.0-effect-fade.min.mjs';
+import Pagination from './swiper-12.2.0-pagination.min.mjs';
 import { createSwiperCarousel, destroySwiperCarousel } from './swiper-carousel.js';
 
 const instances = new WeakMap();
@@ -164,6 +165,7 @@ const bindCarouselAutoplay = (swiper, root, delay, pauseOnHover) => {
       document.hidden ||
       swiper.destroyed ||
       swiper.isLocked ||
+      root.classList.contains('carousel-block--locked') ||
       (pauseOnHover && swiper.wrapperEl?.matches(':hover')) ||
       root.contains(document.activeElement)
     ) return;
@@ -556,16 +558,26 @@ const initialize = (root) => {
   const manualLoopRequested = root.dataset.carouselManualLoop === 'true';
   const showNextSlidePreview = viewport.dataset.swiperNextSlidePreview === 'true';
   const desktopColumns = number(root.dataset.swiperColumnsDesktop, 4);
+  const mobileColumns = number(root.dataset.swiperColumnsMobile, 1);
   const slideCount = Array.from(wrapper.children).filter((slide) => slide.classList.contains('swiper-slide')).length;
-  const previewEnabled = showNextSlidePreview && slideCount > desktopColumns;
+  // Essen Carousel fits N complete cards plus 2/7 of the next card inside
+  // its viewport (Figma: 1920px rail, 448px cards). Other section callers
+  // retain the shared overflow / centered-slide preview contract.
+  const containedPreview = root.dataset.carouselContainedPreview === 'true';
+  const visibleColumns = (columns, enabled) =>
+    containedPreview && enabled === 'true' && slideCount > columns ? columns + 2 / 7 : columns;
+  const desktopSlidesPerView = visibleColumns(desktopColumns, root.dataset.carouselPreviewDesktop);
+  const mobileSlidesPerView = visibleColumns(mobileColumns, root.dataset.carouselPreviewMobile);
+  const previewEnabled = !containedPreview && showNextSlidePreview && slideCount > desktopColumns;
   viewport.dataset.swiperNextSlidePreview = String(previewEnabled);
   // The shared Swiper preview attribute is a CSS-only overflow hook. Sections
   // that require centered-slide runtime must opt in explicitly on their root.
   const useCenteredSlidePreview = root.dataset.showNextSlidePreviewOnDesktop === 'true';
   const transition = root.dataset.transition === 'fade' ? 'fade' : 'slide';
-  const fade = transition === 'fade' && !useCenteredSlidePreview;
+  const containedLoop = containedPreview && (desktopSlidesPerView > desktopColumns || mobileSlidesPerView > mobileColumns);
+  const fade = transition === 'fade' && !useCenteredSlidePreview && !containedLoop;
   if (fade) viewport.dataset.swiperNextSlidePreview = 'false';
-  const manualLoop = manualLoopRequested && loop ? createManualLoop(viewport) : null;
+  const manualLoop = (manualLoopRequested || containedLoop) && loop ? createManualLoop(viewport) : null;
   const paginationModules = pagination && !manualLoop ? [Pagination] : [];
   const modules = fade ? [EffectFade, ...paginationModules] : paginationModules;
   const options = {
@@ -575,11 +587,11 @@ const initialize = (root) => {
     ...(fade ? { fadeEffect: { crossFade: true } } : {}),
     preventInteractionOnTransition: true,
     speed: prefersReducedMotion() ? 0 : 600,
-    slidesPerView: fade ? 1 : number(root.dataset.swiperColumnsMobile, 1),
+    slidesPerView: fade ? 1 : mobileSlidesPerView,
     spaceBetween: fade ? 0 : number(root.dataset.swiperGapMobile, 12),
     breakpoints: {
       [desktopBreakpoint]: {
-        slidesPerView: fade ? 1 : desktopColumns,
+        slidesPerView: fade ? 1 : desktopSlidesPerView,
         spaceBetween: fade ? 0 : number(root.dataset.swiperGapDesktop, 16),
         ...(useCenteredSlidePreview ? { centeredSlides: true, spaceBetween: 24 } : {})
       }
@@ -645,7 +657,10 @@ const initialize = (root) => {
     testimonialGapCleanup = () => window.removeEventListener('resize', syncTestimonialGap);
   }
   const updateLockedState = () => {
-    if (!swiper.destroyed) root.classList.toggle('carousel-block--locked', Boolean(swiper.isLocked));
+    if (swiper.destroyed) return;
+    const columns = window.matchMedia(`(min-width: ${desktopBreakpoint}px)`).matches ? desktopColumns : mobileColumns;
+    const locked = containedPreview ? slideCount <= columns : Boolean(swiper.isLocked);
+    root.classList.toggle('carousel-block--locked', locked);
   };
   swiper.on('resize breakpoint update observerUpdate', updateLockedState);
   updateLockedState();
