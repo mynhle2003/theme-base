@@ -206,6 +206,7 @@
   /* Arche custom: the underline mode uses a rail on desktop and plain labels on mobile. */
   .collection-tabs__layout[data-layout-direction='horizontal'] .tab-layout--underline .tab-layout__tab {
     --link-underline-display: none;
+    line-height: 1.5;
     color: color-mix(in srgb, var(--heading-color) 40%, transparent);
   }
 
@@ -289,7 +290,7 @@
     }
 
     /* Arche custom: continuous left rail, with the active segment highlighted. */
-    .collection-tabs__layout[data-layout-direction='horizontal'] .tab-layout--underline .tab-layout__navigation {
+    .collection-tabs__layout[data-layout-direction='horizontal'] .tab-layout.tab-layout--underline .tab-layout__navigation {
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
@@ -338,7 +339,7 @@
       width: 100%;
     }
 
-    .collection-tabs__layout[data-layout-direction='horizontal'] .tab-layout--underline .tab-layout__navigation {
+    .collection-tabs__layout[data-layout-direction='horizontal'] .tab-layout.tab-layout--underline .tab-layout__navigation {
       flex-direction: row;
       flex-wrap: wrap;
       align-items: center;
