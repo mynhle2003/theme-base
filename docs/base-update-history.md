@@ -1,6 +1,37 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"4630424526e712d334c06359f3cfbb6e14d6da05"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"30d272ad93c267c2c5711657740a8aa546276559"} -->
 
 # Base update history
+
+## 2026-10-13 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `4630424526e712d334c06359f3cfbb6e14d6da05`
+- Updated through team commit: `30d272ad93c267c2c5711657740a8aa546276559`
+- Team commits included: 4
+- Source changes:
+
+```text
+assets/block-animations.js                    |  92 ++++++++++---
+ blocks/collection-tab.liquid                  |  32 ++++-
+ blocks/tab-layout.liquid                      | 181 ++++++++++++++++++++++----
+ locales/en.default.json                       |   1 +
+ sections/collection-tabs.liquid               |   2 +
+ sections/hotspot-gallery.liquid               |  30 ++++-
+ tests/block-animation-lifecycle.test.cjs      | 132 +++++++++++++++++++
+ tests/collection-tabs-card-lifecycle.test.cjs |  87 +++++++++++++
+ tests/collection-tabs-card-motion.test.cjs    |  64 +++++++++
+ tests/collection-tabs-deferred.test.cjs       | 116 +++++++++++++++++
+ tests/product-card-animation.test.cjs         |  78 +++++++++--
+ 11 files changed, 760 insertions(+), 55 deletions(-)
+```
+
+- Included team commits:
+  - `4eec049e88c7c4ba3a00c9827342de82ec6a2675` — Add consistent Header position setting to Hotspot Gallery
+  - `488b2905d8e3eb3c46051ebf06b74b102230d005` — Improve collection tab loading and coordinated card reveals
+  - `ea254eb7234bfd575b43862c5af6475fb7818049` — Sync approved Concept tab and card animation from Pawvera
+  - `30d272ad93c267c2c5711657740a8aa546276559` — Normalize CSS seconds for Shopify compiled animation durations
+
 
 ## 2026-10-09 — Update from upstream/dev
 
