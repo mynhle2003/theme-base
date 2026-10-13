@@ -93,6 +93,15 @@
 {% endif %}
 
 {% stylesheet %}
+  .collection-list-view-all {
+    display: flex;
+    align-items: center;
+  }
+
+  .collection-list-view-all .btn-tertiary {
+    line-height: 1.5;
+  }
+
   .collection-list-view-all .collection-list-view-all__button--mobile {
     display: none;
   }
@@ -105,6 +114,10 @@
     .collection-list-view-all .collection-list-view-all__button--mobile {
       display: inline-flex;
       min-height: var(--collection-list-view-all-height-mobile, var(--button-height-mobile));
+    }
+
+    .collection-list-view-all .collection-list-view-all__button--mobile.btn-tertiary {
+      min-height: var(--collection-list-view-all-height-mobile, auto);
     }
 
     .collection-list-view-all--full-width-mobile,
