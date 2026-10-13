@@ -23,7 +23,12 @@ bằng `--store <store>` hoặc truyền đầy đủ domain, ví dụ
 Nếu gõ nhầm `lauyouthub-template-v2`, lệnh tự chuẩn hóa thành store chính thức
 `layouthub-template-v2.myshopify.com` và báo lại trước khi khởi động preview.
 Shopify CLI `theme dev` theo dõi checkout hiện tại và tự đồng bộ các thay đổi file
-lên development theme của store. Supervisor tự khởi động lại CLI sau khi tiến trình
+lên unpublished theme riêng `Arche template (Minhle)`. Trước mỗi lần chạy/restart,
+supervisor tra danh sách theme, yêu cầu đúng một theme trùng tên và role
+`unpublished`, rồi truyền ID cụ thể qua `--theme`. Không tìm thấy, trùng tên hoặc
+theme đã publish thì dừng; không fallback sang development theme chung.
+Điều này tách Arche khỏi các phiên Elara/Essen dùng cùng store: cổng riêng chỉ tách
+HTTP server local, không tách development theme trên Shopify. Supervisor tự khởi động lại CLI sau khi tiến trình
 bị thoát hoặc cổng bị mất; thời gian chờ tăng dần tối đa 60 giây khi lỗi lặp lại.
 Khi terminal `preview start` còn mở, launcher cũng tự khởi động lại supervisor nếu
 supervisor thoát bất thường. Phiên cũ được dọn theo process/store/cổng đã ghi trong
@@ -48,7 +53,7 @@ cũ. Hãy chạy `stop`, checkout nhánh muốn xem, rồi chạy `start` lại.
 
 Lệnh tự chọn cổng trống trong dải `9300-9399`, tránh cổng mặc định `9292` để có
 thể theo dõi riêng request của preview này. Lệnh dùng `--nodelete`, không chỉ định theme đang publish và không publish theme.
-Shopify CLI có thể tạo/reuse development theme chưa publish trên store. Các file
+Lệnh chỉ dùng unpublished theme Arche đã tồn tại trên store. Các file
 preview được upload tới store nhưng file trong repo không bị thay đổi bởi thao tác
 này. Đảm bảo Shopify CLI đã đăng nhập tài khoản có quyền với store.
 
