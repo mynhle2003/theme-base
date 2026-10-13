@@ -294,7 +294,7 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
-      gap: 0;
+      gap: var(--tab-layout-gap-desktop, 16px);
     }
 
     .collection-tabs__layout[data-layout-direction='horizontal'] .tab-layout--underline .tab-layout__tab {
@@ -344,8 +344,7 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: var(--collection-tabs-controls-alignment-mobile, center);
-      column-gap: 4px;
-      row-gap: 12px;
+      gap: var(--tab-layout-gap-mobile, var(--tab-layout-gap-desktop, 16px));
     }
 
     .collection-tabs__layout[data-layout-direction='horizontal'] .tab-layout--underline .tab-layout__tab {
