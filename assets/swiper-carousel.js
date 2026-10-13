@@ -205,6 +205,32 @@ export const bindSwiperSlideControls = (swiper, controls = {}) => {
   };
 };
 
+// Preserve the track radius while revealing native Swiper progress at full size.
+// Pagination owns the page count (including grouped slides and loop mode).
+const bindRoundedProgressbar = (swiper) => {
+  const update = () => {
+    if (swiper.destroyed || swiper.params.pagination?.type !== 'progressbar') return;
+    const total = swiper.params.loop
+      ? Math.ceil((swiper.virtual && swiper.params.virtual?.enabled ? swiper.virtual.slides.length : swiper.slides.length) / swiper.params.slidesPerGroup)
+      : swiper.snapGrid.length;
+    const current = swiper.params.loop
+      ? Math.floor(swiper.realIndex / swiper.params.slidesPerGroup)
+      : (swiper.snapIndex ?? swiper.activeIndex ?? 0);
+    const vertical = swiper.params.pagination.progressbarOpposite ? swiper.isHorizontal() : !swiper.isHorizontal();
+    resolveElements(swiper.pagination?.el, swiper.el).forEach((pagination) => {
+      pagination.querySelectorAll('.swiper-pagination-progressbar-fill').forEach((fill) => {
+        fill.classList.add('rounded-progress-fill');
+        fill.classList.toggle('rounded-progress-fill--vertical', vertical);
+        fill.style.transform = 'none';
+        fill.style.setProperty('--rounded-progress-value', String(total ? Math.min(1, (current + 1) / total) : 0));
+      });
+    });
+  };
+  swiper.on('paginationUpdate changeDirection', update);
+  update();
+  return () => swiper.off('paginationUpdate changeDirection', update);
+};
+
 export const createSwiperCarousel = (element, options = {}) => {
   if (!isElement(element) || element.dataset.swiperLayout === 'grid') return null;
 
@@ -213,8 +239,9 @@ export const createSwiperCarousel = (element, options = {}) => {
 
   const { controls, ...swiperOptions } = options;
   const swiper = new Swiper(element, buildSwiperOptions(swiperOptions));
+  const progressCleanup = bindRoundedProgressbar(swiper);
   const controlsCleanup = controls ? bindSwiperControls(swiper, controls) : null;
-  instances.set(element, { controlsCleanup, swiper });
+  instances.set(element, { controlsCleanup, progressCleanup, swiper });
   element.dataset.swiperReady = 'true';
   return swiper;
 };
@@ -232,6 +259,7 @@ export const destroySwiperCarousel = (target, deleteInstance = true, cleanupStyl
   const swiper = record?.swiper || getSwiperFromTarget(target);
 
   record?.controlsCleanup?.();
+  record?.progressCleanup?.();
   if (swiper && !swiper.destroyed) swiper.destroy(deleteInstance, cleanupStyles);
   if (element) {
     delete element.dataset.swiperReady;
