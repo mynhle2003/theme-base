@@ -111,6 +111,7 @@
         '--product-callout-popover-anchor-left',
         '--product-callout-popover-anchor-width',
         '--product-callout-popover-anchor-height',
+        '--product-callout-popover-pointer-x',
       ].forEach((property) => popover.style.removeProperty(property));
     };
 
@@ -170,6 +171,8 @@
       popover.style.setProperty('right', 'auto');
       popover.style.setProperty('bottom', 'auto');
       popover.style.setProperty('transform', 'none');
+      popover.dataset.productCalloutPlacement = candidate.top < triggerRect.top ? 'top' : 'bottom';
+      popover.style.setProperty('--product-callout-popover-pointer-x', `${clamp(triggerRect.left + triggerRect.width / 2 - candidate.left, 20, width - 20)}px`);
     };
 
     const cancelPopoverClose = (state, popover) => {
@@ -231,7 +234,7 @@
       close.addEventListener('click', () => closeSheet(state), { once: true });
       const content = document.createElement('div');
       content.className = 'product-callout__sheet-content';
-      Array.from(popover.children).forEach((child) => content.append(child.cloneNode(true)));
+      Array.from(popover.children).filter((child) => !child.hasAttribute('data-product-callout-pointer')).forEach((child) => content.append(child.cloneNode(true)));
       content.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
       state.sheet.replaceChildren(handle, close, content);
       state.sheetRecord = { trigger, wrapper, popover };

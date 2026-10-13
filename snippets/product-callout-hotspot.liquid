@@ -168,6 +168,7 @@
       aria-label="{{ hotspot_popover_label | escape }}"
       hidden
     >
+      <span class="product-callout__popover-pointer" data-product-callout-pointer aria-hidden="true">{% render 'hotspot-tooltip-pointer' %}</span>
       {% if hotspot_type == 'content' %}
         <div class="product-callout__content-card">
           {% if hotspot_content_heading != blank %}
