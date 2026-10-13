@@ -30,7 +30,7 @@
   endif
   assign slideshow_scheme = slideshow_scheme | handleize
   assign slideshow_navigation_style = section.settings.navigation_style | default: 'primary'
-  unless slideshow_navigation_style == 'primary' or slideshow_navigation_style == 'secondary'
+  unless slideshow_navigation_style == 'primary' or slideshow_navigation_style == 'secondary' or slideshow_navigation_style == 'only_icon'
     assign slideshow_navigation_style = 'primary'
   endunless
   assign slideshow_navigation_icon = section.settings.navigation_icon | default: 'arrow'
@@ -80,17 +80,17 @@
         {% content_for 'blocks' %}
       </div>
 
-      {% if section.settings.show_pagination and section.settings.pagination_type == 'bullets' %}
-        <div class="slideshow__bullet-controls swiper swiper-pagination--desktop-{{ section.settings.pagination_position_desktop }} swiper-pagination--mobile-{{ section.settings.pagination_position_mobile }}" data-slideshow-control-scope>
+      {% if section.settings.show_pagination and section.settings.pagination_type == 'bullets' and slideshow_navigation_style == 'only_icon' %}
+        <div class="slideshow__bullet-controls slideshow__bullet-controls--{{ slideshow_navigation_behavior }} swiper swiper-pagination--desktop-{{ section.settings.pagination_position_desktop }} swiper-pagination--mobile-{{ section.settings.pagination_position_mobile }}" data-slideshow-control-scope>
           {% if section.settings.show_navigation %}
             <button class="slideshow__bullet-arrow" type="button" data-slideshow-previous aria-label="Previous slide">
-              <img src="{{ 'arche-slideshow-chevron-left.svg' | asset_url }}" width="24" height="24" alt="" loading="lazy">
+              {% render 'carousel-navigation-icon', icon: slideshow_navigation_icon, direction: 'previous' %}
             </button>
           {% endif %}
           <div class="swiper-pagination slideshow__pagination slideshow__pagination--bullets" data-slideshow-pagination data-pagination-type="bullets"></div>
           {% if section.settings.show_navigation %}
             <button class="slideshow__bullet-arrow" type="button" data-slideshow-next aria-label="Next slide">
-              <img src="{{ 'arche-slideshow-chevron-right.svg' | asset_url }}" width="24" height="24" alt="" loading="lazy">
+              {% render 'carousel-navigation-icon', icon: slideshow_navigation_icon, direction: 'next' %}
             </button>
           {% endif %}
         </div>
@@ -104,8 +104,8 @@
       {% endif %}
 
       {% if section.settings.show_navigation %}
-        {% unless section.settings.show_pagination and section.settings.pagination_type == 'bullets' %}
-        <div class="slideshow__navigation slideshow__navigation--{{ slideshow_navigation_behavior }}" data-slideshow-control-scope aria-label="Slideshow controls">
+        {% unless section.settings.show_pagination and section.settings.pagination_type == 'bullets' and slideshow_navigation_style == 'only_icon' %}
+        <div class="slideshow__navigation slideshow__navigation--{{ slideshow_navigation_behavior }} slideshow__navigation--{{ slideshow_navigation_style }}" data-slideshow-control-scope aria-label="Slideshow controls">
           <button class="btn btn-{{ slideshow_navigation_style }} btn--{{ slideshow_navigation_style }} btn--icon swiper-nav-button swiper-nav-button--prev slideshow__arrow" type="button" data-slideshow-previous aria-label="Previous slide">
             {% render 'carousel-navigation-icon', icon: slideshow_navigation_icon, direction: 'previous' %}
           </button>
@@ -140,8 +140,8 @@
   .slideshow__arrow { position: relative; z-index: 1; pointer-events: auto; touch-action: manipulation; }
   .slideshow__navigation--show_on_hover { transition: opacity var(--motion-duration-standard) var(--motion-ease-standard); }
   @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
-    .slideshow__navigation--show_on_hover { opacity: 0; }
-    .slideshow:is(:hover, :focus-within) .slideshow__navigation--show_on_hover { opacity: 1; }
+    .slideshow__navigation--show_on_hover, .slideshow__bullet-controls--show_on_hover .slideshow__bullet-arrow { opacity: 0; }
+    .slideshow:is(:hover, :focus-within) .slideshow__navigation--show_on_hover, .slideshow:is(:hover, :focus-within) .slideshow__bullet-controls--show_on_hover .slideshow__bullet-arrow { opacity: 1; }
   }
   .slideshow__pagination { --swiper-pagination-inline-padding: var(--slideshow-content-inline-padding); }
   /* Reuse shared Swiper bullet geometry inside the compact control surface. */
@@ -186,7 +186,8 @@
   .slideshow .slideshow__bullet-controls .swiper-pagination-bullet::before { background: #666666; }
   .slideshow__bullet-arrow { position: relative; display: grid; place-items: center; flex: 0 0 24px; width: 24px; height: 24px; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: inherit; cursor: pointer; pointer-events: auto; touch-action: manipulation; }
   .slideshow__bullet-arrow::before { content: ''; position: absolute; inset: -4px; }
-  .slideshow__bullet-arrow img { display: block; }
+  .slideshow__bullet-arrow svg { display: block; }
+  .slideshow__navigation--only_icon .slideshow__arrow { --swiper-nav-size: 24px; padding: 0; border: 0; background: transparent; color: var(--heading-color); box-shadow: none; }
   .slideshow__bullet-arrow:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
   .slideshow--single-slide .slideshow__bullet-controls { display: none; }
 
@@ -503,6 +504,10 @@
         {
           "value": "secondary",
           "label": "Secondary"
+        },
+        {
+          "value": "only_icon",
+          "label": "Only icon"
         }
       ],
       "default": "primary",
@@ -713,7 +718,7 @@
         "pause_on_hover": true,
         "autoplay_delay": 6,
         "show_navigation": true,
-        "navigation_style": "primary",
+        "navigation_style": "only_icon",
         "navigation_icon": "chevron",
         "navigation_behavior": "always",
         "show_pagination": true,
