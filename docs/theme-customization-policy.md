@@ -2,6 +2,12 @@
 
 Customization records track code that changes how a section or block renders or behaves compared with personal `main`.
 
+## Sections and presets named `(custom)`
+
+Any section whose resolved schema name or any preset name contains `(custom)` must accept every public theme block through `"blocks": [{ "type": "@theme" }]` and render dynamic children through `{% content_for 'blocks' %}`. Preserve existing `@app` support and explicit private block entries; underscore-prefixed private blocks are not exposed by `@theme`. This root rule does not broaden nested block contracts, placement guards, capacities, or data context. Keep preset compositions and saved IDs/order intact.
+
+The shared source for this naming rule is [Section Contract](../../agents-build-themes/skills/build/new/build-theme/references/section-contract.md#sections-named-custom).
+
 ## Count as custom
 
 - Changes to the Liquid/HTML implementation in `sections/*.liquid` or `blocks/*.liquid`, excluding everything inside the `{% schema %}` block.

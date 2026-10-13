@@ -276,7 +276,7 @@
 {% endif %}
 
 <div
-  class="blog-list{% if blog_list_layout == 'grid' and blog_list_columns_desktop == 1 %} blog-list--grid-one-column{% endif %} section-list-layout__bridge"
+  class="blog-list{% if blog_list_layout == 'grid' and blog_list_columns_desktop == 1 %} blog-list--grid-one-column{% endif %}{% if blog_list_layout == 'grid' and blog_list_columns_mobile == 1 %} blog-list--mobile-one-column{% endif %} section-list-layout__bridge"
   data-blog-list
   data-layout="{{ blog_list_layout }}"
   data-swiper-autoplay="{{ blog_list_autoplay_enabled }}"
