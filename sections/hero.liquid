@@ -586,7 +586,7 @@
       "step": 4,
       "unit": "px",
       "default": 64,
-      "visible_if": "{{ section.settings.width != 'full' or section.settings.layout != 'classic' }}"
+      "visible_if": "{{ section.settings.width == 'page' or section.settings.layout == 'stack' }}"
     },
     {
       "type": "range",
@@ -597,7 +597,7 @@
       "step": 4,
       "unit": "px",
       "default": 40,
-      "visible_if": "{{ section.settings.width != 'full' or section.settings.layout != 'classic' }}"
+      "visible_if": "{{ section.settings.width == 'page' or section.settings.layout == 'stack' }}"
     },
     {
       "type": "header",
