@@ -227,7 +227,7 @@
       endif
     %}
 
-    <fieldset class="variant-picker__option{% if option_uses_swatches %} variant-picker__option--swatches{% endif %}" data-option-index="{{ option_index }}">
+    <fieldset class="variant-picker__option{% if option_uses_swatches %} variant-picker__option--swatches{% endif %}" data-option-index="{{ option_index }}" data-option-swatch="{{ option_is_color }}">
       <legend id="{{ option_id }}-label" class="visually-hidden">
         {{ product_option.name | escape }}
       </legend>
