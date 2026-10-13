@@ -80,7 +80,21 @@
         {% content_for 'blocks' %}
       </div>
 
-      {% if section.settings.show_pagination %}
+      {% if section.settings.show_pagination and section.settings.pagination_type == 'bullets' %}
+        <div class="slideshow__bullet-controls swiper swiper-pagination--desktop-{{ section.settings.pagination_position_desktop }} swiper-pagination--mobile-{{ section.settings.pagination_position_mobile }}" data-slideshow-control-scope>
+          {% if section.settings.show_navigation %}
+            <button class="slideshow__bullet-arrow" type="button" data-slideshow-previous aria-label="Previous slide">
+              <img src="{{ 'arche-slideshow-chevron-left.svg' | asset_url }}" width="24" height="24" alt="" loading="lazy">
+            </button>
+          {% endif %}
+          <div class="swiper-pagination slideshow__pagination slideshow__pagination--bullets" data-slideshow-pagination data-pagination-type="bullets"></div>
+          {% if section.settings.show_navigation %}
+            <button class="slideshow__bullet-arrow" type="button" data-slideshow-next aria-label="Next slide">
+              <img src="{{ 'arche-slideshow-chevron-right.svg' | asset_url }}" width="24" height="24" alt="" loading="lazy">
+            </button>
+          {% endif %}
+        </div>
+      {% elsif section.settings.show_pagination %}
         <div
           class="swiper-pagination swiper-pagination--overlay slideshow__pagination slideshow__pagination--{{ section.settings.pagination_type }} swiper-pagination--desktop-{{ section.settings.pagination_position_desktop }} swiper-pagination--mobile-{{ section.settings.pagination_position_mobile }}"
           data-slideshow-pagination
@@ -90,6 +104,7 @@
       {% endif %}
 
       {% if section.settings.show_navigation %}
+        {% unless section.settings.show_pagination and section.settings.pagination_type == 'bullets' %}
         <div class="slideshow__navigation slideshow__navigation--{{ slideshow_navigation_behavior }}" data-slideshow-control-scope aria-label="Slideshow controls">
           <button class="btn btn-{{ slideshow_navigation_style }} btn--{{ slideshow_navigation_style }} btn--icon swiper-nav-button swiper-nav-button--prev slideshow__arrow" type="button" data-slideshow-previous aria-label="Previous slide">
             {% render 'carousel-navigation-icon', icon: slideshow_navigation_icon, direction: 'previous' %}
@@ -98,6 +113,7 @@
             {% render 'carousel-navigation-icon', icon: slideshow_navigation_icon, direction: 'next' %}
           </button>
         </div>
+        {% endunless %}
       {% endif %}
     </div>
   </div>
@@ -128,11 +144,57 @@
     .slideshow:is(:hover, :focus-within) .slideshow__navigation--show_on_hover { opacity: 1; }
   }
   .slideshow__pagination { --swiper-pagination-inline-padding: var(--slideshow-content-inline-padding); }
-  .slideshow .slideshow__swiper > .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet::after {
+  /* Reuse shared Swiper bullet geometry inside the compact control surface. */
+  .slideshow__bullet-controls.swiper {
+    --swiper-pagination-color: var(--heading-color);
+    --swiper-pagination-bullet-inactive-color: #666666;
+    --swiper-pagination-bullet-inactive-opacity: 1;
+    --swiper-pagination-bullet-hit-width: 20px;
+    --swiper-pagination-bullet-active-hit-width: 48px;
+    --swiper-pagination-bullet-active-width: 36px;
+    --swiper-pagination-bullet-gap: 0px;
+    position: absolute;
+    inset-block: auto 40px;
+    inset-inline-start: var(--swiper-pagination-start, 0);
+    inset-inline-end: var(--swiper-pagination-end, 0);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: var(--swiper-pagination-justify, center);
+    gap: 4px;
+    width: auto;
+    margin: 0;
+    padding-inline: var(--slideshow-content-inline-padding);
+    overflow: visible;
+    pointer-events: none;
+  }
+  .slideshow__bullet-controls.swiper > .slideshow__pagination {
+    position: static;
+    inset: auto;
+    flex: 0 1 auto;
+    width: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    transform: none;
+    pointer-events: auto;
+  }
+  .slideshow__bullet-controls .swiper-pagination-bullet { cursor: pointer; }
+  .slideshow .slideshow__bullet-controls .swiper-pagination-bullet::before { background: #666666; }
+  .slideshow__bullet-arrow { position: relative; display: grid; place-items: center; flex: 0 0 24px; width: 24px; height: 24px; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: inherit; cursor: pointer; pointer-events: auto; touch-action: manipulation; }
+  .slideshow__bullet-arrow::before { content: ''; position: absolute; inset: -4px; }
+  .slideshow__bullet-arrow img { display: block; }
+  .slideshow__bullet-arrow:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .slideshow--single-slide .slideshow__bullet-controls { display: none; }
+
+  .slideshow .slideshow__swiper .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet::after {
     transform: translate(-50%, -50%);
     transition: none;
   }
-  .slideshow .slideshow__swiper > .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet::after {
+  .slideshow .slideshow__swiper .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet::after {
     background-color: transparent;
     background-image: linear-gradient(var(--swiper-pagination-color), var(--swiper-pagination-color));
     background-repeat: no-repeat;
@@ -141,29 +203,29 @@
     clip-path: inset(0 round var(--swiper-pagination-bullet-border-radius, 1000px));
     animation: none;
   }
-  .slideshow[data-autoplay='true'] .slideshow__swiper > .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet-active::after {
+  .slideshow[data-autoplay='true'] .slideshow__swiper .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet-active::after {
     background-size: 100% 100%;
     clip-path: inset(0 calc((1 - clamp(0, var(--slideshow-autoplay-progress, 1), 1)) * 100%) 0 0 round var(--swiper-pagination-bullet-border-radius, 1000px));
   }
-  .slideshow .slideshow__swiper.swiper-rtl > .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet::after {
+  .slideshow .slideshow__swiper.swiper-rtl .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet::after {
     background-position: right center;
   }
-  .slideshow .slideshow__swiper.swiper-rtl > .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet-active::after {
+  .slideshow .slideshow__swiper.swiper-rtl .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet-active::after {
     clip-path: inset(0 0 0 calc((1 - clamp(0, var(--slideshow-autoplay-progress, 1), 1)) * 100%) round var(--swiper-pagination-bullet-border-radius, 1000px));
   }
-  .slideshow .slideshow__swiper > .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet:focus-visible {
+  .slideshow .slideshow__swiper .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 3px;
   }
   @media (prefers-reduced-motion: reduce) {
-    .slideshow .slideshow__swiper > .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet {
+    .slideshow .slideshow__swiper .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet {
       transition: none;
     }
-    .slideshow[data-autoplay='true'] .slideshow__swiper > .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet-active::after {
+    .slideshow[data-autoplay='true'] .slideshow__swiper .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet-active::after {
       background-size: 100% 100%;
       clip-path: inset(0 round var(--swiper-pagination-bullet-border-radius, 1000px));
     }
-    .slideshow[data-autoplay='true'] .slideshow__swiper.swiper-rtl > .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet-active::after {
+    .slideshow[data-autoplay='true'] .slideshow__swiper.swiper-rtl .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet-active::after {
       clip-path: inset(0 round var(--swiper-pagination-bullet-border-radius, 1000px));
     }
   }
@@ -177,7 +239,7 @@
   .slideshow__pagination--numbers .slideshow__pagination-number[aria-current='true'] circle:last-child { stroke-opacity: 1; stroke-dashoffset: calc(93.6404px * (1 - var(--percent, 1))); }
   .slideshow__pagination--numbers .slideshow__pagination-number:hover, .slideshow__pagination--numbers .slideshow__pagination-number:focus-visible { opacity: 1; }
   .slideshow__pagination--numbers .slideshow__pagination-number:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
-  .slideshow .slideshow__swiper > .slideshow__pagination--progress_bar[data-pagination-type='progress_bar'] {
+  .slideshow .slideshow__swiper .slideshow__pagination--progress_bar[data-pagination-type='progress_bar'] {
     --swiper-pagination-bullet-gap: 16px;
     /* The 2px bars sit 40px above the slide edge inside 24px click targets. */
     inset-block-end: 29px;
@@ -189,10 +251,10 @@
   .slideshow__pagination--progress_bar .slideshow__pagination-segment::before { content: ''; position: absolute; inset: 11px 0; border-radius: inherit; background: #666; }
   .slideshow__pagination--progress_bar .slideshow__pagination-segment:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
   .slideshow__pagination--progress_bar .slideshow__pagination-segment-fill { position: absolute; inset: 11px 0; display: block; border-radius: inherit; background: currentColor; transform: scaleX(0); transform-origin: left center; }
-  .slideshow__swiper.swiper-rtl > .slideshow__pagination--progress_bar .slideshow__pagination-segment-fill { transform-origin: right center; }
+  .slideshow__swiper.swiper-rtl .slideshow__pagination--progress_bar .slideshow__pagination-segment-fill { transform-origin: right center; }
   .slideshow__pagination--progress_bar .slideshow__pagination-segment--active .slideshow__pagination-segment-fill { transform: scaleX(1); }
   .slideshow[data-autoplay='true'] .slideshow__pagination--progress_bar .slideshow__pagination-segment--active .slideshow__pagination-segment-fill { transform: scaleX(var(--slideshow-autoplay-progress, 0)); }
-  .slideshow--single-slide .slideshow__navigation, .slideshow.slideshow--single-slide .slideshow__swiper > .slideshow__pagination { display: none; }
+  .slideshow--single-slide .slideshow__navigation, .slideshow.slideshow--single-slide .slideshow__swiper .slideshow__pagination { display: none; }
   .slideshow[data-full-width-content='true'] .slideshow-slide__content-inner { width: 100%; max-width: none; }
   @media (min-width: 768px) {
     .slideshow--width-page[data-show-next-slide-preview-on-desktop='true'] .slideshow__swiper { overflow: visible; }
@@ -216,13 +278,13 @@
   /* Let the browser animate progress; the timer only toggles pause/resume. */
   .slideshow__pagination[data-autoplay-clock] { --slideshow-clock-play-state: paused; }
   .slideshow__pagination[data-autoplay-clock='running'] { --slideshow-clock-play-state: running; }
-  .slideshow .slideshow__swiper > .slideshow__pagination[data-autoplay-clock][data-pagination-type='bullets'] .swiper-pagination-bullet-active::after {
+  .slideshow .slideshow__swiper .slideshow__pagination[data-autoplay-clock][data-pagination-type='bullets'] .swiper-pagination-bullet-active::after {
     transform-origin: left center;
     will-change: transform;
     animation: slideshow-clock-bullet var(--slideshow-autoplay-duration) linear both;
     animation-play-state: var(--slideshow-clock-play-state);
   }
-  .slideshow__swiper.swiper-rtl > .slideshow__pagination[data-autoplay-clock][data-pagination-type='bullets'] .swiper-pagination-bullet-active::after { transform-origin: right center; }
+  .slideshow__swiper.swiper-rtl .slideshow__pagination[data-autoplay-clock][data-pagination-type='bullets'] .swiper-pagination-bullet-active::after { transform-origin: right center; }
   .slideshow__pagination[data-autoplay-clock] .slideshow__pagination-number[aria-current='true'] circle:last-child {
     animation: slideshow-clock-number var(--slideshow-autoplay-duration) linear both;
     animation-play-state: var(--slideshow-clock-play-state);
@@ -238,7 +300,7 @@
   @keyframes slideshow-clock-number { from { stroke-dashoffset: 93.6404px; } to { stroke-dashoffset: 0; } }
   @keyframes slideshow-clock-segment { from { transform: scaleX(0); } to { transform: scaleX(1); } }
   @media (prefers-reduced-motion: reduce) {
-    .slideshow .slideshow__swiper > .slideshow__pagination[data-autoplay-clock][data-pagination-type='bullets'] .swiper-pagination-bullet-active::after,
+    .slideshow .slideshow__swiper .slideshow__pagination[data-autoplay-clock][data-pagination-type='bullets'] .swiper-pagination-bullet-active::after,
     .slideshow__pagination[data-autoplay-clock] .slideshow__pagination-number[aria-current='true'] circle:last-child,
     .slideshow__pagination[data-autoplay-clock] .slideshow__pagination-segment--active .slideshow__pagination-segment-fill { animation: none; }
     .slideshow__pagination[data-autoplay-clock] .slideshow__pagination-segment--active .slideshow__pagination-segment-fill { transform: scaleX(1); }
