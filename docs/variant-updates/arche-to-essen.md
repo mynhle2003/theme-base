@@ -1,4 +1,4 @@
-# Arche → Essen: Variant picker, Gap, Rounded progress, section `(custom)` và mép ảnh
+# Arche → Essen: Variant picker, Size guide, Product-card tags và các fix dùng chung
 
 Ngày: 2026-10-13. Nguồn: `arche-theme`, branch `theme/arche-theme`, HEAD `f340ad0e3facf5e0ad9c6eba0700ae4e12e0f131` + patch local chưa commit. Đích: `../essen-theme`, branch `theme/essen-theme`, HEAD đã audit `acb809562bf01eb1f301e88439504d3c93bfc141`; chưa áp dụng update.
 
@@ -16,6 +16,11 @@ Quy tắc: `agents-build-themes/skills/build/new/build-theme/references/variant-
 | ARCHE-ESSEN-VARIANT-PICKER-001 | 1 | Chỉ đổi gallery khi đổi swatch; giữ ảnh khi đổi size/option thường | snippets/variant-picker.liquid; assets/variant-picker.js; assets/product-media.js | pending — kiểm tra lỗi tại Essen trước khi áp dụng | Shared picker/gallery hiện có; không chuyển preset/layout |
 
 | ARCHE-ESSEN-HEADER-ALIGNMENT-001 | 1 | Header bật Inherit parent alignment nhận text alignment từ section | blocks/header.liquid | pending — Essen phải tái hiện trước khi update | parent --text-align-default; không chuyển preset/layout Arche |
+
+| Mã update mới | Revision | Phạm vi | Nguồn | Trạng thái Essen | Dependency |
+| --- | --- | --- | --- | --- | --- |
+| ARCHE-ESSEN-SIZE-GUIDE-001 | 1 | Size guide dùng Button Tertiary; xóa CSS riêng | snippets/variant-picker.liquid; assets/critical.css — commit 314ff1e6 | pending | Shared Tertiary button/underline contract |
+| ARCHE-ESSEN-PRODUCT-CARD-TAGS-001 | 1 | Checkbox Show tags và tối đa ba tag trên Product cards | config/settings_schema.json; snippets/product-card.liquid; snippets/product-badges.liquid; snippets/badge.liquid; snippets/css-variables.liquid; assets/critical.css; locales/en.default.schema.json — patch local trước commit | pending | Shared badge primitive và card context; độc lập Size guide |
 
 ## Điều kiện bắt buộc trước mọi update variant
 
@@ -200,9 +205,27 @@ Ngày 2026-10-13, revision 1. Nguồn `arche-theme`, branch `theme/arche-theme`,
 
 ## ARCHE-ESSEN-SIZE-GUIDE-001 — Size guide dùng Button Tertiary
 
-Ngày 2026-10-13, revision 1. Nguồn Arche `theme/arche-theme`; Essen pending, chưa áp dụng.
+Ngày 2026-10-13, revision 1. Nguồn Arche `theme/arche-theme`, commit `314ff1e6`; đích `../essen-theme`, branch `theme/essen-theme`: pending, chưa áp dụng.
 
 - Shared `snippets/variant-picker.liquid` dùng `btn btn-tertiary` và `btn__label`/`btn__text` cho Size guide, gồm Featured product, main product và các overlay dùng picker. Giữ aria-controls/expanded và runtime mở guide.
 - Xóa toàn bộ CSS riêng của trigger trong `assets/critical.css`: không override font, màu, hover, underline, padding hoặc alignment. Theme Settings Button Tertiary sở hữu style và underline.
 - Trước update Essen, kiểm tra trigger còn hard-code/custom chặn Tertiary hay không; chỉ chuyển patch nhỏ nếu gap còn tồn tại. Không copy preset/layout. QA màu/hover, font/case, bật/tắt underline và offset, mở/đóng guide, desktop/mobile và Theme Editor save/reload.
 - QA nguồn: full Theme Check và diff check trước commit; storefront/Theme Editor trực tiếp còn pending.
+
+
+## ARCHE-ESSEN-PRODUCT-CARD-TAGS-001 — Show tags trong Product cards
+
+Ngày 2026-10-13, revision 1. Nguồn Arche `theme/arche-theme`, patch local trước commit, tham khảo implementation local của `../elara-theme`. Đích `../essen-theme`, branch `theme/essen-theme`: pending, chưa áp dụng.
+
+- Thêm checkbox `product_card_show_tags`, mặc định false, ngay sau Show sold out badge trong Theme Settings → Product cards → Display; label `t:labels.show_tags`. Không sửa settings/preset đã lưu.
+- `snippets/product-card.liquid` truyền switch và `context: 'product-card'` vào `product-badges`. Resolver render tối đa ba tag không rỗng theo thứ tự `product.tags`, strip khoảng trắng và tiền tố `badge:` không phân biệt hoa thường; label escape qua `badge`. Bật tags không phụ thuộc Sale/Sold out; Sold out vẫn ưu tiên Sale. Tắt tags không sinh wrapper rỗng.
+- Theo Elara, card không đi qua nhánh manual `badge:` cũ để tránh duplicate; product-page manual badges giữ nguyên. Không bật thêm collection/manual rules ở caller Arche. `badge` chấp nhận `tag`/`tag-secondary`; tag thứ hai dùng tone phụ, thứ nhất/ba dùng tone chính. CSS tiêu thụ bốn token tag trong `css-variables`, dùng màu tương ứng Elara; giữ typography/radius/layout badge hiện có của Arche. Không chuyển custom geometry Elara.
+- Files: `config/settings_schema.json`, `locales/en.default.schema.json`, `snippets/product-card.liquid`, `snippets/product-badges.liquid`, `snippets/badge.liquid`, `snippets/css-variables.liquid`, `assets/critical.css`.
+- Khi được yêu cầu update Essen, kiểm tra setting/logic tương đương đã tồn tại hay chưa. Nếu gap còn tồn tại, chỉ chuyển patch của consumer; giữ schema/preset và appearance của đích. QA tags on/off, empty tags, hơn ba tag, prefix, ký tự HTML, Sale/Sold out, product-page manual badges, wrap desktop/mobile và Theme Editor save/reload trước verified. Chưa sửa/upload/publish Essen.
+
+QA nguồn Show tags: bốn Liquid render tests PASS; full Theme Check 0 errors / 12 existing warnings; diff check PASS. Một test Footer của suite theme-settings lỗi sẵn tại HEAD, ngoài phạm vi patch; không thay footer preset. Chưa QA live editor ở Arche/Essen.
+
+| Ngày | Mã | Revision đích | Trạng thái | Bằng chứng |
+| --- | --- | --- | --- | --- |
+| 2026-10-13 | ARCHE-ESSEN-SIZE-GUIDE-001 | chưa áp dụng | pending | Commit nguồn 314ff1e6; Essen phải kiểm tra gap trước update. |
+| 2026-10-13 | ARCHE-ESSEN-PRODUCT-CARD-TAGS-001 | chưa áp dụng | pending | Bốn render tests và Theme Check nguồn pass; chưa mutation/upload/publish Essen. |

@@ -16,6 +16,8 @@ Record every theme-specific change here before committing the code. During base 
 
 | File/path | Base behavior | Theme-specific behavior | Reason | Update/merge rule |
 | --- | --- | --- | --- | --- |
+| `snippets/badge.liquid` | Sale/sold-out/manual badge tones. | Adds tag and tag-secondary tones. | Optional Product-card tags. | Preserve existing tones, shared escaping and tag tokens. |
+| `snippets/product-badges.liquid` | Status and configured manual badges. | Up to three card tags gated by Show tags; product-page manual path remains. | Reuse Elara tag logic without duplicate prefixed badges. | Preserve card/page ownership, status precedence and tag limit. |
 | `assets/variant-picker.js` | Option changes select variant media. | Only swatch changes update media; all options continue updating commerce state. | Preserve browsed images when changing size. | Keep updateMedia event intent aligned with product-media.js. |
 | `blocks/blog-list.liquid` | Desktop one-column modifier only. | Adds the mobile one-column modifier when mobile grid columns equal one. | Match mobile blog layout. | Preserve option gating on layout and mobile column count. |
 | `blocks/header.liquid` | Shared header composition. | Arche header spacing and composition follow the current preset. | Match Arche section headers. | Review upstream spacing changes and retain merchant controls. |
@@ -1796,3 +1798,22 @@ Final Theme Check: 0 errors / 12 existing warnings outside the changed files. gi
 `snippets/product-callout-runtime.liquid` clones a shell rendered by `component-overlay`, then delegates focus, Escape/backdrop/close, drag dismissal, motion and lifecycle to `ThemeOverlay`. `assets/component-product-callout.css` removes the private dialog geometry, fixed 20px radius, backdrop, handle and close styling; shared overlay tokens now own these. Existing product content grid and desktop tooltip are retained. Destroy closes immediately and disposes the overlay controller on editor unload. Preserve shared shell/runtime reuse during base updates. Live storefront/editor QA pending.
 
 Validation for the shared hotspot shell: Chrome local fixture at 320/375/767px passes shared radius/handle, focus, scroll lock, Escape/backdrop/close, breakpoint dismissal and editor unload/reload with no runtime errors. 32 related overlay/product/picker tests pass. Full Theme Check: 0 errors / 12 existing warnings; diff check passes. This fixture does not verify a live Theme Editor save/reload.
+
+
+## Product-card Show tags — 2026-10-13
+
+| File/path | Base behavior | Arche behavior | Reason | Update/merge rule |
+| --- | --- | --- | --- | --- |
+| `snippets/product-card.liquid` | Passes sale/sold-out switches to shared badges. | Passes global Show tags and explicit product-card context. | Enable optional card tags as in Elara. | Preserve switch/context without enabling additional manual rules. |
+| `snippets/product-badges.liquid` | Status and configured manual badges. | Up to three nonempty card tags, strips legacy badge prefix; manual tag path remains product-page only. | Avoid duplicate card tags and preserve status precedence. | Keep card/page ownership, prefix handling, escaping and three-tag limit. |
+| `snippets/badge.liquid` | Sale, sold-out and manual tones. | Adds tag and tag-secondary tones. | Reuse shared badge markup. | Keep existing tones and escaped text. |
+| `snippets/css-variables.liquid` | Status badge tokens. | Adds the four Elara tag color tokens. | Provide primary/secondary card-tag colors. | Keep shared token mapping. |
+| `assets/critical.css` | Shared status/manual badge styles. | Tag tones consume shared tokens; existing Arche badge typography, radius and wrap remain. | Add optional tags without importing Elara card geometry. | Preserve theme appearance and new tone selectors. |
+
+Setting `product_card_show_tags` defaults false; no saved preset/settings mutation. Transfer tracked as ARCHE-ESSEN-PRODUCT-CARD-TAGS-001; Essen pending and must inspect its gap before applying. Live storefront/Theme Editor QA pending.
+
+Show tags validation: four Liquid render tests pass for off/empty, prefix/escaping/limit, status coexistence and product-page manual tags. Full Theme Check: 0 errors / 12 existing warnings; diff check passes. The broader theme-settings suite has one existing Footer social-links expectation failure, reproduced unchanged at HEAD before the Show tags patch (footer preset uses menu); it is outside this change. Live Theme Editor save/reload remains pending.
+
+## Scrolling cards Stack transition restore — 2026-10-13
+
+The Shopify editor merge removed the section's `stack_effect` schema and `data-stack-effect` binding while the runtime retained both effects. Restored the existing section-owned Scale/Fade control, its Fade default/preset, and the homepage Fade selection. Preserve schema, data attribute and runtime together during future editor/base merges. No Card-level option is introduced by this fix.
