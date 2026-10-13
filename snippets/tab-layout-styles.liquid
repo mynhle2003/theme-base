@@ -39,7 +39,7 @@
     padding: 0;
     border: 0;
     background: transparent;
-    color: color-mix(in srgb, var(--body-color) 48%, transparent);
+    color: var(--body-color);
     cursor: pointer;
     font-family: var(--tab-layout-font-family);
     font-size: var(--tab-layout-font-size);
@@ -101,8 +101,8 @@
   }
 
   .tab-layout--button.tab-layout--active-outline .tab-layout__tab:not([aria-selected='true']) {
-    border-color: color-mix(in srgb, var(--button-primary-border) 35%, transparent);
-    color: color-mix(in srgb, var(--button-primary-border) 35%, transparent);
+    border-color: var(--body-color);
+    color: var(--body-color);
   }
 
   .tab-layout--button.tab-layout--active-outline .tab-layout__tab[aria-selected='true'] {

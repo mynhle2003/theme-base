@@ -182,6 +182,7 @@
   };
   const initialize = root => {
     if (controllers.has(root)) return;
+    if (!editor && !root.querySelector(selector)) return;
     controllers.set(root, createController(root));
   };
   document.querySelectorAll('.shopify-section').forEach(initialize);

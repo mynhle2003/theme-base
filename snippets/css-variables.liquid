@@ -26,7 +26,7 @@
   assign default_heading = settings.foreground_color | default: '#111111'
   assign default_heading_highlight = '#A67C52'
   assign default_body = settings.foreground_color | default: '#404040'
-  assign default_product_card_metafield = '#999999'
+  assign default_product_card_metafield = '#767676'
   assign default_accent = settings.color_accent | default: '#111111'
   assign default_border = settings.color_border | default: '#D8D8D8'
   assign default_shadow = default_body
@@ -1078,7 +1078,7 @@
     {% assign scheme_heading = scheme.settings.heading | default: default_heading %}
     {% assign scheme_heading_highlight = scheme.settings.heading_highlight | default: default_heading_highlight %}
     {% assign scheme_body = scheme.settings.text | default: default_body %}
-    {% assign scheme_product_card_metafield = scheme.settings.product_card_metafield | default: '#999999' %}
+    {% assign scheme_product_card_metafield = scheme.settings.product_card_metafield | default: '#767676' %}
     {% assign scheme_accent = scheme.settings.accent | default: default_accent %}
     {% assign scheme_border = scheme.settings.border | default: default_border %}
     {% assign scheme_shadow = scheme.settings.shadow | default: default_shadow %}

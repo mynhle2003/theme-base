@@ -3450,3 +3450,7 @@ legend {
     --swiper-pagination-justify: flex-end;
   }
 }
+
+/* Keyboard access to the main landmark before repeated header navigation. */
+.skip-to-content { position: fixed; inset-block-start: 12px; inset-inline-start: 12px; z-index: 10000; padding: 12px 20px; background: var(--background-color); color: var(--body-color); transform: translateY(calc(-100% - 24px)); }
+.skip-to-content:focus { transform: none; }
