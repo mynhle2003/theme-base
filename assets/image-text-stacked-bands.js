@@ -1,136 +1,74 @@
 (() => {
   const selector = '[data-images-with-text-scroll]';
-  const desktopQuery = window.matchMedia('(min-width: 1000px)');
-  const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   const states = new WeakMap();
 
   const destroy = (root) => {
     const state = states.get(root);
     if (!state) return;
-    state.observer?.disconnect();
-    window.removeEventListener('scroll', state.schedule);
+    state.resizeObserver?.disconnect();
+    state.headerObserver?.disconnect();
     window.removeEventListener('resize', state.schedule);
-    root.removeEventListener('scroll', state.mobileScroll);
-    state.dotHandlers?.forEach(({ dot, handler }) => dot.removeEventListener('click', handler));
-    if (state.interval) window.clearInterval(state.interval);
-    if (state.frame) window.cancelAnimationFrame(state.frame);
+    window.visualViewport?.removeEventListener('resize', state.schedule);
+    if (state.frame) cancelAnimationFrame(state.frame);
+    state.bands.forEach((band) => band.style.removeProperty('--band-sticky-top'));
+    root.removeAttribute('data-editor-selection');
     states.delete(root);
   };
 
   const init = (root) => {
-    if (!(root instanceof HTMLElement)) return;
     destroy(root);
-
-    const bands = [...root.querySelectorAll('[data-stacked-band]')];
-    const content = bands.map((band) => band.querySelector('[data-stacked-band-content]')).filter(Boolean);
-    const dots = [...(root.parentElement?.querySelectorAll('[data-images-with-text-scroll-dots] [data-images-with-text-scroll-dot]') || [])];
-    if (!bands.length || !content.length) return;
-
-    const activate = (index) => {
-      bands.forEach((band, bandIndex) => band.classList.toggle('is-selected', bandIndex === index));
-      dots.forEach((dot, dotIndex) => {
-        const selected = dotIndex === index;
-        dot.classList.toggle('is-active', selected);
-        dot.setAttribute('aria-current', selected ? 'true' : 'false');
-      });
-    };
-
-    if (!desktopQuery.matches) {
-      const state = { interval: 0, mobileScroll: null, dotHandlers: [] };
-      let activeIndex = 0;
-
-      const activateMobile = (index, shouldScroll = true) => {
-        activeIndex = (index + bands.length) % bands.length;
-        activate(activeIndex);
-        if (shouldScroll) {
-          root.scrollTo({
-            left: bands[activeIndex].offsetLeft,
-            behavior: reducedMotionQuery.matches ? 'auto' : 'smooth'
-          });
-        }
-      };
-
-      const mobileScroll = () => {
-        const closestIndex = bands.reduce((closest, band, index) => {
-          const distance = Math.abs(band.offsetLeft - root.scrollLeft);
-          return distance < closest.distance ? { index, distance } : closest;
-        }, { index: 0, distance: Number.POSITIVE_INFINITY }).index;
-        if (closestIndex !== activeIndex) activateMobile(closestIndex, false);
-      };
-
-      dots.forEach((dot, dotIndex) => {
-        const handler = (event) => {
-          event.preventDefault();
-          activateMobile(dotIndex);
-        };
-        dot.addEventListener('click', handler);
-        state.dotHandlers.push({ dot, handler });
-      });
-
-      state.mobileScroll = mobileScroll;
-      root.addEventListener('scroll', mobileScroll, { passive: true });
-      activateMobile(0, false);
-      if (bands.length > 1 && root.dataset.autoplayEnabled === 'true' && !reducedMotionQuery.matches) {
-        const autoplaySeconds = Math.max(Number.parseFloat(root.dataset.autoplaySeconds) || 4, 1);
-        state.interval = window.setInterval(() => activateMobile(activeIndex + 1), autoplaySeconds * 1000);
-      }
-      states.set(root, state);
-      return;
-    }
-
-    let activeIndex = 0;
-    let frame = 0;
-    const state = { observer: null, schedule: null, frame: 0 };
-
-    const update = () => {
-      frame = 0;
+    const bands = Array.from(root.children).filter((child) => child.matches('[data-stacked-band]'));
+    if (!bands.length) return;
+    const state = { bands, frame: 0 };
+    const measure = () => {
       state.frame = 0;
-      const viewportCenter = window.innerHeight / 2;
-      const centeredIndex = content.findIndex((item) => {
-        const bounds = item.getBoundingClientRect();
-        return bounds.top <= viewportCenter && bounds.bottom >= viewportCenter;
+      const viewportHeight = window.visualViewport?.height || window.innerHeight;
+      const headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-sticky-height')) || 0;
+      const geometry = bands.map((band) => {
+        const layout = band.querySelector('[data-stacked-band-layout]');
+        const style = getComputedStyle(band);
+        const layoutHeight = layout?.getBoundingClientRect().height || 0;
+        const paddingTop = parseFloat(style.paddingTop) || 0;
+        const paddingBottom = parseFloat(style.paddingBottom) || 0;
+        const centeredTop = headerHeight + Math.max(0, (viewportHeight - headerHeight - layoutHeight) / 2);
+        const visibleBottomTop = viewportHeight - layoutHeight - paddingBottom;
+        return { band, top: Math.min(centeredTop, visibleBottomTop) - paddingTop };
       });
-
-      if (centeredIndex >= 0 && centeredIndex !== activeIndex) {
-        activeIndex = centeredIndex;
-        activate(activeIndex);
-      }
+      geometry.forEach(({ band, top }) => band.style.setProperty('--band-sticky-top', `${Math.round(top)}px`));
     };
-
     const schedule = () => {
-      if (!frame) {
-        frame = window.requestAnimationFrame(update);
-        state.frame = frame;
-      }
+      if (!state.frame) state.frame = requestAnimationFrame(measure);
     };
-
-    const observer = new IntersectionObserver(schedule, { threshold: [0, 1] });
-    content.forEach((item) => observer.observe(item));
-    window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule, { passive: true });
-    activate(0);
-    schedule();
-    state.observer = observer;
     state.schedule = schedule;
+    if ('ResizeObserver' in window) {
+      state.resizeObserver = new ResizeObserver(schedule);
+      bands.forEach((band) => state.resizeObserver.observe(band));
+      document.querySelectorAll('.section-header').forEach((header) => state.resizeObserver.observe(header));
+    }
+    state.headerObserver = new MutationObserver(schedule);
+    state.headerObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
+    window.addEventListener('resize', schedule, { passive: true });
+    window.visualViewport?.addEventListener('resize', schedule, { passive: true });
     states.set(root, state);
+    schedule();
   };
 
-  const initWithin = (root = document) => {
-    if (root.matches?.(selector)) init(root);
-    root.querySelectorAll?.(selector).forEach(init);
+  const within = (target, action) => {
+    if (target.matches?.(selector)) action(target);
+    target.querySelectorAll?.(selector).forEach(action);
+  };
+  const selection = (event, selected) => {
+    const root = event.target.closest?.(selector) || event.target.querySelector?.(selector);
+    if (root) root.toggleAttribute('data-editor-selection', selected);
   };
 
-  const destroyWithin = (root) => {
-    if (root.matches?.(selector)) destroy(root);
-    root.querySelectorAll?.(selector).forEach(destroy);
-  };
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => initWithin(), { once: true });
-  else initWithin();
-
-  document.addEventListener('shopify:section:load', (event) => initWithin(event.target));
-  document.addEventListener('shopify:section:unload', (event) => destroyWithin(event.target));
-  document.addEventListener('shopify:section:select', (event) => initWithin(event.target));
-  document.addEventListener('shopify:block:select', (event) => initWithin(event.target.closest?.(selector) || event.target));
-  desktopQuery.addEventListener('change', () => initWithin());
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => within(document, init), { once: true });
+  else within(document, init);
+  document.addEventListener('shopify:section:load', (event) => within(event.target, init));
+  document.addEventListener('shopify:section:unload', (event) => within(event.target, destroy));
+  document.addEventListener('shopify:section:reorder', (event) => within(event.target, init));
+  document.addEventListener('shopify:section:select', (event) => selection(event, true));
+  document.addEventListener('shopify:section:deselect', (event) => selection(event, false));
+  document.addEventListener('shopify:block:select', (event) => selection(event, true));
+  document.addEventListener('shopify:block:deselect', (event) => selection(event, false));
 })();
