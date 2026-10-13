@@ -83,6 +83,22 @@
         ? clamp((transitionStart - nextCardTop) / transitionDistance)
         : 0;
 
+      if (root.dataset.stackEffect === 'fade') {
+        cards.forEach((card, index) => {
+          card.style.removeProperty('transform');
+          if (index < activeIndex) {
+            card.style.opacity = '0';
+          } else if (index === activeIndex) {
+            card.style.opacity = String(1 - transitionProgress);
+          } else if (index === activeIndex + 1 && nextCard) {
+            card.style.opacity = String(transitionProgress);
+          } else {
+            card.style.removeProperty('opacity');
+          }
+        });
+        return;
+      }
+
       cards.forEach((card, index) => {
         card.style.removeProperty('opacity');
         let scale = 1;

@@ -71,6 +71,7 @@
       <div
         class="scrolling-cards align-content"
         data-scrolling-cards
+        data-stack-effect="{{ section.settings.stack_effect | default: 'fade' }}"
         data-sticky-mobile="{{ section.settings.enable_sticky_mobile }}"
       >
         {% capture scrolling_cards_header_content %}{% content_for 'block', type: 'header', id: 'header' %}{% endcapture %}
@@ -197,6 +198,22 @@
       "visible_if": "{{ section.settings.section_width == 'custom' }}"
     },
     {
+      "type": "select",
+      "id": "stack_effect",
+      "label": "Stack transition",
+      "options": [
+        {
+          "value": "scale",
+          "label": "Scale"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        }
+      ],
+      "default": "fade"
+    },
+    {
       "type": "checkbox",
       "id": "enable_sticky_mobile",
       "label": "Enable sticky on mobile",
@@ -304,7 +321,8 @@
         "padding_bottom": 96,
         "customize_mobile_padding": true,
         "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
+        "padding_bottom_mobile": 56,
+        "stack_effect": "fade"
       },
       "blocks": [
         {
