@@ -5,7 +5,7 @@
   the BEM class for the selected status or configured badge.
 
   @param {string} text - Badge label
-  @param {string} [tone] - sale, sold-out or manual
+  @param {string} [tone] - sale, sold-out, manual, tag or tag-secondary
 
   @example
   {% render 'badge', text: 'Sale', tone: 'sale' %}
@@ -13,7 +13,7 @@
 
 {% liquid
   assign badge_tone = tone | default: 'sale'
-  unless badge_tone == 'sale' or badge_tone == 'sold-out' or badge_tone == 'manual'
+  unless badge_tone == 'sale' or badge_tone == 'sold-out' or badge_tone == 'manual' or badge_tone == 'tag' or badge_tone == 'tag-secondary'
     assign badge_tone = 'sale'
   endunless
   assign badge_class = 'product-badge product-badge--' | append: badge_tone
