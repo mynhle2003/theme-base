@@ -196,3 +196,13 @@ Ngày 2026-10-13, revision 1. Nguồn `arche-theme`, branch `theme/arche-theme`,
 - QA nguồn trên preview Arche: desktop Center/Right và mobile Right/Center đều cho computed text-align đúng ở Header và Heading child. Configuration QA tạm thời đã khôi phục.
 - Khi được yêu cầu update Essen: tái hiện trên section của Essen, với Header Fill/Inherit bật; nếu vẫn lỗi, chuyển đúng fallback này theo token của đích. Test Left/Center/Right ở cả hai viewport, tắt Inherit và kiểm tra alignment riêng, rồi save/reload trong editor. Nếu upstream đã sửa, ghi skipped cùng bằng chứng. Không copy toàn file/preset/content Arche.
 - Dependency: parent alignment token hiện có. Không phụ thuộc Blog posts hoặc custom layout của Arche. QA Theme Editor save/reload ở đích còn pending.
+
+
+## ARCHE-ESSEN-SIZE-GUIDE-001 — Size guide dùng Button Tertiary
+
+Ngày 2026-10-13, revision 1. Nguồn Arche `theme/arche-theme`; Essen pending, chưa áp dụng.
+
+- Shared `snippets/variant-picker.liquid` dùng `btn btn-tertiary` và `btn__label`/`btn__text` cho Size guide, gồm Featured product, main product và các overlay dùng picker. Giữ aria-controls/expanded và runtime mở guide.
+- Xóa toàn bộ CSS riêng của trigger trong `assets/critical.css`: không override font, màu, hover, underline, padding hoặc alignment. Theme Settings Button Tertiary sở hữu style và underline.
+- Trước update Essen, kiểm tra trigger còn hard-code/custom chặn Tertiary hay không; chỉ chuyển patch nhỏ nếu gap còn tồn tại. Không copy preset/layout. QA màu/hover, font/case, bật/tắt underline và offset, mở/đóng guide, desktop/mobile và Theme Editor save/reload.
+- QA nguồn: full Theme Check và diff check trước commit; storefront/Theme Editor trực tiếp còn pending.

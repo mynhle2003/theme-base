@@ -1784,3 +1784,8 @@ QA: preview source confirms desktop images 448×336, content Group max-width 770
 
 
 Final Theme Check: 0 errors / 12 existing warnings outside the changed files. git diff --check PASS.
+
+
+## Size guide follows Button Tertiary — 2026-10-13
+
+`snippets/variant-picker.liquid` uses shared `btn btn-tertiary` and label/text markup. Removed all size-guide trigger CSS from `assets/critical.css`; global button typography, colors, hover and underline settings now own presentation. Existing guide ARIA/runtime remains. Preserve this foundation binding when merging upstream. Transfer: ARCHE-ESSEN-SIZE-GUIDE-001, Essen pending. Full Theme Check/diff check required before commit; live editor QA pending.
