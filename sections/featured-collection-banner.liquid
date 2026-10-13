@@ -237,80 +237,80 @@
     }
   ],
   "presets": [
-  {
-    "name": "Featured collection: Banner",
-    "category": "t:general.collection",
-    "settings": {
-      "section_width": "full_width",
-      "banner_position": "before",
-      "gap_desktop": 40,
-      "gap_mobile": 36,
-      "color_scheme": "scheme-1",
-      "padding_top": 0,
-      "padding_bottom": 96,
-      "customize_mobile_padding": true,
-      "padding_top_mobile": 0,
-      "padding_bottom_mobile": 56
-    },
-    "blocks": [
-      {
-        "type": "header",
-        "settings": {
-          "width": "fill",
-          "alignment": "left",
-          "gap_desktop": 8,
-          "gap_mobile": 8
-        },
-        "blocks": [
-          {
-            "type": "heading",
-            "settings": {
-              "text": "<p>New release</p>",
-              "heading_size": "lg",
-              "html_tag": "h2",
-              "width": "fill",
-              "animation_type": "none",
-              "animation_delay": 0
+    {
+      "name": "Featured collection: Banner",
+      "category": "t:general.collection",
+      "settings": {
+        "section_width": "full_width",
+        "banner_position": "before",
+        "gap_desktop": 40,
+        "gap_mobile": 36,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56
+      },
+      "blocks": [
+        {
+          "type": "header",
+          "settings": {
+            "width": "fill",
+            "alignment": "left",
+            "gap_desktop": 8,
+            "gap_mobile": 8
+          },
+          "blocks": [
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>New release</p>",
+                "heading_size": "lg",
+                "html_tag": "h2",
+                "width": "fill",
+                "animation_type": "slide-bottom",
+                "animation_delay": 50
+              }
             }
-          }
-        ]
-      },
-      {
-        "type": "banner",
-        "settings": {
-          "show_overlay": false,
-          "image_ratio_desktop": "square",
-          "image_ratio_mobile": "square",
-          "color_scheme": "scheme-1",
-          "image": "shopify://shop_images/arche-new-release-banner.avif"
-        }
-      },
-      {
-        "type": "product-list-banner",
-        "settings": {
-          "max_products": 6,
-          "columns_mobile": "2",
-          "enable_swipe_mobile": false,
-          "gap_horizontal": 24,
-          "gap_vertical": 32,
-          "gap_horizontal_mobile": 12,
-          "gap_vertical_mobile": 24,
-          "collection": "new-release-arche"
+          ]
         },
-        "blocks": [
-          {
-            "type": "product-card",
-            "settings": {
-              "color_type": "inherit",
-              "color_scheme": "scheme-1"
-            },
-            "id": "product-card",
-            "static": true
+        {
+          "type": "banner",
+          "settings": {
+            "show_overlay": false,
+            "image_ratio_desktop": "square",
+            "image_ratio_mobile": "square",
+            "color_scheme": "scheme-1",
+            "image": "shopify://shop_images/arche-new-release-banner.avif"
           }
-        ]
-      }
-    ]
-  }
-]
+        },
+        {
+          "type": "product-list-banner",
+          "settings": {
+            "max_products": 6,
+            "columns_mobile": "2",
+            "enable_swipe_mobile": false,
+            "gap_horizontal": 24,
+            "gap_vertical": 32,
+            "gap_horizontal_mobile": 12,
+            "gap_vertical_mobile": 24,
+            "collection": "new-release-arche"
+          },
+          "blocks": [
+            {
+              "type": "product-card",
+              "settings": {
+                "color_type": "inherit",
+                "color_scheme": "scheme-1"
+              },
+              "id": "product-card",
+              "static": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}
