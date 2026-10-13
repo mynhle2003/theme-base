@@ -819,6 +819,10 @@
 }
 @media (max-width: 767.98px) {
   .product-callout__sheet .product-callout__product-card-action.btn { min-height: 44px; }
+
+  .product-callout__sheet .product-callout__sheet-content {
+    padding-bottom: calc(max(24px, var(--overlay-inset)) + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 .product-callout__popover-pointer { color: var(--background-color); }
