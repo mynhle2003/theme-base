@@ -510,6 +510,7 @@ input[type='reset'] {
 }
 
 :where(
+  .form__control.form__control--input:not(.form__control--checkbox):not(.form__control--radio):not([type='checkbox']):not([type='radio']):not([type='hidden']),
   .form__control:not(.form__control--checkbox):not(.form__control--radio):not([type='checkbox']):not([type='radio']):not([type='hidden']),
   input:not([type='checkbox']):not([type='radio']):not([type='hidden']):not(.form__control),
   textarea:not(.form__control),
