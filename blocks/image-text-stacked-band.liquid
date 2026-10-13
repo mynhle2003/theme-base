@@ -31,90 +31,67 @@
     render 'heading-size-token', size: band_heading_size_mobile, fallback: 'xl', html_tag: band_heading_tag
   endcapture
   assign band_heading_size_mobile = band_heading_size_mobile | strip
+  assign band_container = 'page-width'
+  if section.settings.section_width == 'full_width'
+    assign band_container = 'full-width'
+  endif
 %}
 
 <div id="images-with-text-scroll-{{ block.id }}" class="images-with-text-scroll__item" data-stacked-band {{ block.shopify_attributes }}>
-  {% if band_image != blank %}
-    {{ band_image | image_url: width: 1600 | image_tag: widths: '210, 420, 440, 575, 630, 880, 1200, 1600', sizes: '(max-width: 699px) 210px, (max-width: 999px) 440px, 575px', alt: band_image_alt, class: 'images-with-text-scroll__image' }}
-  {% else %}
-    {{ 'lifestyle-1' | placeholder_svg_tag: 'images-with-text-scroll__image placeholder-image' }}
-  {% endif %}
-
-  <div
-    class="images-with-text-scroll__text"
-    data-stacked-band-content
-    style="--images-with-text-scroll-gap: {{ block.settings.gap_desktop | default: 16 }}px; --images-with-text-scroll-gap-mobile: {{ block.settings.gap_mobile | default: 12 }}px; --images-with-text-scroll-heading-size-mobile: var(--font-heading-{{ band_heading_size_mobile }}); --images-with-text-scroll-text-size-mobile: var(--font-body-{{ band_text_size_mobile }});{% if section.settings.heading_color != blank %}--images-with-text-scroll-heading-color: {{ section.settings.heading_color | escape }};{% endif %}{% if section.settings.text_color != blank %}--images-with-text-scroll-text-color: {{ section.settings.text_color | escape }};{% endif %}"
-  >
-    {% if block.settings.tag != blank %}
-      <div class="images-with-text-scroll__tag body-{{ band_text_size }}">{{ block.settings.tag }}</div>
-    {% endif %}
-
-    {% if block.settings.heading != blank %}
-      <{{ band_heading_tag }} class="images-with-text-scroll__heading heading-{{ band_heading_size }}">{{ block.settings.heading | strip_html }}</{{ band_heading_tag }}>
-    {% endif %}
-
-    {% if block.settings.text != blank %}
-      <div class="images-with-text-scroll__description body-{{ band_text_size }}">{{ block.settings.text }}</div>
-    {% endif %}
-
-    {% if block.settings.button_label != blank %}
-      {% render 'theme-button',
-        label: block.settings.button_label,
-        url: block.settings.button_link,
-        open_in_new_tab: section.settings.button_open_in_new_tab,
-        variant: band_button_style,
-        icon: band_button_icon,
-        icon_position: 'after',
-        icon_size: 'inherit'
-      %}
+  <div class="images-with-text-scroll__layout container {{ band_container }}" data-stacked-band-layout>
+    <div class="images-with-text-scroll__text" data-stacked-band-content style="--images-with-text-scroll-gap: {{ block.settings.gap_desktop }}px; --images-with-text-scroll-gap-mobile: {{ block.settings.gap_mobile }}px; --band-heading-mobile-size: var(--font-heading-{{ band_heading_size_mobile }}); --band-heading-mobile-leading: var(--font-heading-{{ band_heading_size_mobile }}-line-height); --band-heading-mobile-tracking: var(--font-heading-{{ band_heading_size_mobile }}-letter-spacing); --band-heading-mobile-case: var(--font-heading-{{ band_heading_size_mobile }}-text-transform); --band-text-mobile-size: var(--font-body-{{ band_text_size_mobile }});{% if section.settings.heading_color != blank %}--images-with-text-scroll-heading-color: {{ section.settings.heading_color | escape }};{% endif %}{% if section.settings.text_color != blank %}--images-with-text-scroll-text-color: {{ section.settings.text_color | escape }};{% endif %}">
+      {% if block.settings.tag != blank %}
+        <div class="images-with-text-scroll__tag body-{{ band_text_size }}">{{ block.settings.tag }}</div>
+      {% endif %}
+      {% if block.settings.heading != blank %}
+        <{{ band_heading_tag }} class="images-with-text-scroll__heading heading-{{ band_heading_size }}">{{ block.settings.heading | strip_html }}</{{ band_heading_tag }}>
+      {% endif %}
+      {% if block.settings.text != blank %}
+        <div class="images-with-text-scroll__description body-{{ band_text_size }}">{{ block.settings.text }}</div>
+      {% endif %}
+      {% if block.settings.button_label != blank %}
+        {% render 'theme-button',
+          label: block.settings.button_label,
+          url: block.settings.button_link,
+          open_in_new_tab: section.settings.button_open_in_new_tab,
+          variant: band_button_style,
+          icon: band_button_icon,
+          icon_position: 'after',
+          icon_size: 'inherit'
+        %}
+      {% endif %}
+    </div>
+    {% if band_image != blank %}
+      {{ band_image | image_url: width: 2000 | image_tag: widths: '343, 480, 640, 768, 1000, 1536, 2000', sizes: '(max-width: 1149px) calc(100vw - 32px), (max-width: 1695px) calc((100vw - 160px) / 2), 768px', alt: band_image_alt, class: 'images-with-text-scroll__image' }}
+    {% else %}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'images-with-text-scroll__image placeholder-image' }}
     {% endif %}
   </div>
 </div>
 
 {% stylesheet %}
   .images-with-text-scroll__item {
-    display: contents;
-  }
-
-  .images-with-text-scroll__item:not(:first-child) > .images-with-text-scroll__image {
-    opacity: 0;
+    display: block;
+    min-width: 0;
   }
 
   .images-with-text-scroll__image {
-    grid-area: 1 / 1;
-    align-self: center;
-    width: var(--image-width, min(56vw, 27.5rem));
-    max-width: var(--images-with-text-scroll-image-max-width, 100%);
-    height: var(--image-height, auto);
-    object-fit: contain;
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
     object-position: center;
-    position: sticky;
-    inset-block-start: calc(var(--content-padding, 0px) + var(--sticky-area-height, 0px));
-    opacity: 0;
-    transition: opacity 300ms ease;
-  }
-
-  .images-with-text-scroll__item.is-selected > .images-with-text-scroll__image {
-    opacity: 1;
   }
 
   .images-with-text-scroll__text {
-    grid-area: auto / 2;
-    align-self: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: var(--images-with-text-scroll-gap, 16px);
-    width: 100%;
+    align-items: flex-start;
+    gap: var(--images-with-text-scroll-gap, 32px);
     min-width: 0;
-    max-width: 375px;
-    margin-inline: auto;
-    text-align: center;
-    color: var(--images-with-text-scroll-text-color, inherit);
-  }
-
-  .images-with-text-scroll__tag,
-  .images-with-text-scroll__description {
+    width: 100%;
+    text-align: left;
     color: var(--images-with-text-scroll-text-color, inherit);
   }
 
@@ -129,38 +106,21 @@
     margin: 0;
   }
 
-  @media (max-width: 999px) {
+  @media (max-width: 1149.98px) {
+    .images-with-text-scroll__text {
+      gap: var(--images-with-text-scroll-gap-mobile, 24px);
+    }
+
     .images-with-text-scroll__heading {
-      font-size: var(--images-with-text-scroll-heading-size-mobile, inherit);
+      font-size: var(--band-heading-mobile-size);
+      line-height: var(--band-heading-mobile-leading);
+      letter-spacing: var(--band-heading-mobile-tracking);
+      text-transform: var(--band-heading-mobile-case);
     }
 
     .images-with-text-scroll__tag,
     .images-with-text-scroll__description {
-      font-size: var(--images-with-text-scroll-text-size-mobile, inherit);
-    }
-
-    .images-with-text-scroll__image {
-      position: relative;
-      inset-block-start: auto;
-      justify-self: center;
-      width: var(--image-width, min(100%, 27.5rem));
-      max-width: var(--images-with-text-scroll-mobile-image-max-width, 100%);
-      height: auto;
-      aspect-ratio: var(--images-with-text-scroll-mobile-image-ratio, var(--images-with-text-scroll-master-image-ratio, 1));
-      opacity: 1 !important;
-    }
-
-    .images-with-text-scroll__text {
-      grid-area: auto;
-      min-width: 0;
-      gap: var(--images-with-text-scroll-gap-mobile, var(--images-with-text-scroll-gap, 16px));
-      padding-block: 2rem;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .images-with-text-scroll__image {
-      transition: none;
+      font-size: var(--band-text-mobile-size);
     }
   }
 {% endstylesheet %}
