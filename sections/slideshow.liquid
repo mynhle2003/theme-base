@@ -153,6 +153,7 @@
     --swiper-pagination-bullet-active-hit-width: 48px;
     --swiper-pagination-bullet-active-width: 36px;
     --swiper-pagination-bullet-gap: 0px;
+    --swiper-pagination-bullet-border-radius: 5px;
     position: absolute;
     inset-block: auto 40px;
     inset-inline-start: var(--swiper-pagination-start, 0);
@@ -183,7 +184,7 @@
     pointer-events: auto;
   }
   .slideshow__bullet-controls .swiper-pagination-bullet { cursor: pointer; }
-  .slideshow .slideshow__bullet-controls .swiper-pagination-bullet::before { background: #666666; }
+  .slideshow .slideshow__bullet-controls.swiper > .slideshow__pagination[data-pagination-type='bullets'] .swiper-pagination-bullet::before { background: var(--swiper-pagination-bullet-inactive-color); }
   .slideshow__bullet-arrow { position: relative; display: grid; place-items: center; flex: 0 0 24px; width: 24px; height: 24px; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: inherit; cursor: pointer; pointer-events: auto; touch-action: manipulation; }
   .slideshow__bullet-arrow::before { content: ''; position: absolute; inset: -4px; }
   .slideshow__bullet-arrow svg { display: block; }
@@ -305,6 +306,25 @@
     .slideshow__pagination[data-autoplay-clock] .slideshow__pagination-number[aria-current='true'] circle:last-child,
     .slideshow__pagination[data-autoplay-clock] .slideshow__pagination-segment--active .slideshow__pagination-segment-fill { animation: none; }
     .slideshow__pagination[data-autoplay-clock] .slideshow__pagination-segment--active .slideshow__pagination-segment-fill { transform: scaleX(1); }
+  }
+
+  /* Reveal a rounded fill rather than scaling its corner radius. */
+  .slideshow .slideshow__bullet-controls.swiper > .slideshow__pagination[data-autoplay-clock][data-pagination-type='bullets'] .swiper-pagination-bullet-active::after {
+    transform: translate(-50%, -50%);
+    will-change: clip-path;
+    animation-name: slideshow-clock-bullet-rounded;
+  }
+  .slideshow .slideshow__swiper.swiper-rtl .slideshow__bullet-controls.swiper > .slideshow__pagination[data-autoplay-clock][data-pagination-type='bullets'] .swiper-pagination-bullet-active::after { animation-name: slideshow-clock-bullet-rounded-rtl; }
+  @keyframes slideshow-clock-bullet-rounded {
+    from { clip-path: inset(0 100% 0 0 round var(--swiper-pagination-bullet-border-radius)); }
+    to { clip-path: inset(0 0 0 0 round var(--swiper-pagination-bullet-border-radius)); }
+  }
+  @keyframes slideshow-clock-bullet-rounded-rtl {
+    from { clip-path: inset(0 0 0 100% round var(--swiper-pagination-bullet-border-radius)); }
+    to { clip-path: inset(0 0 0 0 round var(--swiper-pagination-bullet-border-radius)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .slideshow .slideshow__bullet-controls.swiper > .slideshow__pagination[data-autoplay-clock][data-pagination-type='bullets'] .swiper-pagination-bullet-active::after { animation: none; clip-path: inset(0 round var(--swiper-pagination-bullet-border-radius)); }
   }
 {% endstylesheet %}
 
