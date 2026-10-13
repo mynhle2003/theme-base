@@ -12,6 +12,11 @@
   assign hero_content_scheme = hero_content_scheme | default: 'scheme-1' | handleize
 
   assign hero_width = section.settings.width | default: 'full'
+  assign hero_no_padding = false
+  if hero_width == 'full_width_no_padding'
+    assign hero_no_padding = true
+    assign hero_width = 'full'
+  endif
   unless hero_width == 'page' or hero_width == 'full'
     assign hero_width = 'full'
   endunless
@@ -96,7 +101,7 @@
 {% endcapture %}
 
 <div
-  class="hero hero--width-{{ hero_width }} hero--{{ hero_layout }} hero--content-{{ hero_content_width }} hero--content-position-{{ hero_desktop_content_position }} hero--desktop-{{ hero_desktop_height }} hero--mobile-{{ hero_mobile_height }}{% if hero_width == 'page' %} container page-width section-spacing color-scheme section-color-scope {{ hero_section_scheme }}{% endif %}"
+  class="hero hero--width-{{ hero_width }}{% if hero_no_padding %} hero--no-inline-padding{% endif %} hero--{{ hero_layout }} hero--content-{{ hero_content_width }} hero--content-position-{{ hero_desktop_content_position }} hero--desktop-{{ hero_desktop_height }} hero--mobile-{{ hero_mobile_height }}{% if hero_width == 'page' %} container page-width section-spacing color-scheme section-color-scope {{ hero_section_scheme }}{% endif %}"
   {% unless hero_parallax_effect == 'none' %}data-hero-parallax="{{ hero_parallax_effect }}"{% endunless %}
   {% if hero_style != blank %}style="{{ hero_style | strip }}"{% endif %}
 >
@@ -215,6 +220,10 @@
         {
           "value": "full",
           "label": "t:options.hero_width.full"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "t:options.section_width.full_width_no_padding"
         }
       ],
       "default": "full"
@@ -665,7 +674,7 @@
       "name": "Hero",
       "category": "t:general.banners",
       "settings": {
-        "width": "full",
+        "width": "full_width_no_padding",
         "layout": "classic",
         "media_type": "image",
         "desktop_height": "medium",
