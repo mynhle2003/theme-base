@@ -73,7 +73,11 @@
         ? clamp((stickyTop + activeCardHeight - nextCardTop) / activeCardHeight)
         : 0;
 
-      if (root.dataset.stackEffect === 'fade') {
+      const stackEffect = root.dataset.stackEffect
+        || cards.find((card) => card.dataset.stackTransition)?.dataset.stackTransition
+        || 'scale';
+
+      if (stackEffect === 'fade') {
         cards.forEach((card, index) => {
           card.style.removeProperty('transform');
           if (index < activeIndex) {
