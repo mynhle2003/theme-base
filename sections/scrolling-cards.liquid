@@ -41,11 +41,11 @@
     assign scrolling_cards_padding_bottom_mobile = 50
   endif
 
-  assign scrolling_cards_scheme = section.settings.color_scheme | default: 'scheme-1'
+  assign scrolling_cards_scheme = section.settings.color_scheme
   if section.settings.color_scheme.id != blank
     assign scrolling_cards_scheme = section.settings.color_scheme.id
   endif
-  assign scrolling_cards_scheme = scrolling_cards_scheme | default: 'scheme-1' | handleize
+  assign scrolling_cards_scheme = scrolling_cards_scheme | handleize
 %}
 
 {% capture scrolling_cards_style %}
@@ -68,7 +68,7 @@
 
 <div class="section-content-scope scrolling-cards-section scrolling-cards-section--{{ scrolling_cards_section_width }}">
   <div
-    class="section-spacing scrolling-cards-section__spacing color-scheme section-color-scope {{ scrolling_cards_scheme }}"
+    class="section-spacing scrolling-cards-section__spacing{% if scrolling_cards_scheme != blank %} color-scheme section-color-scope {{ scrolling_cards_scheme }}{% endif %}"
     style="{{ scrolling_cards_style | strip }}"
   >
     <div class="container {{ scrolling_cards_container_width }} scrolling-cards-section__container">
