@@ -104,10 +104,6 @@
   endif
 
   assign scrolling_card_color_type = block.settings.color_type | default: 'color_scheme'
-  assign scrolling_card_stack_transition = block.settings.stack_transition | default: 'scale'
-  unless scrolling_card_stack_transition == 'scale' or scrolling_card_stack_transition == 'fade'
-    assign scrolling_card_stack_transition = 'scale'
-  endunless
   assign scrolling_card_scheme = block.settings.color_scheme | default: 'scheme-1'
   if block.settings.color_scheme.id != blank
     assign scrolling_card_scheme = block.settings.color_scheme.id
@@ -176,7 +172,6 @@
 <article
   class="scrolling-card scrolling-card--{{ scrolling_card_direction }} scrolling-card--position-{{ scrolling_card_position }} scrolling-card--align-{{ scrolling_card_alignment }} scrolling-card--radius-{{ scrolling_card_radius_setting }} scrolling-card--shadow-{{ scrolling_card_shadow }}{% if block.settings.vertical_on_mobile and scrolling_card_direction == 'horizontal' %} scrolling-card--vertical-mobile{% endif %}{% if scrolling_card_has_background_media %} scrolling-card--has-background-media{% endif %}{% if block.settings.show_overlay %} scrolling-card--has-overlay{% endif %}{% if scrolling_card_color_type == 'color_scheme' %} color-scheme section-color-scope {{ scrolling_card_scheme }}{% endif %}"
   style="{{ scrolling_card_style | strip }}"
-  data-stack-transition="{{ scrolling_card_stack_transition }}"
   {{ block.shopify_attributes }}
 >
   {% if scrolling_card_has_background_media %}
@@ -572,22 +567,6 @@
     },
     {
       "type": "select",
-      "id": "stack_transition",
-      "label": "Stack transition",
-      "options": [
-        {
-          "value": "scale",
-          "label": "Scale"
-        },
-        {
-          "value": "fade",
-          "label": "Fade"
-        }
-      ],
-      "default": "scale"
-    },
-    {
-      "type": "select",
       "id": "color_type",
       "label": "t:labels.type",
       "options": [
@@ -709,8 +688,7 @@
       "name": "Card",
       "settings": {
         "color_type": "inherit",
-        "color_scheme": "scheme-1",
-        "stack_transition": "scale"
+        "color_scheme": "scheme-1"
       },
       "blocks": [
         {
