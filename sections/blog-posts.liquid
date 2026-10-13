@@ -488,7 +488,8 @@
                     "limit_width": true,
                     "max_width": 770,
                     "width_mobile": "fill",
-                    "limit_width_mobile": false
+                    "limit_width_mobile": false,
+                    "backdrop_blur": 0
                   },
                   "blocks": [
                     {
@@ -504,7 +505,9 @@
                         "padding_top": 0,
                         "padding_bottom": 0,
                         "padding_left": 0,
-                        "padding_right": 0
+                        "padding_right": 0,
+                        "backdrop_blur": 0,
+                        "width_mobile": "fill"
                       },
                       "blocks": [
                         {
@@ -520,7 +523,9 @@
                             "padding_top": 0,
                             "padding_bottom": 0,
                             "padding_left": 0,
-                            "padding_right": 0
+                            "padding_right": 0,
+                            "backdrop_blur": 0,
+                            "width_mobile": "fill"
                           },
                           "blocks": [
                             {
@@ -539,37 +544,52 @@
                                 "padding_right": 0,
                                 "horizontal_alignment": "left",
                                 "position_horizontal": "center",
-                                "customize_mobile_alignment": false
+                                "customize_mobile_alignment": false,
+                                "backdrop_blur": 0,
+                                "width_mobile": "fit"
                               },
                               "blocks": [
                                 {
-                                  "type": "blog-card-meta",
+                                  "type": "group",
                                   "settings": {
-                                    "show_date": true,
-                                    "show_author": false,
-                                    "show_comment_count": false,
-                                    "details_order": "date_author_comment",
-                                    "author_display_type": "text",
-                                    "author_prefix": "by",
-                                    "author_icon": "user",
-                                    "show_date_icon": false,
-                                    "date_icon": "calendar",
-                                    "date_format": "long",
-                                    "show_comment_icon": false,
-                                    "comment_icon": "comment",
-                                    "separator_icon": "none",
-                                    "size": "xs",
-                                    "text_color": "#999999",
-                                    "layout": "horizontal",
-                                    "gap": 12,
-                                    "icon_size": 18,
-                                    "icon_gap": 6,
-                                    "padding_top": 0,
-                                    "padding_bottom": 0,
-                                    "customize_mobile_padding": false,
-                                    "padding_top_mobile": 0,
-                                    "padding_bottom_mobile": 4
-                                  }
+                                    "direction": "vertical",
+                                    "width": "fit",
+                                    "width_mobile": "fit",
+                                    "gap_desktop": 0,
+                                    "gap_mobile": 0,
+                                    "backdrop_blur": 0
+                                  },
+                                  "blocks": [
+                                    {
+                                      "type": "blog-card-meta",
+                                      "settings": {
+                                        "show_date": true,
+                                        "show_author": false,
+                                        "show_comment_count": false,
+                                        "details_order": "date_author_comment",
+                                        "author_display_type": "text",
+                                        "author_prefix": "by",
+                                        "author_icon": "user",
+                                        "show_date_icon": false,
+                                        "date_icon": "calendar",
+                                        "date_format": "long",
+                                        "show_comment_icon": false,
+                                        "comment_icon": "comment",
+                                        "separator_icon": "none",
+                                        "size": "xs",
+                                        "text_color": "#999999",
+                                        "layout": "horizontal",
+                                        "gap": 12,
+                                        "icon_size": 18,
+                                        "icon_gap": 6,
+                                        "padding_top": 0,
+                                        "padding_bottom": 0,
+                                        "customize_mobile_padding": false,
+                                        "padding_top_mobile": 0,
+                                        "padding_bottom_mobile": 4
+                                      }
+                                    }
+                                  ]
                                 },
                                 {
                                   "type": "text",
@@ -583,21 +603,34 @@
                                   }
                                 },
                                 {
-                                  "type": "blog-card-tag",
+                                  "type": "group",
                                   "settings": {
-                                    "max_tag": 1,
-                                    "style": "text",
-                                    "text_case": "original",
-                                    "font": "body",
-                                    "font_size": "xs",
-                                    "letter_spacing": "normal",
-                                    "padding_top": 0,
-                                    "padding_bottom": 0,
-                                    "customize_mobile_padding": false,
-                                    "padding_top_mobile": 0,
-                                    "padding_bottom_mobile": 0,
-                                    "text_color": "#999999"
-                                  }
+                                    "direction": "vertical",
+                                    "width": "fit",
+                                    "width_mobile": "fit",
+                                    "gap_desktop": 0,
+                                    "gap_mobile": 0,
+                                    "backdrop_blur": 0
+                                  },
+                                  "blocks": [
+                                    {
+                                      "type": "blog-card-tag",
+                                      "settings": {
+                                        "max_tag": 1,
+                                        "style": "text",
+                                        "text_case": "original",
+                                        "font": "body",
+                                        "font_size": "xs",
+                                        "letter_spacing": "normal",
+                                        "padding_top": 0,
+                                        "padding_bottom": 0,
+                                        "customize_mobile_padding": false,
+                                        "padding_top_mobile": 0,
+                                        "padding_bottom_mobile": 0,
+                                        "text_color": "#999999"
+                                      }
+                                    }
+                                  ]
                                 }
                               ]
                             },

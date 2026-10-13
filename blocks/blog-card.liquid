@@ -288,7 +288,14 @@
     max-width: 100%;
   }
 
+  .blog-card__content > .size-style {
+    max-width: min(100%, var(--size-style-max-width, 100%));
+  }
+
   @media (max-width: 767.98px) {
+    .blog-card__content > .size-style {
+      max-width: min(100%, var(--size-style-max-width-mobile, var(--size-style-max-width, 100%)));
+    }
     .blog-card__content {
       gap: var(--blog-card-gap-mobile, var(--blog-card-gap, 8px));
       padding: var(--blog-card-padding-top-mobile, var(--blog-card-padding-top, 12px)) var(--blog-card-padding-right-mobile, var(--blog-card-padding-right, 0px)) var(--blog-card-padding-bottom-mobile, var(--blog-card-padding-bottom, 0px)) var(--blog-card-padding-left-mobile, var(--blog-card-padding-left, 0px));
