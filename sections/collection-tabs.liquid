@@ -203,6 +203,17 @@
     order: 3;
   }
 
+  /* Arche custom: the underline mode uses a rail on desktop and plain labels on mobile. */
+  .collection-tabs__layout[data-layout-direction='horizontal'] .tab-layout--underline .tab-layout__tab {
+    --link-underline-display: none;
+    color: color-mix(in srgb, var(--heading-color) 40%, transparent);
+  }
+
+  .collection-tabs__layout[data-layout-direction='horizontal'] .tab-layout--underline .tab-layout__tab:hover,
+  .collection-tabs__layout[data-layout-direction='horizontal'] .tab-layout--underline .tab-layout__tab[aria-selected='true'] {
+    color: var(--heading-color);
+  }
+
   @media (min-width: 768px) {
     .collection-tabs__layout[data-layout-direction='vertical'][data-controls-alignment='center'] > .collection-tabs__controls > .collection-tabs__controls-group > .block-header {
       --flex-align: center;
@@ -239,29 +250,31 @@
 
     .collection-tabs__layout[data-layout-direction='horizontal'] {
       display: grid;
-      grid-template-columns: minmax(220px, 0.3fr) minmax(0, 0.7fr);
-      grid-template-areas: 'header list';
+      /* Arche custom: let the tab labels determine the sidebar width. */
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-areas: 'header list' 'actions actions';
       column-gap: var(--collection-tabs-gap-desktop, 59px);
-      row-gap: 0;
+      row-gap: var(--collection-tabs-gap-desktop, 59px);
       align-items: start;
     }
 
     .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__controls {
-      grid-area: header;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: var(--collection-tabs-gap-desktop, 59px);
-      min-width: 0;
-      position: sticky;
-      inset-block-start: var(--header-height, 0px);
-      align-self: start;
+      display: contents;
     }
 
     .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__controls > .collection-tabs__controls-group {
+      grid-area: header;
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
       gap: var(--collection-tabs-gap-desktop, 59px);
+      min-width: 0;
+    }
+
+    .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__controls > .collection-tabs__actions {
+      grid-area: actions;
+      display: flex;
+      justify-content: center;
       min-width: 0;
     }
 
@@ -273,6 +286,23 @@
     .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__controls > .collection-tabs__actions > .collection-tabs-view-all {
       align-self: start;
       order: 2;
+    }
+
+    /* Arche custom: continuous left rail, with the active segment highlighted. */
+    .collection-tabs__layout[data-layout-direction='horizontal'] .tab-layout--underline .tab-layout__navigation {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 0;
+    }
+
+    .collection-tabs__layout[data-layout-direction='horizontal'] .tab-layout--underline .tab-layout__tab {
+      padding: 10px 12px;
+      border-inline-start: 2px solid var(--border-color);
+    }
+
+    .collection-tabs__layout[data-layout-direction='horizontal'] .tab-layout--underline .tab-layout__tab[aria-selected='true'] {
+      border-inline-start-color: var(--heading-color);
     }
 
     .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__list {
@@ -306,6 +336,21 @@
     .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__controls > .collection-tabs__controls-group > .tab-layout,
     .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__list {
       width: 100%;
+    }
+
+    .collection-tabs__layout[data-layout-direction='horizontal'] .tab-layout--underline .tab-layout__navigation {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: var(--collection-tabs-controls-alignment-mobile, center);
+      column-gap: 4px;
+      row-gap: 12px;
+    }
+
+    .collection-tabs__layout[data-layout-direction='horizontal'] .tab-layout--underline .tab-layout__tab {
+      padding-inline: 12px;
+      padding-block: 0;
+      border: 0;
     }
 
     .collection-tabs__spacing {

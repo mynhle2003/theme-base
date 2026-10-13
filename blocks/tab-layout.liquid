@@ -472,7 +472,7 @@
       const target = event.target instanceof Element ? event.target.closest('[data-collection-tab-trigger]') : null;
       if (!target || !scope.contains(target)) return;
 
-      const supportedKeys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
+      const supportedKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
       if (!supportedKeys.includes(event.key)) return;
 
       synchronizeEntries(state);
@@ -480,8 +480,8 @@
       if (currentIndex < 0) return;
 
       let nextIndex = currentIndex;
-      if (event.key === 'ArrowRight') nextIndex = (currentIndex + 1) % state.entries.length;
-      if (event.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + state.entries.length) % state.entries.length;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (currentIndex + 1) % state.entries.length;
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = (currentIndex - 1 + state.entries.length) % state.entries.length;
       if (event.key === 'Home') nextIndex = 0;
       if (event.key === 'End') nextIndex = state.entries.length - 1;
 
