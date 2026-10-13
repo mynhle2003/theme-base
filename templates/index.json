@@ -1128,8 +1128,25 @@
       }
     },
     "scrolling_cards_stack": {
-      "type": "scrolling-cards-stack",
+      "type": "scrolling-cards",
       "blocks": {
+        "header": {
+          "type": "header",
+          "static": true,
+          "settings": {
+            "width": "fit",
+            "alignment": "left",
+            "customize_mobile_alignment": true,
+            "alignment_mobile": "left",
+            "gap_desktop": 0,
+            "gap_mobile": 0,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0
+          },
+          "blocks": {}
+        },
         "card_1": {
           "type": "scrolling-card",
           "settings": {
@@ -1147,6 +1164,7 @@
             "show_overlay": false,
             "overlay_color": "#16070080",
             "backdrop_blur": 0,
+            "stack_transition": "fade",
             "color_type": "inherit",
             "color_scheme": "scheme-3",
             "padding_top": 0,
@@ -1276,6 +1294,7 @@
             "show_overlay": false,
             "overlay_color": "#16070080",
             "backdrop_blur": 0,
+            "stack_transition": "fade",
             "color_type": "inherit",
             "color_scheme": "scheme-3",
             "padding_top": 0,
@@ -1405,6 +1424,7 @@
             "show_overlay": false,
             "overlay_color": "#16070080",
             "backdrop_blur": 0,
+            "stack_transition": "fade",
             "color_type": "inherit",
             "color_scheme": "scheme-3",
             "padding_top": 0,
@@ -1526,10 +1546,9 @@
       "settings": {
         "section_width": "custom",
         "custom_width": 1600,
-        "stack_effect": "fade",
         "enable_sticky_mobile": true,
-        "gap_desktop": 96,
-        "gap_mobile": 68,
+        "gap_desktop": 0,
+        "gap_mobile": 0,
         "color_scheme": "scheme-3",
         "padding_top": 96,
         "padding_bottom": 96,
@@ -2437,7 +2456,8 @@
             "gap_mobile": 32,
             "width": "fill",
             "height": "fill",
-            "width_mobile": "fill"
+            "width_mobile": "fill",
+            "backdrop_blur": 0
           },
           "blocks": {
             "marquee": {
@@ -2829,7 +2849,7 @@
                 "image_link": "",
                 "open_in_new_tab": false,
                 "width_custom_desktop": 462,
-                "width_custom_mobile": 181.5,
+                "width_custom_mobile": 182,
                 "corner_radius": "square"
               }
             },
@@ -2841,7 +2861,7 @@
                 "image_link": "",
                 "open_in_new_tab": false,
                 "width_custom_desktop": 462,
-                "width_custom_mobile": 181.5,
+                "width_custom_mobile": 182,
                 "corner_radius": "square"
               }
             },
@@ -2853,7 +2873,7 @@
                 "image_link": "",
                 "open_in_new_tab": false,
                 "width_custom_desktop": 462,
-                "width_custom_mobile": 181.5,
+                "width_custom_mobile": 182,
                 "corner_radius": "square"
               }
             },
@@ -2865,7 +2885,7 @@
                 "image_link": "",
                 "open_in_new_tab": false,
                 "width_custom_desktop": 462,
-                "width_custom_mobile": 181.5,
+                "width_custom_mobile": 182,
                 "corner_radius": "square"
               }
             },
@@ -2877,7 +2897,7 @@
                 "image_link": "",
                 "open_in_new_tab": false,
                 "width_custom_desktop": 462,
-                "width_custom_mobile": 181.5,
+                "width_custom_mobile": 182,
                 "corner_radius": "square"
               }
             },
@@ -2889,7 +2909,7 @@
                 "image_link": "",
                 "open_in_new_tab": false,
                 "width_custom_desktop": 462,
-                "width_custom_mobile": 181.5,
+                "width_custom_mobile": 182,
                 "corner_radius": "square"
               }
             }
