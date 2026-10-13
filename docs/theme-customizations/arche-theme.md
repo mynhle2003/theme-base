@@ -1789,3 +1789,10 @@ Final Theme Check: 0 errors / 12 existing warnings outside the changed files. gi
 ## Size guide follows Button Tertiary — 2026-10-13
 
 `snippets/variant-picker.liquid` uses shared `btn btn-tertiary` and label/text markup. Removed all size-guide trigger CSS from `assets/critical.css`; global button typography, colors, hover and underline settings now own presentation. Existing guide ARIA/runtime remains. Preserve this foundation binding when merging upstream. Transfer: ARCHE-ESSEN-SIZE-GUIDE-001, Essen pending. Full Theme Check/diff check required before commit; live editor QA pending.
+
+
+## Hotspot mobile uses the shared overlay shell — 2026-10-13
+
+`snippets/product-callout-runtime.liquid` clones a shell rendered by `component-overlay`, then delegates focus, Escape/backdrop/close, drag dismissal, motion and lifecycle to `ThemeOverlay`. `assets/component-product-callout.css` removes the private dialog geometry, fixed 20px radius, backdrop, handle and close styling; shared overlay tokens now own these. Existing product content grid and desktop tooltip are retained. Destroy closes immediately and disposes the overlay controller on editor unload. Preserve shared shell/runtime reuse during base updates. Live storefront/editor QA pending.
+
+Validation for the shared hotspot shell: Chrome local fixture at 320/375/767px passes shared radius/handle, focus, scroll lock, Escape/backdrop/close, breakpoint dismissal and editor unload/reload with no runtime errors. 32 related overlay/product/picker tests pass. Full Theme Check: 0 errors / 12 existing warnings; diff check passes. This fixture does not verify a live Theme Editor save/reload.
