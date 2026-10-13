@@ -490,7 +490,7 @@
   }
 
   .product-callout__product-card-category,
-  .product-callout__product-card-action {
+  .product-callout__product-card-action:not(.btn) {
     font-size: var(--font-body-xs);
     letter-spacing: 0.12em;
     line-height: 1.2;
@@ -521,7 +521,7 @@
     font-size: var(--font-body-xs);
   }
 
-  .product-callout__product-card-action {
+  .product-callout__product-card-action:not(.btn) {
     margin-top: 0.45rem;
     color: currentColor;
     text-decoration: underline;
@@ -770,16 +770,35 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 44px;
     margin: 0;
-    padding: 8px;
-    border: 0;
-    background: var(--heading-color, #111);
-    color: var(--background-color, #fff);
-    font-size: 11px;
-    line-height: 1.4;
-    letter-spacing: 0;
+    max-width: 100%;
     text-align: center;
-    text-decoration: none;
   }
+}
+
+.hotspot-section .product-callout__product-card-action.btn { margin-top: 6px; }
+@media (max-width: 767.98px) {
+  .product-callout__sheet .product-callout__product-card {
+    grid-template-rows: 1fr auto auto 1fr;
+    justify-items: center;
+  }
+  .product-callout__sheet .product-callout__product-card-media,
+  .product-callout__sheet .product-callout__product-card-action {
+    grid-row: 1 / span 4;
+    align-self: center;
+  }
+  .product-callout__sheet .product-callout__product-card-title,
+  .product-callout__sheet .product-callout__product-card-price { justify-self: start; }
+  .product-callout__sheet .product-callout__product-card-action.btn {
+    margin: 0;
+    padding-inline: 8px;
+    font-size: var(--font-body-xs);
+  }
+  .product-callout__sheet .product-callout__product-card-action.btn-tertiary { padding: 0; }
+  .product-callout__sheet .product-callout__product-card:has(.product-callout__product-card-category) { grid-template-rows: 1fr auto auto auto 1fr; }
+  .product-callout__sheet .product-callout__product-card:has(.product-callout__product-card-category) .product-callout__product-card-media,
+  .product-callout__sheet .product-callout__product-card:has(.product-callout__product-card-category) .product-callout__product-card-action { grid-row: 1 / span 5; }
+  .product-callout__sheet .product-callout__product-card-category { grid-row: 2; justify-self: start; }
+  .product-callout__sheet .product-callout__product-card:has(.product-callout__product-card-category) .product-callout__product-card-title { grid-row: 3; }
+  .product-callout__sheet .product-callout__product-card:has(.product-callout__product-card-category) .product-callout__product-card-price { grid-row: 4; }
 }

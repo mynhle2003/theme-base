@@ -328,6 +328,18 @@
     const initialize = (callout) => {
       if (!callout || instances.has(callout)) return;
 
+      if (callout.closest('[data-hotspot-section]')) {
+        const variant = ['primary', 'secondary', 'tertiary'].includes(callout.dataset.productCalloutButtonStyle) ? callout.dataset.productCalloutButtonStyle : 'tertiary';
+        callout.querySelectorAll('.product-callout__product-card-action:not([aria-disabled="true"])').forEach((action) => {
+          action.classList.add('btn', `btn-${variant}`, `btn--${variant}`);
+          if (variant === 'tertiary') {
+            action.classList.add('link-underline');
+            action.setAttribute('data-underline', 'persistent');
+            action.setAttribute('data-underline-target', 'text');
+          }
+        });
+      }
+
       const controller = new AbortController();
       const state = {
         callout,
