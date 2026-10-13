@@ -11,8 +11,11 @@
 
   const isMobileStickyDisabled = (root) => mobileQuery.matches && root.dataset.stickyMobile !== 'true';
 
-  const resetTransforms = (cards) => {
-    cards.forEach((card) => card.style.removeProperty('transform'));
+  const resetEffects = (cards) => {
+    cards.forEach((card) => {
+      card.style.removeProperty('transform');
+      card.style.removeProperty('opacity');
+    });
   };
 
   const destroy = (root) => {
@@ -24,7 +27,7 @@
     mobileQuery.removeEventListener('change', state.schedule);
     reducedMotionQuery.removeEventListener('change', state.schedule);
     if (state.frame) window.cancelAnimationFrame(state.frame);
-    resetTransforms(state.cards);
+    resetEffects(state.cards);
     states.delete(root);
   };
 
@@ -45,7 +48,7 @@
       state.frame = 0;
 
       if (isMobileStickyDisabled(root) || reducedMotionQuery.matches) {
-        resetTransforms(cards);
+        resetEffects(cards);
         return;
       }
 
@@ -53,7 +56,7 @@
       const stickyTop = Number.parseFloat(window.getComputedStyle(cards[0]).top) || 0;
       const sectionIsOutsideViewport = rootBounds.bottom <= stickyTop || rootBounds.top >= window.innerHeight;
       if (sectionIsOutsideViewport) {
-        resetTransforms(cards);
+        resetEffects(cards);
         return;
       }
 
@@ -70,7 +73,24 @@
         ? clamp((stickyTop + activeCardHeight - nextCardTop) / activeCardHeight)
         : 0;
 
+      if (root.dataset.stackEffect === 'fade') {
+        cards.forEach((card, index) => {
+          card.style.removeProperty('transform');
+          if (index < activeIndex) {
+            card.style.opacity = '0';
+          } else if (index === activeIndex) {
+            card.style.opacity = String(1 - transitionProgress);
+          } else if (index === activeIndex + 1 && nextCard) {
+            card.style.opacity = String(transitionProgress);
+          } else {
+            card.style.removeProperty('opacity');
+          }
+        });
+        return;
+      }
+
       cards.forEach((card, index) => {
+        card.style.removeProperty('opacity');
         let scale = 1;
         if (index < activeIndex) {
           scale = 1 - Math.min((activeIndex - index) * 0.1, 0.3);
