@@ -226,6 +226,27 @@
   clip-path: inset(0 0 0 calc((1 - clamp(0, var(--rounded-progress-value), 1)) * 100%) round var(--rounded-progress-radius, 1000px));
 }
 
+.swiper .swiper-pagination-progressbar {
+  --rounded-progress-radius: var(--swiper-pagination-progressbar-border-radius, 1000px);
+  border-radius: var(--rounded-progress-radius);
+}
+
+.swiper .swiper-pagination-progressbar .rounded-progress-fill {
+  border-radius: inherit;
+  transform: none;
+  transition-property: clip-path;
+}
+
+.swiper .swiper-pagination-progressbar .rounded-progress-fill--vertical {
+  clip-path: inset(0 0 calc((1 - clamp(0, var(--rounded-progress-value), 1)) * 100%) 0 round var(--rounded-progress-radius));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swiper .swiper-pagination-progressbar .rounded-progress-fill {
+    transition: none;
+  }
+}
+
 .swiper-pagination[data-autoplay-clock] {
   --rounded-progress-play-state: paused;
 }
