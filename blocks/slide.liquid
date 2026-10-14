@@ -92,7 +92,7 @@
   endif
 
   assign group_radius = block.settings.corner_radius | default: 'square'
-  unless group_radius == 'square' or group_radius == 'rounded' or group_radius == 'inherit' or group_radius == 'custom' or group_radius == 'pill' or group_radius == 'slightly_rounded'
+  unless group_radius == 'square' or group_radius == 'rounded' or group_radius == 'inherit' or group_radius == 'custom'
     assign group_radius = 'square'
   endunless
 
@@ -460,14 +460,6 @@
         {
           "value": "custom",
           "label": "t:options.slide_radius.custom"
-        },
-        {
-          "value": "slightly_rounded",
-          "label": "Slightly rounded"
-        },
-        {
-          "value": "pill",
-          "label": "Pill"
         }
       ],
       "default": "square"
