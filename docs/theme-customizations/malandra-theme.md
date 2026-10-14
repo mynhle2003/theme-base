@@ -1821,3 +1821,13 @@ templates/page.about-us.json
 - `blocks/tab-layout.liquid`: reuse base deferred-section request/cache and panel hydration; retain the current products until loading succeeds, preserve the last requested tab during observer updates, and abort stale requests on section unload.
 - Keep theme markup, schema, configured collections, presets, layout, navigation and animation unchanged. Preserve this loading contract in future base updates.
 - Validation: full Theme Check passes with zero errors; nine deferred-loading regression tests pass. Owner authorized committing and pushing this scoped fix. Tests stay local; existing theme customizations and unrelated work remain outside this commit.
+
+
+## Autoplay pagination clock parity — 2026-10-14
+
+- Owner requested all carousel Progress bar/Bullets to follow personal main. Source: `theme-base/main` (`c8fab8a5`).
+- `assets/slideshow.js`: use main’s single elapsed-time clock, including hover, focus, visibility, drag and reduced-motion pauses; read number-ring progress from the slideshow root.
+- `sections/slideshow.liquid`: remove the independent CSS animation clock; progress segments and bullets consume elapsed progress while preserving theme geometry, controls, schema and presets.
+- `assets/swiper-carousel.css`: rounded native/manual progress fills consume the existing shared autoplay clock in horizontal, RTL and vertical modes. Non-autoplay behavior remains unchanged.
+- Validation: 14 clock/lifecycle tests pass per theme; full Theme Check has zero errors (4–5 existing warnings). Browser QA fixtures load the actual theme JS/CSS and verify both pagination types on all four themes plus a mobile viewport. Arche storefront preview remains blocked by an unrelated icon-with-text preset upload error (`border_color`); full live Theme Editor QA was not completed.
+- Preserve these clock bindings in future base updates. Tests remain local. Owner authorized commit/push after a passing Theme Check.

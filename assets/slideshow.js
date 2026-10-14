@@ -313,19 +313,12 @@ const startAutoplay = (root, swiper, loop) => {
   let previous = null;
   let frame = 0;
   let touching = false;
-  let hovered = false;
-  let focused = false;
-  let inViewport = true;
-  const pagination = root.querySelector('[data-slideshow-pagination]');
-  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const controller = new AbortController();
-  const options = { signal: controller.signal };
-  const paint = (running = false) => {
-    // CSS owns the progress animation. Only change its playback state when
-    // pausing/resuming, rather than invalidating styles on every timer frame.
-    if (!pagination) return;
-    const state = running ? 'running' : 'paused';
-    if (pagination.dataset.autoplayClock !== state) pagination.dataset.autoplayClock = state;
+  const paint = () => {
+    const progress = Math.max(0, Math.min(1, elapsed / delay));
+    root.style.setProperty('--slideshow-autoplay-progress', String(progress));
+    root.querySelectorAll('[data-slideshow-pagination][data-pagination-type="numbers"] .slideshow__pagination-number').forEach((number) => {
+      number.querySelector('svg')?.style.setProperty('--percent', number.getAttribute('aria-current') === 'true' ? String(progress) : '0');
+    });
   };
   const reset = () => {
     // Moving from a clone to its original is still the same logical slide.
@@ -337,24 +330,16 @@ const startAutoplay = (root, swiper, loop) => {
   };
   const touchStart = () => { touching = true; previous = null; };
   const touchEnd = () => { touching = false; previous = null; };
-  const canTick = () => document.readyState === 'complete' && !document.hidden && inViewport && !motionQuery.matches;
-  const visibilityChange = () => {
-    previous = null;
-    if (!canTick()) {
-      window.clearTimeout(frame);
-      frame = 0;
-      paint(false);
-    } else if (!frame) frame = window.setTimeout(tick, 100);
-  };
-  const tick = (now = performance.now()) => {
-    frame = 0;
-    if (!canTick()) return;
-    const paused = (pauseOnHover && hovered) || focused || touching || swiper.isLocked || swiper.animating;
-    paint(!paused);
+  const visibilityChange = () => { previous = null; };
+  const tick = (now) => {
+    const paused = document.hidden || !isVisible(root) || reducedMotion() ||
+      (pauseOnHover && root.matches(':hover')) ||
+      Boolean(root.querySelector(':focus-visible')) || touching || swiper.isLocked || swiper.animating;
     if (paused) previous = null;
     else {
       if (previous !== null) elapsed = Math.min(delay, elapsed + now - previous);
       previous = now;
+      paint();
       if (elapsed >= delay) {
         elapsed = 0;
         previous = null;
@@ -362,37 +347,23 @@ const startAutoplay = (root, swiper, loop) => {
         paint();
       }
     }
-    // The progress runs independently in CSS; polling the slide timer at 10 Hz
-    // avoids keeping a JavaScript animation frame alive throughout page load.
-    frame = window.setTimeout(tick, Math.min(100, Math.max(1, delay - elapsed)));
+    frame = window.requestAnimationFrame(tick);
   };
-  // Keep slide timing and CSS progress paused together.
+  // The timer and both pagination styles share one clock, including pauses.
   swiper.on('activeIndexChange realIndexChange', reset);
   swiper.on('touchStart', touchStart);
   swiper.on('touchEnd', touchEnd);
-  document.addEventListener('visibilitychange', visibilityChange, options);
-  window.addEventListener('load', visibilityChange, options);
-  root.addEventListener('mouseenter', () => { hovered = true; previous = null; }, options);
-  root.addEventListener('mouseleave', () => { hovered = false; previous = null; }, options);
-  root.addEventListener('focusin', () => { focused = true; previous = null; }, options);
-  root.addEventListener('focusout', (event) => { focused = root.contains(event.relatedTarget); previous = null; }, options);
-  motionQuery.addEventListener('change', visibilityChange, options);
-  const viewportObserver = 'IntersectionObserver' in window ? new IntersectionObserver(([entry]) => {
-    inViewport = entry.isIntersecting;
-    visibilityChange();
-  }) : null;
-  viewportObserver?.observe(root);
+  document.addEventListener('visibilitychange', visibilityChange);
   paint();
-  visibilityChange();
+  frame = window.requestAnimationFrame(tick);
   return {
     destroy() {
-      window.clearTimeout(frame);
+      window.cancelAnimationFrame(frame);
       swiper.off('activeIndexChange realIndexChange', reset);
       swiper.off('touchStart', touchStart);
       swiper.off('touchEnd', touchEnd);
-      controller.abort();
-      viewportObserver?.disconnect();
-      if (pagination) delete pagination.dataset.autoplayClock;
+      document.removeEventListener('visibilitychange', visibilityChange);
+      root.style.removeProperty('--slideshow-autoplay-progress');
     },
   };
 };
