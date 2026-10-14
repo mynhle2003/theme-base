@@ -1807,3 +1807,11 @@ templates/page.about-us.json
 ```
 
 - Preview statistics before this log line: 8 files, 147 additions, 105 deletions.
+
+
+## Collection tabs deferred loading fix — 2026-10-14
+
+- Owner authorized applying this scoped fix to all themes. Source: `shopify-theme-base` via personal `theme-base/main` (`c8fab8a5`).
+- `blocks/tab-layout.liquid`: reuse base deferred-section request/cache and panel hydration; retain the current products until loading succeeds, preserve the last requested tab during observer updates, and abort stale requests on section unload.
+- Keep theme markup, schema, configured collections, presets, layout, navigation and animation unchanged. Preserve this loading contract in future base updates.
+- Validation: full Theme Check passes with zero errors; nine deferred-loading regression tests pass. Owner authorized committing and pushing this scoped fix. Tests stay local; existing theme customizations and unrelated work remain outside this commit.

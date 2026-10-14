@@ -366,11 +366,99 @@
     });
   };
 
+  const clearPendingTab = (state) => {
+    state.requestedTabId = null;
+    state.entries.forEach(({panel}) => {
+      if (panel.dataset.tabLoading !== 'true') return;
+      delete panel.dataset.tabLoading;
+      panel.removeAttribute('aria-busy');
+      panel.inert = false;
+    });
+  };
+
+  // Cache the response near the viewport without populating unselected panels.
+  const requestTabSection = (state) => {
+    if (state.tabSectionRequest) return state.tabSectionRequest;
+    const pending = state.entries.find(entry => entry.panel.hasAttribute('data-tab-deferred'));
+    if (!pending) return Promise.resolve(null);
+    const url = new URL(window.location.href);
+    url.searchParams.delete('sections');
+    url.searchParams.set('section_id', pending.panel.dataset.sectionId);
+    const request = fetch(url, {signal: state.controller.signal, credentials: 'same-origin'})
+      .then(response => {
+        if (!response.ok) throw new Error('Collection tabs request failed');
+        return response.text();
+      })
+      .catch(error => {
+        if (state.tabSectionRequest === request) state.tabSectionRequest = null;
+        throw error;
+      });
+    state.tabSectionRequest = request;
+    return request;
+  };
+
+  // Keep live panel/trigger nodes so keyboard focus and observers remain stable.
+  const loadDeferredPanels = (state) => {
+    const pending = state.entries.filter(entry => entry.panel.hasAttribute('data-tab-deferred'));
+    if (!pending.length) return Promise.resolve();
+    if (state.loadingPanels) return state.loadingPanels;
+    const attempt = requestTabSection(state)
+      .then(html => {
+        if (instances.get(state.layout) !== state) return;
+        const fragment = new DOMParser().parseFromString(html, 'text/html');
+        const replacements = pending.map(entry => ({entry, source: fragment.getElementById(entry.panel.id)}));
+        if (replacements.some(({source}) => !source || source.hasAttribute('data-tab-deferred'))) {
+          state.tabSectionRequest = null;
+          throw new Error('Collection tabs response is incomplete');
+        }
+        replacements.forEach(({entry, source}) => {
+          entry.panel.replaceChildren(...source.childNodes);
+          entry.panel.removeAttribute('data-tab-deferred');
+          entry.panel.removeAttribute('aria-busy');
+        });
+        // Reuse the theme module loader, including already imported carousels.
+        const panel = state.activeEntry.panel;
+        fragment.querySelectorAll('script[data-theme-module]').forEach(marker => panel.append(marker.cloneNode(true)));
+        const requestedId = state.requestedTabId;
+        clearPendingTab(state);
+        if (requestedId) setActiveTab(state, requestedId, false, true);
+        updateExternalNavigation(state);
+      })
+      .catch(error => {
+        if (error.name === 'AbortError' || instances.get(state.layout) !== state) return;
+        clearPendingTab(state);
+        setActiveTab(state, state.activeEntry?.trigger.dataset.tabId, false, false);
+        const status = state.scope.querySelector('[data-tab-load-status]');
+        if (status) status.textContent = state.scope.dataset.tabLoadError;
+      })
+      .finally(() => { if (state.loadingPanels === attempt) state.loadingPanels = null; });
+    state.loadingPanels = attempt;
+    return attempt;
+  };
+
   const setActiveTab = (state, selectedId, shouldFocus, shouldAnimate) => {
     synchronizeEntries(state);
     const selectedEntry = state.entries.find((entry) => entry.trigger.dataset.tabId === selectedId) || state.entries[0];
     if (!selectedEntry) return;
     const previousEntry = state.entries.includes(state.activeEntry) ? state.activeEntry : null;
+    if (selectedEntry.panel.hasAttribute('data-tab-deferred')) {
+      state.entries.forEach(entry => {
+        const selected = entry === selectedEntry;
+        entry.trigger.setAttribute('aria-selected', String(selected));
+        entry.trigger.tabIndex = selected ? 0 : -1;
+      });
+      state.requestedTabId = selectedEntry.trigger.dataset.tabId;
+      if (previousEntry) {
+        previousEntry.panel.dataset.tabLoading = 'true';
+        previousEntry.panel.setAttribute('aria-busy', 'true');
+        previousEntry.panel.inert = true;
+      }
+      if (shouldFocus) selectedEntry.trigger.focus();
+      loadDeferredPanels(state);
+      return;
+    }
+    clearPendingTab(state);
+
 
     state.entries.forEach((entry) => {
       const isActive = entry === selectedEntry;
@@ -400,7 +488,7 @@
     queueMicrotask(() => {
       state.synchronizationQueued = false;
       if (instances.get(state.layout) !== state) return;
-      setActiveTab(state, state.layout.dataset.tabLayoutActive, false, false);
+      setActiveTab(state, state.requestedTabId || state.layout.dataset.tabLayoutActive, false, false);
     });
   };
 
