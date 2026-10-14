@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"efbbac9e29963002df775cf40fd34ca6fe991bd8"} -->
+<!-- theme-base-sync-state: {"sha": "c8fab8a5588b05f9577f3a2aaa2ac01744c1286f"} -->
 # Customization record: malandra-theme
 
 Theme branch: `theme/malandra-theme`
@@ -1789,3 +1789,27 @@ Header position follow-up: live frame traces found the 40px logo pinned to the t
 - Validation: main contract comparison, supported preset settings/children, shared lifecycle regressions and full Theme Check at error level. Test artifacts remain local.
 
 - Slide audit: removed the non-custom legacy radius additions as well; `pill`/`slightly_rounded` saved choices map to main `rounded`. Layout/order/spacing and content remain preserved. Arche/Essen keep only the recorded CSS-loading customization; Elara/Malandra keep the recorded color simplification.
+
+
+### 2026-10-14 — Update from personal main c8fab8a5
+
+- Previous main SHA: `efbbac9e29963002df775cf40fd34ca6fe991bd8`.
+- Updated main SHA: `c8fab8a5588b05f9577f3a2aaa2ac01744c1286f`.
+- Included main commits:
+  - `c8fab8a5588b05f9577f3a2aaa2ac01744c1286f` — chore(base): update base with 2 upstream commits through 73a1feac
+- Owner explicitly approved removing `custom_columns` and `columns_per_breakpoint` from all four themes, schemas, presets and saved instances. Tablet now follows desktop from 768px; content and order are retained.
+- Columns mobile swipe uses main Swiper with keyboard, reduced-motion and editor teardown. Unrelated custom implementations and existing local work are retained.
+- Updated files:
+
+```text
+assets/columns-swipe.js
+blocks/columns.liquid
+docs/columns.md
+locales/en.default.schema.json
+scripts/migrate-columns.cjs
+sections/custom-section.liquid
+templates/index.json
+templates/page.about-us.json
+```
+
+- Preview statistics before this log line: 9 files, 149 additions, 108 deletions.
