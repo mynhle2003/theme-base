@@ -454,6 +454,7 @@ const init = (root) => {
   const options = {
     modules: manualLoop ? [] : (fade ? [EffectFade, ...paginationModules] : paginationModules),
     slidesPerView: 1,
+    lazyPreloadPrevNext: autoplay ? 1 : 0,
     // Keep preview slides visually separate while letting Swiper include the gap
     // in its translate, drag, loop, and pagination calculations.
     spaceBetween: showNextSlidePreview ? 24 : 0,

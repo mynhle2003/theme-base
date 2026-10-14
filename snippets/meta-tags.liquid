@@ -101,9 +101,5 @@
   href="{{ canonical_url }}"
 >
 
-{% if page_description %}
-  <meta
-    name="description"
-    content="{{ page_description | escape }}"
-  >
-{% endif %}
+{% assign meta_description = page_description | default: og_description %}
+<meta name="description" content="{{ meta_description | strip_html | strip_newlines | strip | escape }}">

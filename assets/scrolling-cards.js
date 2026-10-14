@@ -1,6 +1,5 @@
-(() => {
-  if (window.__scrollingCardsRuntime) return;
-  window.__scrollingCardsRuntime = true;
+const runtimeKey = Symbol.for('theme.scrollingCards');
+const runtime = window[runtimeKey] ||= (() => {
 
   const states = new WeakMap();
   const selector = '[data-scrolling-cards]';
@@ -119,4 +118,9 @@
     const root = event.target.closest?.(selector);
     if (root) init(root);
   });
+  return { initialize: initWithin };
 })();
+
+export function initializeThemeModule(root = document) {
+  runtime.initialize(root);
+}

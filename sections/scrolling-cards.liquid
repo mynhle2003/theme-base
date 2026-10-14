@@ -60,7 +60,11 @@
   {% endif %}
 {% endcapture %}
 
-<script type="module" src="{{ 'scrolling-cards.js' | asset_url }}"></script>
+{% if request.design_mode or section.index == blank or section.index <= 2 %}
+  <script type="module" src="{{ 'scrolling-cards.js' | asset_url }}"></script>
+{% else %}
+  <script data-theme-module="{{ 'scrolling-cards.js' | asset_url }}"></script>
+{% endif %}
 
 <div class="section-content-scope scrolling-cards-section scrolling-cards-section--{{ scrolling_cards_section_width }}">
   <div

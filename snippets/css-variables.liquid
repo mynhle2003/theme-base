@@ -102,6 +102,7 @@
   if logo_width == blank
     assign logo_width = 180
   endif
+  assign logo_width_tablet = settings.logo_width_tablet | default: 96
   assign logo_width_mobile = settings.logo_width_mobile
   if logo_width_mobile == blank
     assign logo_width_mobile = 140
@@ -722,6 +723,7 @@
     --font-heading--weight: var(--font-heading-weight);
 
     --logo-width: {{ logo_width }}px;
+    --logo-width-tablet: {{ logo_width_tablet }}px;
     --logo-width-mobile: {{ logo_width_mobile }}px;
     --page-width: {{ page_width }};
     --page-margin-desktop: {{ page_margin_desktop }}px;

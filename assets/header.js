@@ -2,6 +2,7 @@
   const HEADER_SELECTOR = '.header-top[data-header-root]';
   const headerStates = new Map();
   const headerResizeObservers = new Map();
+  const headerLayoutItems = new WeakMap();
   const submenuCloseTimers = new WeakMap();
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const isMobileMenuViewport = () => window.matchMedia('(max-width: 991.98px)').matches;
@@ -419,20 +420,32 @@
     const centerColumn = headerTop?.querySelector('[data-header-column="center"]');
     const rightColumn = headerTop?.querySelector('[data-header-column="right"]');
 
-    if (!headerTop || !blocks || !leftColumn || !centerColumn || !rightColumn || headerTop.dataset.layoutReady === 'true') {
+    if (!headerTop || !blocks || !leftColumn || !centerColumn || !rightColumn) {
       return;
     }
 
-    const items = Array.from(blocks.children);
+    const items = headerLayoutItems.get(headerTop) || Array.from(blocks.children);
+    headerLayoutItems.set(headerTop, items);
     const logo = items.find((item) => item.matches('.header-logo'));
-    const logoPosition = logo?.classList.contains('header-logo--left') ? 'left' : 'center';
+    const mobile = isMobileMenuViewport();
+    const desktopPosition = logo?.dataset.logoDesktopPosition || (logo?.classList.contains('header-logo--left') ? 'left' : 'center');
+    const logoPosition = mobile ? logo?.dataset.logoMobilePosition || 'center' : desktopPosition;
+    const layoutMode = `${mobile ? 'mobile' : 'desktop'}-${logoPosition}`;
+    if (headerTop.dataset.layoutMode === layoutMode) return;
+    const focusedElement = header.contains(document.activeElement) ? document.activeElement : null;
     headerTop.dataset.logoPosition = logoPosition;
+    logo?.classList.toggle('header-logo--left', logoPosition === 'left');
+    logo?.classList.toggle('header-logo--center', logoPosition === 'center');
 
     items.forEach((item) => {
       if (item.matches('.header-logo')) {
         (logoPosition === 'left' ? leftColumn : centerColumn).append(item);
       } else if (item.matches('.header-menu')) {
         (logoPosition === 'left' ? centerColumn : leftColumn).append(item);
+      } else if (mobile && item.matches('.header-search')) {
+        (logoPosition === 'center' ? leftColumn : rightColumn).append(item);
+      } else if (mobile && item.matches('.header-menu-toggle')) {
+        (logoPosition === 'center' ? leftColumn : rightColumn).append(item);
       } else if (item.matches('.header-menu-toggle')) {
         const columns = { left: leftColumn, center: centerColumn, right: rightColumn };
         (columns[item.dataset.headerPosition] || leftColumn).append(item);
@@ -444,6 +457,8 @@
     });
 
     headerTop.dataset.layoutReady = 'true';
+    headerTop.dataset.layoutMode = layoutMode;
+    if (focusedElement?.isConnected && document.activeElement !== focusedElement) focusedElement.focus({ preventScroll: true });
   };
 
   const initializeMegaMenus = (header) => {
@@ -471,6 +486,7 @@
     const header = getHeaderRoot(headerTop);
     const existingHeaderState = headerStates.get(header);
     if (existingHeaderState) {
+      organizeHeaderLayout(header);
       synchronizeHeaderOverlay(header, headerTop);
       synchronizeHeaderColorScheme(header, true);
       synchronizeStickyType(header, existingHeaderState);
@@ -988,6 +1004,7 @@
 
   window.addEventListener('scroll', scheduleUpdate, { passive: true });
   window.addEventListener('resize', () => {
+    headerStates.forEach(({ header }) => organizeHeaderLayout(header));
     restoreMobileMegaMenus();
     scheduleUpdate();
   });

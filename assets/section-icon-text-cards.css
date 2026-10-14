@@ -1,0 +1,52 @@
+
+  .icon-text-cards { width: 100%; min-width: 0; }
+  .icon-text-cards__spacing {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: var(--icon-text-cards-padding-top);
+    padding-bottom: var(--icon-text-cards-padding-bottom);
+    background-color: var(--icon-text-cards-background, var(--background-color));
+  }
+  .icon-text-cards__background { position: absolute; z-index: 0; inset: 0; pointer-events: none; }
+  .icon-text-cards__background img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .icon-text-cards__container { position: relative; z-index: 1; min-width: 0; }
+  .container.full-width.icon-text-cards__container--no-padding { padding-inline: 0; }
+  .icon-text-cards__content {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: var(--icon-text-cards-align);
+    gap: var(--icon-text-cards-gap);
+  }
+  .icon-text-cards__content > * { min-width: 0; max-width: 100%; }
+  .icon-text-cards .carousel-slide-layout--vertical { flex-direction: column; }
+  .icon-text-cards .carousel-slide-layout--vertical > * { flex: 0 1 auto; }
+  .icon-text-cards .carousel-slide-layout--vertical .icon-block { margin-inline: auto; }
+  .icon-text-cards .carousel-slide.swiper-slide > .carousel-slide-layout > .group {
+    display: grid;
+    flex: 0 0 56px;
+    width: 56px;
+    height: 56px;
+    place-items: center;
+    border-radius: 50%;
+  }
+  .icon-text-cards .carousel-slide.swiper-slide > .carousel-slide-layout > .group .icon-block {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    margin-inline: 0;
+  }
+  .icon-text-cards .carousel-slide.swiper-slide > .carousel-slide-layout > .group .icon-block__icon {
+    width: 24px;
+    height: 24px;
+    --icon-width: 24px;
+    --icon-padding: 0px;
+  }
+  @media (max-width: 767.98px) {
+    .icon-text-cards__spacing {
+      padding-top: var(--icon-text-cards-padding-top-mobile);
+      padding-bottom: var(--icon-text-cards-padding-bottom-mobile);
+    }
+    .icon-text-cards__content { align-items: var(--icon-text-cards-align-mobile); gap: var(--icon-text-cards-gap-mobile, var(--icon-text-cards-gap)); }
+  }

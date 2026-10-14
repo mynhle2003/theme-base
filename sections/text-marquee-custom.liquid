@@ -150,70 +150,7 @@
   </div>
 </div>
 
-{% stylesheet %}
-  .section-text-marquee-custom .text-marquee-custom {
-    position: relative;
-    min-width: 0;
-    width: 100%;
-    overflow: hidden;
-    padding-top: var(--text-marquee-custom-padding-top, 0px);
-    padding-bottom: var(--text-marquee-custom-padding-bottom, 0px);
-    background-color: var(--text-marquee-custom-background, var(--background-color));
-    background-image: var(--text-marquee-custom-background-image, none);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-  .section-text-marquee-custom .text-marquee-custom {
-    --text-marquee-custom-padding-scale: 1;
-    padding-top: calc(var(--text-marquee-custom-padding-top, 0px) * var(--text-marquee-custom-padding-scale));
-    padding-bottom: calc(var(--text-marquee-custom-padding-bottom, 0px) * var(--text-marquee-custom-padding-scale));
-  }
-  @media (min-width: 768px) and (max-width: 1149.98px) {
-    .section-text-marquee-custom .text-marquee-custom { --text-marquee-custom-padding-scale: 0.75; }
-  }
-  @media (max-width: 767.98px) {
-    .section-text-marquee-custom .text-marquee-custom {
-      --text-marquee-custom-padding-scale: 0.5;
-      padding-top: var(--text-marquee-custom-padding-top-mobile, calc(var(--text-marquee-custom-padding-top, 0px) * var(--text-marquee-custom-padding-scale)));
-      padding-bottom: var(--text-marquee-custom-padding-bottom-mobile, calc(var(--text-marquee-custom-padding-bottom, 0px) * var(--text-marquee-custom-padding-scale)));
-    }
-  }
-  .section-text-marquee-custom .text-marquee-custom .container.full-width--no-padding { width: 100%; max-width: none; padding-inline: 0; }
-  .section-text-marquee-custom .text-marquee-custom__container { min-width: 0; }
-  .section-text-marquee-custom .text-marquee-custom__content > .marquee .container.full-width { padding-inline: 0; }
-
-  .section-text-marquee-custom .text-marquee-custom__content {
-    --flex-align: var(--text-marquee-custom-align, start);
-    --flex-align-mobile: var(--text-marquee-custom-align-mobile, var(--text-marquee-custom-align, start));
-    min-width: 0;
-    width: 100%;
-    text-align: var(--flex-align);
-  }
-
-
-  .section-text-marquee-custom .text-marquee-custom__content > * {
-    min-width: 0;
-  }
-
-  .section-text-marquee-custom .text-marquee-custom__background {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  @media (max-width: 767.98px) {
-    .section-text-marquee-custom .text-marquee-custom {
-      padding-top: var(--text-marquee-custom-padding-top-mobile, var(--text-marquee-custom-padding-top, 0px));
-      padding-bottom: var(--text-marquee-custom-padding-bottom-mobile, var(--text-marquee-custom-padding-bottom, 0px));
-    }
-
-    .section-text-marquee-custom .text-marquee-custom__content {
-      --flex-align: var(--text-marquee-custom-align-mobile, var(--text-marquee-custom-align, start));
-      text-align: var(--flex-align);
-    }
-  }
-{% endstylesheet %}
+{{ 'section-text-marquee-custom.css' | asset_url | stylesheet_tag }}
 
 {% schema %}
 {

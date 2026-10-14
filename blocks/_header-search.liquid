@@ -170,9 +170,14 @@
     display: none;
   }
 
-  /* Keep the centered logo clear of a full search field on compact desktop
-     layouts as well as tablet/mobile. */
-  @media (max-width: 1399.98px) {
+  /* Desktop type stays active at all desktop widths; mobile uses an icon. */
+  @media (min-width: 992px) {
+    .header-top[data-header-root] .header__row .header-search.header-search--type-text > .icon {
+      display: none;
+    }
+  }
+
+  @media (max-width: 991.98px) {
     .header-top .header-search--type-search_bar {
       display: none;
     }
@@ -194,16 +199,6 @@
       min-height: var(--input-height-mobile);
     }
 
-    .header-search--type-text .header-action__label {
-      position: static;
-      width: auto;
-      height: auto;
-      padding: 0;
-      margin: 0;
-      overflow: visible;
-      clip: auto;
-      white-space: nowrap;
-    }
 
     .header-search__submit {
       width: var(--button-height-mobile);

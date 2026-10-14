@@ -20,6 +20,7 @@
   @param {boolean} [icon_only] - Hide the visible label when the icon is the control
   @param {boolean} [open_in_new_tab] - Whether links should open in a new tab
   @param {boolean} [force_link] - Render a link while its destination is assigned dynamically
+  @param {string} [accessible_description] - Optional visually hidden destination context
   @param {string} [aria_label] - Optional accessible name when it differs from the visible label
   @param {string} [attributes] - Optional HTML attributes owned by the caller
   @param {string} [motion_speed] - Motion token: fast, standard, or slow
@@ -116,6 +117,7 @@
     <span class="btn__text{% if icon_only %} visually-hidden{% endif %}">{{ label | escape }}</span>
     {% if button_icon_name != blank and button_icon_position == 'after' %}{{ button_icon_markup }}{% endif %}
   </span>
+  {% if accessible_description != blank %}<span class="visually-hidden">: {{ accessible_description | escape }}</span>{% endif %}
 {% endcapture %}
 
 {% capture button_loading_dots %}
