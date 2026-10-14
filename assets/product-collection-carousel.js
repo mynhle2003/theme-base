@@ -1,5 +1,5 @@
 import { Pagination } from './swiper-loader.js';
-import { createSwiperCarousel, destroySwiperCarousel } from './swiper-carousel.js';
+import { bindSwiperAutoplay, createSwiperCarousel, destroySwiperCarousel, observeSwiperResize } from './swiper-carousel.js';
 
 const instances = new WeakMap();
 const carouselSelector = '[data-product-carousel][data-layout="carousel"]';
@@ -109,29 +109,15 @@ const getAutoplaySettings = (carousel, scope) => {
 
 const isVisible = (element) => element.getClientRects().length > 0;
 
-const isWrapperHovered = (swiper) => swiper.wrapperEl?.matches(':hover') || false;
-
 const startAutoplay = (state) => {
   const autoplay = getAutoplaySettings(state.carousel, state.scope);
   if (!autoplay.enabled) return;
 
-  state.interval = window.setInterval(() => {
-    if (
-      document.hidden ||
-      !isVisible(state.carousel) ||
-      (autoplay.pauseOnHover && isWrapperHovered(state.swiper)) ||
-      state.scope.contains(document.activeElement) ||
-      state.swiper.isLocked
-    ) {
-      return;
-    }
-
-    if (state.swiper.isEnd) {
-      state.swiper.slideTo(0);
-    } else {
-      state.swiper.slideNext();
-    }
-  }, autoplay.delay);
+  state.autoplayCleanup = bindSwiperAutoplay(state.swiper, {
+    ...autoplay,
+    scope: state.scope,
+    isVisible: () => isVisible(state.carousel),
+  });
 };
 
 const observeVisibility = (state) => {
@@ -144,15 +130,6 @@ const observeVisibility = (state) => {
   state.visibilityObserver.observe(panel, { attributes: true, attributeFilter: ['hidden'] });
 };
 
-const observeSize = (state) => {
-  if (typeof ResizeObserver === 'undefined') return;
-
-  state.resizeObserver = new ResizeObserver(() => {
-    if (state.swiper && isVisible(state.carousel)) state.swiper.update();
-  });
-  state.resizeObserver.observe(state.carousel);
-};
-
 const initialize = (carousel) => {
   if (!carousel || instances.has(carousel)) return;
 
@@ -161,8 +138,8 @@ const initialize = (carousel) => {
     carousel,
     scope,
     swiper: null,
-    interval: null,
-    resizeObserver: null,
+    autoplayCleanup: null,
+    resizeCleanup: null,
     visibilityObserver: null,
     mobileQuery: null,
     mobileQueryHandler: null,
@@ -175,14 +152,21 @@ const initialize = (carousel) => {
       if (state.mobileQuery.matches) {
         if (!state.swiper) {
           state.swiper = createSwiperCarousel(carousel, buildOptions(carousel, scope));
+          if (state.swiper) {
+            startAutoplay(state);
+            state.resizeCleanup = observeSwiperResize(state.swiper, carousel);
+          }
         }
       } else if (state.swiper) {
+        state.resizeCleanup?.();
+        state.resizeCleanup = null;
+        state.autoplayCleanup?.();
+        state.autoplayCleanup = null;
         destroySwiperCarousel(state.swiper);
         state.swiper = null;
       }
     };
     state.mobileQuery.addEventListener('change', state.mobileQueryHandler);
-    observeSize(state);
     state.mobileQueryHandler();
     return;
   }
@@ -194,7 +178,7 @@ const initialize = (carousel) => {
   }
   state.swiper = swiper;
   startAutoplay(state);
-  observeSize(state);
+  state.resizeCleanup = observeSwiperResize(swiper, carousel);
   observeVisibility(state);
 };
 
@@ -209,8 +193,8 @@ const destroy = (carousel) => {
   const state = instances.get(carousel);
   if (!state) return;
 
-  if (state.interval) window.clearInterval(state.interval);
-  state.resizeObserver?.disconnect();
+  state.autoplayCleanup?.();
+  state.resizeCleanup?.();
   state.visibilityObserver?.disconnect();
   state.mobileQuery?.removeEventListener('change', state.mobileQueryHandler);
   if (state.swiper) destroySwiperCarousel(state.swiper);

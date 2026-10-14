@@ -1,9 +1,18 @@
+{% doc %}
+  Renders the one-column carousel owned by Testimonial: split.
+{% enddoc %}
+
 {% liquid
   assign transition = block.settings.transition_style | default: 'slide'
+  unless transition == 'slide' or transition == 'fade'
+    assign transition = 'slide'
+  endunless
   assign carousel_id = 'TestimonialSplit-' | append: block.id
-  assign delay = block.settings.autoplay_speed | default: 4 | times: 1000
+  assign speed = block.settings.autoplay_speed | default: 4 | at_least: 3 | at_most: 7
+  assign delay = speed | times: 1000
+  assign carousel_label = 'general.testimonial_split' | t
 %}
-<script data-theme-module="{{ 'carousel-block.js' | asset_url }}"></script>
+<script data-theme-module="{{ 'testimonial-split.js' | asset_url }}"></script>
 {% if transition == 'fade' %}
   <link rel="stylesheet" href="{{ 'swiper-12.2.0-effect-fade.min.css' | asset_url }}" media="print" onload="this.media='all'">
   <noscript>{{ 'swiper-12.2.0-effect-fade.min.css' | asset_url | stylesheet_tag }}</noscript>
@@ -17,13 +26,13 @@
     --carousel-padding-bottom-mobile: {{ block.settings.padding_bottom_mobile | default: 0 }}px;
   {% endif %}
 {% endcapture %}
-<div class="testimonial-split-carousel" style="{{ carousel_style | strip }}" data-carousel-block
+<div class="testimonial-split-carousel" style="{{ carousel_style | strip }}" data-testimonial-split
   data-transition="{{ transition }}" data-swiper-columns-desktop="1" data-swiper-columns-mobile="1"
   data-swiper-gap-desktop="0" data-swiper-gap-mobile="0" data-swiper-pagination-desktop="false" data-swiper-pagination-mobile="false"
   data-carousel-loop="{{ block.settings.loop }}" data-swiper-autoplay="{{ block.settings.autoplay }}"
   data-swiper-autoplay-pause-on-hover="{{ block.settings.pause_on_hover }}" data-swiper-autoplay-delay="{{ delay }}"
   {{ block.shopify_attributes }}>
-  {% render 'swiper-carousel', id: carousel_id, content: slides, root_class: 'testimonial-split-carousel__viewport', aria_label: 'Testimonial', autoplay: block.settings.autoplay, pause_on_hover: block.settings.pause_on_hover, autoplay_delay: delay, show_next_slide_preview: false, show_next_slide_preview_on_mobile: false %}
+  {% render 'swiper-carousel', id: carousel_id, content: slides, root_class: 'testimonial-split-carousel__viewport', aria_label: carousel_label, autoplay: block.settings.autoplay, pause_on_hover: block.settings.pause_on_hover, autoplay_delay: delay, show_next_slide_preview: false, show_next_slide_preview_on_mobile: false %}
 </div>
 {% stylesheet %}
   .testimonial-split-carousel { width: 100%; min-width: 0; padding-block: var(--carousel-padding-top, 0px) var(--carousel-padding-bottom, 0px); }
@@ -39,11 +48,11 @@
 {% endstylesheet %}
 {% schema %}
 {
-  "name": "Carousel",
+  "name": "t:general.carousel",
   "tag": null,
   "blocks": [
     {
-      "type": "_slide_split"
+      "type": "slide_split"
     }
   ],
   "settings": [
@@ -154,26 +163,33 @@
     {
       "settings": {
         "loop": false,
-        "transition_style": "fade"
+        "transition_style": "fade",
+        "autoplay": false,
+        "pause_on_hover": true,
+        "autoplay_speed": 4,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": false,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
       },
       "blocks": [
         {
-          "type": "_slide_split",
+          "type": "slide_split",
           "blocks": [
             {
               "type": "image",
-              "id": "image",
               "static": true,
               "settings": {
                 "image_ratio_desktop": "ratio_5_4",
                 "image_ratio_mobile": "ratio_5_4",
                 "width_desktop": "fill",
                 "width_mobile": "fill"
-              }
+              },
+              "id": "image"
             },
             {
               "type": "group",
-              "id": "content",
               "static": true,
               "settings": {
                 "direction": "vertical",
@@ -227,7 +243,8 @@
                     "animation_delay": 50
                   }
                 }
-              ]
+              ],
+              "id": "content"
             }
           ],
           "settings": {
@@ -254,22 +271,21 @@
           }
         },
         {
-          "type": "_slide_split",
+          "type": "slide_split",
           "blocks": [
             {
               "type": "image",
-              "id": "image",
               "static": true,
               "settings": {
                 "image_ratio_desktop": "ratio_5_4",
                 "image_ratio_mobile": "ratio_5_4",
                 "width_desktop": "fill",
                 "width_mobile": "fill"
-              }
+              },
+              "id": "image"
             },
             {
               "type": "group",
-              "id": "content",
               "static": true,
               "settings": {
                 "direction": "vertical",
@@ -323,7 +339,8 @@
                     "animation_delay": 50
                   }
                 }
-              ]
+              ],
+              "id": "content"
             }
           ],
           "settings": {

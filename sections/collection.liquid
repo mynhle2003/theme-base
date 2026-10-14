@@ -140,6 +140,172 @@
       "unit": "px",
       "visible_if": "{{ section.settings.customize_mobile_padding }}"
     }
+  ],
+  "presets": [
+    {
+      "name": "Elara: main",
+      "settings": {
+        "products_per_page": 10,
+        "section_width": "full",
+        "item_gap": 50,
+        "item_gap_mobile": 16,
+        "color_scheme": "scheme-1",
+        "background_color": "",
+        "padding_top": 100,
+        "padding_bottom": 120,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 50
+      },
+      "blocks": [
+        {
+          "type": "_collection-toolbar",
+          "static": true,
+          "settings": {
+            "gap": 30,
+            "button_height": "inherit",
+            "sticky_on_mobile": false,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "customize_mobile_padding": false,
+            "padding_top_mobile": 12,
+            "padding_bottom_mobile": 12
+          },
+          "blocks": [
+            {
+              "type": "_collection-filter",
+              "static": true,
+              "settings": {
+                "filter_icon": "sliders",
+                "desktop_layout": "sidebar",
+                "sidebar_visibility": "always",
+                "right_padding": 50,
+                "button_style": "primary",
+                "mobile_layout": "sheet",
+                "heading_size": "sm",
+                "collapse_icon": "plus",
+                "collapse_filters": false,
+                "items_limit": "5",
+                "enable_sorting": true
+              },
+              "id": "filter"
+            },
+            {
+              "type": "_collection-count",
+              "static": true,
+              "settings": {
+                "alignment": "left"
+              },
+              "id": "count"
+            },
+            {
+              "type": "_collection-sort",
+              "static": true,
+              "settings": {
+                "style": "text"
+              },
+              "id": "sort"
+            },
+            {
+              "type": "_collection-columns",
+              "static": true,
+              "settings": {
+                "desktop_type": "text",
+                "desktop_style": "primary",
+                "mobile_type": "icon",
+                "mobile_style": "secondary"
+              },
+              "id": "columns"
+            }
+          ],
+          "id": "toolbar"
+        },
+        {
+          "type": "_collection-products",
+          "static": true,
+          "settings": {
+            "columns_desktop": "3",
+            "columns_mobile": "2",
+            "column_gap_desktop": 4,
+            "row_gap_desktop": 4,
+            "column_gap_mobile": 4,
+            "row_gap_mobile": 4,
+            "full_width": false
+          },
+          "blocks": [
+            {
+              "type": "collection-promo",
+              "settings": {
+                "position": 5,
+                "columns_desktop": "2",
+                "columns_mobile": "2",
+                "card_link": "",
+                "open_in_new_tab": false,
+                "media_type": "image",
+                "image": "",
+                "mobile_image": "",
+                "show_overlay": true,
+                "overlay_color": "#00000033",
+                "subheading": "<p>[ Save 20% off ]</p>",
+                "heading": "<p>Curate Your Set</p>",
+                "text": "<p></p>",
+                "content_alignment": "center",
+                "content_position": "center",
+                "heading_size": "xl",
+                "custom_heading_size": 24,
+                "text_size": "md",
+                "button_label": "Curate now",
+                "button_style": "primary",
+                "show_icon": false,
+                "icon_position": "after",
+                "icon": "arrow_right",
+                "button_height": "inherit",
+                "button_full_width": false,
+                "content_gap": 12,
+                "button_spacing": 24,
+                "color_scheme": "scheme-1",
+                "padding_top": 40,
+                "padding_bottom": 40,
+                "padding_left": 28,
+                "padding_right": 28,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 24,
+                "padding_bottom_mobile": 24,
+                "padding_left_mobile": 16,
+                "padding_right_mobile": 16,
+                "overlay_style": "solid",
+                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.52))"
+              }
+            },
+            {
+              "type": "product-card",
+              "static": true,
+              "settings": {
+                "color_type": "inherit",
+                "color_scheme": ""
+              },
+              "id": "product-card"
+            },
+            {
+              "type": "_collection-pagination",
+              "static": true,
+              "settings": {
+                "pagination_type": "pages",
+                "button_style": "primary",
+                "button_height": "inherit",
+                "padding_top": 40,
+                "padding_bottom": 0,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 30,
+                "padding_bottom_mobile": 0
+              },
+              "id": "pagination"
+            }
+          ],
+          "id": "products"
+        }
+      ]
+    }
   ]
 }
 {% endschema %}
