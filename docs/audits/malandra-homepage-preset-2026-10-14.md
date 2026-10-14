@@ -51,3 +51,9 @@ All sections occupy the homepage JSON template, own their section spacing, and u
 | Exact spacing, cropping, wrapping and pagination at both widths | Closest existing controls and inherited global tokens | Must compare a rendered preview after media/resource assignment; shop-the-look product width and hotspot positions remain preset defaults |
 
 The configuration is ready for resource assignment and an authorized preview. Custom implementation for the gaps above has not been added.
+
+## Shopify sync correction
+
+Read the GitHub integration logs for draft theme `192330498347` through the authenticated Shopify Admin browser. Shopify rejected `templates/index.json` because generated dynamic block IDs started with `_` (`_marquee-text-*`, `_marquee-icon-*`, `_column-*`). The initial theme import saved the other files but omitted the homepage template, causing `/` to resolve to 404. Local Theme Check did not detect this server validation rule.
+
+Renamed fourteen dynamic block IDs to remove their leading underscore and updated the corresponding `block_order` arrays. Block types retain their required underscores. Checked for key collisions, dangling order entries and remaining leading-underscore IDs. This correction changes IDs only, preserving settings, content and composition.
