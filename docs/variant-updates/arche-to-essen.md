@@ -461,3 +461,69 @@ Ngày 2026-10-14, revision 1. Nguồn: `arche-theme`, branch `theme/arche-theme`
 - Khi update: tái hiện vị trí logo/menu/actions trước JS và sau khởi tạo bằng cách trì hoãn runtime; chỉ áp dụng nếu còn dịch chuyển. Kiểm tra Desktop/Mobile Left/Center, custom gap, logo thường/transparent, sticky, width 375/768/1024/1440/1920, viewport đổi và editor reload. Đo nội dung nhìn thấy, không chỉ container. Nếu lỗi đã hết, ghi skipped và bằng chứng.
 - QA nguồn: 41 Chrome fixture tests PASS, gồm 20 trường hợp đối chiếu vị trí hiển thị trước/sau JS ở năm viewport và bốn tổ hợp vị trí logo, sai lệch không quá 1px; giữ 21 regression Search/gap/tertiary. Theme Check 0 errors/5 existing warnings; diff check PASS. Chưa xác minh reload trên storefront/Theme Editor live của Essen; QA fixture nguồn không được dùng để đánh dấu verified đích.
 - Trạng thái Essen: pending. Preview/publish: chưa thực hiện. Không chuyển preset/media/menu hoặc các patch animation/banner đang sửa đồng thời.
+
+## Lighthouse — hướng dẫn update variant ngày 2026-10-14
+
+Ngày: 2026-10-14. Revision: 1. Người dùng yêu cầu tối ưu preview Arche và ghi lại để Essen đọc/apply sau. Nguồn: `arche-theme`, branch `theme/arche-theme`, checkpoint `04dc9f04410f76f2c502752a40476993b29c47c9` + patch local ở `assets/block-animations.js` và `blocks/_mega-menu-banner.liquid`. Preview nguồn: [draft 192282820907](https://layouthub-template-v2.myshopify.com/?preview_theme_id=192282820907). Đích: `../essen-theme`, branch `theme/essen-theme`; tất cả mã dưới đây **pending**, chưa audit/apply/QA/upload/publish Essen.
+
+Bao gồm hai tối ưu mới ngày 14/10 và các tối ưu đã có trong checkpoint nguồn nhưng chưa có handoff Lighthouse. Giữ preset, media, thứ tự, typography, khoảng cách và layout riêng của Essen. Không chép homepage, header-group hay settings_data Arche. Audit từng gap tại đích theo điều kiện chung đầu doc; đã có fix tương đương thì skipped, chưa xác minh thì pending.
+
+| Mã | Revision | Phạm vi | Nguồn | Trạng thái Essen |
+| --- | --- | --- | --- | --- |
+| ARCHE-ESSEN-LIGHTHOUSE-CSS-001 | 1 | CSS component tĩnh tải theo owner | section/block Liquid và asset CSS được owner tham chiếu | pending |
+| ARCHE-ESSEN-LIGHTHOUSE-ANIMATION-002 | 1 | Cache row geometry trong mỗi scan animation | assets/block-animations.js — patch local 14/10 | pending |
+| ARCHE-ESSEN-LIGHTHOUSE-MEDIA-003 | 1 | Lazy/responsive ảnh mega menu đang ẩn | blocks/_mega-menu-banner.liquid — patch local 14/10 | pending |
+| ARCHE-ESSEN-LIGHTHOUSE-RUNTIME-004 | 1 | Runtime Scrolling cards theo viewport; chuẩn bị slide kế cho autoplay | sections/scrolling-cards.liquid; assets/scrolling-cards.js; assets/slideshow.js; assets/theme-module-loader.js | pending |
+| ARCHE-ESSEN-LIGHTHOUSE-ACCESS-005 | 1 | Meta description fallback, tên link bài viết, Skip to content, account menu fallback | snippets/meta-tags.liquid; snippets/theme-button.liquid; blocks/blog-card-button.liquid; layout/theme.liquid; assets/critical.css; locales/en.default.json; blocks/_header-account.liquid; blocks/_header-top.liquid | pending |
+
+### ARCHE-ESSEN-LIGHTHOUSE-ANIMATION-002 — giảm đọc layout lặp
+
+- Gap nguồn: `scan()` query toàn bộ siblings và đọc tọa độ hàng của mọi sibling cho từng card; 24 card tạo 600 lần đọc row geometry/24 query list, 100 card tạo 10.100 lần đọc.
+- Patch mới dùng Map **cục bộ trong mỗi scan** cho list membership, card→list và row top. Chụp tọa độ trước khi ghi các attribute reveal; mỗi card đo một lần. Token `--tab-card-stagger` đọc một lần/card thay cho hai lần.
+- Kết quả fixture so sánh trực tiếp code trước/sau: 24 card còn 24 đọc/1 query list; 100 card còn 100 đọc. Dataset delay/tab delay/row delay/stagger khớp trước/sau; resize sang hai cột đo lại và giữ parity. Đây là số lần đọc layout trong fixture, không phải số điểm Lighthouse hay tổng forced reflow trên trang thực.
+- Giữ nguyên animation type, curve, thời lượng, delay merchant, quy tắc row cách nhau <8px, DOM-order tab staggering, focus, reduced motion, Press và teardown. Không đổi option/preset. Không cache lâu dài vì tab ẩn và breakpoint có thể đổi geometry.
+- Dependency: runtime main/card staggering thực tế của Essen. Mã này là tối ưu bổ sung sau migration animation theo main; không dùng nó để thay toàn bộ runtime hoặc khôi phục runtime Elara cũ. Nếu Essen đã có batching/caching tương đương, skipped. Nếu cấu trúc khác, chuyển logic vào owner scan tương ứng.
+- QA đích: dataset/timing trước/sau với 1/24/100 card, nhiều list/nested list, tab ẩn→active, resize desktop→mobile→desktop, explicit delay 0/75/150, `none`, reduced motion, Press 1→2→1, editor reload/duplicate/unload và keyboard focus. Chỉ verified khi QA runtime Essen đạt.
+
+### ARCHE-ESSEN-LIGHTHOUSE-MEDIA-003 — ảnh menu không tranh tải đầu trang
+
+- Quan sát trên HTTPS draft ngày 14/10: hai banner Header có `loading=auto`, `fetchPriority=auto`, ảnh được chọn ở width=1000; khung desktop đang được DOM báo rộng khoảng 441px. Hero đầu vẫn `loading=eager`/`fetchPriority=high`.
+- Chỉ bổ sung vào `image_tag` của banner: `loading: 'lazy'`, `sizes: 'auto, (max-width: 767px) 100vw, 50vw'`. Giữ image_url tối đa 1000 và widths `240, 360, 480, 720, 1000`, alt, dimensions Shopify, focal point và CSS. `auto` dùng chiều rộng khung thực trên trình duyệt hỗ trợ; fallback giữ chất lượng trên trình duyệt cũ. Không dùng 50vw như phép tính chính xác của tất cả cấu hình mega menu.
+- Dependency: ảnh banner nằm trong menu/drawer ẩn ở first paint, không phải ảnh LCP. Không áp lazy cho logo hoặc hero. Không cần chuyển Button Tertiary/layout/menu/media Arche để áp patch này.
+- Tham khảo chính thức: [Shopify responsive images](https://shopify.dev/docs/storefronts/themes/best-practices/performance/use-responsive-images), [image_tag](https://shopify.dev/docs/api/liquid/filters/image_tag).
+- QA đích: cold-cache không tải banner khi menu vẫn ẩn; mở bằng mouse/keyboard và mobile drawer phải tải ảnh đúng, không đổi bounds/ratio/spacing, không CLS mới; thử 1/2 banner, width limit bật/tắt, hai breakpoint, no-JS và Theme Editor. Không giữ pending ảnh mãi khi menu hiện. Không đánh dấu verified chỉ từ Liquid render.
+
+### ARCHE-ESSEN-LIGHTHOUSE-CSS-001 — CSS theo owner, giữ layout
+
+- Tối ưu đã có ở nguồn từ 13/10: chuyển các CSS tĩnh component tùy chọn khỏi `{% stylesheet %}` bundle phát triển chung sang asset, nạp **synchronous** bằng owner Liquid. Component trên trang vẫn có CSS để dự trữ layout; component vắng mặt không mang CSS theo bundle. Không defer CSS đang giữ hình học above-the-fold.
+- Audit các cặp `section-*.css`/`block-*.css` trong source hiện hành và reference tương ứng, không copy tất cả asset theo glob. Danh sách nhóm chính gồm collection banners/list/thumbnails/tabs/background, email signup, FAQ, image cards/comparison, icon text, location map, parallax, marquee, shop-the-look, testimonial, timeline, search và zoom banner; block bundle product list, countdown, FAQ accordion, image-text card grid item, slide, testimonial item và timeline slide.
+- Với mỗi owner đủ điều kiện ở Essen, trích **CSS Essen hiện tại** vào asset, giữ byte nội dung rule/cascade/specificity/media queries rồi thay đúng stylesheet owner bằng reference. Không lấy CSS Arche để ghi đè geometry Essen. Dynamic Liquid CSS vẫn ở owner hiện tại.
+- Dependency: asset và owner reference phải được chuyển cùng nhau; kiểm tra section rendering API/editor và no-JS. Không giữ cùng rule ở cả compiled bundle và asset. Tên asset khác ở Essen thì dùng tên đích hiện có.
+- QA đích: so sánh nội dung rule trước/sau, URL asset không 404, initial geometry desktop/mobile, mọi template đang dùng owner, section add/reload và bundle byte before/after. Dữ liệu bundle 13/10 là development bundle, không cam kết cùng mức giảm trên HTTPS draft/production.
+
+### ARCHE-ESSEN-LIGHTHOUSE-RUNTIME-004 — trì hoãn runtime dưới fold
+
+- `sections/scrolling-cards.liquid`: section ở vị trí template sau hai vị trí đầu dùng marker `data-theme-module`; vị trí đầu và Theme Editor tải ngay. `assets/scrolling-cards.js` export `initializeThemeModule` để loader init instance mới sau khi import đã cache.
+- Dependency bắt buộc: `assets/theme-module-loader.js` của đích phải hiểu marker, init instance mới, observe boxed ancestor và xử lý editor select/unload/replay. Nếu đích chưa đáp ứng, audit/port riêng phần thiếu; không copy whole loader. Không chuyển centering, Fade/Scale preset hoặc artwork Arche chỉ để có lazy runtime.
+- `assets/slideshow.js`: autoplay dùng `lazyPreloadPrevNext: 1` để slide kế sẵn sàng trước deadline; manual-only vẫn native lazy. Đây là tradeoff tải thêm một slide gần kề cho autoplay, không phải bảo đảm giảm LCP. Giữ preload responsive ưu tiên của slide đầu.
+- QA: runtime dưới fold chưa tải ở top, vào viewport init đúng một lần; editor add/select/reload và cleanup; autoplay/hover/focus/hidden tab/reduced motion, slide kế không trống; không đổi timer/duration, effects hoặc pagination riêng Essen.
+
+### ARCHE-ESSEN-LIGHTHOUSE-ACCESS-005 — SEO và accessibility dùng chung
+
+- Meta description dùng `page_description`, khi thiếu thì fallback về description Open Graph hiện có; escape đúng, không đặt prose Arche vào Essen.
+- Blog Read more truyền article title qua argument tùy chọn `accessible_description` của shared theme-button. Label hiển thị giữ nguyên; title thêm bằng visually-hidden để tên link có ngữ cảnh. Chuyển caller/renderer contract cùng nhau nếu Essen thiếu.
+- Layout thêm Skip to content trỏ `#MainContent`, dùng locale và CSS chỉ hiện khi focus; main có `tabindex=-1`. Giữ landmark/IDs, vị trí bàn phím và style token đích.
+- Header account chỉ yêu cầu handle `customer-account-main-menu` nếu menu tồn tại, nếu không dùng account menu mặc định Shopify. Không tạo resource/menu mới.
+- Các thay đổi độc lập; áp riêng phần còn gap ở đích, không copy whole Header/layout. Kiểm tra link names, meta DOM, keyboard skip, account link/menu và mobile/editor. Contrast và pagination target hiện tại cần audit riêng, không tự đổi màu/kích thước preset để nâng điểm.
+
+### Bằng chứng nguồn và giới hạn đo
+
+- Patch mới 14/10: 20 tests PASS (3 direct before/after geometry-count tests, 10 animation lifecycle, 3 collection-tab motion, 4 Press); Liquid render banner PASS; JS syntax/diff check PASS. Full Theme Check: 362 files, 0 errors / 5 cảnh báo ExcessiveSettingsCount có sẵn.
+- Customization checker vẫn báo thiếu record ở các asset/owner CSS và một số implementation cũ ngoài patch; chưa có full coverage PASS. Hai implementation mới đã ghi trong Customizations table; không biến tình trạng này thành QA đạt toàn repo.
+- HTTPS preview được mở read-only trong Chrome, xác nhận draft Arche và asset t/34. HTTP client không có storefront session bị chuyển tới password page. Shopify CLI yêu cầu đăng nhập lại; local preview đã dừng. **Chưa upload patch 14/10, chưa có Lighthouse before/after mới trên URL yêu cầu và chưa QA storefront/editor của patch mới.** Không dùng điểm password page hoặc số đo cũ làm điểm hiện tại.
+- Lịch sử tham khảo: các report Lighthouse 13.5.0 ngày 13/10 đo `http://127.0.0.1:9300/`, mobile Performance 46→54, TBT 391.5→120.5ms; desktop 71→72; SEO 85→100; Accessibility 94, Best Practices 54. Các run đều có cảnh báo page load timeout. Development resources/no-cache/hot reload và request Shopify làm kết quả chưa đại diện production. Không cộng mức cải thiện này vào patch 14/10.
+- Khi CLI/session phục hồi: xác nhận exact store/theme unpublished → backup/read remote đúng hai file → scope upload với `--only` và `--nodelete` → pull/readback → Lighthouse cold-cache mobile/desktop ít nhất ba lần cùng viewport/version/throttling, báo median LCP/TBT/CLS/score và warnings. Giữ authentication hợp lệ mà không tắt storefront password; không publish. Doc update Essen vẫn pending đến khi owner yêu cầu apply và có QA đích.
+
+| Ngày | Mã | Revision nguồn | Trạng thái Essen | Upload preview nguồn / publish |
+| --- | --- | --- | --- | --- |
+| 2026-10-14 | LIGHTHOUSE-CSS-001 / ANIMATION-002 / MEDIA-003 / RUNTIME-004 / ACCESS-005 (prefix ARCHE-ESSEN đầy đủ ở trên) | checkpoint 04dc9f04 + local patch | pending — chưa audit/apply | patch 14/10 chưa upload / chưa publish |

@@ -123,16 +123,38 @@
   };
   const scan = (root = document) => {
     const cards = root.querySelectorAll?.(cardSelector) || [];
+    // Snapshot each list once before writing reveal attributes. A per-card
+    // sibling query/row measurement makes large product lists do N² layout
+    // reads. These caches live only for this scan: resize/tab/editor renders
+    // always measure the current layout again.
+    const lists = new Map();
+    const rowTops = new Map();
+    const cardLists = new Map();
+    const rowTop = element => {
+      if (!rowTops.has(element)) {
+        const item = element.closest('.product-collection-grid__item') || element.closest('.blog-list__item, .swiper-slide') || element;
+        rowTops.set(element, item.getBoundingClientRect().top);
+      }
+      return rowTops.get(element);
+    };
+    cards.forEach(card => {
+      if (card.closest('.slideshow, .announcement-bar, dialog')) return;
+      const list = card.closest(listSelector);
+      cardLists.set(card, list);
+      if (!list || lists.has(list)) return;
+      const siblings = [...list.querySelectorAll(cardSelector)].filter(e => e.closest(listSelector) === list);
+      lists.set(list, siblings);
+      siblings.forEach(rowTop);
+    });
     cards.forEach(card => {
       if (card.closest('.slideshow, .announcement-bar, dialog')) return;
       card.dataset.componentReveal = '';
       if (!card.dataset.blockAnimation) card.dataset.blockAnimation = card.matches('article.testimonial-item') ? 'fade' : 'slide-bottom';
-      const list = card.closest(listSelector);
+      const list = cardLists.get(card);
       if (list) {
-        const siblings = [...list.querySelectorAll(cardSelector)].filter(e => e.closest(listSelector) === list);
+        const siblings = lists.get(list);
         // Stagger within the visible row; later rows must not inherit a long list-wide wait.
         // Measure the layout item so an in-flight card transform cannot change its row.
-        const rowTop = element => (element.closest('.product-collection-grid__item') || element.closest('.blog-list__item, .swiper-slide') || element).getBoundingClientRect().top;
         const top = rowTop(card);
         const row = siblings.filter(sibling => Math.abs(rowTop(sibling) - top) < 8);
         // Section headings lead the cards. Explicit merchant delay is an offset,
@@ -145,8 +167,9 @@
         const introDelay = Math.max(0, ...intro.map(element => Number(element.dataset.animationDelay) || 0));
         // Concept animates the complete tab list in DOM order, including slides
         // beyond the horizontal viewport, with the same curve on every reveal.
-        card.dataset.animationTabDelay = String(Math.max(0, siblings.indexOf(card)) * (parseFloat(getComputedStyle(card).getPropertyValue('--tab-card-stagger')) || 100));
-        card.dataset.animationRowDelay = String(Math.max(0, row.indexOf(card)) * (parseFloat(getComputedStyle(card).getPropertyValue('--tab-card-stagger')) || 100));
+        const cardStagger = parseFloat(getComputedStyle(card).getPropertyValue('--tab-card-stagger')) || 100;
+        card.dataset.animationTabDelay = String(Math.max(0, siblings.indexOf(card)) * cardStagger);
+        card.dataset.animationRowDelay = String(Math.max(0, row.indexOf(card)) * cardStagger);
         card.dataset.animationStagger = card.dataset.animationPreserveOpacity === 'true' ? '0' :
           String(Math.min(900, introDelay + 150 + Math.max(0, row.indexOf(card)) * 75));
       }
