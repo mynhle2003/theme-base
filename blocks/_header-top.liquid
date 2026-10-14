@@ -242,8 +242,13 @@
       grid-template-columns: auto minmax(0, 1fr) auto;
     }
 
+    .header-top[data-logo-position='center'] .header__row {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    }
+
     .header__column {
       min-height: var(--button-height-mobile);
+      gap: 0.4rem;
     }
 
     .header-top :where(.header-search, .header-account, .header-cart) {

@@ -12,7 +12,7 @@ Media: the two original photos and ESSEN logo were downloaded from Figma, conver
 
 - Resolved after user authorization: created and read back separate `Arche Header` menu (`arche-header`, ID `323641245995`) with Menswear / New / Sale / About. Menswear contains Categories (9 links) and Material (6 links), matching Figma labels/order. Bound the handle in both local Header compositions; the existing main menu remains untouched. Destinations use search URLs because matching Arche/Essen collections were not found; catalog contents are not asserted to match Figma. See `arche-header-menu-2026-10-14.json` for readback.
 - Global logo remains Arche; the uploaded ESSEN logo is available in Files. Existing global mobile logo width is 140px, versus 80px mobile and 96px tablet in Figma.
-- Logo left placement also applies to mobile in the current implementation; no separate mobile placement control exists.
+- Resolved by authorized Arche customization on 2026-10-14: separate Desktop position/Mobile position controls; mobile Center balances columns and groups menu/search left, with Cart right.
 - Shared Header gap applies to actions as well as logo/menu. Figma uses 64px between logo/menu and 4px between action wrappers; no separate action gap setting exists.
 - Tablet shares mobile padding instead of the reference's separate 12px tablet / 10px mobile choice. Existing 40px mobile button minimum also exceeds Figma's 36px mobile header content.
 - Banner images retain their natural aspect ratio (~0.8) rather than Figma's 6:7 crop; there is no banner image-ratio control. Image/content reading order matches the reference; exact menu, card geometry and drawer appearance have not been rendered for comparison.
@@ -25,3 +25,11 @@ Media: the two original photos and ESSEN logo were downloaded from Figma, conver
 - AI Toolkit validator could not run because its package lacks `@shopify/theme-check-common`; CLI Theme Check was used.
 - Local preview on port 9300 was unavailable. Desktop/tablet/mobile Figma references and existing responsive code were inspected; storefront and Theme Editor visual QA remain unverified.
 - No explicit theme push, publication, commit or Git push was performed.
+
+## Authorized Header customization — 2026-10-14
+
+Navigation role in the existing Header section group; block owns desktop/mobile position, runtime owns moving the existing nodes, Header top owns balanced mobile columns, and the global button renderer owns Shop now appearance. Keep desktop `position` ID for saved-setting compatibility and add `position_mobile`, default Center. Preserve existing Theme Editor block attributes, no duplicated logo or action DOM. Reorganize only when active breakpoint/position changes and retain focused control after moves. Existing section initialization calls the organizer again safely.
+
+Preset and saved Header both restore `header_overlay: true` and transparent scheme-3. Current global references remain `arche-header-black.avif` and `arche-header-white.avif`; the uploaded ESSEN logo is not substituted. Banner retains its Button style option and now renders through `theme-button`, using the same classes/label wrapper/underline/icon contract as other buttons. No new button CSS was added.
+
+Validation: 6 Chrome fixture tests passed covering all four Desktop/Mobile Left/Center combinations at 1440, 768, 375 and 320px, resize round trips, repeated initialization, preserved search focus and mobile first paint before JS. These exercise the actual layout organizer and current CSS; they do not claim live Theme Editor verification. JS syntax and diff check pass; full Theme Check has 0 errors/5 existing warnings. No Shopify theme deployment performed for this follow-up.
