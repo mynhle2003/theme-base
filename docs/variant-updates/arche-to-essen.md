@@ -553,3 +553,40 @@ Bao gồm hai tối ưu mới ngày 14/10 và các tối ưu đã có trong chec
 | Ngày | Mã | Revision nguồn | Trạng thái Essen | Upload preview nguồn / publish |
 | --- | --- | --- | --- | --- |
 | 2026-10-14 | LIGHTHOUSE-CSS-001 / ANIMATION-002 / MEDIA-003 / RUNTIME-004 / ACCESS-005 (prefix ARCHE-ESSEN đầy đủ ở trên) | checkpoint 04dc9f04 + local patch | pending — chưa audit/apply | patch 14/10 chưa upload / chưa publish |
+
+## Receipt Essen đợt 3 — 2026-10-14
+
+Owner yêu cầu tiếp tục đọc Arche để update variant Essen. Đích `theme/essen-theme`, HEAD trước sửa `058c2b511eba1f3e69842333ce7b205a19929494`; patch đợt 3 local, chưa commit/push/upload/publish. Nguồn code Arche clean HEAD `21e1dc5c4e462625efd267ebb9b7ef641a8473a4` khi audit; commit từng mã ở bảng dưới. [Receipt đích đợt 3](../../../essen-theme/docs/audits/arche-to-essen-round-3-2026-10-14.md), [history/tra nhanh](../../../essen-theme/docs/variant-update-history.md).
+
+Các pending của đợt hướng dẫn Header/Press/Lighthouse/Size Guide bên trên là lịch sử trước audit; trạng thái mới của các mã trong đợt 3 là applied local, live QA chưa verified. Các mã cũ đã nhận không áp lại. Release trước: shared đợt 1 `116e03ed`; Image card `595a3548`; doc release history `058c2b51`, đều đã push Essen. Badge appearance/settings PRODUCT-BADGES-002 vẫn pending.
+
+| Mã đầy đủ | Revision | Commit nguồn | Essen mới nhất / bằng chứng |
+| --- | --- | --- | --- |
+| ARCHE-ESSEN-SIZE-GUIDE-DIALOG-002 | 1 | 4c01f5a8 | applied local — Popup normalization/body-sm; 25 target Chrome shell cases. |
+| ARCHE-ESSEN-HEADER-LOGO-002 | 1 | 8cbc1913 | applied local — Desktop/mobile positions, reparent/focus/resize; giữ candidates/logo Essen. |
+| ARCHE-ESSEN-HEADER-GAP-003 | 1 | ad3fc68d | applied local — Menu/actions độc lập, mobile override tùy chọn, zero hợp lệ; giữ gap saved 16px. |
+| ARCHE-ESSEN-HEADER-SEARCH-004 | 1 | ad3fc68d | applied local — Bốn desktop types tại 1024/1440; mobile icon-only. |
+| ARCHE-ESSEN-HEADER-BUTTON-005 | 1 | 8cbc1913 + ad3fc68d | applied local — Shared theme-button; banner Essen hiện Primary/padding 40px, không chuyển Tertiary/6px preset. |
+| ARCHE-ESSEN-HEADER-LOAD-006 | 1 | f4b52bb6 | applied local — First-paint visibility khớp initialized trong 20 Chrome cases. |
+| ARCHE-ESSEN-PRESS-001 | 1 | c04c3a40 | applied local — Press scope/reset/reveal và cancel filled fade; opacity-only selection. |
+| ARCHE-ESSEN-LIGHTHOUSE-CSS-001 | 1 | 04dc9f04 inventory | applied local — Trích 29 CSS owner từ Essen, byte-identical 122749 raw bytes; synchronous assets, không copy CSS source. |
+| ARCHE-ESSEN-LIGHTHOUSE-ANIMATION-002 | 1 | f8433bb9 | applied local — Cache cục bộ mỗi scan; 24 card row reads 600→24, 100 card 10100→100; timing parity. |
+| ARCHE-ESSEN-LIGHTHOUSE-MEDIA-003 | 1 | f8433bb9 | applied local — Menu banner lazy/sizes auto fallback; giữ alt/candidates; network live QA pending. |
+| ARCHE-ESSEN-LIGHTHOUSE-RUNTIME-004 | 1 | 04dc9f04 | applied local — Marker/export Scrolling cards, preload autoplay neighbor; loader đích đã tương đương; không chuyển Fade/Scale/centering. |
+| ARCHE-ESSEN-LIGHTHOUSE-ACCESS-005 | 1 | 04dc9f04 | applied local — Description fallback, article link context, skip link locale/focus, existing account-menu guard. |
+
+QA đích: Header 10/41 PASS trước → 41/41 PASS sau; Press 0/4 → 4/4. Tổng 80 scoped tests, 67 Chrome cases, 6 Liquid cases và 6 cache-parity comparisons PASS. Full Theme Check 0 errors/5 existing warnings, JS syntax/diff check PASS. CSS manifest có hash từng asset; schema/preset/template/group/settings JSON giữ nguyên ngoài control Header bổ sung; không thay content/media/order/animation values. Header/Announcement đang sửa riêng được giữ byte-identical ngoài first-paint scope đã audit. Customization coverage vẫn thiếu Header/Footer ngoài phạm vi, không báo full coverage PASS.
+
+Chưa verified live storefront/Theme Editor, chưa đo cold-cache Lighthouse before/after production; không coi raw CSS bytes hay read-count fixture là cải thiện score thực. Chưa release/upload/publish đợt 3.
+
+## ARCHE-ESSEN-HEADER-PRESET-007 — Essen Header preset theo Arche, giữ logo — 2026-10-14
+
+Revision 1. Owner yêu cầu Header preset giống Arche và chỉ giữ logo Essen hiện tại; yêu cầu này cho phép chuyển riêng composition/content/resource references Header vốn bị loại khỏi các mã implementation trước. Nguồn code Arche `21e1dc5c4e462625efd267ebb9b7ef641a8473a4`, section preset và saved Header hiện hành. Đích Essen `theme/essen-theme`, local sau `058c2b51`; applied, chưa commit/push/upload/publish.
+
+Đã chuyển đúng presets array của sections/header.liquid và Header node trong sections/header-group.json: Always, separator Line, transparent scheme-3, desktop Left/mobile Center, gap 64/24 và mobile 8/4, padding 16/10, body/sm navigation, menu arche-header, Cart icon, Search text, bỏ Localization/divider, hai banner nguồn với Tertiary/bottom padding 6px. Giữ config/settings_data.json byte-identical, gồm hai logo Essen thường/transparent và width 104/140px. Không chuyển global logo Arche, không tạo menu/upload Files hoặc đổi Announcement.
+
+QA: preset/instance đích exact source; 20 block instances hợp lệ theo type/setting IDs/select/range/order; Header implementation và group ngoài Header giữ nguyên; Theme Check 0 errors/5 warnings cũ; diff check PASS. Resource live readback và storefront/Theme Editor QA pending. [History đợt 4 tại Essen](../../../essen-theme/docs/variant-update-history.md) ghi lịch sử riêng, không gộp preset follow-up vào receipt bảo toàn đợt 3.
+
+### Essen release receipt — 2026-10-14, đợt 3–5
+
+Essen đã commit/push 12 mã shared r1 đợt 3 và ARCHE-ESSEN-HEADER-PRESET-007 r1 đợt 4 tại `34a8ca27bbcc0c525b84bc8f4f9cf8b4f3c105cd` trên `origin/theme/essen-theme`. Cùng release có ESSEN-HEADER-LOGO-FIGMA-001 r1 đợt 5: logo desktop/tablet/mobile 104/96/80px theo Figma Essen, giữ tài nguyên logo Essen. Mốc đích hoàn tất code đến đợt 5; lịch sử chi tiết: essen-theme/docs/variant-update-history.md. Full Theme Check workspace/index 0 errors / 5 warnings cũ. Appearance/settings PRODUCT-BADGES-002, live QA và Lighthouse production còn pending; chưa upload/publish, chưa verified.
