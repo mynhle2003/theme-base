@@ -1,7 +1,7 @@
 <!-- theme-base-sync-state: {"sha":"75baa7c890ee43f9a7c97ad3aee49961ea295f2f"} -->
-# Customization record: malandra
+# Customization record: malandra-theme
 
-Theme branch: `theme/malandra`
+Theme branch: `theme/malandra-theme`
 Personal base at creation: `d887dac2d2f637e2aae15f59272634f8fd3d1e32`
 Theme update source: this repository's `main` branch
 
