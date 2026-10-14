@@ -338,6 +338,12 @@
     z-index: 0;
   }
 
+  .image-card__media > .background-media:has(.background-media__image) {
+    inset: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+  }
+
   .image-card__overlay {
     z-index: 1;
     pointer-events: none;
