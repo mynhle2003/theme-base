@@ -114,9 +114,9 @@
 
   assign size_chart_option_name = size_chart_option_name | default: 'Size' | strip
   assign size_chart_option_name_normalized = size_chart_option_name | downcase
-  assign size_chart_desktop_layout = size_chart_desktop_layout | default: 'modal'
-  unless size_chart_desktop_layout == 'modal' or size_chart_desktop_layout == 'drawer'
-    assign size_chart_desktop_layout = 'modal'
+  assign size_chart_desktop_layout = size_chart_desktop_layout | default: 'popup'
+  unless size_chart_desktop_layout == 'popup' or size_chart_desktop_layout == 'drawer'
+    assign size_chart_desktop_layout = 'popup'
   endunless
   assign size_chart_mobile_layout = size_chart_mobile_layout | default: 'bottom_sheet'
   unless size_chart_mobile_layout == 'bottom_sheet' or size_chart_mobile_layout == 'drawer'
@@ -415,6 +415,6 @@
           {% endif %}
     {% endcapture %}
     {% assign chart_title = size_chart_page_title | escape %}
-    {% render 'component-overlay', id: size_chart_dialog_id, label: size_chart_page_title, title: chart_title, content: chart_content, append_to_body: true, desktop_layout: size_chart_desktop_layout, mobile_layout: size_chart_mobile_layout, attributes: 'data-size-chart-dialog', body_class: 'rte', width: size_chart_width %}
+    {% render 'component-overlay', id: size_chart_dialog_id, label: size_chart_page_title, title: chart_title, content: chart_content, append_to_body: true, desktop_layout: size_chart_desktop_layout, mobile_layout: size_chart_mobile_layout, attributes: 'data-size-chart-dialog', body_class: 'rte body-sm', width: size_chart_width %}
   {% endif %}
 </variant-picker>

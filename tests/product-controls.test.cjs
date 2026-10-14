@@ -74,6 +74,19 @@ test('caption and size guide share a header while the fieldset keeps its accessi
   assert.doesNotMatch(noGuide, /variant-picker__option-header/);
 });
 
+test('size guide maps saved modal settings to the centered popup shell and preserves drawers', async () => {
+  const options = [{ name: 'Size', values: [optionValue('Small', undefined, true)] }];
+  const page = { title: 'Size guide', content: '<p>Guide</p>' };
+  for (const layout of [undefined, 'modal', 'popup']) {
+    const html = await renderPicker(options, { size_chart_page: page, size_chart_desktop_layout: layout });
+    assert.match(html, /data-desktop-layout="popup"/);
+    assert.match(html, /component-overlay__body[^>]*rte body-sm/);
+  }
+  const drawer = await renderPicker(options, { size_chart_page: page, size_chart_desktop_layout: 'drawer' });
+  assert.match(drawer, /data-desktop-layout="drawer"/);
+  assert.match(drawer, /data-mobile-layout="bottom_sheet"/);
+});
+
 test('color presentation follows Swatches settings independently of the normal picker style', async () => {
   const options = [{ name: 'Color', values: [optionValue('Red', { color: { rgb: '1, 2, 3' }, image: { id: 99 } }, true)] }, { name: 'Size', values: [optionValue('Small', undefined, true)] }];
   const render = (style) => renderPicker(options, { settings: { variant_picker_style: 'dropdown', swatch_style: style, swatch_selected_style: 'underline' }, form_id: 'ExampleForm' });
