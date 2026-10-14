@@ -13,7 +13,7 @@ const fixture = (desktop, mobile) => `<style>${styles}</style><style>
 :root { --button-height:44px; --button-height-mobile:40px; --logo-width:104px; --logo-width-mobile:80px; }
 .header__container { width:calc(100% - 32px); margin:auto; }
 .header-search,.header-cart { width:32px; } .header-menu { width:300px; }
-.header-menu-toggle { display:none; width:36px; height:36px; }
+.header-menu-toggle { display:none; width:24px; height:24px; }
 .site-logo__image { height:35px; }
 @media(max-width:991.98px) { .header-menu { display:none; } .header-menu-toggle { display:block; } }
 </style><div class="shopify-section"><div class="header-top"><div class="header__container"><div class="header__row">
@@ -22,7 +22,7 @@ const fixture = (desktop, mobile) => `<style>${styles}</style><style>
 <div class="header__column header__column--right" data-header-column="right"></div>
 <div class="header__blocks" data-header-blocks>
 <a href="#logo" class="header-logo site-logo header-logo--${desktop}" data-logo-desktop-position="${desktop}" data-logo-mobile-position="${mobile}"><span class="site-logo__image">Logo</span></a>
-<nav class="header-menu">Menu</nav><button class="header-menu-toggle">Menu</button><button class="header-search">Search</button><a href="#cart" class="header-cart">Cart</a>
+<nav class="header-menu"><span class="menu-visible">Menswear New Sale About</span></nav><button class="header-menu-toggle">Menu</button><button class="header-search">Search</button><a href="#cart" class="header-cart">Cart</a>
 </div></div></div></div></div>`;
 const initialize = async page => page.addScriptTag({ content: `const headerLayoutItems = new WeakMap(); const isMobileMenuViewport = () => matchMedia('(max-width: 991.98px)').matches; ${organizer} window.organize = () => organizeHeaderLayout(document.querySelector('.shopify-section')); window.organize();` });
 const inspect = page => page.evaluate(() => {
@@ -85,3 +85,15 @@ test('tertiary underline stays inside banner clipping with existing padding cont
  await page.evaluate(()=>document.querySelector('article').style.setProperty('--mega-banner-padding-bottom','0px'));result=await read();assert.ok(result.bottom>result.clipBottom,'zero padding reproduces clipped underline');
  await page.evaluate(()=>document.documentElement.style.setProperty('--button-tertiary-underline-display','none'));result=await read();assert.equal(result.display,'none','global underline toggle remains respected');await page.close();
 });
+
+for(const width of [375,768,1024,1440,1920]) for(const desktop of ['left','center']) for(const mobile of ['left','center']) {
+ test(`first paint matches initialized visible layout: ${width}px ${desktop}/${mobile}`,async()=>{
+  const page=await browser.newPage({viewport:{width,height:800}});
+  await page.setContent(fixture(desktop,mobile));
+  await page.locator('.header-top').evaluate(el=>{el.style.cssText='--header-top-gap:64px;--header-actions-gap:24px;--header-top-gap-mobile:8px;--header-actions-gap-mobile:4px';});
+  const rects=()=>page.evaluate(()=>Object.fromEntries(['.site-logo','.menu-visible','.header-menu-toggle','.header-search','.header-cart'].map(selector=>{const el=document.querySelector(selector),r=el.getBoundingClientRect();return [selector,{x:r.x,y:r.y,width:r.width,height:r.height,visible:r.width>0&&r.height>0}];})));
+  const before=await rects();await initialize(page);const after=await rects();
+  for(const selector in before) if(before[selector].visible&&after[selector].visible) for(const dim of ['x','y']) assert.ok(Math.abs(before[selector][dim]-after[selector][dim])<=1,JSON.stringify({selector,dim,before:before[selector],after:after[selector]}));
+  await page.close();
+ });
+}

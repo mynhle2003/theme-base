@@ -449,3 +449,15 @@ Bằng chứng nguồn: 4 Press regression tests và 3 collection-tab motion tes
 | Ngày | Mã | Revision | Commit nguồn | Trạng thái Essen | Preview / publish |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | ARCHE-ESSEN-PRESS-001 | 1 | c04c3a40 | pending — chưa audit/apply | chưa upload / chưa publish |
+
+## ARCHE-ESSEN-HEADER-LOAD-006 — Header không nhảy menu khi tải lại
+
+Ngày 2026-10-14, revision 1. Nguồn: `arche-theme`, branch `theme/arche-theme`, patch local chưa commit. Đích `essen-theme`, branch `theme/essen-theme`: **pending**, chưa kiểm tra/apply/upload/publish.
+
+- Files: phần Header first-paint trong `assets/critical.css`; regression `tests/header-responsive-layout.test.cjs`. Không thay font/logo/resource hoặc trì hoãn/ẩn toàn bộ Header chờ JS.
+- Nguyên nhân: trước `data-layout-ready`, menu desktop bị đặt absolute ở giữa cho logo Left; sau `organizeHeaderLayout` nó chuyển sang cột navigation bên cạnh logo. Logo trước JS căn theo top thay vì center; menu toggle mobile có min-height 40px trước JS nhưng block hiện tại dùng 24px.
+- Sửa nguồn: giữ menu trong flow trước JS; logo Left đứng đầu, menu nối tiếp với khoảng cách tính từ `--header-top-gap` và `--header-actions-gap`, vùng menu co giãn để giữ actions phải. Logo Center vẫn giữa; giới hạn menu theo phần cột trái. Căn giữa logo tuyệt đối theo cả hai trục. Đồng bộ toggle mobile với block hiện tại 24px. JS tiếp tục tổ chức cùng nodes như trước; không thêm listener hoặc runtime khởi tạo thứ hai.
+- Dependency: DOM Header và các gap/position setting hiện có của đích. Nếu Essen chưa nhận HEADER-LOGO-002/GAP-003 thì điều chỉnh theo token/DOM thực tế, không copy mù selectors hoặc yêu cầu copy preset Arche. Con số toggle phải theo block đích, không coi 24px là chuẩn bắt buộc mọi theme.
+- Khi update: tái hiện vị trí logo/menu/actions trước JS và sau khởi tạo bằng cách trì hoãn runtime; chỉ áp dụng nếu còn dịch chuyển. Kiểm tra Desktop/Mobile Left/Center, custom gap, logo thường/transparent, sticky, width 375/768/1024/1440/1920, viewport đổi và editor reload. Đo nội dung nhìn thấy, không chỉ container. Nếu lỗi đã hết, ghi skipped và bằng chứng.
+- QA nguồn: 41 Chrome fixture tests PASS, gồm 20 trường hợp đối chiếu vị trí hiển thị trước/sau JS ở năm viewport và bốn tổ hợp vị trí logo, sai lệch không quá 1px; giữ 21 regression Search/gap/tertiary. Theme Check 0 errors/5 existing warnings; diff check PASS. Chưa xác minh reload trên storefront/Theme Editor live của Essen; QA fixture nguồn không được dùng để đánh dấu verified đích.
+- Trạng thái Essen: pending. Preview/publish: chưa thực hiện. Không chuyển preset/media/menu hoặc các patch animation/banner đang sửa đồng thời.
