@@ -1767,3 +1767,7 @@ ARCHE-ESSEN-HEADER-PRESET-007 revision 1 applies the source Header schema preset
 ## Header logo sizing from Figma — 2026-10-14
 
 ESSEN-HEADER-LOGO-FIGMA-001 revision 1: blocks/_header-logo.liquid uses separate tablet width token and responsive image sizes, with natural image height rather than the previous 40/30px caps. snippets/css-variables.liquid emits --logo-width-tablet. Configuration adds Tablet logo width and sets current/named preset widths to 104/96/80px from Figma Header nodes 47129:7653 / 47180:13714 / 47180:13713. Original Essen logo and transparent artwork references remain unchanged. This supersedes the historical 104/140 width preservation of Header preset đợt 4; other Header settings remain. Preserve responsive sizing and image aspect ratio on base merges. Eight Chrome boundary cases pass; Theme Check 0 errors/5 existing warnings. See [history đợt 5](../variant-update-history.md) for source sizes and exact preservation evidence. Local application; no commit/push/upload/publish.
+
+## Release checkpoint — 2026-10-14
+
+Đợt 3–5 đã commit và push trên `origin/theme/essen-theme` tại `34a8ca27bbcc0c525b84bc8f4f9cf8b4f3c105cd`. Code hoàn tất đến đợt 5; 14 mã mới, gồm Header preset Arche và logo Figma 104/96/80px với tài nguyên Essen giữ nguyên. Full Theme Check workspace/index 0 errors / 5 warnings cũ. Chi tiết và phần pending xem [lịch sử variant](../variant-update-history.md). Live QA và upload/publish chưa thực hiện.

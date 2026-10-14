@@ -44,3 +44,7 @@ Customization coverage: update-owned paths are recorded; checker still reports s
 ## Subsequent Header preset request
 
 The preservation receipt above describes đợt 3 at application time. Owner subsequently authorized Arche Header preset parity, preserving only the current Essen logos. ARCHE-ESSEN-HEADER-PRESET-007 revision 1 in [history đợt 4](../variant-update-history.md) tracks that separate configuration change. It intentionally updates saved Header/preset values after the earlier no-preset-change receipt; these new values were not part of đợt 3.
+
+## Release checkpoint — 2026-10-14
+
+Đợt 3–5 đã commit và push trên `origin/theme/essen-theme` tại `34a8ca27bbcc0c525b84bc8f4f9cf8b4f3c105cd`. Code hoàn tất đến đợt 5; 14 mã mới, gồm Header preset Arche và logo Figma 104/96/80px với tài nguyên Essen giữ nguyên. Full Theme Check workspace/index 0 errors / 5 warnings cũ. Chi tiết và phần pending xem [lịch sử variant](../variant-update-history.md). Live QA và upload/publish chưa thực hiện.
