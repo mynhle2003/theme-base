@@ -5,10 +5,6 @@
 {% enddoc %}
 
 {% liquid
-  assign carousel_transition = block.settings.transition_style | default: 'slide'
-  unless carousel_transition == 'slide' or carousel_transition == 'fade'
-    assign carousel_transition = 'slide'
-  endunless
   assign carousel_columns_desktop = block.settings.columns_desktop | default: '4' | plus: 0
   if carousel_columns_desktop < 1 or carousel_columns_desktop > 6
     assign carousel_columns_desktop = 4
@@ -23,183 +19,35 @@
     assign carousel_show_next_slide_preview = true
   endif
 
-  assign image_text_card_ratio_setting = block.settings.image_text_card_ratio | default: 'auto'
-  assign image_text_card_ratio = '6 / 7'
-  case image_text_card_ratio_setting
-    when 'ratio_1_1', 'ratio_4_5', 'ratio_5_4', 'ratio_6_7', 'ratio_7_6', 'ratio_5_7', 'ratio_7_5', 'ratio_2_3', 'ratio_3_2', 'ratio_4_3', 'ratio_3_4', 'ratio_2_1', 'ratio_1_2', 'ratio_16_9', 'ratio_9_16', 'ratio_12_5', 'ratio_5_12', 'ratio_48_17', 'ratio_17_48', 'ratio_5_8', 'ratio_8_5'
-      capture image_text_card_ratio
-        render 'image-ratio-value', setting: image_text_card_ratio_setting
-      endcapture
-      assign image_text_card_ratio = image_text_card_ratio | strip
-    when 'square'
-      assign image_text_card_ratio = '1 / 1'
-    when 'portrait'
-      assign image_text_card_ratio = '4 / 5'
-    when 'landscape'
-      assign image_text_card_ratio = '4 / 3'
-    when 'wide'
-      assign image_text_card_ratio = '16 / 9'
-    when 'custom'
-      assign image_text_card_ratio_width = block.settings.image_text_card_ratio_width | default: 6 | plus: 0
-      assign image_text_card_ratio_height = block.settings.image_text_card_ratio_height | default: 7 | plus: 0
-      if image_text_card_ratio_width > 0 and image_text_card_ratio_height > 0
-        assign image_text_card_ratio = image_text_card_ratio_width | append: ' / ' | append: image_text_card_ratio_height
-      endif
-  endcase
-  assign image_text_card_ratio_mobile = image_text_card_ratio
-  assign image_text_card_max_width = block.settings.image_text_card_max_width | default: 100 | plus: 0
-  assign image_text_card_max_width_mobile = image_text_card_max_width
-  if block.settings.image_text_card_customize_mobile
-    assign image_text_card_ratio_mobile_setting = block.settings.image_text_card_ratio_mobile | default: image_text_card_ratio_setting
-    case image_text_card_ratio_mobile_setting
-      when 'ratio_1_1'
-        assign image_text_card_ratio_mobile = '1 / 1'
-      when 'ratio_4_5'
-        assign image_text_card_ratio_mobile = '4 / 5'
-      when 'ratio_5_4'
-        assign image_text_card_ratio_mobile = '5 / 4'
-      when 'ratio_6_7'
-        assign image_text_card_ratio_mobile = '6 / 7'
-      when 'ratio_7_6'
-        assign image_text_card_ratio_mobile = '7 / 6'
-      when 'ratio_5_7'
-        assign image_text_card_ratio_mobile = '5 / 7'
-      when 'ratio_7_5'
-        assign image_text_card_ratio_mobile = '7 / 5'
-      when 'ratio_2_3'
-        assign image_text_card_ratio_mobile = '2 / 3'
-      when 'ratio_3_2'
-        assign image_text_card_ratio_mobile = '3 / 2'
-      when 'ratio_4_3'
-        assign image_text_card_ratio_mobile = '4 / 3'
-      when 'ratio_3_4'
-        assign image_text_card_ratio_mobile = '3 / 4'
-      when 'ratio_2_1'
-        assign image_text_card_ratio_mobile = '2 / 1'
-      when 'ratio_1_2'
-        assign image_text_card_ratio_mobile = '1 / 2'
-      when 'ratio_16_9'
-        assign image_text_card_ratio_mobile = '16 / 9'
-      when 'ratio_9_16'
-        assign image_text_card_ratio_mobile = '9 / 16'
-      when 'ratio_12_5'
-        assign image_text_card_ratio_mobile = '12 / 5'
-      when 'ratio_5_12'
-        assign image_text_card_ratio_mobile = '5 / 12'
-      when 'ratio_48_17'
-        assign image_text_card_ratio_mobile = '48 / 17'
-      when 'ratio_17_48'
-        assign image_text_card_ratio_mobile = '17 / 48'
-      when 'ratio_5_8'
-        assign image_text_card_ratio_mobile = '5 / 8'
-      when 'ratio_8_5'
-        assign image_text_card_ratio_mobile = '8 / 5'
-      when 'square'
-        assign image_text_card_ratio_mobile = '1 / 1'
-      when 'portrait'
-        assign image_text_card_ratio_mobile = '4 / 5'
-      when 'landscape'
-        assign image_text_card_ratio_mobile = '4 / 3'
-      when 'wide'
-        assign image_text_card_ratio_mobile = '16 / 9'
-      when 'custom'
-        assign image_text_card_ratio_width_mobile = block.settings.image_text_card_ratio_width_mobile | default: 6 | plus: 0
-        assign image_text_card_ratio_height_mobile = block.settings.image_text_card_ratio_height_mobile | default: 7 | plus: 0
-        if image_text_card_ratio_width_mobile > 0 and image_text_card_ratio_height_mobile > 0
-          assign image_text_card_ratio_mobile = image_text_card_ratio_width_mobile | append: ' / ' | append: image_text_card_ratio_height_mobile
-        endif
-    endcase
-    assign image_text_card_max_width_mobile = block.settings.image_text_card_max_width_mobile | default: image_text_card_max_width | plus: 0
+  assign carousel_gap_desktop = block.settings.gap_desktop | default: 4 | plus: 0
+  assign carousel_gap_mobile = block.settings.gap_mobile | default: 4 | plus: 0
+  if carousel_gap_desktop < 0 or carousel_gap_desktop > 40
+    assign carousel_gap_desktop = 4
   endif
-  assign image_text_card_typo_size = block.settings.image_text_card_typo_size | default: 14 | plus: 0
-  assign image_text_card_typo_size_mobile = block.settings.image_text_card_typo_size_mobile | default: image_text_card_typo_size | plus: 0
-  assign image_text_card_content_size = block.settings.image_text_card_content_size | default: 14 | plus: 0
-  assign image_text_card_content_size_mobile = block.settings.image_text_card_content_size_mobile | default: image_text_card_content_size | plus: 0
-
-  assign carousel_gap_desktop = block.settings.gap_desktop | default: 32 | plus: 0
-  assign carousel_gap_mobile = block.settings.gap_mobile | default: 24 | plus: 0
-  if carousel_gap_desktop < 0 or carousel_gap_desktop > 100
-    assign carousel_gap_desktop = 32
+  if carousel_gap_mobile < 0 or carousel_gap_mobile > 40
+    assign carousel_gap_mobile = 4
   endif
-  if carousel_gap_mobile < 0 or carousel_gap_mobile > 100
-    assign carousel_gap_mobile = 24
-  endif
-
-  assign carousel_border_type = block.settings.border_type | default: 'solid'
-  assign carousel_border_type_allowed_values = 'none|solid|dashed|dotted|double' | split: '|'
-  unless carousel_border_type_allowed_values contains carousel_border_type
-    assign carousel_border_type = 'none'
-  endunless
-  assign carousel_border_thickness = block.settings.border_thickness | default: 1 | plus: 0
-  if carousel_border_thickness < 0 or carousel_border_thickness > 4
-    assign carousel_border_thickness = 1
-  endif
-  assign carousel_corner_radius = block.settings.corner_radius | default: 'square'
-  assign carousel_corner_radius_allowed_values = 'square|slightly_rounded|rounded|pill' | split: '|'
-  unless carousel_corner_radius_allowed_values contains carousel_corner_radius
-    assign carousel_corner_radius = 'square'
-  endunless
-  assign image_text_card_radius = '0px'
-  case carousel_corner_radius
-    when 'slightly_rounded'
-      assign image_text_card_radius = '6px'
-    when 'rounded'
-      assign image_text_card_radius = '12px'
-    when 'pill'
-      assign image_text_card_radius = '999px'
-  endcase
-  assign image_text_card_toggle_icon = block.settings.image_text_card_toggle_icon | default: 'plus'
-  assign image_text_card_toggle_icon_allowed_values = 'plus|arrow|chevron' | split: '|'
-  unless image_text_card_toggle_icon_allowed_values contains image_text_card_toggle_icon
-    assign image_text_card_toggle_icon = 'plus'
-  endunless
-  assign image_text_card_icon_size = block.settings.image_text_card_icon_size | default: 24 | plus: 0
-  if image_text_card_icon_size < 12 or image_text_card_icon_size > 40
-    assign image_text_card_icon_size = 24
-  endif
-  assign image_text_card_heading_tag = block.settings.image_text_card_heading_tag | default: 'h4'
-  assign image_text_card_heading_tag_allowed_values = 'div|h1|h2|h3|h4|h5|h6' | split: '|'
-  unless image_text_card_heading_tag_allowed_values contains image_text_card_heading_tag
-    assign image_text_card_heading_tag = 'h4'
-  endunless
 
   assign carousel_width_mode = block.settings.width | default: 'fill'
   unless carousel_width_mode == 'fill' or carousel_width_mode == 'custom'
     assign carousel_width_mode = 'fill'
   endunless
-  assign carousel_custom_width = block.settings.custom_width | default: 100 | plus: 0
+  assign carousel_custom_width = block.settings.custom_width | default: 50 | plus: 0
   if carousel_custom_width < 20 or carousel_custom_width > 100
-    assign carousel_custom_width = 100
+    assign carousel_custom_width = 50
   endif
 
-  assign carousel_navigation_style = block.settings.navigation_style | default: 'secondary'
-  assign carousel_navigation_style_allowed_values = 'primary|secondary|outline' | split: '|'
-  unless carousel_navigation_style_allowed_values contains carousel_navigation_style
-    assign carousel_navigation_style = 'secondary'
+  assign carousel_navigation_style = block.settings.navigation_style | default: 'primary'
+  unless carousel_navigation_style == 'primary' or carousel_navigation_style == 'secondary' or carousel_navigation_style == 'outline'
+    assign carousel_navigation_style = 'primary'
   endunless
-  assign carousel_navigation_icon = block.settings.navigation_icon | default: 'chevron'
-  assign carousel_navigation_icon_allowed_values = 'chevron|arrow|long_arrow' | split: '|'
-  unless carousel_navigation_icon_allowed_values contains carousel_navigation_icon
-    assign carousel_navigation_icon = 'chevron'
+  assign carousel_navigation_icon = block.settings.navigation_icon | default: 'arrow'
+  unless carousel_navigation_icon == 'chevron' or carousel_navigation_icon == 'arrow' or carousel_navigation_icon == 'long_arrow'
+    assign carousel_navigation_icon = 'arrow'
   endunless
-  assign carousel_navigation_behavior = block.settings.navigation_behavior | default: 'always'
+  assign carousel_navigation_behavior = block.settings.navigation_behavior | default: 'show_on_hover'
   unless carousel_navigation_behavior == 'always' or carousel_navigation_behavior == 'show_on_hover'
-    assign carousel_navigation_behavior = 'always'
-  endunless
-
-  assign carousel_controls_style = block.settings.controls_style | default: 'standard'
-  unless carousel_controls_style == 'standard' or carousel_controls_style == 'fraction'
-    assign carousel_controls_style = 'standard'
-  endunless
-  assign carousel_controls_alignment = block.settings.controls_alignment | default: 'center'
-  assign carousel_controls_alignment_allowed_values = 'left|center|right' | split: '|'
-  unless carousel_controls_alignment_allowed_values contains carousel_controls_alignment
-    assign carousel_controls_alignment = 'center'
-  endunless
-  assign carousel_controls_alignment_mobile = block.settings.controls_alignment_mobile | default: carousel_controls_alignment
-  assign carousel_controls_alignment_mobile_allowed_values = 'left|center|right' | split: '|'
-  unless carousel_controls_alignment_mobile_allowed_values contains carousel_controls_alignment_mobile
-    assign carousel_controls_alignment_mobile = carousel_controls_alignment
+    assign carousel_navigation_behavior = 'show_on_hover'
   endunless
 
   assign carousel_show_navigation = true
@@ -207,44 +55,47 @@
     assign carousel_show_navigation = false
   endif
 
-  assign carousel_navigation_position = block.settings.navigation_position | default: 'inside'
+  assign carousel_navigation_position = block.settings.navigation_position | default: 'outside'
   unless carousel_navigation_position == 'inside' or carousel_navigation_position == 'outside'
-    assign carousel_navigation_position = 'inside'
+    assign carousel_navigation_position = 'outside'
   endunless
 
-  assign carousel_pagination_type = block.settings.pagination_type | default: 'progress_bar'
+  assign carousel_pagination_type = block.settings.pagination_type | default: 'bullets'
   unless carousel_pagination_type == 'progress_bar' or carousel_pagination_type == 'bullets'
-    assign carousel_pagination_type = 'progress_bar'
+    assign carousel_pagination_type = 'bullets'
   endunless
   assign carousel_pagination_desktop = true
   if block.settings.show_pagination_on_desktop == false or block.settings.show_pagination_on_desktop == 'false'
     assign carousel_pagination_desktop = false
   endif
-  assign carousel_pagination_mobile = true
-  if block.settings.show_pagination_on_mobile == false or block.settings.show_pagination_on_mobile == 'false'
-    assign carousel_pagination_mobile = false
+  assign carousel_pagination_mobile = false
+  if block.settings.show_pagination_on_mobile == true or block.settings.show_pagination_on_mobile == 'true'
+    assign carousel_pagination_mobile = true
   endif
   assign carousel_pagination_padding_desktop = block.settings.pagination_padding_desktop | default: 40 | plus: 0
-  assign carousel_pagination_padding_mobile = block.settings.pagination_padding_mobile | default: 40 | plus: 0
-  assign carousel_pagination_max_width = block.settings.pagination_max_width | default: 260 | plus: 0
-  if carousel_pagination_padding_desktop < 0 or carousel_pagination_padding_desktop > 100
+  assign carousel_pagination_padding_mobile = block.settings.pagination_padding_mobile | default: 30 | plus: 0
+  if carousel_pagination_padding_desktop < 0 or carousel_pagination_padding_desktop > 70
     assign carousel_pagination_padding_desktop = 40
   endif
-  if carousel_pagination_padding_mobile < 0 or carousel_pagination_padding_mobile > 100
-    assign carousel_pagination_padding_mobile = 40
-  endif
-  if carousel_pagination_max_width < 100 or carousel_pagination_max_width > 500
-    assign carousel_pagination_max_width = 260
+  if carousel_pagination_padding_mobile < 0 or carousel_pagination_padding_mobile > 50
+    assign carousel_pagination_padding_mobile = 30
   endif
   assign carousel_pagination_limit_width = false
   if carousel_pagination_type == 'progress_bar' and block.settings.pagination_limit_width
     assign carousel_pagination_limit_width = true
   endif
+  assign carousel_pagination_max_width = block.settings.pagination_max_width | default: 200 | plus: 0
+  if carousel_pagination_max_width < 100 or carousel_pagination_max_width > 500
+    assign carousel_pagination_max_width = 200
+  endif
 
   assign carousel_autoplay = block.settings.autoplay
-  assign carousel_pause_on_hover = block.settings.pause_on_hover
+  assign carousel_pause_on_hover = true
+  if block.settings.pause_on_hover == false or block.settings.pause_on_hover == 'false'
+    assign carousel_pause_on_hover = false
+  endif
   assign carousel_speed = block.settings.autoplay_speed | default: 4 | plus: 0
-  if carousel_speed < 3 or carousel_speed > 7
+  if carousel_speed < 1 or carousel_speed > 10
     assign carousel_speed = 4
   endif
 
@@ -253,6 +104,13 @@
   assign carousel_padding_top_mobile = block.settings.padding_top_mobile | default: 0 | plus: 0
   assign carousel_padding_bottom_mobile = block.settings.padding_bottom_mobile | default: 0 | plus: 0
   assign carousel_customize_mobile_padding = block.settings.customize_mobile_padding
+  assign carousel_visible_desktop = carousel_columns_desktop
+  assign carousel_visible_mobile = carousel_columns_mobile
+  if block.blocks.size > carousel_columns_mobile and block.settings.show_next_slide_preview_on_mobile
+    if carousel_columns_mobile == 1
+      assign carousel_visible_mobile = 1.2
+    endif
+  endif
   assign carousel_id = 'Carousel-' | append: block.id
   assign carousel_delay = carousel_speed | times: 1000
   assign carousel_previous_label = 'collection_tabs.previous' | t
@@ -261,10 +119,6 @@
   if block.blocks != blank and block.blocks.size > 1
     assign carousel_has_multiple_items = true
   endif
-  assign carousel_show_next_slide_preview = false
-  if block.settings.show_next_slide_preview_on_desktop
-    assign carousel_show_next_slide_preview = true
-  endif
 %}
 
 <script data-theme-module="{{ 'carousel-block.js' | asset_url }}"></script>
@@ -272,21 +126,23 @@
 
 {% capture carousel_slides %}{% content_for 'blocks' %}{% endcapture %}
 {% capture carousel_pagination %}
-  {% if carousel_has_multiple_items and carousel_controls_style == 'standard' %}
+  {% if carousel_has_multiple_items %}
     {% if carousel_pagination_desktop or carousel_pagination_mobile %}
       <div
-        class="swiper-pagination swiper-pagination--below carousel-block__pagination carousel-block__pagination--{{ carousel_pagination_type }}{% if carousel_pagination_limit_width %} carousel-block__pagination--limited{% endif %}"
+        class="swiper-pagination swiper-pagination--below carousel-block__pagination carousel-block__pagination--{{ carousel_pagination_type }}"
         data-carousel-pagination
         data-pagination-type="{{ carousel_pagination_type }}"
         data-pagination-visible-desktop="{{ carousel_pagination_desktop }}"
         data-pagination-visible-mobile="{{ carousel_pagination_mobile }}"
-        {% if carousel_pagination_limit_width %}style="--carousel-pagination-max-width: {{ carousel_pagination_max_width }}px; --swiper-pagination-width: {{ carousel_pagination_max_width }}px;"{% endif %}
+        {% if carousel_pagination_limit_width %}style="--carousel-pagination-width: min(100%, {{ carousel_pagination_max_width }}px); --swiper-pagination-width: min(100%, {{ carousel_pagination_max_width }}px);"{% endif %}
       ></div>
     {% endif %}
   {% endif %}
 {% endcapture %}
 
 {% capture carousel_style %}
+  --carousel-columns-visible-desktop: {{ carousel_visible_desktop }};
+  --carousel-columns-visible-mobile: {{ carousel_visible_mobile }};
   --carousel-padding-top: {{ carousel_padding_top }}px;
   --carousel-padding-bottom: {{ carousel_padding_bottom }}px;
   {% if carousel_customize_mobile_padding %}
@@ -298,34 +154,42 @@
   {% if carousel_pagination_mobile %}--carousel-pagination-padding-mobile: {{ carousel_pagination_padding_mobile }}px;{% endif %}
   {% if carousel_pagination_desktop %}--swiper-pagination-spacing: {{ carousel_pagination_padding_desktop }}px;{% endif %}
   {% if carousel_pagination_mobile %}--swiper-pagination-spacing-mobile: {{ carousel_pagination_padding_mobile }}px;{% endif %}
-  --image-text-card-ratio: {{ image_text_card_ratio }};
-  --image-text-card-ratio-mobile: {{ image_text_card_ratio_mobile }};
-  --image-text-card-max-width: {{ image_text_card_max_width }}%;
-  --image-text-card-max-width-mobile: {{ image_text_card_max_width_mobile }}%;
-  --image-text-card-typo-size: {{ image_text_card_typo_size }}px;
-  --image-text-card-typo-size-mobile: {{ image_text_card_typo_size_mobile }}px;
-  --image-text-card-content-size: {{ image_text_card_content_size }}px;
-  --image-text-card-content-size-mobile: {{ image_text_card_content_size_mobile }}px;
-  --image-text-card-border-style: {{ carousel_border_type }};
-  --image-text-card-border-thickness: {{ carousel_border_thickness }}px;
-  --image-text-card-radius: {{ image_text_card_radius }};
-  --image-text-card-icon-size: {{ image_text_card_icon_size }}px;
-  {% if block.settings.border_color != blank %}--image-text-card-border-color: {{ block.settings.border_color | escape }};{% endif %}
-  {% if block.settings.image_text_card_typo_color != blank %}--image-text-card-typo-color: {{ block.settings.image_text_card_typo_color | escape }};{% endif %}
-  {% if block.settings.image_text_card_content_color != blank %}--image-text-card-content-color: {{ block.settings.image_text_card_content_color | escape }};{% endif %}
 {% endcapture %}
 
-{% if carousel_transition == 'fade' %}
-  <link rel="stylesheet" href="{{ 'swiper-12.2.0-effect-fade.min.css' | asset_url }}" media="print" onload="this.media='all'">
-  <noscript>{{ 'swiper-12.2.0-effect-fade.min.css' | asset_url | stylesheet_tag }}</noscript>
-{% endif %}
+{% capture carousel_navigation_markup %}
+    {% if carousel_has_multiple_items %}
+      {% capture carousel_navigation_center_style %}
+        {% if carousel_pagination_desktop %}
+          {% assign carousel_pagination_size = 'var(--swiper-pagination-progressbar-size, 4px)' %}
+          {% if carousel_pagination_type == 'bullets' %}{% assign carousel_pagination_size = 'var(--swiper-pagination-bullet-size, 0.5rem)' %}{% endif %}
+          --swiper-navigation-center-offset: calc(({{ carousel_pagination_padding_desktop }}px + {{ carousel_pagination_size }}) / 2);
+        {% endif %}
+      {% endcapture %}
+      {% render 'swiper-navigation',
+        show: carousel_show_navigation,
+        position: carousel_navigation_position,
+        style: carousel_navigation_style,
+        icon: carousel_navigation_icon,
+        behavior: carousel_navigation_behavior,
+        centered: true,
+        center_style: carousel_navigation_center_style,
+        wrapper_class: 'carousel-block__navigation',
+        wrapper_attributes: 'data-carousel-navigation',
+        previous_attribute: 'data-carousel-previous',
+        next_attribute: 'data-carousel-next',
+        previous_label: carousel_previous_label,
+        next_label: carousel_next_label
+      %}
+    {% endif %}
+{% endcapture %}
 
 <div
-  class="carousel-block carousel-block--width-{{ carousel_width_mode }} carousel-block--card-icon-{{ image_text_card_toggle_icon }}"
+  class="carousel-block carousel-block--width-{{ carousel_width_mode }}"
   style="{{ carousel_style | strip }}"
   data-carousel-block
-  data-transition="{{ carousel_transition }}"
-  data-image-text-card-heading-tag="{{ image_text_card_heading_tag }}"
+  data-carousel-preview-mobile="{{ block.settings.show_next_slide_preview_on_mobile }}"
+  data-carousel-contained-preview="false"
+  data-carousel-preview-requested="{{ carousel_show_next_slide_preview }}"
   data-swiper-columns-desktop="{{ carousel_columns_desktop }}"
   data-swiper-columns-mobile="{{ carousel_columns_mobile }}"
   data-swiper-gap-desktop="{{ carousel_gap_desktop }}"
@@ -333,8 +197,6 @@
   data-swiper-pagination-type="{{ carousel_pagination_type }}"
   data-swiper-pagination-desktop="{{ carousel_pagination_desktop }}"
   data-swiper-pagination-mobile="{{ carousel_pagination_mobile }}"
-  data-carousel-controls-style="{{ carousel_controls_style }}"
-  data-carousel-loop="{{ block.settings.loop }}"
   data-swiper-autoplay="{{ carousel_autoplay }}"
   data-swiper-autoplay-pause-on-hover="{{ carousel_pause_on_hover }}"
   data-swiper-autoplay-delay="{{ carousel_speed | times: 1000 }}"
@@ -350,79 +212,40 @@
       autoplay: carousel_autoplay,
       pause_on_hover: carousel_pause_on_hover,
       autoplay_delay: carousel_delay,
-      show_next_slide_preview: carousel_show_next_slide_preview,
-      show_next_slide_preview_on_mobile: block.settings.show_next_slide_preview_on_mobile
+      show_next_slide_preview: carousel_show_next_slide_preview
     %}
-    {% if carousel_has_multiple_items and carousel_controls_style == 'standard' %}
-      {% render 'swiper-navigation',
-        show: carousel_show_navigation,
-        position: carousel_navigation_position,
-        style: carousel_navigation_style,
-        icon: carousel_navigation_icon,
-        behavior: carousel_navigation_behavior,
-        centered: true,
-        wrapper_class: 'carousel-block__navigation',
-        wrapper_attributes: 'data-carousel-navigation',
-        previous_attribute: 'data-carousel-previous',
-        next_attribute: 'data-carousel-next',
-        previous_label: carousel_previous_label,
-        next_label: carousel_next_label
-      %}
-    {% endif %}
-    {% if carousel_has_multiple_items and carousel_show_navigation and carousel_controls_style == 'fraction' %}
-      <div class="carousel-block__fraction-controls carousel-block__fraction-controls--{{ carousel_controls_alignment }} carousel-block__fraction-controls--mobile-{{ carousel_controls_alignment_mobile }}">
-        <button class="btn btn--unstyled btn--icon swiper-nav-button carousel-block__fraction-button" type="button" data-carousel-fraction-previous aria-label="{{ 'collection_tabs.previous' | t | escape }}">
-          {% render 'carousel-navigation-icon', icon: carousel_navigation_icon, direction: 'previous' %}
-        </button>
-        <span class="carousel-block__fraction" aria-live="polite">
-          <span data-carousel-fraction-current>1</span>/<span data-carousel-fraction-total>1</span>
-        </span>
-        <button class="btn btn--unstyled btn--icon swiper-nav-button carousel-block__fraction-button" type="button" data-carousel-fraction-next aria-label="{{ 'collection_tabs.next' | t | escape }}">
-          {% render 'carousel-navigation-icon', icon: carousel_navigation_icon, direction: 'next' %}
-        </button>
-      </div>
-    {% endif %}
+    {{ carousel_navigation_markup }}
+
   </div>
 </div>
 
 {% stylesheet %}
-  .carousel-block { width: var(--carousel-width, 100%); min-width: 0; padding-block: var(--carousel-padding-top) var(--carousel-padding-bottom); }
-  .carousel-block__container { position: relative; min-width: 0; }
-  .carousel-block__viewport { width: 100%; }
-  .carousel-block__viewport > .swiper-wrapper { column-gap: 0; }
-  .carousel-block__navigation { position: absolute; z-index: 2; inset: 50% 0 auto; display: flex; justify-content: space-between; padding-inline: 0.5rem; transform: translateY(-50%); pointer-events: none; }
-  .carousel-block__navigation.swiper-carousel__navigation--outside { padding-inline: 0; }
-  .carousel-block__navigation.swiper-carousel__navigation--outside .swiper-nav-button--prev { margin-inline-start: calc(-1 * var(--swiper-nav-size) / 2); }
-  .carousel-block__navigation.swiper-carousel__navigation--outside .swiper-nav-button--next { margin-inline-end: calc(-1 * var(--swiper-nav-size) / 2); }
-  .carousel-block__navigation .swiper-nav-button { pointer-events: auto; }
-  .carousel-block__navigation .swiper-nav-button.swiper-button-disabled { pointer-events: none; }
-  .carousel-block__fraction-controls { display: flex; align-items: center; gap: 1rem; margin-top: 1rem; }
-  .carousel-block__fraction-controls--left { justify-content: flex-start; }
-  .carousel-block__fraction-controls--center { justify-content: center; }
-  .carousel-block__fraction-controls--right { justify-content: flex-end; }
+  [data-carousel-block] { width: var(--carousel-width, 100%); min-width: 0; padding-block: var(--carousel-padding-top, 0px) var(--carousel-padding-bottom, 0px); }
+  [data-carousel-block] .carousel-block__container { position: relative; min-width: 0; }
+  [data-carousel-block] .carousel-block__viewport { width: 100%; }
+  [data-carousel-block] .carousel-block__viewport > .swiper-wrapper { column-gap: 0; }
+  [data-carousel-block] .carousel-block__navigation { position: absolute; z-index: 2; inset: calc(50% - var(--swiper-navigation-center-offset, 0px)) 0 auto; display: flex; justify-content: space-between; padding-inline: 0.5rem; transform: translateY(-50%); pointer-events: none; }
+  [data-carousel-block] .carousel-block__navigation.swiper-carousel__navigation--outside { padding-inline: 0; }
+  [data-carousel-block] .swiper-carousel__navigation--outside .swiper-nav-button--prev { margin-inline-start: calc(-1 * var(--swiper-nav-size) / 2); }
+  [data-carousel-block] .swiper-carousel__navigation--outside .swiper-nav-button--next { margin-inline-end: calc(-1 * var(--swiper-nav-size) / 2); }
+  [data-carousel-block] .carousel-block__navigation .swiper-nav-button { pointer-events: auto; }
+  [data-carousel-block] .carousel-block__navigation .swiper-button-disabled { pointer-events: none; }
+  [data-carousel-block].carousel-block--locked > .carousel-block__container > .carousel-block__navigation,
+  [data-carousel-block].carousel-block--locked > .carousel-block__container > .carousel-block__viewport > .swiper-pagination { display: none !important; }
+  [data-carousel-block] .carousel-block__viewport > .swiper-pagination { width: var(--carousel-pagination-width, 100%); margin-block-start: var(--carousel-pagination-padding-desktop, 0px); }
+  @media (min-width: 768px) { [data-carousel-block] .swiper-pagination[data-pagination-visible-desktop='false'] { display: none; } }
   @media (max-width: 767.98px) {
-    .carousel-block__fraction-controls--mobile-left { justify-content: flex-start; }
-    .carousel-block__fraction-controls--mobile-center { justify-content: center; }
-    .carousel-block__fraction-controls--mobile-right { justify-content: flex-end; }
+    [data-carousel-block] { padding-block: var(--carousel-padding-top-mobile, var(--carousel-padding-top, 0px)) var(--carousel-padding-bottom-mobile, var(--carousel-padding-bottom, 0px)); }
+    [data-carousel-block] .carousel-block__navigation { display: none; }
+    [data-carousel-block] .carousel-block__viewport > .swiper-pagination { margin-block-start: var(--carousel-pagination-padding-mobile, 0px); }
+    [data-carousel-block] .swiper-pagination[data-pagination-visible-mobile='false'] { display: none; }
   }
-  .carousel-block__fraction-button { --swiper-nav-size: 24px; width: 24px; min-width: 24px; height: 24px; padding: 0; }
-  .carousel-block__fraction-button svg { width: 24px; height: 24px; }
-  .carousel-block__fraction { min-width: 2.5rem; font-size: 16px; line-height: 24px; text-align: center; }
-  .carousel-block--locked .carousel-block__navigation,
-  .carousel-block--locked .carousel-block__fraction-controls,
-  .carousel-block--locked .carousel-block__viewport > .swiper-pagination { display: none !important; }
-  .carousel-block__navigation--show_on_hover { opacity: 1; }
-  .carousel-block__viewport > .swiper-pagination { width: var(--carousel-pagination-width, 100%); margin-block: var(--carousel-pagination-padding-desktop, 0px) 0; margin-inline: auto; padding-top: 0; }
-  .carousel-block__viewport > .carousel-block__pagination--limited { width: min(100%, var(--carousel-pagination-max-width, 100%)); }
-  .carousel-block__viewport > .carousel-block__pagination--progress_bar { --swiper-pagination-progressbar-size: 2px; }
-  .carousel-block__viewport > .swiper-pagination:not([data-pagination-visible-desktop='true']) { display: none; }
-  @media (max-width: 767.98px) {
-    .carousel-block { padding-block: var(--carousel-padding-top-mobile, var(--carousel-padding-top)) var(--carousel-padding-bottom-mobile, var(--carousel-padding-bottom)); }
-    .carousel-block__navigation { display: none; }
-    .carousel-block__fraction-controls { margin-top: 1rem; }
-    .carousel-block__viewport > .swiper-pagination { margin-block-start: var(--carousel-pagination-padding-mobile, 0px); }
-    .carousel-block__viewport > .swiper-pagination:not([data-pagination-visible-mobile='true']) { display: none; }
-  }
+
+  [data-carousel-block] .carousel-block__viewport { --carousel-columns-visible: var(--carousel-columns-visible-desktop); --carousel-gap: var(--carousel-gap-desktop, 4px); }
+  [data-carousel-block] .carousel-block__viewport:not(.swiper-initialized) > .swiper-wrapper { column-gap: var(--carousel-gap); }
+  [data-carousel-block] .carousel-block__viewport:not(.swiper-initialized) > .swiper-wrapper > .swiper-slide { width: calc((100% + var(--carousel-gap)) / var(--carousel-columns-visible) - var(--carousel-gap)); }
+  [data-carousel-block][data-carousel-contained-preview='true'] .carousel-block__viewport { overflow: hidden; clip-path: none; }
+  @media (max-width: 767.98px) { [data-carousel-block] .carousel-block__viewport { --carousel-columns-visible: var(--carousel-columns-visible-mobile); --carousel-gap: var(--carousel-gap-mobile, 4px); overflow: hidden; clip-path: none; } }
 {% endstylesheet %}
 
 {% schema %}
@@ -432,12 +255,6 @@
   "blocks": [
     {
       "type": "slide"
-    },
-    {
-      "type": "image-text-card-grid-item"
-    },
-    {
-      "type": "gallery-item"
     }
   ],
   "settings": [
@@ -495,12 +312,6 @@
     },
     {
       "type": "checkbox",
-      "id": "loop",
-      "label": "Loop slides",
-      "default": false
-    },
-    {
-      "type": "checkbox",
       "id": "show_next_slide_preview_on_desktop",
       "label": "t:labels.show_next_slide_preview_on_desktop",
       "default": false
@@ -520,390 +331,20 @@
       "id": "gap_desktop",
       "label": "t:options.device.desktop",
       "min": 0,
-      "max": 100,
+      "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 32
+      "default": 4
     },
     {
       "type": "range",
       "id": "gap_mobile",
       "label": "t:options.device.mobile",
       "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 24
-    },
-    {
-      "type": "header",
-      "content": "Border"
-    },
-    {
-      "type": "select",
-      "id": "border_type",
-      "label": "Border style",
-      "options": [
-        {
-          "value": "none",
-          "label": "None"
-        },
-        {
-          "value": "solid",
-          "label": "Solid"
-        },
-        {
-          "value": "dashed",
-          "label": "Dashed"
-        },
-        {
-          "value": "dotted",
-          "label": "Dotted"
-        },
-        {
-          "value": "double",
-          "label": "Double"
-        }
-      ],
-      "default": "solid"
-    },
-    {
-      "type": "range",
-      "id": "border_thickness",
-      "label": "Border thickness",
-      "min": 0,
-      "max": 4,
-      "step": 1,
-      "unit": "px",
-      "default": 1,
-      "visible_if": "{{ block.settings.border_type != 'none' }}"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "border_color",
-      "label": "Border color",
-      "visible_if": "{{ block.settings.border_type != 'none' }}"
-    },
-    {
-      "type": "select",
-      "id": "corner_radius",
-      "label": "Corner radius",
-      "options": [
-        {
-          "value": "square",
-          "label": "Square"
-        },
-        {
-          "value": "slightly_rounded",
-          "label": "Slightly rounded"
-        },
-        {
-          "value": "rounded",
-          "label": "Rounded"
-        },
-        {
-          "value": "pill",
-          "label": "Pill"
-        }
-      ],
-      "default": "square"
-    },
-    {
-      "type": "header",
-      "content": "Card icon"
-    },
-    {
-      "type": "select",
-      "id": "image_text_card_toggle_icon",
-      "label": "Icon",
-      "options": [
-        {
-          "value": "plus",
-          "label": "Plus"
-        },
-        {
-          "value": "arrow",
-          "label": "Arrow"
-        },
-        {
-          "value": "chevron",
-          "label": "Chevron"
-        }
-      ],
-      "default": "plus"
-    },
-    {
-      "type": "range",
-      "id": "image_text_card_icon_size",
-      "label": "Icon size",
-      "min": 12,
       "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 24
-    },
-    {
-      "type": "header",
-      "content": "Image"
-    },
-    {
-      "type": "select",
-      "id": "image_text_card_ratio",
-      "label": "Image ratio",
-      "options": [
-        {
-          "value": "original",
-          "label": "Original"
-        },
-        {
-          "value": "ratio_1_1",
-          "label": "Square (1:1)"
-        },
-        {
-          "value": "ratio_4_5",
-          "label": "Portrait (4:5)"
-        },
-        {
-          "value": "ratio_3_4",
-          "label": "Portrait (3:4)"
-        },
-        {
-          "value": "ratio_2_3",
-          "label": "Portrait (2:3)"
-        },
-        {
-          "value": "ratio_9_16",
-          "label": "Portrait (9:16)"
-        },
-        {
-          "value": "ratio_16_9",
-          "label": "Landscape (16:9)"
-        },
-        {
-          "value": "ratio_3_2",
-          "label": "Landscape (3:2)"
-        },
-        {
-          "value": "ratio_4_3",
-          "label": "Landscape (4:3)"
-        },
-        {
-          "value": "ratio_5_4",
-          "label": "Landscape (5:4)"
-        },
-        {
-          "value": "custom",
-          "label": "t:options.image_ratio.custom"
-        }
-      ],
-      "default": "original"
-    },
-    {
-      "type": "number",
-      "id": "image_text_card_ratio_width",
-      "label": "Width",
-      "default": 6,
-      "visible_if": "{{ block.settings.image_text_card_ratio == 'custom' }}"
-    },
-    {
-      "type": "number",
-      "id": "image_text_card_ratio_height",
-      "label": "Height",
-      "info": "Numbers only. Width 6 + Height 7 = 6:7.",
-      "default": 7,
-      "visible_if": "{{ block.settings.image_text_card_ratio == 'custom' }}"
-    },
-    {
-      "type": "checkbox",
-      "id": "image_text_card_customize_mobile",
-      "label": "Customize for mobile",
-      "default": false
-    },
-    {
-      "type": "select",
-      "id": "image_text_card_ratio_mobile",
-      "label": "Mobile image ratio",
-      "options": [
-        {
-          "value": "original",
-          "label": "Original"
-        },
-        {
-          "value": "ratio_1_1",
-          "label": "Square (1:1)"
-        },
-        {
-          "value": "ratio_4_5",
-          "label": "Portrait (4:5)"
-        },
-        {
-          "value": "ratio_3_4",
-          "label": "Portrait (3:4)"
-        },
-        {
-          "value": "ratio_2_3",
-          "label": "Portrait (2:3)"
-        },
-        {
-          "value": "ratio_9_16",
-          "label": "Portrait (9:16)"
-        },
-        {
-          "value": "ratio_16_9",
-          "label": "Landscape (16:9)"
-        },
-        {
-          "value": "ratio_3_2",
-          "label": "Landscape (3:2)"
-        },
-        {
-          "value": "ratio_4_3",
-          "label": "Landscape (4:3)"
-        },
-        {
-          "value": "ratio_5_4",
-          "label": "Landscape (5:4)"
-        },
-        {
-          "value": "custom",
-          "label": "t:options.image_ratio.custom"
-        }
-      ],
-      "default": "original",
-      "visible_if": "{{ block.settings.image_text_card_customize_mobile }}"
-    },
-    {
-      "type": "number",
-      "id": "image_text_card_ratio_width_mobile",
-      "label": "Mobile width",
-      "default": 6,
-      "visible_if": "{{ block.settings.image_text_card_customize_mobile and block.settings.image_text_card_ratio_mobile == 'custom' }}"
-    },
-    {
-      "type": "number",
-      "id": "image_text_card_ratio_height_mobile",
-      "label": "Mobile height",
-      "info": "Numbers only. Width 6 + Height 7 = 6:7.",
-      "default": 7,
-      "visible_if": "{{ block.settings.image_text_card_customize_mobile and block.settings.image_text_card_ratio_mobile == 'custom' }}"
-    },
-    {
-      "type": "range",
-      "id": "image_text_card_max_width",
-      "label": "Desktop max width",
-      "min": 20,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 100
-    },
-    {
-      "type": "range",
-      "id": "image_text_card_max_width_mobile",
-      "label": "Mobile max width",
-      "min": 20,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 100,
-      "visible_if": "{{ block.settings.image_text_card_customize_mobile }}"
-    },
-    {
-      "type": "header",
-      "content": "Typography"
-    },
-    {
-      "type": "select",
-      "id": "image_text_card_heading_tag",
-      "label": "Heading HTML tag",
-      "options": [
-        {
-          "value": "div",
-          "label": "Paragraph"
-        },
-        {
-          "value": "h1",
-          "label": "H1"
-        },
-        {
-          "value": "h2",
-          "label": "H2"
-        },
-        {
-          "value": "h3",
-          "label": "H3"
-        },
-        {
-          "value": "h4",
-          "label": "H4"
-        },
-        {
-          "value": "h5",
-          "label": "H5"
-        },
-        {
-          "value": "h6",
-          "label": "H6"
-        }
-      ],
-      "default": "h4"
-    },
-    {
-      "type": "range",
-      "id": "image_text_card_typo_size",
-      "label": "Heading size (desktop)",
-      "min": 10,
-      "max": 40,
-      "step": 1,
-      "unit": "px",
-      "default": 14
-    },
-    {
-      "type": "range",
-      "id": "image_text_card_typo_size_mobile",
-      "label": "Heading size (mobile)",
-      "min": 10,
-      "max": 40,
-      "step": 1,
-      "unit": "px",
-      "default": 14
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "image_text_card_typo_color",
-      "label": "Heading color"
-    },
-    {
-      "type": "header",
-      "content": "Content"
-    },
-    {
-      "type": "range",
-      "id": "image_text_card_content_size",
-      "label": "Font size (desktop)",
-      "min": 10,
-      "max": 32,
-      "step": 1,
-      "unit": "px",
-      "default": 14
-    },
-    {
-      "type": "range",
-      "id": "image_text_card_content_size_mobile",
-      "label": "Font size (mobile)",
-      "min": 10,
-      "max": 32,
-      "step": 1,
-      "unit": "px",
-      "default": 14
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "image_text_card_content_color",
-      "label": "Content color"
+      "default": 4
     },
     {
       "type": "header",
@@ -912,7 +353,7 @@
     {
       "type": "select",
       "id": "width",
-      "label": "t:labels.width",
+      "label": "t:labels.carousel_desktop_width",
       "options": [
         {
           "value": "fill",
@@ -933,7 +374,7 @@
       "max": 100,
       "step": 1,
       "unit": "%",
-      "default": 100,
+      "default": 50,
       "visible_if": "{{ block.settings.width == 'custom' }}"
     },
     {
@@ -960,7 +401,7 @@
           "label": "t:options.collection_navigation_position.inside"
         }
       ],
-      "default": "inside",
+      "default": "outside",
       "visible_if": "{{ block.settings.show_navigation_on_desktop }}"
     },
     {
@@ -981,7 +422,7 @@
           "label": "t:options.button_variant.outline"
         }
       ],
-      "default": "secondary",
+      "default": "primary",
       "visible_if": "{{ block.settings.show_navigation_on_desktop }}"
     },
     {
@@ -1002,7 +443,7 @@
           "label": "t:options.collection_navigation_icon.chevron"
         }
       ],
-      "default": "chevron",
+      "default": "arrow",
       "visible_if": "{{ block.settings.show_navigation_on_desktop }}"
     },
     {
@@ -1011,15 +452,15 @@
       "label": "t:labels.behavior",
       "options": [
         {
-          "value": "always",
-          "label": "t:options.collection_navigation_behavior.always"
-        },
-        {
           "value": "show_on_hover",
           "label": "t:options.collection_navigation_behavior.show_on_hover"
+        },
+        {
+          "value": "always",
+          "label": "t:options.collection_navigation_behavior.always"
         }
       ],
-      "default": "always",
+      "default": "show_on_hover",
       "visible_if": "{{ block.settings.show_navigation_on_desktop }}"
     },
     {
@@ -1040,65 +481,7 @@
           "label": "t:options.collection_pagination.bullets"
         }
       ],
-      "default": "progress_bar"
-    },
-    {
-      "type": "select",
-      "id": "controls_style",
-      "label": "Controls style",
-      "options": [
-        {
-          "value": "standard",
-          "label": "Standard"
-        },
-        {
-          "value": "fraction",
-          "label": "Number / total"
-        }
-      ],
-      "default": "standard"
-    },
-    {
-      "type": "select",
-      "id": "controls_alignment",
-      "label": "Controls alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
-      ],
-      "default": "center",
-      "visible_if": "{{ block.settings.controls_style == 'fraction' }}"
-    },
-    {
-      "type": "select",
-      "id": "controls_alignment_mobile",
-      "label": "Controls alignment (mobile)",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
-      ],
-      "default": "center",
-      "visible_if": "{{ block.settings.controls_style == 'fraction' }}"
+      "default": "bullets"
     },
     {
       "type": "checkbox",
@@ -1109,9 +492,9 @@
     {
       "type": "range",
       "id": "pagination_padding_desktop",
-      "label": "t:labels.pagination_desktop_top_padding",
+      "label": "t:labels.carousel_pagination_top_padding",
       "min": 0,
-      "max": 100,
+      "max": 70,
       "step": 1,
       "unit": "px",
       "default": 40,
@@ -1121,17 +504,17 @@
       "type": "checkbox",
       "id": "show_pagination_on_mobile",
       "label": "t:labels.show_pagination_on_mobile",
-      "default": true
+      "default": false
     },
     {
       "type": "range",
       "id": "pagination_padding_mobile",
-      "label": "t:labels.pagination_mobile_top_padding",
+      "label": "t:labels.carousel_pagination_top_padding_mobile",
       "min": 0,
-      "max": 100,
+      "max": 50,
       "step": 1,
       "unit": "px",
-      "default": 40,
+      "default": 30,
       "visible_if": "{{ block.settings.show_pagination_on_mobile }}"
     },
     {
@@ -1139,7 +522,7 @@
       "id": "pagination_limit_width",
       "label": "t:labels.limit_width",
       "default": false,
-      "visible_if": "{{ block.settings.pagination_type == 'progress_bar' }}"
+      "visible_if": "{{ block.settings.pagination_type == 'progress_bar' and block.settings.show_pagination_on_desktop or block.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "range",
@@ -1149,8 +532,8 @@
       "max": 500,
       "step": 10,
       "unit": "px",
-      "default": 260,
-      "visible_if": "{{ block.settings.pagination_type == 'progress_bar' and block.settings.pagination_limit_width }}"
+      "default": 200,
+      "visible_if": "{{ block.settings.pagination_type == 'progress_bar' and block.settings.pagination_limit_width and block.settings.show_pagination_on_desktop or block.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "header",
@@ -1173,8 +556,8 @@
       "type": "range",
       "id": "autoplay_speed",
       "label": "t:labels.speed",
-      "min": 3,
-      "max": 7,
+      "min": 1,
+      "max": 10,
       "step": 1,
       "unit": "s",
       "default": 4,
@@ -1231,22 +614,6 @@
       "unit": "px",
       "default": 0,
       "visible_if": "{{ block.settings.customize_mobile_padding }}"
-    },
-    {
-      "type": "select",
-      "id": "transition_style",
-      "label": "Style",
-      "options": [
-        {
-          "value": "slide",
-          "label": "Slide"
-        },
-        {
-          "value": "fade",
-          "label": "Fade"
-        }
-      ],
-      "default": "slide"
     }
   ],
   "presets": [
@@ -1258,226 +625,200 @@
         "columns_mobile": "1",
         "width": "fill",
         "navigation_style": "primary",
-        "navigation_icon": "chevron",
+        "navigation_icon": "arrow",
         "navigation_behavior": "show_on_hover",
-        "pagination_type": "progress_bar",
+        "pagination_type": "bullets",
         "show_pagination_on_desktop": true,
-        "show_pagination_on_mobile": true,
+        "show_pagination_on_mobile": false,
         "pagination_padding_desktop": 40,
-        "pagination_padding_mobile": 40,
+        "pagination_padding_mobile": 30,
         "autoplay": false,
-        "transition_style": "slide",
-        "show_navigation_on_desktop": true
+        "navigation_position": "outside",
+        "gap_desktop": 30,
+        "gap_mobile": 12
       },
       "blocks": [
         {
           "type": "slide",
+          "settings": {
+            "direction": "vertical",
+            "alignment": "left",
+            "gap_desktop": 16,
+            "gap_mobile": 12,
+            "height": "fit",
+            "corner_radius": "square",
+            "shadow": "none",
+            "appearance_type": "inherit",
+            "customize_mobile_padding": false
+          },
           "blocks": [
-            {
-              "type": "image",
-              "settings": {
-                "image_ratio_desktop": "ratio_1_1",
-                "image_ratio_mobile": "ratio_1_1",
-                "width_desktop": "fill",
-                "width_mobile": "fill",
-                "limit_width_desktop": false,
-                "limit_width_mobile": false,
-                "padding_bottom": 0
-              }
-            },
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Heading</p>",
-                "heading_size": "sm",
+                "text": "<p>Discover more</p>",
+                "heading_size": "lg",
                 "html_tag": "h3",
                 "width": "fill",
                 "customize_mobile_size": false,
-                "width_mobile": "fill",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
+                "width_mobile": "fill"
               }
             },
             {
               "type": "text",
               "settings": {
-                "text": "<p>Use this text to describe your product, collection, or feature. Share a few details to inform or inspire your customers.</p>",
-                "text_size": "sm",
+                "text": "<p>Share your brand story with your customers. Highlight a product, announce something new, or welcome visitors to your store.</p>",
+                "text_size": "md",
                 "width": "fill",
                 "customize_mobile_size": false,
-                "width_mobile": "fill",
-                "animation_type": "slide-bottom",
-                "animation_delay": 100
-              }
-            },
-            {
-              "type": "button",
-              "settings": {
-                "button_label": "Button label",
-                "button_style": "tertiary",
-                "width": "fit",
-                "width_mobile": "fit",
-                "animation_type": "slide-bottom",
-                "animation_delay": 150
+                "width_mobile": "fill"
               }
             }
           ]
         },
         {
           "type": "slide",
+          "settings": {
+            "direction": "vertical",
+            "alignment": "left",
+            "gap_desktop": 16,
+            "gap_mobile": 12,
+            "height": "fit",
+            "corner_radius": "square",
+            "shadow": "none",
+            "appearance_type": "inherit",
+            "customize_mobile_padding": false
+          },
           "blocks": [
-            {
-              "type": "image",
-              "settings": {
-                "image_ratio_desktop": "ratio_1_1",
-                "image_ratio_mobile": "ratio_1_1",
-                "width_desktop": "fill",
-                "width_mobile": "fill",
-                "limit_width_desktop": false,
-                "limit_width_mobile": false,
-                "padding_bottom": 0
-              }
-            },
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Heading</p>",
-                "heading_size": "sm",
+                "text": "<p>Discover more</p>",
+                "heading_size": "lg",
                 "html_tag": "h3",
                 "width": "fill",
                 "customize_mobile_size": false,
-                "width_mobile": "fill",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
+                "width_mobile": "fill"
               }
             },
             {
               "type": "text",
               "settings": {
-                "text": "<p>Use this text to describe your product, collection, or feature. Share a few details to inform or inspire your customers.</p>",
-                "text_size": "sm",
+                "text": "<p>Share your brand story with your customers. Highlight a product, announce something new, or welcome visitors to your store.</p>",
+                "text_size": "md",
                 "width": "fill",
                 "customize_mobile_size": false,
-                "width_mobile": "fill",
-                "animation_type": "slide-bottom",
-                "animation_delay": 100
-              }
-            },
-            {
-              "type": "button",
-              "settings": {
-                "button_label": "Button label",
-                "button_style": "tertiary",
-                "width": "fit",
-                "width_mobile": "fit",
-                "animation_type": "slide-bottom",
-                "animation_delay": 150
+                "width_mobile": "fill"
               }
             }
           ]
         },
         {
           "type": "slide",
+          "settings": {
+            "direction": "vertical",
+            "alignment": "left",
+            "gap_desktop": 16,
+            "gap_mobile": 12,
+            "height": "fit",
+            "corner_radius": "square",
+            "shadow": "none",
+            "appearance_type": "inherit",
+            "customize_mobile_padding": false
+          },
           "blocks": [
-            {
-              "type": "image",
-              "settings": {
-                "image_ratio_desktop": "ratio_1_1",
-                "image_ratio_mobile": "ratio_1_1",
-                "width_desktop": "fill",
-                "width_mobile": "fill",
-                "limit_width_desktop": false,
-                "limit_width_mobile": false,
-                "padding_bottom": 0
-              }
-            },
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Heading</p>",
-                "heading_size": "sm",
+                "text": "<p>Discover more</p>",
+                "heading_size": "lg",
                 "html_tag": "h3",
                 "width": "fill",
                 "customize_mobile_size": false,
-                "width_mobile": "fill",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
+                "width_mobile": "fill"
               }
             },
             {
               "type": "text",
               "settings": {
-                "text": "<p>Use this text to describe your product, collection, or feature. Share a few details to inform or inspire your customers.</p>",
-                "text_size": "sm",
+                "text": "<p>Share your brand story with your customers. Highlight a product, announce something new, or welcome visitors to your store.</p>",
+                "text_size": "md",
                 "width": "fill",
                 "customize_mobile_size": false,
-                "width_mobile": "fill",
-                "animation_type": "slide-bottom",
-                "animation_delay": 100
-              }
-            },
-            {
-              "type": "button",
-              "settings": {
-                "button_label": "Button label",
-                "button_style": "tertiary",
-                "width": "fit",
-                "width_mobile": "fit",
-                "animation_type": "slide-bottom",
-                "animation_delay": 150
+                "width_mobile": "fill"
               }
             }
           ]
         },
         {
           "type": "slide",
+          "settings": {
+            "direction": "vertical",
+            "alignment": "left",
+            "gap_desktop": 16,
+            "gap_mobile": 12,
+            "height": "fit",
+            "corner_radius": "square",
+            "shadow": "none",
+            "appearance_type": "inherit",
+            "customize_mobile_padding": false
+          },
           "blocks": [
-            {
-              "type": "image",
-              "settings": {
-                "image_ratio_desktop": "ratio_1_1",
-                "image_ratio_mobile": "ratio_1_1",
-                "width_desktop": "fill",
-                "width_mobile": "fill",
-                "limit_width_desktop": false,
-                "limit_width_mobile": false,
-                "padding_bottom": 0
-              }
-            },
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Heading</p>",
-                "heading_size": "sm",
+                "text": "<p>Discover more</p>",
+                "heading_size": "lg",
                 "html_tag": "h3",
                 "width": "fill",
                 "customize_mobile_size": false,
-                "width_mobile": "fill",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
+                "width_mobile": "fill"
               }
             },
             {
               "type": "text",
               "settings": {
-                "text": "<p>Use this text to describe your product, collection, or feature. Share a few details to inform or inspire your customers.</p>",
-                "text_size": "sm",
+                "text": "<p>Share your brand story with your customers. Highlight a product, announce something new, or welcome visitors to your store.</p>",
+                "text_size": "md",
                 "width": "fill",
                 "customize_mobile_size": false,
-                "width_mobile": "fill",
-                "animation_type": "slide-bottom",
-                "animation_delay": 100
+                "width_mobile": "fill"
+              }
+            }
+          ]
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "direction": "vertical",
+            "alignment": "left",
+            "gap_desktop": 16,
+            "gap_mobile": 12,
+            "height": "fit",
+            "corner_radius": "square",
+            "shadow": "none",
+            "appearance_type": "inherit",
+            "customize_mobile_padding": false
+          },
+          "blocks": [
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Discover more</p>",
+                "heading_size": "lg",
+                "html_tag": "h3",
+                "width": "fill",
+                "customize_mobile_size": false,
+                "width_mobile": "fill"
               }
             },
             {
-              "type": "button",
+              "type": "text",
               "settings": {
-                "button_label": "Button label",
-                "button_style": "tertiary",
-                "width": "fit",
-                "width_mobile": "fit",
-                "animation_type": "slide-bottom",
-                "animation_delay": 150
+                "text": "<p>Share your brand story with your customers. Highlight a product, announce something new, or welcome visitors to your store.</p>",
+                "text_size": "md",
+                "width": "fill",
+                "customize_mobile_size": false,
+                "width_mobile": "fill"
               }
             }
           ]

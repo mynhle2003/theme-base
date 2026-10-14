@@ -220,7 +220,6 @@
       "blocks": [
         {
           "type": "heading",
-          "id": "heading",
           "static": true,
           "settings": {
             "text": "<p>You May Also Like</p>",
@@ -228,11 +227,11 @@
             "html_tag": "h2",
             "animation_type": "rotate-words",
             "animation_delay": 50
-          }
+          },
+          "id": "heading"
         },
         {
           "type": "product-list",
-          "id": "product-list",
           "static": true,
           "settings": {
             "use_recommendations": true,
@@ -257,10 +256,11 @@
           "blocks": [
             {
               "type": "product-card",
-              "id": "product-card",
-              "static": true
+              "static": true,
+              "id": "product-card"
             }
-          ]
+          ],
+          "id": "product-list"
         }
       ]
     }

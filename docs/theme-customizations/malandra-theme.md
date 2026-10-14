@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"75baa7c890ee43f9a7c97ad3aee49961ea295f2f"} -->
+<!-- theme-base-sync-state: {"sha":"efbbac9e29963002df775cf40fd34ca6fe991bd8"} -->
 # Customization record: malandra-theme
 
 Theme branch: `theme/malandra-theme`
@@ -104,9 +104,9 @@ This table records current implementation differences from personal `main`: Liqu
 | `sections/text-marquee-custom.liquid` | Main uses shared layout-flow and omits space-between from mobile alignment. | Exposes direction/mobile-stack classes consumed by child Group Height Fill; normalizes horizontal position independently of vertical position; constrains mobile alignment to left/center/right. Maps Group layout direction, position, alignment and Fit/Fill height to shared flow; Fill propagates through the container/content wrappers. | Keep scrolling content and child Group sizing consistent across desktop/mobile (2026-10-07). | Preserve direction hooks, responsive axis handling, independent horizontal-position fallback and shared flow mapping. Current implementation still supports section Fit/Fill; later upstream changes must be reviewed against this current code. |
 | `blocks/product-list.liquid` | Desktop preview control/render path without an independent mobile preview. | Add/forward an independent mobile preview checkbox, default false, through the existing Swiper viewport. | User requested consistent mobile next-slide preview on Elara, 2026-10-07. | Review overlapping upstream carousel/schema changes before merging; preserve independent flags, 768px breakpoint, 1.2 sizing, existing loops, editor lifecycle and prior custom behavior in this file. |
 | `blocks/blog-list.liquid` | Desktop preview control/render path without an independent mobile preview. | Add/forward an independent mobile preview checkbox, default false, through the existing Swiper viewport. | User requested consistent mobile next-slide preview on Elara, 2026-10-07. | Review overlapping upstream carousel/schema changes before merging; preserve independent flags, 768px breakpoint, 1.2 sizing, existing loops, editor lifecycle and prior custom behavior in this file. |
-| `blocks/carousel.liquid` | Desktop preview control/render path without an independent mobile preview. | Add/forward an independent mobile preview checkbox, default false, through the existing Swiper viewport. | User requested consistent mobile next-slide preview on Elara, 2026-10-07. | Review overlapping upstream carousel/schema changes before merging; preserve independent flags, 768px breakpoint, 1.2 sizing, existing loops, editor lifecycle and prior custom behavior in this file. |
+| `blocks/carousel.liquid` | Main Carousel settings, order, definitions and Slide-only child contract. | Add only the recorded independent mobile preview setting alongside the main desktop preview; Arche/Essen use contained N + 2/7, Elara/Malandra use 1.2 for one mobile column. | Reapply genuine preview custom without retaining legacy base options. | Main controls remain authoritative; no legacy card/border/loop/transition option group. |
 | `blocks/product-callout-gallery.liquid` | Desktop preview control/render path without an independent mobile preview. | Add/forward an independent mobile preview checkbox, default false, through the existing Swiper viewport. Image ratios use canonical ratio_* values/original; Custom resolves W/H with existing responsive ownership. | User requested consistent mobile next-slide preview on Elara, 2026-10-07. | Review overlapping upstream carousel/schema changes before merging; preserve independent flags, 768px breakpoint, 1.2 sizing, existing loops, editor lifecycle and prior custom behavior in this file. | Preserve canonical ratio values, W/H consumers and saved-ratio migration.
-| `assets/carousel-block.js` | Separate carousel owners use integer mobile columns; Collection list alone supports 1.2 mobile slides. | Share Collection list mobile sizing: preview on + one mobile column gives 1.2 slides; two columns remain two. Desktop uses its own breakpoint configuration. Mobile preview uses slide transition. | User requested consistent mobile next-slide preview on Elara, 2026-10-07. | Review overlapping upstream carousel/schema changes before merging; preserve independent flags, 768px breakpoint, 1.2 sizing, existing loops, editor lifecycle and prior custom behavior in this file. |
+| `assets/carousel-block.js` | Main common Carousel owner uses shared scoped runtime. | Owner layout policy restores 1.2 slides for enabled one-column mobile preview; two columns remain two; suppress preview for insufficient items. | Reapply the documented theme preview on main lifecycle. | Preserve pre-JS/runtime parity, resize, cloned loop behavior and editor cleanup. |
 | `snippets/product-collection-grid.liquid` | Only forwards desktop preview to shared Swiper. | Forward optional mobile preview from Product list without changing grid rendering. | User requested consistent mobile next-slide preview on Elara, 2026-10-07. | Review overlapping upstream carousel/schema changes before merging; preserve independent flags, 768px breakpoint, 1.2 sizing, existing loops, editor lifecycle and prior custom behavior in this file. |
 | `sections/collections-with-background.liquid` | Desktop fixed heights 28/36/44/52/62rem; mobile shows separate cards. | Elara desktop scale anchored at Medium 680px; optional mobile background tabs anchored at Medium 600px with one stacked background and vertical titles; picture images fill the media container. | User requested theme-specific Figma heights and mobile click-to-switch backgrounds on 2026-10-07. | Preserve the tab layout option, mobile position controls and fixed-height calibration; review overlapping upstream layout changes before merging. |
 | `assets/collections-with-background.js` | Mobile hides tabs and exposes every panel; desktop hover/click selects a panel. | Mobile tabs keep one selected panel, support click/keyboard and preserve selection across viewport changes; mobile hover does not switch backgrounds. | Match the authorized Elara mobile interaction. | Preserve abortable editor lifecycle, keyboard focus, selected-panel accessibility and existing mobile card/carousel modes. |
@@ -141,8 +141,7 @@ This table records current implementation differences from personal `main`: Liqu
 | `snippets/marquee-letter-spacing.liquid` | No compact tracking helper. | Resolves the eight local tracking choices to scoped CSS variables shared by compact Heading/Text. | Avoid duplicated typography translation and global token overrides. | Preserve role tokens and local tracking scope. |
 | `sections/testimonial-carousel.liquid` | Generic composition; no private split contract. | Renames to Testimonial: split, restricts to one private carousel and removes section gaps; three-slide full-bleed Malandra preset. | User requested Figma split rebuild on 2026-10-08. | Preserve private slot IDs, original inline SVG snippets and fixed layout; review overlapping upstream changes before merging. |
 | `blocks/carousel_split.liquid` | Generic composition; no private split contract. | Private Carousel fixes columns to one and slide gaps to zero, disables previews; Style first and only Autoplay/Padding schema headers; shared Swiper runtime. | User requested Figma split rebuild on 2026-10-08. | Preserve private slot IDs, original inline SVG snippets and fixed layout; review overlapping upstream changes before merging. |
-| `blocks/_slide_split.liquid` | Generic composition; no private split contract. | Private Slide fixes equal desktop columns and image-first mobile stacking with static existing Image/Group slots; Group reuses Eyebrow, five-stars Icon, Heading and Text. Full-height layout and a stretched flex content column anchor navigation at the common slide bottom despite different quote lengths. | User requested Figma split rebuild on 2026-10-08. | Preserve private slot IDs, original inline SVG snippets and fixed layout; review overlapping upstream changes before merging. |
-| `blocks/slide.liquid` | Appearance supports scheme plus custom background color/image. | Color group retains Inherit/Color scheme; removed custom background settings and their Liquid/CSS consumers. | User requested the same simplified Color contract for Slide and Slide split on 2026-10-08. | Preserve scheme inheritance; review upstream changes to background options before merging. |
+| `blocks/slide.liquid` | Main Slide option definitions and radius choices. | Retain the recorded simplified Inherit/Color scheme controls. | Reapply only recorded custom logic after rebuilding from main. | Main controls are authoritative; legacy non-custom radius choices map through the main migration. |
 | `snippets/testimonial-split-arrow.liquid` | Generic composition; no private split contract. | Original Figma shaft/tip exports composed in a 24px directional wrapper, preserving dimensions; accessible controls have 44px effective targets. | User requested Figma split rebuild on 2026-10-08. | Preserve private slot IDs, original inline SVG snippets and fixed layout; review overlapping upstream changes before merging. |
 | `blocks/testimonial-item.liquid` | Legacy reusable testimonial item. | Deleted because no template instances use it; removed explicit registrations from Carousel and Gallery header group. | User requested deleting the unused block. | Keep it deleted and migrate any upstream usage to the owning approved block before merging. |
 | `assets/cart-drawer.css` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
@@ -150,7 +149,7 @@ This table records current implementation differences from personal `main`: Liqu
 | `blocks/_collection-sort.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
 | `blocks/_collection-toolbar.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
 | `blocks/_header-menu.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
-| `blocks/collection-tab.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
+| `blocks/collection-tab.liquid` | Main deferred Collection tab loading and product/promo slots. | Retain explicit tab-layout-styles dependency; saved labels, collections and promo content remain theme-owned. | Owner authorized rebuilding promotion/Collection tabs from main. | Keep main loading/lifecycle; preserve saved content and compatible layout values. |
 | `blocks/countdown-timer.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
 | `blocks/gallery-strip-feature-item.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
 | `blocks/gallery-strip-item.liquid` | Implementation on personal main `729be6cf`. | Preserve the theme implementation from `c987610b` and its existing DOM, geometry, configured content and legacy setting consumers. | Owner requested base sync with unchanged current layout on 2026-10-09. | Keep this compatibility implementation; review future main overlaps and migrate only after preserving saved values and layout. |
@@ -170,13 +169,61 @@ This table records current implementation differences from personal `main`: Liqu
 | `blocks/_header-menu-toggle.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
 | `blocks/_mega-menu-banner.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
 | `blocks/collection-background-item.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
-| `blocks/collection-promo.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
+| `blocks/collection-promo.liquid` | Main Collection promo including overlay-style controls. | No retained legacy implementation; preserve saved promotion media/content and layout. | Owner explicitly authorized migration. | Keep saved references and compatible layout; new controls use main defaults. |
 | `blocks/gallery-image.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
 | `blocks/parallax-item.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
 | `blocks/product-callout.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
 | `blocks/product-variant-picker.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
-| `blocks/promo-card.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
+| `blocks/promo-card.liquid` | Main Promo card including overlay-style controls. | No retained legacy implementation; rebuild uses main and preserves template/preset content and layout values. | Owner explicitly authorized migration. | New controls use main defaults; keep merchant resources, alignment, position and spacing. |
 | `blocks/scrolling-card.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation and schema. | Preserve custom compositions and their dependencies. | Retain until an explicit migration is requested. |
+| `assets/bundle-summary.css` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `assets/cart-drawer-recommendations.js` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `assets/comparison-table.css` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `assets/featured-collection-banner.css` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `assets/hotspot-full-width-carousel.css` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `assets/image-comparison.css` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `assets/marquee-countdown-timer.css` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `assets/product-callout.css` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `assets/timeline-list.css` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `assets/timeline-list.js` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/_announcement-social-links.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/_bundle-summary.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/_header-account.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/_marquee-heading.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/blog-card-button.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/button.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/collection-list-items.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/comparison-table.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/editorial-text.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/email-signup.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/eyebrow.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/heading.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/icon.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/image-text-card-grid-item.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/menu.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/slide_split.liquid` | Main Split uses static image/content slots and scoped shared lifecycle. | Retain original theme arrow artwork; main already supplies equal columns, mobile stacking and bottom controls. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Keep main slot contracts and source SVG geometry; no legacy _slide_split reference. |
+| `blocks/text.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `blocks/timeline-list.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `sections/featured-collection-banner.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `sections/header.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `sections/hotspot-full-width-carousel.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `sections/hotspot-gallery.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `sections/product.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `snippets/badge.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `snippets/block-animation-attributes.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `snippets/gallery-strip-item-styles.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `snippets/heading-size-token.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `snippets/hero-styles.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `snippets/icon.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `snippets/image-comparison.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `snippets/image.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `snippets/localization-styles.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `snippets/product-badges.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `snippets/product-callout-runtime.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `snippets/product-card-image.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `snippets/tab-layout-styles.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `snippets/theme-button.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `assets/carousel-runtime.js` | Main shared lifecycle owns initialization, controls, loop clones, autoplay and editor cleanup. | Optional owner layout policy restores independently configured mobile preview and contained preview; rounded manual progress for Arche/Essen. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Use policy only for common Carousel; other owners use main defaults. Preserve cleanup and main single-clock behavior. |
 
 ## Figma catalog and card composition — 2026-10-07
 
@@ -1610,3 +1657,135 @@ Verified the actual localhost storefront with frame-by-frame geometry readings b
 Follow-up paint regression: the remaining apparent brown overflow was the header-top surface, not a resize of the announcement. Recorded the actual first frame with header-top background rgb(67, 35, 21), then an animated fade to transparent after header wrapper initialization. Move overlay transparency from sections/header.liquid into critical.css and recognize the server-rendered overlay before the wrapper receives data-sticky-type/header--overlay. Match the transparent-scheme child before JS as well. Desktop and mobile frame traces now show fully transparent header surfaces from the first frame through initialization; announcement remains brown at 41px/37px. Eleven regressions pass, including delayed header CSS/runtime and restored base backgrounds for scrolled/submenu/search/cart states. Temporary paint probe removed.
 
 Header position follow-up: live frame traces found the 40px logo pinned to the top of a 44px fallback track (2px vertical movement at column setup), a fallback icon display rule exposing the desktop Text cart's mobile icon (23.5px action-group movement), different mobile toggle/gap/cart margins, an asymmetric mobile logo grid, and scrollbar appearance changing the page width. Center fallback absolute items vertically, let block-owned icon visibility apply, match mobile spacing/toggle dimensions and zero cart margin, keep centered mobile logo columns symmetric, and reserve the root scrollbar gutter. Strengthen the header-column margin reset against later cart CSS. Preload the selected Accent base font when distinct from Body: header labels were swapping from fallback metrics because only Body was preloaded. Actual preview measurements now match before/after header initialization for logo, menu, localization, Search and Cart on desktop/mobile; mobile coordinates also remain identical as the scrollbar appears. Thirteen browser regressions pass, including actual header.js column setup and adding tall content after initialization. Temporary position probe removed.
+
+### 2026-10-14 — Rebuild from personal main and reapply custom logic
+
+- Previous main checkpoint: `75baa7c890ee43f9a7c97ad3aee49961ea295f2f`.
+- Updated through main: `efbbac9e29963002df775cf40fd34ca6fe991bd8`.
+- Main commits included: 2.
+  - `e84d0689249b5ae26d3c5c066c90348e4aae06f4` — chore(base): update base with 4 upstream commits through 30d272ad
+  - `efbbac9e29963002df775cf40fd34ca6fe991bd8` — chore(base): update base with 16 upstream commits through 0fa58707
+
+- Scope: Carousel, Slide, Testimonial: split, Carousel split, Slide split, Columns/Column, promotion cards and Collection tabs. Main supplies implementation, ownership, slots and lifecycle. Theme templates supply content/order/layout; custom logic is re-applied additively after the rebuild.
+- Placement/context: retain existing JSON templates, section-group composition and Shopify resource context. No store picker save, media upload or publish.
+- Migration: `grid → columns` with `_columns-column` wrappers; `_slide_split → slide_split` preserving static `image`/`content` IDs. Former static generic header/carousel slots are converted to dynamic blocks on the new main owner without dropping their content/order.
+- Layout compatibility: preserve desktop/tablet/mobile column counts through main custom breakpoint controls, gaps and padding values where the new contract supports them. Preserve saved pill/slightly-rounded Slide shapes. Carousel desktop gap supports 0–100px with step 1 to retain the existing 56px preset.
+- Custom: common Carousel policy restores independent previews (Arche/Essen N + 2/7; Elara/Malandra 1.2 for one mobile column); Lighthouse Slide CSS loading on Arche/Essen; original Split SVGs on Elara/Malandra; Arche Columns metadata; tab rail/header styling and explicit style dependency; shared rounded progress and blog auto-height where recorded.
+- Main lifecycle: elapsed-time autoplay, observer/destroy cleanup, versioned shared imports and deferred Collection tabs. Theme-specific global Press/entrance geometry behavior is retained outside the rebuild.
+- Promotion cards keep saved media, content, position, alignment, column spans and padding; new overlay controls use main defaults.
+- Presets captured from migrated templates:
+  - `templates/collection.json#main` → `sections/collection.liquid` / **Malandra: main**.
+  - `templates/index.json#collection_tabs` → `sections/collection-tabs.liquid` / **Malandra: collection tabs**.
+  - `templates/index.json#our_mission` → `sections/custom-section.liquid` / **Malandra: our mission**.
+  - `templates/index.json#benefits` → `sections/icon-text-cards.liquid` / **Malandra: benefits**.
+  - `templates/index.spinel-sync.json#collection_tabs_ihC66t` → `sections/collection-tabs.liquid` / **Malandra: collection tabs**.
+  - `templates/index.spinel-sync.json#icon_text_inline_eN4cRW` → `sections/icon-text-inline.liquid` / **Malandra: icon text inlin**.
+  - `templates/index.spinel-sync.json#gallery_carousel_X7PGND` → `sections/gallery-carousel.liquid` / **Malandra: gallery carouse**.
+  - `templates/index.spinel-sync.json#icon_text_cards_qT6mLV` → `sections/icon-text-cards.liquid` / **Malandra: icon text cards**.
+  - `templates/page.about-us.json#philosophy` → `sections/custom-section.liquid` / **Malandra: philosophy**.
+  - `templates/page.about-us.json#story_lifetime` → `sections/custom-section.liquid` / **Malandra: story lifetime**.
+  - `templates/page.about-us.json#story_gold` → `sections/custom-section.liquid` / **Malandra: story gold**.
+  - `templates/page.about-us.json#story_generations` → `sections/custom-section.liquid` / **Malandra: story generatio**.
+  - `templates/page.about-us.json#service_promises` → `sections/custom-section.liquid` / **Malandra: service promise**.
+
+- Change statistics: 87 code/configuration/support-document paths plus this customization log; 2 obsolete block files removed after reference migration.
+- Changed paths:
+  - `assets/carousel-block.js`.
+  - `assets/carousel-runtime.js`.
+  - `assets/carousel-slide.js`.
+  - `assets/column-background-video.js`.
+  - `assets/product-collection-carousel.js`.
+  - `assets/swiper-carousel.css`.
+  - `assets/swiper-carousel.js`.
+  - `assets/testimonial-split.js`.
+  - `blocks/_columns-column.liquid`.
+  - `blocks/_slide_split.liquid`.
+  - `blocks/blog-grid.liquid`.
+  - `blocks/blog-list.liquid`.
+  - `blocks/carousel.liquid`.
+  - `blocks/carousel_split.liquid`.
+  - `blocks/collection-card.liquid`.
+  - `blocks/collection-list-items.liquid`.
+  - `blocks/collection-promo.liquid`.
+  - `blocks/collection-tab.liquid`.
+  - `blocks/columns.liquid`.
+  - `blocks/comparison-table.liquid`.
+  - `blocks/gallery-header-group.liquid`.
+  - `blocks/grid.liquid`.
+  - `blocks/images.liquid`.
+  - `blocks/parallax-item.liquid`.
+  - `blocks/product-list-banner.liquid`.
+  - `blocks/product-list.liquid`.
+  - `blocks/promo-card.liquid`.
+  - `blocks/slide.liquid`.
+  - `blocks/slide_split.liquid`.
+  - `blocks/slideshow-slide.liquid`.
+  - `docs/columns.md`.
+  - `docs/swiper-carousel.md`.
+  - `layout/theme.liquid`.
+  - `locales/en.default.json`.
+  - `locales/en.default.schema.json`.
+  - `scripts/migrate-columns.cjs`.
+  - `scripts/migrate-common-carousel-options.cjs`.
+  - `scripts/migrate-testimonial-carousel.cjs`.
+  - `sections/announcement-bar.liquid`.
+  - `sections/blog-posts.liquid`.
+  - `sections/bundle-builder.liquid`.
+  - `sections/cart-recommendations.liquid`.
+  - `sections/collection-list.liquid`.
+  - `sections/collection-tabs.liquid`.
+  - `sections/collection.liquid`.
+  - `sections/collections-with-tabs.liquid`.
+  - `sections/collections.liquid`.
+  - `sections/comparison-table-custom.liquid`.
+  - `sections/countdown.liquid`.
+  - `sections/custom-section.liquid`.
+  - `sections/email-signup-dual-image.liquid`.
+  - `sections/email-signup-form.liquid`.
+  - `sections/email-signup-single-image.liquid`.
+  - `sections/faq-image-accordion.liquid`.
+  - `sections/featured-blog-posts.liquid`.
+  - `sections/featured-collection-banner.liquid`.
+  - `sections/featured-collection-horizontal.liquid`.
+  - `sections/featured-collection.liquid`.
+  - `sections/footer.liquid`.
+  - `sections/gallery-carousel.liquid`.
+  - `sections/gallery-custom.liquid`.
+  - `sections/header.liquid`.
+  - `sections/hero.liquid`.
+  - `sections/hotspot-gallery.liquid`.
+  - `sections/hotspot.liquid`.
+  - `sections/icon-text-cards.liquid`.
+  - `sections/icon-text-inline.liquid`.
+  - `sections/image-comparison-split-custom.liquid`.
+  - `sections/image-text-card-grid.liquid`.
+  - `sections/location-map.liquid`.
+  - `sections/parallax.liquid`.
+  - `sections/press.liquid`.
+  - `sections/rich-text.liquid`.
+  - `sections/scroll-reading-text.liquid`.
+  - `sections/scrolling-cards.liquid`.
+  - `sections/shop-the-look-section.liquid`.
+  - `sections/testimonial-carousel.liquid`.
+  - `sections/testimonials-background-custom.liquid`.
+  - `sections/testimonials-horizontal-custom.liquid`.
+  - `sections/timeline.liquid`.
+  - `sections/video-product-carousel-custom.liquid`.
+  - `snippets/product-list-promo-items.liquid`.
+  - `snippets/theme-module-import-map.liquid`.
+  - `templates/collection.json`.
+  - `templates/index.json`.
+  - `templates/index.spinel-sync.json`.
+  - `templates/page.about-us.json`.
+- Validation: full Theme Check at error level; 16 shared runtime/import-map tests per theme; Liquid/server-layout parity checks (20 Arche, 16 other themes); template content/media comparison showed no missing saved values. Static/dynamic slot references were checked. Tests/results stay local.
+- Limit: storefront/browser and full interactive Theme Editor sessions have not been exercised for this batch. Malandra application is pending while its checkout has local edits.
+- Retained code dependencies outside the rebuild remain listed in Customizations. No personal base-update-history file is propagated.
+
+### 2026-10-14 — Align rebuilt option contracts with main
+
+- Removed the accidental legacy `image_text_card_*`, parent border/radius, loop and transition controls from common Carousel. Removed the Theme carousel behavior header. Main setting order, choices, ranges and defaults are retained; the independent mobile preview checkbox is the only recorded custom addition. Old unused factory-preset gaps follow the supported main range; saved template gap values remain unchanged.
+- Columns and `_columns-column` settings and child allow-lists were audited against main and already match; no extra optimization was introduced. Grid and `_slide_split` references have been migrated.
+- Retained the existing Testimonial: split content/static slot IDs and original SVG custom. The new main structure is already in place; no redundant optimization or old Testimonial: Carousel factory preset is kept.
+- Validation: main contract comparison, supported preset settings/children, shared lifecycle regressions and full Theme Check at error level. Test artifacts remain local.
+
+- Slide audit: removed the non-custom legacy radius additions as well; `pill`/`slightly_rounded` saved choices map to main `rounded`. Layout/order/spacing and content remain preserved. Arche/Essen keep only the recorded CSS-loading customization; Elara/Malandra keep the recorded color simplification.

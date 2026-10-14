@@ -318,7 +318,6 @@
             "gap_desktop": 8,
             "gap_mobile": 8
           },
-          "id": "header",
           "blocks": [
             {
               "type": "heading",
@@ -331,7 +330,8 @@
                 "animation_delay": 50
               }
             }
-          ]
+          ],
+          "id": "header"
         },
         {
           "type": "collection-list-items",
@@ -359,7 +359,6 @@
             "navigation_style": "primary",
             "navigation_behavior": "show_on_hover"
           },
-          "id": "collection-list",
           "blocks": [
             {
               "type": "collection-card",
@@ -382,8 +381,15 @@
                 "ratio_custom_width": 6,
                 "ratio_custom_height": 7
               },
-              "id": "collection-card",
               "blocks": [
+                {
+                  "type": "collection-card-description",
+                  "settings": {
+                    "source": "product_count",
+                    "text_size": "sm",
+                    "text_limit": "one"
+                  }
+                },
                 {
                   "type": "collection-card-title",
                   "static": true,
@@ -394,18 +400,12 @@
                     "title_suffix_to_hide": " - Elara"
                   },
                   "id": "title"
-                },
-                {
-                  "type": "collection-card-description",
-                  "settings": {
-                    "source": "product_count",
-                    "text_size": "sm",
-                    "text_limit": "one"
-                  }
                 }
-              ]
+              ],
+              "id": "collection-card"
             }
-          ]
+          ],
+          "id": "collection-list"
         }
       ],
       "settings": {
