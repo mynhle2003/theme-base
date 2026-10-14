@@ -58,28 +58,35 @@
           "static": true,
           "settings": {
             "bottom_separator": "line",
-            "gap": 16,
-            "padding_top": 12,
-            "padding_bottom": 12,
+            "gap": 64,
+            "padding_top": 16,
+            "padding_bottom": 16,
             "customize_mobile_padding": true,
-            "padding_top_mobile": 12,
-            "padding_bottom_mobile": 12
+            "padding_top_mobile": 10,
+            "padding_bottom_mobile": 10
           },
           "blocks": {
+            "header-logo": {
+              "type": "_header-logo",
+              "settings": {
+                "position": "left"
+              },
+              "blocks": {}
+            },
             "header-menu": {
               "type": "_header-menu",
               "settings": {
-                "menu": "main-menu",
-                "gap": 24,
-                "show_dropdown_icon": true,
+                "menu": "arche-header",
+                "gap": 28,
+                "show_dropdown_icon": false,
                 "dropdown_trigger": "hover",
-                "font": "accent",
-                "font_size": "md",
+                "font": "body",
+                "font_size": "sm",
                 "letter_spacing": "normal",
                 "text_case": "original",
                 "text_color": "",
                 "submenu_font": "body",
-                "submenu_font_size": "md",
+                "submenu_font_size": "sm",
                 "submenu_text_case": "original",
                 "submenu_text_color": ""
               },
@@ -87,96 +94,98 @@
                 "mega-menu-banners": {
                   "type": "_mega-menu-banners",
                   "settings": {
-                    "menu_item": "Collections",
+                    "menu_item": "Menswear",
                     "highlight_menu_item": false,
                     "highlight_color": "#000000",
-                    "banner_width": 40,
-                    "gap": 12,
+                    "banner_width": 49,
+                    "gap": 32,
                     "layout": "horizontal",
-                    "submenu_columns": "4",
-                    "limit_width": true,
+                    "submenu_columns": "2",
+                    "limit_width": false,
                     "max_width": 850,
                     "collections": [],
-                    "font": "accent",
-                    "font_size": "xl",
+                    "font": "body",
+                    "font_size": "md",
                     "letter_spacing": "normal"
                   },
                   "blocks": {
                     "mega-menu-banner-1": {
                       "type": "_mega-menu-banner",
                       "settings": {
-                        "link": "",
+                        "link": "/search?q=Sweaters&type=product",
                         "open_new_tab": false,
-                        "layout": "content_on_image",
+                        "layout": "content_below_image",
                         "limit_width": false,
                         "max_width": 700,
                         "overlay": false,
                         "overlay_color": "#000000",
                         "subheading": "",
-                        "heading": "Curate Your Set",
-                        "text": "<p>Choose your favorites and save up to 20%.</p>",
+                        "heading": "Sweaters",
+                        "text": "<p>Quality must be tested in the real world</p>",
                         "alignment": "left",
                         "content_position": "bottom",
-                        "heading_size": "md",
-                        "custom_heading_size": 24,
-                        "text_size": "md",
-                        "label": "",
-                        "button_style": "primary",
+                        "heading_size": "custom",
+                        "custom_heading_size": 18,
+                        "text_size": "sm",
+                        "label": "Shop now",
+                        "button_style": "tertiary",
                         "show_icon": false,
                         "icon": "arrow_right",
                         "icon_position": "right",
                         "full_width": false,
-                        "content_gap": 10,
-                        "button_spacing": 30,
-                        "color_scheme": "",
-                        "padding_top": 40,
-                        "padding_bottom": 40,
-                        "padding_left": 40,
-                        "padding_right": 40,
+                        "content_gap": 8,
+                        "button_spacing": 16,
+                        "color_scheme": "scheme-1",
+                        "padding_top": 24,
+                        "padding_bottom": 0,
+                        "padding_left": 0,
+                        "padding_right": 0,
                         "customize_mobile_padding": false,
                         "padding_top_mobile": 40,
                         "padding_bottom_mobile": 40,
                         "padding_left_mobile": 40,
-                        "padding_right_mobile": 40
+                        "padding_right_mobile": 40,
+                        "image": "shopify://shop_images/arche-header-sweaters.avif"
                       },
                       "blocks": {}
                     },
                     "mega-menu-banner-2": {
                       "type": "_mega-menu-banner",
                       "settings": {
-                        "link": "",
+                        "link": "/search?q=T-Shirts&type=product",
                         "open_new_tab": false,
-                        "layout": "content_on_image",
+                        "layout": "content_below_image",
                         "limit_width": false,
                         "max_width": 700,
                         "overlay": false,
                         "overlay_color": "#000000",
                         "subheading": "",
-                        "heading": "Curate Your Set",
-                        "text": "<p>Choose your favorites and save up to 20%.</p>",
+                        "heading": "T-Shirts",
+                        "text": "<p>Designed to accompany you through the years</p>",
                         "alignment": "left",
                         "content_position": "bottom",
-                        "heading_size": "md",
-                        "custom_heading_size": 24,
-                        "text_size": "md",
-                        "label": "",
-                        "button_style": "primary",
+                        "heading_size": "custom",
+                        "custom_heading_size": 18,
+                        "text_size": "sm",
+                        "label": "Shop now",
+                        "button_style": "tertiary",
                         "show_icon": false,
                         "icon": "arrow_right",
                         "icon_position": "right",
                         "full_width": false,
-                        "content_gap": 10,
-                        "button_spacing": 30,
-                        "color_scheme": "",
-                        "padding_top": 40,
-                        "padding_bottom": 40,
-                        "padding_left": 40,
-                        "padding_right": 40,
+                        "content_gap": 8,
+                        "button_spacing": 16,
+                        "color_scheme": "scheme-1",
+                        "padding_top": 24,
+                        "padding_bottom": 0,
+                        "padding_left": 0,
+                        "padding_right": 0,
                         "customize_mobile_padding": false,
                         "padding_top_mobile": 40,
                         "padding_bottom_mobile": 40,
                         "padding_left_mobile": 40,
-                        "padding_right_mobile": 40
+                        "padding_right_mobile": 40,
+                        "image": "shopify://shop_images/arche-header-t-shirts.avif"
                       },
                       "blocks": {}
                     }
@@ -191,48 +200,19 @@
                 "mega-menu-banners"
               ]
             },
-            "header-logo": {
-              "type": "_header-logo",
-              "settings": {
-                "position": "center"
-              },
-              "blocks": {}
-            },
             "header-menu-toggle": {
               "type": "_header-menu-toggle",
               "settings": {},
               "blocks": {}
             },
-            "header-localization": {
-              "type": "_header-localization",
-              "settings": {
-                "dropdown_trigger": "click",
-                "show_country_selector": true,
-                "show_country_name": false,
-                "show_country_flag": true,
-                "show_language_selector": false,
-                "font_size": "md"
-              },
-              "blocks": {}
-            },
-            "header-divider": {
-              "type": "_header-divider",
-              "settings": {
-                "full_height": false,
-                "height": 12,
-                "color_type": "inherit",
-                "border_color": "#dbd9d9"
-              },
-              "blocks": {}
-            },
             "header-search": {
               "type": "_header-search",
               "settings": {
-                "type": "icon",
+                "type": "text",
                 "label": "Search",
-                "font": "accent",
-                "font_size": "md",
-                "letter_spacing": "relaxed"
+                "font": "body",
+                "font_size": "sm",
+                "letter_spacing": "normal"
               },
               "blocks": {}
             },
@@ -241,8 +221,8 @@
               "settings": {
                 "type": "text",
                 "label": "Account",
-                "font": "accent",
-                "font_size": "md",
+                "font": "body",
+                "font_size": "sm",
                 "letter_spacing": "normal"
               },
               "blocks": {}
@@ -250,7 +230,7 @@
             "header-cart": {
               "type": "_header-cart",
               "settings": {
-                "type": "text",
+                "type": "icon",
                 "label": "Cart",
                 "badge_type": "primary"
               },
@@ -258,11 +238,9 @@
             }
           },
           "block_order": [
-            "header-menu",
             "header-logo",
+            "header-menu",
             "header-menu-toggle",
-            "header-localization",
-            "header-divider",
             "header-search",
             "header-account",
             "header-cart"
@@ -272,10 +250,10 @@
       "settings": {
         "section_width": "page_width",
         "icon_size": 20,
-        "sticky_type": "scroll_up",
+        "sticky_type": "none",
         "color_scheme": "scheme-1",
-        "header_overlay": true,
-        "transparent_color_scheme": "scheme-3"
+        "header_overlay": false,
+        "transparent_color_scheme": "scheme-1"
       }
     }
   },
