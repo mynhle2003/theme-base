@@ -290,7 +290,6 @@
       "blocks": [
         {
           "type": "header",
-          "id": "header",
           "static": true,
           "settings": {
             "width": "fill",
@@ -310,11 +309,11 @@
                 "animation_delay": 50
               }
             }
-          ]
+          ],
+          "id": "header"
         },
         {
           "type": "view-all-button",
-          "id": "blog-posts-view-all",
           "static": true,
           "settings": {
             "button_label": "All Stories",
@@ -325,11 +324,11 @@
             "show_icon": false,
             "show_icon_mobile": false,
             "hide_view_all_mobile": false
-          }
+          },
+          "id": "blog-posts-view-all"
         },
         {
           "type": "blog-list",
-          "id": "blog-list",
           "static": true,
           "settings": {
             "blog": "",
@@ -358,7 +357,6 @@
           "blocks": [
             {
               "type": "blog-card",
-              "id": "blog-card",
               "static": true,
               "settings": {
                 "ratio": "landscape",
@@ -425,9 +423,11 @@
                     "padding_bottom": 0
                   }
                 }
-              ]
+              ],
+              "id": "blog-card"
             }
-          ]
+          ],
+          "id": "blog-list"
         }
       ]
     }
