@@ -395,3 +395,29 @@ Bằng chứng nguồn: 21 Chrome fixture tests PASS cho responsive logo, first 
 | Ngày | Mã | Revision đích | Trạng thái | Preview / publish |
 | --- | --- | --- | --- | --- |
 | 2026-10-14 | HEADER-LOGO-002 / HEADER-GAP-003 / HEADER-SEARCH-004 / HEADER-BUTTON-005 (đầy đủ prefix ARCHE-ESSEN ở trên) | chưa audit/apply | pending | chưa upload / chưa publish |
+
+
+## ARCHE-ESSEN-PRESS-001 — Hiển thị nội dung khi đổi active item
+
+Ngày: 2026-10-14. Revision: 1. Nguồn: `arche-theme`, branch `theme/arche-theme`, commit `c04c3a402149f25ac5373c9af39cd4159163f857` (`fix(press): reveal selected quotes and release fade effects`), tham khảo runtime của `elara-theme`. Đích: `../essen-theme`, branch `theme/essen-theme`. Trạng thái: **pending** — chưa audit, áp dụng hoặc QA tại Essen; chưa upload preview/publish.
+
+### Lỗi, phạm vi và dependency
+
+- Khi chọn logo/item khác trong Press, quote có entrance animation có thể còn `reveal-pending` vì callback IntersectionObserver đã chạy khi item bị ẩn. Khi quay lại item cũ, animation fade với `fill: forwards` có thể giữ opacity 0 dù item đã được chọn.
+- `assets/block-animations.js`: thêm `.press-item[data-carousel-slide]` vào `scopeSelector` để lifecycle hiện có reset nội dung khi ẩn và reveal khi item được active trong viewport.
+- `assets/carousel-block.js`: trong `initializeReveal`, cancel animation trong `finally` sau khi promise finished kết thúc để CSS selection sở hữu trạng thái opacity nghỉ; chuyển keyframes exit/enter thành opacity-only, để animation của block con sở hữu chuyển động.
+- `tests/press-active-item.test.cjs`: kiểm thử quote chưa được reveal khi ẩn, đổi và quay lại item, animation `none`, cleanup fade và chọn nhanh liên tiếp.
+- Dependency: reveal carousel và block entrance lifecycle hiện có tại đích. Độc lập với `ARCHE-ESSEN-BLOCK-ANIMATION-001`; nếu Essen đã rebuild theo main, đối chiếu controller mới và áp dụng logic tương đương, không thay bằng runtime Arche cũ. Không chuyển imports Swiper, preset, quote, logo, image ratio, spacing hoặc layout của Arche/Elara.
+
+### Áp dụng và acceptance tại Essen
+
+1. Tái hiện trên Essen với quote có animation, chọn item 1 → 2 → 1 và click nhanh nhiều logo. Kiểm tra `aria-hidden`, `.is-selected`, `reveal-pending` và opacity thực tế. Nếu đã có fix tương đương và không còn lỗi, ghi `skipped`; chưa tái hiện được thì giữ `pending`.
+2. Chuyển riêng logic lifecycle/cleanup theo implementation đích; không copy toàn bộ hai asset hoặc ghi đè các custom khác. Giữ autoplay, pause-on-hover, keyboard/focus, pagination và Theme Editor lifecycle hiện có.
+3. QA desktop/mobile, animation bật/tắt và reduced motion; từng item hiển thị quote đúng khi active, quay lại item cũ không mất nội dung, chọn nhanh kết thúc ở item yêu cầu cuối cùng, chỉ một item selected và logo có `aria-current` đúng. Kiểm tra autoplay, nhiều instance và Theme Editor select/add/remove/duplicate/reorder/save/reload.
+4. Chạy tests thích ứng với runtime đích, Theme Check full và diff check; ghi commit đích cùng bằng chứng, chỉ đánh dấu `verified` sau QA Essen. Preview/publish theo dõi riêng.
+
+Bằng chứng nguồn: 4 Press regression tests và 3 collection-tab motion tests PASS (7/7); `git diff --check` PASS; Theme Check full với `--fail-level error` PASS, 0 errors / 5 cảnh báo settings-count ở các file khác. Chưa QA storefront/Theme Editor live; kết quả nguồn không thay thế QA Essen.
+
+| Ngày | Mã | Revision | Commit nguồn | Trạng thái Essen | Preview / publish |
+| --- | --- | --- | --- | --- | --- |
+| 2026-10-14 | ARCHE-ESSEN-PRESS-001 | 1 | c04c3a40 | pending — chưa audit/apply | chưa upload / chưa publish |
