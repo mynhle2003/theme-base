@@ -13,8 +13,7 @@
     align-items: center;
     justify-content: var(--collection-tabs-controls-alignment, flex-start);
     flex-wrap: wrap;
-    column-gap: calc(var(--layout-grid-gap, 24px) * 0.75);
-    row-gap: 0.5rem;
+    gap: var(--tab-layout-gap-desktop, 16px);
     max-width: 100%;
     padding-block: 0;
   }
@@ -69,8 +68,6 @@
 
   .tab-layout--button .tab-layout__navigation {
     align-items: center;
-    column-gap: 0.4rem;
-    row-gap: 0.4rem;
     padding-block: 0;
   }
 
@@ -126,8 +123,7 @@
 
     .tab-layout__navigation {
       justify-content: var(--collection-tabs-controls-alignment-mobile, var(--collection-tabs-controls-alignment, flex-start));
-      column-gap: calc(var(--layout-grid-gap, 24px) * 0.6);
-      row-gap: 0.45rem;
+      gap: var(--tab-layout-gap-mobile, var(--tab-layout-gap-desktop, 16px));
     }
 
     [data-layout-direction='horizontal'] .tab-layout[data-vertical-layout='true'] .tab-layout__navigation {

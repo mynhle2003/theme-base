@@ -4,12 +4,12 @@ Role/placement/context: existing Heading, Text, Button, Eyebrow, Icon and Editor
 Ownership: block Type/Delay; global motion and reduced motion control runtime. Existing typography/layout/padding retain ownership.
 Slots: unchanged; no wrappers or new children.
 Output: validated attributes on block roots, shared animation class.
-Runtime: Elara section-scoped controller with editor replay, teardown, hidden-scope gating and boot fallback.
-Responsive/accessibility: preserve DOM/order/layout, readable without JS or with motion disabled; focus exposes content.
+Runtime: personal main e84d0689249b5ae26d3c5c066c90348e4aae06f4, with automatic card/list entrances, editor lifecycle and body motion switch. Retain compatible leaf Type/Delay controls and validated hooks.
+Responsive/accessibility: preserve DOM/order/layout, readable without JS or with motion disabled; main owns pending visibility, focus and reduced-motion behavior.
 QA: schemas, JS syntax, Theme Check, customization coverage and existing kernel regressions. Native editor/store visual QA remains outstanding.
 Defaults: None/0 for existing content; merchant can opt in. Preserve all preset and saved settings.
 
-Validation: Theme Check passed with zero errors and five existing settings-count warnings (down from eleven warnings). Twelve existing kernel tests passed; 176 token/hook/schema preservation assertions passed before the final form-token extraction. JS syntax, diff whitespace and customization coverage passed. Native storefront and Theme Editor animation preview remain unverified. No commit/push/upload.
+Historical validation of the superseded Elara runtime: Theme Check passed with zero errors and five existing settings-count warnings (down from eleven warnings). Twelve existing kernel tests passed; 176 token/hook/schema preservation assertions passed before the final form-token extraction. JS syntax, diff whitespace and customization coverage passed. Native storefront and Theme Editor animation preview remain unverified. No commit/push/upload.
 
 ## Section/template preset synchronization — 2026-10-09
 
@@ -22,3 +22,7 @@ Configured 240 section-preset, 209 template, 4 group and 77 block-preset entries
 ## Preset delay review — 2026-10-09
 
 Reviewed all 530 animation entries in section/block presets, saved templates and section groups. Kept the short content cadence: heading/eyebrow/icon 50ms, text 100ms, CTA 150ms; testimonial/press headings and image-card CTAs retain their contextual 100ms timing. Changed nine slideshow CTA delays from 500ms to 150ms across the section preset and both home templates, plus the FAQ support CTA from 300ms to 150ms. Individual block presets and disabled animations remain None/0. Only delay values changed; animation types, content, media, composition, schema controls and runtime are preserved.
+
+## Main migration — 2026-10-14
+
+ARCHE-ESSEN-BLOCK-ANIMATION-001 replaces the former custom runtime and boot guard with pinned personal main. The schema contract did not change: identity mapping preserves all 424 actual Type/Delay entries (including None and zero), block IDs, order, content and media. No preset was reset to main or Arche defaults. Current saved delays are 0/50/100/150ms. The old boot guard and Rotate words CSS runtime are removed; compatible leaf hooks and the pending-state CSS remain recorded as differences against main. Earlier preset receipts remain historical. See [update receipt](audits/arche-to-essen-2026-10-14.md) for target QA and outstanding live checks.

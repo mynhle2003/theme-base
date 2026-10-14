@@ -491,7 +491,7 @@ class VariantPicker extends HTMLElement {
     });
   }
 
-  sync({ updateUrl = false, source = 'change' } = {}) {
+  sync({ updateUrl = false, source = 'change', updateMedia = true } = {}) {
     const options = this.selectedOptions();
     const variant = this.findVariant(options);
 
@@ -500,7 +500,7 @@ class VariantPicker extends HTMLElement {
     this.updateStatus(variant);
     this.updatePrice(variant);
     this.updateSaleBadge(variant);
-    this.updateLegacyMedia(variant?.id || '');
+    if (updateMedia) this.updateLegacyMedia(variant?.id || '');
     if (updateUrl) this.updateUrl(variant?.id || '');
 
     this.dispatchEvent(
@@ -512,6 +512,7 @@ class VariantPicker extends HTMLElement {
           options,
           available: Boolean(variant?.available),
           source,
+          updateMedia,
         },
       }),
     );
@@ -522,7 +523,12 @@ class VariantPicker extends HTMLElement {
       return;
     }
 
-    this.sync({ updateUrl: this.dataset.updateUrlOnChange !== 'false', source: 'change' });
+    const optionGroup = event.target.closest('.variant-picker__option');
+    this.sync({
+      updateUrl: this.dataset.updateUrlOnChange !== 'false',
+      source: 'change',
+      updateMedia: optionGroup?.dataset.optionSwatch === 'true',
+    });
   }
 
   handleClick(event) {

@@ -227,7 +227,7 @@
       endif
     %}
 
-    <fieldset class="variant-picker__option{% if option_uses_swatches %} variant-picker__option--swatches{% endif %}" data-option-index="{{ option_index }}">
+    <fieldset class="variant-picker__option{% if option_uses_swatches %} variant-picker__option--swatches{% endif %}" data-option-index="{{ option_index }}" data-option-swatch="{{ option_is_color }}">
       <legend id="{{ option_id }}-label" class="visually-hidden">
         {{ product_option.name | escape }}
       </legend>
@@ -240,14 +240,16 @@
           {% endif %}
           {% if show_size_chart %}
             <button
-              class="variant-picker__size-chart-trigger"
+              class="variant-picker__size-chart-trigger btn btn-tertiary link-underline"
+              data-underline="persistent"
+              data-underline-target="text"
               type="button"
               aria-haspopup="dialog"
               aria-controls="{{ size_chart_dialog_id }}"
               aria-expanded="false"
               data-size-chart-trigger
             >
-              {{ size_chart_label | escape }}
+              <span class="btn__label"><span class="btn__text">{{ size_chart_label | escape }}</span></span>
             </button>
           {% endif %}
         </div>

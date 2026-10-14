@@ -102,7 +102,7 @@ const createManualPagination = (pagination, swiper, manualLoop) => {
     const currentIndex = getCurrentIndex();
     if (type === 'progress_bar') {
       const fill = pagination.querySelector('.swiper-pagination-progressbar-fill');
-      if (fill) fill.style.transform = `scaleX(${(currentIndex + 1) / manualLoop.slideCount})`;
+      if (fill) fill.style.setProperty('--rounded-progress-value', String((currentIndex + 1) / manualLoop.slideCount));
       return;
     }
 
@@ -116,7 +116,7 @@ const createManualPagination = (pagination, swiper, manualLoop) => {
   if (type === 'progress_bar') {
     pagination.classList.add('swiper-pagination-progressbar', 'swiper-pagination-horizontal');
     const fill = document.createElement('span');
-    fill.className = 'swiper-pagination-progressbar-fill';
+    fill.className = 'swiper-pagination-progressbar-fill rounded-progress-fill';
     fill.setAttribute('aria-hidden', 'true');
     pagination.replaceChildren(fill);
   } else {

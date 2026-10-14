@@ -464,6 +464,7 @@ class ProductMediaGallery extends HTMLElement {
     const featuredMediaId = event.detail?.variant?.featured_media?.id;
     window.requestAnimationFrame(() => {
       this.dataset.currentVariantId = variantId;
+      if (event.detail?.updateMedia === false) return;
       const filtersVariantMedia = this.applyVariantMediaFilter(variantId);
       this.syncThumbnailVisibility();
       this.syncGalleryOverflow();
