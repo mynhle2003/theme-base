@@ -1872,3 +1872,7 @@ Validation: 23 main animation regression tests PASS, JavaScript syntax PASS, The
 Browser QA local: 8 Chrome cases PASS tại 375/1920px — Image card entrance, nested child ownership, Rotate words, motion on/off, reduced motion và no-JS. Đây là fixture dùng CSS/JS thật, không phải QA storefront/Theme Editor live.
 
 Customization coverage: checker báo các path ngoài phạm vi migration chưa được ghi nhận (gồm extracted component CSS và các section/block khác); không đánh dấu full coverage PASS. Các implementation path của migration là assets/block-animations.js (đã bằng main), assets/critical.css và layout/theme.liquid (vẫn có record).
+
+## Header navigation — variant handoff 2026-10-14
+
+[Hướng dẫn update variant Header](../variant-updates/arche-to-essen.md#header-navigation--hướng-dẫn-update-variant-ngày-2026-10-14): ARCHE-ESSEN-HEADER-LOGO-002, HEADER-GAP-003, HEADER-SEARCH-004 và HEADER-BUTTON-005. Nguồn implementation 8cbc1913/ad3fc68d; final Arche preset tại 26acff38: Sticky Always, Bottom separator Line, transparent enabled, giữ hai logo global cũ. Essen pending; kiểm tra lỗi/contract đích trước khi chuyển patch nhỏ, không copy preset/menu/media Arche. QA nguồn 21 Chrome fixtures pass, Theme Check 0 errors/5 warnings; live QA đích theo dõi riêng.

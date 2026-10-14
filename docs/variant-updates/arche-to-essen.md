@@ -327,3 +327,71 @@ Khi update Essen: audit code/settings đích trước, chuyển patch theo diff 
 Catalog là dữ liệu store, không được chuyển bằng Git: không chạy lại cleanup trên store khác. Với catalog được yêu cầu đồng bộ Figma, chỉ gắn tag đúng product trong nguồn; không thêm New/Bestseller mặc định, badge: prefix, vendor/template hoặc Figma-* marker. Source text new hiện được store tái sử dụng thành New; CSS uppercase hiển thị NEW. Không rename tag dùng chung để đổi case. Sale/Sold out lấy trạng thái commerce, không tạo tag hay đổi stock để giả lập. Quy tắc duy trì tại agents-build-themes/skills/setup-store/store-content-media/references/products.md.
 
 Bằng chứng nguồn: 5 tests PASS, Theme Check 0 errors / 5 existing deferred warnings, diff check PASS; homepage DOM readback xác nhận 11 sản phẩm không còn tag ngoài Figma (ngoại lệ Sale giữ nguyên). Desktop NEW/SALE có 10px, tracking 1.4px, bo góc 4px và cao 22px. Sold-out verified qua source component/Liquid logic; live target sold-out và Theme Editor save/reload phải QA khi áp dụng Essen.
+
+## Header navigation — hướng dẫn update variant ngày 2026-10-14
+
+Nguồn: repo `arche-theme`, branch `theme/arche-theme`. Đích theo tài liệu này: repo `essen-theme`, branch `theme/essen-theme`. Các mã dưới đây đều **pending** tại Essen: chưa audit/apply/QA/upload/publish trong tác vụ Header này. Không nhầm với `ARCHE-ESSEN-HEADER-ALIGNMENT-001`, mã cũ dành cho compound content block `blocks/header.liquid`, không phải navigation Header.
+
+| Mã | Revision | Phạm vi nguồn | Commit nguồn | Essen |
+| --- | --- | --- | --- | --- |
+| ARCHE-ESSEN-HEADER-LOGO-002 | 1 | Logo Desktop/Mobile position, nhóm action mobile, first paint/resize | 8cbc1913 | pending |
+| ARCHE-ESSEN-HEADER-GAP-003 | 1 | Gap menu/actions độc lập và Customize for mobile | ad3fc68d | pending |
+| ARCHE-ESSEN-HEADER-SEARCH-004 | 1 | Bốn giá trị Search Desktop type | ad3fc68d | pending |
+| ARCHE-ESSEN-HEADER-BUTTON-005 | 1 | Banner dùng shared button và tránh cắt underline tertiary | 8cbc1913 + ad3fc68d | pending |
+
+### ARCHE-ESSEN-HEADER-LOGO-002 — vị trí logo độc lập
+
+- Files: `blocks/_header-logo.liquid`, `assets/header.js`, `blocks/_header-top.liquid`, phần Header first-paint của `assets/critical.css`; regression trong `tests/header-responsive-layout.test.cjs`.
+- Giữ ID cũ `position`, đổi nhãn thành Desktop position; thêm `position_mobile` với Left/Center, default Center, Liquid normalization và data attributes riêng. Không rename ID desktop làm mất giá trị đã lưu.
+- Runtime dùng breakpoint hiện tại 991.98/992px; đọc đúng option từng viewport. Mobile Center: hai cột hai bên cân bằng, logo giữa thực sự, Menu toggle/Search cụm trái và Cart phải. Mobile Left: logo trái, toggle/Search/actions cụm phải. Desktop giữ bố cục theo Desktop position.
+- Di chuyển lại cùng node khi breakpoint/vị trí đổi; lưu thứ tự gốc bằng WeakMap, không nhân bản logo/action hoặc listener; giữ focus sau reparent. First paint phải đọc Mobile position, không suy từ class desktop. Existing section-load/reinitialization vẫn idempotent.
+- Dependency: DOM cột/Header runtime của Essen và CSS breakpoint đích; không bắt buộc chuyển preset, menu store hoặc ảnh Arche. Nếu cấu trúc khác, reconcile patch, không copy nguyên file.
+
+### ARCHE-ESSEN-HEADER-GAP-003 — gap menu và cụm actions
+
+- Files: `blocks/_header-top.liquid`, phần Header first-paint `assets/critical.css`.
+- Giữ `gap` (đổi label Gap menu): khoảng giữa các cột Header/logo và navigation. Không thay nó cho gap từng navigation link; `_header-menu.gap` vẫn là setting riêng.
+- Thêm `actions_gap`: gap trong cụm Search/Account/Cart/localization/divider. Thêm `customize_mobile_gap` (Customize for mobile), `gap_mobile`, `actions_gap_mobile`; chỉ hiện hai range mobile khi checkbox bật.
+- Liquid guard 0–100px, giữ 0 hợp lệ. Binding `--header-top-gap` và `--header-actions-gap`; mobile override qua `--header-top-gap-mobile` / `--header-actions-gap-mobile` chỉ emit khi bật. Tắt checkbox thì cả hai kế thừa desktop, không dùng mobile hardcoded.
+- First paint cũng dùng gap actions tương ứng để không nhảy khi JS sắp cột. Ở Essen giữ giá trị đã lưu; chỉ migrate/add default sau khi đối chiếu owner/setting đích.
+
+### ARCHE-ESSEN-HEADER-SEARCH-004 — Desktop type đúng giá trị
+
+- File: `blocks/_header-search.liquid`. Giữ ID/value hiện có `type`: icon, text, icon_with_text, search_bar.
+- >=992px: Icon chỉ icon; Text chỉ nhãn (ẩn icon bằng selector đủ specificity); Icon with text hiện cả hai; Search bar là form GET tới routes.search_url với input q và submit.
+- Bỏ việc thu Search bar thành icon từ 1400px; desktop compact 1024px vẫn phải hiển thị kiểu đã chọn. <992px, mọi kiểu dùng icon mở Search overlay; form desktop và nhãn được ẩn, không hiện hai trigger.
+- Giữ label/input ID, block editor attributes, aria-controls/haspopup và data-search-overlay-open; không sửa Search overlay logic hoặc search route của đích.
+
+### ARCHE-ESSEN-HEADER-BUTTON-005 — option tertiary và gạch chân
+
+- File implementation: `blocks/_mega-menu-banner.liquid`. Đã có `button_style` với Primary/Secondary/Tertiary, nên giữ option, không hardcode mọi nút thành Tertiary.
+- Thay button markup riêng bằng `render 'theme-button'`: truyền variant, label, URL, open_new_tab, icon/position và class spacing/full-width. Shared renderer cấp btn/btn-tertiary/btn--tertiary, btn__label/btn__text và underline attributes đúng contract. Không thêm CSS appearance riêng cho Shop now, không copy shared snippet nếu Essen đã có renderer tương đương.
+- Nguyên nhân underline vẫn bị mất ở preset: banner overflow hidden cắt pseudo-element ở dưới nút khi content bottom padding=0. Arche dùng **setting padding_bottom sẵn có =6px** trong hai banner ở section preset và header-group, đủ cho global underline offset hiện tại 5px + nét 1px. Đây là cấu hình theo token đích, không phải quy tắc hardcode 6px cho mọi theme.
+- Essen phải tái hiện clipping với global underline bật và option Tertiary; nếu bị cắt, dùng padding control hiện có đủ cho offset/độ dày thực tế. Không ép gạch chân khi global Show underline tắt, không đổi toàn bộ button settings của Essen.
+- Dependency: shared theme-button/underline contract và các setting banner hiện có; độc lập logo/gap/Search, không cần copy các feature đó để fix nút.
+
+### Preset, media và giá trị riêng Arche — không tự copy sang Essen
+
+- Nguồn cấu hình: `sections/header.liquid` (schema presets), `sections/header-group.json`; giữ các implementation edits ngoài schema không thuộc các mã trên.
+- Trạng thái Arche mới nhất tại `26acff38`: Sticky Type **Always**, Bottom separator **Line**; Transparent header section bật, transparent scheme-3; logo desktop Left/mobile Center.
+- Lịch sử: `3fbb353c` bật Always và separator None; `26acff38` đổi lại separator Line theo owner. Không lấy giá trị None cũ làm final.
+- Gaps Arche: menu/column 64px, actions 24px desktop; Customize for mobile bật với menu/column 8px, actions 4px. Navigation link gap 28px. Hai banner chọn Button style Tertiary, bottom padding 6px.
+- Giữ hai logo global cũ của Arche: `shopify://shop_images/arche-header-black.avif` và `arche-header-white.avif`; không thay bằng ESSEN logo đã upload. Essen phải giữ logo thường/transparent của chính Essen.
+- Menu `arche-header` (Menswear/New/Sale/About, Categories/Material) và hai ảnh banner là resource riêng store/preset Arche. Không tạo/copy/đổi menu hoặc upload Files sang variant chỉ vì chuyển code. Handle/menu/media phải xác minh độc lập nếu owner yêu cầu content. Receipt nguồn: `docs/audits/arche-header-media-2026-10-14.json`, `arche-header-menu-2026-10-14.json`.
+- Preset/media không là dependency bắt buộc của bốn fix implementation; preserve template, scheme, padding, menu và các setting merchant ở Essen.
+
+### Cách áp dụng, QA và trạng thái đích
+
+1. Khi được yêu cầu update Essen, đọc từng mã, audit file/schema/runtime và tái hiện gap tại chính Essen. Đã được upstream sửa thì skipped kèm bằng chứng; chưa tái hiện được giữ pending; contract khác ghi conflict. Không áp dụng chỉ từ QA Arche.
+2. Chuyển từng diff implementation nhỏ theo DOM/token đích; bổ sung option mới với migration rõ ràng, bảo toàn IDs/giá trị đã có. Không chép nguyên Header group/settings_data hoặc ghi đè worktree.
+3. QA Logo: cả bốn tổ hợp desktop/mobile Left/Center, 320/375/768/1440px; first paint trước JS, resize round-trip, không duplicate, giữ focus; thêm/remove/reorder/reload và select block trong Theme Editor.
+4. QA Gap: giá trị 0/4/24/64 và 100px; bật/tắt mobile override, gap actions và gap cột phải độc lập; labels dài, nhiều controls, overflow và keyboard.
+5. QA Search: cả bốn kiểu ở 375/1024/1440px, đúng icon/label/form visibility; GET submit, mở/đóng overlay, aria/focus và editor save/reload.
+6. QA Button: ba option style, có/không icon, left/right icon, full width và new tab. Tertiary có nét 1px trong clipping bounds khi bật; global underline off thì ẩn; kiểm tra hover/focus và drawer mobile.
+7. Chạy Theme Check, JS syntax, diff check và tests phù hợp ở Essen. Ghi commit/revision đích, QA thực tế và pending live editor riêng. Upload/publish cần quyền riêng, không nằm trong việc ghi doc.
+
+Bằng chứng nguồn: 21 Chrome fixture tests PASS cho responsive logo, first paint, option Search, gap inheritance và tertiary clipping/global toggle; Theme Check full 0 errors / 5 warnings có sẵn; diff check PASS. Test fixture không thay thế QA storefront/Theme Editor live. Không đổi code hoặc deploy Essen trong tác vụ này.
+
+| Ngày | Mã | Revision đích | Trạng thái | Preview / publish |
+| --- | --- | --- | --- | --- |
+| 2026-10-14 | HEADER-LOGO-002 / HEADER-GAP-003 / HEADER-SEARCH-004 / HEADER-BUTTON-005 (đầy đủ prefix ARCHE-ESSEN ở trên) | chưa audit/apply | pending | chưa upload / chưa publish |
