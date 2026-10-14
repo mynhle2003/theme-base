@@ -285,7 +285,7 @@
       "type": "row"
     },
     {
-      "type": "grid"
+      "type": "columns"
     },
     {
       "type": "email-signup"
@@ -490,17 +490,16 @@
       "blocks": [
         {
           "type": "text",
-          "id": "text",
           "static": true,
           "settings": {
             "text": "<p>The pavilion standard</p>",
             "animation_type": "fade",
             "animation_delay": 100
-          }
+          },
+          "id": "text"
         },
         {
           "type": "editorial-text",
-          "id": "editorial-text",
           "static": true,
           "settings": {
             "text": "<p>Every piece that leaves our studio passes through no fewer than forty pairs of hands. We believe jewelry should outlive trends and outlive us.</p>",
@@ -509,18 +508,19 @@
             "max_width": 900,
             "animation_type": "fade",
             "animation_delay": 100
-          }
+          },
+          "id": "editorial-text"
         },
         {
           "type": "button",
-          "id": "button",
           "static": true,
           "settings": {
             "button_label": "Our story",
             "button_style": "secondary",
             "animation_type": "fade",
             "animation_delay": 150
-          }
+          },
+          "id": "button"
         }
       ]
     }

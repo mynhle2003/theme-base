@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"75baa7c890ee43f9a7c97ad3aee49961ea295f2f"} -->
+<!-- theme-base-sync-state: {"sha":"efbbac9e29963002df775cf40fd34ca6fe991bd8"} -->
 # Customization record: arche-theme
 
 Theme branch: `theme/arche-theme`
@@ -20,10 +20,9 @@ Record every theme-specific change here before committing the code. During base 
 | --- | --- | --- | --- | --- |
 | `blocks/_header-account.liquid` | Always requests a fixed account menu. | Request customer-account-main-menu only when present; otherwise retain Shopify default menu. | Avoid missing-menu errors. | Preserve account markup and fallback. |
 | `blocks/blog-card-button.liquid` | Generic Read more link. | Pass article title through aria_label and accessible_description. | Distinct accessible link names. | Keep contextual article and visible label. |
-| `blocks/grid.liquid` | CSS-only grid option output. | Expose resolved columns and gaps as data attributes. | Keep runtime metadata aligned with options. | Preserve column/gap mappings. |
 | `snippets/theme-button.liquid` | No optional destination context. | Append escaped optional accessible_description in a visually-hidden span. | Accessible Blog Read more context. | Keep argument optional and visible label unchanged. |
 | `blocks/image-text-card-grid-item.liquid` | Static CSS in Liquid stylesheet bundle. | Load `assets/block-image-text-card-grid-item.css` synchronously with the owner. | Reduce unrelated development bundle CSS. | Keep owner and asset paired; preserve existing rules, layout and editor behavior. |
-| `blocks/slide.liquid` | Static CSS in Liquid stylesheet bundle. | Load `assets/block-slide.css` synchronously with the owner. | Reduce unrelated development bundle CSS. | Keep owner and asset paired; preserve existing rules, layout and editor behavior. |
+| `blocks/slide.liquid` | Rebuilt main Slide layout and border-thickness contract. | Keep saved pill/slightly-rounded shapes; load rebuilt owner CSS synchronously via assets/block-slide.css. | Preserve template layout and recorded theme customization. | Keep main markup and local/editor attributes; map supported saved settings without losing content. |
 | `blocks/timeline-slide.liquid` | Static CSS in Liquid stylesheet bundle. | Load `assets/block-timeline-slide.css` synchronously with the owner. | Reduce unrelated development bundle CSS. | Keep owner and asset paired; preserve existing rules, layout and editor behavior. |
 | `sections/collection-list-thumbnails.liquid` | Static CSS in Liquid stylesheet bundle. | Load `assets/section-collection-list-thumbnails.css` synchronously with the owner. | Reduce unrelated development bundle CSS. | Keep owner and asset paired; preserve existing rules, layout and editor behavior. |
 | `sections/text-marquee-custom.liquid` | Static CSS in Liquid stylesheet bundle. | Load `assets/section-text-marquee-custom.css` synchronously with the owner. | Reduce unrelated development bundle CSS. | Keep owner and asset paired; preserve existing rules, layout and editor behavior. |
@@ -147,8 +146,8 @@ Record every theme-specific change here before committing the code. During base 
 | `assets/section-zoom-image-banner.js` | No dedicated zoom banner runtime. | Block-local `zoom-foreground-image` custom element reveals the foreground clip-path from 0% to 100% as the image enters the viewport and its center reaches viewport center, easing scale from 1.12 to 1. Uses native scrolling, time-based damping, visibility gating, reduced motion, editor selection reset and listener/observer cleanup. | Match the requested entry-to-center reveal and smooth scroll interaction across wheel, touch, keyboard and high refresh rates. | Preserve native scroll behavior; verify lifecycle and motion preferences when main changes runtime conventions. |
 
 | `blocks/blog-card.liquid` | Existing media ratio presets do not support landscape 5:4; collection thumbnails retain legacy portrait 2:3. | Adds validated 5:4 rendering (1.25); collection thumbnails also add explicit 4:5 without changing legacy values. | Expose Essen theme image ratios in the editor. | Preserve additive options and their Liquid/CSS mappings; review overlapping ratio logic from main and verify desktop/mobile crop. |
-| `blocks/carousel.liquid` | Existing media ratio presets do not support landscape 5:4; collection thumbnails retain legacy portrait 2:3. | Adds validated 5:4 rendering (1.25). Desktop next-slide preview and a new independent mobile option fit N complete items plus 2/7 of the next item inside the viewport, with a matching pre-JS layout; preview is disabled when all items fit. | Expose Essen image ratios and match the contained carousel preview in Figma node 46028:7301. | Preserve additive options and their Liquid/CSS mappings; review overlapping ratio logic from main and verify desktop/mobile crop, contained preview, gap, insufficient items and editor reloads. |
-| `assets/carousel-block.js` | Carousel preview uses shared overflow CSS and integer columns; other sections may opt into centered preview. | Only the Essen Carousel opt-in uses fractional slidesPerView (N + 2/7), independently per breakpoint and only with more slides than columns; retains controls, pagination and editor lifecycle, using the existing cloned manual loop to support fractional views with few slides. | Show a partial next item within the carousel bounds; manual-loop progress uses rounded reveal via --rounded-progress-value instead of scaleX. | Review upstream initialization, breakpoint, loop and lifecycle changes; preserve other section callers and verify preview off/on, insufficient slides and resize. |
+| `blocks/carousel.liquid` | Rebuilt from personal main `efbbac9e`. | Restore independent mobile preview, legacy card appearance/5:4 settings and existing loop configuration; preserve current template layout values. | Rebuild first, then reapply the recorded additions. | Keep Slide-only direct children and main shared runtime; retain source defaults for new settings and existing theme values. |
+| `assets/carousel-block.js` | Main common Carousel owner uses shared scoped runtime. | Owner layout policy restores contained N + 2/7 preview independently per breakpoint; suppress preview for insufficient items. | Reapply the documented theme preview on main lifecycle. | Preserve pre-JS/runtime parity, resize, cloned loop behavior and editor cleanup. |
 | `snippets/collection-card-render.liquid` | Main shared collection card renderer validates the common ratio values and maps them to CSS aspect ratios. | Adds the Assen-only `ratio_5_4` option to the renderer allow-list and maps it to `1.25`, shared by both collection-card adapters. | Preserve the theme's 5:4 collection-card crop while adopting main's shared render kernel. | Keep the 5:4 schema choice in both adapters aligned with the allow-list and 1.25 mapping; review main renderer changes together with both callers. |
 | `blocks/collection-thumbnail.liquid` | Existing media ratio presets do not support landscape 5:4; collection thumbnails retain legacy portrait 2:3. | Adds validated 5:4 rendering (1.25); collection thumbnails also add explicit 4:5 without changing legacy values. | Expose Essen theme image ratios in the editor. | Preserve additive options and their Liquid/CSS mappings; review overlapping ratio logic from main and verify desktop/mobile crop. |
 | `blocks/first-card.liquid` | Existing media ratio presets do not support landscape 5:4; collection thumbnails retain legacy portrait 2:3. | Adds validated 5:4 rendering (1.25); collection thumbnails also add explicit 4:5 without changing legacy values. | Expose Essen theme image ratios in the editor. | Preserve additive options and their Liquid/CSS mappings; review overlapping ratio logic from main and verify desktop/mobile crop. |
@@ -179,7 +178,7 @@ Record every theme-specific change here before committing the code. During base 
 | `snippets/localization-flag.liquid` | Country image URLs inherit the preview protocol. | Normalize protocol-relative src/srcset after native image_tag rendering. | Avoid insecure flag requests in HTTP development previews. | Preserve existing HTTPS URLs and native image dimensions/classes/alt semantics. |
 | `blocks/_header-localization.liquid` | Header localization owns the reusable localization CSS. | Render shared header-localization-styles and HTTPS localization flags; declarations stay identical. | Correct dependency/loading or accessible label warnings. | Preserve behavior and shared CSS dependency when merging overlapping base changes; retain merchant settings and sources. |
 | `blocks/_header-menu.liquid` | Mobile menu uses localization classes owned by another block. | Declare shared localization styles and HTTPS flags. | Correct dependency/loading or accessible label warnings. | Preserve behavior and shared CSS dependency when merging overlapping base changes; retain merchant settings and sources. |
-| `blocks/collection-tab.liquid` | Tab triggers use CSS owned by the Tab Layout block. | Declare tab-layout-styles so triggers always include their shared styles. | Correct dependency/loading or accessible label warnings. | Preserve behavior and shared CSS dependency when merging overlapping base changes; retain merchant settings and sources. |
+| `blocks/collection-tab.liquid` | Main deferred Collection tab loading and product/promo slots. | Retain explicit tab-layout-styles dependency; saved labels, collections and promo content remain theme-owned. | Owner authorized rebuilding promotion/Collection tabs from main. | Keep main loading/lifecycle; preserve saved content and compatible layout values. |
 | `blocks/tab-layout.liquid` | Owns shared tab navigation CSS. | Render tab-layout-styles with identical declarations and order. | Correct dependency/loading or accessible label warnings. | Preserve behavior and shared CSS dependency when merging overlapping base changes; retain merchant settings and sources. |
 | `blocks/gallery-strip-item.liquid` | Owns shared gallery strip item geometry. | Render gallery-strip-item-styles with identical CSS. | Correct dependency/loading or accessible label warnings. | Preserve behavior and shared CSS dependency when merging overlapping base changes; retain merchant settings and sources. |
 | `blocks/gallery-strip-feature-item.liquid` | Uses geometry owned by a sibling block. | Declare gallery-strip-item-styles; retain feature overlay overrides. | Correct dependency/loading or accessible label warnings. | Preserve behavior and shared CSS dependency when merging overlapping base changes; retain merchant settings and sources. |
@@ -347,17 +346,20 @@ Record every theme-specific change here before committing the code. During base 
 | `blocks/_header-menu-toggle.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
 | `blocks/_mega-menu-banner.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
 | `blocks/collection-background-item.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
-| `blocks/collection-promo.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `blocks/collection-promo.liquid` | Main Collection promo including overlay-style controls. | No retained legacy implementation; preserve saved promotion media/content and layout. | Owner explicitly authorized migration. | Keep saved references and compatible layout; new controls use main defaults. |
 | `blocks/gallery-image.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
 | `blocks/group.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
 | `blocks/parallax-item.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
 | `blocks/product-buy-quantity.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
 | `blocks/product-callout.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
 | `blocks/product-inventory.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
-| `blocks/promo-card.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `blocks/promo-card.liquid` | Main Promo card including overlay-style controls. | No retained legacy implementation; rebuild uses main and preserves template/preset content and layout values. | Owner explicitly authorized migration. | New controls use main defaults; keep merchant resources, alignment, position and spacing. |
 | `blocks/scrolling-card.liquid` | Personal main `fafdc8de`. | Color Type supports Inherit with a transparent surface, or an explicit scheme; sticky top consumes the measured viewport center. | Reuse the existing Card block with inherited colors and centered sticky placement. | Preserve scheme override and centered positioning; Stack transition is owned by the existing Scrolling cards section, not Card. |
 | `snippets/media-card.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
 | `snippets/product-inventory-status.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
+| `blocks/columns.liquid` | Main Columns owns validated counts and horizontal/vertical gaps. | Restore Arche resolved desktop/tablet/mobile counts and gap metadata using the new breakpoint controls. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Former Grid metadata custom is migrated to Columns; keep values consistent with rendered CSS. |
+| `sections/hotspot-gallery.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
+| `assets/carousel-runtime.js` | Main shared lifecycle owns initialization, controls, loop clones, autoplay and editor cleanup. | Optional owner layout policy restores independently configured mobile preview and contained preview; rounded manual progress for Arche/Essen. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Use policy only for common Carousel; other owners use main defaults. Preserve cleanup and main single-clock behavior. |
 
 ## Base update decisions
 
@@ -1957,3 +1959,123 @@ Transfer all applicable performance improvements through [Lighthouse variant upd
 ## Lighthouse release validation — 2026-10-14
 
 Reconciled historical extracted-CSS owner/asset paths and the existing account, Blog link, Grid metadata and Header overlay implementation differences into the Customizations table after comparing each missing path with base checkpoint 75baa7c. This documents existing code; no extra storefront implementation was changed by the ledger repair. Release customization check PASS: 204 implementation paths covered. This supersedes the earlier coverage-pending note. Scoped tests, actual Liquid render, full Theme Check and diff check are rerun before commit; tests/generated reports remain local. HTTPS draft upload and a fresh live Lighthouse score still await Shopify CLI sign-in.
+
+### 2026-10-14 — Rebuild from personal main and reapply custom logic
+
+- Previous main checkpoint: `75baa7c890ee43f9a7c97ad3aee49961ea295f2f`.
+- Updated through main: `efbbac9e29963002df775cf40fd34ca6fe991bd8`.
+- Main commits included: 2.
+  - `e84d0689249b5ae26d3c5c066c90348e4aae06f4` — chore(base): update base with 4 upstream commits through 30d272ad
+  - `efbbac9e29963002df775cf40fd34ca6fe991bd8` — chore(base): update base with 16 upstream commits through 0fa58707
+
+- Scope: Carousel, Slide, Testimonial: split, Carousel split, Slide split, Columns/Column, promotion cards and Collection tabs. Main supplies implementation, ownership, slots and lifecycle. Theme templates supply content/order/layout; custom logic is re-applied additively after the rebuild.
+- Placement/context: retain existing JSON templates, section-group composition and Shopify resource context. No store picker save, media upload or publish.
+- Migration: `grid → columns` with `_columns-column` wrappers; `_slide_split → slide_split` preserving static `image`/`content` IDs. Former static generic header/carousel slots are converted to dynamic blocks on the new main owner without dropping their content/order.
+- Layout compatibility: preserve desktop/tablet/mobile column counts through main custom breakpoint controls, gaps and padding values where the new contract supports them. Preserve saved pill/slightly-rounded Slide shapes. Carousel desktop gap supports 0–100px with step 1 to retain the existing 56px preset.
+- Custom: common Carousel policy restores independent previews (Arche/Essen N + 2/7; Elara/Malandra 1.2 for one mobile column); Lighthouse Slide CSS loading on Arche/Essen; original Split SVGs on Elara/Malandra; Arche Columns metadata; tab rail/header styling and explicit style dependency; shared rounded progress and blog auto-height where recorded.
+- Main lifecycle: elapsed-time autoplay, observer/destroy cleanup, versioned shared imports and deferred Collection tabs. Theme-specific global Press/entrance geometry behavior is retained outside the rebuild.
+- Promotion cards keep saved media, content, position, alignment, column spans and padding; new overlay controls use main defaults.
+- Presets captured from migrated templates:
+  - `templates/collection.json#main` → `sections/collection.liquid` / **Arche: main**.
+  - `templates/index.json#collection_tabs` → `sections/collection-tabs.liquid` / **Arche: collection tabs**.
+  - `templates/index.json#image_cards` → `sections/custom-section.liquid` / **Arche: image cards**.
+  - `templates/index.json#icon_with_text_custom` → `sections/icon-with-text-custom.liquid` / **Arche: icon with text cus**.
+  - `templates/index.spinel-sync.json#collection_tabs_ihC66t` → `sections/collection-tabs.liquid` / **Arche: collection tabs ih**.
+  - `templates/index.spinel-sync.json#icon_text_inline_eN4cRW` → `sections/icon-text-inline.liquid` / **Arche: icon text inline e**.
+  - `templates/index.spinel-sync.json#gallery_carousel_X7PGND` → `sections/gallery-carousel.liquid` / **Arche: gallery carousel X**.
+  - `templates/index.spinel-sync.json#icon_text_cards_qT6mLV` → `sections/icon-text-cards.liquid` / **Arche: icon text cards qT**.
+  - `templates/page.about-us.json#philosophy` → `sections/custom-section.liquid` / **Arche: philosophy**.
+  - `templates/page.about-us.json#story_lifetime` → `sections/custom-section.liquid` / **Arche: story lifetime**.
+  - `templates/page.about-us.json#story_gold` → `sections/custom-section.liquid` / **Arche: story gold**.
+  - `templates/page.about-us.json#story_generations` → `sections/custom-section.liquid` / **Arche: story generations**.
+  - `templates/page.about-us.json#service_promises` → `sections/custom-section.liquid` / **Arche: service promises**.
+
+- Change statistics: 84 code/configuration/support-document paths plus this customization log; 1 obsolete block files removed after reference migration.
+- Changed paths:
+  - `assets/block-slide.css`.
+  - `assets/carousel-block.js`.
+  - `assets/carousel-runtime.js`.
+  - `assets/carousel-slide.js`.
+  - `assets/column-background-video.js`.
+  - `assets/product-collection-carousel.js`.
+  - `assets/swiper-carousel.css`.
+  - `assets/swiper-carousel.js`.
+  - `assets/testimonial-split.js`.
+  - `blocks/_columns-column.liquid`.
+  - `blocks/blog-grid.liquid`.
+  - `blocks/blog-list.liquid`.
+  - `blocks/carousel.liquid`.
+  - `blocks/carousel_split.liquid`.
+  - `blocks/collection-card.liquid`.
+  - `blocks/collection-list-items.liquid`.
+  - `blocks/collection-promo.liquid`.
+  - `blocks/collection-tab.liquid`.
+  - `blocks/columns.liquid`.
+  - `blocks/comparison-table.liquid`.
+  - `blocks/gallery-header-group.liquid`.
+  - `blocks/grid.liquid`.
+  - `blocks/parallax-item.liquid`.
+  - `blocks/product-list-banner.liquid`.
+  - `blocks/product-list.liquid`.
+  - `blocks/promo-card.liquid`.
+  - `blocks/slide.liquid`.
+  - `blocks/slide_split.liquid`.
+  - `blocks/slideshow-slide.liquid`.
+  - `docs/columns.md`.
+  - `docs/swiper-carousel.md`.
+  - `layout/theme.liquid`.
+  - `locales/en.default.json`.
+  - `locales/en.default.schema.json`.
+  - `scripts/migrate-columns.cjs`.
+  - `scripts/migrate-common-carousel-options.cjs`.
+  - `scripts/migrate-testimonial-carousel.cjs`.
+  - `sections/blog-posts.liquid`.
+  - `sections/blog.liquid`.
+  - `sections/bundle-builder.liquid`.
+  - `sections/cart-recommendations.liquid`.
+  - `sections/collection-list.liquid`.
+  - `sections/collection-tabs.liquid`.
+  - `sections/collection.liquid`.
+  - `sections/collections-with-tabs.liquid`.
+  - `sections/comparison-table-custom.liquid`.
+  - `sections/countdown.liquid`.
+  - `sections/custom-section.liquid`.
+  - `sections/email-signup-dual-image.liquid`.
+  - `sections/email-signup-form.liquid`.
+  - `sections/email-signup-single-image.liquid`.
+  - `sections/featured-blog-posts.liquid`.
+  - `sections/featured-collection-banner.liquid`.
+  - `sections/featured-collection.liquid`.
+  - `sections/featured-product.liquid`.
+  - `sections/footer.liquid`.
+  - `sections/gallery-carousel.liquid`.
+  - `sections/header.liquid`.
+  - `sections/hero.liquid`.
+  - `sections/hotspot-gallery.liquid`.
+  - `sections/hotspot.liquid`.
+  - `sections/icon-text-cards.liquid`.
+  - `sections/icon-text-inline.liquid`.
+  - `sections/icon-with-text-custom.liquid`.
+  - `sections/image-comparison-split-custom.liquid`.
+  - `sections/image-text-card-grid.liquid`.
+  - `sections/location-map.liquid`.
+  - `sections/parallax.liquid`.
+  - `sections/press.liquid`.
+  - `sections/rich-text.liquid`.
+  - `sections/scroll-reading-text.liquid`.
+  - `sections/scrolling-cards.liquid`.
+  - `sections/shop-the-look-section.liquid`.
+  - `sections/testimonial-carousel.liquid`.
+  - `sections/testimonials-background-custom.liquid`.
+  - `sections/testimonials-horizontal-custom.liquid`.
+  - `sections/timeline.liquid`.
+  - `snippets/product-list-promo-items.liquid`.
+  - `snippets/theme-module-import-map.liquid`.
+  - `templates/article.json`.
+  - `templates/collection.json`.
+  - `templates/index.json`.
+  - `templates/index.spinel-sync.json`.
+  - `templates/page.about-us.json`.
+- Validation: full Theme Check at error level; 16 shared runtime/import-map tests per theme; Liquid/server-layout parity checks (20 Arche, 16 other themes); template content/media comparison showed no missing saved values. Static/dynamic slot references were checked. Tests/results stay local.
+- Limit: storefront/browser and full interactive Theme Editor sessions have not been exercised for this batch.
+- Retained code dependencies outside the rebuild remain listed in Customizations. No personal base-update-history file is propagated.

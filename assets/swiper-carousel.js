@@ -1,7 +1,7 @@
-import A11y from './swiper-12.2.0-a11y.min.mjs';
-import Swiper from './swiper-12.2.0.min.mjs';
+import { A11y, Swiper } from './swiper-loader.js';
 
 const instances = new WeakMap();
+const autoplayBindings = new WeakMap();
 const CONTROL_EVENTS = ['afterInit', 'fromEdge', 'lock', 'resize', 'slideChange', 'toEdge', 'unlock', 'update'];
 
 const isElement = (value) => value?.nodeType === 1 && typeof value.matches === 'function';
@@ -51,30 +51,122 @@ const prefersReducedMotion = () =>
   typeof window.matchMedia === 'function' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/**
- * Binds the theme's shared interval-based autoplay contract to any Swiper
- * instance. The returned cleanup function is safe to call during editor
- * section unloads and component disconnects.
- */
+/** One elapsed-time clock owns autoplay navigation and pagination progress. */
 export const bindSwiperAutoplay = (swiper, settings = {}) => {
+  if (swiper) autoplayBindings.get(swiper)?.();
   if (!swiper || swiper.destroyed || prefersReducedMotion()) return () => {};
 
   const delay = Math.min(60000, Math.max(1000, Number(settings.delay) || 4000));
   const scope = settings.scope || swiper.el;
-  const pauseOnHover = settings.pauseOnHover !== false;
-  const interval = window.setInterval(() => {
-    if (
-      document.hidden ||
-      swiper.destroyed ||
-      swiper.isLocked ||
-      (pauseOnHover && swiper.wrapperEl?.matches(':hover')) ||
-      scope.contains(document.activeElement)
-    ) return;
+  const motion = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+  const pagination = swiper.el?.querySelector('.swiper-pagination');
+  const previousClock = pagination?.getAttribute('data-autoplay-clock');
+  const previousProgress = pagination?.style.getPropertyValue('--carousel-autoplay-progress');
+  const previousRemaining = pagination?.style.getPropertyValue('--carousel-autoplay-remaining');
+  let elapsed = 0;
+  let lastTime = null;
+  let pendingAdvance = false;
+  let frame;
+  let stopped = false;
+  let paintedProgress = null;
+  let currentIndex = settings.getIndex?.();
+  const paint = (progress, paused) => {
+    if (!pagination) return;
+    const state = paused ? 'paused' : 'running';
+    if (pagination.dataset.autoplayClock !== state) pagination.dataset.autoplayClock = state;
+    const value = String(progress);
+    if (paintedProgress !== value) {
+      pagination.style.setProperty('--carousel-autoplay-progress', value);
+      pagination.style.setProperty('--carousel-autoplay-remaining', `${(1 - progress) * 100}%`);
+      paintedProgress = value;
+    }
+  };
+  const reset = () => {
+    if (settings.getIndex) {
+      const index = settings.getIndex();
+      if (index === currentIndex) return;
+      currentIndex = index;
+    }
+    elapsed = 0;
+    lastTime = null;
+    pendingAdvance = false;
+    paint(0, Boolean(swiper.animating));
+  };
+  const resetTime = () => { lastTime = null; };
+  const tick = (time) => {
+    if (stopped || swiper.destroyed) return;
+    const delta = lastTime === null ? 0 : Math.max(0, time - lastTime);
+    lastTime = time;
+    const paused = document.hidden || motion?.matches || swiper.isLocked || settings.isVisible?.() === false
+      || (settings.pauseOnHover !== false && swiper.wrapperEl?.matches(':hover'))
+      || scope.contains(document.activeElement);
+    if (paused) paint(elapsed / delay, true);
+    else if (pendingAdvance && !swiper.animating) {
+      // The completed fill was painted on the preceding frame before navigation.
+      pendingAdvance = false;
+      swiper.isEnd ? swiper.slideTo(0) : swiper.slideNext();
+    } else {
+      elapsed = Math.min(delay, elapsed + delta);
+      paint(elapsed / delay, false);
+      pendingAdvance = elapsed === delay;
+    }
+    frame = window.requestAnimationFrame(tick);
+  };
+  swiper.on('slideChange', reset);
+  document.addEventListener('visibilitychange', resetTime);
+  paint(0, true);
+  frame = window.requestAnimationFrame(tick);
+  const cleanup = () => {
+    if (stopped) return;
+    stopped = true;
+    window.cancelAnimationFrame(frame);
+    swiper.off('slideChange', reset);
+    swiper.off('destroy', cleanup);
+    autoplayBindings.delete(swiper);
+    document.removeEventListener('visibilitychange', resetTime);
+    if (pagination) {
+      if (previousClock === null) pagination.removeAttribute('data-autoplay-clock');
+      else pagination.setAttribute('data-autoplay-clock', previousClock);
+      if (previousProgress) pagination.style.setProperty('--carousel-autoplay-progress', previousProgress);
+      else pagination.style.removeProperty('--carousel-autoplay-progress');
+      if (previousRemaining) pagination.style.setProperty('--carousel-autoplay-remaining', previousRemaining);
+      else pagination.style.removeProperty('--carousel-autoplay-remaining');
+    }
+  };
+  autoplayBindings.set(swiper, cleanup);
+  swiper.on('destroy', cleanup);
+  return cleanup;
+};
 
-    swiper.isEnd ? swiper.slideTo(0) : swiper.slideNext();
-  }, delay);
-
-  return () => window.clearInterval(interval);
+/** Coalesce size changes and release the observer when Swiper is destroyed. */
+export const observeSwiperResize = (swiper, element = swiper?.el) => {
+  if (!swiper || swiper.destroyed || !element || typeof ResizeObserver === 'undefined') return () => {};
+  let previousWidth = 0;
+  let previousHeight = 0;
+  let frame = null;
+  let stopped = false;
+  const observer = new ResizeObserver(([entry]) => {
+    const width = Math.round(entry?.contentRect?.width || element.clientWidth);
+    const height = Math.round(entry?.contentRect?.height || element.clientHeight);
+    if (stopped || swiper.destroyed || !width || (width === previousWidth && height === previousHeight)) return;
+    previousWidth = width;
+    previousHeight = height;
+    if (frame !== null) return;
+    frame = window.requestAnimationFrame(() => {
+      frame = null;
+      if (!stopped && !swiper.destroyed) swiper.update();
+    });
+  });
+  const cleanup = () => {
+    if (stopped) return;
+    stopped = true;
+    observer.disconnect();
+    if (frame !== null) window.cancelAnimationFrame(frame);
+    swiper.off('destroy', cleanup);
+  };
+  observer.observe(element);
+  swiper.on('destroy', cleanup);
+  return cleanup;
 };
 
 export const bindSwiperControls = (swiper, controls = {}) => {
@@ -209,7 +301,7 @@ export const bindSwiperSlideControls = (swiper, controls = {}) => {
 // Pagination owns the page count (including grouped slides and loop mode).
 const bindRoundedProgressbar = (swiper) => {
   const update = () => {
-    if (swiper.destroyed || swiper.params.pagination?.type !== 'progressbar') return;
+    if (swiper.destroyed || swiper.params?.pagination?.type !== 'progressbar') return;
     const total = swiper.params.loop
       ? Math.ceil((swiper.virtual && swiper.params.virtual?.enabled ? swiper.virtual.slides.length : swiper.slides.length) / swiper.params.slidesPerGroup)
       : swiper.snapGrid.length;
@@ -239,9 +331,20 @@ export const createSwiperCarousel = (element, options = {}) => {
 
   const { controls, ...swiperOptions } = options;
   const swiper = new Swiper(element, buildSwiperOptions(swiperOptions));
-  const progressCleanup = bindRoundedProgressbar(swiper);
   const controlsCleanup = controls ? bindSwiperControls(swiper, controls) : null;
-  instances.set(element, { controlsCleanup, progressCleanup, swiper });
+  const progressCleanup = bindRoundedProgressbar(swiper);
+  let released = false;
+  const cleanup = () => {
+    if (released) return;
+    released = true;
+    controlsCleanup?.();
+    progressCleanup?.();
+    autoplayBindings.get(swiper)?.();
+    instances.delete(element);
+    delete element.dataset.swiperReady;
+  };
+  swiper.on('destroy', cleanup);
+  instances.set(element, { cleanup, swiper });
   element.dataset.swiperReady = 'true';
   return swiper;
 };
@@ -258,8 +361,7 @@ export const destroySwiperCarousel = (target, deleteInstance = true, cleanupStyl
   const record = element ? instances.get(element) : null;
   const swiper = record?.swiper || getSwiperFromTarget(target);
 
-  record?.controlsCleanup?.();
-  record?.progressCleanup?.();
+  record?.cleanup?.();
   if (swiper && !swiper.destroyed) swiper.destroy(deleteInstance, cleanupStyles);
   if (element) {
     delete element.dataset.swiperReady;

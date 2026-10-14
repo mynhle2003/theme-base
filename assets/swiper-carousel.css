@@ -85,6 +85,81 @@
 }
 
 /* Slideshow and hotspot controls share overlay geometry; sections own inset tokens. */
+.swiper > .swiper-pagination.swiper-pagination--overlay {
+  --swiper-pagination-color: var(--heading-color);
+  --swiper-pagination-progressbar-bg-color: color-mix(in srgb, var(--heading-color) 30%, transparent);
+  --swiper-pagination-bullet-inactive-color: color-mix(in srgb, var(--heading-color) 30%, transparent);
+  --swiper-pagination-bullet-inactive-opacity: .55;
+  --swiper-pagination-bullet-horizontal-gap: 0px;
+  position: absolute;
+  inset-block: auto 0;
+  inset-inline-start: var(--swiper-pagination-start, 0);
+  inset-inline-end: var(--swiper-pagination-end, auto);
+  z-index: 4;
+  display: flex;
+  width: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+  gap: var(--swiper-pagination-bullet-gap, 8px);
+  align-items: center;
+  justify-content: var(--swiper-pagination-justify, flex-start);
+  margin: 0;
+  padding-block: var(--swiper-pagination-overlay-padding, 2.4rem);
+  padding-inline: var(--swiper-pagination-inline-padding, var(--page-margin-current));
+  color: var(--heading-color);
+  transform: none;
+}
+
+.swiper-pagination--desktop-left {
+  --swiper-pagination-start: 0;
+  --swiper-pagination-end: auto;
+  --swiper-pagination-justify: flex-start;
+}
+
+.swiper-pagination--desktop-center {
+  --swiper-pagination-start: 0;
+  --swiper-pagination-end: 0;
+  --swiper-pagination-justify: center;
+}
+
+.swiper-pagination--desktop-right {
+  --swiper-pagination-start: auto;
+  --swiper-pagination-end: 0;
+  --swiper-pagination-justify: flex-end;
+}
+
+/* Progress bars span the same content inset regardless of bullet alignment. */
+.swiper > .swiper-pagination.swiper-pagination--overlay[data-pagination-type='progress_bar'] {
+  inset-block-end: var(--swiper-pagination-overlay-padding, 2.4rem);
+  inset-inline: var(--swiper-pagination-inline-padding, var(--page-margin-current));
+  min-height: 2px;
+  height: 2px;
+  padding: 0;
+}
+
+@media (max-width: 767.98px) {
+  .swiper > .swiper-pagination.swiper-pagination--overlay {
+    --swiper-pagination-overlay-padding: 1.6rem;
+  }
+
+  .swiper-pagination--mobile-left {
+    --swiper-pagination-start: 0;
+    --swiper-pagination-end: auto;
+    --swiper-pagination-justify: flex-start;
+  }
+
+  .swiper-pagination--mobile-center {
+    --swiper-pagination-start: 0;
+    --swiper-pagination-end: 0;
+    --swiper-pagination-justify: center;
+  }
+
+  .swiper-pagination--mobile-right {
+    --swiper-pagination-start: auto;
+    --swiper-pagination-end: 0;
+    --swiper-pagination-justify: flex-end;
+  }
+}
 
 .swiper > :is(
   .swiper-pagination[data-pagination-type='bullets'],
@@ -144,7 +219,7 @@
   width: var(--swiper-pagination-bullet-width, var(--swiper-pagination-bullet-size, 8px));
   height: var(--swiper-pagination-bullet-height, var(--swiper-pagination-bullet-size, 8px));
   box-sizing: border-box;
-  border-radius: var(--swiper-pagination-bullet-border-radius, 1000px);
+  border-radius: inherit;
   content: '';
   pointer-events: none;
   transform: translate(-50%, -50%);
@@ -163,11 +238,10 @@
   .swiper-pagination[data-pagination-type='bullets'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet::after {
-  --rounded-progress-radius: var(--swiper-pagination-bullet-border-radius, 1000px);
   background: var(--swiper-pagination-color, var(--body-color));
   opacity: 0;
   transform: translate(-50%, -50%);
-  clip-path: inset(0 100% 0 0 round var(--rounded-progress-radius));
+  clip-path: inset(0 100% 0 0 round var(--swiper-pagination-bullet-border-radius, 1000px));
   transform-origin: left center;
 }
 
@@ -205,74 +279,7 @@
 ) .swiper-pagination-bullet-active::after {
   opacity: 1;
   transform: translate(-50%, -50%);
-  clip-path: inset(0 round var(--rounded-progress-radius));
-}
-
-/* Rounded fills reveal at their original size, so the end radius never scales. */
-.swiper-rtl {
-  --rounded-progress-animation: rounded-progress-reveal-rtl;
-}
-
-.rounded-progress-fill {
-  --rounded-progress-value: 0;
-  clip-path: inset(0 calc((1 - clamp(0, var(--rounded-progress-value), 1)) * 100%) 0 0 round var(--rounded-progress-radius, 1000px));
-}
-
-.rounded-progress-fill--active {
-  --rounded-progress-value: 1;
-}
-
-.swiper-rtl .rounded-progress-fill {
-  clip-path: inset(0 0 0 calc((1 - clamp(0, var(--rounded-progress-value), 1)) * 100%) round var(--rounded-progress-radius, 1000px));
-}
-
-.swiper .swiper-pagination-progressbar {
-  --rounded-progress-radius: var(--swiper-pagination-progressbar-border-radius, 1000px);
-  border-radius: var(--rounded-progress-radius);
-}
-
-.swiper .swiper-pagination-progressbar .rounded-progress-fill {
-  border-radius: inherit;
-  transform: none;
-  transition-property: clip-path;
-}
-
-.swiper .swiper-pagination-progressbar .rounded-progress-fill--vertical {
-  clip-path: inset(0 0 calc((1 - clamp(0, var(--rounded-progress-value), 1)) * 100%) 0 round var(--rounded-progress-radius));
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .swiper .swiper-pagination-progressbar .rounded-progress-fill {
-    transition: none;
-  }
-}
-
-.swiper-pagination[data-autoplay-clock] {
-  --rounded-progress-play-state: paused;
-}
-
-.swiper-pagination[data-autoplay-clock='running'] {
-  --rounded-progress-play-state: running;
-}
-
-.swiper[data-swiper-autoplay='true'] > :is(
-  .swiper-pagination[data-pagination-type='bullets'],
-  .swiper-pagination.swiper-pagination-bullets
-) .swiper-pagination-bullet-active::after,
-.swiper > .swiper-pagination[data-autoplay-clock][data-pagination-type='bullets'] .swiper-pagination-bullet-active::after,
-.swiper-pagination[data-autoplay-clock] .rounded-progress-fill--active {
-  animation: var(--rounded-progress-animation, rounded-progress-reveal) var(--rounded-progress-duration, var(--swiper-pagination-bullet-progress-duration, 4s)) linear both;
-  animation-play-state: var(--rounded-progress-play-state, running);
-}
-
-@keyframes rounded-progress-reveal {
-  from { clip-path: inset(0 100% 0 0 round var(--rounded-progress-radius, 1000px)); }
-  to { clip-path: inset(0 0 0 0 round var(--rounded-progress-radius, 1000px)); }
-}
-
-@keyframes rounded-progress-reveal-rtl {
-  from { clip-path: inset(0 0 0 100% round var(--rounded-progress-radius, 1000px)); }
-  to { clip-path: inset(0 0 0 0 round var(--rounded-progress-radius, 1000px)); }
+  clip-path: inset(0 round var(--swiper-pagination-bullet-border-radius, 1000px));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -290,20 +297,10 @@
   .swiper[data-swiper-autoplay='true'] > :is(
     .swiper-pagination[data-pagination-type='bullets'],
     .swiper-pagination.swiper-pagination-bullets
-  ) .swiper-pagination-bullet-active::after,
-  .swiper > .swiper-pagination[data-autoplay-clock][data-pagination-type='bullets'] .swiper-pagination-bullet-active::after,
-  .swiper-pagination[data-autoplay-clock] .rounded-progress-fill--active {
-    animation: none;
-    clip-path: inset(0 round var(--rounded-progress-radius, 1000px));
-  }
-}
-
-@media (hover: hover) {
-  .swiper[data-swiper-autoplay='true'][data-swiper-autoplay-pause-on-hover='true']:has(> .swiper-wrapper:hover) > :is(
-    .swiper-pagination[data-pagination-type='bullets'],
-    .swiper-pagination.swiper-pagination-bullets
   ) .swiper-pagination-bullet-active::after {
-    animation-play-state: paused;
+    animation: none;
+    transform: translate(-50%, -50%);
+    clip-path: inset(0 round var(--swiper-pagination-bullet-border-radius, 1000px));
   }
 }
 
@@ -349,5 +346,66 @@
   .swiper-carousel__container > .swiper-carousel__navigation--show_on_hover .swiper-nav-button {
     transition: none;
     transform: none;
+  }
+}
+
+
+.swiper > .swiper-pagination[data-autoplay-clock]:is([data-pagination-type='bullets'], .swiper-pagination-bullets) .swiper-pagination-bullet-active::after {
+  animation: none;
+  transform: translate(-50%, -50%);
+  clip-path: inset(0 var(--carousel-autoplay-remaining, 100%) 0 0 round var(--swiper-pagination-bullet-border-radius, 1000px));
+}
+
+.swiper.swiper-rtl > .swiper-pagination[data-autoplay-clock]:is([data-pagination-type='bullets'], .swiper-pagination-bullets) .swiper-pagination-bullet-active::after {
+  clip-path: inset(0 0 0 var(--carousel-autoplay-remaining, 100%) round var(--swiper-pagination-bullet-border-radius, 1000px));
+}
+
+.swiper > .swiper-pagination-progressbar[data-autoplay-clock] .swiper-pagination-progressbar-fill {
+  transform: none !important;
+  transition: none !important;
+  border-radius: inherit;
+  clip-path: inset(0 var(--carousel-autoplay-remaining, 100%) 0 0 round var(--swiper-pagination-progressbar-border-radius, 0px));
+}
+
+.swiper.swiper-rtl > .swiper-pagination-progressbar[data-autoplay-clock] .swiper-pagination-progressbar-fill {
+  clip-path: inset(0 0 0 var(--carousel-autoplay-remaining, 100%) round var(--swiper-pagination-progressbar-border-radius, 0px));
+}
+
+/* Rounded fills reveal at their original size, so the end radius never scales. */
+.swiper-rtl {
+  --rounded-progress-animation: rounded-progress-reveal-rtl;
+}
+
+.rounded-progress-fill {
+  --rounded-progress-value: 0;
+  clip-path: inset(0 calc((1 - clamp(0, var(--rounded-progress-value), 1)) * 100%) 0 0 round var(--rounded-progress-radius, 1000px));
+}
+
+.rounded-progress-fill--active {
+  --rounded-progress-value: 1;
+}
+
+.swiper-rtl .rounded-progress-fill {
+  clip-path: inset(0 0 0 calc((1 - clamp(0, var(--rounded-progress-value), 1)) * 100%) round var(--rounded-progress-radius, 1000px));
+}
+
+.swiper .swiper-pagination-progressbar {
+  --rounded-progress-radius: var(--swiper-pagination-progressbar-border-radius, 1000px);
+  border-radius: var(--rounded-progress-radius);
+}
+
+.swiper .swiper-pagination-progressbar .rounded-progress-fill {
+  border-radius: inherit;
+  transform: none;
+  transition-property: clip-path;
+}
+
+.swiper .swiper-pagination-progressbar .rounded-progress-fill--vertical {
+  clip-path: inset(0 0 calc((1 - clamp(0, var(--rounded-progress-value), 1)) * 100%) 0 round var(--rounded-progress-radius));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swiper .swiper-pagination-progressbar .rounded-progress-fill {
+    transition: none;
   }
 }

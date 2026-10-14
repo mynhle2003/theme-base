@@ -226,16 +226,15 @@
       "blocks": [
         {
           "type": "blog-title",
-          "id": "heading",
           "static": true,
           "settings": {
             "html_tag": "h1",
             "heading_size": "lg"
-          }
+          },
+          "id": "heading"
         },
         {
           "type": "blog-archive-list",
-          "id": "blog-archive-list",
           "static": true,
           "blocks": [
             {
@@ -245,8 +244,10 @@
               }
             },
             {
+              "type": "pagination"
+            },
+            {
               "type": "blog-card",
-              "id": "blog-card",
               "static": true,
               "blocks": [
                 {
@@ -292,12 +293,11 @@
                     "customize_mobile_padding": false
                   }
                 }
-              ]
-            },
-            {
-              "type": "pagination"
+              ],
+              "id": "blog-card"
             }
-          ]
+          ],
+          "id": "blog-archive-list"
         }
       ],
       "settings": {
