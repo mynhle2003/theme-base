@@ -91,7 +91,7 @@
   endif
 
   assign group_radius = block.settings.corner_radius | default: 'square'
-  unless group_radius == 'square' or group_radius == 'rounded' or group_radius == 'inherit' or group_radius == 'custom' or group_radius == 'pill' or group_radius == 'slightly_rounded'
+  unless group_radius == 'square' or group_radius == 'rounded' or group_radius == 'inherit' or group_radius == 'custom'
     assign group_radius = 'square'
   endunless
 
@@ -399,9 +399,6 @@
   .carousel-slide-layout[data-carousel-slide-layout].carousel-slide-layout--radius-inherit { --group-radius: var(--media-radius, var(--radius-square)); }
   .carousel-slide-layout[data-carousel-slide-layout].carousel-slide-layout--radius-custom { --group-radius: var(--slide-custom-radius, 0px); }
   .carousel-slide-layout[data-carousel-slide-layout] { border-width: var(--slide-border-thickness, 0px); }
-
-  .carousel-slide-layout[data-carousel-slide-layout].carousel-slide-layout--radius-pill { --group-radius: var(--radius-pill, 999px); }
-  .carousel-slide-layout[data-carousel-slide-layout].carousel-slide-layout--radius-slightly_rounded { --group-radius: var(--radius-slight, 6px); }
 {% endstylesheet %}
 
 {% schema %}
@@ -632,14 +629,6 @@
         {
           "value": "custom",
           "label": "t:options.slide_radius.custom"
-        },
-        {
-          "value": "slightly_rounded",
-          "label": "Slightly rounded"
-        },
-        {
-          "value": "pill",
-          "label": "Pill"
         }
       ],
       "default": "square"
@@ -674,10 +663,6 @@
         }
       ],
       "default": "none"
-    },
-    {
-      "type": "header",
-      "content": "t:labels.background"
     },
     {
       "type": "header",
