@@ -3176,6 +3176,22 @@ legend {
 }
 
 /* Announcement geometry is required before section CSS and its module load. */
+.section-header:has(.header-top[data-header-overlap-first-section]) {
+  position: relative;
+  height: 0;
+  margin-block-end: 0;
+  overflow: visible;
+  z-index: var(--z-drawer, 200);
+}
+
+.section-header:not([data-sticky-type]):has(.header-top[data-header-overlay]),
+.header.header--overlay {
+  background-color: transparent;
+}
+.section-header:has(.header-top--transparent-scheme) .header-top {
+  background-color: transparent;
+}
+
 .announcement-bar { --announcement-bar-loop-distance: 0px; position: relative; width: 100%; overflow: hidden; color: var(--body-color); background: var(--announcement-bar-background, var(--background-color)); padding: var(--announcement-bar-padding-top, 8px) var(--announcement-bar-padding-right, 0px) var(--announcement-bar-padding-bottom, 8px) var(--announcement-bar-padding-left, 0px); }
 .announcement-bar__inner { position: relative; z-index: 1; display: flex; align-items: center; width: 100%; min-height: 2rem; }
 .announcement-bar__background, .announcement-bar__overlay, .announcement-bar__background-image, .announcement-bar__background-image > picture, .announcement-bar__background-image > picture > img { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -3195,8 +3211,8 @@ legend {
 /* Stack all slides in one cell until initialization, reserving the tallest
    content without leaving a separate row for hidden discount/countdown blocks. */
 .announcement-bar--slider:not([data-announcement-initialized='true']) .announcement-bar__viewport { height: auto; }
-.announcement-bar--slider:not([data-announcement-initialized='true']) .announcement-bar__slides { display: grid; transform: none; }
-.announcement-bar--slider:not([data-announcement-initialized='true']) .announcement-bar__slides > .text-block { grid-area: 1 / 1; height: auto; visibility: hidden; }
+.announcement-bar--slider:not([data-announcement-initialized='true']) .announcement-bar__slides { display: grid; grid-template-columns: minmax(0, 1fr); transform: none; }
+.announcement-bar--slider:not([data-announcement-initialized='true']) .announcement-bar__slides > .text-block { grid-area: 1 / 1; justify-self: stretch; width: auto; height: auto; visibility: hidden; }
 .announcement-bar--slider:not([data-announcement-initialized='true']) .announcement-bar__slides > .text-block:first-child { display: flex; flex: 0 0 auto; height: auto; opacity: 1; visibility: visible; pointer-events: auto; }
 .announcement-bar--scrolling .announcement-bar__slides { display: flex; flex-wrap: nowrap; align-items: center; gap: var(--announcement-bar-gap, 16px); width: max-content; max-width: max-content; animation: none; }
 .announcement-bar--scrolling .announcement-bar__slides > .text-block { flex: 0 0 auto; width: fit-content; max-width: max-content; padding: 0; white-space: nowrap; }
@@ -3205,6 +3221,8 @@ legend {
 .announcement-bar--single .announcement-bar__control, .announcement-bar--scrolling .announcement-bar__control { visibility: hidden; pointer-events: none; }
 .announcement-bar--slider.announcement-bar--navigation-show_on_hover .announcement-bar__inner > .announcement-bar__control { opacity: 0; }
 .announcement-bar--bottom-separator { border-bottom: 1px solid var(--border-color); }
+.announcement-bar--single .announcement-bar__control { display: none; }
+.announcement-bar--slider.announcement-bar--single .announcement-bar__viewport { flex: 1 1 auto; width: 100%; max-width: 100%; }
 
 /* Optional section content: keep editor metadata without reserving gaps or padding. */
 .section-content-scope [data-content-empty],

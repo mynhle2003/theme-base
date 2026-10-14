@@ -328,6 +328,34 @@ Catalog là dữ liệu store, không được chuyển bằng Git: không chạ
 
 Bằng chứng nguồn: 5 tests PASS, Theme Check 0 errors / 5 existing deferred warnings, diff check PASS; homepage DOM readback xác nhận 11 sản phẩm không còn tag ngoài Figma (ngoại lệ Sale giữ nguyên). Desktop NEW/SALE có 10px, tracking 1.4px, bo góc 4px và cao 22px. Sold-out verified qua source component/Liquid logic; live target sold-out và Theme Editor save/reload phải QA khi áp dụng Essen.
 
+## Receipt Essen — 2026-10-14
+
+Owner yêu cầu đọc doc, kiểm tra và update trong repo Essen. Đích `theme/essen-theme`, HEAD trước sửa `acb809562bf01eb1f301e88439504d3c93bfc141`; patch local chưa commit. [Receipt đầy đủ tại Essen](../../../essen-theme/docs/audits/arche-to-essen-2026-10-14.md) ghi bằng chứng đích, file sở hữu và QA còn thiếu. Receipt này cập nhật các trạng thái pending lịch sử ở trên; không dùng QA Arche làm QA Essen.
+
+| Mã | Revision | Essen hiện tại | Bằng chứng / phần còn thiếu |
+| --- | --- | --- | --- |
+| ARCHE-ESSEN-TAB-LAYOUT-001 | 1 | applied — local | Tái hiện gap cố định bằng CSS Essen; binding desktop/mobile và gap 0–100px pass Chrome. Live editor pending. |
+| ARCHE-ESSEN-SLIDESHOW-002 | 2 | applied — local | Tái hiện scaleX(.5); shared reveal và reconcile clock CSS, giữ navigation/geometry/timer Essen. 40 Chrome progress cases pass; live editor/manual-loop edge QA pending. |
+| ARCHE-ESSEN-CUSTOM-SECTIONS-001 | 1 | applied — local | Sáu root còn thiếu đã mở @theme, giữ private/@app/preset. Comparison table/hai testimonial skipped vì đã đáp ứng. Custom section không có tên/preset `(custom)` nên giữ nguyên. Live editor pending. |
+| ARCHE-ESSEN-IMAGE-CARD-001 | 1 | applied — local follow-up 2026-10-14 | Sau commit Essen 116e03ed, owner báo seam do làm tròn pixel và yêu cầu fix Arche. Đã chuyển đúng image-only inset -1px / width-height +2px; 36 Chrome fixture cases PASS. Live QA/release pending. |
+| ARCHE-ESSEN-VARIANT-PICKER-001 | 1 | applied — local | Target fixture tái hiện đổi size vẫn chuyển ảnh; swatch intent và gallery guard đã áp dụng, commerce updates giữ nguyên. Live QA pending. |
+| ARCHE-ESSEN-HEADER-ALIGNMENT-001 | 1 | applied — local | CSS đích trả start cho parent Center/Right trước sửa; fallback token và local override pass desktop/mobile. Live editor pending. |
+| ARCHE-ESSEN-SIZE-GUIDE-001 | 1 | applied — local | Trigger thiếu Tertiary và có CSS riêng; chuyển shared button/underline, giữ dialog runtime. Live color/underline/open-close QA pending. |
+| ARCHE-ESSEN-PRODUCT-CARD-TAGS-001 | 1 | applied — local | Target thiếu switch/resolver; thêm default false, ba tag, prefix/escape/status precedence; năm Liquid tests trên snippets Essen pass. Giữ geometry/settings Essen. Live editor pending. |
+| ARCHE-ESSEN-FORM-INPUT-CSS-001 | 1 | applied — local | Baseline đầu chỉ có năm warnings; lần check sau phát hiện bảy input warnings. Thêm subset selector :where không đổi declarations/specificity. Final Theme Check 0 errors/5 existing warnings. Live forms QA pending. |
+| ARCHE-ESSEN-BLOCK-ANIMATION-001 | 1 | applied — local | Runtime byte-identical personal main e84d0689249b5ae26d3c5c066c90348e4aae06f4; identity mapping giữ đủ 424 giá trị cũ, template/saved settings byte-identical. Dọn mô tả runtime custom cũ, giữ leaf hooks/CSS/khác biệt ngoài animation. Live editor pending. |
+| ARCHE-ESSEN-PRODUCT-BADGES-002 | 1 | applied — shared logic; appearance pending | Chuyển status-tag exclusion và primary tag text #111111. Chưa xác minh gap appearance Figma ở Essen nên giữ typography/geometry/radius/color/current settings; không mutation catalog. |
+
+QA đích: 39 scoped tests PASS; 40 progress + 42 gap/alignment/motion Chrome cases PASS; JS syntax và diff check PASS; Theme Check 0 errors/5 existing settings-count warnings. Ba assertions product-media-variant cũ thất bại cả HEAD gốc và patch, không phải regression mới. Customization coverage còn thiếu Header/Footer ngoài phạm vi update; các path thuộc update đã được record. AI Toolkit Liquid validator thiếu dependency; dùng Shopify CLI Theme Check. Chưa verified live storefront/Theme Editor. Không commit/push/upload/publish; giữ Header/Announcement đang được chỉnh đồng thời trong workspace.
+
+### Essen Image card follow-up — ARCHE-ESSEN-IMAGE-CARD-001 revision 1 — 2026-10-14
+
+Owner báo vệt/border phía trên ảnh do làm tròn pixel và yêu cầu áp dụng fix Arche, đồng thời ghi lịch sử theo mã để tra nhanh. Nguồn đối chiếu: Arche `theme/arche-theme`, commit `4fd63fc3e87089e59538dbeb134af2518b485941`, CSS trong blocks/image-card.liquid. Đích Essen `theme/essen-theme`, patch local sau commit `116e03edddb1783ae6fdafb4ae7cc17e076636dc`. Commit 116e03ed chứa các mã update trước đó nhưng chưa chứa IMAGE-CARD-001; receipt pending trước đó là lịch sử và được thay bằng applied local ở follow-up này.
+
+Đã thêm đúng rule `.image-card__media > .background-media:has(.background-media__image)` với inset -1px và width/height calc(100% + 2px). Giữ clipping/card box, media/preset/schema, ratio, overlay, radius, hover và video; không tắt border merchant chọn. QA đích: 36 Chrome fixture cases PASS tại 375/768/1920px, ratios 1:1/5:4/4:5, tọa độ/kích thước pixel lẻ, ảnh/video, square/rounded, overlay/hover. Theme Check 0 errors/5 existing warnings; diff check PASS. Chưa verified storefront/Theme Editor live; chưa commit/push/upload/publish follow-up.
+
+Tra nhanh trạng thái/mã/commit của tất cả update tại [bảng tra nhanh Essen](../../../essen-theme/docs/audits/arche-to-essen-2026-10-14.md#tra-nhanh-update-theo-arche); chi tiết mapping source/target và lịch sử IMAGE-CARD-001 trong cùng receipt.
+
 ## Header navigation — hướng dẫn update variant ngày 2026-10-14
 
 Nguồn: repo `arche-theme`, branch `theme/arche-theme`. Đích theo tài liệu này: repo `essen-theme`, branch `theme/essen-theme`. Các mã dưới đây đều **pending** tại Essen: chưa audit/apply/QA/upload/publish trong tác vụ Header này. Không nhầm với `ARCHE-ESSEN-HEADER-ALIGNMENT-001`, mã cũ dành cho compound content block `blocks/header.liquid`, không phải navigation Header.
