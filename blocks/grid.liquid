@@ -113,13 +113,11 @@
 
 <div
   class="block-grid"
-  {% if section.type == 'icon-with-text-custom' %}
-    data-columns-desktop="{{ grid_columns_desktop }}"
-    data-columns-tablet="{{ grid_columns_tablet }}"
-    data-columns-mobile="{{ grid_columns_mobile }}"
-    data-gap-desktop="{{ grid_gap }}"
-    data-gap-mobile="{{ grid_gap_mobile }}"
-  {% endif %}
+  data-columns-desktop="{{ grid_columns_desktop }}"
+  data-columns-tablet="{{ grid_columns_tablet }}"
+  data-columns-mobile="{{ grid_columns_mobile }}"
+  data-gap-desktop="{{ grid_gap }}"
+  data-gap-mobile="{{ grid_gap_mobile }}"
   {% if grid_style != blank %}style="{{ grid_style }}"{% endif %}
   {{ block.shopify_attributes }}
 >

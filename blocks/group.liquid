@@ -236,9 +236,7 @@
   assign group_class = 'group size-style layout-flow layout-flow--responsive group--' | append: group_direction
   assign group_class = group_class | append: ' group--align-' | append: group_alignment
   assign group_class = group_class | append: ' group--width-' | append: group_width_mode
-  if section.type == 'icon-with-text-custom'
-    assign group_class = group_class | append: ' group--width-mobile-' | append: group_width_mobile_mode
-  endif
+  assign group_class = group_class | append: ' group--width-mobile-' | append: group_width_mobile_mode
   assign group_class = group_class | append: ' group--height-' | append: group_height_mode
   assign group_class = group_class | append: ' group--radius-' | append: group_radius
   assign group_class = group_class | append: ' group--shadow-' | append: group_shadow
