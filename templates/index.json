@@ -10,45 +10,61 @@
 {
   "sections": {
     "hero": {
-      "type": "slideshow",
+      "type": "hero",
       "settings": {
-        "width": "full_bleed",
+        "width": "full",
+        "layout": "classic",
+        "media_type": "image",
+        "overlay": "#00000000",
+        "parallax_effect": "none",
         "desktop_height": "medium",
         "mobile_height": "medium",
-        "autoplay": false,
-        "show_navigation": false,
-        "show_pagination": false,
-        "full_width_content": true,
-        "color_scheme": "scheme-3",
-        "aria_label": "Elegant Jewelry Pieces",
+        "content_width": "custom",
+        "content_max_width": 960,
+        "enable_sticky": false,
+        "desktop_position": "bottom_left",
+        "mobile_position": "bottom_left",
+        "desktop_gap": 0,
+        "mobile_gap": 0,
+        "color_scheme": "scheme-1",
+        "content_color_scheme": "scheme-3",
         "padding_top": 0,
         "padding_bottom": 0,
         "customize_mobile_padding": true,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
+        "padding_bottom_mobile": 0,
+        "banner_image": "shopify://shop_images/malandra-hero-desktop-figma.avif",
+        "mobile_banner_image": "shopify://shop_images/malandra-hero-mobile-figma.avif"
       },
       "blocks": {
-        "slideshow-slide-1": {
-          "type": "slideshow-slide",
+        "hero-content": {
+          "type": "group",
           "settings": {
-            "layout": "split",
-            "media_type": "image",
-            "media_2_type": "image",
-            "content_width": "fill",
-            "desktop_position": "bottom_left",
-            "mobile_position": "bottom_left",
-            "desktop_gap": 40,
-            "mobile_gap": 28,
-            "show_overlay": true,
-            "overlay_color": "#00000033",
-            "color_scheme": "scheme-3"
+            "direction": "vertical",
+            "alignment": "left",
+            "customize_mobile_alignment": true,
+            "alignment_mobile": "left",
+            "width": "fill",
+            "width_mobile": "fill",
+            "height": "fit",
+            "gap_desktop": 40,
+            "gap_mobile": 28,
+            "padding_top": 0,
+            "padding_bottom": 64,
+            "padding_left": 16,
+            "padding_right": 64,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 32,
+            "padding_left_mobile": 8,
+            "padding_right_mobile": 8
           },
           "blocks": {
             "header-1": {
               "type": "header",
               "settings": {
-                "width": "custom",
-                "max_width": 850,
+                "width": "fill",
+                "max_width": 840,
                 "inherit_alignment": false,
                 "alignment": "left",
                 "customize_mobile_alignment": true,
@@ -56,7 +72,7 @@
                 "customize_mobile_size": true,
                 "width_mobile": "fill",
                 "gap_desktop": 16,
-                "gap_mobile": 12
+                "gap_mobile": 16
               },
               "blocks": {
                 "heading-1": {
@@ -101,7 +117,7 @@
         }
       },
       "block_order": [
-        "slideshow-slide-1"
+        "hero-content"
       ]
     },
     "values_marquee": {

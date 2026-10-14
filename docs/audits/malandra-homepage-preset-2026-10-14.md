@@ -10,7 +10,7 @@ All sections occupy the homepage JSON template, own their section spacing, and u
 
 | Figma region | Existing section / blocks | Desktop / mobile configuration |
 | --- | --- | --- |
-| Hero banner 02 | slideshow / slideshow-slide, header, button | One split slide, bottom-left copy, existing medium heights 800/600; secondary media hidden by native mobile behavior |
+| Hero banner 02 | hero / group, header, heading, text, button | Classic image background with bottom-left content, separate desktop/mobile image pickers, existing medium heights 720/620 |
 | Scrolling text 2 | text-marquee-custom / marquee | Five benefit phrases, existing decorative icons; 20/16 vertical padding |
 | Featured collection 14 | collection-tabs / collection-tab | Necklaces, Rings, Bracelets; 4/2 product columns, centered tabs, no pagination |
 | Collection list 27 | collection-list / collection-list-items, collection-card | Shop By Category, three desktop columns, mobile carousel with next-card preview, 6:7 media ratio |
@@ -57,3 +57,21 @@ The configuration is ready for resource assignment and an authorized preview. Cu
 Read the GitHub integration logs for draft theme `192330498347` through the authenticated Shopify Admin browser. Shopify rejected `templates/index.json` because generated dynamic block IDs started with `_` (`_marquee-text-*`, `_marquee-icon-*`, `_column-*`). The initial theme import saved the other files but omitted the homepage template, causing `/` to resolve to 404. Local Theme Check did not detect this server validation rule.
 
 Renamed fourteen dynamic block IDs to remove their leading underscore and updated the corresponding `block_order` arrays. Block types retain their required underscores. Checked for key collisions, dangling order entries and remaining leading-underscore IDs. This correction changes IDs only, preserving settings, content and composition.
+
+## Hero preset rebuild
+
+At the owner's request, replaced the first homepage Slideshow section with the existing Hero section. Removed the slideshow-slide wrapper and retained the Figma heading, paragraph and Shop all button inside an existing Group. Hero uses Classic, full width, bottom-left desktop/mobile positions, a 960px desktop content cap, 40/28px content gaps and explicit group padding. With the current page margins, content starts at approximately 64px desktop / 24px mobile, with 64/32px bottom spacing. No Slideshow section or slideshow-slide block remains in this homepage template.
+
+Hero supports only one desktop background source and an optional mobile source. The Figma desktop reference has two independent images; reproducing it with this Hero requires a prepared composite desktop image plus the single portrait mobile image. Neither picker is selected. Native Medium heights are 720px desktop and 620px mobile, compared with Figma's 800/600px. No shared height mapping was changed, since other Hero instances use it. These media/layout/height gaps remain unimplemented within the preset-only configuration. The rebuilt preset has been validated locally; a new rendered preview has not been uploaded or verified.
+
+## Hero media upload completed
+
+The owner requested media upload and confirmed **only the first Hero**, excluding all other homepage images/resources. Applied `agents-build-themes/skills/setup-store/store-content-media/SKILL.md` and its Images reference.
+
+Prepared a 1920×800 desktop composite from the two original Figma image sources, and a 750×1200 portrait mobile image. Used the measured Figma image transforms, saturation and background gradient/tint; no headings/buttons are embedded in either image. Both files were encoded as AVIF and verified with an AVIF decoder. Figma write/export-copy access was unavailable without a Full seat; no Figma nodes were changed. Original source pixels and read-only fill metadata were used for deterministic preparation instead.
+
+Uploaded two new Files on `layouthub-template-v2.myshopify.com`, verified filenames/dimensions in Shopify Admin and saved alt text. Media IDs are `46617142395179` (desktop) and `46617142362411` (mobile). Added the verified `shopify://shop_images/` references to `banner_image` / `mobile_banner_image` in the first Hero's local template settings. Set its additional overlay transparent to avoid darkening the prepared Figma gradient twice.
+
+Receipt: `docs/audits/malandra-hero-media-2026-10-14.json`. CDN readback returned JPEG for default requests and WebP when advertising AVIF/WebP support, with correct dimensions; Files reports the uploaded sources as AVIF. Do not infer CDN response format from the `.avif` URL suffix.
+
+Theme Check passed at error level (six existing warnings) and `git diff --check` passed. The media gap for the first Hero is resolved locally. Native Hero height differences and other documented layout gaps remain. No Theme Editor settings were saved, no theme deployment/commit/push was performed for this media step, and the new Hero/media composition has not yet been verified on a deployed storefront.
