@@ -1,6 +1,31 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"0fa5870762651985e16081a8ae86152a57cc69b8"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"73a1feacb87a8a16be8673b79474263c470de43a"} -->
 
 # Base update history
+
+## 2026-10-14 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `0fa5870762651985e16081a8ae86152a57cc69b8`
+- Updated through team commit: `73a1feacb87a8a16be8673b79474263c470de43a`
+- Team commits included: 2
+- Source changes:
+
+```text
+assets/columns-swipe.js        | 75 ++++++++++++++++++++++++++++++++++++++
+ blocks/columns.liquid          | 83 +++++++++++++++---------------------------
+ docs/columns.md                | 46 ++++++++++-------------
+ locales/en.default.schema.json |  3 --
+ scripts/migrate-columns.cjs    |  7 ----
+ templates/page.about-us.json   |  4 +-
+ tests/columns.test.cjs         | 46 ++++++++++++++++++-----
+ 7 files changed, 162 insertions(+), 102 deletions(-)
+```
+
+- Included team commits:
+  - `cb6fb4ada29066ea0a8a9406c5e775d69eb84ea1` — fix(columns): remove custom breakpoint options
+  - `73a1feacb87a8a16be8673b79474263c470de43a` — fix(columns): use Swiper for mobile swipe
+
 
 ## 2026-10-14 — Update from upstream/dev
 
