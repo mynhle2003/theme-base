@@ -187,12 +187,13 @@
     {% if padding_right_mobile != padding_right %}--group-padding-right-mobile: {{ padding_right_mobile }}px;{% endif %}
   {% endif %}
   {% if block.settings.border_thickness > 0 %}--column-border-thickness: {{ block.settings.border_thickness }}px;{% endif %}
+  {% if block.settings.border_color != blank %}--group-border-color: {{ block.settings.border_color | escape }};{% endif %}
   {% if group_radius == 'custom' %}--column-custom-radius: {{ column_custom_radius }}px;{% endif %}
   {% if block.settings.show_overlay and column_backdrop_blur > 0 %}--column-backdrop-blur: {{ column_backdrop_blur }}px;{% endif %}
 {% endcapture %}
 {% assign group_style = group_style | strip %}
 
-  <div class="{{ group_class }}" {% if group_style != blank %}style="{{ group_style }}"{% endif %} data-columns-column {{ block.shopify_attributes }}>
+  <div class="{{ group_class }}" {% if group_style != blank %}style="{{ group_style }}"{% endif %} data-columns-column data-column-border="{{ block.settings.border_thickness | default: 0 }}" {{ block.shopify_attributes }}>
     {% assign column_background_media = block.settings.background_media %}
     {% if column_background_media == blank and block.settings.background_image != blank %}{% assign column_background_media = 'image' %}{% endif %}
     {% if column_background_media == 'image' %}
@@ -662,6 +663,12 @@
       "step": 1,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "t:labels.border_color",
+      "visible_if": "{{ block.settings.border_thickness > 0 }}"
     },
     {
       "type": "select",
