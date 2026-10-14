@@ -43,8 +43,10 @@
   data-columns-desktop="{{ columns_desktop }}"
   data-columns-mobile="{{ columns_mobile }}"
   data-columns-tablet="{{ columns_desktop }}"
-  data-gap-desktop="{{ block.settings.gap_horizontal | default: 20 }}"
-  data-gap-mobile="{{ block.settings.gap_horizontal_mobile | default: 12 }}"
+  data-gap-desktop="{{ gap_horizontal_value }}"
+  data-gap-vertical-desktop="{{ gap_vertical_value }}"
+  data-gap-mobile="{{ gap_horizontal_mobile_value }}"
+  data-gap-vertical-mobile="{{ gap_vertical_mobile_value }}"
   {{ block.shopify_attributes }}>
   {% if block.settings.enable_swipe_mobile %}<div class="columns-swipe-wrapper">{% endif %}
   {% content_for 'blocks' %}
