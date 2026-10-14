@@ -8,7 +8,10 @@
   // hide that content again; later editor renders still preview normally.
   let skipInitialAnimations = Boolean(boot?.expired);
   if (!skipInitialAnimations) document.documentElement.classList.add('block-animations-enabled');
-  const selector = '[data-block-animation]';
+  const selector = '[data-block-animation], [data-component-reveal]';
+  const cardSelector = 'article.testimonial-item, .product-card, .promo-card, .collection-card, .collection-card-kernel, .blog-card, .blog-first-card, article.image-card, .collection-thumbnail__link, .icon-text-cards__content > .group, .icon-text-cards__viewport > .swiper-wrapper > .swiper-slide > .group';
+  const listSelector = '[data-product-list-mobile-promos], [data-product-carousel], .product-collection-grid, .collection-card-list__grid, .product-list__grid, [data-product-list], .image-cards-section__grid, [data-blog-list], .blog-grid, .collection-thumbnails__grid, .collection-thumbnails__carousel, .testimonial-carousel, .testimonials-cards__carousel, .icon-text-cards__content, .icon-text-cards__viewport > .swiper-wrapper';
+  const excluded = '.announcement-bar, .marquee, [data-multi-image]';
   const controllers = new Map();
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const editor = Boolean(window.Shopify?.designMode);
@@ -68,11 +71,25 @@
       element.dataset.animationInitialized = 'true';
       element.classList.remove('reveal-pending');
       if (immediate || !(prepared ? prepared.motion : enabled()) || typeof element.animate !== 'function') return;
-      const delay = Math.round(Math.max(0, Math.min(2000, Number(element.dataset.animationDelay) || 0)) / 50) * 50;
+      const offset = Math.round(Math.max(0, Math.min(2000, Number(element.dataset.animationDelay) || 0)) / 50) * 50;
+      const delay = offset + (state.component ? Number(element.dataset.animationStagger) || 0 : 0);
       const options = { duration: 500, delay, easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)', fill: 'backwards' };
+      if (state.component) {
+        const tokens = getComputedStyle(element);
+        const time = tokens.getPropertyValue('--motion-duration-slow').trim();
+        const duration = parseFloat(time);
+        options.duration = Math.max(700, Number.isFinite(duration) ? duration * (time.endsWith('s') && !time.endsWith('ms') ? 1000 : 1) : 700);
+        options.easing = tokens.getPropertyValue('--motion-ease-standard').trim() || 'cubic-bezier(.22,1,.36,1)';
+      }
       const from = { opacity: 0 };
       const transforms = { scale: 'scale(0.5)', 'slide-left': 'translateX(-20px)', 'slide-right': 'translateX(20px)', 'slide-bottom': 'translateY(20px)' };
       const endTransforms = { scale: 'scale(1)', 'slide-left': 'translateX(0)', 'slide-right': 'translateX(0)', 'slide-bottom': 'translateY(0)' };
+      if (state.component) {
+        transforms.scale = 'scale(.94)';
+        transforms['slide-left'] = 'translateX(-32px)';
+        transforms['slide-right'] = 'translateX(32px)';
+        transforms['slide-bottom'] = 'translateY(32px)';
+      }
       if (transforms[state.type]) from.transform = transforms[state.type];
       try {
         if (state.type === 'rotate-words') {
@@ -119,6 +136,20 @@
       element.classList.remove('reveal-pending');
     };
     const scan = () => {
+      const cards = [...root.querySelectorAll(cardSelector)].filter(card => !card.closest(`${excluded}, .slideshow, dialog`));
+      const rows = new Map(cards.map(card => [card, (card.closest('.product-collection-grid__item, .blog-list__item, .swiper-slide') || card).getBoundingClientRect().top]));
+      const intros = [...root.querySelectorAll('[data-block-animation]')].filter(element => !element.closest(cardSelector) && active(element));
+      const staggers = new Map(cards.map(card => {
+        const list = card.closest(listSelector);
+        if (!list) return [card, 0];
+        const row = cards.filter(other => other.closest(listSelector) === list && Math.abs(rows.get(other) - rows.get(card)) < 8);
+        const introDelay = Math.max(0, ...intros.filter(element => element.compareDocumentPosition(card) & Node.DOCUMENT_POSITION_FOLLOWING).map(element => Number(element.dataset.animationDelay) || 0));
+        return [card, Math.min(900, introDelay + 150 + Math.max(0, row.indexOf(card)) * 75)];
+      }));
+      cards.forEach(card => {
+        card.dataset.componentReveal = '';
+        card.dataset.animationStagger = String(staggers.get(card));
+      });
       // Read visibility in one pass before splitting words or writing classes.
       // Alternating each block's layout reads and animation writes forces a
       // fresh document layout for every block during storefront startup.
@@ -127,13 +158,15 @@
       const visible = new Set(candidates.filter(element => active(element) && inView(element)));
       nodes.forEach((state, element) => { if (!root.contains(element) || !element.matches(selector)) remove(element); });
       candidates.forEach(element => {
-        const type = element.dataset.blockAnimation;
-        if (!types.has(type) || element.closest('.announcement-bar, .marquee, [data-multi-image]')) { remove(element); return; }
-        const configuration = `${type}:${element.dataset.animationDelay}`;
+        const component = element.hasAttribute('data-component-reveal');
+        const type = element.dataset.blockAnimation || (element.matches('article.testimonial-item') ? 'fade' : 'slide-bottom');
+        const parent = element.parentElement?.closest('[data-component-reveal]');
+        if (!types.has(type) || element.closest(excluded) || (component && element.closest('.slideshow, dialog')) || (parent && parent.dataset.blockAnimation !== 'none')) { remove(element); element.dataset.animationInitialized = 'true'; return; }
+        const configuration = `${type}:${element.dataset.animationDelay}:${component}`;
         if (nodes.get(element)?.configuration === configuration) return;
         remove(element);
         if (type === 'rotate-words') splitWords(element);
-        nodes.set(element, { element, type, configuration, played: false, animations: [], refreshTimer: null });
+        nodes.set(element, { element, type, component, configuration, played: false, animations: [], refreshTimer: null });
         if (skipInitialAnimations || !motion || !observer || typeof element.animate !== 'function' || element.contains(document.activeElement)) { reveal(element, true); return; }
         element.classList.add('reveal-pending');
         element.dataset.animationInitialized = 'true';
@@ -148,6 +181,7 @@
       if (records.some(record => record.type === 'childList' || ['data-block-animation', 'data-animation-delay'].includes(record.attributeName))) scan();
       records.forEach(record => {
         if (record.type !== 'attributes' || !record.target.matches('[role="tabpanel"], .slideshow__swiper .swiper-slide, .press-item[data-carousel-slide]')) return;
+        if (record.target.matches('[role="tabpanel"]') && active(record.target)) scan();
         nodes.forEach((state, element) => {
           if (!record.target.contains(element)) return;
           if (!active(element)) {
@@ -166,6 +200,11 @@
       });
     };
     const options = { signal: events.signal };
+    let resizeFrame;
+    window.addEventListener('resize', () => {
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(scan);
+    }, options);
     root.addEventListener('shopify:block:select', previewSelection, options);
     root.addEventListener('shopify:section:select', previewSelection, options);
     root.addEventListener('focusin', event => {
@@ -178,7 +217,7 @@
     }), options);
     scan();
     mutations.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden', 'aria-hidden', 'inert', 'class', 'data-block-animation', 'data-animation-delay'] });
-    return { destroy() { events.abort(); mutations.disconnect(); observer?.disconnect(); nodes.forEach((state, element) => remove(element)); } };
+    return { destroy() { cancelAnimationFrame(resizeFrame); events.abort(); mutations.disconnect(); observer?.disconnect(); nodes.forEach((state, element) => remove(element)); } };
   };
   const initialize = root => {
     if (controllers.has(root)) return;

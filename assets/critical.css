@@ -1321,6 +1321,12 @@ p:empty {
   animation: none;
 }
 
+.motion-block:has([data-component-reveal]),
+.motion-block[data-component-reveal],
+[data-component-reveal] .motion-block {
+  animation: none;
+}
+
 /* Hide valid leaf effects before deferred JS prepares them, without hiding
    no-JS content or components that own a different motion lifecycle. */
 :where(html.block-animations-enabled) .block-animation:where(:is(
@@ -1331,7 +1337,8 @@ p:empty {
   [data-block-animation='slide-bottom'],
   [data-block-animation='rotate-words']
 ):not([data-animation-initialized]):not(:focus-within):not(.announcement-bar *, .marquee *, [data-multi-image] *)),
-:where(html.block-animations-enabled) .block-animation.reveal-pending:where(:not(:focus-within)) {
+:where(html.block-animations-enabled) .block-animation.reveal-pending:where(:not(:focus-within)),
+:where(html.block-animations-enabled) [data-component-reveal].reveal-pending:where(:not(:focus-within)) {
   opacity: calc(1 - var(--motion-block-animations, 1));
 }
 
@@ -1373,7 +1380,8 @@ p:empty {
 
 @media (prefers-reduced-motion: reduce) {
   .block-animation[data-block-animation],
-  .block-animation.reveal-pending {
+  .block-animation.reveal-pending,
+  [data-component-reveal].reveal-pending {
     opacity: 1;
   }
   [data-block-animation='rotate-words'].reveal-words-ready .reveal-word {

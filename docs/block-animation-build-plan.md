@@ -1,5 +1,13 @@
 # Block Animation
 
+## Arche whole-card entrances (2026-10-14)
+
+- Reference: local `arche-theme/assets/block-animations.js`, read-only. Reuse Elara's existing section-scoped runtime, startup fallback, leaf effects and word rotation rather than replacing their lifecycle.
+- Scope: Image, Product, Promo, Collection, Blog, Collection thumbnail, Testimonial and Icon text cards in their existing compositions. Discover existing card roots; no schema, content, preset or layout changes. Whole-card motion owns nested entrance; child controls remain usable outside cards. Component-owned slideshow, marquee, announcement and multiple-image motion keep their existing ownership.
+- Timing: slide up 32px, minimum 700ms using shared slow-duration/easing tokens; testimonials fade. Each row starts after the section intro delay +150ms, with 75ms between cards and a 900ms stagger cap. Responsive resize and tab activation recalculate future row delays. Effects release their transform/opacity layer after completion.
+- Accessibility/runtime: global motion toggle, reduced motion, focus exposure, no-JS readability, late startup release, dynamic insertion, hidden tabs and section load/unload retain existing safeguards.
+- Validation: five Chrome headless regression tests cover viewport startup, reduced motion, row/mobile stagger, CSS seconds-to-ms conversion, child suppression, transform release, global disable, exclusions, editor reload/unload, focus and dynamic tab replay. JS syntax and diff whitespace pass. Theme Check reports zero errors and six existing settings-count warnings. Shopify Toolkit's separate validator is unavailable because its bundled `@shopify/theme-check-common` dependency is missing. Live Shopify storefront/Theme Editor visual QA remains unverified. No commit, push or upload.
+
 - Role/placement/context: existing Heading, Text, Button, Eyebrow, Icon and Editorial text content kernels in their current compositions; no new slots or resource context.
 - Ownership: each block owns Type and Delay; Theme Settings `motion_block_animations` and reduced motion remain authoritative. Typography, padding, widths and children keep their existing owners.
 - Reference: Omnise Elvara Theme Editor theme 139629002837 and https://helix-theme-elvara.myshopify.com/, inspected 2026-10-09. Button/Text/Subheading/Icon/Editorial text expose None, Fade, Scale, Slide from left/right/bottom. Heading also exposes Rotate words. Delay input has min 0, max 2000, step 50, unit ms. Group has no entrance Animation group. Reference runtime uses `reveal-component`, `data-name`, `data-delay`, 500ms duration, scale .5 and 20px translations.
