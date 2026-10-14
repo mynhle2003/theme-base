@@ -370,3 +370,15 @@
 .swiper.swiper-rtl > .swiper-pagination-progressbar[data-autoplay-clock] .swiper-pagination-progressbar-fill {
   clip-path: inset(0 0 0 var(--carousel-autoplay-remaining, 100%) round var(--swiper-pagination-progressbar-border-radius, 0px));
 }
+
+/* Retain rounded geometry while using main's autoplay elapsed-time progress. */
+.swiper .swiper-pagination-progressbar[data-autoplay-clock] .rounded-progress-fill {
+  transition: none !important;
+  clip-path: inset(0 var(--carousel-autoplay-remaining, 100%) 0 0 round var(--rounded-progress-radius, 0px));
+}
+.swiper.swiper-rtl .swiper-pagination-progressbar[data-autoplay-clock] .rounded-progress-fill {
+  clip-path: inset(0 0 0 var(--carousel-autoplay-remaining, 100%) round var(--rounded-progress-radius, 0px));
+}
+.swiper .swiper-pagination-progressbar[data-autoplay-clock] .rounded-progress-fill--vertical {
+  clip-path: inset(0 0 var(--carousel-autoplay-remaining, 100%) 0 round var(--rounded-progress-radius, 0px));
+}
