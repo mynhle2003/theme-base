@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"efbbac9e29963002df775cf40fd34ca6fe991bd8"} -->
+<!-- theme-base-sync-state: {"sha": "c8fab8a5588b05f9577f3a2aaa2ac01744c1286f"} -->
 # Customization record: arche-theme
 
 Theme branch: `theme/arche-theme`
@@ -357,7 +357,7 @@ Record every theme-specific change here before committing the code. During base 
 | `blocks/scrolling-card.liquid` | Personal main `fafdc8de`. | Color Type supports Inherit with a transparent surface, or an explicit scheme; sticky top consumes the measured viewport center. | Reuse the existing Card block with inherited colors and centered sticky placement. | Preserve scheme override and centered positioning; Stack transition is owned by the existing Scrolling cards section, not Card. |
 | `snippets/media-card.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
 | `snippets/product-inventory-status.liquid` | Personal main `fafdc8de`. | Keep the previous theme implementation unchanged as a custom composition dependency. | Owner excludes custom sections/blocks and dependencies from base updates. | Retain until explicitly authorized to migrate. |
-| `blocks/columns.liquid` | Main Columns owns validated counts and horizontal/vertical gaps. | Restore Arche resolved desktop/tablet/mobile counts and gap metadata using the new breakpoint controls. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Former Grid metadata custom is migrated to Columns; keep values consistent with rendered CSS. |
+| `blocks/columns.liquid` | Main Columns owns desktop/mobile counts, gaps and mobile Swiper. | Keep resolved count and gap metadata; tablet follows desktop after the owner-approved breakpoint removal. | Preserve Arche metadata consumers. | Reapply metadata without retired breakpoint settings; main Swiper owns lifecycle. |
 | `sections/hotspot-gallery.liquid` | Personal main efbbac9e implementation. | Retain existing theme logic outside the rebuilt scope, or the explicitly reapplied custom addition. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Review against this new main checkpoint; preserve documented behavior and dependencies. |
 | `assets/carousel-runtime.js` | Main shared lifecycle owns initialization, controls, loop clones, autoplay and editor cleanup. | Optional owner layout policy restores independently configured mobile preview and contained preview; rounded manual progress for Arche/Essen. | Owner requested rebuild from main followed by custom reapplication (2026-10-14). | Use policy only for common Carousel; other owners use main defaults. Preserve cleanup and main single-clock behavior. |
 
@@ -2088,3 +2088,28 @@ Reconciled historical extracted-CSS owner/asset paths and the existing account, 
 - Validation: main contract comparison, supported preset settings/children, shared lifecycle regressions and full Theme Check at error level. Test artifacts remain local.
 
 - Slide audit: removed the non-custom legacy radius additions as well; `pill`/`slightly_rounded` saved choices map to main `rounded`. Layout/order/spacing and content remain preserved. Arche/Essen keep only the recorded CSS-loading customization; Elara/Malandra keep the recorded color simplification.
+
+
+### 2026-10-14 — Update from personal main c8fab8a5
+
+- Previous main SHA: `efbbac9e29963002df775cf40fd34ca6fe991bd8`.
+- Updated main SHA: `c8fab8a5588b05f9577f3a2aaa2ac01744c1286f`.
+- Included main commits:
+  - `c8fab8a5588b05f9577f3a2aaa2ac01744c1286f` — chore(base): update base with 2 upstream commits through 73a1feac
+- Owner explicitly approved removing `custom_columns` and `columns_per_breakpoint` from all four themes, schemas, presets and saved instances. Tablet now follows desktop from 768px; content and order are retained.
+- Columns mobile swipe uses main Swiper with keyboard, reduced-motion and editor teardown. Unrelated custom implementations and existing local work are retained.
+- Updated files:
+
+```text
+assets/columns-swipe.js
+blocks/columns.liquid
+docs/columns.md
+locales/en.default.schema.json
+scripts/migrate-columns.cjs
+sections/custom-section.liquid
+sections/icon-with-text-custom.liquid
+templates/index.json
+templates/page.about-us.json
+```
+
+- Preview statistics before this log line: 10 files, 154 additions, 140 deletions.
