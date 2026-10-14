@@ -428,17 +428,16 @@
       "name": "t:general.image_cards",
       "category": "t:general.banners",
       "settings": {
-        "section_width": "page_width",
-        "height": "auto",
-        "custom_height": 100,
+        "section_width": "full_width_no_padding",
         "direction": "horizontal",
         "vertical_on_mobile": true,
-        "gap_desktop": 32,
-        "gap_mobile": 8,
+        "height": "auto",
+        "gap_desktop": 0,
+        "gap_mobile": 0,
         "color_scheme": "scheme-1",
-        "customize_mobile_padding": false,
-        "padding_top": 50,
-        "padding_bottom": 50,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": true,
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 0
       },
@@ -446,49 +445,65 @@
         {
           "type": "image-card",
           "settings": {
-            "color_scheme": "scheme-3",
-            "position_desktop": "center_center",
-            "position_mobile": "center_center",
-            "padding_top": 32,
-            "padding_bottom": 32,
-            "padding_left": 32,
-            "padding_right": 32
+            "height_desktop": "ratio_5_4",
+            "height_mobile": "ratio_5_4",
+            "position_desktop": "bottom_center",
+            "position_mobile": "bottom_center",
+            "color_scheme": "scheme-1",
+            "gap_desktop": 24,
+            "gap_mobile": 24,
+            "enable_sticky": false,
+            "padding_top": 56,
+            "padding_bottom": 56,
+            "padding_left": 56,
+            "padding_right": 56,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 40,
+            "padding_bottom_mobile": 40,
+            "padding_left_mobile": 56,
+            "padding_right_mobile": 56,
+            "image": "shopify://shop_images/malandra-image-cards-opal-desktop-crop.avif",
+            "mobile_image": "shopify://shop_images/malandra-image-cards-opal-mobile-crop.avif"
           },
           "blocks": [
             {
-              "type": "eyebrow",
+              "type": "header",
               "settings": {
-                "text": "<p>Eyebrow</p>",
-                "animation_type": "slide-bottom",
-                "animation_delay": 50
-              }
-            },
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Heading</p>",
-                "heading_size": "md",
-                "html_tag": "h2",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
-              }
+                "width": "fill",
+                "inherit_alignment": false,
+                "alignment": "center",
+                "gap_desktop": 10,
+                "gap_mobile": 12
+              },
+              "blocks": [
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>SALE UP TO 20%</p>",
+                    "show_background": false,
+                    "show_icon": false,
+                    "animation_type": "none"
+                  }
+                },
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Opalus Drop Bracelets</p>",
+                    "heading_size": "md",
+                    "html_tag": "h2",
+                    "width": "fill",
+                    "animation_type": "none"
+                  }
+                }
+              ]
             },
             {
               "type": "button",
               "settings": {
-                "button_label": "Button label",
-                "button_style": "primary",
-                "button_open_in_new_tab": false,
+                "button_label": "Shop sale",
+                "button_style": "tertiary",
                 "show_icon": false,
-                "icon": "arrow",
-                "icon_position": "after",
-                "icon_size": "inherit",
-                "icon_width": 20,
-                "width": "fit",
-                "width_mobile": "fit",
-                "customize_mobile_padding": false,
-                "animation_type": "slide-bottom",
-                "animation_delay": 100
+                "animation_type": "none"
               }
             }
           ]
@@ -496,49 +511,204 @@
         {
           "type": "image-card",
           "settings": {
-            "color_scheme": "scheme-3",
+            "height_desktop": "ratio_5_4",
+            "height_mobile": "ratio_5_4",
             "position_desktop": "center_center",
             "position_mobile": "center_center",
-            "padding_top": 32,
-            "padding_bottom": 32,
-            "padding_left": 32,
-            "padding_right": 32
+            "color_scheme": "scheme-3",
+            "gap_desktop": 24,
+            "gap_mobile": 24,
+            "enable_sticky": false,
+            "padding_top": 56,
+            "padding_bottom": 56,
+            "padding_left": 56,
+            "padding_right": 56,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 56,
+            "padding_bottom_mobile": 56,
+            "padding_left_mobile": 56,
+            "padding_right_mobile": 56,
+            "image": "shopify://shop_images/malandra-image-cards-model-desktop-crop.avif",
+            "mobile_image": "shopify://shop_images/malandra-image-cards-model-mobile-crop.avif"
           },
           "blocks": [
             {
-              "type": "eyebrow",
-              "settings": {
-                "text": "<p>Eyebrow</p>",
-                "animation_type": "slide-bottom",
-                "animation_delay": 50
-              }
-            },
-            {
               "type": "heading",
               "settings": {
-                "text": "<p>Heading</p>",
-                "heading_size": "md",
+                "text": "<p>Gemstones New Collections</p>",
+                "heading_size": "lg",
                 "html_tag": "h2",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
+                "width": "fill",
+                "animation_type": "none"
               }
             },
             {
               "type": "button",
               "settings": {
-                "button_label": "Button label",
-                "button_style": "primary",
-                "button_open_in_new_tab": false,
+                "button_label": "Discover more",
+                "button_style": "tertiary",
                 "show_icon": false,
-                "icon": "arrow",
-                "icon_position": "after",
-                "icon_size": "inherit",
-                "icon_width": 20,
-                "width": "fit",
-                "width_mobile": "fit",
-                "customize_mobile_padding": false,
-                "animation_type": "slide-bottom",
-                "animation_delay": 100
+                "animation_type": "none"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Image cards — Opal edits",
+      "category": "t:general.banners",
+      "settings": {
+        "section_width": "full_width_no_padding",
+        "direction": "horizontal",
+        "vertical_on_mobile": true,
+        "height": "auto",
+        "gap_desktop": 16,
+        "gap_mobile": 12,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 16,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 12
+      },
+      "blocks": [
+        {
+          "type": "image-card",
+          "settings": {
+            "height_desktop": "ratio_5_4",
+            "height_mobile": "ratio_5_4",
+            "position_desktop": "bottom_center",
+            "position_mobile": "bottom_center",
+            "color_scheme": "scheme-1",
+            "gap_desktop": 24,
+            "gap_mobile": 16,
+            "enable_sticky": false,
+            "padding_top": 56,
+            "padding_bottom": 56,
+            "padding_left": 56,
+            "padding_right": 56,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 28,
+            "padding_bottom_mobile": 28,
+            "padding_left_mobile": 24,
+            "padding_right_mobile": 24,
+            "background_type": "image",
+            "show_overlay": false,
+            "corner_radius": "square",
+            "image": "shopify://shop_images/malandra-opal-edits-earrings-desktop-crop.avif",
+            "mobile_image": "shopify://shop_images/malandra-opal-edits-earrings-mobile-crop.avif"
+          },
+          "blocks": [
+            {
+              "type": "header",
+              "settings": {
+                "width": "fill",
+                "alignment": "center",
+                "inherit_alignment": false,
+                "gap_desktop": 10,
+                "gap_mobile": 4
+              },
+              "blocks": [
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>SALE UP TO 20%</p>",
+                    "show_background": false,
+                    "show_icon": false,
+                    "animation_type": "none",
+                    "color": "#636363"
+                  }
+                },
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Arrow Drop Earrings</p>",
+                    "heading_size": "lg",
+                    "html_tag": "h2",
+                    "width": "fill",
+                    "animation_type": "none"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "button",
+              "settings": {
+                "button_label": "Shop sale",
+                "button_style": "tertiary",
+                "show_icon": false,
+                "animation_type": "none"
+              }
+            }
+          ]
+        },
+        {
+          "type": "image-card",
+          "settings": {
+            "height_desktop": "ratio_5_4",
+            "height_mobile": "ratio_5_4",
+            "position_desktop": "bottom_center",
+            "position_mobile": "bottom_center",
+            "color_scheme": "scheme-1",
+            "gap_desktop": 24,
+            "gap_mobile": 16,
+            "enable_sticky": false,
+            "padding_top": 56,
+            "padding_bottom": 56,
+            "padding_left": 56,
+            "padding_right": 56,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 28,
+            "padding_bottom_mobile": 28,
+            "padding_left_mobile": 24,
+            "padding_right_mobile": 24,
+            "background_type": "image",
+            "show_overlay": false,
+            "corner_radius": "square",
+            "image": "shopify://shop_images/malandra-opal-edits-necklace-desktop-crop.avif",
+            "mobile_image": "shopify://shop_images/malandra-opal-edits-necklace-mobile-crop.avif"
+          },
+          "blocks": [
+            {
+              "type": "header",
+              "settings": {
+                "width": "fill",
+                "alignment": "center",
+                "inherit_alignment": false,
+                "gap_desktop": 10,
+                "gap_mobile": 4
+              },
+              "blocks": [
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>NEW COLLECTION 2025</p>",
+                    "show_background": false,
+                    "show_icon": false,
+                    "animation_type": "none",
+                    "color": "#636363"
+                  }
+                },
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Lighting Ridge Opals</p>",
+                    "heading_size": "lg",
+                    "html_tag": "h2",
+                    "width": "fill",
+                    "animation_type": "none"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "button",
+              "settings": {
+                "button_label": "Shop now",
+                "button_style": "tertiary",
+                "show_icon": false,
+                "animation_type": "none"
               }
             }
           ]

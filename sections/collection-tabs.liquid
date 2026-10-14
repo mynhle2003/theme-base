@@ -547,6 +547,13 @@
       "visible_if": "{{ section.settings.layout_type == 'carousel' }}"
     },
     {
+      "type": "checkbox",
+      "id": "show_next_slide_preview_on_mobile",
+      "label": "t:labels.show_next_slide_preview_on_mobile",
+      "default": false,
+      "visible_if": "{{ section.settings.layout_type == 'carousel' }}"
+    },
+    {
       "type": "header",
       "content": "t:general.products_gap"
     },
@@ -831,79 +838,60 @@
       "settings": {
         "section_width": "full_width",
         "layout_direction": "vertical",
-        "tab_position": "left",
-        "mobile_alignment": "center",
-        "gap_desktop": 32,
-        "gap_mobile": 24,
-        "max_products": 8,
+        "tab_position": "center",
+        "mobile_alignment": "left",
+        "gap_desktop": 48,
+        "gap_mobile": 36,
+        "max_products": 4,
         "layout_type": "carousel",
         "columns_desktop": "4",
         "columns_mobile": "1",
         "show_next_slide_preview_on_desktop": false,
-        "product_gap_desktop": 4,
-        "product_gap_mobile": 4,
-        "show_navigation_on_desktop": true,
+        "show_next_slide_preview_on_mobile": true,
+        "product_gap_desktop": 10,
+        "product_gap_mobile": 10,
+        "show_navigation_on_desktop": false,
         "navigation_position": "inside",
         "navigation_style": "primary",
         "navigation_icon": "chevron",
         "navigation_behavior": "show_on_hover",
-        "show_pagination_on_desktop": true,
+        "show_pagination_on_desktop": false,
         "pagination_type": "progress_bar",
         "pagination_top_padding_desktop": 48,
-        "pagination_top_padding_mobile": 24,
+        "pagination_top_padding_mobile": 36,
         "pagination_limit_width": false,
         "pagination_max_width": 260,
         "autoplay": false,
         "autoplay_pause_on_hover": true,
         "autoplay_speed": 4,
         "color_scheme": "scheme-1",
-        "padding_top": 16,
-        "padding_bottom": 32,
+        "padding_top": 80,
+        "padding_bottom": 80,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 8,
-        "padding_bottom_mobile": 24
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
-        {
-          "type": "header",
-          "static": true,
-          "settings": {
-            "width": "fit",
-            "gap_desktop": 12,
-            "gap_mobile": 8
-          },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Collection tabs</p>",
-                "heading_size": "md",
-                "html_tag": "h2",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
-              }
-            }
-          ],
-          "id": "header"
-        },
         {
           "type": "tab-layout",
           "static": true,
           "settings": {
             "vertical_layout": false,
-            "style": "button",
+            "style": "underline",
             "active_style": "primary",
-            "gap_desktop": 16,
-            "gap_mobile": 16,
-            "font": "heading"
+            "gap_desktop": 48,
+            "gap_mobile": 40,
+            "font": "heading",
+            "heading_size": "custom",
+            "custom_heading_size": 20
           },
           "id": "tab-layout"
         },
         {
           "type": "collection-tab",
           "settings": {
-            "label": "Tab 1",
-            "collection": ""
+            "label": "NECKLACES",
+            "collection": "collection-tabs-malandra"
           },
           "blocks": [
             {
@@ -920,8 +908,8 @@
         {
           "type": "collection-tab",
           "settings": {
-            "label": "Tab 2",
-            "collection": ""
+            "label": "NEW IN",
+            "collection": "new-in-malandra"
           },
           "blocks": [
             {
@@ -938,8 +926,8 @@
         {
           "type": "collection-tab",
           "settings": {
-            "label": "Tab 3",
-            "collection": ""
+            "label": "BRACELETS",
+            "collection": "bracelets-elara"
           },
           "blocks": [
             {
@@ -952,169 +940,75 @@
               "id": "product-card"
             }
           ]
-        },
-        {
-          "type": "tabs-view-all-button",
-          "static": true,
-          "settings": {
-            "button_label": "View all",
-            "button_style": "tertiary",
-            "show_icon": false,
-            "icon": "arrow",
-            "icon_position": "after",
-            "icon_size": "inherit",
-            "icon_width": 20,
-            "width": "fit",
-            "width_mobile": "fit",
-            "customize_mobile_padding": false,
-            "hide_view_all_mobile": false
-          },
-          "id": "collection-tabs-view-all"
         }
       ]
     },
     {
-      "name": "Collection tabs 2",
+      "name": "Collection tabs",
+      "category": "t:general.collection",
       "settings": {
-        "section_width": "page_width",
+        "section_width": "full_width",
         "layout_direction": "vertical",
         "tab_position": "left",
-        "mobile_alignment": "center",
-        "gap_desktop": 32,
-        "gap_mobile": 24,
-        "max_products": 8,
+        "mobile_alignment": "left",
+        "gap_desktop": 48,
+        "gap_mobile": 32,
+        "max_products": 3,
         "layout_type": "carousel",
         "columns_desktop": "4",
         "columns_mobile": "1",
         "show_next_slide_preview_on_desktop": false,
-        "product_gap_desktop": 4,
-        "product_gap_mobile": 4,
+        "show_next_slide_preview_on_mobile": true,
+        "product_gap_desktop": 10,
+        "product_gap_mobile": 10,
         "show_navigation_on_desktop": true,
         "navigation_position": "inside",
-        "navigation_style": "primary",
+        "navigation_style": "icon_only",
         "navigation_icon": "chevron",
         "navigation_behavior": "show_on_hover",
         "show_pagination_on_desktop": true,
         "pagination_type": "progress_bar",
         "pagination_top_padding_desktop": 48,
-        "pagination_top_padding_mobile": 24,
-        "pagination_limit_width": false,
+        "pagination_top_padding_mobile": 36,
+        "pagination_limit_width": true,
         "pagination_max_width": 260,
         "autoplay": false,
         "autoplay_pause_on_hover": true,
         "autoplay_speed": 4,
         "color_scheme": "scheme-1",
-        "padding_top": 40,
-        "padding_bottom": 40,
+        "padding_top": 80,
+        "padding_bottom": 80,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 24,
-        "padding_bottom_mobile": 24
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
-        {
-          "type": "collection-tab",
-          "settings": {
-            "label": "Tab 1",
-            "collection": ""
-          },
-          "blocks": [
-            {
-              "type": "product-card",
-              "static": true,
-              "settings": {
-                "color_type": "inherit",
-                "color_scheme": "scheme-1"
-              },
-              "id": "product-card"
-            }
-          ]
-        },
-        {
-          "type": "collection-tab",
-          "settings": {
-            "label": "Tab 2",
-            "collection": ""
-          },
-          "blocks": [
-            {
-              "type": "product-card",
-              "static": true,
-              "settings": {
-                "color_type": "inherit",
-                "color_scheme": "scheme-1"
-              },
-              "id": "product-card"
-            }
-          ]
-        },
-        {
-          "type": "collection-tab",
-          "settings": {
-            "label": "Tab 3",
-            "collection": ""
-          },
-          "blocks": [
-            {
-              "type": "product-card",
-              "static": true,
-              "settings": {
-                "color_type": "inherit",
-                "color_scheme": "scheme-1"
-              },
-              "id": "product-card"
-            }
-          ]
-        },
         {
           "type": "header",
           "static": true,
           "settings": {
-            "width": "fit",
-            "max_width": 750,
-            "customize_mobile_size": false,
-            "width_mobile": "fit",
-            "max_width_mobile": 480,
-            "inherit_alignment": false,
+            "width": "fill",
             "alignment": "left",
-            "customize_mobile_alignment": false,
-            "alignment_mobile": "left",
+            "inherit_alignment": false,
             "gap_desktop": 12,
-            "gap_mobile": 8,
-            "padding_top": 0,
-            "padding_bottom": 0,
-            "padding_left": 0,
-            "padding_right": 0,
-            "customize_mobile_padding": false,
-            "padding_top_mobile": 0,
-            "padding_bottom_mobile": 0,
-            "padding_left_mobile": 0,
-            "padding_right_mobile": 0
+            "gap_mobile": 12
           },
           "blocks": [
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Collection tabs</p>",
-                "heading_size": "md",
-                "custom_heading_size": 24,
+                "text": "<p>Semi-Precious Birthstones</p>",
+                "heading_size": "lg",
                 "html_tag": "h2",
-                "text_color": "",
-                "width": "fit",
-                "max_width": 640,
-                "customize_mobile_size": false,
-                "width_mobile": "fit",
-                "max_width_mobile": 480,
-                "padding_top": 0,
-                "padding_bottom": 0,
-                "padding_left": 0,
-                "padding_right": 0,
-                "customize_mobile_padding": false,
-                "padding_top_mobile": 0,
-                "padding_bottom_mobile": 0,
-                "padding_left_mobile": 0,
-                "padding_right_mobile": 0,
-                "animation_type": "rotate-words",
-                "animation_delay": 50
+                "animation_type": "none"
+              }
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>The ultimate sentimental souvenir, made from 14k gold and semi-precious stones.</p>",
+                "text_size": "md",
+                "animation_type": "none"
               }
             }
           ],
@@ -1125,39 +1019,165 @@
           "static": true,
           "settings": {
             "vertical_layout": false,
-            "style": "button",
+            "style": "underline",
             "active_style": "primary",
-            "gap_desktop": 16,
-            "gap_mobile": 16,
-            "font": "heading",
-            "heading_size": "sm",
-            "custom_heading_size": 24
+            "gap_desktop": 32,
+            "gap_mobile": 32,
+            "font": "body",
+            "heading_size": "custom",
+            "custom_heading_size": 14
           },
           "id": "tab-layout"
+        },
+        {
+          "type": "collection-tab",
+          "settings": {
+            "label": "RINGS",
+            "collection": ""
+          },
+          "blocks": [
+            {
+              "type": "product-card",
+              "static": true,
+              "settings": {
+                "color_type": "inherit",
+                "color_scheme": "scheme-1"
+              },
+              "id": "product-card"
+            },
+            {
+              "type": "promo-card",
+              "settings": {
+                "card_position": 1,
+                "show_on_top_mobile": true,
+                "media_type": "image",
+                "heading": "For Effortless Glow",
+                "text": "<p>Radiant, versatile, classic: your everyday essential.</p>",
+                "content_alignment": "left",
+                "content_position": "bottom",
+                "heading_size": "md",
+                "text_size": "md",
+                "button_label": "SHOP NOW",
+                "card_link": "shopify://collections/all",
+                "button_style": "primary",
+                "button_height": "medium",
+                "show_icon": false,
+                "show_overlay": true,
+                "overlay_style": "gradient",
+                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.32))",
+                "color_scheme": "scheme-3",
+                "content_gap": 12,
+                "button_spacing": 24,
+                "padding_vertical": 36,
+                "padding_horizontal": 36,
+                "customize_mobile_padding": true,
+                "padding_vertical_mobile": 28,
+                "padding_horizontal_mobile": 28
+              }
+            }
+          ]
+        },
+        {
+          "type": "collection-tab",
+          "settings": {
+            "label": "NECKLACES",
+            "collection": ""
+          },
+          "blocks": [
+            {
+              "type": "product-card",
+              "static": true,
+              "settings": {
+                "color_type": "inherit",
+                "color_scheme": "scheme-1"
+              },
+              "id": "product-card"
+            },
+            {
+              "type": "promo-card",
+              "settings": {
+                "card_position": 1,
+                "show_on_top_mobile": true,
+                "media_type": "image",
+                "heading": "For Effortless Glow",
+                "text": "<p>Radiant, versatile, classic: your everyday essential.</p>",
+                "content_alignment": "left",
+                "content_position": "bottom",
+                "heading_size": "md",
+                "text_size": "md",
+                "button_label": "SHOP NOW",
+                "card_link": "shopify://collections/all",
+                "button_style": "primary",
+                "button_height": "medium",
+                "show_icon": false,
+                "show_overlay": true,
+                "overlay_style": "gradient",
+                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.32))",
+                "color_scheme": "scheme-3",
+                "content_gap": 12,
+                "button_spacing": 24,
+                "padding_vertical": 36,
+                "padding_horizontal": 36,
+                "customize_mobile_padding": true,
+                "padding_vertical_mobile": 28,
+                "padding_horizontal_mobile": 28
+              }
+            }
+          ]
+        },
+        {
+          "type": "collection-tab",
+          "settings": {
+            "label": "EARRINGS",
+            "collection": ""
+          },
+          "blocks": [
+            {
+              "type": "product-card",
+              "static": true,
+              "settings": {
+                "color_type": "inherit",
+                "color_scheme": "scheme-1"
+              },
+              "id": "product-card"
+            },
+            {
+              "type": "promo-card",
+              "settings": {
+                "card_position": 1,
+                "show_on_top_mobile": true,
+                "media_type": "image",
+                "heading": "For Effortless Glow",
+                "text": "<p>Radiant, versatile, classic: your everyday essential.</p>",
+                "content_alignment": "left",
+                "content_position": "bottom",
+                "heading_size": "md",
+                "text_size": "md",
+                "button_label": "SHOP NOW",
+                "card_link": "shopify://collections/all",
+                "button_style": "primary",
+                "button_height": "medium",
+                "show_icon": false,
+                "show_overlay": true,
+                "overlay_style": "gradient",
+                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.32))",
+                "color_scheme": "scheme-3",
+                "content_gap": 12,
+                "button_spacing": 24,
+                "padding_vertical": 36,
+                "padding_horizontal": 36,
+                "customize_mobile_padding": true,
+                "padding_vertical_mobile": 28,
+                "padding_horizontal_mobile": 28
+              }
+            }
+          ]
         },
         {
           "type": "tabs-view-all-button",
           "static": true,
           "settings": {
-            "button_label": "View all",
-            "button_style": "tertiary",
-            "show_icon": false,
-            "icon": "arrow_right",
-            "icon_position": "after",
-            "icon_size": "inherit",
-            "icon_width": 20,
-            "width": "fit",
-            "width_mobile": "fit",
-            "padding_top": 0,
-            "padding_bottom": 0,
-            "padding_left": 0,
-            "padding_right": 0,
-            "customize_mobile_padding": false,
-            "padding_top_mobile": 0,
-            "padding_bottom_mobile": 0,
-            "padding_left_mobile": 0,
-            "padding_right_mobile": 0,
-            "hide_view_all_mobile": false
+            "button_label": ""
           },
           "id": "collection-tabs-view-all"
         }

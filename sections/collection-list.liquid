@@ -307,27 +307,28 @@
       "blocks": [
         {
           "type": "header",
-          "static": true,
           "settings": {
             "width": "custom",
             "max_width": 770,
-            "customize_mobile_size": true,
-            "width_mobile": "fill",
             "inherit_alignment": false,
             "alignment": "center",
+            "customize_mobile_alignment": true,
+            "alignment_mobile": "center",
+            "customize_mobile_size": true,
+            "width_mobile": "fill",
             "gap_desktop": 8,
             "gap_mobile": 8
           },
+          "static": true,
           "blocks": [
             {
               "type": "heading",
               "settings": {
                 "text": "<p>Shop By Category</p>",
-                "heading_size": "md",
+                "heading_size": "lg",
                 "html_tag": "h2",
                 "width": "fill",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
+                "animation_type": "none"
               }
             }
           ],
@@ -338,26 +339,25 @@
           "static": true,
           "settings": {
             "layout": "carousel",
-            "columns_desktop": "4",
+            "columns_desktop": "3",
             "columns_mobile": "1",
             "show_next_slide_preview_on_desktop": false,
             "show_next_slide_preview_on_mobile": true,
-            "gap_desktop": 24,
+            "gap_desktop": 16,
             "gap_mobile": 16,
-            "show_navigation_on_desktop": true,
+            "show_navigation_on_desktop": false,
             "show_pagination_on_desktop": false,
             "pagination_type": "progress_bar",
             "pagination_top_padding_desktop": 48,
             "pagination_top_padding_mobile": 36,
             "autoplay": false,
-            "collections": [
-              "earrings-elara",
-              "bracelets-elara",
-              "necklaces-elara",
-              "rings-elara"
-            ],
             "navigation_style": "primary",
-            "navigation_behavior": "show_on_hover"
+            "navigation_behavior": "show_on_hover",
+            "collections": [
+              "necklace-malandra",
+              "earrings-malandra",
+              "bracelet-malandra"
+            ]
           },
           "blocks": [
             {
@@ -365,39 +365,33 @@
               "static": true,
               "settings": {
                 "ratio": "custom",
-                "placement": "on_image",
-                "alignment": "left",
-                "gap_desktop": 12,
-                "gap_mobile": 12,
+                "placement": "below_image",
+                "alignment": "center",
+                "gap_desktop": 8,
+                "gap_mobile": 8,
                 "corner_radius": "square",
                 "border_thickness": 0,
                 "shadow": "none",
                 "color_type": "color_scheme",
-                "color_scheme": "scheme-3",
-                "padding_top": 28,
-                "padding_bottom": 28,
-                "padding_left": 28,
-                "padding_right": 28,
+                "color_scheme": "scheme-1",
+                "padding_top": 20,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
                 "ratio_custom_width": 6,
                 "ratio_custom_height": 7
               },
               "blocks": [
                 {
-                  "type": "collection-card-description",
-                  "settings": {
-                    "source": "product_count",
-                    "text_size": "sm",
-                    "text_limit": "one"
-                  }
-                },
-                {
                   "type": "collection-card-title",
                   "static": true,
                   "settings": {
-                    "show_product_count": false,
+                    "show_product_count": true,
                     "heading_size": "md",
                     "html_tag": "h3",
-                    "title_suffix_to_hide": " - Elara"
+                    "product_count_font": "body",
+                    "product_count_font_size": "xs",
+                    "title_suffix_to_hide": " Malandra"
                   },
                   "id": "title"
                 }
@@ -413,13 +407,13 @@
         "desktop_alignment": "center",
         "mobile_alignment": "center",
         "gap_desktop": 48,
-        "gap_mobile": 40,
+        "gap_mobile": 36,
         "background_media": "none",
         "color_scheme": "scheme-1",
-        "padding_top": 20,
+        "padding_top": 10,
         "padding_bottom": 80,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 20,
+        "padding_top_mobile": 10,
         "padding_bottom_mobile": 56
       }
     }

@@ -243,35 +243,50 @@
       "name": "Gallery image grid",
       "category": "Storytelling",
       "settings": {
-        "section_width": "page_width",
-        "alignment": "left",
+        "section_width": "full_width",
+        "alignment": "center",
         "content_gap": 40,
         "customize_mobile_gap": true,
-        "content_gap_mobile": 32,
+        "content_gap_mobile": 36,
         "color_scheme": "scheme-1",
-        "customize_mobile_padding": false
+        "padding_top": 20,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
         {
           "type": "gallery-header-group",
+          "settings": {
+            "alignment": "center",
+            "gap": 16,
+            "gap_mobile": 12
+          },
           "blocks": [
-            {
-              "type": "eyebrow",
-              "settings": {
-                "text": "<p>Section TAG</p>"
-              }
-            },
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Follow Us On Instagram</p>",
-                "html_tag": "h2"
+                "text": "<p>Shop The Latest From Instagram</p>",
+                "heading_size": "lg",
+                "html_tag": "h2",
+                "width": "custom",
+                "animation_type": "none",
+                "max_width": 760,
+                "customize_mobile_size": true,
+                "width_mobile": "fill"
               }
             },
             {
               "type": "text",
               "settings": {
-                "text": "<p>@pam_sam</p>"
+                "text": "<p>@exclusive_gold</p>",
+                "text_size": "md",
+                "width": "custom",
+                "animation_type": "none",
+                "max_width": 760,
+                "customize_mobile_size": true,
+                "width_mobile": "fill"
               }
             }
           ]
@@ -280,42 +295,106 @@
           "type": "gallery-grid",
           "settings": {
             "columns_desktop": 4,
-            "columns_mobile": "1",
-            "gap": 32,
-            "gap_mobile": 24,
+            "columns_mobile": "2",
+            "gap": 8,
+            "gap_mobile": 4,
             "width": "fill"
           },
           "blocks": [
             {
               "type": "gallery-image",
               "settings": {
-                "tag": "@pam_sam",
+                "tag": "",
                 "social_network": "instagram",
-                "show_overlay": "always"
+                "show_overlay": "hover",
+                "alt_text": "Blue gemstone and diamond stacking rings on a hand",
+                "social_background": "#FFFFFF00",
+                "social_color": "#FFFFFF",
+                "image": "shopify://shop_images/malandra-gallery-01-figma.avif"
               }
             },
             {
               "type": "gallery-image",
               "settings": {
-                "tag": "@pam_sam",
+                "tag": "",
                 "social_network": "instagram",
-                "show_overlay": "always"
+                "show_overlay": "hover",
+                "alt_text": "Diamond necklace against a dark blue background",
+                "social_background": "#FFFFFF00",
+                "social_color": "#FFFFFF",
+                "image": "shopify://shop_images/malandra-gallery-02-figma.avif"
               }
             },
             {
               "type": "gallery-image",
               "settings": {
-                "tag": "@pam_sam",
+                "tag": "",
                 "social_network": "instagram",
-                "show_overlay": "always"
+                "show_overlay": "hover",
+                "alt_text": "Model wearing a statement gemstone earring",
+                "social_background": "#FFFFFF00",
+                "social_color": "#FFFFFF",
+                "image": "shopify://shop_images/malandra-gallery-03-figma.avif"
               }
             },
             {
               "type": "gallery-image",
               "settings": {
-                "tag": "@pam_sam",
+                "tag": "",
                 "social_network": "instagram",
-                "show_overlay": "always"
+                "show_overlay": "hover",
+                "alt_text": "Sculptural gold rings on light fabric",
+                "social_background": "#FFFFFF00",
+                "social_color": "#FFFFFF",
+                "image": "shopify://shop_images/malandra-gallery-04-figma.avif"
+              }
+            },
+            {
+              "type": "gallery-image",
+              "settings": {
+                "tag": "",
+                "social_network": "instagram",
+                "show_overlay": "hover",
+                "alt_text": "Gold charm bracelet on a wrist",
+                "social_background": "#FFFFFF00",
+                "social_color": "#FFFFFF",
+                "image": "shopify://shop_images/malandra-gallery-05-figma.avif"
+              }
+            },
+            {
+              "type": "gallery-image",
+              "settings": {
+                "tag": "",
+                "social_network": "instagram",
+                "show_overlay": "hover",
+                "alt_text": "Gold gemstone bangle on a pale background",
+                "social_background": "#FFFFFF00",
+                "social_color": "#FFFFFF",
+                "image": "shopify://shop_images/malandra-gallery-06-figma.avif"
+              }
+            },
+            {
+              "type": "gallery-image",
+              "settings": {
+                "tag": "",
+                "social_network": "instagram",
+                "show_overlay": "hover",
+                "alt_text": "Gemstone necklace on teal jewelry boxes",
+                "social_background": "#FFFFFF00",
+                "social_color": "#FFFFFF",
+                "image": "shopify://shop_images/malandra-gallery-07-figma.avif"
+              }
+            },
+            {
+              "type": "gallery-image",
+              "settings": {
+                "tag": "",
+                "social_network": "instagram",
+                "show_overlay": "hover",
+                "alt_text": "Model wearing a pearl and green gemstone drop earring",
+                "social_background": "#FFFFFF00",
+                "social_color": "#FFFFFF",
+                "image": "shopify://shop_images/malandra-gallery-08-figma.avif"
               }
             }
           ]

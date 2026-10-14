@@ -48,7 +48,7 @@
   endunless
 
   assign blog_list_columns_desktop = block.settings.columns_desktop | default: '4' | plus: 0
-  if blog_list_columns_desktop < 2 or blog_list_columns_desktop > 6
+  if blog_list_columns_desktop < 1 or blog_list_columns_desktop > 6
     assign blog_list_columns_desktop = 4
   endif
   assign blog_list_columns_mobile = block.settings.columns_mobile | default: '1' | plus: 0
@@ -276,7 +276,7 @@
 {% endif %}
 
 <div
-  class="blog-list section-list-layout__bridge"
+  class="blog-list{% if blog_list_layout == 'grid' and blog_list_columns_desktop == 1 %} blog-list--grid-one-column{% endif %}{% if blog_list_layout == 'grid' and blog_list_columns_mobile == 1 %} blog-list--mobile-one-column{% endif %} section-list-layout__bridge"
   data-blog-list
   data-layout="{{ blog_list_layout }}"
   data-swiper-autoplay="{{ blog_list_autoplay_enabled }}"
@@ -454,6 +454,10 @@
       "id": "columns_desktop",
       "label": "t:labels.desktop_columns",
       "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
         {
           "value": "2",
           "label": "2"

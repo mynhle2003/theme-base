@@ -34,7 +34,7 @@
   if shop_the_look_image_block != blank
     assign shop_the_look_image_ratio_desktop = shop_the_look_image_block.settings.image_ratio_desktop | default: 'auto'
   endif
-  unless shop_the_look_image_ratio_desktop == 'auto' or shop_the_look_image_ratio_desktop == 'square' or shop_the_look_image_ratio_desktop == 'portrait' or shop_the_look_image_ratio_desktop == 'landscape' or shop_the_look_image_ratio_desktop == 'wide' or shop_the_look_image_ratio_desktop == 'portrait_6_7' or shop_the_look_image_ratio_desktop == 'portrait_tall' or shop_the_look_image_ratio_desktop == 'portrait_2_3' or shop_the_look_image_ratio_desktop == 'landscape_5_4' or shop_the_look_image_ratio_desktop == 'wide_2_1' or shop_the_look_image_ratio_desktop == 'custom' or shop_the_look_image_ratio_desktop == 'ratio_1_1' or shop_the_look_image_ratio_desktop == 'ratio_4_5' or shop_the_look_image_ratio_desktop == 'ratio_5_4' or shop_the_look_image_ratio_desktop == 'ratio_6_7' or shop_the_look_image_ratio_desktop == 'ratio_7_6' or shop_the_look_image_ratio_desktop == 'ratio_5_7' or shop_the_look_image_ratio_desktop == 'ratio_7_5' or shop_the_look_image_ratio_desktop == 'ratio_2_3' or shop_the_look_image_ratio_desktop == 'ratio_3_2' or shop_the_look_image_ratio_desktop == 'ratio_4_3' or shop_the_look_image_ratio_desktop == 'ratio_3_4' or shop_the_look_image_ratio_desktop == 'ratio_2_1' or shop_the_look_image_ratio_desktop == 'ratio_1_2' or shop_the_look_image_ratio_desktop == 'ratio_16_9' or shop_the_look_image_ratio_desktop == 'ratio_9_16' or shop_the_look_image_ratio_desktop == 'ratio_12_5' or shop_the_look_image_ratio_desktop == 'ratio_5_12' or shop_the_look_image_ratio_desktop == 'ratio_48_17' or shop_the_look_image_ratio_desktop == 'ratio_17_48' or shop_the_look_image_ratio_desktop == 'ratio_5_8' or shop_the_look_image_ratio_desktop == 'ratio_8_5'
+  unless shop_the_look_image_ratio_desktop == 'fill_height' or shop_the_look_image_ratio_desktop == 'auto' or shop_the_look_image_ratio_desktop == 'square' or shop_the_look_image_ratio_desktop == 'portrait' or shop_the_look_image_ratio_desktop == 'landscape' or shop_the_look_image_ratio_desktop == 'wide' or shop_the_look_image_ratio_desktop == 'portrait_6_7' or shop_the_look_image_ratio_desktop == 'portrait_tall' or shop_the_look_image_ratio_desktop == 'portrait_2_3' or shop_the_look_image_ratio_desktop == 'landscape_5_4' or shop_the_look_image_ratio_desktop == 'wide_2_1' or shop_the_look_image_ratio_desktop == 'custom' or shop_the_look_image_ratio_desktop == 'ratio_1_1' or shop_the_look_image_ratio_desktop == 'ratio_4_5' or shop_the_look_image_ratio_desktop == 'ratio_5_4' or shop_the_look_image_ratio_desktop == 'ratio_6_7' or shop_the_look_image_ratio_desktop == 'ratio_7_6' or shop_the_look_image_ratio_desktop == 'ratio_5_7' or shop_the_look_image_ratio_desktop == 'ratio_7_5' or shop_the_look_image_ratio_desktop == 'ratio_2_3' or shop_the_look_image_ratio_desktop == 'ratio_3_2' or shop_the_look_image_ratio_desktop == 'ratio_4_3' or shop_the_look_image_ratio_desktop == 'ratio_3_4' or shop_the_look_image_ratio_desktop == 'ratio_2_1' or shop_the_look_image_ratio_desktop == 'ratio_1_2' or shop_the_look_image_ratio_desktop == 'ratio_16_9' or shop_the_look_image_ratio_desktop == 'ratio_9_16' or shop_the_look_image_ratio_desktop == 'ratio_12_5' or shop_the_look_image_ratio_desktop == 'ratio_5_12' or shop_the_look_image_ratio_desktop == 'ratio_48_17' or shop_the_look_image_ratio_desktop == 'ratio_17_48' or shop_the_look_image_ratio_desktop == 'ratio_5_8' or shop_the_look_image_ratio_desktop == 'ratio_8_5'
     assign shop_the_look_image_ratio_desktop = 'auto'
   endunless
 
@@ -153,15 +153,15 @@
   }
 
   @media (min-width: 768px) {
-    .shop-the-look-section[data-shop-the-look-image-ratio-desktop]:not([data-shop-the-look-image-ratio-desktop='auto']) .shop-the-look-section__media,
-    .shop-the-look-section__media:has(> .image-block[class*='image-block--ratio-desktop-']:not(.image-block--ratio-desktop-auto)) {
+    .shop-the-look-section[data-shop-the-look-image-ratio-desktop]:not([data-shop-the-look-image-ratio-desktop='auto']):not([data-shop-the-look-image-ratio-desktop='fill_height']) .shop-the-look-section__media,
+    .shop-the-look-section__media:has(> .image-block[class*='image-block--ratio-desktop-']:not(.image-block--ratio-desktop-auto):not(.image-block--ratio-desktop-fill_height)) {
       align-self: center;
     }
 
-    .shop-the-look-section[data-shop-the-look-image-ratio-desktop]:not([data-shop-the-look-image-ratio-desktop='auto']) .shop-the-look-section__media > .image-block,
-    .shop-the-look-section[data-shop-the-look-image-ratio-desktop]:not([data-shop-the-look-image-ratio-desktop='auto']) .shop-the-look-section__media > .image-block > .image-block__media,
-    .shop-the-look-section__media:has(> .image-block[class*='image-block--ratio-desktop-']:not(.image-block--ratio-desktop-auto)) > .image-block,
-    .shop-the-look-section__media:has(> .image-block[class*='image-block--ratio-desktop-']:not(.image-block--ratio-desktop-auto)) > .image-block > .image-block__media {
+    .shop-the-look-section[data-shop-the-look-image-ratio-desktop]:not([data-shop-the-look-image-ratio-desktop='auto']):not([data-shop-the-look-image-ratio-desktop='fill_height']) .shop-the-look-section__media > .image-block,
+    .shop-the-look-section[data-shop-the-look-image-ratio-desktop]:not([data-shop-the-look-image-ratio-desktop='auto']):not([data-shop-the-look-image-ratio-desktop='fill_height']) .shop-the-look-section__media > .image-block > .image-block__media,
+    .shop-the-look-section__media:has(> .image-block[class*='image-block--ratio-desktop-']:not(.image-block--ratio-desktop-auto):not(.image-block--ratio-desktop-fill_height)) > .image-block,
+    .shop-the-look-section__media:has(> .image-block[class*='image-block--ratio-desktop-']:not(.image-block--ratio-desktop-auto):not(.image-block--ratio-desktop-fill_height)) > .image-block > .image-block__media {
       height: auto;
     }
   }
@@ -415,69 +415,72 @@
       "name": "t:general.shop_the_look",
       "category": "t:general.content",
       "settings": {
-        "section_width": "page_width",
+        "section_width": "full_width_no_padding",
         "media_position": "left",
         "mobile_media_position": "first",
-        "gap_desktop": 56,
-        "gap_mobile": 40,
-        "color_scheme": "scheme-1",
-        "padding_top": 10,
-        "padding_bottom": 80,
+        "gap_desktop": 0,
+        "gap_mobile": 48,
+        "color_scheme": "scheme-4",
+        "padding_top": 0,
+        "padding_bottom": 0,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 10,
-        "padding_bottom_mobile": 56
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48
       },
       "blocks": [
         {
           "type": "image",
           "static": true,
           "settings": {
-            "image": "shopify://shop_images/elara-figma-shop-the-look.avif",
-            "mobile_image": "shopify://shop_images/elara-figma-shop-the-look.avif",
-            "alt_text": "Gold necklace and hoop earrings styled together",
-            "image_ratio_desktop": "custom",
-            "image_ratio_custom_width_desktop": 6,
-            "image_ratio_custom_height_desktop": 7,
-            "image_ratio_mobile": "custom",
-            "image_ratio_custom_width_mobile": 6,
-            "image_ratio_custom_height_mobile": 7,
+            "alt_text": "Statement rings styled on a model’s hand",
+            "image_ratio_desktop": "ratio_1_1",
+            "image_ratio_mobile": "ratio_1_1",
             "width_desktop": "fill",
             "width_mobile": "fill",
             "corner_radius": "square",
-            "customize_mobile_padding": false
+            "customize_mobile_padding": false,
+            "image": "shopify://shop_images/malandra-shop-the-look.avif",
+            "mobile_image": "shopify://shop_images/malandra-shop-the-look.avif"
           },
           "id": "image"
         },
         {
           "type": "header",
-          "static": true,
           "settings": {
             "width": "custom",
             "max_width": 770,
-            "inherit_alignment": true,
-            "gap_desktop": 16,
-            "gap_mobile": 16
+            "inherit_alignment": false,
+            "alignment": "center",
+            "customize_mobile_alignment": true,
+            "alignment_mobile": "center",
+            "customize_mobile_size": true,
+            "width_mobile": "fill",
+            "gap_desktop": 8,
+            "gap_mobile": 8,
+            "padding_bottom": 40,
+            "customize_mobile_padding": true,
+            "padding_bottom_mobile": 36
           },
+          "static": true,
           "blocks": [
             {
-              "type": "heading",
+              "type": "eyebrow",
               "settings": {
-                "text": "<p>Shop the Look</p>",
-                "heading_size": "lg",
-                "html_tag": "h2",
-                "width": "fill",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
+                "text": "<p>Shop the look</p>",
+                "show_background": false,
+                "show_icon": false,
+                "animation_type": "none",
+                "color": "#636363"
               }
             },
             {
-              "type": "spacer",
+              "type": "heading",
               "settings": {
-                "unit_desktop": "pixel",
-                "size_desktop_px": 32,
-                "show_on_mobile": true,
-                "unit_mobile": "pixel",
-                "size_mobile_px": 20
+                "text": "<p>Statement Stacks</p>",
+                "heading_size": "lg",
+                "html_tag": "h2",
+                "width": "fill",
+                "animation_type": "none"
               }
             }
           ],
@@ -488,23 +491,23 @@
           "static": true,
           "settings": {
             "layout_type": "carousel",
-            "columns_desktop": "2",
+            "columns_desktop": "1",
             "columns_mobile": "1",
             "show_next_slide_preview_on_desktop": false,
-            "show_next_slide_preview_on_mobile": true,
+            "show_next_slide_preview_on_mobile": false,
             "product_gap_desktop": 20,
             "product_gap_mobile": 16,
             "show_navigation_on_desktop": true,
             "navigation_position": "outside",
-            "navigation_style": "primary",
+            "navigation_style": "secondary",
             "navigation_icon": "chevron",
-            "navigation_behavior": "show_on_hover",
+            "navigation_behavior": "always",
             "show_pagination_on_desktop": true,
             "pagination_type": "progress_bar",
-            "pagination_top_padding_desktop": 64,
-            "pagination_top_padding_mobile": 36,
+            "pagination_top_padding_desktop": 56,
+            "pagination_top_padding_mobile": 28,
             "pagination_limit_width": true,
-            "pagination_max_width": 260,
+            "pagination_max_width": 220,
             "autoplay": false,
             "autoplay_pause_on_hover": true,
             "autoplay_speed": 4
@@ -513,37 +516,25 @@
             {
               "type": "shop-the-look-product",
               "settings": {
-                "product": "elara-september-birthstone-necklace",
                 "show_hotspot": true,
-                "hotspot_horizontal": 55,
-                "hotspot_vertical": 84,
+                "hotspot_horizontal": 45,
+                "hotspot_vertical": 53,
                 "customize_mobile_position": true,
-                "hotspot_horizontal_mobile": 50,
-                "hotspot_vertical_mobile": 84
+                "hotspot_horizontal_mobile": 44,
+                "hotspot_vertical_mobile": 54,
+                "product": "elara-tennis-eternity-stacking-ring"
               }
             },
             {
               "type": "shop-the-look-product",
               "settings": {
-                "product": "elara-savi-triple-ridge-hoop-earrings",
                 "show_hotspot": true,
-                "hotspot_horizontal": 44,
-                "hotspot_vertical": 28,
+                "hotspot_horizontal": 62,
+                "hotspot_vertical": 56,
                 "customize_mobile_position": true,
-                "hotspot_horizontal_mobile": 40,
-                "hotspot_vertical_mobile": 28
-              }
-            },
-            {
-              "type": "shop-the-look-product",
-              "settings": {
-                "product": "elara-curly-molten-mini-initial-necklace",
-                "show_hotspot": true,
-                "hotspot_horizontal": 66,
-                "hotspot_vertical": 91,
-                "customize_mobile_position": true,
-                "hotspot_horizontal_mobile": 66,
-                "hotspot_vertical_mobile": 90
+                "hotspot_horizontal_mobile": 62,
+                "hotspot_vertical_mobile": 56,
+                "product": "elara-fine-diamond-signet-ring"
               }
             }
           ],

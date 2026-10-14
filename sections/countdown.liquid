@@ -551,7 +551,7 @@
       "name": "t:general.countdown",
       "category": "t:general.content",
       "settings": {
-        "section_width": "full_width",
+        "section_width": "page_width",
         "enable_boxed_layout": false,
         "direction": "horizontal",
         "position": "center",
@@ -561,15 +561,17 @@
         "alignment_mobile": "center",
         "gap_desktop": 36,
         "gap_mobile": 36,
-        "color_scheme": "scheme-3",
+        "color_scheme": "scheme-1",
         "boxed_color_scheme": "scheme-1",
         "boxed_padding_block": 70,
         "boxed_padding_inline": 50,
         "boxed_padding_block_mobile": 40,
         "boxed_padding_inline_mobile": 30,
-        "padding_top": 48,
-        "padding_bottom": 48,
-        "customize_mobile_padding": false
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
         {
@@ -579,38 +581,39 @@
             "direction": "vertical",
             "alignment": "left",
             "alignment_mobile": "center",
-            "width": "fit",
+            "width": "fill",
             "height": "fit",
-            "gap_desktop": 8,
-            "gap_mobile": 6,
+            "gap_desktop": 16,
+            "gap_mobile": 12,
             "appearance_type": "inherit",
             "border_type": "none",
             "corner_radius": "square",
             "shadow": "none",
-            "customize_mobile_padding": false
+            "customize_mobile_padding": false,
+            "customize_mobile_alignment": true,
+            "max_width": 500,
+            "limit_width": true,
+            "width_mobile": "fill",
+            "limit_width_mobile": false
           },
           "blocks": [
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Flash sale: Up to 40% Off!</p>",
-                "heading_size": "display",
+                "text": "<p>Spring Sale</p>",
+                "heading_size": "lg",
                 "html_tag": "h2",
-                "width": "fit",
-                "customize_mobile_size": false,
-                "animation_type": "rotate-words",
-                "animation_delay": 50
+                "width": "fill",
+                "animation_type": "none"
               }
             },
             {
               "type": "text",
               "settings": {
-                "text": "<p>Timeless quality, limited time offer. Don't miss out.</p>",
-                "text_size": "xs",
-                "width": "fit",
-                "customize_mobile_size": false,
-                "animation_type": "slide-bottom",
-                "animation_delay": 100
+                "text": "<p>Get 15% off on all products - limited time only!</p>",
+                "text_size": "md",
+                "width": "fill",
+                "animation_type": "none"
               }
             }
           ],
@@ -621,14 +624,14 @@
           "static": true,
           "settings": {
             "style": "with_labels",
-            "show_background": true,
+            "show_background": false,
             "corner_radius": "square",
-            "type": "fixed_time",
-            "end_time": "2026-12-25 12:00",
-            "hide_when_expired": true,
-            "number_size": "md",
+            "type": "recurring",
+            "number_size": "lg",
             "label_size": "xs",
-            "color_type": "inherit"
+            "color_type": "inherit",
+            "duration_hours": 64,
+            "duration_minutes": 23
           },
           "id": "countdown"
         },
@@ -636,15 +639,15 @@
           "type": "button",
           "static": true,
           "settings": {
-            "button_label": "Shop sale",
+            "button_label": "Shop now",
             "button_link": "",
-            "button_style": "secondary",
+            "button_style": "primary",
             "button_open_in_new_tab": false,
             "show_icon": false,
             "width": "fit",
             "width_mobile": "fit",
             "customize_mobile_padding": false,
-            "animation_type": "slide-bottom",
+            "animation_type": "none",
             "animation_delay": 150
           },
           "id": "button"

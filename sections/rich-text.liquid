@@ -73,7 +73,11 @@
 
   <div class="container {{ rich_text_container_width }} rich-text__container">
     <div class="rich-text__content section-content-slot layout-flow layout-flow--responsive align-content" style="{{ rich_text_content_style }}">
-      {% content_for "block", type: "eyebrow", id: "eyebrow" %}
+      {% if section.settings.use_leading_icon %}
+        {% content_for "block", type: "icon", id: "icon" %}
+      {% else %}
+        {% content_for "block", type: "eyebrow", id: "eyebrow" %}
+      {% endif %}
       {% content_for "block", type: "heading", id: "heading" %}
       {% content_for "block", type: "text", id: "text" %}
       {% content_for "blocks" %}
@@ -176,6 +180,12 @@
     }
   ],
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_leading_icon",
+      "label": "Replace eyebrow with icon",
+      "default": false
+    },
     {
       "type": "header",
       "content": "t:general.layout"
@@ -328,58 +338,6 @@
           "static": true,
           "settings": {
             "text": "<p>Use this section to test the shared Section Kernel, global layout width, color scheme, background and responsive padding.</p>",
-            "animation_type": "slide-bottom",
-            "animation_delay": 100
-          },
-          "id": "text"
-        }
-      ]
-    },
-    {
-      "name": "Popular item heading",
-      "settings": {
-        "section_width": "page_width",
-        "alignment": "center",
-        "customize_mobile_alignment": true,
-        "alignment_mobile": "center",
-        "color_scheme": "scheme-1",
-        "padding_top": 20,
-        "padding_bottom": 48,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 20,
-        "padding_bottom_mobile": 40
-      },
-      "blocks": [
-        {
-          "type": "eyebrow",
-          "static": true,
-          "settings": {
-            "text": "",
-            "animation_type": "slide-bottom",
-            "animation_delay": 50
-          },
-          "id": "eyebrow"
-        },
-        {
-          "type": "heading",
-          "settings": {
-            "text": "<p>See Our Popular Item</p>",
-            "heading_size": "lg",
-            "html_tag": "h2",
-            "width": "fill",
-            "customize_mobile_size": true,
-            "width_mobile": "fill",
-            "animation_type": "rotate-words",
-            "animation_delay": 50
-          },
-          "static": true,
-          "id": "heading"
-        },
-        {
-          "type": "text",
-          "static": true,
-          "settings": {
-            "text": "",
             "animation_type": "slide-bottom",
             "animation_delay": 100
           },
