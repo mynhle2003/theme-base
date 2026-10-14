@@ -20,7 +20,7 @@ Doc này là nhật ký các đợt nhận update từ theme khác để đối 
 | ARCHE-ESSEN-FORM-INPUT-CSS-001 | 1 | Input modifier có owner trong foundation CSS | `116e03ed`; applied |
 | ARCHE-ESSEN-BLOCK-ANIMATION-001 | 1 | Runtime về pinned personal main; giữ preset/saved animation | `116e03ed`; applied |
 | ARCHE-ESSEN-PRODUCT-BADGES-002 | 1, một phần | Loại status tags trùng và primary tag text #111111 | `116e03ed`; shared logic applied, appearance/settings pending |
-| ARCHE-ESSEN-IMAGE-CARD-001 | 1 | Ảnh tràn 1px/cạnh để che khe do làm tròn pixel | Patch local sau `116e03ed`; applied, chưa commit/push |
+| ARCHE-ESSEN-IMAGE-CARD-001 | 1 | Ảnh tràn 1px/cạnh để che khe do làm tròn pixel | `595a3548`; applied, đã commit/push |
 
 Tất cả mục applied trên còn QA live storefront/Theme Editor trước verified. Chưa upload preview hoặc publish trong các đợt ghi bên dưới.
 
@@ -71,7 +71,16 @@ Khung card clip phần tràn để che khe nền tối ở pixel lẻ. Không t�
 
 **QA:** 36 Chrome fixture cases PASS với CSS Essen thật tại 375/768/1920px; ratios 1:1/5:4/4:5; tọa độ/kích thước pixel lẻ; ảnh/video, square/rounded, overlay và hover. Theme Check 0 errors / 5 warnings cũ; diff check PASS. Fixture xác minh hình học của patch; chưa có QA storefront/Theme Editor save/reload.
 
-**Trạng thái:** applied local. Chưa có commit đích riêng, chưa push/upload/publish. Khi release, thêm sự kiện với commit thực tế vào đợt này; không gán fix Image card cho commit `116e03ed`.
+**Trạng thái:** applied; đã commit/push, live QA chưa verified. Chưa upload preview/publish. Fix Image card thuộc commit `595a3548`, không thuộc commit `116e03ed`.
+
+### Sự kiện release của đợt 2 — 2026-10-14
+
+- Commit code: [`595a354876e0e66cf381a3cb01d566c4a51bb809`](https://github.com/mynhle2003/theme-base/commit/595a354876e0e66cf381a3cb01d566c4a51bb809).
+- Message: `fix(image-card): prevent fractional pixel seams`.
+- Phạm vi: Image card và ba doc audit/customization/history, tổng cộng 4 file.
+- Full Theme Check workspace và bản từ Git index: 0 errors / 5 warnings cũ; diff check PASS.
+- Đã push tới `origin/theme/essen-theme`. Doc follow-up ghi SHA thực tế trong commit documentation kế tiếp.
+- Các thay đổi Header/Announcement riêng vẫn local, ngoài release này.
 
 ## Cách ghi đợt update tiếp theo
 

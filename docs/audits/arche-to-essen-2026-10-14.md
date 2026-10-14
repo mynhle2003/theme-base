@@ -9,7 +9,7 @@ Tất cả mã dùng prefix **ARCHE-ESSEN**; `applied` là đã nhận code, ch�
 | ARCHE-ESSEN-TAB-LAYOUT-001 | 1 | applied | 116e03ed |
 | ARCHE-ESSEN-SLIDESHOW-002 | 2 | applied | 116e03ed |
 | ARCHE-ESSEN-CUSTOM-SECTIONS-001 | 1 | applied | 116e03ed |
-| ARCHE-ESSEN-IMAGE-CARD-001 | 1 | applied — local follow-up | after 116e03ed; uncommitted |
+| ARCHE-ESSEN-IMAGE-CARD-001 | 1 | applied — committed/pushed; live QA pending | 595a3548 |
 | ARCHE-ESSEN-VARIANT-PICKER-001 | 1 | applied | 116e03ed |
 | ARCHE-ESSEN-HEADER-ALIGNMENT-001 | 1 | applied | 116e03ed |
 | ARCHE-ESSEN-SIZE-GUIDE-001 | 1 | applied | 116e03ed |
@@ -18,7 +18,7 @@ Tất cả mã dùng prefix **ARCHE-ESSEN**; `applied` là đã nhận code, ch�
 | ARCHE-ESSEN-BLOCK-ANIMATION-001 | 1 | applied | 116e03ed |
 | ARCHE-ESSEN-PRODUCT-BADGES-002 | 1 | shared logic applied; appearance/settings pending | 116e03ed |
 
-Source tracker: [Arche handoff](../../../arche-theme/docs/variant-updates/arche-to-essen.md). Target branch `theme/essen-theme`, HEAD before application `acb809562bf01eb1f301e88439504d3c93bfc141`. Shared patches read from the local Arche working tree; animation implementation comes exclusively from pinned personal main `e84d0689249b5ae26d3c5c066c90348e4aae06f4`. Initial application was committed and pushed as `116e03edddb1783ae6fdafb4ae7cc17e076636dc` on 2026-10-14. The Image card follow-up below is a subsequent local patch. Preview upload and publication were not performed.
+Source tracker: [Arche handoff](../../../arche-theme/docs/variant-updates/arche-to-essen.md). Target branch `theme/essen-theme`, HEAD before application `acb809562bf01eb1f301e88439504d3c93bfc141`. Shared patches read from the local Arche working tree; animation implementation comes exclusively from pinned personal main `e84d0689249b5ae26d3c5c066c90348e4aae06f4`. Initial application was committed and pushed as `116e03edddb1783ae6fdafb4ae7cc17e076636dc` on 2026-10-14. The Image card follow-up below was subsequently committed/pushed as `595a3548`. Preview upload and publication were not performed.
 
 | Update | Revision | Target status | Before / application evidence |
 | --- | --- | --- | --- |
@@ -53,4 +53,4 @@ All rows marked applied remain unverified on a live storefront/Theme Editor. Bad
 - **Thay đổi:** chỉ thêm `.image-card__media > .background-media:has(.background-media__image)` với `inset: -1px`, `width: calc(100% + 2px)`, `height: calc(100% + 2px)`. Khớp rule source; kích thước phải cộng 2px vì media nền vốn có width/height 100%. Khung card vẫn clip phần ảnh tràn, che khe nền tối ở tọa độ pixel lẻ. Đây là xử lý khe render; không tắt border merchant chọn.
 - **Phạm vi:** giữ nguyên schema/preset, ảnh/content, aspect ratio, overlay, radius và hover. Crop tăng tối đa 1px mỗi cạnh. Video không có background-media__image nên không nhận rule. Promo-grid không có override selector media riêng cần reconcile.
 - **QA Essen:** 36 Chrome fixture cases PASS dùng stylesheet Image card/media-background thật: 375/768/1920px, ratios 1:1/5:4/4:5, tọa độ 13.5px và width 287.5px, square/rounded, ảnh/video, overlay và hover. Ảnh overscan đúng 1px/cạnh, video giữ inset 0 và kích thước card; khung/overlay không đổi. Theme Check 0 errors/5 existing warnings; git diff --check PASS. QA fixture xác minh hình học của patch, không thay cho screenshot trước/sau trên storefront hoặc Theme Editor save/reload.
-- **Release:** follow-up chưa commit/push/upload/publish. Các thay đổi Header/Announcement ngoài scope giữ nguyên.
+- **Release 2026-10-14:** commit `595a354876e0e66cf381a3cb01d566c4a51bb809` (`fix(image-card): prevent fractional pixel seams`), đã push `origin/theme/essen-theme`; chưa upload/publish. Full Theme Check workspace/Git index pass với 0 errors/5 warnings cũ. Các thay đổi Header/Announcement ngoài scope giữ nguyên.
