@@ -33,3 +33,13 @@ Navigation role in the existing Header section group; block owns desktop/mobile 
 Preset and saved Header both restore `header_overlay: true` and transparent scheme-3. Current global references remain `arche-header-black.avif` and `arche-header-white.avif`; the uploaded ESSEN logo is not substituted. Banner retains its Button style option and now renders through `theme-button`, using the same classes/label wrapper/underline/icon contract as other buttons. No new button CSS was added.
 
 Validation: 6 Chrome fixture tests passed covering all four Desktop/Mobile Left/Center combinations at 1440, 768, 375 and 320px, resize round trips, repeated initialization, preserved search focus and mobile first paint before JS. These exercise the actual layout organizer and current CSS; they do not claim live Theme Editor verification. JS syntax and diff check pass; full Theme Check has 0 errors/5 existing warnings. No Shopify theme deployment performed for this follow-up.
+
+## Header gaps, Search types and tertiary underline correction
+
+Retain existing top-block `gap` ID, relabel it Gap menu (spacing between Header columns). Add actions_gap for controls within each column, and customize_mobile_gap controlling gap_mobile/actions_gap_mobile. Liquid validates each value in 0–100px. Without mobile overrides the CSS inherits desktop variables. Preset/group: desktop column gap 64px, visible action gap 24px (Figma's 4px wrapper gap plus adjacent 10px wrapper padding); mobile column gap 8px and action gap 4px. Existing navigation-link gap remains 28px.
+
+Search Desktop type: Text now hides its icon at desktop widths; Icon and Icon with text retain their respective content. Search bar remains a form throughout desktop (>=992px), replacing the premature 1400px icon fallback. All modes use icon-only mobile behavior below 992px. Keep existing search form submission and overlay button hooks.
+
+Shop now already has Button style and still uses the shared theme-button renderer. Missing underline reproduced: banner overflow clips the pseudo-element when content bottom padding is zero. Set the existing banner bottom padding control to 6px in both local compositions; do not add button appearance CSS or override the global underline toggle. Chrome checks verify the 1px underline lies inside the clipping bounds, zero padding reproduces clipping, and global underline disabled still hides it.
+
+Validation: 21 Chrome tests pass for logo positions, first paint, breakpoint changes, Search's four types at 375/1024/1440, independently configured/inherited gaps, and tertiary clipping/global toggle. Theme Check: 0 errors, 5 existing warnings. Live Theme Editor review and Shopify deployment remain unverified.

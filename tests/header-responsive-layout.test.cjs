@@ -55,3 +55,33 @@ for (const mobile of ['left','center']) test(`mobile first paint before JavaScri
  else assert.equal(geometry.logoX,16);
  await page.close();
 });
+
+for (const width of [375, 1024, 1440]) for (const type of ['icon', 'text', 'icon_with_text', 'search_bar']) {
+ test(`Search Desktop type ${type} at ${width}px`, async () => {
+  const page=await browser.newPage({viewport:{width,height:800}});
+  const search=type==='search_bar'
+    ? '<form class="header-search header-search--type-search_bar"><input class="header-search__input"><button class="header-search__submit"><span class="icon">Icon</span></button></form><button class="header-search header-search--mobile-icon"><span class="icon">Icon</span></button>'
+    : `<button class="header-search header-search--type-${type}"><span class="icon">Icon</span>${type==='icon'?'':'<span class="header-action__label">Search</span>'}</button>`;
+  await page.setContent(`<style>${styles}${stylesheet('blocks/_header-search.liquid')}:root{--header-icon-size:20px;--button-height:44px;--button-height-mobile:40px;--input-height:44px;--input-height-mobile:40px;--font-body-md:14px;--font-body-family:Arial;}</style><div class="header-top" data-header-root data-layout-ready="true"><div class="header__row"><div class="header__column header__column--right">${search}</div></div></div>`);
+  const visible=await page.evaluate(()=>{const shown=s=>{const el=document.querySelector(s);if(!el)return false;const r=el.getBoundingClientRect();return getComputedStyle(el).display!=='none'&&r.width>1&&r.height>1;};return {icon:shown('.header-search:not(.header-search--mobile-icon) > .icon'),label:shown('.header-action__label'),form:shown('form'),mobile:shown('.header-search--mobile-icon')};});
+  if(type==='search_bar'){assert.equal(visible.form,width>=992);assert.equal(visible.mobile,width<992);}
+  else {assert.equal(visible.icon,width<992||type!=='text');assert.equal(visible.label,width>=992&&type!=='icon');}
+  await page.close();
+ });
+}
+for (const width of [375, 1440]) test(`independent menu/action gaps at ${width}px`,async()=>{
+ const page=await browser.newPage({viewport:{width,height:800}});
+ await page.setContent(fixture('left','center'));await initialize(page);
+ const gaps=await page.evaluate(()=>{const root=document.querySelector('.header-top');root.style.cssText='--header-top-gap:64px;--header-actions-gap:24px;--header-top-gap-mobile:8px;--header-actions-gap-mobile:4px';return {row:getComputedStyle(root.querySelector('.header__row')).gap,actions:getComputedStyle(root.querySelector('.header__column--right')).gap};});
+ assert.equal(gaps.row,width<992?'8px':'64px');assert.equal(gaps.actions,width<992?'4px':'24px');
+ const inherited=await page.evaluate(()=>{const root=document.querySelector('.header-top');root.style.removeProperty('--header-top-gap-mobile');root.style.removeProperty('--header-actions-gap-mobile');return {row:getComputedStyle(root.querySelector('.header__row')).gap,actions:getComputedStyle(root.querySelector('.header__column--right')).gap};});assert.equal(inherited.row,'64px');assert.equal(inherited.actions,'24px');await page.close();
+});
+
+test('tertiary underline stays inside banner clipping with existing padding control', async()=>{
+ const page=await browser.newPage({viewport:{width:1440,height:800}});
+ await page.setContent(`<style>${styles}${stylesheet('blocks/_mega-menu-banner.liquid')}</style><style>:root{--button-tertiary-underline-display:block;--button-tertiary-underline-offset:5px;--font-body-family:Arial;--button-font-size:13px;--button-letter-spacing:1.2px;}article{width:432px;--mega-banner-content-gap:8px;--mega-banner-button-gap:16px;--mega-banner-padding-top:24px;--mega-banner-padding-bottom:6px;--mega-banner-padding-left:0px;--mega-banner-padding-right:0px;}</style><article class="header-mega-menu__banner"><div class="header-mega-menu__banner-content header-mega-menu__banner-content--left"><a class="btn btn-tertiary btn--tertiary link-underline header-mega-menu__banner-button" data-underline="persistent" data-underline-target="text" href="#"><span class="btn__label"><span class="btn__text">Shop now</span></span></a></div></article>`);
+ const read=()=>page.evaluate(()=>{const article=document.querySelector('article'),text=document.querySelector('.btn__text'),pseudo=getComputedStyle(text,'::after'),r=text.getBoundingClientRect();return {display:pseudo.display,height:pseudo.height,bottom:r.bottom-parseFloat(pseudo.bottom),clipBottom:article.getBoundingClientRect().bottom};});
+ let result=await read();assert.equal(result.display,'block');assert.equal(result.height,'1px');assert.ok(result.bottom<=result.clipBottom,JSON.stringify(result));
+ await page.evaluate(()=>document.querySelector('article').style.setProperty('--mega-banner-padding-bottom','0px'));result=await read();assert.ok(result.bottom>result.clipBottom,'zero padding reproduces clipped underline');
+ await page.evaluate(()=>document.documentElement.style.setProperty('--button-tertiary-underline-display','none'));result=await read();assert.equal(result.display,'none','global underline toggle remains respected');await page.close();
+});
