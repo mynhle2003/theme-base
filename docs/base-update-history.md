@@ -1,6 +1,90 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"30d272ad93c267c2c5711657740a8aa546276559"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"0fa5870762651985e16081a8ae86152a57cc69b8"} -->
 
 # Base update history
+
+## 2026-10-14 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `30d272ad93c267c2c5711657740a8aa546276559`
+- Updated through team commit: `0fa5870762651985e16081a8ae86152a57cc69b8`
+- Team commits included: 16
+- Source changes:
+
+```text
+assets/carousel-block.js                       | 804 +-------------------
+ assets/carousel-runtime.js                     | 770 +++++++++++++++++++
+ assets/carousel-slide.js                       |  39 +
+ assets/cart-drawer-recommendations.js          |  21 +-
+ assets/column-background-video.js              |  39 +
+ assets/product-collection-carousel.js          |  54 +-
+ assets/swiper-carousel.css                     |  67 +-
+ assets/swiper-carousel.js                      | 145 +++-
+ assets/testimonial-split.js                    |  31 +
+ assets/timeline-list.js                        |  51 +-
+ blocks/_columns-column.liquid                  | 982 +++++++++++++++++++++++++
+ blocks/carousel.liquid                         | 830 ++++++---------------
+ blocks/carousel_split.liquid                   | 359 +++++++++
+ blocks/columns.liquid                          | 508 +++++++++++++
+ blocks/gallery-header-group.liquid             |   2 +-
+ blocks/grid.liquid                             | 400 ----------
+ blocks/image-text-card-grid-item.liquid        |   2 +-
+ blocks/slide.liquid                            | 397 +++++-----
+ blocks/slide_split.liquid                      | 853 +++++++++++++++++++++
+ blocks/slideshow-slide.liquid                  |   2 +-
+ docs/columns.md                                |  93 +++
+ docs/swiper-carousel.md                        | 203 ++++-
+ layout/theme.liquid                            |   1 +
+ locales/en.default.json                        |   6 +
+ locales/en.default.schema.json                 |  15 +-
+ scripts/migrate-columns.cjs                    |  93 +++
+ scripts/migrate-common-carousel-options.cjs    |  58 ++
+ scripts/migrate-testimonial-carousel.cjs       |  80 ++
+ sections/custom-section.liquid                 |   2 +-
+ sections/footer.liquid                         |   2 +-
+ sections/gallery-carousel.liquid               |   8 +-
+ sections/gallery-custom.liquid                 |   2 +-
+ sections/hero.liquid                           |   2 +-
+ sections/icon-text-cards.liquid                |   8 +-
+ sections/icon-text-inline.liquid               |  35 +-
+ sections/image-comparison-split-custom.liquid  |   2 +-
+ sections/image-text-card-grid.liquid           |   8 +-
+ sections/scroll-reading-text.liquid            |   2 +-
+ sections/testimonial-carousel.liquid           | 429 +++++++----
+ sections/testimonials-background-custom.liquid |   6 -
+ sections/testimonials-horizontal-custom.liquid |   6 +-
+ snippets/hero-styles.liquid                    |  19 +-
+ snippets/theme-module-import-map.liquid        |  17 +
+ templates/index.json                           | 148 +---
+ templates/index.spinel-sync.json               | 148 +---
+ templates/page.about-us.json                   | 860 ++++++++++++++--------
+ tests/carousel-autoplay-clock.test.cjs         | 149 ++++
+ tests/carousel-shared.test.cjs                 | 175 +++++
+ tests/columns.test.cjs                         | 115 +++
+ tests/swiper-shared-lifecycle.test.cjs         |  37 +
+ tests/testimonial-carousel.test.cjs            | 176 +++++
+ tests/theme-import-map.test.cjs                |  28 +
+ 52 files changed, 6389 insertions(+), 2900 deletions(-)
+```
+
+- Included team commits:
+  - `75b06dea3353a077abae20d29d214f32dde6d94f` — fix(carousel): separate testimonials and rebuild shared carousel controls
+  - `8508226a2282cc92dc0326f4a66a4be2dfa6221a` — fix(carousel): align slide options and preserve bullet fill radius
+  - `2ffda374cf309fb1c71110d7eb9cb18fdeb61cf6` — fix(slide): show shared placeholders for empty background media
+  - `8985ff7f296ef0cfa91f280613a58a41e8e02c59` — fix(carousel): align shared block presets with reference theme
+  - `4e8bdd3a55a11e247a2d2c54e844c72ce8e87d5b` — fix(carousel): restrict shared children to slide blocks
+  - `47a96c90b11ef00be2224befbfa8498140dd00a7` — feat(testimonial): rebuild carousel as split composition
+  - `6840f6646ed05a0844e63c7da4da7a2834a14dde` — fix(carousel): share autoplay handling and simplify split labels
+  - `f86a55a60ce915633210de60c281c2127e52c38f` — fix(hero): fill background media and correct responsive video visibility
+  - `0c7639bab2b3ef274259147ef2ddcf8366d8a86c` — feat(grid): rebuild Columns options and responsive layout
+  - `f543b076d978afaf8341a4eca772580db01cb634` — feat(columns): rebuild Column surfaces and reference layout presets
+  - `ce0ad810c18a6ef4952433d03ce072184965850f` — fix(columns): standardize preset headings and button labels
+  - `0a4bbf1cb9db4116f9523e14c42c5c53d0c26f4f` — fix(carousel): synchronize autoplay and pagination progress
+  - `ca1aeff2da3d06dd32598cd3110a7f151f1af994` — fix(carousel): synchronize pagination timelines with autoplay
+  - `6c54e6fd63fd95409b791f9f5bb42afd17ee994e` — fix(carousel): align runtime intervals and progress rendering
+  - `8d5605ad7a0e09dfe3f172518638d24e7c1ee746` — refactor(carousel): reuse shared Swiper lifecycle and controls
+  - `0fa5870762651985e16081a8ae86152a57cc69b8` — fix(theme): version shared module imports on Shopify CDN
+
 
 ## 2026-10-13 — Update from upstream/dev
 
