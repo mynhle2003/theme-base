@@ -20,6 +20,7 @@ Quy tắc: `agents-build-themes/skills/build/new/build-theme/references/variant-
 | Mã update mới | Revision | Phạm vi | Nguồn | Trạng thái Essen | Dependency |
 | --- | --- | --- | --- | --- | --- |
 | ARCHE-ESSEN-SIZE-GUIDE-001 | 1 | Size guide dùng Button Tertiary; xóa CSS riêng | snippets/variant-picker.liquid; assets/critical.css — commit 314ff1e6 | pending | Shared Tertiary button/underline contract |
+| ARCHE-ESSEN-SIZE-GUIDE-DIALOG-002 | 1 | Dialog Size Guide căn giữa viewport như Quick View; nội dung dùng body-sm | snippets/variant-picker.liquid; tests/product-controls.test.cjs — commit 4c01f5a8 | pending — chưa audit/apply tại Essen | Shared component-overlay popup và typography body-sm; độc lập trigger Tertiary |
 | ARCHE-ESSEN-PRODUCT-CARD-TAGS-001 | 1 | Checkbox Show tags và tối đa ba tag trên Product cards | config/settings_schema.json; snippets/product-card.liquid; snippets/product-badges.liquid; snippets/badge.liquid; snippets/css-variables.liquid; assets/critical.css; locales/en.default.schema.json — patch local trước commit | pending | Shared badge primitive và card context; độc lập Size guide |
 
 | Mã update cảnh báo | Revision | Phạm vi | Nguồn | Trạng thái Essen | Dependency |
@@ -246,6 +247,31 @@ Ngày 2026-10-13, revision 1. Nguồn Arche `theme/arche-theme`, commit `314ff1e
 - Trước update Essen, kiểm tra trigger còn hard-code/custom chặn Tertiary hay không; chỉ chuyển patch nhỏ nếu gap còn tồn tại. Không copy preset/layout. QA màu/hover, font/case, bật/tắt underline và offset, mở/đóng guide, desktop/mobile và Theme Editor save/reload.
 - QA nguồn: full Theme Check và diff check trước commit; storefront/Theme Editor trực tiếp còn pending.
 
+
+## ARCHE-ESSEN-SIZE-GUIDE-DIALOG-002 — Dialog căn giữa viewport và giảm cỡ chữ
+
+Ngày: 2026-10-14. Revision: 1. Nguồn: `arche-theme`, branch `theme/arche-theme`, commit `4c01f5a8a4988b83b209925e8d3c6abb7b98c4c2`. Đích: `../essen-theme`, branch `theme/essen-theme`. Trạng thái: **pending** — chưa audit, áp dụng hoặc QA tại Essen; chưa upload preview/publish.
+
+- Nguyên nhân: Size Guide truyền `data-desktop-layout="modal"`, trong khi geometry dùng chung chỉ căn giữa với `popup`. Dialog vì vậy không nhận `display: grid; place-items: center` như Quick View.
+- `snippets/variant-picker.liquid`: mặc định layout desktop thành `popup`; chuẩn hóa giá trị `modal` đã lưu và giá trị không hợp lệ về `popup`, giữ `drawer`. Không đổi ID/value schema hoặc ghi lại settings merchant.
+- Thêm `body-sm` vào `body_class: 'rte body-sm'` để giảm nhẹ cỡ chữ nội dung theo token của theme. Tiêu đề dialog tiếp tục dùng shared heading; không hardcode font-size hoặc sửa typography toàn theme.
+- Tái sử dụng `component-overlay` và `append_to_body: true`: desktop Popup căn giữa viewport theo hai trục, giới hạn chiều cao theo viewport. Giữ nguyên width setting, drawer desktop và bottom sheet/drawer mobile, aria, focus trap, Escape, backdrop, scroll lock và lifecycle hiện có. Không copy animation riêng Quick View.
+- Dependency: shared overlay có contract `popup` và token `body-sm` tại đích. Độc lập `ARCHE-ESSEN-SIZE-GUIDE-001` (trigger Button Tertiary). Commit nguồn còn chứa icon-with-text: chỉ lấy diff Size Guide và regression test tương ứng, không cherry-pick toàn commit.
+- Nội dung Shopify Page `size-guide`, bảng số đo và HTML trình bày trên store là content riêng; không thuộc patch code chuyển variant, không tự sửa page hoặc copy content sang store đích.
+
+### Áp dụng và acceptance tại Essen
+
+1. Kiểm tra code và tái hiện trên Essen với layout desktop Popup, kể cả giá trị `modal` đã lưu. Nếu đã có mapping tương đương và dialog đã căn giữa, ghi `skipped`; chưa tái hiện được thì giữ `pending`; contract khác ghi `conflict`.
+2. Chuyển riêng normalization và class nội dung theo DOM/token đích. Không copy toàn snippet, schema, preset, template hoặc settings_data.
+3. QA desktop 768/1024/1440px: dialog ở giữa viewport ngang/dọc, nội dung dài cuộn được và nút đóng vẫn truy cập được; resize khi mở. Kiểm tra Popup mặc định, legacy `modal`, `popup`, giá trị sai và Drawer còn đúng vị trí.
+4. QA mobile 320/375px: bottom sheet/drawer giữ hành vi cũ, bảng không làm tràn viewport; chữ nhỏ hơn nhưng vẫn dễ đọc khi zoom 200%. Kiểm tra keyboard mở/đóng, Tab/Shift+Tab, Escape, backdrop, trả focus, nhiều picker và trường hợp mở từ Quick View. Kiểm tra Theme Editor reload/duplicate/save.
+5. Chạy regression tests phù hợp, full Theme Check và diff check ở Essen. Ghi commit đích và bằng chứng trước khi đánh dấu `verified`; upload/publish theo dõi riêng.
+
+Bằng chứng nguồn: 35 tests product-controls/component-overlay/overlay-product-modules PASS, gồm normalization layout, giữ drawer/mobile, focus và lifecycle overlay; full Theme Check PASS (0 errors / 5 warnings settings-count có sẵn); diff check PASS. Chưa QA trực quan dialog storefront/Theme Editor sau patch; tests không thay thế QA tại Essen.
+
+| Ngày | Mã | Revision | Commit nguồn | Trạng thái Essen | Preview / publish |
+| --- | --- | --- | --- | --- | --- |
+| 2026-10-14 | ARCHE-ESSEN-SIZE-GUIDE-DIALOG-002 | 1 | 4c01f5a8 | pending — chưa audit/apply | chưa upload / chưa publish |
 
 ## ARCHE-ESSEN-PRODUCT-CARD-TAGS-001 — Show tags trong Product cards
 
