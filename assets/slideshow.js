@@ -231,7 +231,7 @@ const createNumberedPagination = (root, swiper, loop, slideCount) => {
   const update = () => {
     if (swiper.destroyed) return;
     const currentIndex = getCurrentIndex();
-    const autoplayProgress = element.style.getPropertyValue('--slideshow-autoplay-progress').trim();
+    const autoplayProgress = root.style.getPropertyValue('--slideshow-autoplay-progress').trim();
     const hasAutoplayClock = autoplayProgress !== '';
     const progress = hasAutoplayClock ? Math.max(0, Math.min(1, Number(autoplayProgress) || 0)) : 1;
     numbers.forEach((number, index) => {
@@ -308,7 +308,6 @@ const startAutoplay = (root, swiper, loop) => {
   if (root.dataset.autoplay !== 'true' || reducedMotion()) return null;
   const delay = Math.min(60000, Math.max(3000, Number(root.dataset.autoplayDelay) || 6000));
   const pauseOnHover = root.dataset.pauseOnHover !== 'false';
-  const pagination = root.querySelector('[data-slideshow-pagination]');
 
   const index = () => loop ? loop.logicalIndex(swiper.activeIndex) : swiper.realIndex;
   let current = index();
@@ -316,24 +315,12 @@ const startAutoplay = (root, swiper, loop) => {
   let previous = null;
   let frame = 0;
   let touching = false;
-  let inViewport = !('IntersectionObserver' in window);
-  let destroyed = false;
-  const schedule = () => {
-    if (!destroyed && !frame && inViewport && !document.hidden && document.readyState === 'complete') {
-      frame = window.setTimeout(tick, Math.min(100, Math.max(1, delay - elapsed)));
-    }
-  };
-  const suspend = () => {
-    window.clearTimeout(frame);
-    frame = 0;
-    previous = null;
-    paint(false);
-  };
-  const paint = (running = false) => {
-    // Progress animates in CSS; only pause/resume changes invalidate styles.
-    if (!pagination) return;
-    const state = running ? 'running' : 'paused';
-    if (pagination.dataset.autoplayClock !== state) pagination.dataset.autoplayClock = state;
+  const paint = () => {
+    const progress = Math.max(0, Math.min(1, elapsed / delay));
+    root.style.setProperty('--slideshow-autoplay-progress', String(progress));
+    root.querySelectorAll('[data-slideshow-pagination][data-pagination-type="numbers"] .slideshow__pagination-number').forEach((number) => {
+      number.querySelector('svg')?.style.setProperty('--percent', number.getAttribute('aria-current') === 'true' ? String(progress) : '0');
+    });
   };
   const reset = () => {
     // Moving from a clone to its original is still the same logical slide.
@@ -345,25 +332,16 @@ const startAutoplay = (root, swiper, loop) => {
   };
   const touchStart = () => { touching = true; previous = null; };
   const touchEnd = () => { touching = false; previous = null; };
-  const visibilityChange = () => {
-    if (document.hidden) suspend();
-    else schedule();
-  };
-  const observer = 'IntersectionObserver' in window ? new window.IntersectionObserver((entries) => {
-    inViewport = entries.some((entry) => entry.isIntersecting);
-    if (inViewport) schedule();
-    else suspend();
-  }) : null;
-  const tick = (now = performance.now()) => {
-    frame = 0;
+  const visibilityChange = () => { previous = null; };
+  const tick = (now) => {
     const paused = document.hidden || !isVisible(root) || reducedMotion() ||
       (pauseOnHover && root.matches(':hover')) ||
       Boolean(root.querySelector(':focus-visible')) || touching || swiper.isLocked || swiper.animating;
-    paint(!paused);
     if (paused) previous = null;
     else {
       if (previous !== null) elapsed = Math.min(delay, elapsed + now - previous);
       previous = now;
+      paint();
       if (elapsed >= delay) {
         elapsed = 0;
         previous = null;
@@ -371,28 +349,23 @@ const startAutoplay = (root, swiper, loop) => {
         paint();
       }
     }
-    schedule();
+    frame = window.requestAnimationFrame(tick);
   };
-  // Keep CSS progress and slide timing paused together without a per-frame task.
+  // The timer and both pagination styles share one clock, including pauses.
   swiper.on('activeIndexChange realIndexChange', reset);
   swiper.on('touchStart', touchStart);
   swiper.on('touchEnd', touchEnd);
   document.addEventListener('visibilitychange', visibilityChange);
-  window.addEventListener('load', schedule);
   paint();
-  observer?.observe(root);
-  schedule();
+  frame = window.requestAnimationFrame(tick);
   return {
     destroy() {
-      destroyed = true;
-      suspend();
-      observer?.disconnect();
+      window.cancelAnimationFrame(frame);
       swiper.off('activeIndexChange realIndexChange', reset);
       swiper.off('touchStart', touchStart);
       swiper.off('touchEnd', touchEnd);
       document.removeEventListener('visibilitychange', visibilityChange);
-      window.removeEventListener('load', schedule);
-      if (pagination) delete pagination.dataset.autoplayClock;
+      root.style.removeProperty('--slideshow-autoplay-progress');
     },
   };
 };
