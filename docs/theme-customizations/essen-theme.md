@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha": "c8fab8a5588b05f9577f3a2aaa2ac01744c1286f"} -->
+<!-- theme-base-sync-state: {"sha": "c07753a29c860f64e60567a2fc0d58deb3429c3b"} -->
 # Customization record: essen-theme
 
 Lịch sử nhận update giữa các variant: [Variant update history](../variant-update-history.md).
@@ -1948,3 +1948,11 @@ templates/page.about-us.json
 - `assets/swiper-carousel.css`: rounded native/manual progress fills consume the existing shared autoplay clock in horizontal, RTL and vertical modes. Non-autoplay behavior remains unchanged.
 - Validation: 14 clock/lifecycle tests pass per theme; full Theme Check has zero errors (4–5 existing warnings). Browser QA fixtures load the actual theme JS/CSS and verify both pagination types on all four themes plus a mobile viewport. Arche storefront preview remains blocked by an unrelated icon-with-text preset upload error (`border_color`); full live Theme Editor QA was not completed.
 - Preserve these clock bindings in future base updates. Tests remain local. Owner authorized commit/push after a passing Theme Check.
+
+### 2026-10-15 — Apply shared icon, collection-tab and underline fixes
+
+- Owner explicitly requests the new shared behavior in all variants, including customized files, while preserving their layout and preset content.
+- Previous personal main: `c8fab8a5588b05f9577f3a2aaa2ac01744c1286f`. Updated through personal main: `c07753a29c860f64e60567a2fc0d58deb3429c3b` (one main commit; team source `a0ac2424`).
+- Three-way integration preserves theme implementation outside the shared fixes. Custom SVG uses isolated image rendering and input validation; icon bounds use flex layout; shared underline uses positive internal padding and bottom zero.
+- Collection tabs dynamically allow only Collection tab. Static controls remain; all section settings and presets, templates, section-group composition and saved config are preserved. No structural preset rebuild is needed for this source change.
+- Scope: `assets/component-pagination.css`, `assets/component-search-suggestions.css`, `assets/critical.css`, `blocks/icon.liquid`, `sections/collection-tabs.liquid`, `snippets/css-variables.liquid`, `snippets/custom-icon-image.liquid`, `snippets/icon.liquid`, `snippets/tab-layout-styles.liquid`.
