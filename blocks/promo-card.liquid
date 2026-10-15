@@ -21,6 +21,10 @@
     assign promo_padding_vertical_mobile = block.settings.padding_vertical_mobile
     assign promo_padding_horizontal_mobile = block.settings.padding_horizontal_mobile
   endif
+  assign promo_desktop_top = false
+  if block.settings.show_on_top_desktop
+    assign promo_desktop_top = true
+  endif
   assign promo_icon = blank
   if block.settings.show_icon
     assign promo_icon = 'arrow'
@@ -31,7 +35,7 @@
   endif
 -%}
 <!--promo-card-slot:{{ block.settings.card_position | default: 1 | at_least: 1 | at_most: 25 }}-->
-<div class="promo-card color-scheme section-color-scope {{ promo_scheme }}" data-promo-card data-promo-mobile-top="{{ block.settings.show_on_top_mobile }}" data-alignment="{{ promo_alignment }}" data-position="{{ promo_content_position }}" style="--promo-content-gap:{{ block.settings.content_gap }}px;--promo-button-spacing:{{ block.settings.button_spacing }}px;--promo-padding-vertical:{{ promo_padding_vertical }}px;--promo-padding-horizontal:{{ promo_padding_horizontal }}px;--promo-padding-vertical-mobile:{{ promo_padding_vertical_mobile }}px;--promo-padding-horizontal-mobile:{{ promo_padding_horizontal_mobile }}px;{% if block.settings.show_overlay %}--promo-overlay:{{ effective_overlay | default: 'transparent' | escape }};{% endif %}" {{ block.shopify_attributes }}>
+<div class="promo-card color-scheme section-color-scope {{ promo_scheme }}" data-promo-card data-promo-desktop-top="{{ promo_desktop_top }}" data-promo-mobile-top="{{ block.settings.show_on_top_mobile }}" data-alignment="{{ promo_alignment }}" data-position="{{ promo_content_position }}" style="--promo-content-gap:{{ block.settings.content_gap }}px;--promo-button-spacing:{{ block.settings.button_spacing }}px;--promo-padding-vertical:{{ promo_padding_vertical }}px;--promo-padding-horizontal:{{ promo_padding_horizontal }}px;--promo-padding-vertical-mobile:{{ promo_padding_vertical_mobile }}px;--promo-padding-horizontal-mobile:{{ promo_padding_horizontal_mobile }}px;{% if block.settings.show_overlay %}--promo-overlay:{{ effective_overlay | default: 'transparent' | escape }};{% endif %}" {{ block.shopify_attributes }}>
   {% render 'media-background', media_type: block.settings.media_type, image: block.settings.image, mobile_image: block.settings.mobile_image, video: block.settings.video, mobile_video: block.settings.mobile_video, alt: block.settings.image.alt, placeholder: 'collection-1', sizes: '(min-width: 1150px) 25vw, (min-width: 768px) 33vw, 100vw' %}
   {% if block.settings.show_overlay %}<div class="promo-card__overlay" aria-hidden="true"></div>{% endif %}
   {% if block.settings.card_link != blank %}
@@ -53,6 +57,7 @@
 <!--/promo-card-slot-->
 {% stylesheet %}
   .promo-card { position: relative; isolation: isolate; display: flex; min-width: 0; min-height: 100%; overflow: hidden; border-radius: var(--product-card-media-radius, var(--radius-16)); background: var(--background-color); }
+  .promo-card .background-media :is(img, video) { display: block; width: 100%; height: 100%; object-fit: cover; }
   .promo-card__overlay { position: absolute; inset: 0; background: var(--promo-overlay, transparent); pointer-events: none; }
   .promo-card__link { position: absolute; inset: 0; z-index: 1; }
   .promo-card__link:focus-visible { outline: 2px solid currentColor; outline-offset: -4px; }
@@ -90,6 +95,12 @@
       "max": 25,
       "step": 1,
       "default": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_top_desktop",
+      "label": "Show promo card on top (desktop)",
+      "default": false
     },
     {
       "type": "checkbox",
@@ -477,6 +488,7 @@
       "name": "Promo card",
       "settings": {
         "card_position": 1,
+        "show_on_top_desktop": false,
         "show_on_top_mobile": true,
         "open_in_new_tab": false,
         "media_type": "image",

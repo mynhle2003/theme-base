@@ -18,3 +18,22 @@ checks and Theme Check on this branch. Live Peeko editor covered add/remove,
 position changes, grid/carousel, mobile-top, selection and owning-tab activation.
 Base runtime is scoped to Product/Promo cards; existing theme motion tokens and
 motion_block_animations setting remain authoritative.
+
+## Malandra Collection tab desktop override
+
+`show_on_top_desktop` defaults false and appears immediately above the mobile
+checkbox. It pins the enabled promo(s) in a separate first column beside the
+Collection tab product carousel/grid. Desktop product columns describe the
+remaining products; with three columns the pinned promo occupies the fourth
+equal-width card slot. Multiple enabled promos stack in that first column.
+The mobile checkbox independently moves a promo above the list. Product list
+ignores the desktop setting. The shared Promo card editor includes the checkbox; its desktop runtime is
+scoped to Collection tab panels. The flag reads the checkbox directly, without
+requiring `section.type`. The detached promo host is outside the Swiper root;
+pagination stays inside the product Swiper and centers within its own column.
+Without JavaScript cards remain readable in their configured original slots.
+
+When desktop promos are detached, the product carousel (including pagination)
+is sticky below the theme's sticky-header height and stops at the panel bottom.
+Its grid item does not stretch to match the stacked promo column. This keeps
+products reachable alongside multiple promos; mobile retains normal flow.

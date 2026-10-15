@@ -1,5 +1,9 @@
 # Block Animation
 
+## Malandra header/footer exclusion (2026-10-15)
+
+Owner requires header and footer entrance Animation Type to remain `none` unless explicitly authorized. This overrides earlier complete-coverage instructions for these surfaces. Applies to saved header/footer groups, announcement-bar/header/footer section presets and their nested blocks, including mega menus. Preserve Delay and component-owned motion. Content Header blocks in ordinary page sections remain eligible for content animations. Repository instructions are recorded in `AGENTS.md`.
+
 ## Arche whole-card entrances (2026-10-14)
 
 - Reference: local `arche-theme/assets/block-animations.js`, read-only. Reuse Elara's existing section-scoped runtime, startup fallback, leaf effects and word rotation rather than replacing their lifecycle.

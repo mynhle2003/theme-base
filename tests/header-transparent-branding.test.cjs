@@ -1,0 +1,22 @@
+const {test,before,after}=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const {chromium}=require('playwright');
+let browser;
+before(async()=>{browser=await chromium.launch({channel:'chrome',headless:true});});
+after(async()=>{await browser?.close();});
+const block=fs.readFileSync('blocks/_header-logo.liquid','utf8');
+const css=fs.readFileSync('assets/critical.css','utf8')+block.match(/{% stylesheet %}([\s\S]*?){% endstylesheet %}/)[1];
+const icons=fs.readFileSync('snippets/header-figma-icon.liquid','utf8').match(/<svg[\s\S]*?<\/svg>/g).join('');
+for(const width of [375,1440]) test(`transparent branding preserves geometry and inherits scheme at ${width}px`,async()=>{
+ const page=await browser.newPage({viewport:{width,height:800}});
+ const word='data:image/svg+xml;base64,'+Buffer.from(fs.readFileSync('.shopify/media-ledger/header/wordmark.svg')).toString('base64');
+ const symbol='data:image/svg+xml;base64,'+Buffer.from(fs.readFileSync('.shopify/media-ledger/header/diamond.svg')).toString('base64');
+ await page.setContent(`<style>${css}</style><style>:root{--logo-width:100px;--logo-width-mobile:92px}.header-top{--body-color:rgb(20,30,40);color:var(--body-color)}.header-top--transparent-scheme{--body-color:rgb(240,245,250)}</style><div class="header-top"><a class="header-logo site-logo site-logo--stacked"><img src="${symbol}" class="site-logo__symbol site-logo__symbol--base"><img src="${symbol}" class="site-logo__symbol site-logo__symbol--overlay"><img src="${word}" class="site-logo__image site-logo__image--overlay site-logo__white-fallback"><img src="${word}" class="site-logo__image site-logo__image--base"></a><div class="icons">${icons}</div></div>`);
+ await page.locator('img').evaluateAll(async imgs=>Promise.all(imgs.map(i=>i.decode())));
+ const state=()=>page.evaluate(()=>({size:document.querySelector('.site-logo').getBoundingClientRect().toJSON(),visible:[...document.querySelectorAll('.site-logo img')].filter(e=>getComputedStyle(e).display!=='none').map(e=>({class:e.className,filter:getComputedStyle(e).filter})),paints:[...document.querySelectorAll('.icons path')].map(e=>({paint:getComputedStyle(e)[e.getAttribute('stroke')==='currentColor'?'stroke':'fill'],color:getComputedStyle(e).color}))}));
+ const normal=await state();assert.equal(normal.visible.length,2);assert.ok(normal.visible.every(i=>i.class.includes('--base')));assert.ok(normal.paints.every(p=>p.paint===p.color&&p.color==='rgb(20, 30, 40)'));
+ await page.locator('.header-top').evaluate(e=>e.classList.add('header-top--transparent-scheme'));
+ const transparent=await state();assert.equal(transparent.visible.length,2);assert.ok(transparent.visible.every(i=>i.class.includes('--overlay')));assert.equal(transparent.visible.find(i=>i.class.includes('site-logo__symbol')).filter,'none');assert.equal(transparent.visible.find(i=>i.class.includes('site-logo__image')).filter,'brightness(0) invert(1)');assert.equal(transparent.size.width,normal.size.width);assert.equal(transparent.size.height,normal.size.height);assert.ok(transparent.paints.every(p=>p.paint===p.color&&p.color==='rgb(240, 245, 250)'));
+ await page.locator('.header-top').evaluate(e=>e.classList.remove('header-top--transparent-scheme'));assert.deepEqual((await state()).visible,normal.visible);await page.close();
+});

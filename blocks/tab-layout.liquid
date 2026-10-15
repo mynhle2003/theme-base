@@ -10,7 +10,7 @@
 
 {% liquid
   assign tab_layout_style = block.settings.style | default: 'underline'
-  unless tab_layout_style == 'underline' or tab_layout_style == 'button'
+  unless tab_layout_style == 'underline' or tab_layout_style == 'button' or tab_layout_style == 'separator'
     assign tab_layout_style = 'underline'
   endunless
 
@@ -151,6 +151,7 @@
 %}
 
 {% capture tab_layout_style_attribute %}
+  {% if tab_layout_style == 'separator' %}--tab-layout-separator: url('{{ 'malandra-tab-separator.svg' | asset_url }}');{% endif %}
   --tab-layout-gap-desktop: {{ tab_layout_gap_desktop }}px;
   --tab-layout-gap-mobile: {{ tab_layout_gap_mobile }}px;
   --tab-layout-font-family: {{ tab_layout_font_family }};
@@ -436,6 +437,29 @@
     return attempt;
   };
 
+  const centerActiveTab = (state, trigger, animate = false) => {
+    if (!state.navigation || !window.matchMedia?.('(max-width: 767.98px)').matches) return;
+    window.cancelAnimationFrame(state.navigationFrame);
+    state.navigationFrame = window.requestAnimationFrame(() => {
+      state.navigationFrame = 0;
+      if (instances.get(state.layout) !== state || !state.navigation.contains(trigger)) return;
+      if (animate && state.navigation.scrollWidth > state.navigation.clientWidth) state.centerNavigation = true;
+      if (state.centerNavigation) {
+        const width = state.navigation.clientWidth;
+        const first = state.entries[0]?.trigger.offsetWidth || 0;
+        const last = state.entries.at(-1)?.trigger.offsetWidth || 0;
+        state.navigation.style.setProperty('--tab-layout-scroll-start', `${Math.max(0, (width - first) / 2)}px`);
+        state.navigation.style.setProperty('--tab-layout-scroll-end', `${Math.max(0, (width - last) / 2)}px`);
+      }
+      const viewport = state.navigation.getBoundingClientRect();
+      const tab = trigger.getBoundingClientRect();
+      state.navigation.scrollBy({
+        left: tab.left + tab.width / 2 - viewport.left - viewport.width / 2,
+        behavior: animate && !prefersReducedMotion() ? 'smooth' : 'instant'
+      });
+    });
+  };
+
   const setActiveTab = (state, selectedId, shouldFocus, shouldAnimate) => {
     synchronizeEntries(state);
     const selectedEntry = state.entries.find((entry) => entry.trigger.dataset.tabId === selectedId) || state.entries[0];
@@ -453,7 +477,8 @@
         previousEntry.panel.setAttribute('aria-busy', 'true');
         previousEntry.panel.inert = true;
       }
-      if (shouldFocus) selectedEntry.trigger.focus();
+      if (shouldFocus) selectedEntry.trigger.focus({ preventScroll: true });
+      centerActiveTab(state, selectedEntry.trigger, shouldAnimate);
       loadDeferredPanels(state);
       return;
     }
@@ -473,7 +498,8 @@
     state.layout.dataset.tabLayoutActive = selectedEntry.trigger.dataset.tabId;
     updateViewAll(state, selectedEntry.trigger);
     updateExternalNavigation(state);
-    if (shouldFocus) selectedEntry.trigger.focus();
+    if (shouldFocus) selectedEntry.trigger.focus({ preventScroll: true });
+    if (previousEntry !== selectedEntry || shouldAnimate) centerActiveTab(state, selectedEntry.trigger, shouldAnimate);
 
     if (shouldAnimate && previousEntry && previousEntry !== selectedEntry) {
       animatePanel(state, selectedEntry.panel);
@@ -508,6 +534,9 @@
       viewAll: Array.from(scope.querySelectorAll('[data-collection-tabs-view-all]')),
       controller,
       observer: null,
+      navigationObserver: null,
+      navigationFrame: 0,
+      centerNavigation: false,
       panelAnimation: null,
       panelAnimationFrame: 0,
       synchronizationQueued: false,
@@ -520,6 +549,14 @@
     layout.dataset.tabLayoutReady = 'true';
     setActiveTab(state, layout.dataset.tabLayoutActive || state.entries[0]?.trigger.dataset.tabId, false, false);
     scope.dataset.collectionTabsReady = 'true';
+
+    if (typeof ResizeObserver !== 'undefined') {
+      state.navigationObserver = new ResizeObserver(() => {
+        const trigger = state.entries.find(entry => entry.trigger.getAttribute('aria-selected') === 'true')?.trigger;
+        if (trigger) centerActiveTab(state, trigger);
+      });
+      state.navigationObserver.observe(navigation);
+    }
 
     if (typeof MutationObserver !== 'undefined') {
       state.observer = new MutationObserver(() => scheduleSynchronization(state));
@@ -597,6 +634,8 @@
       state.externalNavigationSwiper = null;
       state.controller.abort();
       state.observer?.disconnect();
+      state.navigationObserver?.disconnect();
+      window.cancelAnimationFrame(state.navigationFrame);
       cancelPanelAnimation(state);
       state.entries.forEach((entry) => {
         if (entry.tab.isConnected && !entry.tab.contains(entry.trigger)) {
@@ -610,6 +649,8 @@
       });
       updateViewAll(state, null);
       state.navigation.hidden = true;
+      state.navigation.style.removeProperty('--tab-layout-scroll-start');
+      state.navigation.style.removeProperty('--tab-layout-scroll-end');
       delete state.scope.dataset.collectionTabsReady;
       layout.dataset.tabLayoutReady = 'false';
       delete layout.dataset.tabLayoutActive;
@@ -667,6 +708,10 @@
         {
           "value": "button",
           "label": "t:options.tab_style.button"
+        },
+        {
+          "value": "separator",
+          "label": "t:options.tab_style.separator"
         }
       ],
       "default": "underline"

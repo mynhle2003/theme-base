@@ -118,9 +118,6 @@
           {% content_for 'block', type: 'header', id: 'header' %}
           {% content_for 'block', type: 'tab-layout', id: 'tab-layout' %}
         </div>
-        <div class="collection-tabs__actions section-content-slot">
-          {% content_for 'block', type: 'tabs-view-all-button', id: 'collection-tabs-view-all' %}
-        </div>
       </div>
       <span class="visually-hidden" data-tab-load-status role="status" aria-live="polite"></span>
       <div
@@ -128,6 +125,9 @@
         data-collection-tabs-list
       >
         {% content_for 'blocks' %}
+      </div>
+      <div class="collection-tabs__actions section-content-slot">
+        {% content_for 'block', type: 'tabs-view-all-button', id: 'collection-tabs-view-all' %}
       </div>
     </div>
   </div>
@@ -163,7 +163,19 @@
   }
 
   .collection-tabs__actions {
-    display: contents;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    order: 3;
+  }
+
+  .collection-tabs__actions:not(:has(.collection-tabs-view-all)) {
+    display: none;
+  }
+
+  .collection-tabs__layout .tab-layout__navigation {
+    column-gap: var(--tab-layout-gap-desktop, 16px);
   }
 
   .collection-tabs__controls-group {
@@ -199,7 +211,7 @@
     min-width: 0;
   }
 
-  .collection-tabs__controls > .collection-tabs__actions > .collection-tabs-view-all {
+  .collection-tabs__actions > .collection-tabs-view-all {
     flex: 0 0 auto;
     align-self: center;
     order: 3;
@@ -211,48 +223,67 @@
       --text-align-default: left;
     }
 
-    .collection-tabs__layout[data-layout-direction='vertical'][data-controls-alignment='center'] > .collection-tabs__controls > .collection-tabs__controls-group > .block-header {
-      --flex-align: center;
-      --text-align-default: center;
-      align-self: center;
-    }
-
-    .collection-tabs__layout[data-layout-direction='vertical'][data-controls-alignment='flex-end'] > .collection-tabs__controls > .collection-tabs__controls-group > .block-header {
-      --flex-align: end;
-      --text-align-default: right;
-      align-self: flex-end;
-    }
-
-    .collection-tabs__layout[data-layout-direction='vertical'][data-controls-alignment='flex-start'] > .collection-tabs__controls {
+    .collection-tabs__layout[data-layout-direction='vertical'] > .collection-tabs__controls > .collection-tabs__controls-group {
       display: flex;
+      flex-direction: row;
       align-items: end;
       justify-content: space-between;
+      flex-wrap: wrap;
+      width: 100%;
+      min-width: 0;
       gap: var(--collection-tabs-gap-desktop, 59px);
     }
 
-    .collection-tabs__layout[data-layout-direction='vertical'][data-controls-alignment='flex-start'] > .collection-tabs__controls > .collection-tabs__controls-group {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--collection-tabs-gap-desktop, 59px);
+    .collection-tabs__layout[data-layout-direction='vertical'] > .collection-tabs__controls > .collection-tabs__controls-group > .block-header {
+      flex: 1 1 20rem;
+      width: auto;
       min-width: 0;
     }
 
-    .collection-tabs__layout[data-layout-direction='vertical'][data-controls-alignment='flex-start'] > .collection-tabs__controls > .collection-tabs__controls-group > .tab-layout {
+    .collection-tabs__layout[data-layout-direction='vertical'] > .collection-tabs__controls > .collection-tabs__controls-group > .tab-layout {
       width: auto;
+      max-width: 100%;
     }
 
-    .collection-tabs__layout[data-layout-direction='vertical'][data-controls-alignment='flex-start'] > .collection-tabs__controls > .collection-tabs__actions > .collection-tabs-view-all {
-      align-self: end;
+    .collection-tabs__layout[data-layout-direction='vertical'][data-tab-position='left'] > .collection-tabs__controls > .collection-tabs__controls-group {
+      flex-direction: row-reverse;
+    }
+
+    .collection-tabs__layout[data-layout-direction='vertical'][data-tab-position='left'] > .collection-tabs__controls > .collection-tabs__controls-group > .block-header {
+      --flex-align: end;
+      --text-align-default: right;
+    }
+
+    .collection-tabs__layout[data-layout-direction='vertical'][data-tab-position='center'] > .collection-tabs__controls > .collection-tabs__controls-group {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .collection-tabs__layout[data-layout-direction='vertical'][data-tab-position='center'] > .collection-tabs__controls > .collection-tabs__controls-group > .block-header {
+      --flex-align: center;
+      --text-align-default: center;
+      align-self: center;
+      flex: 0 1 auto;
+      width: var(--size-width, fit-content);
+    }
+
+    .collection-tabs__layout[data-layout-direction='vertical'] > .collection-tabs__controls > .collection-tabs__controls-group:not(:has(> .block-header:not([data-content-empty]))) {
+      flex-direction: row;
+      justify-content: var(--collection-tabs-controls-alignment, flex-start);
     }
 
     .collection-tabs__layout[data-layout-direction='horizontal'] {
       display: grid;
       grid-template-columns: minmax(220px, 0.3fr) minmax(0, 0.7fr);
-      grid-template-areas: 'header list';
+      grid-template-areas: 'header list' 'actions actions';
       column-gap: var(--collection-tabs-gap-desktop, 59px);
-      row-gap: 0;
+      row-gap: var(--collection-tabs-gap-desktop, 59px);
       align-items: start;
+    }
+
+    .collection-tabs__layout[data-layout-direction='horizontal']:not(:has(> .collection-tabs__actions .collection-tabs-view-all)) {
+      grid-template-areas: 'header list';
+      row-gap: 0;
     }
 
     .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__controls {
@@ -279,9 +310,8 @@
       width: auto;
     }
 
-    .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__controls > .collection-tabs__actions > .collection-tabs-view-all {
-      align-self: start;
-      order: 2;
+    .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__actions {
+      grid-area: actions;
     }
 
     .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__list {
@@ -291,6 +321,18 @@
   }
 
   @media (max-width: 767.98px) {
+    .collection-tabs__actions {
+      justify-content: var(--collection-tabs-controls-alignment-mobile, flex-start);
+    }
+
+    .collection-tabs__actions:has(> .collection-tabs-view-all--hide-mobile) {
+      display: none;
+    }
+
+    .collection-tabs__layout .tab-layout__navigation {
+      column-gap: var(--tab-layout-gap-mobile, var(--tab-layout-gap-desktop, 16px));
+    }
+
     .collection-tabs__layout > .collection-tabs__controls > .collection-tabs__controls-group > .block-header {
       --flex-align-mobile: var(--collection-tabs-controls-alignment-mobile, flex-start);
       --text-align-default: var(--collection-tabs-controls-text-alignment-mobile, left);
@@ -324,13 +366,19 @@
     }
 
   }
-  .collection-tabs__controls:not(:has(.block-header:not([data-content-empty]), [data-tab-navigation] > *, .collection-tabs-view-all)) {
+  .collection-tabs__controls:not(:has(.block-header:not([data-content-empty]), [data-tab-navigation] > *)) {
     display: none;
   }
   @media (min-width: 768px) {
-    .collection-tabs__layout[data-layout-direction='horizontal']:not(:has(.block-header:not([data-content-empty]), [data-tab-navigation] > *, .collection-tabs-view-all)) {
+    .collection-tabs__layout[data-layout-direction='horizontal']:not(:has(.block-header:not([data-content-empty]), [data-tab-navigation] > *)) {
       grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: 'list' 'actions';
+    }
+  }
+  @media (min-width: 768px) {
+    .collection-tabs__layout[data-layout-direction='horizontal']:not(:has(.block-header:not([data-content-empty]), [data-tab-navigation] > *)):not(:has(> .collection-tabs__actions .collection-tabs-view-all)) {
       grid-template-areas: 'list';
+      row-gap: 0;
     }
   }
   /* The tab navigation is populated by JS; :has updates when tabs arrive. */
@@ -827,124 +875,13 @@
       "settings": {
         "section_width": "full_width",
         "layout_direction": "vertical",
-        "tab_position": "center",
+        "tab_position": "right",
         "mobile_alignment": "left",
         "gap_desktop": 48,
         "gap_mobile": 36,
-        "max_products": 4,
+        "max_products": 8,
         "layout_type": "carousel",
-        "columns_desktop": "4",
-        "columns_mobile": "1",
-        "show_next_slide_preview_on_desktop": false,
-        "show_next_slide_preview_on_mobile": true,
-        "product_gap_desktop": 10,
-        "product_gap_mobile": 10,
-        "show_navigation_on_desktop": false,
-        "navigation_position": "inside",
-        "navigation_style": "primary",
-        "navigation_icon": "chevron",
-        "navigation_behavior": "show_on_hover",
-        "show_pagination_on_desktop": false,
-        "pagination_type": "progress_bar",
-        "pagination_top_padding_desktop": 48,
-        "pagination_top_padding_mobile": 36,
-        "pagination_limit_width": false,
-        "pagination_max_width": 260,
-        "autoplay": false,
-        "autoplay_pause_on_hover": true,
-        "autoplay_speed": 4,
-        "color_scheme": "scheme-1",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
-      },
-      "blocks": [
-        {
-          "type": "tab-layout",
-          "static": true,
-          "settings": {
-            "vertical_layout": false,
-            "style": "underline",
-            "active_style": "primary",
-            "gap_desktop": 48,
-            "gap_mobile": 40,
-            "font": "heading",
-            "heading_size": "custom",
-            "custom_heading_size": 20
-          },
-          "id": "tab-layout"
-        },
-        {
-          "type": "collection-tab",
-          "settings": {
-            "label": "NECKLACES",
-            "collection": "collection-tabs-malandra"
-          },
-          "blocks": [
-            {
-              "type": "product-card",
-              "static": true,
-              "settings": {
-                "color_type": "inherit",
-                "color_scheme": "scheme-1"
-              },
-              "id": "product-card"
-            }
-          ]
-        },
-        {
-          "type": "collection-tab",
-          "settings": {
-            "label": "NEW IN",
-            "collection": "new-in-malandra"
-          },
-          "blocks": [
-            {
-              "type": "product-card",
-              "static": true,
-              "settings": {
-                "color_type": "inherit",
-                "color_scheme": "scheme-1"
-              },
-              "id": "product-card"
-            }
-          ]
-        },
-        {
-          "type": "collection-tab",
-          "settings": {
-            "label": "BRACELETS",
-            "collection": "bracelets-elara"
-          },
-          "blocks": [
-            {
-              "type": "product-card",
-              "static": true,
-              "settings": {
-                "color_type": "inherit",
-                "color_scheme": "scheme-1"
-              },
-              "id": "product-card"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Collection tabs",
-      "category": "t:general.collection",
-      "settings": {
-        "section_width": "full_width",
-        "layout_direction": "vertical",
-        "tab_position": "left",
-        "mobile_alignment": "left",
-        "gap_desktop": 48,
-        "gap_mobile": 32,
-        "max_products": 3,
-        "layout_type": "carousel",
-        "columns_desktop": "4",
+        "columns_desktop": "3",
         "columns_mobile": "1",
         "show_next_slide_preview_on_desktop": false,
         "show_next_slide_preview_on_mobile": true,
@@ -952,15 +889,15 @@
         "product_gap_mobile": 10,
         "show_navigation_on_desktop": true,
         "navigation_position": "inside",
-        "navigation_style": "icon_only",
+        "navigation_style": "primary",
         "navigation_icon": "chevron",
         "navigation_behavior": "show_on_hover",
         "show_pagination_on_desktop": true,
         "pagination_type": "progress_bar",
-        "pagination_top_padding_desktop": 48,
-        "pagination_top_padding_mobile": 36,
+        "pagination_top_padding_desktop": 40,
+        "pagination_top_padding_mobile": 32,
         "pagination_limit_width": true,
-        "pagination_max_width": 260,
+        "pagination_max_width": 450,
         "autoplay": false,
         "autoplay_pause_on_hover": true,
         "autoplay_speed": 4,
@@ -976,11 +913,14 @@
           "type": "header",
           "static": true,
           "settings": {
-            "width": "fill",
+            "width": "custom",
             "alignment": "left",
             "inherit_alignment": false,
-            "gap_desktop": 12,
-            "gap_mobile": 12
+            "gap_desktop": 16,
+            "gap_mobile": 12,
+            "max_width": 770,
+            "customize_mobile_size": true,
+            "width_mobile": "fill"
           },
           "blocks": [
             {
@@ -989,7 +929,8 @@
                 "text": "<p>Semi-Precious Birthstones</p>",
                 "heading_size": "lg",
                 "html_tag": "h2",
-                "animation_type": "none"
+                "animation_type": "rotate-words",
+                "animation_delay": 50
               }
             },
             {
@@ -997,7 +938,8 @@
               "settings": {
                 "text": "<p>The ultimate sentimental souvenir, made from 14k gold and semi-precious stones.</p>",
                 "text_size": "md",
-                "animation_type": "none"
+                "animation_type": "slide-bottom",
+                "animation_delay": 100
               }
             }
           ],
@@ -1022,7 +964,7 @@
           "type": "collection-tab",
           "settings": {
             "label": "RINGS",
-            "collection": ""
+            "collection": "rings-malandra"
           },
           "blocks": [
             {
@@ -1041,27 +983,30 @@
                 "show_on_top_mobile": true,
                 "media_type": "image",
                 "heading": "For Effortless Glow",
-                "text": "<p>Radiant, versatile, classic: your everyday essential.</p>",
+                "text": "<p>Radiant, versatile, classic your everyday essential.</p>",
                 "content_alignment": "left",
                 "content_position": "bottom",
                 "heading_size": "md",
                 "text_size": "md",
                 "button_label": "SHOP NOW",
-                "card_link": "shopify://collections/all",
+                "card_link": "shopify://collections/rings-malandra",
                 "button_style": "primary",
-                "button_height": "medium",
+                "button_height": "inherit",
                 "show_icon": false,
                 "show_overlay": true,
                 "overlay_style": "gradient",
-                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.32))",
+                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0) 49.935%, rgba(50, 27, 3, 0.3) 84.685%)",
                 "color_scheme": "scheme-3",
-                "content_gap": 12,
+                "content_gap": 16,
                 "button_spacing": 24,
                 "padding_vertical": 36,
                 "padding_horizontal": 36,
                 "customize_mobile_padding": true,
-                "padding_vertical_mobile": 28,
-                "padding_horizontal_mobile": 28
+                "padding_vertical_mobile": 32,
+                "padding_horizontal_mobile": 28,
+                "show_on_top_desktop": true,
+                "image": "shopify://shop_images/malandra-rings-promo.avif",
+                "mobile_image": "shopify://shop_images/malandra-rings-promo.avif"
               }
             }
           ]
@@ -1070,7 +1015,7 @@
           "type": "collection-tab",
           "settings": {
             "label": "NECKLACES",
-            "collection": ""
+            "collection": "everyday-necklaces-malandra"
           },
           "blocks": [
             {
@@ -1088,28 +1033,31 @@
                 "card_position": 1,
                 "show_on_top_mobile": true,
                 "media_type": "image",
-                "heading": "For Effortless Glow",
-                "text": "<p>Radiant, versatile, classic: your everyday essential.</p>",
+                "heading": "Golden Layers",
+                "text": "<p>Delicate chains and pendants, thoughtfully paired for your everyday story.</p>",
                 "content_alignment": "left",
                 "content_position": "bottom",
                 "heading_size": "md",
                 "text_size": "md",
-                "button_label": "SHOP NOW",
-                "card_link": "shopify://collections/all",
+                "button_label": "SHOP NECKLACES",
+                "card_link": "shopify://collections/everyday-necklaces-malandra",
                 "button_style": "primary",
-                "button_height": "medium",
+                "button_height": "inherit",
                 "show_icon": false,
                 "show_overlay": true,
                 "overlay_style": "gradient",
-                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.32))",
+                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0) 49.935%, rgba(50, 27, 3, 0.3) 84.685%)",
                 "color_scheme": "scheme-3",
-                "content_gap": 12,
+                "content_gap": 16,
                 "button_spacing": 24,
                 "padding_vertical": 36,
                 "padding_horizontal": 36,
                 "customize_mobile_padding": true,
-                "padding_vertical_mobile": 28,
-                "padding_horizontal_mobile": 28
+                "padding_vertical_mobile": 32,
+                "padding_horizontal_mobile": 28,
+                "show_on_top_desktop": true,
+                "image": "shopify://shop_images/malandra-necklaces-promo.avif",
+                "mobile_image": "shopify://shop_images/malandra-necklaces-promo.avif"
               }
             }
           ]
@@ -1118,7 +1066,7 @@
           "type": "collection-tab",
           "settings": {
             "label": "EARRINGS",
-            "collection": ""
+            "collection": "signature-earrings-malandra"
           },
           "blocks": [
             {
@@ -1136,28 +1084,31 @@
                 "card_position": 1,
                 "show_on_top_mobile": true,
                 "media_type": "image",
-                "heading": "For Effortless Glow",
-                "text": "<p>Radiant, versatile, classic: your everyday essential.</p>",
+                "heading": "A Little Radiance",
+                "text": "<p>Sculptural hoops and delicate drops, the finishing touch for every day.</p>",
                 "content_alignment": "left",
                 "content_position": "bottom",
                 "heading_size": "md",
                 "text_size": "md",
-                "button_label": "SHOP NOW",
-                "card_link": "shopify://collections/all",
+                "button_label": "SHOP EARRINGS",
+                "card_link": "shopify://collections/signature-earrings-malandra",
                 "button_style": "primary",
-                "button_height": "medium",
+                "button_height": "inherit",
                 "show_icon": false,
                 "show_overlay": true,
                 "overlay_style": "gradient",
-                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.32))",
+                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0) 49.935%, rgba(50, 27, 3, 0.3) 84.685%)",
                 "color_scheme": "scheme-3",
-                "content_gap": 12,
+                "content_gap": 16,
                 "button_spacing": 24,
                 "padding_vertical": 36,
                 "padding_horizontal": 36,
                 "customize_mobile_padding": true,
-                "padding_vertical_mobile": 28,
-                "padding_horizontal_mobile": 28
+                "padding_vertical_mobile": 32,
+                "padding_horizontal_mobile": 28,
+                "show_on_top_desktop": true,
+                "image": "shopify://shop_images/malandra-earrings-promo.avif",
+                "mobile_image": "shopify://shop_images/malandra-earrings-promo.avif"
               }
             }
           ]
@@ -1166,7 +1117,8 @@
           "type": "tabs-view-all-button",
           "static": true,
           "settings": {
-            "button_label": ""
+            "button_label": "View all",
+            "hide_view_all_mobile": true
           },
           "id": "collection-tabs-view-all"
         }

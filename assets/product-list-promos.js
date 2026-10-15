@@ -1,6 +1,16 @@
 const instances = new WeakMap();
 const listSelector = '[data-product-list], [data-collection-tab-panel]';
 
+const clearDetachedSlideState = (item) => {
+  item.classList.remove('swiper-slide', 'swiper-slide-active', 'swiper-slide-next', 'swiper-slide-prev', 'swiper-slide-visible', 'swiper-slide-fully-visible');
+  item.removeAttribute('role');
+  item.removeAttribute('aria-label');
+  item.removeAttribute('aria-roledescription');
+  item.style.width = '';
+  item.style.marginRight = '';
+  item.style.marginLeft = '';
+};
+
 const initialize = (list) => {
   if (instances.has(list)) return;
   const host = list.querySelector('[data-product-list-mobile-promos]');
@@ -13,28 +23,43 @@ const initialize = (list) => {
     item.before(anchor);
     return { item, anchor, slide: item.classList.contains('swiper-slide') };
   });
+  const isCollectionTab = list.matches('[data-collection-tab-panel]');
   const query = window.matchMedia('(max-width: 767.98px)');
+  let resetFrame = null;
   const update = () => {
     const carousel = list.querySelector('[data-product-carousel]');
     const swiper = carousel?.swiper;
     const activeItem = swiper?.slides?.[swiper.activeIndex];
+    const detached = [];
     entries.forEach(({ item, anchor, slide }) => {
-      const onTop = query.matches && item.querySelector('[data-promo-mobile-top="true"]');
+      const onTop = query.matches
+        ? item.querySelector('[data-promo-mobile-top="true"]')
+        : isCollectionTab && item.querySelector('[data-promo-desktop-top="true"]');
       if (onTop) {
-        item.classList.remove('swiper-slide');
-        item.style.width = '';
-        item.style.marginRight = '';
+        clearDetachedSlideState(item);
+        detached.push(item);
         host.append(item);
       } else {
         item.classList.toggle('swiper-slide', slide);
         anchor.after(item);
       }
     });
+    if (isCollectionTab) {
+      list.dataset.promoDesktopDetached = String(!query.matches && host.children.length > 0);
+    }
     if (swiper && !swiper.destroyed) {
       swiper.update();
       const index = [...swiper.slides].indexOf(activeItem);
       swiper.slideTo(Math.max(0, index), 0);
     }
+    // The first update can still touch the old cached Swiper slide array.
+    detached.forEach(clearDetachedSlideState);
+    if (resetFrame !== null) window.cancelAnimationFrame(resetFrame);
+    // Swiper A11y may label its initial slide snapshot on the next tick.
+    resetFrame = window.requestAnimationFrame(() => {
+      resetFrame = null;
+      if (instances.has(list)) detached.forEach(clearDetachedSlideState);
+    });
   };
   const select = (event) => {
     const item = event.target.closest?.('[data-product-list-promo-item]');
@@ -56,7 +81,9 @@ const initialize = (list) => {
   };
   query.addEventListener('change', update);
   list.addEventListener('shopify:block:select', select);
-  instances.set(list, { entries, query, update, select });
+  instances.set(list, { entries, query, update, select, cancelReset: () => {
+    if (resetFrame !== null) window.cancelAnimationFrame(resetFrame);
+  } });
   update();
 };
 
@@ -68,6 +95,8 @@ export const initializeThemeModule = (root = document) => {
 const destroy = (list) => {
   const state = instances.get(list);
   if (!state) return;
+  state.cancelReset();
+  delete list.dataset.promoDesktopDetached;
   state.query.removeEventListener('change', state.update);
   list.removeEventListener('shopify:block:select', state.select);
   state.entries.forEach(({ item, anchor, slide }) => {

@@ -50,7 +50,7 @@
 .search-page__smart-anchor { width: min(100%, var(--search-input-width)); margin-inline: auto; position: relative; }
 .search-page__smart-anchor.is-open { z-index: calc(var(--z-modal, 1000) + 1); }
 .search-page__form { display: flex; align-items: center; gap: 12px; min-height: var(--search-input-height); padding-inline: var(--search-input-padding); border: var(--input-border-width, 1px) solid var(--input-border-color, var(--border-color)); border-radius: var(--input-radius); background: var(--input-background-color); }
-.search-page__smart-anchor.is-open .search-page__form { position: relative; z-index: 1; background-color: #fff; }
+.search-page__smart-anchor.is-open .search-page__form { position: relative; z-index: 1; background-color: var(--input-background-color); }
 .search-page__form:focus-within { outline: 2px solid var(--input-focus-color); outline-offset: 2px; }
 .search-page__field { flex: 1 1 auto; min-width: 0; }
 .search-page__field .form__control.form__control--input { width: 100%; min-width: 0; min-height: 0; padding: 0; border: 0; outline: 0; box-shadow: none; background: transparent; border-radius: 0; font: inherit; }

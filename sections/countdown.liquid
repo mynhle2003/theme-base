@@ -192,9 +192,7 @@
         class="{{ countdown_section_content_class }}"
         {% if countdown_section_content_style != blank %}style="{{ countdown_section_content_style }}"{% endif %}
       >
-        {% content_for 'block', type: 'group', id: 'content' %}
-        {% content_for 'block', type: 'countdown-timer', id: 'countdown' %}
-        {% content_for 'block', type: 'button', id: 'button' %}
+        {% content_for 'blocks' %}
       </div>
     </div>
   </div>
@@ -254,15 +252,79 @@
       "*"
     ]
   },
+  "max_blocks": 50,
   "blocks": [
     {
+      "type": "carousel"
+    },
+    {
+      "type": "header"
+    },
+    {
+      "type": "heading"
+    },
+    {
+      "type": "editorial-text"
+    },
+    {
+      "type": "eyebrow"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "image-comparison"
+    },
+    {
+      "type": "image-card"
+    },
+    {
+      "type": "video"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "buttons"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "spacer"
+    },
+    {
       "type": "group"
+    },
+    {
+      "type": "marquee"
+    },
+    {
+      "type": "row"
+    },
+    {
+      "type": "columns"
+    },
+    {
+      "type": "email-signup"
+    },
+    {
+      "type": "contact-form"
+    },
+    {
+      "type": "product-list"
     },
     {
       "type": "countdown-timer"
     },
     {
-      "type": "button"
+      "type": "@theme"
     }
   ],
   "settings": [
@@ -553,104 +615,150 @@
       "settings": {
         "section_width": "page_width",
         "enable_boxed_layout": false,
-        "direction": "horizontal",
+        "direction": "vertical",
         "position": "center",
         "horizontal_alignment": "space-between",
         "customize_mobile_alignment": true,
         "alignment": "left",
         "alignment_mobile": "center",
-        "gap_desktop": 36,
-        "gap_mobile": 36,
+        "gap_desktop": 0,
+        "gap_mobile": 0,
         "color_scheme": "scheme-1",
         "boxed_color_scheme": "scheme-1",
         "boxed_padding_block": 70,
         "boxed_padding_inline": 50,
         "boxed_padding_block_mobile": 40,
         "boxed_padding_inline_mobile": 30,
-        "padding_top": 64,
-        "padding_bottom": 64,
+        "padding_top": 0,
+        "padding_bottom": 0,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 56
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
       },
       "blocks": [
         {
-          "type": "group",
-          "static": true,
+          "type": "divider",
           "settings": {
-            "direction": "vertical",
-            "alignment": "left",
+            "style": "solid",
+            "thickness": "thin",
+            "color": "scheme",
+            "width": "full",
+            "desktop_spacing": 0,
+            "mobile_spacing": 0
+          }
+        },
+        {
+          "type": "group",
+          "settings": {
+            "direction": "horizontal",
+            "position_horizontal": "center",
+            "horizontal_alignment": "space-between",
+            "customize_mobile_alignment": true,
             "alignment_mobile": "center",
             "width": "fill",
-            "height": "fit",
-            "gap_desktop": 16,
-            "gap_mobile": 12,
-            "appearance_type": "inherit",
-            "border_type": "none",
-            "corner_radius": "square",
-            "shadow": "none",
-            "customize_mobile_padding": false,
-            "customize_mobile_alignment": true,
-            "max_width": 500,
-            "limit_width": true,
             "width_mobile": "fill",
-            "limit_width_mobile": false
+            "height": "fit",
+            "gap_desktop": 36,
+            "gap_mobile": 36,
+            "padding_top": 64,
+            "padding_bottom": 64,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 48,
+            "padding_bottom_mobile": 56
           },
           "blocks": [
             {
-              "type": "heading",
+              "type": "group",
               "settings": {
-                "text": "<p>Spring Sale</p>",
-                "heading_size": "lg",
-                "html_tag": "h2",
+                "direction": "vertical",
+                "alignment": "left",
+                "alignment_mobile": "center",
                 "width": "fill",
-                "animation_type": "none"
+                "height": "fit",
+                "gap_desktop": 16,
+                "gap_mobile": 12,
+                "appearance_type": "inherit",
+                "border_type": "none",
+                "corner_radius": "square",
+                "shadow": "none",
+                "customize_mobile_padding": false,
+                "customize_mobile_alignment": true,
+                "max_width": 500,
+                "limit_width": true,
+                "width_mobile": "fill",
+                "limit_width_mobile": false
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Spring Sale</p>",
+                    "heading_size": "lg",
+                    "html_tag": "h2",
+                    "width": "fill",
+                    "animation_type": "rotate-words",
+                    "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Get 15% off on all products - limited time only!</p>",
+                    "text_size": "md",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 100
+                  }
+                }
+              ]
+            },
+            {
+              "type": "countdown-timer",
+              "settings": {
+                "style": "with_separators",
+                "show_background": false,
+                "corner_radius": "square",
+                "type": "recurring",
+                "number_size": "lg",
+                "label_size": "xs",
+                "color_type": "inherit",
+                "duration_hours": 64,
+                "duration_minutes": 23
               }
             },
             {
-              "type": "text",
+              "type": "group",
               "settings": {
-                "text": "<p>Get 15% off on all products - limited time only!</p>",
-                "text_size": "md",
+                "direction": "vertical",
+                "alignment": "right",
+                "alignment_mobile": "center",
                 "width": "fill",
-                "animation_type": "none"
-              }
+                "limit_width": true,
+                "max_width": 500,
+                "width_mobile": "fill",
+                "limit_width_mobile": false,
+                "gap_desktop": 0,
+                "gap_mobile": 0
+              },
+              "blocks": [
+                {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "Shop now",
+                    "button_link": "",
+                    "button_style": "primary",
+                    "button_open_in_new_tab": false,
+                    "show_icon": false,
+                    "width": "fit",
+                    "width_mobile": "fit",
+                    "customize_mobile_padding": false,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 150
+                  }
+                }
+              ]
             }
-          ],
-          "id": "content"
-        },
-        {
-          "type": "countdown-timer",
-          "static": true,
-          "settings": {
-            "style": "with_labels",
-            "show_background": false,
-            "corner_radius": "square",
-            "type": "recurring",
-            "number_size": "lg",
-            "label_size": "xs",
-            "color_type": "inherit",
-            "duration_hours": 64,
-            "duration_minutes": 23
-          },
-          "id": "countdown"
-        },
-        {
-          "type": "button",
-          "static": true,
-          "settings": {
-            "button_label": "Shop now",
-            "button_link": "",
-            "button_style": "primary",
-            "button_open_in_new_tab": false,
-            "show_icon": false,
-            "width": "fit",
-            "width_mobile": "fit",
-            "customize_mobile_padding": false,
-            "animation_type": "none",
-            "animation_delay": 150
-          },
-          "id": "button"
+          ]
         }
       ]
     }

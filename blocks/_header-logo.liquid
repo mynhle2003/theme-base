@@ -4,33 +4,63 @@
     assign logo_position = 'center'
   endunless
 
+  assign logo_position_mobile = block.settings.position_mobile | default: 'center'
+  unless logo_position_mobile == 'left' or logo_position_mobile == 'center'
+    assign logo_position_mobile = 'center'
+  endunless
+
   assign logo_width = settings.logo_width | default: 180 | plus: 0
   assign logo_width_mobile = settings.logo_width_mobile | default: 140 | plus: 0
   assign logo_sizes = '(min-width: 992px) ' | append: logo_width | append: 'px, ' | append: logo_width_mobile | append: 'px'
-  assign logo_image = settings.logo
+  assign logo_image = block.settings.logo | default: settings.logo
+  if block.settings.logo != blank
+    assign logo_width = block.settings.width | default: 118
+    assign logo_width_mobile = block.settings.width_mobile | default: 100
+    assign logo_sizes = '(min-width: 992px) ' | append: logo_width | append: 'px, ' | append: logo_width_mobile | append: 'px'
+  endif
   assign logo_class = 'header-logo site-logo header-logo--' | append: logo_position
 
-  assign logo_has_overlay_image = false
-  if template.name == 'index' and section.settings.header_overlay and settings.logo_transparent != blank
-    assign logo_has_overlay_image = true
+  if block.settings.symbol != blank
+    assign logo_class = logo_class | append: ' site-logo--stacked'
   endif
+  assign logo_overlay_image = settings.logo_transparent
+  assign logo_overlay_is_white_fallback = false
+  if block.settings.logo != blank
+    assign logo_overlay_image = block.settings.logo_transparent | default: logo_image
+    if block.settings.logo_transparent == blank
+      assign logo_overlay_is_white_fallback = true
+    endif
+  endif
+  assign symbol_overlay_image = block.settings.symbol_transparent | default: block.settings.symbol
 %}
 
 <a
   class="{{ logo_class }}"
+  {% if block.settings.logo != blank %}style="--logo-width: {{ logo_width }}px; --logo-width-mobile: {{ logo_width_mobile }}px;"{% endif %}
+  data-logo-desktop-position="{{ logo_position }}"
+  data-logo-mobile-position="{{ logo_position_mobile }}"
   href="{{ routes.root_url }}"
   aria-label="{{ shop.name | escape }}"
   {{ block.shopify_attributes }}
 >
-  {% if logo_has_overlay_image %}
-    {{ settings.logo_transparent | image_url: width: logo_width | image_tag: widths: '80, 120, 140, 180, 240, 320, 400', sizes: logo_sizes, class: 'site-logo__image site-logo__image--overlay', alt: shop.name }}
+  {% if block.settings.symbol != blank %}
+    {{ block.settings.symbol | image_url: width: 400 | image_tag: widths: '80, 120, 160, 240, 400', sizes: '40px', class: 'site-logo__symbol site-logo__symbol--base', alt: '' }}
+  {% endif %}
+  {% if block.settings.symbol != blank %}
+    {% assign symbol_overlay_class = 'site-logo__symbol site-logo__symbol--overlay' %}
+    {{ symbol_overlay_image | image_url: width: 400 | image_tag: widths: '80, 120, 160, 240, 400', sizes: '40px', class: symbol_overlay_class, alt: '' }}
+  {% endif %}
+  {% if logo_overlay_image != blank %}
+    {% assign logo_overlay_class = 'site-logo__image site-logo__image--overlay' %}
+    {% if logo_overlay_is_white_fallback %}{% assign logo_overlay_class = logo_overlay_class | append: ' site-logo__white-fallback' %}{% endif %}
+    {{ logo_overlay_image | image_url: width: 1200 | image_tag: widths: '120, 180, 240, 320, 420, 600, 900, 1200', sizes: logo_sizes, class: logo_overlay_class, alt: shop.name }}
   {% endif %}
   {% if logo_image != blank %}
     {{
       logo_image
-      | image_url: width: logo_width
+      | image_url: width: 1200
       | image_tag:
-        widths: '80, 120, 140, 180, 240, 320, 400',
+        widths: '120, 180, 240, 320, 420, 600, 900, 1200',
         sizes: logo_sizes,
         class: 'site-logo__image site-logo__image--base',
         alt: shop.name
@@ -58,10 +88,6 @@
     text-decoration: none;
   }
 
-  .site-logo .site-logo__image--overlay { display: none; }
-  .header-top--transparent-scheme .site-logo:has(.site-logo__image--overlay) > :is(.site-logo__image--base, .site-logo__fallback) { display: none; }
-  .header-top--transparent-scheme .site-logo .site-logo__image--overlay { display: block; }
-
   .site-logo__image {
     display: block;
     width: 100%;
@@ -88,7 +114,7 @@
     transform: translateX(-50%);
   }
 
-  @media (max-width: 991.98px) {
+  @media (width < 992px) {
     .site-logo {
       width: min(var(--logo-width-mobile), 52vw);
       max-width: min(var(--logo-width-mobile), 52vw);
@@ -104,6 +130,15 @@
       white-space: nowrap;
     }
   }
+  .site-logo--stacked { flex-direction: column; gap: calc(var(--logo-width) * 12 / 118); }
+  .site-logo--stacked .site-logo__symbol { display: block; width: calc(100% * 40 / 118); height: auto; aspect-ratio: 40 / 27; object-fit: contain; flex: 0 0 auto; }
+  .site-logo--stacked .site-logo__image { max-height: none; }
+  @media (width < 992px) { .site-logo--stacked { gap: calc(var(--logo-width-mobile) * 10 / 100); } .site-logo--stacked .site-logo__symbol { width: 40%; } }
+  .site-logo .site-logo__white-fallback { filter: brightness(0) invert(1); }
+  .header-logo.site-logo > :is(.site-logo__image--overlay, .site-logo__symbol--overlay) { display: none; }
+  .header-top--transparent-scheme .site-logo:has(.site-logo__image--overlay) > :is(.site-logo__image--base, .site-logo__fallback),
+  .header-top--transparent-scheme .site-logo:has(.site-logo__symbol--overlay) > .site-logo__symbol--base { display: none; }
+  .header-top--transparent-scheme .header-logo.site-logo > :is(.site-logo__image--overlay, .site-logo__symbol--overlay) { display: block; }
 {% endstylesheet %}
 
 {% schema %}
@@ -116,9 +151,73 @@
       "content": "t:info.header_logo"
     },
     {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Optional block logo. Uses the theme logo when empty."
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_transparent",
+      "label": "Logo for transparent header",
+      "info": "Optional alternate wordmark. When empty, the block logo is shown in white.",
+      "visible_if": "{{ block.settings.logo != blank }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "symbol",
+      "label": "Symbol above logo",
+      "info": "Optional brand symbol. Scales proportionally with the logo width."
+    },
+    {
+      "type": "image_picker",
+      "id": "symbol_transparent",
+      "label": "Symbol for transparent header",
+      "info": "Optional alternate symbol. When empty, the original symbol color is preserved.",
+      "visible_if": "{{ block.settings.symbol != blank }}"
+    },
+    {
+      "type": "range",
+      "id": "width",
+      "label": "Logo width",
+      "min": 40,
+      "max": 240,
+      "step": 2,
+      "unit": "px",
+      "default": 118,
+      "visible_if": "{{ block.settings.logo != blank }}"
+    },
+    {
+      "type": "range",
+      "id": "width_mobile",
+      "label": "Logo width (mobile)",
+      "min": 40,
+      "max": 240,
+      "step": 2,
+      "unit": "px",
+      "default": 100,
+      "visible_if": "{{ block.settings.logo != blank }}"
+    },
+    {
       "type": "select",
       "id": "position",
-      "label": "t:labels.position",
+      "label": "t:labels.desktop_position",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "position_mobile",
+      "label": "t:labels.mobile_position",
       "options": [
         {
           "value": "left",
