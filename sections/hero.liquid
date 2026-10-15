@@ -672,23 +672,23 @@
   "presets": [
     {
       "name": "Hero",
-      "category": "t:general.banners",
       "settings": {
         "width": "full_width_no_padding",
         "layout": "classic",
         "media_type": "image",
+        "banner_image": "",
+        "overlay": "#0000001a",
         "desktop_height": "medium",
         "mobile_height": "medium",
+        "content_width": "fill",
         "desktop_position": "center_center",
         "mobile_position": "center_center",
-        "content_width": "fill",
         "desktop_gap": 0,
         "mobile_gap": 0,
-        "color_scheme": "scheme-3",
-        "content_color_scheme": "scheme-3",
         "page_content_padding": 64,
         "page_content_padding_mobile": 16,
-        "overlay": "#0000001a",
+        "color_scheme": "scheme-3",
+        "content_color_scheme": "scheme-3",
         "padding_top": 0,
         "padding_bottom": 0,
         "customize_mobile_padding": true,
@@ -700,26 +700,26 @@
           "type": "group",
           "settings": {
             "direction": "vertical",
+            "customize_mobile_alignment": true,
             "alignment": "center",
-            "width": "fill",
-            "width_mobile": "fill",
-            "height": "fill",
-            "backdrop_blur": 0,
+            "alignment_mobile": "center",
             "gap_desktop": 32,
             "gap_mobile": 32,
-            "customize_mobile_alignment": true,
-            "alignment_mobile": "center"
+            "width": "fill",
+            "height": "fill",
+            "width_mobile": "fill",
+            "backdrop_blur": 0
           },
           "blocks": [
             {
               "type": "marquee",
               "settings": {
-                "animation_direction": "backward",
+                "alignment": "center",
                 "animation_speed": 1,
+                "animation_direction": "backward",
                 "gap_desktop": 64,
                 "gap_mobile": 32,
                 "width": "fill",
-                "alignment": "center",
                 "color_type": "inherit"
               },
               "blocks": [

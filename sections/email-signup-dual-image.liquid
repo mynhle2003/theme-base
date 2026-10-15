@@ -360,6 +360,7 @@
       "blocks": [
         {
           "type": "image",
+          "id": "image_left",
           "static": true,
           "settings": {
             "image_ratio_desktop": "auto",
@@ -368,11 +369,11 @@
             "limit_width_desktop": false,
             "show_image_first_mobile": true,
             "corner_radius": "square"
-          },
-          "id": "image_left"
+          }
         },
         {
           "type": "group",
+          "id": "content",
           "static": true,
           "settings": {
             "direction": "vertical",
@@ -406,17 +407,13 @@
                   "settings": {
                     "text": "<p>Main Heading Placeholder</p>",
                     "heading_size": "display",
-                    "html_tag": "h2",
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 50
+                    "html_tag": "h2"
                   }
                 },
                 {
                   "type": "text",
                   "settings": {
-                    "text": "<p>This is placeholder text for a short paragraph that explains the purpose of this section.</p>",
-                    "animation_type": "fade",
-                    "animation_delay": 100
+                    "text": "<p>This is placeholder text for a short paragraph that explains the purpose of this section.</p>"
                   }
                 }
               ]
@@ -438,11 +435,11 @@
                 "vertical_on_mobile": false
               }
             }
-          ],
-          "id": "content"
+          ]
         },
         {
           "type": "image",
+          "id": "image_right",
           "static": true,
           "settings": {
             "image_ratio_desktop": "auto",
@@ -451,8 +448,7 @@
             "limit_width_desktop": false,
             "show_image_first_mobile": false,
             "corner_radius": "square"
-          },
-          "id": "image_right"
+          }
         }
       ]
     }

@@ -239,7 +239,6 @@
   "presets": [
     {
       "name": "Featured collection: Banner",
-      "category": "t:general.collection",
       "settings": {
         "section_width": "full_width",
         "banner_position": "before",
@@ -278,34 +277,34 @@
         {
           "type": "banner",
           "settings": {
+            "image": "",
             "show_overlay": false,
             "image_ratio_desktop": "square",
             "image_ratio_mobile": "square",
-            "color_scheme": "scheme-1",
-            "image": "shopify://shop_images/arche-new-release-banner.avif"
+            "color_scheme": "scheme-1"
           }
         },
         {
           "type": "product-list-banner",
           "settings": {
+            "collection": "",
             "max_products": 6,
             "columns_mobile": "2",
             "enable_swipe_mobile": false,
             "gap_horizontal": 24,
             "gap_vertical": 32,
             "gap_horizontal_mobile": 12,
-            "gap_vertical_mobile": 24,
-            "collection": "new-release-arche"
+            "gap_vertical_mobile": 24
           },
           "blocks": [
             {
               "type": "product-card",
+              "static": true,
+              "id": "product-card",
               "settings": {
                 "color_type": "inherit",
                 "color_scheme": "scheme-1"
-              },
-              "static": true,
-              "id": "product-card"
+              }
             }
           ]
         }
