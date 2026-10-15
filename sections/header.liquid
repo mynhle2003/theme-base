@@ -190,7 +190,6 @@
   "presets": [
     {
       "name": "t:general.header",
-      "category": "t:general.header",
       "settings": {
         "section_width": "page_width",
         "icon_size": 20,
@@ -203,6 +202,7 @@
         {
           "type": "_header-top",
           "static": true,
+          "id": "header-top",
           "settings": {
             "bottom_separator": "line",
             "gap": 64,
@@ -227,7 +227,7 @@
             {
               "type": "_header-menu",
               "settings": {
-                "menu": "arche-header",
+                "menu": "",
                 "gap": 28,
                 "show_dropdown_icon": false,
                 "dropdown_trigger": "hover",
@@ -235,68 +235,107 @@
                 "font_size": "sm",
                 "letter_spacing": "normal",
                 "text_case": "original",
+                "text_color": "",
                 "submenu_font": "body",
-                "submenu_font_size": "sm"
+                "submenu_font_size": "sm",
+                "submenu_text_case": "original",
+                "submenu_text_color": ""
               },
               "blocks": [
                 {
                   "type": "_mega-menu-banners",
                   "settings": {
                     "menu_item": "Menswear",
+                    "highlight_menu_item": false,
+                    "highlight_color": "#000000",
                     "banner_width": 49,
                     "gap": 32,
                     "layout": "horizontal",
                     "submenu_columns": "2",
                     "limit_width": false,
                     "max_width": 850,
+                    "collections": [],
                     "font": "body",
-                    "font_size": "md"
+                    "font_size": "md",
+                    "letter_spacing": "normal"
                   },
                   "blocks": [
                     {
                       "type": "_mega-menu-banner",
                       "settings": {
-                        "heading_size": "custom",
+                        "link": "/search?q=Sweaters&type=product",
+                        "open_new_tab": false,
                         "layout": "content_below_image",
-                        "image": "shopify://shop_images/arche-header-sweaters.avif",
+                        "limit_width": false,
+                        "max_width": 700,
+                        "overlay": false,
+                        "overlay_color": "#000000",
+                        "subheading": "",
                         "heading": "Sweaters",
                         "text": "<p>Quality must be tested in the real world</p>",
+                        "alignment": "left",
+                        "content_position": "bottom",
+                        "heading_size": "custom",
                         "custom_heading_size": 18,
                         "text_size": "sm",
                         "label": "Shop now",
-                        "link": "/search?q=Sweaters&type=product",
                         "button_style": "tertiary",
+                        "show_icon": false,
+                        "icon": "arrow_right",
+                        "icon_position": "right",
+                        "full_width": false,
                         "content_gap": 8,
                         "button_spacing": 16,
+                        "color_scheme": "scheme-1",
                         "padding_top": 24,
                         "padding_bottom": 6,
                         "padding_left": 0,
                         "padding_right": 0,
                         "customize_mobile_padding": false,
-                        "color_scheme": "scheme-1"
+                        "padding_top_mobile": 40,
+                        "padding_bottom_mobile": 40,
+                        "padding_left_mobile": 40,
+                        "padding_right_mobile": 40,
+                        "image": ""
                       }
                     },
                     {
                       "type": "_mega-menu-banner",
                       "settings": {
-                        "heading_size": "custom",
+                        "link": "/search?q=T-Shirts&type=product",
+                        "open_new_tab": false,
                         "layout": "content_below_image",
-                        "image": "shopify://shop_images/arche-header-t-shirts.avif",
+                        "limit_width": false,
+                        "max_width": 700,
+                        "overlay": false,
+                        "overlay_color": "#000000",
+                        "subheading": "",
                         "heading": "T-Shirts",
                         "text": "<p>Designed to accompany you through the years</p>",
+                        "alignment": "left",
+                        "content_position": "bottom",
+                        "heading_size": "custom",
                         "custom_heading_size": 18,
                         "text_size": "sm",
                         "label": "Shop now",
-                        "link": "/search?q=T-Shirts&type=product",
                         "button_style": "tertiary",
+                        "show_icon": false,
+                        "icon": "arrow_right",
+                        "icon_position": "right",
+                        "full_width": false,
                         "content_gap": 8,
                         "button_spacing": 16,
+                        "color_scheme": "scheme-1",
                         "padding_top": 24,
                         "padding_bottom": 6,
                         "padding_left": 0,
                         "padding_right": 0,
                         "customize_mobile_padding": false,
-                        "color_scheme": "scheme-1"
+                        "padding_top_mobile": 40,
+                        "padding_bottom_mobile": 40,
+                        "padding_left_mobile": 40,
+                        "padding_right_mobile": 40,
+                        "image": ""
                       }
                     }
                   ]
@@ -304,7 +343,8 @@
               ]
             },
             {
-              "type": "_header-menu-toggle"
+              "type": "_header-menu-toggle",
+              "settings": {}
             },
             {
               "type": "_header-search",
@@ -334,8 +374,7 @@
                 "badge_type": "primary"
               }
             }
-          ],
-          "id": "header-top"
+          ]
         }
       ]
     }

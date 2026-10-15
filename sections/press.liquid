@@ -268,7 +268,6 @@
   "presets": [
     {
       "name": "t:general.press",
-      "category": "Trust & social proof",
       "settings": {
         "max_width": 768,
         "alignment": "center",
@@ -283,15 +282,9 @@
       },
       "blocks": [
         {
-          "type": "eyebrow",
-          "settings": {
-            "text": "<p>IN THE PRESS</p>",
-            "animation_type": "fade",
-            "animation_delay": 0
-          }
-        },
-        {
           "type": "press-quotes",
+          "static": true,
+          "id": "quotes",
           "settings": {
             "autoplay": false,
             "image_spacing_desktop": 40,
@@ -299,16 +292,15 @@
             "image_gap_desktop": 40,
             "image_gap_mobile": 32
           },
-          "static": true,
           "blocks": [
             {
               "type": "press-item",
               "settings": {
-                "image_width_desktop": 160,
-                "image_width_mobile": 160,
-                "image": "shopify://shop_images/arche-press-clairol.avif",
+                "image": "",
                 "alt_text": "Clairol logo",
-                "image_ratio": "original"
+                "image_ratio": "original",
+                "image_width_desktop": 160,
+                "image_width_mobile": 160
               },
               "blocks": [
                 {
@@ -327,11 +319,11 @@
             {
               "type": "press-item",
               "settings": {
-                "image_width_desktop": 160,
-                "image_width_mobile": 160,
-                "image": "shopify://shop_images/arche-press-vogue.avif",
+                "image": "",
                 "alt_text": "Vogue logo",
-                "image_ratio": "original"
+                "image_ratio": "original",
+                "image_width_desktop": 160,
+                "image_width_mobile": 160
               },
               "blocks": [
                 {
@@ -350,11 +342,11 @@
             {
               "type": "press-item",
               "settings": {
-                "image_width_desktop": 160,
-                "image_width_mobile": 160,
-                "image": "shopify://shop_images/arche-press-vanity-fair.avif",
+                "image": "",
                 "alt_text": "Vanity Fair logo",
-                "image_ratio": "original"
+                "image_ratio": "original",
+                "image_width_desktop": 160,
+                "image_width_mobile": 160
               },
               "blocks": [
                 {
@@ -370,8 +362,15 @@
                 }
               ]
             }
-          ],
-          "id": "quotes"
+          ]
+        },
+        {
+          "type": "eyebrow",
+          "settings": {
+            "text": "<p>IN THE PRESS</p>",
+            "animation_type": "fade",
+            "animation_delay": 0
+          }
         }
       ]
     }

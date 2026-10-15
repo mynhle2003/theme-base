@@ -416,7 +416,6 @@
   "presets": [
     {
       "name": "Announcement bar",
-      "category": "t:general.header",
       "settings": {
         "show_close_button": true,
         "type": "slider",
@@ -435,14 +434,17 @@
         "padding_top": 8,
         "padding_right": 0,
         "padding_bottom": 8,
-        "padding_left": 0
+        "padding_left": 0,
+        "overlay_color": "#00000033"
       },
       "blocks": [
         {
           "type": "announcement-text",
           "settings": {
             "text": "FORMA. Minimal Design, Maximum Quality",
-            "width": "fill"
+            "width": "fill",
+            "text_color": "",
+            "max_width": 640
           }
         }
       ]

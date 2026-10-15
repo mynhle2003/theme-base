@@ -217,22 +217,30 @@
   "presets": [
     {
       "name": "Recommended products",
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 90,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 50
+      },
       "blocks": [
         {
           "type": "heading",
           "static": true,
+          "id": "heading",
           "settings": {
             "text": "<p>You May Also Like</p>",
             "heading_size": "md",
             "html_tag": "h2",
             "animation_type": "slide-bottom",
             "animation_delay": 50
-          },
-          "id": "heading"
+          }
         },
         {
           "type": "product-list",
           "static": true,
+          "id": "product-list",
           "settings": {
             "use_recommendations": true,
             "recommendation_type": "related",
@@ -256,10 +264,10 @@
             {
               "type": "product-card",
               "static": true,
-              "id": "product-card"
+              "id": "product-card",
+              "settings": {}
             }
-          ],
-          "id": "product-list"
+          ]
         }
       ]
     }

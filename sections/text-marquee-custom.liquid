@@ -405,20 +405,24 @@
   "presets": [
     {
       "name": "Text marquee (custom)",
-      "category": "t:general.content",
+      "settings": {
+        "section_width": "full_width",
+        "color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": false,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "position_horizontal": "center",
+        "horizontal_alignment": "left"
+      },
       "blocks": [
         {
           "type": "marquee",
           "settings": {
-            "animation_direction": "backward",
             "animation_speed": 1,
-            "gap_desktop": 32,
+            "gap_desktop": 48,
             "gap_mobile": 32,
-            "padding_top": 20,
-            "padding_bottom": 20,
-            "customize_mobile_padding": true,
-            "padding_top_mobile": 20,
-            "padding_bottom_mobile": 20,
             "show_top_divider": false,
             "show_bottom_divider": false,
             "show_blurred_edges": false,
@@ -427,83 +431,47 @@
             "width": "fill",
             "custom_width": 50,
             "color_type": "inherit",
-            "color_scheme": "scheme-1"
+            "color_scheme": "scheme-1",
+            "padding_top": 50,
+            "padding_top_mobile": 25,
+            "padding_bottom": 50,
+            "padding_bottom_mobile": 25,
+            "customize_mobile_padding": true
           },
           "blocks": [
             {
-              "type": "_marquee-text",
+              "type": "_marquee-heading",
               "settings": {
-                "text": "<p>Free 30-day returns</p>",
-                "text_size": "sm"
+                "text": "ETHICALLY SOURCED DIAMONDS",
+                "heading_size": "md",
+                "opacity": 100
               }
             },
             {
               "type": "_marquee-icon",
               "settings": {
-                "source": "custom",
-                "icon": "square",
-                "icon_width": 6,
-                "icon_padding": 0,
-                "custom_mobile": false,
-                "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>"
+                "icon": "diamond",
+                "icon_width": 48
               }
             },
             {
-              "type": "_marquee-text",
+              "type": "_marquee-heading",
               "settings": {
-                "text": "<p>Fast shipping</p>",
-                "text_size": "sm"
-              }
-            },
-            {
-              "type": "_marquee-icon",
-              "settings": {
-                "source": "custom",
-                "icon": "square",
-                "icon_width": 6,
-                "icon_padding": 0,
-                "custom_mobile": false,
-                "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>"
-              }
-            },
-            {
-              "type": "_marquee-text",
-              "settings": {
-                "text": "<p>Easy exchanges</p>",
-                "text_size": "sm"
+                "text": "LIFETIME WARRANTY",
+                "heading_size": "md",
+                "opacity": 100
               }
             },
             {
               "type": "_marquee-icon",
               "settings": {
-                "source": "custom",
-                "icon": "square",
-                "icon_width": 6,
-                "icon_padding": 0,
-                "custom_mobile": false,
-                "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 6 6\" fill=\"#111111\" focusable=\"false\" aria-hidden=\"true\"><rect width=\"6\" height=\"6\" stroke=\"none\"/></svg>"
+                "icon": "diamond",
+                "icon_width": 48
               }
             }
           ]
         }
-      ],
-      "settings": {
-        "section_width": "full_width_no_padding",
-        "direction": "vertical",
-        "gap_desktop": 0,
-        "gap_mobile": 0,
-        "color_scheme": "scheme-1",
-        "background_color": "#f0f0f0",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "customize_mobile_padding": false,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0,
-        "position_horizontal": "center",
-        "horizontal_alignment": "left",
-        "alignment": "left",
-        "alignment_mobile": "left"
-      }
+      ]
     }
   ]
 }

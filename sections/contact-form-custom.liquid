@@ -377,7 +377,6 @@
   "presets": [
     {
       "name": "t:general.contact_form_custom",
-      "category": "t:general.forms",
       "settings": {
         "section_width": "page_width",
         "direction": "horizontal",
@@ -387,11 +386,13 @@
         "alignment_mobile": "left",
         "gap_desktop": 80,
         "gap_mobile": 40,
-        "background_type": "color",
         "color_scheme": "scheme-1",
-        "customize_mobile_padding": true,
+        "background_type": "color",
+        "background_color": "",
+        "background_overlay_color": "#00000000",
         "padding_top": 80,
         "padding_bottom": 80,
+        "customize_mobile_padding": true,
         "padding_top_mobile": 56,
         "padding_bottom_mobile": 56,
         "show_overlay": true,
@@ -402,28 +403,88 @@
         {
           "type": "image",
           "settings": {
-            "width_desktop": "fill",
-            "width_mobile": "fill",
+            "image": "",
+            "show_image_first_mobile": true,
+            "image_link": "",
+            "open_in_new_tab": false,
+            "alt_text": "",
             "image_ratio_desktop": "landscape",
+            "width_desktop": "fill",
+            "width_custom_desktop": 100,
+            "limit_width_desktop": false,
+            "max_width_desktop": 1600,
             "image_ratio_mobile": "landscape",
-            "show_image_first_mobile": true
+            "width_mobile": "fill",
+            "width_custom_mobile": 100,
+            "limit_width_mobile": false,
+            "max_width_mobile": 1600,
+            "corner_radius": "square",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": false,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
           }
         },
         {
           "type": "group",
           "settings": {
             "direction": "vertical",
-            "width": "fill",
+            "position": "top",
+            "horizontal_alignment": "left",
+            "customize_mobile_alignment": true,
+            "alignment": "left",
+            "alignment_mobile": "left",
             "gap_desktop": 40,
-            "gap_mobile": 32
+            "gap_mobile": 32,
+            "width": "fill",
+            "max_width": 640,
+            "height": "fill",
+            "width_mobile": "fit",
+            "max_width_mobile": 480,
+            "appearance_type": "inherit",
+            "color_scheme": "",
+            "background_color": "",
+            "border_type": "none",
+            "border_color": "",
+            "corner_radius": "square",
+            "shadow": "none",
+            "overlay_color": "",
+            "backdrop_blur": 0,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": false,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
           },
           "blocks": [
             {
               "type": "header",
               "settings": {
                 "width": "fill",
+                "max_width": 750,
+                "customize_mobile_size": false,
+                "width_mobile": "fit",
+                "max_width_mobile": 480,
                 "gap_desktop": 12,
-                "gap_mobile": 8
+                "gap_mobile": 8,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": false,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
               },
               "blocks": [
                 {
@@ -432,6 +493,21 @@
                     "text": "<p>Do you have any question? &#x20;</p>",
                     "heading_size": "sm",
                     "html_tag": "h3",
+                    "text_color": "",
+                    "width": "fit",
+                    "max_width": 640,
+                    "customize_mobile_size": false,
+                    "width_mobile": "fit",
+                    "max_width_mobile": 480,
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "customize_mobile_padding": false,
+                    "padding_top_mobile": 0,
+                    "padding_bottom_mobile": 0,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0,
                     "animation_type": "slide-bottom",
                     "animation_delay": 50,
                     "custom_heading_size": 24
@@ -441,6 +517,22 @@
                   "type": "text",
                   "settings": {
                     "text": "<p>For any inquiries, submit the contact form and our team will be in touch shortly.</p>",
+                    "text_size": "md",
+                    "text_color": "",
+                    "width": "fit",
+                    "max_width": 640,
+                    "customize_mobile_size": false,
+                    "width_mobile": "fit",
+                    "max_width_mobile": 480,
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "customize_mobile_padding": false,
+                    "padding_top_mobile": 0,
+                    "padding_bottom_mobile": 0,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0,
                     "animation_type": "fade",
                     "animation_delay": 100
                   }
@@ -450,13 +542,22 @@
             {
               "type": "contact-form",
               "settings": {
-                "width_desktop": "fill",
-                "width_mobile": "fill",
                 "gap_desktop": 24,
                 "gap_mobile": 24,
+                "field_height_desktop": "inherit",
+                "field_height_mobile": "inherit",
                 "submit_label": "Send",
+                "button_style": "primary",
+                "show_icon": false,
+                "width_desktop": "fill",
+                "width_custom_desktop": 100,
+                "width_mobile": "fill",
+                "width_custom_mobile": 100,
                 "limit_width_desktop": false,
+                "max_width_desktop": 900,
                 "limit_width_mobile": false,
+                "max_width_mobile": 480,
+                "animation_type": "none",
                 "require_name": true,
                 "require_message": true
               },
@@ -464,9 +565,10 @@
                 {
                   "type": "contact-field",
                   "settings": {
-                    "label": "Phone",
                     "field_type": "phone",
-                    "required": false
+                    "label": "Phone",
+                    "required": false,
+                    "options": "Option 1; Option 2; Option 3"
                   }
                 }
               ]

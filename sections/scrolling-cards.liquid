@@ -313,132 +313,120 @@
   "presets": [
     {
       "name": "Scrolling cards",
-      "category": "Media",
       "settings": {
-        "section_width": "page_width",
+        "section_width": "custom",
+        "custom_width": 1600,
         "stack_effect": "fade",
         "enable_sticky_mobile": true,
-        "gap_desktop": 60,
-        "gap_mobile": 40,
-        "color_scheme": "scheme-1",
-        "padding_top": 80,
-        "padding_bottom": 90,
+        "gap_desktop": 0,
+        "gap_mobile": 0,
+        "color_scheme": "scheme-3",
+        "padding_top": 96,
+        "padding_bottom": 96,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 50,
-        "padding_bottom_mobile": 50
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
         {
           "type": "header",
           "static": true,
+          "id": "header",
           "settings": {
             "width": "fit",
-            "alignment": "center",
+            "alignment": "left",
             "customize_mobile_alignment": true,
-            "alignment_mobile": "center",
-            "gap_desktop": 12,
-            "gap_mobile": 8
-          },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Scrolling cards</p>",
-                "heading_size": "md",
-                "html_tag": "h2",
-                "width": "fit",
-                "animation_type": "slide-bottom",
-                "animation_delay": 50
-              }
-            }
-          ],
-          "id": "header"
+            "alignment_mobile": "left",
+            "gap_desktop": 0,
+            "gap_mobile": 0,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0
+          }
         },
         {
           "type": "scrolling-card",
           "settings": {
             "direction": "horizontal",
-            "position": "top",
+            "position": "center",
             "alignment": "left",
             "vertical_on_mobile": true,
             "alignment_mobile": "left",
-            "gap_desktop": 50,
-            "gap_mobile": 40,
+            "gap_desktop": 64,
+            "gap_mobile": 48,
             "border_thickness": 0,
-            "corner_radius": "inherit",
+            "corner_radius": "square",
             "shadow": "none",
-            "background_media": "image",
-            "show_overlay": true,
+            "background_media": "none",
+            "show_overlay": false,
             "overlay_color": "#16070080",
-            "backdrop_blur": 30,
+            "backdrop_blur": 0,
             "color_type": "inherit",
             "color_scheme": "scheme-3",
-            "padding_top": 70,
-            "padding_bottom": 70,
-            "padding_left": 50,
-            "padding_right": 50,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
             "customize_mobile_padding": true,
-            "padding_top_mobile": 40,
-            "padding_bottom_mobile": 30,
-            "padding_left_mobile": 16,
-            "padding_right_mobile": 16
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
           },
           "blocks": [
             {
               "type": "group",
               "settings": {
                 "direction": "vertical",
+                "position": "center",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": true,
                 "alignment": "left",
+                "alignment_mobile": "left",
+                "gap_desktop": 32,
+                "gap_mobile": 24,
+                "device": "desktop",
                 "width": "fill",
-                "height": "fill",
-                "gap_desktop": 16,
-                "gap_mobile": 12,
+                "height": "fit",
+                "width_mobile": "fill",
                 "appearance_type": "inherit",
+                "color_scheme": "",
                 "border_type": "none",
                 "corner_radius": "square",
-                "shadow": "none"
+                "shadow": "none",
+                "backdrop_blur": 0,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 64,
+                "padding_right": 64,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
               },
               "blocks": [
                 {
-                  "type": "eyebrow",
-                  "settings": {
-                    "text": "<p>Eyebrow</p>",
-                    "show_background": true,
-                    "corner_radius": "pill",
-                    "animation_type": "fade",
-                    "animation_delay": 0
-                  }
-                },
-                {
-                  "type": "spacer",
-                  "settings": {
-                    "unit_desktop": "pixel",
-                    "size_desktop_px": 80,
-                    "show_on_mobile": true,
-                    "unit_mobile": "pixel",
-                    "size_mobile_px": 40
-                  }
-                },
-                {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>Heading</p>",
-                    "heading_size": "md",
-                    "html_tag": "h3",
-                    "width": "fit",
+                    "text": "<p>Sophistication in every line. Neutral colors for minimalist style</p>",
+                    "heading_size": "lg",
+                    "html_tag": "h2",
+                    "width": "fill",
                     "animation_type": "slide-bottom",
                     "animation_delay": 50
                   }
                 },
                 {
-                  "type": "text",
+                  "type": "button",
                   "settings": {
-                    "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>",
-                    "text_size": "sm",
-                    "width": "custom",
-                    "max_width": 500,
+                    "button_label": "Shop our collection",
+                    "button_link": "",
+                    "button_style": "tertiary",
+                    "show_icon": false,
                     "animation_type": "fade",
-                    "animation_delay": 100
+                    "animation_delay": 150
                   }
                 }
               ]
@@ -446,112 +434,32 @@
             {
               "type": "image",
               "settings": {
-                "image_ratio_desktop": "landscape",
-                "image_ratio_mobile": "landscape",
+                "image": "",
+                "show_image_first_mobile": false,
+                "image_link": "",
+                "open_in_new_tab": false,
+                "alt_text": "Man wearing a neutral cream polo and matching trousers",
+                "device": "desktop",
+                "image_ratio_desktop": "square",
+                "image_ratio_custom_width_desktop": 16,
+                "image_ratio_custom_height_desktop": 9,
                 "width_desktop": "fill",
+                "width_custom_desktop": 100,
+                "limit_width_desktop": false,
+                "max_width_desktop": 1600,
+                "image_ratio_mobile": "square",
+                "image_ratio_custom_width_mobile": 16,
+                "image_ratio_custom_height_mobile": 9,
                 "width_mobile": "fill",
-                "corner_radius": "square"
-              }
-            }
-          ]
-        },
-        {
-          "type": "scrolling-card",
-          "settings": {
-            "direction": "horizontal",
-            "position": "top",
-            "alignment": "left",
-            "vertical_on_mobile": true,
-            "alignment_mobile": "left",
-            "gap_desktop": 50,
-            "gap_mobile": 40,
-            "border_thickness": 0,
-            "corner_radius": "inherit",
-            "shadow": "none",
-            "background_media": "image",
-            "show_overlay": true,
-            "overlay_color": "#16070080",
-            "backdrop_blur": 30,
-            "color_type": "inherit",
-            "color_scheme": "scheme-3",
-            "padding_top": 70,
-            "padding_bottom": 70,
-            "padding_left": 50,
-            "padding_right": 50,
-            "customize_mobile_padding": true,
-            "padding_top_mobile": 40,
-            "padding_bottom_mobile": 30,
-            "padding_left_mobile": 16,
-            "padding_right_mobile": 16
-          },
-          "blocks": [
-            {
-              "type": "group",
-              "settings": {
-                "direction": "vertical",
-                "alignment": "left",
-                "width": "fill",
-                "height": "fill",
-                "gap_desktop": 16,
-                "gap_mobile": 12,
-                "appearance_type": "inherit",
-                "border_type": "none",
+                "width_custom_mobile": 100,
+                "limit_width_mobile": false,
+                "max_width_mobile": 1600,
                 "corner_radius": "square",
-                "shadow": "none"
-              },
-              "blocks": [
-                {
-                  "type": "eyebrow",
-                  "settings": {
-                    "text": "<p>Eyebrow</p>",
-                    "show_background": true,
-                    "corner_radius": "pill",
-                    "animation_type": "fade",
-                    "animation_delay": 0
-                  }
-                },
-                {
-                  "type": "spacer",
-                  "settings": {
-                    "unit_desktop": "pixel",
-                    "size_desktop_px": 80,
-                    "show_on_mobile": true,
-                    "unit_mobile": "pixel",
-                    "size_mobile_px": 40
-                  }
-                },
-                {
-                  "type": "heading",
-                  "settings": {
-                    "text": "<p>Heading</p>",
-                    "heading_size": "md",
-                    "html_tag": "h3",
-                    "width": "fit",
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 50
-                  }
-                },
-                {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>",
-                    "text_size": "sm",
-                    "width": "custom",
-                    "max_width": 500,
-                    "animation_type": "fade",
-                    "animation_delay": 100
-                  }
-                }
-              ]
-            },
-            {
-              "type": "image",
-              "settings": {
-                "image_ratio_desktop": "landscape",
-                "image_ratio_mobile": "landscape",
-                "width_desktop": "fill",
-                "width_mobile": "fill",
-                "corner_radius": "square"
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": false
               }
             }
           ]
@@ -560,87 +468,84 @@
           "type": "scrolling-card",
           "settings": {
             "direction": "horizontal",
-            "position": "top",
+            "position": "center",
             "alignment": "left",
             "vertical_on_mobile": true,
             "alignment_mobile": "left",
-            "gap_desktop": 50,
-            "gap_mobile": 40,
+            "gap_desktop": 64,
+            "gap_mobile": 48,
             "border_thickness": 0,
-            "corner_radius": "inherit",
+            "corner_radius": "square",
             "shadow": "none",
-            "background_media": "image",
-            "show_overlay": true,
+            "background_media": "none",
+            "show_overlay": false,
             "overlay_color": "#16070080",
-            "backdrop_blur": 30,
+            "backdrop_blur": 0,
             "color_type": "inherit",
             "color_scheme": "scheme-3",
-            "padding_top": 70,
-            "padding_bottom": 70,
-            "padding_left": 50,
-            "padding_right": 50,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
             "customize_mobile_padding": true,
-            "padding_top_mobile": 40,
-            "padding_bottom_mobile": 30,
-            "padding_left_mobile": 16,
-            "padding_right_mobile": 16
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
           },
           "blocks": [
             {
               "type": "group",
               "settings": {
                 "direction": "vertical",
+                "position": "center",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": true,
                 "alignment": "left",
+                "alignment_mobile": "left",
+                "gap_desktop": 32,
+                "gap_mobile": 24,
+                "device": "desktop",
                 "width": "fill",
-                "height": "fill",
-                "gap_desktop": 16,
-                "gap_mobile": 12,
+                "height": "fit",
+                "width_mobile": "fill",
                 "appearance_type": "inherit",
+                "color_scheme": "",
                 "border_type": "none",
                 "corner_radius": "square",
-                "shadow": "none"
+                "shadow": "none",
+                "backdrop_blur": 0,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 64,
+                "padding_right": 64,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
               },
               "blocks": [
                 {
-                  "type": "eyebrow",
-                  "settings": {
-                    "text": "<p>Eyebrow</p>",
-                    "show_background": true,
-                    "corner_radius": "pill",
-                    "animation_type": "fade",
-                    "animation_delay": 0
-                  }
-                },
-                {
-                  "type": "spacer",
-                  "settings": {
-                    "unit_desktop": "pixel",
-                    "size_desktop_px": 80,
-                    "show_on_mobile": true,
-                    "unit_mobile": "pixel",
-                    "size_mobile_px": 40
-                  }
-                },
-                {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>Heading</p>",
-                    "heading_size": "md",
-                    "html_tag": "h3",
-                    "width": "fit",
+                    "text": "<p>Minimalist style. Monochromatic tones. For everyday moments</p>",
+                    "heading_size": "lg",
+                    "html_tag": "h2",
+                    "width": "fill",
                     "animation_type": "slide-bottom",
                     "animation_delay": 50
                   }
                 },
                 {
-                  "type": "text",
+                  "type": "button",
                   "settings": {
-                    "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>",
-                    "text_size": "sm",
-                    "width": "custom",
-                    "max_width": 500,
+                    "button_label": "Shop our collection",
+                    "button_link": "",
+                    "button_style": "tertiary",
+                    "show_icon": false,
                     "animation_type": "fade",
-                    "animation_delay": 100
+                    "animation_delay": 150
                   }
                 }
               ]
@@ -648,11 +553,151 @@
             {
               "type": "image",
               "settings": {
-                "image_ratio_desktop": "landscape",
-                "image_ratio_mobile": "landscape",
+                "image": "",
+                "show_image_first_mobile": false,
+                "image_link": "",
+                "open_in_new_tab": false,
+                "alt_text": "Back and side view of a man wearing a dark blueberry shirt",
+                "device": "desktop",
+                "image_ratio_desktop": "square",
+                "image_ratio_custom_width_desktop": 16,
+                "image_ratio_custom_height_desktop": 9,
                 "width_desktop": "fill",
+                "width_custom_desktop": 100,
+                "limit_width_desktop": false,
+                "max_width_desktop": 1600,
+                "image_ratio_mobile": "square",
+                "image_ratio_custom_width_mobile": 16,
+                "image_ratio_custom_height_mobile": 9,
                 "width_mobile": "fill",
-                "corner_radius": "square"
+                "width_custom_mobile": 100,
+                "limit_width_mobile": false,
+                "max_width_mobile": 1600,
+                "corner_radius": "square",
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": false
+              }
+            }
+          ]
+        },
+        {
+          "type": "scrolling-card",
+          "settings": {
+            "direction": "horizontal",
+            "position": "center",
+            "alignment": "left",
+            "vertical_on_mobile": true,
+            "alignment_mobile": "left",
+            "gap_desktop": 64,
+            "gap_mobile": 48,
+            "border_thickness": 0,
+            "corner_radius": "square",
+            "shadow": "none",
+            "background_media": "none",
+            "show_overlay": false,
+            "overlay_color": "#16070080",
+            "backdrop_blur": 0,
+            "color_type": "inherit",
+            "color_scheme": "scheme-3",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
+          },
+          "blocks": [
+            {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "position": "center",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": true,
+                "alignment": "left",
+                "alignment_mobile": "left",
+                "gap_desktop": 32,
+                "gap_mobile": 24,
+                "device": "desktop",
+                "width": "fill",
+                "height": "fit",
+                "width_mobile": "fill",
+                "appearance_type": "inherit",
+                "color_scheme": "",
+                "border_type": "none",
+                "corner_radius": "square",
+                "shadow": "none",
+                "backdrop_blur": 0,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 64,
+                "padding_right": 64,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>The art of minimalism. A collection of essentials for your style</p>",
+                    "heading_size": "lg",
+                    "html_tag": "h2",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "Shop our collection",
+                    "button_link": "",
+                    "button_style": "tertiary",
+                    "show_icon": false,
+                    "animation_type": "fade",
+                    "animation_delay": 150
+                  }
+                }
+              ]
+            },
+            {
+              "type": "image",
+              "settings": {
+                "image": "",
+                "show_image_first_mobile": false,
+                "image_link": "",
+                "open_in_new_tab": false,
+                "alt_text": "Two men wearing sunglasses and light grey minimalist tops",
+                "device": "desktop",
+                "image_ratio_desktop": "square",
+                "image_ratio_custom_width_desktop": 16,
+                "image_ratio_custom_height_desktop": 9,
+                "width_desktop": "fill",
+                "width_custom_desktop": 100,
+                "limit_width_desktop": false,
+                "max_width_desktop": 1600,
+                "image_ratio_mobile": "square",
+                "image_ratio_custom_width_mobile": 16,
+                "image_ratio_custom_height_mobile": 9,
+                "width_mobile": "fill",
+                "width_custom_mobile": 100,
+                "limit_width_mobile": false,
+                "max_width_mobile": 1600,
+                "corner_radius": "square",
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": false
               }
             }
           ]
