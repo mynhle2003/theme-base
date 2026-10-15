@@ -73,7 +73,19 @@
     assign hero_page_content_padding = 0
     assign hero_page_content_padding_mobile = 0
   endif
+  assign hero_image_loading = 'lazy'
+  assign hero_image_priority = 'auto'
+  if section.index == 1
+    assign hero_image_loading = 'eager'
+    assign hero_image_priority = 'high'
+  endif
 %}
+
+{% if section.index == 1 and hero_media_type == 'image' and section.settings.banner_image != blank %}
+  <!-- theme-lcp-preloads:start -->
+  {% render 'hero-image', image: section.settings.banner_image, mobile_image: section.settings.mobile_banner_image, preload: true %}
+  <!-- theme-lcp-preloads:end -->
+{% endif %}
 
 {% capture hero_style %}
   {% if hero_desktop_gap != 12 %}--hero-content-gap: {{ hero_desktop_gap }}px;{% endif %}
@@ -109,15 +121,7 @@
           {{ section.settings.mobile_video | video_tag: image_size: '1200x', autoplay: true, loop: true, muted: true, controls: false, playsinline: true, class: 'hero__video hero__video--mobile' }}
         {% endif %}
       {% elsif hero_media_type == 'image' and section.settings.banner_image != blank %}
-        <picture>
-          {% if section.settings.mobile_banner_image != blank %}
-            <source
-              media="(max-width: 767.98px)"
-              srcset="{{ section.settings.mobile_banner_image | image_url: width: 1200 }}"
-            >
-          {% endif %}
-          {{ section.settings.banner_image | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 2000, 2400', sizes: '100vw', alt: '' }}
-        </picture>
+        {% render 'hero-image', image: section.settings.banner_image, mobile_image: section.settings.mobile_banner_image, loading: hero_image_loading, fetchpriority: hero_image_priority %}
       {% else %}
         {{ 'lifestyle-1' | placeholder_svg_tag: 'hero__placeholder' }}
       {% endif %}
