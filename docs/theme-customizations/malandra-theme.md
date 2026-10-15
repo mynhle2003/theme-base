@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha": "c8fab8a5588b05f9577f3a2aaa2ac01744c1286f"} -->
+<!-- theme-base-sync-state: {"sha": "c07753a29c860f64e60567a2fc0d58deb3429c3b"} -->
 # Customization record: malandra-theme
 
 Theme branch: `theme/malandra-theme`
@@ -1856,3 +1856,11 @@ templates/page.about-us.json
 - Set all 17 nonzero `backdrop_blur` settings in `templates/index.spinel-sync.json` to `0`, including nested Group settings. Other templates already use zero or omit the setting.
 - Set the three Scrolling Cards factory preset `backdrop_blur` values to `0` as well.
 - Validation: changed JSON/schema parse successfully; no nonzero explicit backdrop blur values remain in templates, sections, blocks, or config; `git diff --check` passes.
+
+### 2026-10-15 — Apply shared icon, collection-tab and underline fixes
+
+- Owner explicitly requests the new shared behavior in all variants, including customized files, while preserving their layout and preset content.
+- Previous personal main: `c8fab8a5588b05f9577f3a2aaa2ac01744c1286f`. Updated through personal main: `c07753a29c860f64e60567a2fc0d58deb3429c3b` (one main commit; team source `a0ac2424`).
+- Three-way integration preserves theme implementation outside the shared fixes. Custom SVG uses isolated image rendering and input validation; icon bounds use flex layout; shared underline uses positive internal padding and bottom zero.
+- Collection tabs dynamically allow only Collection tab. Static controls remain; all section settings and presets, templates, section-group composition and saved config are preserved. No structural preset rebuild is needed for this source change.
+- Scope: `assets/component-pagination.css`, `assets/component-search-suggestions.css`, `assets/critical.css`, `blocks/icon.liquid`, `sections/collection-tabs.liquid`, `snippets/css-variables.liquid`, `snippets/custom-icon-image.liquid`, `snippets/icon.liquid`, `snippets/tab-layout-styles.liquid`.
