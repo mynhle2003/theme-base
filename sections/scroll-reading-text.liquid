@@ -479,9 +479,19 @@
   "presets": [
     {
       "name": "Scroll reading text",
-      "category": "Storytelling",
       "settings": {
+        "section_width": "page_width",
         "color_scheme": "scheme-1",
+        "background_color": "",
+        "padding_top": 40,
+        "padding_right": 0,
+        "padding_bottom": 40,
+        "padding_left": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 24,
+        "padding_right_mobile": 0,
+        "padding_bottom_mobile": 24,
+        "padding_left_mobile": 0,
         "overlay": true,
         "overlay_style": "solid",
         "overlay_color": "#00000033",
@@ -491,36 +501,84 @@
         {
           "type": "text",
           "static": true,
+          "id": "text",
           "settings": {
             "text": "<p>The pavilion standard</p>",
+            "text_size": "md",
+            "text_color": "",
+            "width": "fit",
+            "max_width": 640,
+            "customize_mobile_size": false,
+            "width_mobile": "fit",
+            "max_width_mobile": 480,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": false,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0,
             "animation_type": "slide-bottom",
             "animation_delay": 100
-          },
-          "id": "text"
+          }
         },
         {
           "type": "editorial-text",
           "static": true,
+          "id": "editorial-text",
           "settings": {
             "text": "<p>Every piece that leaves our studio passes through no fewer than forty pairs of hands. We believe jewelry should outlive trends and outlive us.</p>",
             "size": "lg",
+            "font_size": 40,
+            "text_color": "",
             "width": "custom",
             "max_width": 900,
+            "customize_mobile_size": false,
+            "width_mobile": "fit",
+            "max_width_mobile": 480,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": false,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0,
             "animation_type": "slide-bottom",
             "animation_delay": 100
-          },
-          "id": "editorial-text"
+          }
         },
         {
           "type": "button",
           "static": true,
+          "id": "button",
           "settings": {
             "button_label": "Our story",
+            "button_link": "",
+            "button_open_in_new_tab": false,
             "button_style": "secondary",
+            "show_icon": false,
+            "icon": "arrow_right",
+            "icon_position": "after",
+            "icon_size": "inherit",
+            "icon_width": 20,
+            "width": "fit",
+            "width_mobile": "fit",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": false,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0,
             "animation_type": "slide-bottom",
             "animation_delay": 150
-          },
-          "id": "button"
+          }
         }
       ]
     }

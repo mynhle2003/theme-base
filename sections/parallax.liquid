@@ -238,8 +238,8 @@
     {
       "name": "Parallax",
       "category": "t:general.banners",
-      "blocks": [
-        {
+      "blocks": {
+        "header": {
           "type": "header",
           "static": true,
           "settings": {
@@ -249,28 +249,28 @@
             "gap_desktop": 12,
             "gap_mobile": 8
           },
-          "blocks": [
-            {
+          "blocks": {
+            "text": {
               "type": "editorial-text",
               "settings": {
                 "text": "<p>Use this text to share information about your brand with customers, describe products, or highlight announcements.</p>",
                 "width": "fill",
                 "size": "xl",
-                "corner_radius": "rounded",
-                "animation_type": "slide-bottom",
-                "animation_delay": 100
+                "corner_radius": "rounded"
               }
             }
-          ],
-          "id": "header"
+          },
+          "block_order": [
+            "text"
+          ]
         },
-        {
+        "item_1": {
           "type": "parallax-item",
           "settings": {
             "position": "left"
           },
-          "blocks": [
-            {
+          "blocks": {
+            "image": {
               "type": "image",
               "settings": {
                 "image_ratio_desktop": "portrait",
@@ -280,15 +280,18 @@
                 "corner_radius": "rounded"
               }
             }
+          },
+          "block_order": [
+            "image"
           ]
         },
-        {
+        "item_2": {
           "type": "parallax-item",
           "settings": {
             "position": "center"
           },
-          "blocks": [
-            {
+          "blocks": {
+            "image": {
               "type": "image",
               "settings": {
                 "image_ratio_desktop": "portrait",
@@ -298,15 +301,18 @@
                 "corner_radius": "rounded"
               }
             }
+          },
+          "block_order": [
+            "image"
           ]
         },
-        {
+        "item_3": {
           "type": "parallax-item",
           "settings": {
             "position": "right"
           },
-          "blocks": [
-            {
+          "blocks": {
+            "image": {
               "type": "image",
               "settings": {
                 "image_ratio_desktop": "portrait",
@@ -316,15 +322,18 @@
                 "corner_radius": "rounded"
               }
             }
+          },
+          "block_order": [
+            "image"
           ]
         },
-        {
+        "item_4": {
           "type": "parallax-item",
           "settings": {
             "position": "left"
           },
-          "blocks": [
-            {
+          "blocks": {
+            "image": {
               "type": "image",
               "settings": {
                 "image_ratio_desktop": "portrait",
@@ -334,15 +343,18 @@
                 "corner_radius": "rounded"
               }
             }
+          },
+          "block_order": [
+            "image"
           ]
         },
-        {
+        "item_5": {
           "type": "parallax-item",
           "settings": {
             "position": "center"
           },
-          "blocks": [
-            {
+          "blocks": {
+            "image": {
               "type": "image",
               "settings": {
                 "image_ratio_desktop": "portrait",
@@ -352,15 +364,18 @@
                 "corner_radius": "rounded"
               }
             }
+          },
+          "block_order": [
+            "image"
           ]
         },
-        {
+        "item_6": {
           "type": "parallax-item",
           "settings": {
             "position": "right"
           },
-          "blocks": [
-            {
+          "blocks": {
+            "image": {
               "type": "image",
               "settings": {
                 "image_ratio_desktop": "portrait",
@@ -370,8 +385,19 @@
                 "corner_radius": "rounded"
               }
             }
+          },
+          "block_order": [
+            "image"
           ]
         }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4",
+        "item_5",
+        "item_6"
       ]
     }
   ]

@@ -278,6 +278,7 @@
       "blocks": [
         {
           "type": "header",
+          "id": "header",
           "static": true,
           "settings": {
             "width": "fit",
@@ -289,25 +290,21 @@
               "type": "heading",
               "settings": {
                 "text": "<p>Main Heading</p>",
-                "heading_size": "lg",
-                "html_tag": "h2",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
+                "heading_size": "display",
+                "html_tag": "h2"
               }
             },
             {
               "type": "text",
               "settings": {
-                "text": "<p>This is placeholder text for a paragraph that provides a short and engaging description</p>",
-                "animation_type": "slide-bottom",
-                "animation_delay": 100
+                "text": "<p>This is placeholder text for a paragraph that provides a short and engaging description</p>"
               }
             }
-          ],
-          "id": "header"
+          ]
         },
         {
           "type": "view-all-button",
+          "id": "featured-blog-posts-view-all",
           "static": true,
           "settings": {
             "button_label": "View all",
@@ -316,13 +313,12 @@
             "button_height_mobile": "inherit",
             "full_width_mobile": true,
             "show_icon": false,
-            "show_icon_mobile": false,
-            "hide_view_all_mobile": false
-          },
-          "id": "featured-blog-posts-view-all"
+            "show_icon_mobile": false
+          }
         },
         {
           "type": "blog-grid",
+          "id": "blog-grid",
           "static": true,
           "settings": {
             "blog": "",
@@ -336,6 +332,7 @@
           "blocks": [
             {
               "type": "first-card",
+              "id": "first-card",
               "static": true,
               "blocks": [
                 {
@@ -350,7 +347,7 @@
                   "type": "blog-card-title",
                   "settings": {
                     "line_limit": "two",
-                    "heading_size": "md",
+                    "heading_size": "lg",
                     "html_tag": "h3",
                     "padding_top": 0,
                     "padding_bottom": 0
@@ -395,11 +392,11 @@
                     "padding_bottom": 0
                   }
                 }
-              ],
-              "id": "first-card"
+              ]
             },
             {
               "type": "blog-card",
+              "id": "blog-card",
               "static": true,
               "settings": {
                 "ratio": "original",
@@ -432,7 +429,7 @@
                   "type": "blog-card-title",
                   "settings": {
                     "line_limit": "two",
-                    "heading_size": "xs",
+                    "heading_size": "sm",
                     "html_tag": "h3",
                     "padding_top": 0,
                     "padding_bottom": 0
@@ -459,11 +456,9 @@
                     "padding_bottom": 0
                   }
                 }
-              ],
-              "id": "blog-card"
+              ]
             }
-          ],
-          "id": "blog-grid"
+          ]
         }
       ]
     }

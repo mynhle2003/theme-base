@@ -731,9 +731,8 @@
   "presets": [
     {
       "name": "t:general.hotspot_carousel",
-      "category": "t:general.banners",
       "settings": {
-        "width": "full",
+        "width": "page",
         "show_next_slide_preview_on_desktop": false,
         "transition_style": "slide",
         "desktop_height": "medium",
@@ -751,7 +750,9 @@
         "show_product_image": true,
         "show_price": true,
         "product_link_label": "View product",
+        "background_media": "none",
         "color_scheme": "scheme-1",
+        "background_color": "",
         "padding_top": 40,
         "padding_bottom": 40,
         "customize_mobile_padding": false,
@@ -760,51 +761,47 @@
       },
       "blocks": [
         {
-          "type": "header",
-          "settings": {
-            "width": "fit",
-            "alignment": "center",
-            "gap_desktop": 8,
-            "gap_mobile": 8,
-            "padding_bottom": 40,
-            "padding_bottom_mobile": 40
-          },
-          "blocks": [
-            {
-              "type": "eyebrow",
-              "settings": {
-                "text": "<p>SUBHEADING</p>",
-                "animation_type": "slide-bottom",
-                "animation_delay": 50
-              }
-            },
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Hotspot carousel</p>",
-                "heading_size": "md",
-                "html_tag": "h2",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
-              }
-            }
-          ]
-        },
-        {
           "type": "product-callout",
           "settings": {
             "editor_title": "Product callout 1",
-            "content_color_scheme": "scheme-3",
             "desktop_image_position": "center center",
             "mobile_image_position": "center center",
+            "overlay": "#00000033",
+            "desktop_height": "adapt",
+            "mobile_height": "adapt",
+            "content_layout": "below",
+            "content_position": "last",
+            "content_panel_width": "30",
+            "preheading": "",
+            "heading": "Heading",
+            "heading_size": "lg",
+            "custom_heading_size": 24,
+            "html_tag": "h2",
+            "text": "<p>Add a short paragraph to support the heading</p>",
+            "text_size": "lg",
+            "content_color_scheme": "scheme-3",
+            "text_alignment": "left",
+            "text_position": "bottom_left",
+            "button_label": "Button label",
+            "button_link": "",
+            "open_in_new_tab": false,
+            "button_style": "primary",
+            "gap_desktop": 12,
+            "gap_mobile": 8,
+            "content_padding_desktop": 40,
+            "content_padding_mobile": 24,
             "hotspot_icon_style": "dot",
             "hotspot_behavior": "click",
-            "heading_size": "lg"
+            "hotspot_color_scheme": ""
           },
           "blocks": [
             {
               "type": "hotspot",
               "settings": {
+                "product": "",
+                "use_content": false,
+                "content_heading": "Medium Heading",
+                "content_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>",
                 "vertical_position": 50,
                 "horizontal_position": 22,
                 "customize_mobile_position": false,
@@ -815,6 +812,10 @@
             {
               "type": "hotspot",
               "settings": {
+                "product": "",
+                "use_content": false,
+                "content_heading": "Medium Heading",
+                "content_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>",
                 "vertical_position": 56,
                 "horizontal_position": 57,
                 "customize_mobile_position": false,
@@ -825,6 +826,10 @@
             {
               "type": "hotspot",
               "settings": {
+                "product": "",
+                "use_content": false,
+                "content_heading": "Medium Heading",
+                "content_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>",
                 "vertical_position": 73,
                 "horizontal_position": 77,
                 "customize_mobile_position": false,
@@ -838,17 +843,44 @@
           "type": "product-callout",
           "settings": {
             "editor_title": "Product callout 2",
-            "content_color_scheme": "scheme-3",
             "desktop_image_position": "center center",
             "mobile_image_position": "center center",
+            "overlay": "#00000033",
+            "desktop_height": "adapt",
+            "mobile_height": "adapt",
+            "content_layout": "below",
+            "content_position": "last",
+            "content_panel_width": "30",
+            "preheading": "",
+            "heading": "Heading",
+            "heading_size": "lg",
+            "custom_heading_size": 24,
+            "html_tag": "h2",
+            "text": "<p>Add a short paragraph to support the heading</p>",
+            "text_size": "lg",
+            "content_color_scheme": "scheme-3",
+            "text_alignment": "left",
+            "text_position": "bottom_left",
+            "button_label": "Button label",
+            "button_link": "",
+            "open_in_new_tab": false,
+            "button_style": "primary",
+            "gap_desktop": 12,
+            "gap_mobile": 8,
+            "content_padding_desktop": 40,
+            "content_padding_mobile": 24,
             "hotspot_icon_style": "dot",
             "hotspot_behavior": "click",
-            "heading_size": "lg"
+            "hotspot_color_scheme": ""
           },
           "blocks": [
             {
               "type": "hotspot",
               "settings": {
+                "product": "",
+                "use_content": false,
+                "content_heading": "Medium Heading",
+                "content_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>",
                 "vertical_position": 50,
                 "horizontal_position": 22,
                 "customize_mobile_position": false,
@@ -859,6 +891,10 @@
             {
               "type": "hotspot",
               "settings": {
+                "product": "",
+                "use_content": false,
+                "content_heading": "Medium Heading",
+                "content_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>",
                 "vertical_position": 56,
                 "horizontal_position": 57,
                 "customize_mobile_position": false,
@@ -869,6 +905,10 @@
             {
               "type": "hotspot",
               "settings": {
+                "product": "",
+                "use_content": false,
+                "content_heading": "Medium Heading",
+                "content_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>",
                 "vertical_position": 73,
                 "horizontal_position": 77,
                 "customize_mobile_position": false,
@@ -882,17 +922,44 @@
           "type": "product-callout",
           "settings": {
             "editor_title": "Product callout 3",
-            "content_color_scheme": "scheme-3",
             "desktop_image_position": "center center",
             "mobile_image_position": "center center",
+            "overlay": "#00000033",
+            "desktop_height": "adapt",
+            "mobile_height": "adapt",
+            "content_layout": "below",
+            "content_position": "last",
+            "content_panel_width": "30",
+            "preheading": "",
+            "heading": "Heading",
+            "heading_size": "lg",
+            "custom_heading_size": 24,
+            "html_tag": "h2",
+            "text": "<p>Add a short paragraph to support the heading</p>",
+            "text_size": "lg",
+            "content_color_scheme": "scheme-3",
+            "text_alignment": "left",
+            "text_position": "bottom_left",
+            "button_label": "Button label",
+            "button_link": "",
+            "open_in_new_tab": false,
+            "button_style": "primary",
+            "gap_desktop": 12,
+            "gap_mobile": 8,
+            "content_padding_desktop": 40,
+            "content_padding_mobile": 24,
             "hotspot_icon_style": "dot",
             "hotspot_behavior": "click",
-            "heading_size": "lg"
+            "hotspot_color_scheme": ""
           },
           "blocks": [
             {
               "type": "hotspot",
               "settings": {
+                "product": "",
+                "use_content": false,
+                "content_heading": "Medium Heading",
+                "content_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>",
                 "vertical_position": 50,
                 "horizontal_position": 22,
                 "customize_mobile_position": false,
@@ -903,6 +970,10 @@
             {
               "type": "hotspot",
               "settings": {
+                "product": "",
+                "use_content": false,
+                "content_heading": "Medium Heading",
+                "content_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>",
                 "vertical_position": 56,
                 "horizontal_position": 57,
                 "customize_mobile_position": false,
@@ -913,6 +984,10 @@
             {
               "type": "hotspot",
               "settings": {
+                "product": "",
+                "use_content": false,
+                "content_heading": "Medium Heading",
+                "content_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>",
                 "vertical_position": 73,
                 "horizontal_position": 77,
                 "customize_mobile_position": false,

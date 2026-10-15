@@ -273,8 +273,8 @@
   "presets": [
     {
       "name": "Blog posts",
-      "category": "Blog",
       "settings": {
+        "blog": "",
         "section_width": "full_width",
         "desktop_alignment": "left",
         "mobile_alignment": "left",
@@ -291,11 +291,28 @@
         {
           "type": "header",
           "static": true,
+          "id": "header",
           "settings": {
             "width": "fill",
+            "max_width": 750,
+            "customize_mobile_size": false,
+            "width_mobile": "fit",
+            "max_width_mobile": 480,
             "inherit_alignment": true,
+            "alignment": "left",
+            "customize_mobile_alignment": false,
+            "alignment_mobile": "left",
             "gap_desktop": 8,
-            "gap_mobile": 8
+            "gap_mobile": 8,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": false,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
           },
           "blocks": [
             {
@@ -303,36 +320,57 @@
               "settings": {
                 "text": "<p>From the Blog</p>",
                 "heading_size": "lg",
+                "custom_heading_size": 24,
                 "html_tag": "h2",
+                "text_color": "",
                 "width": "fill",
+                "max_width": 640,
+                "customize_mobile_size": false,
+                "width_mobile": "fit",
+                "max_width_mobile": 480,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": false,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0,
                 "animation_type": "rotate-words",
                 "animation_delay": 50
               }
             }
-          ],
-          "id": "header"
+          ]
         },
         {
           "type": "view-all-button",
           "static": true,
+          "id": "blog-posts-view-all",
           "settings": {
             "button_label": "All Stories",
+            "button_link": "",
+            "button_open_in_new_tab": false,
             "button_style": "text",
+            "show_icon": false,
+            "icon": "arrow_right",
+            "icon_position": "after",
+            "icon_size": "inherit",
+            "icon_width": 20,
             "button_style_mobile": "text",
             "button_height_mobile": "inherit",
             "full_width_mobile": false,
-            "show_icon": false,
             "show_icon_mobile": false,
             "hide_view_all_mobile": false
-          },
-          "id": "blog-posts-view-all"
+          }
         },
         {
           "type": "blog-list",
           "static": true,
+          "id": "blog-list",
           "settings": {
             "blog": "",
-            "max_posts": 5,
+            "max_posts": 3,
             "layout_type": "carousel",
             "columns_desktop": "3",
             "columns_mobile": "1",
@@ -358,9 +396,12 @@
             {
               "type": "blog-card",
               "static": true,
+              "id": "blog-card",
               "settings": {
                 "ratio": "landscape",
+                "media_layout": "stacked",
                 "alignment": "left",
+                "position": "space-between",
                 "desktop_gap": 8,
                 "mobile_gap": 8,
                 "border_thickness": 0,
@@ -372,7 +413,11 @@
                 "padding_bottom": 0,
                 "padding_left": 16,
                 "padding_right": 16,
-                "customize_mobile_padding": false
+                "customize_mobile_padding": false,
+                "padding_top_mobile": 12,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
               },
               "blocks": [
                 {
@@ -380,10 +425,13 @@
                   "settings": {
                     "line_limit": "no_limit",
                     "heading_size": "xs",
+                    "custom_heading_size": 24,
                     "html_tag": "h3",
                     "padding_top": 0,
                     "padding_bottom": 0,
-                    "customize_mobile_padding": false
+                    "customize_mobile_padding": false,
+                    "padding_top_mobile": 8,
+                    "padding_bottom_mobile": 0
                   }
                 },
                 {
@@ -395,39 +443,46 @@
                     "details_order": "date_author_comment",
                     "author_display_type": "text",
                     "author_prefix": "by",
+                    "author_icon": "user",
                     "show_date_icon": false,
                     "date_icon": "calendar",
                     "date_format": "long",
                     "show_comment_icon": false,
                     "comment_icon": "comment",
                     "separator_icon": "none",
+                    "size": "sm",
+                    "text_color": "#999999",
                     "layout": "horizontal",
                     "gap": 12,
                     "icon_size": 18,
                     "icon_gap": 6,
-                    "size": "sm",
-                    "text_color": "#999999",
                     "padding_top": 0,
                     "padding_bottom": 0,
-                    "customize_mobile_padding": false
+                    "customize_mobile_padding": false,
+                    "padding_top_mobile": 0,
+                    "padding_bottom_mobile": 4
                   }
                 },
                 {
                   "type": "blog-card-tag",
                   "settings": {
-                    "text_case": "original",
-                    "padding_top": 8,
+                    "max_tag": 3,
                     "style": "outline",
+                    "text_case": "original",
                     "font": "body",
                     "font_size": "xs",
-                    "padding_bottom": 0
+                    "letter_spacing": "normal",
+                    "text_color": "",
+                    "padding_top": 8,
+                    "padding_bottom": 0,
+                    "customize_mobile_padding": false,
+                    "padding_top_mobile": 8,
+                    "padding_bottom_mobile": 0
                   }
                 }
-              ],
-              "id": "blog-card"
+              ]
             }
-          ],
-          "id": "blog-list"
+          ]
         }
       ]
     }
