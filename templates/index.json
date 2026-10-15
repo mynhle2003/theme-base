@@ -11,45 +11,20 @@
   "sections": {
     "hero": {
       "type": "hero",
-      "settings": {
-        "width": "full",
-        "layout": "classic",
-        "media_type": "image",
-        "overlay": "#00000000",
-        "parallax_effect": "none",
-        "desktop_height": "medium",
-        "mobile_height": "medium",
-        "content_width": "custom",
-        "content_max_width": 960,
-        "enable_sticky": false,
-        "desktop_position": "bottom_left",
-        "mobile_position": "bottom_left",
-        "desktop_gap": 0,
-        "mobile_gap": 0,
-        "color_scheme": "scheme-1",
-        "content_color_scheme": "scheme-3",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0,
-        "banner_image": "shopify://shop_images/malandra-hero-desktop-figma.avif",
-        "mobile_banner_image": "shopify://shop_images/malandra-hero-mobile-figma.avif"
-      },
       "blocks": {
         "hero-content": {
           "type": "group",
           "settings": {
-            "backdrop_blur": 0,
             "direction": "vertical",
-            "alignment": "left",
             "customize_mobile_alignment": true,
+            "alignment": "left",
             "alignment_mobile": "left",
-            "width": "fill",
-            "width_mobile": "fill",
-            "height": "fit",
             "gap_desktop": 40,
             "gap_mobile": 28,
+            "width": "fill",
+            "height": "fit",
+            "width_mobile": "fill",
+            "backdrop_blur": 0,
             "padding_top": 0,
             "padding_bottom": 64,
             "padding_left": 16,
@@ -66,12 +41,12 @@
               "settings": {
                 "width": "fill",
                 "max_width": 840,
+                "customize_mobile_size": true,
+                "width_mobile": "fill",
                 "inherit_alignment": false,
                 "alignment": "left",
                 "customize_mobile_alignment": true,
                 "alignment_mobile": "left",
-                "customize_mobile_size": true,
-                "width_mobile": "fill",
                 "gap_desktop": 16,
                 "gap_mobile": 16
               },
@@ -122,45 +97,52 @@
       },
       "block_order": [
         "hero-content"
-      ]
+      ],
+      "settings": {
+        "width": "full",
+        "layout": "classic",
+        "media_type": "image",
+        "banner_image": "shopify://shop_images/malandra-hero-desktop-figma.avif",
+        "mobile_banner_image": "shopify://shop_images/malandra-hero-mobile-figma.avif",
+        "overlay": "#00000000",
+        "parallax_effect": "none",
+        "desktop_height": "medium",
+        "mobile_height": "medium",
+        "content_width": "custom",
+        "content_max_width": 960,
+        "enable_sticky": false,
+        "desktop_position": "bottom_left",
+        "mobile_position": "bottom_left",
+        "desktop_gap": 0,
+        "mobile_gap": 0,
+        "color_scheme": "scheme-1",
+        "content_color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
     },
     "values_marquee": {
       "type": "text-marquee-custom",
-      "settings": {
-        "section_width": "full_width_no_padding",
-        "direction": "vertical",
-        "gap_desktop": 0,
-        "gap_mobile": 0,
-        "color_scheme": "scheme-2",
-        "background_color": "#f4efe9",
-        "padding_top": 20,
-        "padding_bottom": 20,
-        "customize_mobile_padding": true,
-        "position_horizontal": "center",
-        "horizontal_alignment": "left",
-        "alignment": "left",
-        "alignment_mobile": "left",
-        "padding_top_mobile": 20,
-        "padding_bottom_mobile": 20,
-        "height": "fit"
-      },
       "blocks": {
         "marquee-marquee-1": {
           "type": "marquee",
           "settings": {
-            "animation_direction": "backward",
-            "animation_speed": 0.6,
-            "gap_desktop": 24,
-            "gap_mobile": 24,
-            "padding_top": 0,
-            "padding_bottom": 0,
             "show_top_divider": false,
             "show_bottom_divider": false,
             "show_blurred_edges": false,
             "enable_parallax": false,
             "alignment": "center",
+            "animation_speed": 0.6,
+            "animation_direction": "backward",
+            "gap_desktop": 24,
+            "gap_mobile": 24,
             "width": "fill",
-            "color_type": "inherit"
+            "color_type": "inherit",
+            "padding_top": 0,
+            "padding_bottom": 0
           },
           "blocks": {
             "marquee-group-1": {
@@ -169,9 +151,9 @@
                 "direction": "horizontal",
                 "gap_desktop": 24,
                 "gap_mobile": 24,
+                "color_type": "inherit",
                 "padding_left": 0,
-                "padding_right": 0,
-                "color_type": "inherit"
+                "padding_right": 0
               },
               "blocks": {
                 "marquee-text-1": {
@@ -181,10 +163,10 @@
                     "text_size": "md",
                     "text_color": "#181818",
                     "width": "fit",
-                    "padding_left": 16,
-                    "padding_right": 16,
                     "animation_type": "slide-bottom",
-                    "animation_delay": 100
+                    "animation_delay": 100,
+                    "padding_left": 16,
+                    "padding_right": 16
                   }
                 },
                 "marquee-icon-2": {
@@ -210,9 +192,9 @@
                 "direction": "horizontal",
                 "gap_desktop": 24,
                 "gap_mobile": 24,
+                "color_type": "inherit",
                 "padding_left": 0,
-                "padding_right": 0,
-                "color_type": "inherit"
+                "padding_right": 0
               },
               "blocks": {
                 "marquee-text-1": {
@@ -222,10 +204,10 @@
                     "text_size": "md",
                     "text_color": "#181818",
                     "width": "fit",
-                    "padding_left": 16,
-                    "padding_right": 16,
                     "animation_type": "slide-bottom",
-                    "animation_delay": 100
+                    "animation_delay": 100,
+                    "padding_left": 16,
+                    "padding_right": 16
                   }
                 },
                 "marquee-icon-4": {
@@ -251,9 +233,9 @@
                 "direction": "horizontal",
                 "gap_desktop": 24,
                 "gap_mobile": 24,
+                "color_type": "inherit",
                 "padding_left": 0,
-                "padding_right": 0,
-                "color_type": "inherit"
+                "padding_right": 0
               },
               "blocks": {
                 "marquee-text-1": {
@@ -263,10 +245,10 @@
                     "text_size": "md",
                     "text_color": "#181818",
                     "width": "fit",
-                    "padding_left": 16,
-                    "padding_right": 16,
                     "animation_type": "slide-bottom",
-                    "animation_delay": 100
+                    "animation_delay": 100,
+                    "padding_left": 16,
+                    "padding_right": 16
                   }
                 },
                 "marquee-icon-6": {
@@ -292,9 +274,9 @@
                 "direction": "horizontal",
                 "gap_desktop": 24,
                 "gap_mobile": 24,
+                "color_type": "inherit",
                 "padding_left": 0,
-                "padding_right": 0,
-                "color_type": "inherit"
+                "padding_right": 0
               },
               "blocks": {
                 "marquee-text-1": {
@@ -304,10 +286,10 @@
                     "text_size": "md",
                     "text_color": "#181818",
                     "width": "fit",
-                    "padding_left": 16,
-                    "padding_right": 16,
                     "animation_type": "slide-bottom",
-                    "animation_delay": 100
+                    "animation_delay": 100,
+                    "padding_left": 16,
+                    "padding_right": 16
                   }
                 },
                 "marquee-icon-8": {
@@ -333,9 +315,9 @@
                 "direction": "horizontal",
                 "gap_desktop": 24,
                 "gap_mobile": 24,
+                "color_type": "inherit",
                 "padding_left": 0,
-                "padding_right": 0,
-                "color_type": "inherit"
+                "padding_right": 0
               },
               "blocks": {
                 "marquee-text-1": {
@@ -345,10 +327,10 @@
                     "text_size": "md",
                     "text_color": "#181818",
                     "width": "fit",
-                    "padding_left": 16,
-                    "padding_right": 16,
                     "animation_type": "slide-bottom",
-                    "animation_delay": 100
+                    "animation_delay": 100,
+                    "padding_left": 16,
+                    "padding_right": 16
                   }
                 },
                 "marquee-icon-10": {
@@ -374,9 +356,9 @@
                 "direction": "horizontal",
                 "gap_desktop": 24,
                 "gap_mobile": 24,
+                "color_type": "inherit",
                 "padding_left": 0,
-                "padding_right": 0,
-                "color_type": "inherit"
+                "padding_right": 0
               },
               "blocks": {
                 "marquee-text-1": {
@@ -386,10 +368,10 @@
                     "text_size": "md",
                     "text_color": "#181818",
                     "width": "fit",
-                    "padding_left": 16,
-                    "padding_right": 16,
                     "animation_type": "slide-bottom",
-                    "animation_delay": 100
+                    "animation_delay": 100,
+                    "padding_left": 16,
+                    "padding_right": 16
                   }
                 },
                 "marquee-icon-12": {
@@ -415,9 +397,9 @@
                 "direction": "horizontal",
                 "gap_desktop": 24,
                 "gap_mobile": 24,
+                "color_type": "inherit",
                 "padding_left": 0,
-                "padding_right": 0,
-                "color_type": "inherit"
+                "padding_right": 0
               },
               "blocks": {
                 "marquee-text-1": {
@@ -427,10 +409,10 @@
                     "text_size": "md",
                     "text_color": "#181818",
                     "width": "fit",
-                    "padding_left": 16,
-                    "padding_right": 16,
                     "animation_type": "slide-bottom",
-                    "animation_delay": 100
+                    "animation_delay": 100,
+                    "padding_left": 16,
+                    "padding_right": 16
                   }
                 },
                 "marquee-icon-14": {
@@ -456,9 +438,9 @@
                 "direction": "horizontal",
                 "gap_desktop": 24,
                 "gap_mobile": 24,
+                "color_type": "inherit",
                 "padding_left": 0,
-                "padding_right": 0,
-                "color_type": "inherit"
+                "padding_right": 0
               },
               "blocks": {
                 "marquee-text-1": {
@@ -468,10 +450,10 @@
                     "text_size": "md",
                     "text_color": "#181818",
                     "width": "fit",
-                    "padding_left": 16,
-                    "padding_right": 16,
                     "animation_type": "slide-bottom",
-                    "animation_delay": 100
+                    "animation_delay": 100,
+                    "padding_left": 16,
+                    "padding_right": 16
                   }
                 },
                 "marquee-icon-16": {
@@ -506,49 +488,32 @@
       },
       "block_order": [
         "marquee-marquee-1"
-      ]
+      ],
+      "settings": {
+        "section_width": "full_width_no_padding",
+        "direction": "vertical",
+        "position_horizontal": "center",
+        "horizontal_alignment": "left",
+        "alignment": "left",
+        "alignment_mobile": "left",
+        "gap_desktop": 0,
+        "gap_mobile": 0,
+        "height": "fit",
+        "color_scheme": "scheme-2",
+        "background_color": "#f4efe9",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
     },
     "collection_tabs": {
       "type": "collection-tabs",
-      "settings": {
-        "section_width": "full_width",
-        "layout_direction": "vertical",
-        "tab_position": "center",
-        "mobile_alignment": "left",
-        "gap_desktop": 48,
-        "gap_mobile": 36,
-        "max_products": 4,
-        "layout_type": "carousel",
-        "columns_desktop": "4",
-        "columns_mobile": "1",
-        "show_next_slide_preview_on_desktop": false,
-        "show_next_slide_preview_on_mobile": true,
-        "product_gap_desktop": 10,
-        "product_gap_mobile": 10,
-        "show_navigation_on_desktop": true,
-        "navigation_position": "inside",
-        "navigation_style": "primary",
-        "navigation_icon": "chevron",
-        "navigation_behavior": "show_on_hover",
-        "show_pagination_on_desktop": false,
-        "pagination_type": "progress_bar",
-        "pagination_top_padding_desktop": 48,
-        "pagination_top_padding_mobile": 36,
-        "pagination_limit_width": false,
-        "pagination_max_width": 260,
-        "autoplay": false,
-        "autoplay_pause_on_hover": true,
-        "autoplay_speed": 4,
-        "color_scheme": "scheme-1",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
-      },
       "blocks": {
         "header": {
           "type": "header",
+          "disabled": true,
           "static": true,
           "settings": {
             "width": "fit",
@@ -569,8 +534,7 @@
           },
           "block_order": [
             "heading-1"
-          ],
-          "disabled": true
+          ]
         },
         "tab-layout": {
           "type": "tab-layout",
@@ -642,6 +606,7 @@
         },
         "collection-tabs-view-all": {
           "type": "tabs-view-all-button",
+          "disabled": true,
           "static": true,
           "settings": {
             "button_label": "View all",
@@ -652,47 +617,69 @@
             "icon_size": "inherit",
             "icon_width": 20,
             "width": "fit",
+            "hide_view_all_mobile": false,
             "width_mobile": "fit",
-            "customize_mobile_padding": false,
-            "hide_view_all_mobile": false
-          },
-          "disabled": true
+            "customize_mobile_padding": false
+          }
         }
       },
       "block_order": [
         "collection-tab-3",
         "collection-tab-4",
         "collection-tab-5"
-      ]
+      ],
+      "settings": {
+        "section_width": "full_width",
+        "layout_direction": "vertical",
+        "tab_position": "center",
+        "mobile_alignment": "left",
+        "gap_desktop": 48,
+        "gap_mobile": 36,
+        "max_products": 4,
+        "layout_type": "carousel",
+        "columns_desktop": "4",
+        "columns_mobile": "1",
+        "show_next_slide_preview_on_desktop": false,
+        "show_next_slide_preview_on_mobile": true,
+        "product_gap_desktop": 10,
+        "product_gap_mobile": 10,
+        "show_navigation_on_desktop": true,
+        "navigation_position": "inside",
+        "navigation_style": "primary",
+        "navigation_icon": "chevron",
+        "navigation_behavior": "show_on_hover",
+        "show_pagination_on_desktop": false,
+        "pagination_type": "progress_bar",
+        "pagination_top_padding_desktop": 48,
+        "pagination_top_padding_mobile": 36,
+        "pagination_limit_width": false,
+        "pagination_max_width": 260,
+        "autoplay": false,
+        "autoplay_pause_on_hover": true,
+        "autoplay_speed": 4,
+        "color_scheme": "scheme-1",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      }
     },
     "categories": {
       "type": "collection-list",
-      "settings": {
-        "section_width": "full_width",
-        "desktop_alignment": "center",
-        "mobile_alignment": "center",
-        "gap_desktop": 48,
-        "gap_mobile": 36,
-        "background_media": "none",
-        "color_scheme": "scheme-1",
-        "padding_top": 10,
-        "padding_bottom": 80,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 10,
-        "padding_bottom_mobile": 56
-      },
       "blocks": {
         "header": {
           "type": "header",
+          "static": true,
           "settings": {
             "width": "custom",
             "max_width": 770,
+            "customize_mobile_size": true,
+            "width_mobile": "fill",
             "inherit_alignment": false,
             "alignment": "center",
             "customize_mobile_alignment": true,
             "alignment_mobile": "center",
-            "customize_mobile_size": true,
-            "width_mobile": "fill",
             "gap_desktop": 8,
             "gap_mobile": 8
           },
@@ -709,7 +696,6 @@
               }
             }
           },
-          "static": true,
           "block_order": [
             "heading-1"
           ]
@@ -718,6 +704,11 @@
           "type": "collection-list-items",
           "static": true,
           "settings": {
+            "collections": [
+              "necklace-malandra",
+              "earrings-malandra",
+              "bracelet-malandra"
+            ],
             "layout": "carousel",
             "columns_desktop": "3",
             "columns_mobile": "1",
@@ -726,18 +717,13 @@
             "gap_desktop": 16,
             "gap_mobile": 16,
             "show_navigation_on_desktop": true,
+            "navigation_style": "primary",
+            "navigation_behavior": "show_on_hover",
             "show_pagination_on_desktop": false,
             "pagination_type": "progress_bar",
             "pagination_top_padding_desktop": 48,
             "pagination_top_padding_mobile": 36,
-            "autoplay": false,
-            "navigation_style": "primary",
-            "navigation_behavior": "show_on_hover",
-            "collections": [
-              "necklace-malandra",
-              "earrings-malandra",
-              "bracelet-malandra"
-            ]
+            "autoplay": false
           },
           "blocks": {
             "collection-card": {
@@ -745,33 +731,33 @@
               "static": true,
               "settings": {
                 "ratio": "custom",
+                "ratio_custom_width": 6,
+                "ratio_custom_height": 7,
                 "placement": "below_image",
                 "alignment": "center",
                 "gap_desktop": 8,
                 "gap_mobile": 8,
-                "corner_radius": "square",
                 "border_thickness": 0,
+                "corner_radius": "square",
                 "shadow": "none",
                 "color_type": "color_scheme",
                 "color_scheme": "scheme-1",
                 "padding_top": 20,
                 "padding_bottom": 0,
                 "padding_left": 0,
-                "padding_right": 0,
-                "ratio_custom_width": 6,
-                "ratio_custom_height": 7
+                "padding_right": 0
               },
               "blocks": {
                 "title": {
                   "type": "collection-card-title",
                   "static": true,
                   "settings": {
+                    "title_suffix_to_hide": " Malandra",
                     "show_product_count": true,
                     "heading_size": "md",
                     "html_tag": "h3",
                     "product_count_font": "body",
-                    "product_count_font_size": "xs",
-                    "title_suffix_to_hide": " Malandra"
+                    "product_count_font_size": "xs"
                   }
                 }
               },
@@ -782,55 +768,56 @@
         },
         "view-all": {
           "type": "view-all-button",
-          "settings": {},
+          "disabled": true,
           "static": true,
-          "disabled": true
+          "settings": {}
         }
       },
-      "block_order": []
+      "settings": {
+        "section_width": "full_width",
+        "desktop_alignment": "center",
+        "mobile_alignment": "center",
+        "gap_desktop": 48,
+        "gap_mobile": 36,
+        "background_media": "none",
+        "color_scheme": "scheme-1",
+        "padding_top": 10,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 56
+      }
     },
     "statement_stacks": {
       "type": "shop-the-look-section",
-      "settings": {
-        "section_width": "full_width_no_padding",
-        "media_position": "left",
-        "mobile_media_position": "first",
-        "gap_desktop": 0,
-        "gap_mobile": 48,
-        "color_scheme": "scheme-4",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 48
-      },
       "blocks": {
         "image": {
           "type": "image",
           "static": true,
           "settings": {
+            "image": "shopify://shop_images/malandra-shop-the-look.avif",
+            "mobile_image": "shopify://shop_images/malandra-shop-the-look.avif",
             "alt_text": "Statement rings styled on a model’s hand",
             "image_ratio_desktop": "ratio_1_1",
-            "image_ratio_mobile": "ratio_1_1",
             "width_desktop": "fill",
+            "image_ratio_mobile": "ratio_1_1",
             "width_mobile": "fill",
             "corner_radius": "square",
-            "customize_mobile_padding": false,
-            "image": "shopify://shop_images/malandra-shop-the-look.avif",
-            "mobile_image": "shopify://shop_images/malandra-shop-the-look.avif"
+            "customize_mobile_padding": false
           }
         },
         "header": {
           "type": "header",
+          "static": true,
           "settings": {
             "width": "custom",
             "max_width": 770,
+            "customize_mobile_size": true,
+            "width_mobile": "fill",
             "inherit_alignment": false,
             "alignment": "center",
             "customize_mobile_alignment": true,
             "alignment_mobile": "center",
-            "customize_mobile_size": true,
-            "width_mobile": "fill",
             "gap_desktop": 8,
             "gap_mobile": 8,
             "padding_bottom": 40,
@@ -842,10 +829,10 @@
               "type": "eyebrow",
               "settings": {
                 "text": "<p>Shop the look</p>",
+                "color": "#636363",
                 "show_background": false,
                 "show_icon": false,
                 "animation_type": "slide-bottom",
-                "color": "#636363",
                 "animation_delay": 50
               }
             },
@@ -861,7 +848,6 @@
               }
             }
           },
-          "static": true,
           "block_order": [
             "eyebrow-1",
             "heading-2"
@@ -897,25 +883,25 @@
             "shop-the-look-product-1": {
               "type": "shop-the-look-product",
               "settings": {
+                "product": "elara-tennis-eternity-stacking-ring",
                 "show_hotspot": true,
                 "hotspot_horizontal": 45,
                 "hotspot_vertical": 53,
                 "customize_mobile_position": true,
                 "hotspot_horizontal_mobile": 44,
-                "hotspot_vertical_mobile": 54,
-                "product": "elara-tennis-eternity-stacking-ring"
+                "hotspot_vertical_mobile": 54
               }
             },
             "shop-the-look-product-2": {
               "type": "shop-the-look-product",
               "settings": {
+                "product": "elara-fine-diamond-signet-ring",
                 "show_hotspot": true,
                 "hotspot_horizontal": 62,
                 "hotspot_vertical": 56,
                 "customize_mobile_position": true,
                 "hotspot_horizontal_mobile": 62,
-                "hotspot_vertical_mobile": 56,
-                "product": "elara-fine-diamond-signet-ring"
+                "hotspot_vertical_mobile": 56
               }
             }
           },
@@ -925,36 +911,36 @@
           ]
         }
       },
-      "block_order": []
-    },
-    "new_collections": {
-      "type": "image-cards",
       "settings": {
         "section_width": "full_width_no_padding",
-        "direction": "horizontal",
-        "vertical_on_mobile": true,
-        "height": "auto",
+        "media_position": "left",
+        "mobile_media_position": "first",
         "gap_desktop": 0,
-        "gap_mobile": 0,
-        "color_scheme": "scheme-1",
+        "gap_mobile": 48,
+        "color_scheme": "scheme-4",
         "padding_top": 0,
         "padding_bottom": 0,
         "customize_mobile_padding": true,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
-      },
+        "padding_bottom_mobile": 48
+      }
+    },
+    "new_collections": {
+      "type": "image-cards",
       "blocks": {
         "image-card-1": {
           "type": "image-card",
           "settings": {
+            "image": "shopify://shop_images/malandra-image-cards-opal-desktop-crop.avif",
+            "mobile_image": "shopify://shop_images/malandra-image-cards-opal-mobile-crop.avif",
             "height_desktop": "ratio_5_4",
             "height_mobile": "ratio_5_4",
+            "enable_sticky": false,
             "position_desktop": "bottom_center",
             "position_mobile": "bottom_center",
-            "color_scheme": "scheme-1",
             "gap_desktop": 24,
             "gap_mobile": 24,
-            "enable_sticky": false,
+            "color_scheme": "scheme-1",
             "padding_top": 56,
             "padding_bottom": 56,
             "padding_left": 56,
@@ -963,9 +949,7 @@
             "padding_top_mobile": 40,
             "padding_bottom_mobile": 40,
             "padding_left_mobile": 56,
-            "padding_right_mobile": 56,
-            "image": "shopify://shop_images/malandra-image-cards-opal-desktop-crop.avif",
-            "mobile_image": "shopify://shop_images/malandra-image-cards-opal-mobile-crop.avif"
+            "padding_right_mobile": 56
           },
           "blocks": {
             "header-1": {
@@ -1024,14 +1008,16 @@
         "image-card-2": {
           "type": "image-card",
           "settings": {
+            "image": "shopify://shop_images/malandra-image-cards-model-desktop-crop.avif",
+            "mobile_image": "shopify://shop_images/malandra-image-cards-model-mobile-crop.avif",
             "height_desktop": "ratio_5_4",
             "height_mobile": "ratio_5_4",
+            "enable_sticky": false,
             "position_desktop": "center_center",
             "position_mobile": "center_center",
-            "color_scheme": "scheme-3",
             "gap_desktop": 24,
             "gap_mobile": 24,
-            "enable_sticky": false,
+            "color_scheme": "scheme-3",
             "padding_top": 56,
             "padding_bottom": 56,
             "padding_left": 56,
@@ -1040,9 +1026,7 @@
             "padding_top_mobile": 56,
             "padding_bottom_mobile": 56,
             "padding_left_mobile": 56,
-            "padding_right_mobile": 56,
-            "image": "shopify://shop_images/malandra-image-cards-model-desktop-crop.avif",
-            "mobile_image": "shopify://shop_images/malandra-image-cards-model-mobile-crop.avif"
+            "padding_right_mobile": 56
           },
           "blocks": {
             "heading-1": {
@@ -1076,33 +1060,24 @@
       "block_order": [
         "image-card-1",
         "image-card-2"
-      ]
-    },
-    "spring_sale": {
-      "type": "countdown",
+      ],
       "settings": {
-        "section_width": "page_width",
-        "enable_boxed_layout": false,
-        "direction": "vertical",
-        "position": "center",
-        "horizontal_alignment": "space-between",
-        "customize_mobile_alignment": true,
-        "alignment": "left",
-        "alignment_mobile": "center",
+        "section_width": "full_width_no_padding",
+        "height": "auto",
+        "direction": "horizontal",
+        "vertical_on_mobile": true,
         "gap_desktop": 0,
         "gap_mobile": 0,
         "color_scheme": "scheme-1",
-        "boxed_color_scheme": "scheme-1",
-        "boxed_padding_block": 70,
-        "boxed_padding_inline": 50,
-        "boxed_padding_block_mobile": 40,
-        "boxed_padding_inline_mobile": 30,
         "padding_top": 0,
         "padding_bottom": 0,
         "customize_mobile_padding": true,
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 0
-      },
+      }
+    },
+    "spring_sale": {
+      "type": "countdown",
       "blocks": {
         "divider": {
           "type": "divider",
@@ -1123,11 +1098,11 @@
             "horizontal_alignment": "space-between",
             "customize_mobile_alignment": true,
             "alignment_mobile": "center",
-            "width": "fill",
-            "width_mobile": "fill",
-            "height": "fit",
             "gap_desktop": 36,
             "gap_mobile": 36,
+            "width": "fill",
+            "height": "fit",
+            "width_mobile": "fill",
             "padding_top": 64,
             "padding_bottom": 64,
             "customize_mobile_padding": true,
@@ -1139,22 +1114,22 @@
               "type": "group",
               "settings": {
                 "direction": "vertical",
+                "customize_mobile_alignment": true,
                 "alignment": "left",
                 "alignment_mobile": "center",
-                "width": "fill",
-                "height": "fit",
                 "gap_desktop": 16,
                 "gap_mobile": 12,
+                "width": "fill",
+                "limit_width": true,
+                "max_width": 500,
+                "height": "fit",
+                "width_mobile": "fill",
+                "limit_width_mobile": false,
                 "appearance_type": "inherit",
                 "border_type": "none",
                 "corner_radius": "square",
                 "shadow": "none",
-                "customize_mobile_padding": false,
-                "customize_mobile_alignment": true,
-                "max_width": 500,
-                "limit_width": true,
-                "width_mobile": "fill",
-                "limit_width_mobile": false
+                "customize_mobile_padding": false
               },
               "blocks": {
                 "heading-1": {
@@ -1191,11 +1166,11 @@
                 "show_background": false,
                 "corner_radius": "square",
                 "type": "recurring",
+                "duration_hours": 64,
+                "duration_minutes": 23,
                 "number_size": "lg",
                 "label_size": "xs",
-                "color_type": "inherit",
-                "duration_hours": 64,
-                "duration_minutes": 23
+                "color_type": "inherit"
               }
             },
             "action": {
@@ -1204,13 +1179,13 @@
                 "direction": "vertical",
                 "alignment": "right",
                 "alignment_mobile": "center",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
                 "width": "fill",
                 "limit_width": true,
                 "max_width": 500,
                 "width_mobile": "fill",
-                "limit_width_mobile": false,
-                "gap_desktop": 0,
-                "gap_mobile": 0
+                "limit_width_mobile": false
               },
               "blocks": {
                 "button": {
@@ -1218,14 +1193,14 @@
                   "settings": {
                     "button_label": "Shop now",
                     "button_link": "",
-                    "button_style": "primary",
                     "button_open_in_new_tab": false,
+                    "button_style": "primary",
                     "show_icon": false,
                     "width": "fit",
                     "width_mobile": "fit",
-                    "customize_mobile_padding": false,
                     "animation_type": "slide-bottom",
-                    "animation_delay": 150
+                    "animation_delay": 150,
+                    "customize_mobile_padding": false
                   }
                 }
               },
@@ -1244,36 +1219,50 @@
       "block_order": [
         "divider",
         "layout"
-      ]
+      ],
+      "settings": {
+        "section_width": "page_width",
+        "enable_boxed_layout": false,
+        "direction": "vertical",
+        "position": "center",
+        "horizontal_alignment": "space-between",
+        "customize_mobile_alignment": true,
+        "alignment": "left",
+        "alignment_mobile": "center",
+        "gap_desktop": 0,
+        "gap_mobile": 0,
+        "color_scheme": "scheme-1",
+        "boxed_color_scheme": "scheme-1",
+        "boxed_padding_block": 70,
+        "boxed_padding_inline": 50,
+        "boxed_padding_block_mobile": 40,
+        "boxed_padding_inline_mobile": 30,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
     },
     "opal_edits": {
       "type": "image-cards",
-      "settings": {
-        "section_width": "full_width_no_padding",
-        "direction": "horizontal",
-        "vertical_on_mobile": true,
-        "height": "auto",
-        "gap_desktop": 16,
-        "gap_mobile": 12,
-        "color_scheme": "scheme-1",
-        "padding_top": 0,
-        "padding_bottom": 16,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 12
-      },
       "blocks": {
         "image-card-1": {
           "type": "image-card",
           "settings": {
+            "background_type": "image",
+            "image": "shopify://shop_images/malandra-opal-edits-earrings-desktop-crop.avif",
+            "mobile_image": "shopify://shop_images/malandra-opal-edits-earrings-mobile-crop.avif",
+            "show_overlay": false,
             "height_desktop": "ratio_5_4",
             "height_mobile": "ratio_5_4",
+            "enable_sticky": false,
             "position_desktop": "bottom_center",
             "position_mobile": "bottom_center",
-            "color_scheme": "scheme-1",
             "gap_desktop": 24,
             "gap_mobile": 16,
-            "enable_sticky": false,
+            "corner_radius": "square",
+            "color_scheme": "scheme-1",
             "padding_top": 56,
             "padding_bottom": 56,
             "padding_left": 56,
@@ -1282,20 +1271,15 @@
             "padding_top_mobile": 28,
             "padding_bottom_mobile": 28,
             "padding_left_mobile": 24,
-            "padding_right_mobile": 24,
-            "background_type": "image",
-            "show_overlay": false,
-            "corner_radius": "square",
-            "image": "shopify://shop_images/malandra-opal-edits-earrings-desktop-crop.avif",
-            "mobile_image": "shopify://shop_images/malandra-opal-edits-earrings-mobile-crop.avif"
+            "padding_right_mobile": 24
           },
           "blocks": {
             "header-1": {
               "type": "header",
               "settings": {
                 "width": "fill",
-                "alignment": "center",
                 "inherit_alignment": false,
+                "alignment": "center",
                 "gap_desktop": 10,
                 "gap_mobile": 4
               },
@@ -1304,10 +1288,10 @@
                   "type": "eyebrow",
                   "settings": {
                     "text": "<p>SALE UP TO 20%</p>",
+                    "color": "#636363",
                     "show_background": false,
                     "show_icon": false,
                     "animation_type": "slide-bottom",
-                    "color": "#636363",
                     "animation_delay": 50
                   }
                 },
@@ -1347,14 +1331,19 @@
         "image-card-2": {
           "type": "image-card",
           "settings": {
+            "background_type": "image",
+            "image": "shopify://shop_images/malandra-opal-edits-necklace-desktop-crop.avif",
+            "mobile_image": "shopify://shop_images/malandra-opal-edits-necklace-mobile-crop.avif",
+            "show_overlay": false,
             "height_desktop": "ratio_5_4",
             "height_mobile": "ratio_5_4",
+            "enable_sticky": false,
             "position_desktop": "bottom_center",
             "position_mobile": "bottom_center",
-            "color_scheme": "scheme-1",
             "gap_desktop": 24,
             "gap_mobile": 16,
-            "enable_sticky": false,
+            "corner_radius": "square",
+            "color_scheme": "scheme-1",
             "padding_top": 56,
             "padding_bottom": 56,
             "padding_left": 56,
@@ -1363,20 +1352,15 @@
             "padding_top_mobile": 28,
             "padding_bottom_mobile": 28,
             "padding_left_mobile": 24,
-            "padding_right_mobile": 24,
-            "background_type": "image",
-            "show_overlay": false,
-            "corner_radius": "square",
-            "image": "shopify://shop_images/malandra-opal-edits-necklace-desktop-crop.avif",
-            "mobile_image": "shopify://shop_images/malandra-opal-edits-necklace-mobile-crop.avif"
+            "padding_right_mobile": 24
           },
           "blocks": {
             "header-1": {
               "type": "header",
               "settings": {
                 "width": "fill",
-                "alignment": "center",
                 "inherit_alignment": false,
+                "alignment": "center",
                 "gap_desktop": 10,
                 "gap_mobile": 4
               },
@@ -1385,10 +1369,10 @@
                   "type": "eyebrow",
                   "settings": {
                     "text": "<p>NEW COLLECTION 2025</p>",
+                    "color": "#636363",
                     "show_background": false,
                     "show_icon": false,
                     "animation_type": "slide-bottom",
-                    "color": "#636363",
                     "animation_delay": 50
                   }
                 },
@@ -1429,43 +1413,36 @@
       "block_order": [
         "image-card-1",
         "image-card-2"
-      ]
+      ],
+      "settings": {
+        "section_width": "full_width_no_padding",
+        "height": "auto",
+        "direction": "horizontal",
+        "vertical_on_mobile": true,
+        "gap_desktop": 16,
+        "gap_mobile": 12,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 16,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 12
+      }
     },
     "love_always": {
       "type": "hero",
-      "settings": {
-        "width": "full",
-        "layout": "classic",
-        "media_type": "video",
-        "desktop_height": "medium",
-        "mobile_height": "extra_small",
-        "desktop_position": "center_center",
-        "mobile_position": "center_center",
-        "content_width": "fill",
-        "desktop_gap": 48,
-        "mobile_gap": 36,
-        "content_color_scheme": "scheme-3",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 50,
-        "padding_bottom_mobile": 50,
-        "overlay": "#00000000",
-        "video": "shopify://files/videos/malandra-love-always-figma-compatible.mp4",
-        "mobile_video": "shopify://files/videos/malandra-love-always-figma-compatible.mp4"
-      },
       "blocks": {
         "header-1": {
           "type": "header",
           "settings": {
             "width": "custom",
             "max_width": 770,
+            "customize_mobile_size": true,
+            "width_mobile": "fill",
             "inherit_alignment": false,
             "alignment": "center",
             "customize_mobile_alignment": true,
             "alignment_mobile": "center",
-            "customize_mobile_size": true,
-            "width_mobile": "fill",
             "gap_desktop": 16,
             "gap_mobile": 10
           },
@@ -1474,10 +1451,10 @@
               "type": "eyebrow",
               "settings": {
                 "text": "<p>INTRODUCING</p>",
+                "color": "#FFFFFFCC",
                 "show_background": false,
                 "show_icon": false,
                 "animation_type": "slide-bottom",
-                "color": "#FFFFFFCC",
                 "animation_delay": 50
               }
             },
@@ -1487,9 +1464,9 @@
                 "text": "<p>Love, Always</p>",
                 "heading_size": "xl",
                 "html_tag": "h2",
+                "text_color": "#FFFFFF",
                 "width": "fill",
                 "animation_type": "rotate-words",
-                "text_color": "#FFFFFF",
                 "animation_delay": 50
               }
             }
@@ -1503,10 +1480,10 @@
           "type": "button",
           "settings": {
             "button_label": "Shop now",
+            "button_link": "shopify://collections/all",
             "button_style": "primary",
             "show_icon": false,
             "animation_type": "slide-bottom",
-            "button_link": "shopify://collections/all",
             "animation_delay": 150
           }
         }
@@ -1514,36 +1491,44 @@
       "block_order": [
         "header-1",
         "button-2"
-      ]
+      ],
+      "settings": {
+        "width": "full",
+        "layout": "classic",
+        "media_type": "video",
+        "video": "shopify://files/videos/malandra-love-always-figma-compatible.mp4",
+        "mobile_video": "shopify://files/videos/malandra-love-always-figma-compatible.mp4",
+        "overlay": "#00000000",
+        "desktop_height": "medium",
+        "mobile_height": "extra_small",
+        "content_width": "fill",
+        "desktop_position": "center_center",
+        "mobile_position": "center_center",
+        "desktop_gap": 48,
+        "mobile_gap": 36,
+        "content_color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 50,
+        "padding_bottom_mobile": 50
+      }
     },
     "articles": {
       "type": "blog-posts",
-      "settings": {
-        "section_width": "page_width",
-        "desktop_alignment": "center",
-        "mobile_alignment": "center",
-        "gap_desktop": 48,
-        "gap_mobile": 40,
-        "color_scheme": "scheme-1",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56,
-        "blog": "malandra"
-      },
       "blocks": {
         "header": {
           "type": "header",
+          "static": true,
           "settings": {
             "width": "custom",
             "max_width": 770,
+            "customize_mobile_size": true,
+            "width_mobile": "fill",
             "inherit_alignment": false,
             "alignment": "center",
             "customize_mobile_alignment": true,
             "alignment_mobile": "center",
-            "customize_mobile_size": true,
-            "width_mobile": "fill",
             "gap_desktop": 16,
             "gap_mobile": 10
           },
@@ -1570,7 +1555,6 @@
               }
             }
           },
-          "static": true,
           "block_order": [
             "heading-1",
             "text-2"
@@ -1582,19 +1566,20 @@
           "settings": {
             "button_label": "View all",
             "button_style": "text",
+            "show_icon": true,
+            "icon": "arrow_up_right",
+            "icon_size": "custom",
+            "icon_width": 16,
+            "hide_view_all_mobile": false,
             "button_style_mobile": "text",
             "button_height_mobile": "inherit",
             "full_width_mobile": false,
-            "show_icon": true,
-            "show_icon_mobile": true,
-            "hide_view_all_mobile": false,
-            "icon": "arrow_up_right",
-            "icon_size": "custom",
-            "icon_width": 16
+            "show_icon_mobile": true
           }
         },
         "blog-list": {
           "type": "blog-list",
+          "static": true,
           "settings": {
             "max_posts": 3,
             "layout_type": "grid",
@@ -1605,18 +1590,19 @@
             "gap_desktop": 36,
             "gap_mobile": 32,
             "show_navigation_on_desktop": true,
+            "navigation_style": "primary",
+            "navigation_behavior": "show_on_hover",
             "show_pagination_on_desktop": false,
             "pagination_type": "progress_bar",
             "pagination_padding_desktop": 48,
             "pagination_padding_mobile": 36,
             "pagination_limit_width": false,
-            "autoplay": false,
-            "navigation_style": "primary",
-            "navigation_behavior": "show_on_hover"
+            "autoplay": false
           },
           "blocks": {
             "blog-card": {
               "type": "blog-card",
+              "static": true,
               "settings": {
                 "ratio": "ratio_4_3",
                 "media_layout": "horizontal",
@@ -1642,9 +1628,9 @@
                 "blog-card-title-1": {
                   "type": "blog-card-title",
                   "settings": {
+                    "line_limit": "no_limit",
                     "heading_size": "md",
                     "html_tag": "h3",
-                    "line_limit": "no_limit",
                     "padding_top": 0,
                     "padding_bottom": 8,
                     "customize_mobile_padding": true,
@@ -1658,15 +1644,15 @@
                     "show_date": true,
                     "show_author": true,
                     "show_comment_count": false,
+                    "author_prefix": "",
                     "show_date_icon": false,
                     "date_format": "long",
-                    "layout": "horizontal",
+                    "separator_icon": "dot",
                     "size": "xs",
                     "text_color": "#999999",
+                    "layout": "horizontal",
                     "padding_top": 0,
                     "padding_bottom": 12,
-                    "separator_icon": "dot",
-                    "author_prefix": "",
                     "customize_mobile_padding": true,
                     "padding_top_mobile": 0,
                     "padding_bottom_mobile": 8
@@ -1711,7 +1697,6 @@
                   }
                 }
               },
-              "static": true,
               "block_order": [
                 "blog-card-tag-5",
                 "blog-card-title-1",
@@ -1721,27 +1706,26 @@
               ]
             }
           },
-          "static": true,
           "block_order": []
         }
       },
-      "block_order": []
+      "settings": {
+        "blog": "malandra",
+        "section_width": "page_width",
+        "desktop_alignment": "center",
+        "mobile_alignment": "center",
+        "gap_desktop": 48,
+        "gap_mobile": 40,
+        "color_scheme": "scheme-1",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      }
     },
     "instagram": {
       "type": "gallery-image-grid",
-      "settings": {
-        "section_width": "full_width",
-        "alignment": "center",
-        "content_gap": 40,
-        "customize_mobile_gap": true,
-        "content_gap_mobile": 36,
-        "color_scheme": "scheme-1",
-        "padding_top": 20,
-        "padding_bottom": 80,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 10,
-        "padding_bottom_mobile": 56
-      },
       "blocks": {
         "gallery-header-group-1": {
           "type": "gallery-header-group",
@@ -1758,10 +1742,10 @@
                 "heading_size": "lg",
                 "html_tag": "h2",
                 "width": "custom",
-                "animation_type": "rotate-words",
                 "max_width": 760,
                 "customize_mobile_size": true,
                 "width_mobile": "fill",
+                "animation_type": "rotate-words",
                 "animation_delay": 50
               }
             },
@@ -1771,10 +1755,10 @@
                 "text": "<p>@exclusive_gold</p>",
                 "text_size": "md",
                 "width": "custom",
-                "animation_type": "slide-bottom",
                 "max_width": 760,
                 "customize_mobile_size": true,
                 "width_mobile": "fill",
+                "animation_type": "slide-bottom",
                 "animation_delay": 100
               }
             }
@@ -1797,97 +1781,97 @@
             "gallery-image-1": {
               "type": "gallery-image",
               "settings": {
+                "image": "shopify://shop_images/malandra-gallery-01-figma.avif",
+                "alt_text": "Blue gemstone and diamond stacking rings on a hand",
                 "tag": "",
                 "social_network": "instagram",
-                "show_overlay": "hover",
-                "alt_text": "Blue gemstone and diamond stacking rings on a hand",
                 "social_background": "#FFFFFF00",
                 "social_color": "#FFFFFF",
-                "image": "shopify://shop_images/malandra-gallery-01-figma.avif"
+                "show_overlay": "hover"
               }
             },
             "gallery-image-2": {
               "type": "gallery-image",
               "settings": {
+                "image": "shopify://shop_images/malandra-gallery-02-figma.avif",
+                "alt_text": "Diamond necklace against a dark blue background",
                 "tag": "",
                 "social_network": "instagram",
-                "show_overlay": "hover",
-                "alt_text": "Diamond necklace against a dark blue background",
                 "social_background": "#FFFFFF00",
                 "social_color": "#FFFFFF",
-                "image": "shopify://shop_images/malandra-gallery-02-figma.avif"
+                "show_overlay": "hover"
               }
             },
             "gallery-image-3": {
               "type": "gallery-image",
               "settings": {
+                "image": "shopify://shop_images/malandra-gallery-03-figma.avif",
+                "alt_text": "Model wearing a statement gemstone earring",
                 "tag": "",
                 "social_network": "instagram",
-                "show_overlay": "hover",
-                "alt_text": "Model wearing a statement gemstone earring",
                 "social_background": "#FFFFFF00",
                 "social_color": "#FFFFFF",
-                "image": "shopify://shop_images/malandra-gallery-03-figma.avif"
+                "show_overlay": "hover"
               }
             },
             "gallery-image-4": {
               "type": "gallery-image",
               "settings": {
+                "image": "shopify://shop_images/malandra-gallery-04-figma.avif",
+                "alt_text": "Sculptural gold rings on light fabric",
                 "tag": "",
                 "social_network": "instagram",
-                "show_overlay": "hover",
-                "alt_text": "Sculptural gold rings on light fabric",
                 "social_background": "#FFFFFF00",
                 "social_color": "#FFFFFF",
-                "image": "shopify://shop_images/malandra-gallery-04-figma.avif"
+                "show_overlay": "hover"
               }
             },
             "gallery-image-5": {
               "type": "gallery-image",
               "settings": {
+                "image": "shopify://shop_images/malandra-gallery-05-figma.avif",
+                "alt_text": "Gold charm bracelet on a wrist",
                 "tag": "",
                 "social_network": "instagram",
-                "show_overlay": "hover",
-                "alt_text": "Gold charm bracelet on a wrist",
                 "social_background": "#FFFFFF00",
                 "social_color": "#FFFFFF",
-                "image": "shopify://shop_images/malandra-gallery-05-figma.avif"
+                "show_overlay": "hover"
               }
             },
             "gallery-image-6": {
               "type": "gallery-image",
               "settings": {
+                "image": "shopify://shop_images/malandra-gallery-06-figma.avif",
+                "alt_text": "Gold gemstone bangle on a pale background",
                 "tag": "",
                 "social_network": "instagram",
-                "show_overlay": "hover",
-                "alt_text": "Gold gemstone bangle on a pale background",
                 "social_background": "#FFFFFF00",
                 "social_color": "#FFFFFF",
-                "image": "shopify://shop_images/malandra-gallery-06-figma.avif"
+                "show_overlay": "hover"
               }
             },
             "gallery-image-7": {
               "type": "gallery-image",
               "settings": {
+                "image": "shopify://shop_images/malandra-gallery-07-figma.avif",
+                "alt_text": "Gemstone necklace on teal jewelry boxes",
                 "tag": "",
                 "social_network": "instagram",
-                "show_overlay": "hover",
-                "alt_text": "Gemstone necklace on teal jewelry boxes",
                 "social_background": "#FFFFFF00",
                 "social_color": "#FFFFFF",
-                "image": "shopify://shop_images/malandra-gallery-07-figma.avif"
+                "show_overlay": "hover"
               }
             },
             "gallery-image-8": {
               "type": "gallery-image",
               "settings": {
+                "image": "shopify://shop_images/malandra-gallery-08-figma.avif",
+                "alt_text": "Model wearing a pearl and green gemstone drop earring",
                 "tag": "",
                 "social_network": "instagram",
-                "show_overlay": "hover",
-                "alt_text": "Model wearing a pearl and green gemstone drop earring",
                 "social_background": "#FFFFFF00",
                 "social_color": "#FFFFFF",
-                "image": "shopify://shop_images/malandra-gallery-08-figma.avif"
+                "show_overlay": "hover"
               }
             }
           },
@@ -1906,46 +1890,48 @@
       "block_order": [
         "gallery-header-group-1",
         "gallery-grid-2"
-      ]
-    },
-    "benefits": {
-      "type": "icon-text-cards",
+      ],
       "settings": {
-        "section_width": "page_width",
+        "section_width": "full_width",
         "alignment": "center",
-        "content_gap": 0,
+        "content_gap": 40,
+        "customize_mobile_gap": true,
+        "content_gap_mobile": 36,
         "color_scheme": "scheme-1",
-        "padding_top": 10,
-        "padding_bottom": 64,
+        "padding_top": 20,
+        "padding_bottom": 80,
         "customize_mobile_padding": true,
         "padding_top_mobile": 10,
         "padding_bottom_mobile": 56
-      },
+      }
+    },
+    "benefits": {
+      "type": "icon-text-cards",
       "blocks": {
         "carousel-1": {
           "type": "carousel",
           "settings": {
             "columns_desktop": "4",
             "columns_mobile": "1",
-            "gap_desktop": 28,
-            "gap_mobile": 28,
-            "show_navigation_on_desktop": true,
-            "show_pagination_on_desktop": false,
-            "show_pagination_on_mobile": true,
-            "pagination_type": "bullets",
-            "pagination_padding_desktop": 48,
-            "pagination_padding_mobile": 36,
-            "autoplay": false,
             "show_next_slide_preview_on_desktop": false,
             "show_next_slide_preview_on_mobile": false,
+            "gap_desktop": 28,
+            "gap_mobile": 28,
             "width": "fill",
             "custom_width": 50,
+            "show_navigation_on_desktop": true,
             "navigation_position": "outside",
             "navigation_style": "primary",
             "navigation_icon": "arrow",
             "navigation_behavior": "show_on_hover",
+            "pagination_type": "bullets",
+            "show_pagination_on_desktop": false,
+            "pagination_padding_desktop": 48,
+            "show_pagination_on_mobile": true,
+            "pagination_padding_mobile": 36,
             "pagination_limit_width": false,
             "pagination_max_width": 200,
+            "autoplay": false,
             "pause_on_hover": true,
             "autoplay_speed": 4,
             "padding_top": 0,
@@ -1960,14 +1946,14 @@
               "settings": {
                 "direction": "vertical",
                 "alignment": "center",
-                "height": "fit",
-                "gap_desktop": 24,
-                "gap_mobile": 24,
-                "horizontal_alignment": "center",
-                "alignment_mobile": "center",
-                "customize_mobile_alignment": true,
                 "position": "top",
                 "position_horizontal": "top",
+                "horizontal_alignment": "center",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "center",
+                "gap_desktop": 24,
+                "gap_mobile": 24,
+                "height": "fit",
                 "border_thickness": 0,
                 "corner_radius": "square",
                 "custom_radius": 20,
@@ -1989,10 +1975,10 @@
                 "icon-1": {
                   "type": "icon",
                   "settings": {
-                    "icon": "diamond",
-                    "icon_width": 32,
                     "source": "custom",
+                    "icon": "diamond",
                     "custom_icon": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect width=\"32\" height=\"32\" fill=\"#E5E5E5\"/>\n<g id=\"Malandra\">\n<rect width=\"6087\" height=\"14050\" transform=\"translate(-2577.5 -11171.6)\" fill=\"#D7D7D7\"/>\n<g id=\"Malandra_2\">\n<rect width=\"1920\" height=\"11949.8\" transform=\"translate(-333.5 -11071.6)\" fill=\"white\"/>\n<g id=\"Icon with text 1\">\n<rect width=\"1920\" height=\"222\" transform=\"translate(-333.5 -10)\" fill=\"white\"/>\n<g id=\"Container\">\n<g id=\"Row\">\n<g id=\"Card\" clip-path=\"url(#clip0_44390_7749)\">\n<g id=\"Top\">\n<g id=\"diamond (1) 1\" clip-path=\"url(#clip1_44390_7749)\">\n<g id=\"Group\">\n<g id=\"Group_2\">\n<path id=\"Vector\" d=\"M31.9017 10.041C26.3625 2.93849 26.5987 3.11642 26.303 3.08742L17.6321 1.91949C15.4463 1.62505 13.9616 2.00774 13.2035 2.0763C12.9491 2.11055 12.7706 2.34461 12.8048 2.59905C12.8391 2.85349 13.0734 3.0323 13.3276 2.99774C14.0964 2.92724 15.4754 2.5673 17.5079 2.84092L23.4623 3.64292C23.0167 3.73373 16.4458 5.07273 15.9999 5.1636L8.53765 3.64292L11.117 3.29548C11.3715 3.26123 11.5499 3.02717 11.5157 2.77274C11.4815 2.51824 11.2469 2.33974 10.993 2.37405L5.69735 3.0873C5.6966 3.08736 5.69585 3.08749 5.6951 3.08761L5.6881 3.08855C5.68098 3.08955 5.67404 3.09111 5.66698 3.09242C5.66242 3.0933 5.65773 3.09392 5.65323 3.09492C5.64942 3.09574 5.6456 3.09655 5.64185 3.09742C5.63654 3.09874 5.63129 3.1003 5.62604 3.10173C5.61792 3.10398 5.60979 3.10617 5.60179 3.10886C5.59848 3.10999 5.59535 3.11136 5.59204 3.11255C5.5906 3.11305 5.58917 3.11361 5.58779 3.11417C5.58317 3.11592 5.57835 3.11755 5.57379 3.11936C5.56542 3.1228 5.55729 3.12661 5.54917 3.13055C5.5456 3.13223 5.5421 3.1338 5.5386 3.13555C5.53467 3.13755 5.53085 3.13948 5.52704 3.14155C5.52335 3.14355 5.51985 3.1458 5.51617 3.14798C5.31429 3.26561 5.41285 3.27392 0.0983123 10.0409C-0.0121873 10.1826 -0.0311872 10.3753 0.0496875 10.5359C0.236812 10.9071 -0.260874 10.1743 9.9984 23.7922C10.153 23.9972 10.4445 24.038 10.6495 23.8833C10.8545 23.7287 10.8952 23.4372 10.7406 23.2322L1.72949 11.2888L9.01084 13.5823C9.18546 14.0428 14.5189 28.1101 14.6178 28.3711L12.052 24.9704C11.8974 24.7654 11.606 24.7246 11.4009 24.8793C11.1959 25.0339 11.1552 25.3254 11.3098 25.5304C13.9964 29.0906 14.2733 29.4595 14.2924 29.4811C14.6318 29.8636 15.1013 30.1056 15.5503 30.1813C15.6167 30.1926 16.3956 30.1924 16.4607 30.1797C17.0269 30.0698 17.5051 29.7499 17.7308 29.4526L26.8054 17.425C26.96 17.22 26.9192 16.9285 26.7143 16.7739C26.5091 16.6194 26.2178 16.6601 26.0631 16.865L17.3819 28.3713C17.6592 27.6399 22.7852 14.1198 22.989 13.5823L30.2704 11.2888L27.37 15.1331C27.2154 15.3381 27.2561 15.6296 27.4611 15.7842C27.6661 15.9388 27.9576 15.8981 28.1122 15.6931C32.0061 10.5272 31.7962 10.8403 31.9499 10.5366C32.0312 10.376 32.0124 10.1829 31.9017 10.041ZM15.9999 6.34328L21.6086 12.7417H10.3913L15.9999 6.34328ZM1.19562 10.1458L5.60592 4.49017L8.59597 12.4769L1.19562 10.1458ZM6.47985 4.17242C7.40035 4.35998 14.0007 5.7051 15.1226 5.93372L9.5284 12.3156L6.47985 4.17242ZM16.0513 29.2585H15.9487L10.039 13.6714H21.961L16.0513 29.2585ZM22.4715 12.3156L16.8772 5.93372C17.6214 5.78204 24.3757 4.40567 25.52 4.17242L22.4715 12.3156ZM23.4039 12.4768L26.394 4.49004L30.8043 10.1458L23.4039 12.4768Z\" fill=\"#7A5025\"/>\n</g>\n</g>\n</g>\n</g>\n</g>\n</g>\n</g>\n</g>\n</g>\n</g>\n<defs>\n<clipPath id=\"clip0_44390_7749\">\n<rect width=\"379\" height=\"148\" fill=\"white\" transform=\"translate(-173.5)\"/>\n</clipPath>\n<clipPath id=\"clip1_44390_7749\">\n<rect width=\"32\" height=\"32\" fill=\"white\"/>\n</clipPath>\n</defs>\n</svg>",
+                    "icon_width": 32,
                     "icon_padding": 0,
                     "animation_type": "slide-bottom",
                     "animation_delay": 50
@@ -2003,12 +1989,12 @@
                   "settings": {
                     "width": "fill",
                     "max_width": 370,
+                    "customize_mobile_size": true,
+                    "width_mobile": "fill",
                     "inherit_alignment": false,
                     "alignment": "center",
                     "customize_mobile_alignment": true,
                     "alignment_mobile": "center",
-                    "customize_mobile_size": true,
-                    "width_mobile": "fill",
                     "gap_desktop": 16,
                     "gap_mobile": 16
                   },
@@ -2018,11 +2004,11 @@
                       "settings": {
                         "text": "<p>Quality That Lasts</p>",
                         "heading_size": "custom",
+                        "custom_heading_size": 20,
                         "html_tag": "h4",
+                        "text_color": "#181818",
                         "width": "fill",
                         "animation_type": "rotate-words",
-                        "custom_heading_size": 20,
-                        "text_color": "#181818",
                         "animation_delay": 50
                       }
                     },
@@ -2031,9 +2017,9 @@
                       "settings": {
                         "text": "<p>For extra peace of mind, every piece is covered by our two-year warranty.</p>",
                         "text_size": "md",
+                        "text_color": "#636363",
                         "width": "fill",
                         "animation_type": "slide-bottom",
-                        "text_color": "#636363",
                         "animation_delay": 100
                       }
                     }
@@ -2054,14 +2040,14 @@
               "settings": {
                 "direction": "vertical",
                 "alignment": "center",
-                "height": "fit",
-                "gap_desktop": 24,
-                "gap_mobile": 24,
-                "horizontal_alignment": "center",
-                "alignment_mobile": "center",
-                "customize_mobile_alignment": true,
                 "position": "top",
                 "position_horizontal": "top",
+                "horizontal_alignment": "center",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "center",
+                "gap_desktop": 24,
+                "gap_mobile": 24,
+                "height": "fit",
                 "border_thickness": 0,
                 "corner_radius": "square",
                 "custom_radius": 20,
@@ -2083,10 +2069,10 @@
                 "icon-1": {
                   "type": "icon",
                   "settings": {
-                    "icon": "circle",
-                    "icon_width": 32,
                     "source": "custom",
+                    "icon": "circle",
                     "custom_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=\"none\">   <g clip-path=\"url(#clip0_52325_1564)\">     <path d=\"M24.2292 29.0008C24.0561 28.7024 23.6737 28.6008 23.375 28.7739L23.3509 28.7878C23.0524 28.961 22.9509 29.3434 23.124 29.642C23.2399 29.8418 23.4496 29.9534 23.6651 29.9534C23.7715 29.9534 23.8795 29.9261 23.9782 29.8688L24.0022 29.855C24.3007 29.6818 24.4023 29.2993 24.2292 29.0008Z\" fill=\"#7A5025\"/>     <path d=\"M29.8559 8.00494C27.7195 4.30463 24.27 1.65782 20.1429 0.551941C16.0159 -0.553934 11.7052 0.013629 8.00485 2.14994C4.3046 4.28625 1.65773 7.73575 0.551914 11.8628C-0.553899 15.9899 0.0136011 20.3007 2.14991 24.0009C4.06623 27.3201 7.11198 29.8427 10.7261 31.1038C12.4393 31.7016 14.2277 31.9999 16.0134 31.9999C17.955 31.9999 19.893 31.647 21.725 30.9429C22.0472 30.8191 22.2079 30.4576 22.084 30.1354C21.9602 29.8132 21.5985 29.6523 21.2765 29.7763C16.4002 31.6505 11.1214 30.7989 7.17741 27.8386L7.73735 24.9158L8.00716 24.8281C9.02673 24.4969 9.58673 23.3979 9.2556 22.3783L9.0576 21.7689C9.01179 21.6279 9.01204 21.4789 9.05823 21.338C9.23191 20.8085 9.16985 20.2292 8.88791 19.7484C8.60598 19.2678 8.13066 18.9307 7.58373 18.8238L6.1731 18.5481L3.45135 16.4788C3.28829 16.3548 3.07485 16.3186 2.87998 16.3818L1.28648 16.8994C1.25266 16.3295 1.25216 15.7598 1.28429 15.193C1.34716 15.2516 1.3881 15.2914 1.41329 15.3175C1.44448 15.3694 1.4831 15.4171 1.52835 15.4583C1.65848 15.5768 1.77635 15.6306 2.02385 15.6306C2.25129 15.6305 2.58798 15.5852 3.14391 15.5031C3.67116 15.4251 4.19566 15.3373 4.20085 15.3364C4.41104 15.3013 4.58873 15.1613 4.67235 14.9653C4.75598 14.7693 4.73391 14.5443 4.61385 14.3681L3.84754 13.2441L4.94516 12.4593C5.01829 12.4069 5.07929 12.3395 5.12398 12.2615L6.82541 9.29119L7.51123 8.55632C8.21204 7.80519 8.41204 6.70625 8.02066 5.7565C7.78979 5.19632 7.38654 4.72994 6.88216 4.41563C7.42841 3.98619 8.01085 3.58969 8.62985 3.23238C10.901 1.92113 13.3795 1.28569 15.8319 1.26138L14.7159 2.66132L10.5775 4.11213C10.4094 4.171 10.2744 4.29888 10.2065 4.4635L9.05079 7.26525C8.96873 7.46432 8.99479 7.69144 9.11985 7.86669L10.8079 10.2312C10.5661 10.4518 10.3308 10.773 10.0497 11.1719C9.92648 11.3468 9.8101 11.512 9.72966 11.6046C9.65973 11.6853 9.58973 11.764 9.52035 11.842C9.15729 12.2504 8.78191 12.6729 8.51523 13.2371C7.92885 14.4783 8.04729 15.9209 8.82429 17.0021C9.5756 18.0474 10.8142 18.5788 12.1362 18.4233C12.3516 18.398 12.5524 18.3483 12.7467 18.3002C13.2825 18.1676 13.4523 18.1544 13.6242 18.3153C13.7078 18.3936 13.7155 18.4084 13.7138 18.6739C13.7126 18.8429 13.7113 19.0532 13.7695 19.2933C13.8629 19.6773 14.104 19.9428 14.2978 20.156C14.3941 20.2619 14.4937 20.3716 14.5244 20.4451C14.7194 20.9123 14.6345 21.1709 14.4485 21.7378C14.4325 21.7863 14.4163 21.8358 14.4 21.8866C14.1174 22.7613 14.5113 23.6289 14.8588 24.3943C14.9717 24.6428 15.0782 24.8774 15.148 25.0848C15.71 26.7523 16.1312 27.1341 16.4693 27.2879C16.6464 27.3684 16.8296 27.4037 17.0147 27.4036C17.9157 27.4036 18.8558 26.5671 19.2877 26.0368C19.5589 25.7038 19.6257 25.3703 19.6745 25.1268C19.6988 25.0056 19.7179 24.91 19.7544 24.8475C19.8103 24.7519 19.8761 24.6778 19.9594 24.5839C20.127 24.3952 20.3355 24.1604 20.4706 23.7349C20.5732 23.4116 20.6478 23.3324 20.8947 23.0694C20.9377 23.0237 20.9835 22.9748 21.0327 22.9213C21.8652 22.0155 21.6508 21.3236 21.4237 20.5909C21.2327 19.9745 21.5669 19.5803 22.3749 18.8278C22.7251 18.5016 23.0872 18.1644 23.3672 17.7591C23.4897 17.5818 23.8624 17.0422 23.6317 16.5074C23.4057 15.983 22.8311 15.8949 22.3695 15.8241C22.1872 15.7961 21.9117 15.7539 21.824 15.6966C21.4373 15.4438 21.2007 14.9161 20.9719 14.4058C20.9264 14.3043 20.8814 14.204 20.8359 14.1067C20.7546 13.9331 20.6734 13.723 20.5875 13.5006C20.3601 12.9121 20.1024 12.2451 19.6637 11.7801C19.2694 11.3623 18.5261 11.161 17.8703 10.9834C17.6497 10.9237 17.4415 10.8673 17.3042 10.8166C17.1892 10.7741 17.0643 10.7664 16.9452 10.7944C16.626 10.8693 16.4269 10.9517 16.279 11.0702C16.2399 11.1015 16.1242 11.2043 16.0565 11.3696C15.8277 11.2598 15.513 11.0501 15.3194 10.921C15.3154 10.9183 15.3114 10.9156 15.3074 10.9129C15.3726 10.6518 15.3135 10.4423 15.2517 10.3114C14.9025 9.57288 13.7436 9.63069 13.515 9.65013C13.3851 9.661 13.2208 9.66682 13.047 9.67294C12.774 9.68263 12.4722 9.6935 12.1737 9.727L12.189 9.68413C12.4157 9.05269 13.0187 8.62844 13.6895 8.62844H14.0449C14.3899 8.62844 14.6698 8.34857 14.6698 8.0035C14.6698 7.65844 14.3899 7.37857 14.0449 7.37857H13.6895C12.6935 7.37857 11.7815 7.90275 11.2703 8.72782L10.3381 7.422L11.2552 5.19894L15.2992 3.78119C15.41 3.74232 15.5078 3.67294 15.5811 3.581L17.3788 1.32607C21.9722 1.763 26.2959 4.33838 28.7735 8.62975C29.4335 9.77282 29.9217 10.9762 30.2462 12.207L29.9813 12.4433C29.6355 12.7518 29.4329 13.1944 29.4251 13.6576C29.425 13.6626 29.4249 13.6676 29.4247 13.6726L28.9931 12.4856C28.9288 12.3085 28.834 12.1461 28.7117 12.0029L27.9417 11.1014C27.6432 10.752 27.2086 10.5517 26.7492 10.5517H25.8067C25.4722 10.5517 25.1664 10.7349 25.0086 11.0298C24.8508 11.3246 24.868 11.6808 25.0536 11.959L25.149 12.1022C24.54 12.6259 23.8356 13.0449 23.0856 13.3276L21.7937 10.853V10.3009C21.7937 10.1302 21.7239 9.96675 21.6003 9.84894L20.437 8.73838C20.3728 8.67713 20.2963 8.63025 20.2126 8.60082L19.1654 8.23282C18.8396 8.11819 18.483 8.28963 18.3686 8.61519C18.2542 8.94088 18.4254 9.29757 18.751 9.412L19.6712 9.73544L20.5439 10.5684V11.0064C20.5439 11.1071 20.5682 11.2063 20.6149 11.2956L22.2322 14.3936C22.3776 14.6723 22.7077 14.7997 23.0024 14.6907L23.4733 14.5171C24.5674 14.1136 25.5814 13.4645 26.4059 12.6401C26.6165 12.4294 26.6493 12.0995 26.484 11.8516L26.4507 11.8016H26.7492C26.8425 11.8016 26.9308 11.8423 26.9914 11.9133L27.7614 12.8148C27.7862 12.8438 27.8054 12.8767 27.8185 12.9128L28.6682 15.2492C28.7412 15.4499 28.9117 15.5994 29.12 15.6457C29.165 15.6556 29.2104 15.6605 29.2554 15.6605C29.4194 15.6605 29.5789 15.5959 29.6973 15.4774L30.1017 15.073C30.3579 14.8168 30.5342 14.4927 30.6184 14.1334C31.2439 19.1462 29.2784 24.3317 25.1237 27.5926C24.8522 27.8056 24.8048 28.1984 25.018 28.47C25.231 28.7416 25.6238 28.7889 25.8954 28.5758C28.8949 26.2216 30.9555 22.8544 31.6977 19.0944C32.4469 15.2983 31.7928 11.3598 29.8559 8.00494ZM2.9551 17.6716L5.53216 19.6311C5.60835 19.689 5.69673 19.7286 5.7906 19.7469L7.34385 20.0504C7.5421 20.0892 7.70748 20.2064 7.80966 20.3807C7.91185 20.5549 7.93335 20.7564 7.87048 20.9484C7.7411 21.3429 7.74048 21.7603 7.86879 22.1551L8.06679 22.7643C8.1851 23.1284 7.98498 23.521 7.62091 23.6393L6.99985 23.8411C6.78316 23.9115 6.62204 24.0943 6.57923 24.3179L6.07935 26.9272C4.98041 25.9214 4.01554 24.7326 3.23235 23.3761C2.27685 21.7213 1.67985 19.9562 1.41673 18.1714L2.9551 17.6716ZM6.59741 7.70357L5.86223 8.49125C5.82941 8.52644 5.80073 8.56532 5.77679 8.60707L4.10729 11.5218L2.62348 12.5828C2.3471 12.7804 2.27923 13.1625 2.4706 13.4433L3.02554 14.2573C2.70566 14.3049 2.4186 14.3441 2.22773 14.3649C2.19104 14.3298 2.15266 14.2941 2.11298 14.2572C1.96441 14.1192 1.75798 13.9349 1.45023 13.6656C1.95779 10.5241 3.47154 7.56463 5.85229 5.30557C6.30816 5.44913 6.68229 5.78919 6.86504 6.23275C7.07066 6.73163 6.96554 7.309 6.59741 7.70357ZM11.693 11.1188C11.9718 10.9619 12.6188 10.9389 13.0912 10.9222C13.2805 10.9155 13.4594 10.9091 13.6191 10.8958C13.7034 10.8887 13.797 10.89 13.8854 10.8969C13.8459 10.9981 13.8331 11.1093 13.8502 11.2195C13.8803 11.4134 13.9999 11.5819 14.1729 11.6744C14.2901 11.7372 14.4533 11.846 14.626 11.9612C15.1145 12.2868 15.6682 12.6559 16.1883 12.689C16.6613 12.7197 16.9245 12.4501 17.0372 12.3353C17.0462 12.3262 17.0547 12.3171 17.0637 12.3088C17.1272 12.257 17.1867 12.1876 17.231 12.1039C17.3309 12.1325 17.4359 12.1609 17.5435 12.1901C17.9136 12.2903 18.6024 12.4768 18.7546 12.6381C19.0249 12.9246 19.2356 13.4701 19.4215 13.9513C19.5155 14.1944 19.6042 14.4239 19.7038 14.6368C19.7465 14.7281 19.7886 14.8221 19.8314 14.9174C20.1197 15.5606 20.4466 16.2898 21.14 16.743C21.4545 16.9486 21.8399 17.0076 22.18 17.0598C22.2212 17.0661 22.2683 17.0734 22.3162 17.0813C22.1143 17.3629 21.8269 17.6305 21.5232 17.9133C20.7495 18.6338 19.7866 19.5306 20.23 20.9611C20.4394 21.6366 20.4491 21.7096 20.1125 22.0758C20.0667 22.1257 20.0239 22.1712 19.9839 22.2138C19.6956 22.5207 19.4679 22.7631 19.2794 23.3568C19.2247 23.5293 19.1537 23.6091 19.0249 23.7541C18.9219 23.8701 18.7936 24.0146 18.6753 24.2171C18.5335 24.4598 18.4867 24.6934 18.4491 24.8811C18.412 25.0658 18.391 25.1584 18.3185 25.2474C18.1535 25.4501 17.8456 25.7443 17.5295 25.9451C17.2358 26.1316 17.0643 26.1571 17.0059 26.1536C16.9392 26.0821 16.6976 25.7691 16.3326 24.6858C16.2426 24.4185 16.1177 24.1435 15.997 23.8776C15.7308 23.2913 15.4556 22.6851 15.5895 22.2708C15.6053 22.2219 15.6209 22.1741 15.6363 22.1274C15.8502 21.4756 16.052 20.86 15.678 19.9638C15.5642 19.6908 15.3829 19.4914 15.223 19.3154C15.1196 19.2016 15.0024 19.0726 14.9844 18.9983C14.9624 18.9078 14.963 18.8032 14.9639 18.6821C14.966 18.3556 14.9692 17.8621 14.4787 17.4028C13.787 16.7554 12.9805 16.9548 12.4468 17.0868C12.2829 17.1273 12.128 17.1657 11.9907 17.1818C11.1127 17.2847 10.3289 16.9534 9.83948 16.2724C9.32754 15.5601 9.25323 14.6016 9.6456 13.7709C9.83554 13.369 10.1225 13.0461 10.4547 12.6723C10.5273 12.5906 10.6005 12.5083 10.6738 12.4239C10.7957 12.2834 10.9298 12.0931 11.0716 11.8917C11.2409 11.6514 11.5562 11.2039 11.693 11.1188Z\" fill=\"#7A5025\"/>     <path d=\"M25.6263 21.5178L25.3256 20.3845C25.2599 20.137 25.0499 19.9546 24.7957 19.9242C24.5412 19.8945 24.2944 20.0217 24.1722 20.2468C24.1037 20.373 24.042 20.5068 23.9824 20.6361C23.8821 20.8536 23.7783 21.0786 23.6704 21.2028C23.6098 21.2726 23.454 21.3478 23.3035 21.4204C22.9437 21.594 22.4509 21.8318 22.2627 22.432C22.1458 22.8042 22.1894 23.0987 22.2213 23.3137C22.2488 23.5001 22.2552 23.5648 22.2053 23.682L22.199 23.6966C22.0001 24.1634 21.63 25.0325 22.149 25.7713C22.5193 26.2985 22.9087 26.4341 23.2112 26.4341C23.2703 26.4343 23.3262 26.4291 23.3778 26.4206C24.0153 26.3165 24.4946 25.6533 24.8862 24.3336L25.6213 21.856C25.654 21.7458 25.6558 21.6288 25.6263 21.5178ZM23.688 23.978C23.4884 24.6509 23.3118 24.965 23.2098 25.1043C23.1981 25.0893 23.1853 25.0723 23.1717 25.0528C23.0523 24.8827 23.2308 24.4637 23.3489 24.1864L23.3552 24.1718C23.5457 23.7246 23.4948 23.3813 23.4577 23.1305C23.4339 22.97 23.4254 22.901 23.4552 22.8061C23.4797 22.7282 23.6262 22.6526 23.8468 22.5461C23.9446 22.4988 24.0523 22.4469 24.161 22.384L23.688 23.978Z\" fill=\"#7A5025\"/>     <path d=\"M16.8771 7.42896L16.8349 7.41421C16.5095 7.30021 16.1526 7.47139 16.0383 7.79708C15.9241 8.12283 16.0955 8.47939 16.4212 8.59364L16.4633 8.60839C16.5318 8.63239 16.6015 8.64377 16.6702 8.64377C16.9282 8.64377 17.1697 8.48271 17.26 8.22552C17.3742 7.89977 17.2028 7.54314 16.8771 7.42896Z\" fill=\"#7A5025\"/>   </g>   <defs>     <clipPath id=\"clip0_52325_1564\">       <rect width=\"32\" height=\"32\" fill=\"white\"/>     </clipPath>   </defs> </svg>",
+                    "icon_width": 32,
                     "icon_padding": 0,
                     "animation_type": "slide-bottom",
                     "animation_delay": 50
@@ -2097,12 +2083,12 @@
                   "settings": {
                     "width": "fill",
                     "max_width": 370,
+                    "customize_mobile_size": true,
+                    "width_mobile": "fill",
                     "inherit_alignment": false,
                     "alignment": "center",
                     "customize_mobile_alignment": true,
                     "alignment_mobile": "center",
-                    "customize_mobile_size": true,
-                    "width_mobile": "fill",
                     "gap_desktop": 16,
                     "gap_mobile": 16
                   },
@@ -2112,11 +2098,11 @@
                       "settings": {
                         "text": "<p>Sustainably Made</p>",
                         "heading_size": "custom",
+                        "custom_heading_size": 20,
                         "html_tag": "h4",
+                        "text_color": "#181818",
                         "width": "fill",
                         "animation_type": "rotate-words",
-                        "custom_heading_size": 20,
-                        "text_color": "#181818",
                         "animation_delay": 50
                       }
                     },
@@ -2125,9 +2111,9 @@
                       "settings": {
                         "text": "<p>Handcrafted from responsibly-sourced, with 100% certified recycled.</p>",
                         "text_size": "md",
+                        "text_color": "#636363",
                         "width": "fill",
                         "animation_type": "slide-bottom",
-                        "text_color": "#636363",
                         "animation_delay": 100
                       }
                     }
@@ -2148,14 +2134,14 @@
               "settings": {
                 "direction": "vertical",
                 "alignment": "center",
-                "height": "fit",
-                "gap_desktop": 24,
-                "gap_mobile": 24,
-                "horizontal_alignment": "center",
-                "alignment_mobile": "center",
-                "customize_mobile_alignment": true,
                 "position": "top",
                 "position_horizontal": "top",
+                "horizontal_alignment": "center",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "center",
+                "gap_desktop": 24,
+                "gap_mobile": 24,
+                "height": "fit",
                 "border_thickness": 0,
                 "corner_radius": "square",
                 "custom_radius": 20,
@@ -2177,10 +2163,10 @@
                 "icon-1": {
                   "type": "icon",
                   "settings": {
-                    "icon": "cube",
-                    "icon_width": 32,
                     "source": "custom",
+                    "icon": "cube",
                     "custom_icon": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect width=\"32\" height=\"32\" fill=\"#E5E5E5\"/>\n<g id=\"Malandra\">\n<rect width=\"6087\" height=\"14050\" transform=\"translate(-3391.5 -11171.6)\" fill=\"#D7D7D7\"/>\n<g id=\"Malandra_2\">\n<rect width=\"1920\" height=\"11949.8\" transform=\"translate(-1147.5 -11071.6)\" fill=\"white\"/>\n<g id=\"Icon with text 1\">\n<rect width=\"1920\" height=\"222\" transform=\"translate(-1147.5 -10)\" fill=\"white\"/>\n<g id=\"Container\">\n<g id=\"Row\">\n<g id=\"Card\" clip-path=\"url(#clip0_44390_7749)\">\n<g id=\"Top\">\n<g id=\"box 2\" clip-path=\"url(#clip1_44390_7749)\">\n<g id=\"Group\">\n<g id=\"Group_2\">\n<path id=\"Vector\" d=\"M30.733 7.06072L16.2038 0.0465938C16.075 -0.0155312 15.925 -0.0155312 15.7962 0.0465938L1.26689 7.06072C1.10489 7.13891 1.00195 7.30297 1.00195 7.48284V24.5172C1.00195 24.697 1.10489 24.8611 1.26689 24.9393L15.7961 31.9534C15.8605 31.9845 15.9303 32 16 32C16.0696 32 16.1393 31.9845 16.2038 31.9534L30.733 24.9393C30.895 24.8611 30.9979 24.697 30.9979 24.5172V7.48291C30.9979 7.30291 30.895 7.13897 30.733 7.06072ZM16 0.989281L29.451 7.48284L25.5518 9.36522C25.5271 9.34641 25.5011 9.32903 25.4725 9.31522L12.1128 2.86584L16 0.989281ZM11.0541 3.39584L24.4856 9.87997L21.7347 11.208L8.30876 4.72653L11.0541 3.39584ZM24.7999 10.7692V15.6783L22.2303 16.9188V12.0097L24.7999 10.7692ZM30.0604 24.223L16.4687 30.7844V14.7912L19.7108 13.226C19.9439 13.1135 20.0416 12.8333 19.9291 12.6001C19.8165 12.367 19.5363 12.2692 19.3031 12.3818L16 13.9765L14.7002 13.349C14.467 13.2363 14.1868 13.3342 14.0743 13.5673C13.9617 13.8004 14.0595 14.0807 14.2926 14.1932L15.5312 14.7912V30.7844L1.93945 24.2229V8.22966L12.2895 13.2262C12.3551 13.258 12.4246 13.273 12.4929 13.273C12.6671 13.273 12.8345 13.1753 12.9153 13.0079C13.0279 12.7748 12.9301 12.4945 12.697 12.382L2.54889 7.48284L7.20545 5.23484L21.2863 12.0325C21.2884 12.0354 21.2907 12.038 21.2928 12.0408V17.6657C21.2928 17.827 21.3758 17.977 21.5124 18.0628C21.5883 18.1104 21.6748 18.1345 21.7616 18.1345C21.8311 18.1345 21.9008 18.119 21.9654 18.0878L25.4725 16.3948C25.6345 16.3166 25.7374 16.1526 25.7374 15.9727V10.3167L30.0604 8.22972V24.223Z\" fill=\"#7A5025\"/>\n</g>\n</g>\n<g id=\"Group_3\">\n<g id=\"Group_4\">\n<path id=\"Vector_2\" d=\"M5.80779 22.4052L3.6756 21.3759C3.44235 21.2632 3.16223 21.3611 3.04966 21.5942C2.9371 21.8273 3.03485 22.1076 3.26798 22.2201L5.40016 23.2495C5.46585 23.2812 5.53529 23.2962 5.6036 23.2962C5.77785 23.2962 5.94523 23.1986 6.02604 23.0311C6.13866 22.798 6.04091 22.5178 5.80779 22.4052Z\" fill=\"#7A5025\"/>\n</g>\n</g>\n<g id=\"Group_5\">\n<g id=\"Group_6\">\n<path id=\"Vector_3\" d=\"M7.77005 21.1275L3.67849 19.1522C3.4453 19.0396 3.16512 19.1374 3.05255 19.3706C2.94005 19.6037 3.0378 19.884 3.27093 19.9965L7.36249 21.9718C7.42818 22.0035 7.49762 22.0185 7.56593 22.0185C7.74018 22.0185 7.90755 21.9209 7.98837 21.7535C8.10093 21.5202 8.00318 21.24 7.77005 21.1275Z\" fill=\"#7A5025\"/>\n</g>\n</g>\n</g>\n</g>\n</g>\n</g>\n</g>\n</g>\n</g>\n</g>\n<defs>\n<clipPath id=\"clip0_44390_7749\">\n<rect width=\"379\" height=\"148\" fill=\"white\" transform=\"translate(-173.5)\"/>\n</clipPath>\n<clipPath id=\"clip1_44390_7749\">\n<rect width=\"32\" height=\"32\" fill=\"white\"/>\n</clipPath>\n</defs>\n</svg>",
+                    "icon_width": 32,
                     "icon_padding": 0,
                     "animation_type": "slide-bottom",
                     "animation_delay": 50
@@ -2191,12 +2177,12 @@
                   "settings": {
                     "width": "fill",
                     "max_width": 370,
+                    "customize_mobile_size": true,
+                    "width_mobile": "fill",
                     "inherit_alignment": false,
                     "alignment": "center",
                     "customize_mobile_alignment": true,
                     "alignment_mobile": "center",
-                    "customize_mobile_size": true,
-                    "width_mobile": "fill",
                     "gap_desktop": 16,
                     "gap_mobile": 16
                   },
@@ -2206,11 +2192,11 @@
                       "settings": {
                         "text": "<p>Premium Service</p>",
                         "heading_size": "custom",
+                        "custom_heading_size": 20,
                         "html_tag": "h4",
+                        "text_color": "#181818",
                         "width": "fill",
                         "animation_type": "rotate-words",
-                        "custom_heading_size": 20,
-                        "text_color": "#181818",
                         "animation_delay": 50
                       }
                     },
@@ -2219,9 +2205,9 @@
                       "settings": {
                         "text": "<p>Fast free shipping over £100, plus hassle-free returns. All 100% carbon-neutral.</p>",
                         "text_size": "md",
+                        "text_color": "#636363",
                         "width": "fill",
                         "animation_type": "slide-bottom",
-                        "text_color": "#636363",
                         "animation_delay": 100
                       }
                     }
@@ -2242,14 +2228,14 @@
               "settings": {
                 "direction": "vertical",
                 "alignment": "center",
-                "height": "fit",
-                "gap_desktop": 24,
-                "gap_mobile": 24,
-                "horizontal_alignment": "center",
-                "alignment_mobile": "center",
-                "customize_mobile_alignment": true,
                 "position": "top",
                 "position_horizontal": "top",
+                "horizontal_alignment": "center",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "center",
+                "gap_desktop": 24,
+                "gap_mobile": 24,
+                "height": "fit",
                 "border_thickness": 0,
                 "corner_radius": "square",
                 "custom_radius": 20,
@@ -2271,10 +2257,10 @@
                 "icon-1": {
                   "type": "icon",
                   "settings": {
-                    "icon": "shopping-bag",
-                    "icon_width": 32,
                     "source": "custom",
+                    "icon": "shopping-bag",
                     "custom_icon": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect width=\"32\" height=\"32\" fill=\"#E5E5E5\"/>\n<g id=\"Malandra\">\n<rect width=\"6087\" height=\"14050\" transform=\"translate(-3798.5 -11171.6)\" fill=\"#D7D7D7\"/>\n<g id=\"Malandra_2\">\n<rect width=\"1920\" height=\"11949.8\" transform=\"translate(-1554.5 -11071.6)\" fill=\"white\"/>\n<g id=\"Icon with text 1\">\n<rect width=\"1920\" height=\"222\" transform=\"translate(-1554.5 -10)\" fill=\"white\"/>\n<g id=\"Container\">\n<g id=\"Row\">\n<g id=\"Card\" clip-path=\"url(#clip0_44390_7749)\">\n<g id=\"Top\">\n<g id=\"present (3) 1\" clip-path=\"url(#clip1_44390_7749)\">\n<g id=\"Group\">\n<path id=\"Vector\" d=\"M28.6046 7.03194H25.2146C25.4306 6.66106 25.555 6.23056 25.555 5.77131C25.555 4.86281 25.0853 4.04919 24.2984 3.59494C23.5116 3.14069 22.5721 3.14069 21.7854 3.59494L20.1513 4.53837L17.7109 5.94731L18.5723 4.45531C19.1093 3.52538 19.1093 2.41506 18.5723 1.48512C18.0354 0.555187 17.0739 0 16.0001 0C14.9263 0 13.9647 0.555187 13.4278 1.48512C12.8909 2.41506 12.8909 3.52538 13.4278 4.45531L14.2891 5.94731L11.8488 4.53837L10.2148 3.59494C9.42794 3.14062 8.4885 3.14062 7.70169 3.59494C6.91488 4.04919 6.44513 4.86281 6.44513 5.77131C6.44513 6.23056 6.56957 6.66106 6.78557 7.03194H3.3955C2.70494 7.03194 2.14307 7.59375 2.14307 8.28438V12.9676C2.14307 13.6214 2.64688 14.159 3.2865 14.2146V30.7476C3.2865 31.4382 3.84838 32 4.53894 32H27.4611C28.1517 32 28.7136 31.4382 28.7136 30.7476V14.2146C29.3532 14.1591 29.857 13.6214 29.857 12.9676V8.28438C29.8571 7.59375 29.2952 7.03194 28.6046 7.03194ZM22.4116 4.67956C22.8064 4.45169 23.2776 4.45169 23.6723 4.67956C24.0669 4.90744 24.3026 5.31556 24.3026 5.77131C24.3026 6.46644 23.7371 7.03194 23.0419 7.03194H18.6695H18.3372L22.4116 4.67956ZM18.0433 12.9676H13.9568V8.28438H18.0433V12.9676ZM14.5124 2.11138C14.8229 1.5735 15.3791 1.25244 16.0001 1.25244C16.6211 1.25244 17.1772 1.5735 17.4877 2.11138C17.7982 2.64919 17.7982 3.29131 17.4877 3.82906L16.0001 6.40569L14.5124 3.82906C14.2019 3.29125 14.2019 2.64913 14.5124 2.11138ZM7.69757 5.77131C7.69757 5.31556 7.93319 4.90744 8.32788 4.67956C8.52525 4.56563 8.74169 4.50863 8.95819 4.50863C9.17469 4.50863 9.39119 4.56563 9.5885 4.67956L13.6629 7.03194H13.3306H8.95819C8.26307 7.03194 7.69757 6.46644 7.69757 5.77131ZM3.3955 8.28438H12.7044V12.9676H3.3955V8.28438ZM4.53894 14.2201H12.7044V30.7476H4.53894V14.2201ZM13.9569 30.7476V14.2201H18.0433V30.7476H13.9569ZM19.2957 30.7476V14.2201H20.8371C21.1829 14.2201 21.4633 13.9397 21.4633 13.5939C21.4633 13.2481 21.1829 12.9676 20.8371 12.9676H19.2957V8.28438H28.6046V12.9676H26.5433C26.1974 12.9676 25.917 13.248 25.917 13.5939C25.917 13.9397 26.1974 14.2201 26.5433 14.2201H27.4611V30.7476H19.2957Z\" fill=\"#7A5025\"/>\n<path id=\"Vector_2\" d=\"M23.6848 14.2203C24.0307 14.2203 24.3111 13.9399 24.3111 13.594C24.3111 13.2482 24.0307 12.9678 23.6848 12.9678C23.339 12.9678 23.0586 13.2482 23.0586 13.594C23.0586 13.9399 23.339 14.2203 23.6848 14.2203Z\" fill=\"#7A5025\"/>\n</g>\n</g>\n</g>\n</g>\n</g>\n</g>\n</g>\n</g>\n</g>\n<defs>\n<clipPath id=\"clip0_44390_7749\">\n<rect width=\"379\" height=\"148\" fill=\"white\" transform=\"translate(-173.5)\"/>\n</clipPath>\n<clipPath id=\"clip1_44390_7749\">\n<rect width=\"32\" height=\"32\" fill=\"white\"/>\n</clipPath>\n</defs>\n</svg>",
+                    "icon_width": 32,
                     "icon_padding": 0,
                     "animation_type": "slide-bottom",
                     "animation_delay": 50
@@ -2285,12 +2271,12 @@
                   "settings": {
                     "width": "fill",
                     "max_width": 370,
+                    "customize_mobile_size": true,
+                    "width_mobile": "fill",
                     "inherit_alignment": false,
                     "alignment": "center",
                     "customize_mobile_alignment": true,
                     "alignment_mobile": "center",
-                    "customize_mobile_size": true,
-                    "width_mobile": "fill",
                     "gap_desktop": 16,
                     "gap_mobile": 16
                   },
@@ -2300,11 +2286,11 @@
                       "settings": {
                         "text": "<p>Gift Wrapping</p>",
                         "heading_size": "custom",
+                        "custom_heading_size": 20,
                         "html_tag": "h4",
+                        "text_color": "#181818",
                         "width": "fill",
                         "animation_type": "rotate-words",
-                        "custom_heading_size": 20,
-                        "text_color": "#181818",
                         "animation_delay": 50
                       }
                     },
@@ -2313,9 +2299,9 @@
                       "settings": {
                         "text": "<p>A good gift is gold. We offer complimentary gift wrap in stores and online year.</p>",
                         "text_size": "md",
+                        "text_color": "#636363",
                         "width": "fill",
                         "animation_type": "slide-bottom",
-                        "text_color": "#636363",
                         "animation_delay": 100
                       }
                     }
@@ -2342,22 +2328,21 @@
       },
       "block_order": [
         "carousel-1"
-      ]
+      ],
+      "settings": {
+        "section_width": "page_width",
+        "alignment": "center",
+        "content_gap": 0,
+        "color_scheme": "scheme-1",
+        "padding_top": 10,
+        "padding_bottom": 64,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 56
+      }
     },
     "image_with_text_custom": {
       "type": "custom-section",
-      "name": "Image with text (custom)",
-      "settings": {
-        "section_width": "page_width",
-        "alignment": "left",
-        "color_scheme": "scheme-1",
-        "content_gap": 0,
-        "padding_top": 96,
-        "padding_bottom": 96,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
-      },
       "blocks": {
         "layout": {
           "type": "group",
@@ -2367,11 +2352,11 @@
             "horizontal_alignment": "left",
             "customize_mobile_alignment": true,
             "alignment_mobile": "left",
-            "width": "fill",
-            "width_mobile": "fill",
-            "height": "fit",
             "gap_desktop": 40,
-            "gap_mobile": 40
+            "gap_mobile": 40,
+            "width": "fill",
+            "height": "fit",
+            "width_mobile": "fill"
           },
           "blocks": {
             "images": {
@@ -2407,33 +2392,31 @@
               "blocks": {
                 "first": {
                   "type": "image",
+                  "static": true,
                   "settings": {
-                    "image_ratio_desktop": "ratio_1_1",
-                    "image_ratio_mobile": "ratio_1_1",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "corner_radius": "square",
-                    "alt_text": "Model wearing Malandra jewelry",
                     "image": "shopify://shop_images/malandra-image-with-text-model-figma.avif",
-                    "mobile_image": "shopify://shop_images/malandra-image-with-text-model-figma.avif"
-                  },
-                  "id": "first",
-                  "static": true
+                    "mobile_image": "shopify://shop_images/malandra-image-with-text-model-figma.avif",
+                    "alt_text": "Model wearing Malandra jewelry",
+                    "image_ratio_desktop": "ratio_1_1",
+                    "width_desktop": "fill",
+                    "image_ratio_mobile": "ratio_1_1",
+                    "width_mobile": "fill",
+                    "corner_radius": "square"
+                  }
                 },
                 "second": {
                   "type": "image",
+                  "static": true,
                   "settings": {
-                    "image_ratio_desktop": "ratio_4_5",
-                    "image_ratio_mobile": "ratio_4_5",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "corner_radius": "square",
-                    "alt_text": "Gold ring with a green gemstone",
                     "image": "shopify://shop_images/malandra-image-with-text-ring-figma.avif",
-                    "mobile_image": "shopify://shop_images/malandra-image-with-text-ring-figma.avif"
-                  },
-                  "id": "second",
-                  "static": true
+                    "mobile_image": "shopify://shop_images/malandra-image-with-text-ring-figma.avif",
+                    "alt_text": "Gold ring with a green gemstone",
+                    "image_ratio_desktop": "ratio_4_5",
+                    "width_desktop": "fill",
+                    "image_ratio_mobile": "ratio_4_5",
+                    "width_mobile": "fill",
+                    "corner_radius": "square"
+                  }
                 }
               }
             },
@@ -2442,30 +2425,30 @@
               "settings": {
                 "direction": "vertical",
                 "alignment": "left",
-                "width": "fill",
-                "width_mobile": "fill",
-                "height": "fit",
                 "gap_desktop": 32,
                 "gap_mobile": 28,
+                "width": "fill",
+                "height": "fit",
+                "width_mobile": "fill",
                 "padding_left": 40,
                 "padding_right": 56,
                 "customize_mobile_padding": true,
-                "padding_left_mobile": 0,
-                "padding_right_mobile": 0,
                 "padding_top_mobile": 0,
-                "padding_bottom_mobile": 0
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
               },
               "blocks": {
                 "header": {
                   "type": "group",
                   "settings": {
                     "direction": "vertical",
-                    "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fit",
                     "alignment": "left",
                     "gap_desktop": 16,
-                    "gap_mobile": 12
+                    "gap_mobile": 12,
+                    "width": "fill",
+                    "height": "fit",
+                    "width_mobile": "fill"
                   },
                   "blocks": {
                     "eyebrow": {
@@ -2481,11 +2464,11 @@
                       "settings": {
                         "direction": "vertical",
                         "alignment": "left",
-                        "width": "fill",
-                        "width_mobile": "fill",
-                        "height": "fit",
                         "gap_desktop": 20,
-                        "gap_mobile": 16
+                        "gap_mobile": 16,
+                        "width": "fill",
+                        "height": "fit",
+                        "width_mobile": "fill"
                       },
                       "blocks": {
                         "heading": {
@@ -2546,24 +2529,22 @@
       },
       "block_order": [
         "layout"
-      ]
+      ],
+      "name": "Image with text (custom)",
+      "settings": {
+        "section_width": "page_width",
+        "alignment": "left",
+        "content_gap": 0,
+        "color_scheme": "scheme-1",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      }
     },
     "founder_rich_text": {
       "type": "rich-text",
-      "settings": {
-        "section_width": "page_width",
-        "alignment": "center",
-        "customize_mobile_alignment": true,
-        "alignment_mobile": "center",
-        "color_scheme": "scheme-1",
-        "background_color": "#f9f9f9",
-        "padding_top": 64,
-        "padding_bottom": 80,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 56,
-        "use_leading_icon": true
-      },
       "blocks": {
         "icon": {
           "type": "icon",
@@ -2573,10 +2554,10 @@
             "custom_icon": "<svg preserveAspectRatio=\"none\" overflow=\"visible\" style=\"display: block;\" width=\"47.9999\" height=\"45.44\" viewBox=\"0 0 47.9999 45.44\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g id=\"Group\">\n<path id=\"Vector\" d=\"M47.8574 25.5954C47.7384 25.3573 47.4408 25.2382 47.2027 25.1787C45.8336 25.1787 34.0478 24.7025 34.0478 11.012C34.0478 10.5953 33.6907 10.2382 33.274 10.2382C32.8573 10.2382 32.5002 10.5953 32.5002 11.012C32.5002 24.7025 20.7144 25.1787 19.4049 25.1787C19.2263 25.1787 19.0477 25.2383 18.9287 25.3573C18.8096 25.4168 18.7501 25.5359 18.6906 25.5954C18.5715 25.8335 18.5715 26.1311 18.6906 26.3692C18.8096 26.6073 19.1073 26.7859 19.4049 26.7859C19.4049 26.7859 19.4049 26.7859 19.4644 26.7859C20.8335 26.7859 32.5597 27.2621 32.5597 40.9526C32.5597 41.3693 32.9169 41.7264 33.3335 41.7264C33.7502 41.7264 34.1074 41.3693 34.1074 40.9526C34.1074 27.3216 45.8336 26.7859 47.2027 26.7859C47.5003 26.7859 47.7384 26.6073 47.917 26.3692C48.036 26.1311 48.036 25.8335 47.8574 25.5954ZM33.274 35.1193C31.5478 29.4645 27.3216 27.024 23.9882 25.9525C27.3216 24.8811 31.5478 22.4406 33.274 16.7858C35.0002 22.4406 39.2264 24.8811 42.5598 25.9525C39.2264 27.024 35.0002 29.4645 33.274 35.1193Z\" fill=\"#7A5025\"/>\n<path id=\"Vector_2\" d=\"M23.4525 10.1191C23.8692 10.1191 24.2263 9.76196 24.2263 9.28577C24.2263 8.8691 23.8692 8.51196 23.4525 8.51196C22.7382 8.51196 16.3096 8.27386 16.3096 0.773814C16.3096 0.357145 15.9525 1.86478e-08 15.5358 1.86478e-08C15.1191 1.86478e-08 14.762 0.357145 14.762 0.773814C14.762 8.27386 8.33338 8.51196 7.61909 8.51196C7.55957 8.51196 7.55957 8.51196 7.55957 8.51196C7.1429 8.57148 6.84528 8.8691 6.84528 9.28577C6.84528 9.70244 7.20243 10.0596 7.61909 10.0596C8.39291 10.0596 14.762 10.2977 14.762 17.7977C14.762 18.2144 15.1191 18.5715 15.5358 18.5715C15.893 18.6311 16.2501 18.2739 16.2501 17.8573C16.2501 10.3572 22.6787 10.1191 23.393 10.1191H23.4525ZM15.4763 13.512C14.5239 11.2501 12.7977 10.0001 11.1905 9.28577C12.9167 8.57148 14.5239 7.20242 15.4763 5.05955C16.4287 7.32147 18.1549 8.57148 19.762 9.28577C18.0358 10.0001 16.4287 11.3691 15.4763 13.512Z\" fill=\"#7A5025\"/>\n<path id=\"Vector_3\" d=\"M16.6072 35.3574C15.893 35.3574 9.46434 35.1193 9.46434 27.6192C9.46434 27.2026 9.1072 26.8454 8.69053 26.8454C8.27386 26.8454 7.91672 27.2026 7.91672 27.6192C7.91672 35.1193 1.4881 35.3574 0.773814 35.3574C0.71429 35.3574 0.71429 35.3574 0.71429 35.3574C0.297621 35.4169 0 35.7145 0 36.1312C0 36.5478 0.357145 36.905 0.773814 36.905C1.54763 36.905 7.91672 37.1431 7.91672 44.6431C7.91672 45.0598 8.27386 45.4169 8.69053 45.4169C9.04767 45.536 9.40482 45.1789 9.40482 44.7027C9.40482 37.2026 15.8334 36.9645 16.5477 36.9645H16.6072C17.0239 36.9645 17.3811 36.6074 17.3811 36.1312C17.3811 35.7145 17.0239 35.3574 16.6072 35.3574ZM8.63101 40.4169C7.61909 38.155 5.95242 36.905 4.34526 36.1907C6.07147 35.4764 7.67862 34.1074 8.63101 31.9645C9.58339 34.2264 11.3096 35.4764 12.9167 36.1907C11.1905 36.905 9.58339 38.274 8.63101 40.4169Z\" fill=\"#7A5025\"/>\n</g>\n</svg>",
             "icon_width": 48,
             "icon_padding": 0,
-            "padding_top": 1,
-            "padding_bottom": 2,
             "animation_type": "slide-bottom",
-            "animation_delay": 50
+            "animation_delay": 50,
+            "padding_top": 1,
+            "padding_bottom": 2
           }
         },
         "heading": {
@@ -2611,59 +2592,36 @@
           }
         }
       },
-      "block_order": []
+      "settings": {
+        "use_leading_icon": true,
+        "section_width": "page_width",
+        "alignment": "center",
+        "customize_mobile_alignment": true,
+        "alignment_mobile": "center",
+        "color_scheme": "scheme-1",
+        "background_color": "#f9f9f9",
+        "padding_top": 64,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 56
+      }
     },
     "birthstones_tabs": {
       "type": "collection-tabs",
-      "settings": {
-        "section_width": "full_width",
-        "layout_direction": "vertical",
-        "tab_position": "right",
-        "mobile_alignment": "left",
-        "gap_desktop": 48,
-        "gap_mobile": 36,
-        "max_products": 8,
-        "layout_type": "carousel",
-        "columns_desktop": "3",
-        "columns_mobile": "1",
-        "show_next_slide_preview_on_desktop": false,
-        "show_next_slide_preview_on_mobile": true,
-        "product_gap_desktop": 10,
-        "product_gap_mobile": 10,
-        "show_navigation_on_desktop": true,
-        "navigation_position": "inside",
-        "navigation_style": "primary",
-        "navigation_icon": "chevron",
-        "navigation_behavior": "show_on_hover",
-        "show_pagination_on_desktop": true,
-        "pagination_type": "progress_bar",
-        "pagination_top_padding_desktop": 40,
-        "pagination_top_padding_mobile": 32,
-        "pagination_limit_width": true,
-        "pagination_max_width": 450,
-        "autoplay": false,
-        "autoplay_pause_on_hover": true,
-        "autoplay_speed": 4,
-        "color_scheme": "scheme-1",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
-      },
       "blocks": {
         "header": {
           "type": "header",
           "static": true,
           "settings": {
             "width": "custom",
-            "alignment": "left",
-            "inherit_alignment": false,
-            "gap_desktop": 16,
-            "gap_mobile": 12,
             "max_width": 770,
             "customize_mobile_size": true,
-            "width_mobile": "fill"
+            "width_mobile": "fill",
+            "inherit_alignment": false,
+            "alignment": "left",
+            "gap_desktop": 16,
+            "gap_mobile": 12
           },
           "blocks": {
             "heading-1": {
@@ -2724,8 +2682,15 @@
               "type": "promo-card",
               "settings": {
                 "card_position": 1,
+                "show_on_top_desktop": true,
                 "show_on_top_mobile": true,
+                "card_link": "shopify://collections/rings-malandra",
                 "media_type": "image",
+                "image": "shopify://shop_images/malandra-rings-promo.avif",
+                "mobile_image": "shopify://shop_images/malandra-rings-promo.avif",
+                "show_overlay": true,
+                "overlay_style": "gradient",
+                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0) 49.935%, rgba(50, 27, 3, 0.3) 84.685%)",
                 "heading": "For Effortless Glow",
                 "text": "<p>Radiant, versatile, classic your everyday essential.</p>",
                 "content_alignment": "left",
@@ -2733,24 +2698,17 @@
                 "heading_size": "md",
                 "text_size": "md",
                 "button_label": "SHOP NOW",
-                "card_link": "shopify://collections/rings-malandra",
                 "button_style": "primary",
-                "button_height": "inherit",
                 "show_icon": false,
-                "show_overlay": true,
-                "overlay_style": "gradient",
-                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0) 49.935%, rgba(50, 27, 3, 0.3) 84.685%)",
-                "color_scheme": "scheme-3",
+                "button_height": "inherit",
                 "content_gap": 16,
                 "button_spacing": 24,
+                "color_scheme": "scheme-3",
                 "padding_vertical": 36,
                 "padding_horizontal": 36,
                 "customize_mobile_padding": true,
                 "padding_vertical_mobile": 32,
-                "padding_horizontal_mobile": 28,
-                "show_on_top_desktop": true,
-                "image": "shopify://shop_images/malandra-rings-promo.avif",
-                "mobile_image": "shopify://shop_images/malandra-rings-promo.avif"
+                "padding_horizontal_mobile": 28
               }
             }
           },
@@ -2777,8 +2735,15 @@
               "type": "promo-card",
               "settings": {
                 "card_position": 1,
+                "show_on_top_desktop": true,
                 "show_on_top_mobile": true,
+                "card_link": "shopify://collections/everyday-necklaces-malandra",
                 "media_type": "image",
+                "image": "shopify://shop_images/malandra-necklaces-promo.avif",
+                "mobile_image": "shopify://shop_images/malandra-necklaces-promo.avif",
+                "show_overlay": true,
+                "overlay_style": "gradient",
+                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0) 49.935%, rgba(50, 27, 3, 0.3) 84.685%)",
                 "heading": "Golden Layers",
                 "text": "<p>Delicate chains and pendants, thoughtfully paired for your everyday story.</p>",
                 "content_alignment": "left",
@@ -2786,24 +2751,17 @@
                 "heading_size": "md",
                 "text_size": "md",
                 "button_label": "SHOP NECKLACES",
-                "card_link": "shopify://collections/everyday-necklaces-malandra",
                 "button_style": "primary",
-                "button_height": "inherit",
                 "show_icon": false,
-                "show_overlay": true,
-                "overlay_style": "gradient",
-                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0) 49.935%, rgba(50, 27, 3, 0.3) 84.685%)",
-                "color_scheme": "scheme-3",
+                "button_height": "inherit",
                 "content_gap": 16,
                 "button_spacing": 24,
+                "color_scheme": "scheme-3",
                 "padding_vertical": 36,
                 "padding_horizontal": 36,
                 "customize_mobile_padding": true,
                 "padding_vertical_mobile": 32,
-                "padding_horizontal_mobile": 28,
-                "show_on_top_desktop": true,
-                "image": "shopify://shop_images/malandra-necklaces-promo.avif",
-                "mobile_image": "shopify://shop_images/malandra-necklaces-promo.avif"
+                "padding_horizontal_mobile": 28
               }
             }
           },
@@ -2830,8 +2788,15 @@
               "type": "promo-card",
               "settings": {
                 "card_position": 1,
+                "show_on_top_desktop": true,
                 "show_on_top_mobile": true,
+                "card_link": "shopify://collections/signature-earrings-malandra",
                 "media_type": "image",
+                "image": "shopify://shop_images/malandra-earrings-promo.avif",
+                "mobile_image": "shopify://shop_images/malandra-earrings-promo.avif",
+                "show_overlay": true,
+                "overlay_style": "gradient",
+                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0) 49.935%, rgba(50, 27, 3, 0.3) 84.685%)",
                 "heading": "A Little Radiance",
                 "text": "<p>Sculptural hoops and delicate drops, the finishing touch for every day.</p>",
                 "content_alignment": "left",
@@ -2839,24 +2804,17 @@
                 "heading_size": "md",
                 "text_size": "md",
                 "button_label": "SHOP EARRINGS",
-                "card_link": "shopify://collections/signature-earrings-malandra",
                 "button_style": "primary",
-                "button_height": "inherit",
                 "show_icon": false,
-                "show_overlay": true,
-                "overlay_style": "gradient",
-                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0) 49.935%, rgba(50, 27, 3, 0.3) 84.685%)",
-                "color_scheme": "scheme-3",
+                "button_height": "inherit",
                 "content_gap": 16,
                 "button_spacing": 24,
+                "color_scheme": "scheme-3",
                 "padding_vertical": 36,
                 "padding_horizontal": 36,
                 "customize_mobile_padding": true,
                 "padding_vertical_mobile": 32,
-                "padding_horizontal_mobile": 28,
-                "show_on_top_desktop": true,
-                "image": "shopify://shop_images/malandra-earrings-promo.avif",
-                "mobile_image": "shopify://shop_images/malandra-earrings-promo.avif"
+                "padding_horizontal_mobile": 28
               }
             }
           },
@@ -2866,12 +2824,12 @@
         },
         "collection-tabs-view-all": {
           "type": "tabs-view-all-button",
+          "disabled": true,
           "static": true,
           "settings": {
             "button_label": "View all",
             "hide_view_all_mobile": true
-          },
-          "disabled": true
+          }
         }
       },
       "block_order": [
@@ -2879,7 +2837,43 @@
         "collection-tab-4",
         "collection-tab-5"
       ],
-      "name": "Collection tabs"
+      "name": "Collection tabs",
+      "settings": {
+        "section_width": "full_width",
+        "layout_direction": "vertical",
+        "tab_position": "right",
+        "mobile_alignment": "left",
+        "gap_desktop": 48,
+        "gap_mobile": 36,
+        "max_products": 8,
+        "layout_type": "carousel",
+        "columns_desktop": "3",
+        "columns_mobile": "1",
+        "show_next_slide_preview_on_desktop": false,
+        "show_next_slide_preview_on_mobile": true,
+        "product_gap_desktop": 10,
+        "product_gap_mobile": 10,
+        "show_navigation_on_desktop": true,
+        "navigation_position": "inside",
+        "navigation_style": "primary",
+        "navigation_icon": "chevron",
+        "navigation_behavior": "show_on_hover",
+        "show_pagination_on_desktop": true,
+        "pagination_type": "progress_bar",
+        "pagination_top_padding_desktop": 40,
+        "pagination_top_padding_mobile": 32,
+        "pagination_limit_width": true,
+        "pagination_max_width": 450,
+        "autoplay": false,
+        "autoplay_pause_on_hover": true,
+        "autoplay_speed": 4,
+        "color_scheme": "scheme-1",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      }
     }
   },
   "order": [
