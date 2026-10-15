@@ -1,6 +1,32 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"73a1feacb87a8a16be8673b79474263c470de43a"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"a0ac2424fa1c7ffe0e74833dd277312fba95068c"} -->
 
 # Base update history
+
+## 2026-10-15 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `73a1feacb87a8a16be8673b79474263c470de43a`
+- Updated through team commit: `a0ac2424fa1c7ffe0e74833dd277312fba95068c`
+- Team commits included: 1
+- Source changes:
+
+```text
+assets/component-pagination.css         |  3 +-
+ assets/component-search-suggestions.css |  1 +
+ assets/critical.css                     | 16 ++++--
+ blocks/icon.liquid                      |  3 +-
+ sections/collection-tabs.liquid         |  5 +-
+ snippets/css-variables.liquid           |  2 +-
+ snippets/custom-icon-image.liquid       | 97 +++++++++++++++++++++++++++++++++
+ snippets/icon.liquid                    | 33 ++++-------
+ snippets/tab-layout-styles.liquid       |  1 +
+ 9 files changed, 127 insertions(+), 34 deletions(-)
+```
+
+- Included team commits:
+  - `a0ac2424fa1c7ffe0e74833dd277312fba95068c` — fix(theme): contain underlines and safely render custom icons
+
 
 ## 2026-10-14 — Update from upstream/dev
 
