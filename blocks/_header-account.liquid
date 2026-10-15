@@ -28,19 +28,19 @@
 %}
 
 {% if shop.customer_accounts_enabled %}
-  <shopify-account class="{{ account_class }}" {% if linklists['customer-account-main-menu'].links != blank %}menu="customer-account-main-menu"{% endif %} {{ block.shopify_attributes }}>
+  <shopify-account class="{{ account_class }}" {% if linklists['customer-account-main-menu'].links != blank %}menu="customer-account-main-menu"{% endif %} {% if account_type == 'text' %}{{ block.shopify_attributes }}{% endif %}>
     <span slot="signed-out-avatar" class="header-account__avatar" aria-label="{{ account_label | escape }}">
-      {% unless account_type == 'text' %}<span class="icon" aria-hidden="true">
-        {% render 'icon', icon: 'user', bare: true %}
+      {% unless account_type == 'text' %}<span class="icon" aria-hidden="true" {{ block.shopify_attributes }}>
+        {% render 'header-figma-icon', icon: 'account' %}
       </span>{% endunless %}
       {% unless account_type == 'icon' %}<span class="header-action__label {{ account_typography_class }}">{{ account_label | escape }}</span>{% endunless %}
       <span class="header-account__mobile-label">{{ 'customers.login.submit' | t }}</span>
     </span>
   </shopify-account>
 {% else %}
-  <a class="{{ account_class }}" href="{{ routes.account_login_url }}" aria-label="{{ account_label | escape }}" {{ block.shopify_attributes }}>
-    {% unless account_type == 'text' %}<span class="icon" aria-hidden="true">
-      {% render 'icon', icon: 'user', bare: true %}
+  <a class="{{ account_class }}" href="{{ routes.account_login_url }}" aria-label="{{ account_label | escape }}" {% if account_type == 'text' %}{{ block.shopify_attributes }}{% endif %}>
+    {% unless account_type == 'text' %}<span class="icon" aria-hidden="true" {{ block.shopify_attributes }}>
+      {% render 'header-figma-icon', icon: 'account' %}
     </span>{% endunless %}
     {% unless account_type == 'icon' %}<span class="header-action__label {{ account_typography_class }}">{{ account_label | escape }}</span>{% endunless %}
     <span class="header-account__mobile-label">{{ 'customers.login.submit' | t }}</span>
@@ -89,18 +89,16 @@
 
   .header-account .icon {
     display: inline-flex;
-    width: var(--header-icon-size, var(--icon-size-medium));
-    height: var(--header-icon-size, var(--icon-size-medium));
     flex: 0 0 auto;
   }
 
-  .header-account .icon svg {
+  .header-account .icon svg:not(.header-figma-icon *) {
     display: block;
     width: 100%;
     height: 100%;
   }
 
-  @media (max-width: 991.98px) {
+  @media (width < 992px) {
     .header-account {
       min-height: var(--button-height-mobile);
     }

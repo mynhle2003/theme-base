@@ -1,4 +1,7 @@
 {% liquid
+  assign banner_collection = block.settings.collection
+  assign banner_image = block.settings.image | default: banner_collection.image
+  assign banner_link = block.settings.link | default: banner_collection.url
   assign banner_scheme = block.settings.color_scheme | default: 'scheme-1'
   if block.settings.color_scheme.id != blank
     assign banner_scheme = block.settings.color_scheme.id
@@ -20,7 +23,7 @@
     assign banner_text_size = 'md'
   endunless
   assign banner_subheading = block.settings.subheading
-  assign banner_heading = block.settings.heading
+  assign banner_heading = block.settings.heading | default: banner_collection.title
   assign banner_text = block.settings.text
   assign banner_heading_class = 'heading-text heading-' | append: banner_heading_size
   assign banner_text_class = 'body-text body-' | append: banner_text_size
@@ -51,19 +54,44 @@
   {% endif %}
 {% endcapture %}
 {% assign banner_style = banner_style | strip %}
-<article class="header-mega-menu__banner header-mega-menu__banner--{{ block.settings.layout | default: 'content_on_image' }} section-color-scope {{ banner_scheme }}{% if block.settings.limit_width %} header-mega-menu__banner--limited{% endif %}{% if block.settings.overlay %} header-mega-menu__banner--overlay{% endif %}"{% if banner_style != blank %} style="{{ banner_style }}"{% endif %} {{ block.shopify_attributes }}>
-  <{% if block.settings.link != blank %}a{% else %}div{% endif %} class="header-mega-menu__banner-media{% if block.settings.image == blank %} placeholder-image{% endif %}" {% if block.settings.link != blank %}href="{{ block.settings.link | escape }}" target="{{ banner_target }}"{% if block.settings.open_new_tab %} rel="noopener noreferrer"{% endif %}{% endif %}>
-    {% if block.settings.image != blank %}
-      {{ block.settings.image | image_url: width: 1000 | image_tag: class: 'header-mega-menu__banner-image', widths: '240, 360, 480, 720, 1000', alt: banner_heading }}
+<article class="header-mega-menu__banner{% if block.settings.image_ratio == 'portrait' %} header-mega-menu__banner--portrait{% endif %}{% if block.settings.show_product_count and banner_collection != blank %} header-mega-menu__banner--collection-card{% endif %} header-mega-menu__banner--{{ block.settings.layout | default: 'content_on_image' }} section-color-scope {{ banner_scheme }}{% if block.settings.limit_width %} header-mega-menu__banner--limited{% endif %}{% if block.settings.overlay %} header-mega-menu__banner--overlay{% endif %}"{% if banner_style != blank %} style="{{ banner_style }}"{% endif %} {{ block.shopify_attributes }}>
+  <{% if banner_link != blank %}a{% else %}div{% endif %} class="header-mega-menu__banner-media{% if banner_image == blank %} placeholder-image{% endif %}" {% if banner_link != blank %}href="{{ banner_link | escape }}" target="{{ banner_target }}"{% if block.settings.open_new_tab %} rel="noopener noreferrer"{% endif %}{% endif %}>
+    {% if banner_image != blank %}
+      {{ banner_image | image_url: width: 1000 | image_tag: class: 'header-mega-menu__banner-image', widths: '240, 360, 480, 720, 1000', sizes: 'auto, (max-width: 767px) 100vw, 50vw', loading: 'lazy', alt: banner_heading }}
     {% else %}
       {{ 'image' | placeholder_svg_tag: 'header-mega-menu__banner-image' }}
     {% endif %}
-  </{% if block.settings.link != blank %}a{% else %}div{% endif %}>
+  </{% if banner_link != blank %}a{% else %}div{% endif %}>
   <div class="header-mega-menu__banner-content header-mega-menu__banner-content--{{ block.settings.alignment | default: 'left' }} header-mega-menu__banner-content--{{ block.settings.content_position | default: 'bottom' }}">
     {% if banner_subheading != blank %}<div class="header-mega-menu__banner-subheading">{{ banner_subheading }}</div>{% endif %}
   {% if banner_heading != blank %}<div class="header-mega-menu__banner-title {{ banner_heading_class }}">{{ banner_heading }}</div>{% endif %}
+  {% if block.settings.show_product_count and banner_collection != blank %}<div class="header-mega-menu__banner-text body-text body-sm">{{ 'collection_list.products_count' | t: count: banner_collection.all_products_count }}</div>{% endif %}
   {% if banner_text != blank %}<div class="header-mega-menu__banner-text {{ banner_text_class }}">{{ banner_text }}</div>{% endif %}
-    {% if block.settings.label != blank and block.settings.link != blank %}<a class="btn btn--{{ block.settings.button_style | default: 'primary' }}{% if block.settings.button_style == 'tertiary' %} link-underline{% endif %} header-mega-menu__banner-button{% if block.settings.full_width %} header-mega-menu__banner-button--full-width{% endif %}"{% if block.settings.button_style == 'tertiary' %} data-underline="persistent" data-underline-target="text"{% endif %} href="{{ block.settings.link | escape }}" target="{{ banner_target }}"{% if block.settings.open_new_tab %} rel="noopener noreferrer"{% endif %}>{% if block.settings.show_icon and block.settings.icon_position == 'left' %}{% render 'icon', icon: block.settings.icon, bare: true, class: 'header-mega-menu__banner-button-icon' %}{% endif %}<span class="btn__text">{{ block.settings.label | escape }}</span>{% if block.settings.show_icon and block.settings.icon_position == 'right' %}{% render 'icon', icon: block.settings.icon, bare: true, class: 'header-mega-menu__banner-button-icon' %}{% endif %}</a>{% endif %}
+    {% if block.settings.label != blank and banner_link != blank %}
+      {% liquid
+        assign banner_button_class = 'header-mega-menu__banner-button'
+        if block.settings.full_width
+          assign banner_button_class = banner_button_class | append: ' header-mega-menu__banner-button--full-width'
+        endif
+        assign banner_button_icon = blank
+        if block.settings.show_icon
+          assign banner_button_icon = block.settings.icon
+        endif
+        assign banner_button_icon_position = 'after'
+        if block.settings.icon_position == 'left'
+          assign banner_button_icon_position = 'before'
+        endif
+      %}
+      {% render 'theme-button',
+        label: block.settings.label,
+        url: banner_link,
+        variant: block.settings.button_style,
+        open_in_new_tab: block.settings.open_new_tab,
+        icon: banner_button_icon,
+        icon_position: banner_button_icon_position,
+        class: banner_button_class
+      %}
+    {% endif %}
   </div>
 </article>
 {% stylesheet %}
@@ -75,12 +103,45 @@
       padding: var(--mega-banner-padding-top-mobile, var(--mega-banner-padding-top)) var(--mega-banner-padding-right-mobile, var(--mega-banner-padding-right)) var(--mega-banner-padding-bottom-mobile, var(--mega-banner-padding-bottom)) var(--mega-banner-padding-left-mobile, var(--mega-banner-padding-left));
     }
   }
+  .header-mega-menu__banner--portrait .header-mega-menu__banner-media { aspect-ratio: 6 / 7; overflow: hidden; }
+  .header-mega-menu__banner--portrait .header-mega-menu__banner-image { aspect-ratio: 6 / 7; height: 100%; min-height: 0; }
+  .header-mega-menu__banner--collection-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgb(28 15 3 / 50%)); pointer-events: none; }
+  .header-mega-menu__banner--collection-card .header-mega-menu__banner-content { pointer-events: none; }
 {% endstylesheet %}
 {% schema %}
 {
   "name": "Banner",
   "tag": null,
   "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Uses this collection image and link when the corresponding controls are empty."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "Show product count",
+      "default": false,
+      "visible_if": "{{ block.settings.collection != blank }}"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        {
+          "value": "original",
+          "label": "Original"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (6:7)"
+        }
+      ],
+      "default": "original"
+    },
     {
       "type": "url",
       "id": "link",

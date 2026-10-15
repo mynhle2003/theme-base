@@ -73,143 +73,273 @@
           "static": true,
           "settings": {
             "bottom_separator": "none",
-            "gap": 16,
-            "padding_top": 12,
-            "padding_bottom": 12,
+            "gap": 32,
+            "padding_top": 16,
+            "padding_bottom": 16,
             "customize_mobile_padding": true,
-            "padding_top_mobile": 12,
-            "padding_bottom_mobile": 12
+            "padding_top_mobile": 16,
+            "padding_bottom_mobile": 16,
+            "actions_gap": 24,
+            "customize_mobile_gap": true,
+            "gap_mobile": 8,
+            "actions_gap_mobile": 4
           },
           "blocks": {
             "header-menu": {
               "type": "_header-menu",
               "settings": {
-                "menu": "main-menu",
-                "gap": 24,
+                "menu": "malandra-header",
+                "gap": 28,
                 "show_dropdown_icon": true,
                 "dropdown_trigger": "hover",
-                "font": "accent",
-                "font_size": "md",
+                "font": "body",
+                "font_size": "sm",
                 "letter_spacing": "normal",
-                "text_case": "original",
+                "text_case": "uppercase",
                 "text_color": "",
                 "submenu_font": "body",
-                "submenu_font_size": "md",
+                "submenu_font_size": "sm",
                 "submenu_text_case": "original",
                 "submenu_text_color": ""
               },
               "blocks": {
-                "mega-menu-banners": {
+                "best-sellers-mega": {
                   "type": "_mega-menu-banners",
                   "settings": {
-                    "menu_item": "Collections",
-                    "highlight_menu_item": false,
-                    "highlight_color": "#000000",
-                    "banner_width": 40,
-                    "gap": 12,
+                    "gap": 32,
                     "layout": "horizontal",
-                    "submenu_columns": "4",
-                    "limit_width": true,
-                    "max_width": 850,
-                    "collections": [],
-                    "font": "accent",
-                    "font_size": "xl",
-                    "letter_spacing": "normal"
+                    "submenu_columns": "3",
+                    "banner_width": 42,
+                    "limit_width": false,
+                    "font": "body",
+                    "font_size": "sm",
+                    "letter_spacing": "normal",
+                    "menu_item": "BEST SELLERS"
                   },
                   "blocks": {
-                    "mega-menu-banner-1": {
+                    "necklace-edit": {
                       "type": "_mega-menu-banner",
                       "settings": {
-                        "link": "",
-                        "open_new_tab": false,
-                        "layout": "content_on_image",
-                        "limit_width": false,
-                        "max_width": 700,
-                        "overlay": false,
-                        "overlay_color": "#000000",
-                        "subheading": "",
-                        "heading": "Curate Your Set",
-                        "text": "<p>Choose your favorites and save up to 20%.</p>",
+                        "collection": "necklace-malandra",
+                        "image": "shopify://shop_images/malandra-category-necklace-figma.avif",
+                        "link": "/collections/necklace-malandra",
+                        "layout": "content_below_image",
+                        "image_ratio": "portrait",
+                        "show_product_count": false,
+                        "heading": "Everyday Necklaces",
+                        "heading_size": "custom",
+                        "custom_heading_size": 24,
+                        "text": "<p>Layer your favorites, every day.</p>",
+                        "text_size": "sm",
+                        "label": "Shop necklaces",
+                        "button_style": "tertiary",
                         "alignment": "left",
                         "content_position": "bottom",
-                        "heading_size": "lg",
-                        "custom_heading_size": 24,
-                        "text_size": "md",
-                        "label": "",
-                        "button_style": "primary",
-                        "show_icon": false,
-                        "icon": "arrow_right",
-                        "icon_position": "right",
-                        "full_width": false,
-                        "content_gap": 10,
-                        "button_spacing": 30,
-                        "color_scheme": "",
-                        "padding_top": 40,
-                        "padding_bottom": 40,
-                        "padding_left": 40,
-                        "padding_right": 40,
+                        "content_gap": 12,
+                        "button_spacing": 16,
+                        "padding_top": 24,
+                        "padding_bottom": 6,
+                        "padding_left": 0,
+                        "padding_right": 0,
                         "customize_mobile_padding": false,
-                        "padding_top_mobile": 40,
-                        "padding_bottom_mobile": 40,
-                        "padding_left_mobile": 40,
-                        "padding_right_mobile": 40
+                        "color_scheme": "scheme-1",
+                        "overlay": false
                       },
                       "blocks": {}
                     },
-                    "mega-menu-banner-2": {
+                    "earring-edit": {
                       "type": "_mega-menu-banner",
                       "settings": {
-                        "link": "",
-                        "open_new_tab": false,
-                        "layout": "content_on_image",
-                        "limit_width": false,
-                        "max_width": 700,
-                        "overlay": false,
-                        "overlay_color": "#000000",
-                        "subheading": "",
-                        "heading": "Curate Your Set",
-                        "text": "<p>Choose your favorites and save up to 20%.</p>",
+                        "collection": "earrings-elara",
+                        "image": "shopify://shop_images/elara-category-earrings.avif",
+                        "link": "/collections/earrings-elara",
+                        "layout": "content_below_image",
+                        "image_ratio": "portrait",
+                        "show_product_count": false,
+                        "heading": "Statement Earrings",
+                        "heading_size": "custom",
+                        "custom_heading_size": 24,
+                        "text": "<p>A little sparkle, a lasting impression.</p>",
+                        "text_size": "sm",
+                        "label": "Shop earrings",
+                        "button_style": "tertiary",
                         "alignment": "left",
                         "content_position": "bottom",
-                        "heading_size": "lg",
-                        "custom_heading_size": 24,
-                        "text_size": "md",
-                        "label": "",
-                        "button_style": "primary",
-                        "show_icon": false,
-                        "icon": "arrow_right",
-                        "icon_position": "right",
-                        "full_width": false,
-                        "content_gap": 10,
-                        "button_spacing": 30,
-                        "color_scheme": "",
-                        "padding_top": 40,
-                        "padding_bottom": 40,
-                        "padding_left": 40,
-                        "padding_right": 40,
+                        "content_gap": 12,
+                        "button_spacing": 16,
+                        "padding_top": 24,
+                        "padding_bottom": 6,
+                        "padding_left": 0,
+                        "padding_right": 0,
                         "customize_mobile_padding": false,
-                        "padding_top_mobile": 40,
-                        "padding_bottom_mobile": 40,
-                        "padding_left_mobile": 40,
-                        "padding_right_mobile": 40
+                        "color_scheme": "scheme-1",
+                        "overlay": false
                       },
                       "blocks": {}
                     }
                   },
                   "block_order": [
-                    "mega-menu-banner-1",
-                    "mega-menu-banner-2"
+                    "necklace-edit",
+                    "earring-edit"
+                  ]
+                },
+                "collection-mega": {
+                  "type": "_mega-menu-banners",
+                  "settings": {
+                    "gap": 24,
+                    "layout": "horizontal",
+                    "submenu_columns": "3",
+                    "banner_width": 100,
+                    "limit_width": false,
+                    "font": "body",
+                    "font_size": "sm",
+                    "letter_spacing": "normal",
+                    "menu_item": "COLLECTION"
+                  },
+                  "blocks": {
+                    "earrings": {
+                      "type": "_mega-menu-banner",
+                      "settings": {
+                        "collection": "earrings-malandra",
+                        "image": "shopify://shop_images/elara-category-earrings.avif",
+                        "link": "/collections/earrings-malandra",
+                        "layout": "content_on_image",
+                        "image_ratio": "portrait",
+                        "show_product_count": true,
+                        "heading": "Earrings",
+                        "heading_size": "custom",
+                        "custom_heading_size": 28,
+                        "text": "",
+                        "text_size": "sm",
+                        "label": "",
+                        "button_style": "tertiary",
+                        "alignment": "left",
+                        "content_position": "bottom",
+                        "content_gap": 12,
+                        "button_spacing": 16,
+                        "padding_top": 28,
+                        "padding_bottom": 28,
+                        "padding_left": 28,
+                        "padding_right": 28,
+                        "customize_mobile_padding": false,
+                        "color_scheme": "scheme-3",
+                        "overlay": false
+                      },
+                      "blocks": {}
+                    },
+                    "bracelets": {
+                      "type": "_mega-menu-banner",
+                      "settings": {
+                        "collection": "bracelet-malandra",
+                        "image": "shopify://shop_images/elara-category-bracelets.avif",
+                        "link": "/collections/bracelet-malandra",
+                        "layout": "content_on_image",
+                        "image_ratio": "portrait",
+                        "show_product_count": true,
+                        "heading": "Bracelets",
+                        "heading_size": "custom",
+                        "custom_heading_size": 28,
+                        "text": "",
+                        "text_size": "sm",
+                        "label": "",
+                        "button_style": "tertiary",
+                        "alignment": "left",
+                        "content_position": "bottom",
+                        "content_gap": 12,
+                        "button_spacing": 16,
+                        "padding_top": 28,
+                        "padding_bottom": 28,
+                        "padding_left": 28,
+                        "padding_right": 28,
+                        "customize_mobile_padding": false,
+                        "color_scheme": "scheme-3",
+                        "overlay": false
+                      },
+                      "blocks": {}
+                    },
+                    "necklaces": {
+                      "type": "_mega-menu-banner",
+                      "settings": {
+                        "collection": "necklace-malandra",
+                        "image": "shopify://shop_images/elara-category-necklaces-figma.avif",
+                        "link": "/collections/necklace-malandra",
+                        "layout": "content_on_image",
+                        "image_ratio": "portrait",
+                        "show_product_count": true,
+                        "heading": "Necklaces",
+                        "heading_size": "custom",
+                        "custom_heading_size": 28,
+                        "text": "",
+                        "text_size": "sm",
+                        "label": "",
+                        "button_style": "tertiary",
+                        "alignment": "left",
+                        "content_position": "bottom",
+                        "content_gap": 12,
+                        "button_spacing": 16,
+                        "padding_top": 28,
+                        "padding_bottom": 28,
+                        "padding_left": 28,
+                        "padding_right": 28,
+                        "customize_mobile_padding": false,
+                        "color_scheme": "scheme-3",
+                        "overlay": false
+                      },
+                      "blocks": {}
+                    },
+                    "rings": {
+                      "type": "_mega-menu-banner",
+                      "settings": {
+                        "collection": "rings-elara",
+                        "image": "shopify://shop_images/elara-category-rings-figma.avif",
+                        "link": "/collections/rings-elara",
+                        "layout": "content_on_image",
+                        "image_ratio": "portrait",
+                        "show_product_count": true,
+                        "heading": "Rings",
+                        "heading_size": "custom",
+                        "custom_heading_size": 28,
+                        "text": "",
+                        "text_size": "sm",
+                        "label": "",
+                        "button_style": "tertiary",
+                        "alignment": "left",
+                        "content_position": "bottom",
+                        "content_gap": 12,
+                        "button_spacing": 16,
+                        "padding_top": 28,
+                        "padding_bottom": 28,
+                        "padding_left": 28,
+                        "padding_right": 28,
+                        "customize_mobile_padding": false,
+                        "color_scheme": "scheme-3",
+                        "overlay": false
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "earrings",
+                    "bracelets",
+                    "necklaces",
+                    "rings"
                   ]
                 }
               },
               "block_order": [
-                "mega-menu-banners"
+                "best-sellers-mega",
+                "collection-mega"
               ]
             },
             "header-logo": {
               "type": "_header-logo",
               "settings": {
-                "position": "center"
+                "position": "center",
+                "position_mobile": "center",
+                "logo": "shopify://shop_images/elara-header-logo-transparent.svg",
+                "width": 100,
+                "width_mobile": 92,
+                "logo_transparent": "shopify://shop_images/elara-header-logo-white.svg"
               },
               "blocks": {}
             },
@@ -218,46 +348,25 @@
               "settings": {},
               "blocks": {}
             },
-            "header-localization": {
-              "type": "_header-localization",
-              "settings": {
-                "dropdown_trigger": "click",
-                "show_country_selector": true,
-                "show_country_name": false,
-                "show_country_flag": true,
-                "show_language_selector": false,
-                "font_size": "md"
-              },
-              "blocks": {}
-            },
-            "header-divider": {
-              "type": "_header-divider",
-              "settings": {
-                "full_height": false,
-                "height": 12,
-                "color_type": "inherit",
-                "border_color": "#dbd9d9"
-              },
-              "blocks": {}
-            },
             "header-search": {
               "type": "_header-search",
               "settings": {
                 "type": "icon",
                 "label": "Search",
-                "font": "accent",
-                "font_size": "md",
-                "letter_spacing": "relaxed"
+                "font": "body",
+                "font_size": "sm",
+                "letter_spacing": "relaxed",
+                "show_on_mobile": false
               },
               "blocks": {}
             },
             "header-account": {
               "type": "_header-account",
               "settings": {
-                "type": "text",
+                "type": "icon",
                 "label": "Account",
-                "font": "accent",
-                "font_size": "md",
+                "font": "body",
+                "font_size": "sm",
                 "letter_spacing": "normal"
               },
               "blocks": {}
@@ -265,7 +374,7 @@
             "header-cart": {
               "type": "_header-cart",
               "settings": {
-                "type": "text",
+                "type": "icon",
                 "label": "Cart",
                 "badge_type": "primary"
               },
@@ -276,8 +385,6 @@
             "header-menu",
             "header-logo",
             "header-menu-toggle",
-            "header-localization",
-            "header-divider",
             "header-search",
             "header-account",
             "header-cart"
@@ -285,7 +392,7 @@
         }
       },
       "settings": {
-        "section_width": "page_width",
+        "section_width": "full_width",
         "icon_size": 20,
         "sticky_type": "scroll_up",
         "color_scheme": "scheme-1",

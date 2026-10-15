@@ -133,7 +133,7 @@
       }
       observer?.unobserve(element);
       nodes.delete(element);
-      element.classList.remove('reveal-pending');
+      if (element.classList.contains('reveal-pending')) element.classList.remove('reveal-pending');
     };
     const scan = () => {
       const cards = [...root.querySelectorAll(cardSelector)].filter(card => !card.closest(`${excluded}, .slideshow, dialog`));
@@ -161,7 +161,13 @@
         const component = element.hasAttribute('data-component-reveal');
         const type = element.dataset.blockAnimation || (element.matches('article.testimonial-item') ? 'fade' : 'slide-bottom');
         const parent = element.parentElement?.closest('[data-component-reveal]');
-        if (!types.has(type) || element.closest(excluded) || (component && element.closest('.slideshow, dialog')) || (parent && parent.dataset.blockAnimation !== 'none')) { remove(element); element.dataset.animationInitialized = 'true'; return; }
+        if (!types.has(type) || element.closest(excluded) || (component && element.closest('.slideshow, dialog')) || (parent && parent.dataset.blockAnimation !== 'none')) {
+          remove(element);
+          // Marquee observes its children to refresh cloned content. Writing the
+          // same state on every scan feeds its clone rebuild back into this scan.
+          if (element.dataset.animationInitialized !== 'true') element.dataset.animationInitialized = 'true';
+          return;
+        }
         const configuration = `${type}:${element.dataset.animationDelay}:${component}`;
         if (nodes.get(element)?.configuration === configuration) return;
         remove(element);
@@ -219,11 +225,23 @@
     mutations.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden', 'aria-hidden', 'inert', 'class', 'data-block-animation', 'data-animation-delay'] });
     return { destroy() { cancelAnimationFrame(resizeFrame); events.abort(); mutations.disconnect(); observer?.disconnect(); nodes.forEach((state, element) => remove(element)); } };
   };
+  // Prepare offscreen entrances shortly before they are needed. Scanning every
+  // section at startup measures card rows and splits heading text below the fold.
+  const sectionObserver = !editor && 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) initialize(entry.target); });
+  }, { rootMargin: '300px 0px' }) : null;
   const initialize = root => {
+    sectionObserver?.unobserve(root);
     if (controllers.has(root)) return;
     controllers.set(root, createController(root));
   };
-  document.querySelectorAll('.shopify-section').forEach(initialize);
+  document.querySelectorAll('.shopify-section').forEach(root => {
+    if (!sectionObserver) { initialize(root); return; }
+    const bounds = root.getBoundingClientRect();
+    // Zero-height wrappers can own fixed overlays; they cannot intersect.
+    if (bounds.height <= 0 || bounds.top <= innerHeight + 300 || root.contains(document.activeElement)) initialize(root);
+    else sectionObserver.observe(root);
+  });
   skipInitialAnimations = false;
   document.documentElement.classList.add('block-animations-enabled');
   if (boot) clearTimeout(boot.timer);
@@ -234,6 +252,7 @@
     initialize(event.target);
   });
   document.addEventListener('shopify:section:unload', event => {
+    sectionObserver?.unobserve(event.target);
     controllers.get(event.target)?.destroy();
     controllers.delete(event.target);
   });

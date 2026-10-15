@@ -23,6 +23,9 @@
 
   assign search_typography_class = 'body-text body-' | append: search_font_size | append: ' font-' | append: search_font | append: ' tracking-' | append: search_letter_spacing | append: ' text-case-original'
   assign search_class = 'header-search header-search--type-' | append: search_type | append: ' ' | append: search_typography_class
+  if block.settings.show_on_mobile == false
+    assign search_class = search_class | append: ' header-search--hide-mobile'
+  endif
   if search_type == 'icon'
     assign search_class = search_class | append: ' header-action--type-icon'
   endif
@@ -48,12 +51,12 @@
     >
     <button class="btn btn--unstyled header-search__submit" type="submit" aria-label="{{ search_label | escape }}">
       <span class="icon" aria-hidden="true">
-        {% render 'icon', icon: 'magnifying-glass', bare: true %}
+        {% render 'header-figma-icon', icon: 'search' %}
       </span>
     </button>
   </form>
   <button
-    class="header-search header-search--mobile-icon header-action--type-icon"
+    class="header-search header-search--mobile-icon header-action--type-icon{% if block.settings.show_on_mobile == false %} header-search--hide-mobile{% endif %}"
     type="button"
     aria-label="{{ search_label | escape }}"
     aria-haspopup="dialog"
@@ -61,7 +64,7 @@
     data-search-overlay-open
   >
     <span class="icon" aria-hidden="true">
-      {% render 'icon', icon: 'magnifying-glass', bare: true %}
+      {% render 'header-figma-icon', icon: 'search' %}
     </span>
   </button>
 {% else %}
@@ -72,10 +75,10 @@
     aria-haspopup="dialog"
     aria-controls="SearchOverlay"
     data-search-overlay-open
-    {{ block.shopify_attributes }}
+    {% if search_type == 'text' %}{{ block.shopify_attributes }}{% endif %}
   >
-    <span class="icon" aria-hidden="true">
-      {% render 'icon', icon: 'magnifying-glass', bare: true %}
+    <span class="icon" aria-hidden="true" {% unless search_type == 'text' %}{{ block.shopify_attributes }}{% endunless %}>
+      {% render 'header-figma-icon', icon: 'search' %}
     </span>
     {% unless search_type == 'icon' %}<span class="header-action__label {{ search_typography_class }}">{{ search_label | escape }}</span>{% endunless %}
   </button>
@@ -104,12 +107,10 @@
 
   .header-search .icon {
     display: inline-flex;
-    width: var(--header-icon-size, var(--icon-size-medium));
-    height: var(--header-icon-size, var(--icon-size-medium));
     flex: 0 0 auto;
   }
 
-  .header-search .icon svg {
+  .header-search .icon svg:not(.header-figma-icon *) {
     display: block;
     width: 100%;
     height: 100%;
@@ -170,9 +171,14 @@
     display: none;
   }
 
-  /* Keep the centered logo clear of a full search field on compact desktop
-     layouts as well as tablet/mobile. */
-  @media (max-width: 1399.98px) {
+  /* Desktop type stays active at all desktop widths; mobile uses an icon. */
+  @media (min-width: 992px) {
+    .header-top[data-header-root] .header__row .header-search.header-search--type-text > .icon {
+      display: none;
+    }
+  }
+
+  @media (width < 992px) {
     .header-top .header-search--type-search_bar {
       display: none;
     }
@@ -182,7 +188,7 @@
     }
   }
 
-  @media (max-width: 991.98px) {
+  @media (width < 992px) {
     .header-search,
     .header-search__input,
     .header-search__submit {
@@ -194,21 +200,14 @@
       min-height: var(--input-height-mobile);
     }
 
-    .header-search--type-text .header-action__label {
-      position: static;
-      width: auto;
-      height: auto;
-      padding: 0;
-      margin: 0;
-      overflow: visible;
-      clip: auto;
-      white-space: nowrap;
-    }
 
     .header-search__submit {
       width: var(--button-height-mobile);
       min-width: var(--button-height-mobile);
     }
+  }
+  @media (width < 992px) {
+    .header-top .header__row .header-search--hide-mobile { display: none; }
   }
 {% endstylesheet %}
 
@@ -217,6 +216,7 @@
   "name": "t:general.header_search",
   "tag": null,
   "settings": [
+    { "type": "checkbox", "id": "show_on_mobile", "label": "Show on mobile", "default": true },
     {
       "type": "header",
       "content": "Layout"

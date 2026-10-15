@@ -1,0 +1,55 @@
+{% doc %}
+  Hero artwork and matching art-directed preload hints. Preserve the artwork's
+  focal point and cover crop; cap responsive candidates at the original size.
+
+  @param {image} image - Desktop artwork
+  @param {image} [mobile_image] - Optional mobile artwork
+  @param {string} [loading] - Image loading strategy
+  @param {string} [fetchpriority] - Image request priority
+  @param {boolean} [preload] - Render hints instead of the picture
+{% enddoc %}
+{% liquid
+  assign mobile_artwork = mobile_image | default: image
+  assign desktop_max = image.width | at_most: 2400
+  assign mobile_max = mobile_artwork.width | at_most: 1200
+  assign candidates = '375,550,750,1100,1500,2000' | split: ','
+  capture desktop_srcset
+    for candidate in candidates
+      assign candidate_width = candidate | plus: 0
+      if candidate_width < desktop_max
+        echo image | image_url: width: candidate_width
+        echo ' '
+        echo candidate_width
+        echo 'w, '
+      endif
+    endfor
+    echo image | image_url: width: desktop_max
+    echo ' '
+    echo desktop_max
+    echo 'w'
+  endcapture
+  capture mobile_srcset
+    for candidate in candidates
+      assign candidate_width = candidate | plus: 0
+      if candidate_width < mobile_max
+        echo mobile_artwork | image_url: width: candidate_width
+        echo ' '
+        echo candidate_width
+        echo 'w, '
+      endif
+    endfor
+    echo mobile_artwork | image_url: width: mobile_max
+    echo ' '
+    echo mobile_max
+    echo 'w'
+  endcapture
+%}
+{% if preload %}
+  <link rel="preload" as="image" imagesrcset="{{ mobile_srcset | strip | escape }}" imagesizes="100vw" media="(max-width: 767.98px)" fetchpriority="high">
+  <link rel="preload" as="image" imagesrcset="{{ desktop_srcset | strip | escape }}" imagesizes="100vw" media="(min-width: 768px)" fetchpriority="high">
+{% else %}
+  <picture>
+    <source media="(max-width: 767.98px)" srcset="{{ mobile_srcset | strip | escape }}" sizes="100vw">
+    <img src="{{ image | image_url: width: desktop_max }}" srcset="{{ desktop_srcset | strip | escape }}" sizes="100vw" width="{{ image.width }}" height="{{ image.height }}" alt="" loading="{{ loading | default: 'lazy' }}" fetchpriority="{{ fetchpriority | default: 'auto' }}" style="object-position: {{ image.presentation.focal_point | default: '50% 50%' }};">
+  </picture>
+{% endif %}

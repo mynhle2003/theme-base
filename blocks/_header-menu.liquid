@@ -90,7 +90,7 @@
 {% assign menu_style = menu_style | strip %}
 
   <nav
-    class="{{ menu_class }} {{ menu_typography_class }} scrollbar scrollbar--hidden scrollbar--vertical-until-desktop"
+    class="{{ menu_class }} {{ menu_typography_class }}"
     id="HeaderMenu-{{ section.id }}"
     aria-label="{{ 'accessibility.menu' | t }}"
     data-dropdown-trigger="{{ dropdown_trigger }}"
@@ -113,7 +113,7 @@
                   <summary class="header-menu__summary link-underline-trigger" aria-haspopup="true">
                     <span class="header-menu__top-link-label link-underline">{{ link.title | escape }}</span>
                     {% if block.settings.show_dropdown_icon %}
-                      {% render 'icon', icon: 'chevron-down', class: 'header-menu__dropdown-icon' %}
+                      <span class="icon header-menu__dropdown-icon" aria-hidden="true">{% render 'header-figma-icon', icon: 'chevron' %}</span>
                     {% endif %}
                   </summary>
                   <ul class="header-menu__submenu {{ submenu_typography_class }}" role="list">
@@ -139,6 +139,7 @@
                 <a class="header-menu__link link-underline-trigger" href="{{ link.url }}"><span class="header-menu__top-link-label link-underline">{{ link.title | escape }}</span></a>
               {% endif %}
             </li>
+            {% unless forloop.last %}<li class="header-menu__gap" role="presentation" aria-hidden="true"></li>{% endunless %}
           {% endfor %}
       </ul>
       <div class="header-menu__mega-config" aria-hidden="true">{% content_for 'blocks' %}</div>
@@ -280,7 +281,25 @@
   .header-menu__list {
     align-items: center;
     flex-wrap: wrap;
-    gap: var(--header-menu-gap, 26px);
+    width: max-content;
+    max-width: 100%;
+    column-gap: min(8px, var(--header-menu-gap, 26px));
+    row-gap: var(--header-menu-gap, 26px);
+  }
+
+  /* Zero-basis spacers yield before the label items wrap. */
+  .header-menu__list > .header-menu__item {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .header-menu__gap {
+    width: max(0px, calc(var(--header-menu-gap, 26px) - 8px));
+    max-width: max(0px, calc(var(--header-menu-gap, 26px) - 8px));
+    min-width: 0;
+    flex: 1 1 0px;
+    margin-inline: calc(min(8px, var(--header-menu-gap, 26px)) / -2);
+    list-style: none;
   }
 
   .header-menu__item {
@@ -350,7 +369,7 @@
   }
 
   .header-menu__dropdown-icon {
-    --icon-width: calc(var(--icon-size-small) - 2px);
+    --icon-width: 20px;
     width: var(--icon-width);
     height: var(--icon-width);
     flex: 0 0 auto;
@@ -435,7 +454,7 @@
     inset-block-start: calc(100% + var(--header-submenu-offset, 0px));
     inset-inline-start: calc(var(--header-mega-inline-offset, 0px) * -1);
     width: 100vw;
-    padding-block: 1.5rem;
+    padding-block: 32px;
     padding-inline: 0;
     border-radius: var(--drawer-radius);
     background: var(--background-color);
@@ -523,8 +542,10 @@
   .header-mega-menu__navigation .header-menu__submenu-item > .header-menu__link {
     min-height: 1.5rem;
     padding-inline: 0;
-    font-weight: 600;
-    line-height: 1.25;
+    font-family: var(--font-heading-family);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.5;
   }
 
   .header-mega-menu__navigation .header-menu__tertiary {
@@ -544,7 +565,7 @@
     padding-inline: 0;
   }
 
-  .header-mega-menu__banners { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; align-items: start; }
+  .header-mega-menu__banners { display: grid; grid-template-columns: repeat(var(--mega-banner-columns, 2), minmax(0, 1fr)); gap: var(--mega-menu-gap, 24px); align-items: start; }
   .header-mega-menu__banners--single { grid-template-columns: minmax(0, 1fr); }
   .header-mega-menu__banner { color: inherit; text-decoration: none; }
   .header-mega-menu__banner-image { display: block; width: 100%; aspect-ratio: 1 / 1.1; object-fit: cover; }
@@ -676,7 +697,7 @@
     display: contents;
   }
 
-  @media (max-width: 991.98px) {
+  @media (width < 992px) {
     /* The same drawer handles the mobile and tablet navigation. */
     .header-menu {
       display: none !important;
@@ -1125,6 +1146,11 @@
     }
   }
 
+  .header-mega-menu__container.page-width { max-width: calc(var(--page-width) + var(--page-margin-current) * 2); }
+  @media (min-width: 992px) {
+    .header-mega-menu--cards-only .header-mega-menu__layout { grid-template-columns: minmax(0, 1fr); }
+    .header-mega-menu--cards-only .header-mega-menu__content { display: none; }
+  }
 {% endstylesheet %}
 
 {% schema %}
