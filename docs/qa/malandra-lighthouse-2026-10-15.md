@@ -73,3 +73,31 @@ Doc chuyển fix dùng chung: [Malandra → Elara](../variant-updates/malandra-t
 ## Git release follow-up — 2026-10-15
 
 Owner yêu cầu commit/push toàn bộ thay đổi hiện có, trừ test. Full Theme Check release gate pass (0 errors/5 existing warnings), 13 scoped image tests pass local; năm lỗi Marquee/Press nêu trên tái hiện nguyên trạng trong snapshot HEAD riêng. Các test được giữ local và không nằm trong commit. Shopify đã đồng bộ patch Lighthouse lên remote bằng `ace7cd08`, `eb8da206`, `c3e4661a`; release tiếp theo giữ các commit này và gộp tài liệu/preset/custom-section/rich-text còn lại, bảo toàn normalization JSON/locale từ remote. Đây là Git release, không publish Shopify theme hoặc áp dụng Elara.
+
+## Best Practices follow-up — 2026-10-15
+
+Phần này thay thế trạng thái Best Practices **null** ở các lần đo lịch sử phía trên. Owner yêu cầu xử lý cảnh báo còn lại; nguồn `daf292dc` + patch local `assets/block-animations.js`. Không sửa Lighthouse, bỏ audit, chặn third-party requests hoặc phân nhánh theo user-agent để đạt điểm.
+
+Diagnostic xác định node lỗi là `<img>` data-URI SVG của icon trong **clone marquee**, không phải ảnh hero. `block-animations.js` ghi lại class/data-animation-initialized trên các node excluded dù giá trị không đổi. MutationObserver của marquee nhận các ghi này và rebuild clones; childList từ rebuild lại kích hoạt animation scan. Vòng lặp làm clone bị tháo khỏi DOM khi ImageElements đang lấy matched CSS rules, gây lỗi stale node.
+
+Patch chỉ làm hai thao tác thành idempotent: chỉ bỏ `reveal-pending` khi class tồn tại; chỉ đặt `data-animation-initialized=true` cho node excluded khi chưa true. Giữ Type/Delay, exclusions, animation/focus behavior, markup, asset safety và chính sách header/footer. Không sửa SVG sanitizer hoặc thay icon bằng inline SVG để tránh audit ảnh.
+
+Regression Chrome dùng **hai runtime thật** trước/sau và cùng marquee JS/CSS: sau startup, 600ms có **108 → 0** clone removals; vẫn còn ba clones và một animation. Merchant text update, resize 375→1280px, section unload/reload và reduced motion pass. Theme Check 0 errors/5 existing warnings; JS syntax/diff check pass. Script regression nằm local `/tmp/malandra-perf-tools/marquee-regression.mjs`, không thêm test vào commit.
+
+| Lần đo mới, Lighthouse 13.5.0 / Chrome 155 | Mobile | Desktop |
+| --- | ---: | ---: |
+| Performance | 87 | 98 |
+| Accessibility | 96 | 96 |
+| Best Practices | **77** | **77** |
+| SEO | 100 | 100 |
+| LCP | 3.00 s | 0.73 s |
+| TBT | 181 ms | 5.5 ms |
+| Audit/gatherer errors | **0** | **0** |
+
+`image-aspect-ratio`, `image-size-responsive` và `unsized-images` đều pass cả hai viewport. Đây vẫn là single lab runs với preview redirect warning, không phải median/field data; không quy dao động TBT giữa các lần chạy cho patch này.
+
+**Hai warning còn lại:** `third-party-cookies` (`_shop_app_essential` từ `shop.app/accounts/pre_auth`) và `inspector-issues` (cookie issues từ Shop pre-auth, Shop Pay sprite và Shopify Web Pixels `/cdn/wpm/`). Đây là runtime do Shopify cung cấp, không phải lỗi kích thước ảnh hay JavaScript theme. Giữ native account/sign-in/Shop recognition, checkout và pixel behavior. Không xóa `content_for_header`, giả consent hoặc tắt dịch vụ chỉ để đạt 100. [Shopify account component documentation](https://shopify.dev/docs/api/storefront-web-components/components/shopify-account) mô tả các chức năng cần bảo toàn; loại bỏ/đổi các integration này là thay đổi sản phẩm và cần scope riêng.
+
+Upload riêng `assets/block-animations.js` vào draft `192330498347` lúc **13:15:26 giờ Việt Nam**; backup remote trước sửa khớp HEAD, readback sau sửa khớp local. Chưa Git commit/push hoặc publish follow-up này; không áp dụng Elara. [Evidence JSON](../audits/malandra-best-practices-2026-10-15.json) ghi hash/readback/regression/scores; HTML/JSON `best-practices-fixed-mobile` và `best-practices-fixed-desktop` trong `.shopify/lighthouse/malandra-2026-10-15/` là báo cáo mới có điểm hợp lệ.
+
+Git release follow-up: owner yêu cầu commit/push, tiếp tục loại test. Shopify đã đồng bộ đúng patch JavaScript bằng `17a3623c`; commit tài liệu/evidence tiếp theo giữ nguyên commit nguồn này. Full Theme Check trước release pass (0 errors/5 existing warnings), JS syntax và diff check pass. Trạng thái chưa commit ở đoạn trên là thời điểm đo; Elara vẫn pending, không publish Shopify theme.
