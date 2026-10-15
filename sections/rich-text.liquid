@@ -73,11 +73,7 @@
 
   <div class="container {{ rich_text_container_width }} rich-text__container">
     <div class="rich-text__content section-content-slot layout-flow layout-flow--responsive align-content" style="{{ rich_text_content_style }}">
-      {% if section.settings.use_leading_icon %}
-        {% content_for "block", type: "icon", id: "icon" %}
-      {% else %}
-        {% content_for "block", type: "eyebrow", id: "eyebrow" %}
-      {% endif %}
+      {% content_for "block", type: "eyebrow", id: "eyebrow" %}
       {% content_for "block", type: "heading", id: "heading" %}
       {% content_for "block", type: "text", id: "text" %}
       {% content_for "blocks" %}
@@ -145,47 +141,19 @@
 {
   "name": "t:general.rich_text",
   "class": "section-rich--text",
-  "enabled_on": {
-    "templates": [
-      "*"
-    ]
-  },
+  "enabled_on": { "templates": ["*"] },
   "blocks": [
-    {
-      "type": "eyebrow"
-    },
-    {
-      "type": "heading"
-    },
-    {
-      "type": "editorial-text"
-    },
-    {
-      "type": "text"
-    },
-    {
-      "type": "image"
-    },
-    {
-      "type": "button"
-    },
-    {
-      "type": "buttons"
-    },
-    {
-      "type": "icon"
-    },
-    {
-      "type": "marquee"
-    }
+    { "type": "eyebrow" },
+    { "type": "heading" },
+    { "type": "editorial-text" },
+    { "type": "text" },
+    { "type": "image" },
+    { "type": "button" },
+    { "type": "buttons" },
+    { "type": "icon" },
+    { "type": "marquee" }
   ],
   "settings": [
-    {
-      "type": "checkbox",
-      "id": "use_leading_icon",
-      "label": "Replace eyebrow with icon",
-      "default": false
-    },
     {
       "type": "header",
       "content": "t:general.layout"
@@ -313,35 +281,29 @@
       "blocks": [
         {
           "type": "eyebrow",
+          "id": "eyebrow",
           "static": true,
           "settings": {
-            "text": "<p>New arrivals</p>",
-            "animation_type": "slide-bottom",
-            "animation_delay": 50
-          },
-          "id": "eyebrow"
+            "text": "<p>New arrivals</p>"
+          }
         },
         {
           "type": "heading",
+          "id": "heading",
           "static": true,
           "settings": {
             "text": "<p>Build your base theme</p>",
-            "heading_size": "md",
-            "html_tag": "h2",
-            "animation_type": "rotate-words",
-            "animation_delay": 50
-          },
-          "id": "heading"
+            "heading_size": "lg",
+            "html_tag": "h2"
+          }
         },
         {
           "type": "text",
+          "id": "text",
           "static": true,
           "settings": {
-            "text": "<p>Use this section to test the shared Section Kernel, global layout width, color scheme, background and responsive padding.</p>",
-            "animation_type": "slide-bottom",
-            "animation_delay": 100
-          },
-          "id": "text"
+            "text": "<p>Use this section to test the shared Section Kernel, global layout width, color scheme, background and responsive padding.</p>"
+          }
         }
       ]
     }

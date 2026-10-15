@@ -1,0 +1,13 @@
+# Testimonials: Horizontal (custom) — 2026-10-15
+
+Replaced `founder_rich_text` in `templates/index.json` with `founder_testimonials` at the same position, between `love_always` and `articles`. Registered the exact requested name in Custom section Add section presets. Composition: Group (920px maximum, full mobile width) → Carousel (one visible slide) → three Slides → Custom icon, Heading, Text. Preset and saved instance contain the same settings and content.
+
+First item retains the supplied Figma quote and Clem credit (desktop 52325:1457; mobile 52393:9218). Two additional items contain original brand editorial copy credited to the MALANDRA Design Team and Studio. All items reuse the existing exact Figma custom SVG, without temporary asset references. Heading uses the existing custom 26px control (36.4px line height); 24px content gaps; centered italic 16px credits; #f9f9f9 background. Desktop padding 64/80; mobile 48/56. Pagination and autoplay disabled. Desktop arrows appear on hover outside the quote; mobile uses the native swipe carousel. Hover arrows are an intentional interaction addition to the static Figma reference.
+
+Restored all of `sections/rich-text.liquid` byte-for-byte from local `main`, including its original preset and eyebrow slot. Removed its obsolete active customization table entry. No new settings, rendering code, CSS, or JavaScript were added.
+
+Validation: preset/template parity; recursive block allow-lists; existing setting IDs, enums and ranges; unchanged placement and unrelated sections; `git diff --check`; Shopify Theme Check exit 0 (zero errors, five existing ExcessiveSettingsCount warnings outside changed files). Existing localhost preview at port 9301 rendered the new composition. Desktop viewport 1920 and mobile viewport 375 checked: 920px desktop carousel; 26px/36.4px quote; all three original SVG images loaded at 48 × 45.4375px with original aspect ratio; no page horizontal overflow. Next arrow advanced to the second quote. Mobile screenshot checked first and second items; native theme margins and browser scrollbar influence wrapping compared with Figma. Theme Editor add/duplicate/reorder/save lifecycle and touch swipe were not exercised.
+
+No explicit push, publish, or commit performed. Existing user-owned development preview watcher was reused and left running.
+
+Follow-up: enabled block entrance animations consistently in all three preset/template slides: Icon fade at 50ms, Heading rotate-words at 100ms, credit Text slide-bottom at 150ms. Reused existing block animation controls and runtime. Preset/template parity and animation enum/delay ranges validated; no header/footer configuration changed.

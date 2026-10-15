@@ -1,4 +1,4 @@
-# Malandra → Elara: Header và Search
+# Malandra → Elara: Header, Search và Lighthouse
 
 Ngày: 2026-10-15. Nguồn: `malandra-theme`, branch `theme/malandra-theme`, HEAD `0732ecfe8b7687d345a04c1a4d8617b1fd43ce22` + patch local chưa commit. Đích: `../elara-theme`, branch `theme/elara-theme`, HEAD tham khảo `f17d6b7f1a961364aff9d9fcc424b266a2164105`.
 
@@ -94,3 +94,35 @@ Nếu theme có block logo override, không lấy nhầm transparent artwork glo
 - Khi áp dụng từng mã, ghi ngày/revision, source snapshot, target before/after commit hoặc patch local, bằng chứng tái hiện trước sửa, patch thực tế, QA sau sửa, phần chưa kiểm tra, trạng thái code/preview/publish riêng. Ghi cùng mã và link doc nguồn vào customization record Elara.
 
 Lịch sử:2026-10-15 — tạo doc theo yêu cầu owner; cả6mã pending, chưa cập nhật Elara.
+
+## Lighthouse — bổ sung 2026-10-15
+
+Owner yêu cầu tối ưu Lighthouse tại Malandra và thêm vào doc update variant. Nguồn mới: `theme/malandra-theme`, HEAD `908780fb02b9ed61d9df0880f82284bdf853ae9f` + patch Lighthouse chưa commit. Preview nguồn đúng là **192330498347**, không phải Arche 192282820907 trong URL đầu tiên. [Báo cáo và ledger nguồn](../qa/malandra-lighthouse-2026-10-15.md), [manifest/hashes](../audits/malandra-lighthouse-2026-10-15.json).
+
+| Mã update | Revision | Nội dung | Trạng thái Elara | Dependency |
+| --- | --- | --- | --- | --- |
+| MALANDRA-ELARA-LIGHTHOUSE-HERO-001 | 1 | Ưu tiên hero đầu trang; preload art-directed khớp picture; source-size caps | pending — chưa audit/apply | Cơ chế head `theme-lcp-preloads` và Hero đích |
+| MALANDRA-ELARA-LIGHTHOUSE-CSS-002 | 1 | Tám CSS owner tải theo component, giữ nguyên rules đích | pending — chưa audit/apply | Owner/asset contract đích; độc lập Hero |
+| MALANDRA-ELARA-LIGHTHOUSE-CONTRAST-003 | 1 | Tab inactive đủ tương phản theo scheme | pending — chưa audit/apply | Shared Tab Layout và schemes đích; độc lập hai mã trên |
+
+### MALANDRA-ELARA-LIGHTHOUSE-HERO-001
+
+Nguồn: `sections/hero.liquid`, snippet mới `snippets/hero-image.liquid`; dependency layout hiện có đọc marker `theme-lcp-preloads`. Chỉ Hero ảnh ở template position 1 nhận eager/high và media-qualified preloads; Hero sau nhận lazy/auto. Preload phải dùng **cùng srcset/sizes** với picture tại mỗi breakpoint, không tải cả hai artwork; cap candidate ở kích thước ảnh gốc. Giữ focal point, crop/geometry, decorative alt và video branch. Không copy ảnh, text, scheme, dimensions hay homepage preset Malandra.
+
+Trước apply: kiểm tra Hero và head của Elara còn thiếu ưu tiên/preload, kiểm tra section.index và capture/render order trong storefront/Theme Editor. Nếu đích đã tương đương thì skipped; nếu dependency head không tương thích thì conflict, không copy cả layout. QA: first/later Hero, mobile absent/small sources, video, 375/768/1280px, no-JS và editor reload/reorder; network xác nhận đúng artwork và không request trùng preload/picture.
+
+### MALANDRA-ELARA-LIGHTHOUSE-CSS-002
+
+Danh sách tám owner/asset và source hashes nằm trong báo cáo nguồn. Elara phải audit bundle và owner trước: chỉ trích phần CSS vẫn còn nằm trong bundle chung. **Trích CSS đang có của Elara**, không copy CSS Malandra hoặc thay phiên bản stylesheet/custom layout của Elara. Nếu đã có dependency asset tương đương thì skipped. File owner và asset phải chuyển cùng nhau; link tải đồng bộ trước markup, giữ layout reservation/no-JS và stylesheet khi editor/resource render. Không tồn tại đồng thời rule trong `{% stylesheet %}` và asset mới.
+
+QA: so sánh CSS trước/sau byte-identical, schema/preset/runtime không đổi; kiểm tra cascade với shared styles, template dùng từng owner và Theme Editor add/reload. Đo bundle/transfer và Lighthouse độc lập ở Elara; không lấy 63,803 source bytes hoặc score nguồn làm bằng chứng đích. Giữ scope owner hiện hữu, không tách CSS global foundation chỉ để giảm điểm.
+
+### MALANDRA-ELARA-LIGHTHOUSE-CONTRAST-003
+
+Nguồn `snippets/tab-layout-styles.liquid`: 48% body/transparent và 44% heading/background làm tab nhỏ thiếu tương phản trên nền trắng; nguồn đổi inactive mix thành 95% text token với scheme background. Giữ selected/hover/underline, font, dimensions, controls và merchant settings. Elara chỉ áp dụng khi tái hiện contrast failure; đo cả schemes sáng/tối thực dùng trước khi chọn tỷ lệ phù hợp, không copy hardcoded màu Malandra. QA normal/hover/selected/focus, mobile/desktop và Lighthouse color-contrast. Nếu text token gốc đã thiếu contrast với nền, giải quyết đúng scheme đích thay vì coi mix 95% là bảo đảm cho mọi palette.
+
+### Bằng chứng và receipt Lighthouse
+
+Nguồn HTTPS Lighthouse 13.5.0: mobile Performance 66→86, LCP 4.03→2.95s, TBT 351→52ms; desktop 84→97. Accessibility 93→96; color-contrast pass. Đây là single lab runs, có một lần trung gian LCP mô phỏng bất thường và lỗi ImageElements khiến Best Practices null; đọc toàn báo cáo trước khi viện dẫn. Chưa hoàn tất editor lifecycle của mọi optional owner. Source draft đã upload/readback 19 file; chưa publish/Git commit/push. **Cả ba mã ở Elara vẫn pending; không có target mutation hoặc QA.**
+
+Khi được yêu cầu áp dụng, ghi source revision/patch hash mới nhất, target before/after, lỗi tái hiện đích, patch/QA, trạng thái code/preview/publish riêng theo quy tắc đầu doc. Header/footer vẫn `animation_type: none`; giữ delay và component interactions. Lịch sử ngày 15/10/2026: bổ sung ba mã Lighthouse, không thay trạng thái sáu mã Header/Search.
