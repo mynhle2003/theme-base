@@ -101,3 +101,28 @@ Regression Chrome dùng **hai runtime thật** trước/sau và cùng marquee JS
 Upload riêng `assets/block-animations.js` vào draft `192330498347` lúc **13:15:26 giờ Việt Nam**; backup remote trước sửa khớp HEAD, readback sau sửa khớp local. Chưa Git commit/push hoặc publish follow-up này; không áp dụng Elara. [Evidence JSON](../audits/malandra-best-practices-2026-10-15.json) ghi hash/readback/regression/scores; HTML/JSON `best-practices-fixed-mobile` và `best-practices-fixed-desktop` trong `.shopify/lighthouse/malandra-2026-10-15/` là báo cáo mới có điểm hợp lệ.
 
 Git release follow-up: owner yêu cầu commit/push, tiếp tục loại test. Shopify đã đồng bộ đúng patch JavaScript bằng `17a3623c`; commit tài liệu/evidence tiếp theo giữ nguyên commit nguồn này. Full Theme Check trước release pass (0 errors/5 existing warnings), JS syntax và diff check pass. Trạng thái chưa commit ở đoạn trên là thời điểm đo; Elara vẫn pending, không publish Shopify theme.
+
+## Mobile Performance follow-up — 2026-10-15
+
+Owner báo Performance mobile giảm và yêu cầu bổ sung tối ưu còn thiếu vào doc variant. Đo lại cùng draft 192330498347, Lighthouse 13.5.0/default mobile, giữ account/checkout/pixels/preview bar. Ba baseline trên cùng compiled CSS và animation asset đạt 82/89/90; **lần 89 có load timeout**, không dùng làm benchmark hoàn tất. Hai lần còn lại có TBT 355.5/95.5ms; animation có long task 160/115ms, song tác vụ Web Pixels/Trekkie cũng chiếm CPU. Vì vậy score 87 lịch sử chỉ là một lần đo, không phải mức ổn định hay bảo đảm.
+
+Patch mới `assets/block-animations.js`: tạo controller của section xa dưới fold khi cách viewport 300px. First viewport, root có focus, zero-height overlay wrappers, Theme Editor và missing IntersectionObserver vẫn init ngay. Section pending được unobserve khi unload; editor/reload init trực tiếp. Không đổi effect, delay, content/layout/colors, không bỏ fix marquee hoặc chặn Shopify scripts. Nguồn checkpoint `12cb57fe` + local patch.
+
+| Ba lần hoàn tất sau upload | Performance | LCP | TBT | Best Practices |
+| --- | ---: | ---: | ---: | ---: |
+| viewport-after-1 | 89 | 2.93 s | 64.5 ms | 77 |
+| viewport-after-2 | 87 | 3.09 s | 28 ms | 77 |
+| viewport-after-3 | 89 | 3.23 s | 34 ms | 77 |
+| Median | **89** | **3.09 s** | **34 ms** | **77** |
+
+Ba report không load timeout hoặc gatherer error; vẫn có preview redirect warning. Không animation long task >50ms trong cả ba trace; animation CPU total 204.5/205.8/136.4ms, so với 481.5/337.6ms ở hai baseline hoàn tất. Không suy ra Shopify runtime hết dao động hoặc mọi máy đạt 89; chưa đo lại desktop cho patch này.
+
+Accessibility mới **93** (SEO 100): audit tìm thấy metadata blog màu #999 trên trắng thiếu contrast, ngoài lỗi heading-order/preview-frame đã biết. Runtime patch không sửa màu/preset; các card dưới fold chưa đi qua entrance preparation làm kết quả kiểm tra phần này khác các lần trước. Ghi rõ gap này, không dùng opacity hoặc bỏ audit để giữ score 96 cũ.
+
+Chrome regression pass: first/far viewport, editor immediate, missing observer, reduced motion, pending unload/reload. Marquee fixture vẫn không churn sau settle; merchant text update, resize, editor reload/reduced motion pass. JS syntax/diff check và full Theme Check pass (0 errors/5 existing warnings). Regression scripts ở `/tmp/malandra-perf-tools/animation-viewport-regression.mjs` và `marquee-regression.mjs`; không thêm test vào commit.
+
+Upload duy nhất `assets/block-animations.js` lên draft lúc **13:34:57 giờ Việt Nam**. Backup trước khớp Git source; readback sau khớp local (hash trong [evidence](../audits/malandra-mobile-performance-2026-10-15.json)). Các thay đổi layout/section khác làm riêng được giữ nguyên và không nằm trong upload này. HTML/JSON cả sáu report lưu tại `.shopify/lighthouse/malandra-2026-10-15/` với prefix `mobile-regression-1/2/3` và `viewport-after-1/2/3`.
+
+Đã bổ sung [MALANDRA-ELARA-LIGHTHOUSE-ANIMATION-005](../variant-updates/malandra-to-elara.md#malandra-elara-lighthouse-animation-005--mobile-performance-2026-10-15), đồng thời đưa 004/005 vào bảng tra cứu và cập nhật receipt Git 004. Elara pending, chưa áp dụng/publish; patch 005 và doc bổ sung chưa Git commit/push.
+
+Git release 005: owner yêu cầu commit/push; runtime đã được Shopify đồng bộ tại `52d8b37c`. Commit tài liệu/evidence tiếp theo giữ nguyên runtime này, không bao gồm file test. Các ghi chú chưa commit phía trên là trạng thái tại thời điểm đo; Elara vẫn pending.

@@ -104,6 +104,8 @@ Owner yêu cầu tối ưu Lighthouse tại Malandra và thêm vào doc update v
 | MALANDRA-ELARA-LIGHTHOUSE-HERO-001 | 1 | Ưu tiên hero đầu trang; preload art-directed khớp picture; source-size caps | pending — chưa audit/apply | Cơ chế head `theme-lcp-preloads` và Hero đích |
 | MALANDRA-ELARA-LIGHTHOUSE-CSS-002 | 1 | Tám CSS owner tải theo component, giữ nguyên rules đích | pending — chưa audit/apply | Owner/asset contract đích; độc lập Hero |
 | MALANDRA-ELARA-LIGHTHOUSE-CONTRAST-003 | 1 | Tab inactive đủ tương phản theo scheme | pending — chưa audit/apply | Shared Tab Layout và schemes đích; độc lập hai mã trên |
+| MALANDRA-ELARA-LIGHTHOUSE-MARQUEE-004 | 1 | Idempotent cleanup, hết observer feedback và clone churn | pending — chưa audit/apply | Animation scan + marquee observer đích |
+| MALANDRA-ELARA-LIGHTHOUSE-ANIMATION-005 | 1 | Khởi tạo animation section dưới fold khi gần viewport | pending — chưa audit/apply | Giữ fix 004 nếu đích còn feedback; section lifecycle/IntersectionObserver |
 
 ### MALANDRA-ELARA-LIGHTHOUSE-HERO-001
 
@@ -136,3 +138,23 @@ Bug nguồn: animation scan ghi lại class/data trạng thái không đổi tr�
 Đích phải tái hiện clone churn khi nội dung đã ổn định trước apply. Đã idempotent/tương đương thì skipped; chưa xác minh thì pending; runtime không tương thích thì conflict. QA clone identity ổn định, merchant text update, resize, editor unload/reload và reduced motion; Lighthouse không còn gatherer errors. Không chữa lỗi bằng nới SVG sanitizer, bỏ audit, tắt cookie/pixels/account hoặc user-agent detection.
 
 Nguồn: clone removals 108→0/600ms; full Lighthouse mobile/desktop Best Practices **77/77**, ba image audits pass, zero gatherer errors; Performance 87/98. Hai warning cookie còn lại thuộc Shopify Shop/Shop Pay/Web Pixels. [Báo cáo follow-up](../qa/malandra-lighthouse-2026-10-15.md#best-practices-follow-up--2026-10-15), [evidence/hash](../audits/malandra-best-practices-2026-10-15.json). Source draft 192330498347 đã upload/readback riêng JS; chưa Git commit/push follow-up hoặc publish. Elara vẫn pending và cần bằng chứng riêng; không dùng score nguồn để verified đích.
+
+Receipt Git mới nhất cho 004: runtime nguồn đã có tại `17a3623c`; docs/evidence tại `4c1d4e62`. Các ghi chú chưa commit phía trên là lịch sử trước release. Trạng thái Elara vẫn pending.
+
+## MALANDRA-ELARA-LIGHTHOUSE-ANIMATION-005 — Mobile Performance, 2026-10-15
+
+Revision 1. Nguồn `theme/malandra-theme`, checkpoint `12cb57fec308a4ef00800f1327e6b887b000c8d3` + patch local `assets/block-animations.js`; hash/readback trong [evidence JSON](../audits/malandra-mobile-performance-2026-10-15.json). Đích Elara **pending**, chưa audit/apply/upload/publish. Không chuyển preset/content/media hoặc toàn bộ runtime Malandra.
+
+**Lý do:** khởi tạo mọi section ngay lúc mở trang đo row geometry, scan cards và split heading text cả ở phần rất xa viewport. Hai baseline mobile hoàn tất trên cùng CSS/runtime đạt 82 và 90 điểm; TBT 355.5/95.5ms và animation long task 160/115ms. Lần baseline 89 điểm có load timeout được lưu nhưng loại khỏi so sánh đầy đủ. Một score 87 trước đó không phải mức bảo đảm cho mọi lần chạy/máy; không dùng lần cao nhất làm baseline.
+
+**Patch cần chuyển khi đích còn gap:** trên storefront có IntersectionObserver, root section nằm xa hơn viewport +300px được observe, chỉ tạo controller khi approach. Root gần viewport, đang chứa focus hoặc có height 0 (có thể sở hữu fixed overlay) vẫn init ngay. Theme Editor và trình duyệt không có IntersectionObserver init ngay như cũ. Khi init phải unobserve để không tạo controller trùng; section unload unobserve cả root chưa init; section load/reload init trực tiếp. Giữ từng effect, delay/stagger, first-paint boot timeout, no-JS, focus visibility, reduced motion và fix idempotence 004; header/footer vẫn None. Không delay native account/cart hoặc tắt tracking để nâng score.
+
+**Audit đích trước apply:** xác nhận Elara còn scan mọi root dưới fold tại startup và có cost thực tế; kiểm tra contract root/zero-height overlays/editor/animation của đích. Đã lazy/equivalent thì skipped; chưa xác minh thì pending; contract khác không thể chuyển patch tối thiểu thì conflict. Không mặc định root nào có geometry zero cũng là section không dùng.
+
+**Acceptance:** first viewport init ngay; root xa chưa split/scan cho đến approach rồi vẫn reveal đúng; editor chọn/reload section không phải cuộn mới hoạt động; missing observer/reduced motion/focus/no-JS đọc được; unload root pending không init về sau, reload hoạt động; giữ marquee clone ổn định khi nội dung không đổi. Đo chuỗi mobile cùng config, giữ tất cả report/warnings, loại load timeout khỏi thống kê hoàn tất và ghi median/range. Không coi giảm CPU fixture hay score nguồn là verified đích.
+
+**QA nguồn:** Chrome pass storefront near/far, editor immediate, missing observer, reduced motion, pending unload/reload; marquee regression tiếp tục 0 clone removals sau settle, merchant text update/resize/editor reload pass. Theme Check 0 errors/5 warnings cũ; JS syntax/diff check pass. Ba mobile report sau upload đạt **89/87/89**, median **89**, LCP median **3.09s**, TBT median **34ms**; không animation task >50ms trong cả ba trace; Best Practices 77, zero gatherer errors. Không tuyên bố score tăng cố định vì baseline và Shopify scripts có dao động.
+
+Accessibility các lần mới là 93: phát hiện metadata bài blog màu #999 trên trắng thiếu contrast; patch không thay màu này. Không dùng tối ưu animation để che audit; ghi gap riêng trong QA report. Source chỉ upload riêng animation asset lên draft 192330498347 lúc 13:34:57 giờ Việt Nam, readback khớp. Chưa Git commit/push patch 005, chưa đo lại desktop và chưa QA toàn bộ theme live; Elara vẫn pending. Các thay đổi layout/section khác đang được thực hiện riêng không thuộc upload này.
+
+Git release 005: owner yêu cầu commit/push; runtime đã được Shopify đồng bộ tại `52d8b37c`. Commit tài liệu/evidence tiếp theo giữ nguyên runtime này, không bao gồm file test. Các ghi chú chưa commit phía trên là trạng thái tại thời điểm đo; Elara vẫn pending.
