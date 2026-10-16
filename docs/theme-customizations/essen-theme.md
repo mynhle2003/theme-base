@@ -18,6 +18,7 @@ Record every theme-specific change here before committing the code. During base 
 
 | File/path | Base behavior | Theme-specific behavior | Reason | Update/merge rule |
 | --- | --- | --- | --- | --- |
+| `blocks/_shop-the-look-image.liquid` | Shared image and addable section block list | Only static section slots; private image retains variant ratio/media controls, removes layout width and padding controls; saved image data migrates with stable IDs | Owner-requested Shop the look base rollout | Keep section image private and preserve variant media values when merging |
 | `sections/countdown.liquid` | Static Countdown composition | Dynamic Countdown (custom) with Custom section block choices; preserve timer logic, settings, preset content and saved block order | Owner-requested Countdown migration | Retain dynamic composition and theme layout values |
 | `snippets/meta-tags.liquid` | Description only when page_description present. | Fallback to existing og_description when missing. | ARCHE-ESSEN-LIGHTHOUSE-ACCESS-005. | Preserve theme/store copy and escaping; no source prose. |
 | `snippets/theme-button.liquid` | Shared button renders visible label. | Adds optional escaped visually-hidden accessible_description. | ARCHE-ESSEN-LIGHTHOUSE-ACCESS-005. | Keep existing callers unaffected when absent. |
@@ -2369,3 +2370,8 @@ Owner-authorized migration from team `2a9a0caf`, personal main `2cf6e5ab`: renam
 - `snippets/variant-picker.liquid`
 - `snippets/video.liquid`
 - `snippets/view-all-button.liquid`
+
+
+### Shop the look migration — 2026-10-16
+
+Owner-authorized team commit `bf4b69b5`: disallow extra section blocks; migrate static image to private `_shop-the-look-image`, retain saved media, IDs, ratio/height/radius/overlay controls and compatible variant settings; remove image layout width and padding controls. Shared Image is unchanged. Normalize Countdown preset label to Count down (Custom).
