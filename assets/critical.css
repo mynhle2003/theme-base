@@ -29,6 +29,25 @@ body {
   color: var(--body-color);
 }
 
+/* Reserve the server-rendered overlay header geometry before section CSS. */
+.section-header:has(.header-top[data-header-overlap-first-section]) {
+  position: relative;
+  height: 0;
+  margin-block-end: 0;
+  overflow: visible;
+  z-index: var(--z-drawer, 200);
+}
+
+/* The overlay scheme supplies text/icon colors, not a painted header surface.
+   Resolve its server-rendered state before header.js adds wrapper classes. */
+.section-header:not([data-sticky-type]):has(.header-top[data-header-overlay]),
+.header.header--overlay {
+  background-color: transparent;
+}
+.section-header:has(.header-top--transparent-scheme) .header-top {
+  background-color: transparent;
+}
+
 /*
  * Header first-paint layout:
  * Header Theme Blocks are organized into their final columns by header.js.
