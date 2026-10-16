@@ -134,14 +134,14 @@
 
 {% capture menu_summary %}
   {{ heading_markup }}
-  <span class="menu-block__toggle-icon menu-block__toggle-icon--{{ menu_icon }}" aria-hidden="true">
+  <span class="menu-block__toggle-icon menu-block__toggle-icon--{{ menu_icon }}" style="color: var(--menu-block-heading-color, var(--heading-color));{% if menu_icon == 'plus' %} width: 20px; height: 20px;{% endif %}" aria-hidden="true">
     {% if menu_icon == 'plus' %}
-      <svg viewBox="0 0 24 24" fill="none" focusable="false">
-        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-linecap="round" stroke-width="var(--icon-thickness)" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" focusable="false">
+        <path d="M4.16666 10.0001H15.8333M9.99582 15.8334L9.99582 4.16675" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     {% else %}
       <svg viewBox="0 0 24 24" fill="none" focusable="false">
-        <path d="m5 9 7 7 7-7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="var(--icon-thickness)" />
+        <path d="m5 9 7 7 7-7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.66667" />
       </svg>
     {% endif %}
   </span>

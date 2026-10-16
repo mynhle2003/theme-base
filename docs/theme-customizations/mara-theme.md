@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"793e6ecfbf7bce955fe5822518e863e4e2ac5fc5"} -->
+<!-- theme-base-sync-state: {"sha": "b7ffd45f46adb47ca54be8cf841f82a84fc97348"} -->
 # Customization record: mara-theme
 
 Theme branch: `theme/mara-theme`
@@ -12,6 +12,7 @@ Record only theme-specific section/block implementation changes here: Liquid/HTM
 
 | File/path | Base behavior | Theme-specific behavior | Reason | Update/merge rule |
 | --- | --- | --- | --- | --- |
+| `blocks/product-list-banner.liquid`, `snippets/product-collection-grid.liquid` | Banner Product list has mobile swipe but no next-slide preview control | Conditional mobile preview checkbox forwarded through mobile-only carousel branch | User requested Mara-only mobile preview option and enabled preset,2026-10-16 | Preserve setting/pass-through; omitted/false stays disabled for other consumers |
 | `snippets/theme-button.liquid` | Shared button filters icon names through its own allow-list | Accept registered mara-quick-add-plus so icon-only Quick add produces SVG instead of an empty button | Fix missing Quick add icon reported by user,2026-10-16 | Keep namespaced glyph admitted alongside icon registry and both Quick add callers; preserve all other validation |
 | `snippets/product-card-quick-add.liquid`, `snippets/product-card-quick-add-overlay.liquid` | Icon mode renders cart glyph; overlay wrapper fills image width | Mara icon mode renders namespaced Figma plus and exposes icon modifier for aligned direct/overlay actions | User requested Figma Quick add parity on desktop/mobile,2026-10-16 | Preserve form/overlay attributes, loading states, labels and text/full-width setting paths; retain icon/CSS dependencies |
 | `sections/footer.liquid` | Base Footer composition | Preserve variant footer markup/CSS, settings and blocks while adopting top divider, Background media and viewport-aware reveal lifecycle | Owner-authorized Footer base rollout | Merge controls/runtime without replacing the variant preset or saved composition |
@@ -302,3 +303,67 @@ Quick add icon follow-up: the first implementation omitted the namespaced glyph 
 The hidden desktop header-menu backdrop used 100vw and centered itself with translateX(-50%). With a 1920px browser window and 1905px document client width, its right edge reached 1912.5px and made the page scroll horizontally by 8px. Changed the backdrop to inset-inline:0 and width:100%, removing the horizontal transform. Mega-menu panels now consume the existing --header-mega-width measured by header.js instead of 100vw. No global overflow clipping was added.
 
 Live localhost:9300 measurements after reload: document/body scrollWidth equals document clientWidth at window widths 375,390,768,1024,1440,1920 (client widths 360,375,753,1009,1425,1905). No horizontal overflow in those checks. Theme Check:0 errors,6 existing settings-count warnings; git diff --check passes. No test files or output artifacts added.
+
+## Featured collection: Banner mobile preview — 2026-10-16
+
+Product list adds show_next_slide_preview_on_mobile immediately after Enable swipe on mobile, visible only when swipe is enabled. Schema default false preserves existing instances; block preset, Featured collection: Banner preset and homepage instance explicitly enable it. Shared grid forwards this opt-in in its mobile-only branch to swiper-carousel, which owns the data attribute and fractional slides through existing runtime. Swipe off selects normal grid and ignores preview. Desktop keeps two-column grid. No new CSS/JS or other consumer opt-in. Browser automation disabled; live editor and responsive rendering pending.
+
+Mobile preview validation:3 banner contract tests and2 shared lifecycle tests pass; Theme Check0 errors/6 warnings; diff check passes. Broader carousel-shared suite has a preexisting schema snapshot mismatch (shared carousel already exposes mobile preview while its expected setting list omits it); shared carousel schema was not changed in this task. Updated the stale banner role expectation from3 to the existing4-role custom contract.
+
+
+## Mobile Menu toggle icon color — 2026-10-16
+
+`blocks/menu.liquid`: the existing Chevron/Plus toggle wrapper now consumes `--menu-block-heading-color` with `--heading-color` fallback, matching the heading instead of inheriting the section body color. Footer preset and saved menu instances already use `heading_color: #181818`, matching Mara mobile Footer Figma `47228:14097`. Existing SVGs continue to consume currentColor; rotation, accordion behavior, setting IDs and options are unchanged. This applies to all Menu block consumers in Mara; preserve the color mapping during base updates.
+
+Original Figma Plus SVG replacement remains pending: no local source SVG was available, downloads did not complete, and Figma MCP still reports the View-seat quota limit. Existing 24px viewBox geometry in an18px wrapper is retained, rather than fabricating the source20px asset. No pixel-exact or live-browser verification is claimed.
+
+
+### Mobile Menu Plus source resolved — 2026-10-16
+
+Read the original SVG from Figma Inspector's Copy SVG for node `47215:5017` (Mara mobile Footer). Replaced only the existing `plus` branch in `blocks/menu.liquid`: original20×20 viewBox, exact path `M4.16666 10.0001H15.8333M9.99582 15.8334L9.99582 4.16675`, stroke1.25, round caps/joins. Stroke uses currentColor through the heading-color mapping; the Plus wrapper is20px to preserve the source dimensions. Chevron geometry/sizing is unchanged. Existing45-degree open-state rotation and accessibility remain intact. All Mara Menu blocks selecting Plus share this replacement; no new icon key, option, snippet or store media was added. Supersedes the pending source-availability note above; live storefront verification is still pending.
+
+
+### Menu sibling stroke consistency — 2026-10-16
+
+Chevron retains its original path,24px viewBox and18px rendered box. Stroke1.66667 scales to1.25px, matching the original Figma Plus1.25px stroke at20px. Both use round caps/joins. This calibrates sibling stroke only; Chevron geometry is not claimed as Figma-exported. Color mapping and open-state rotation remain unchanged. Applies to existing Mara Menu Chevron consumers. Source build-preset skill now requires matching visible stroke/cap/join style across related existing values in the same option, without adding icons or redrawing sibling paths. Live rendering remains unverified.
+
+### 2026-10-16 — Port approved background media and ratio fixes
+
+- Team source: `328b2bee5e9f16c1079d4613755c5e966b65452a`; personal main: `b7ffd45f46adb47ca54be8cf841f82a84fc97348`.
+- Previous checkpoint: `793e6ecfbf7bce955fe5822518e863e4e2ac5fc5`.
+- Included main commit: `b7ffd45f` — chore(base): update base with 1 upstream commits through 328b2bee.
+- Owner approved applying this specific fix inside retained custom implementations, rebuilding affected ratio options from base and retaining custom options.
+- Preserve template/preset content, IDs, order, layout and existing custom setting IDs. Convert only equivalent Banner ratio aliases to canonical values.
+- Apply clipped one-pixel background paint and nested-picture sizing, exact Image card/Banner fractions and active image/video Original ratios. Keep unrelated local work outside the release.
+- Previously retained implementations not involved in this fix remain unchanged.
+- Updated paths:
+  - `assets/component-blocks-image-card.css`
+  - `assets/critical.css`
+  - `blocks/_columns-column.liquid`
+  - `blocks/banner.liquid`
+  - `blocks/image-card.liquid`
+  - `blocks/slide.liquid`
+  - `sections/bundle-builder.liquid`
+  - `sections/collection-list-thumbnails.liquid`
+  - `sections/collection-list.liquid`
+  - `sections/collections-with-background.liquid`
+  - `sections/collections-with-tabs.liquid`
+  - `sections/contact-form-custom.liquid`
+  - `sections/contact-information.liquid`
+  - `sections/custom-section.liquid`
+  - `sections/email-signup-form.liquid`
+  - `sections/featured-product.liquid`
+  - `sections/gallery-carousel.liquid`
+  - `sections/gallery-full-width-strip.liquid`
+  - `sections/gallery-image-grid.liquid`
+  - `sections/icon-text-cards.liquid`
+  - `sections/icon-text-inline.liquid`
+  - `sections/image-cards.liquid`
+  - `sections/image-text-split-layout.liquid`
+  - `sections/promo-grid-custom.liquid`
+  - `sections/rich-text.liquid`
+  - `sections/scroll-reading-text.liquid`
+  - `sections/testimonial-carousel.liquid`
+  - `snippets/image-ratio-value.liquid`
+  - `snippets/media-background.liquid`
+  - `snippets/media-card.liquid`
