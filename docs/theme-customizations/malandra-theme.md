@@ -3080,3 +3080,8 @@ Owner-authorized team commit `bf4b69b5`: disallow extra section blocks; migrate 
 - `snippets/variant-picker.liquid`
 - `snippets/video.liquid`
 - `snippets/view-all-button.liquid`
+
+
+### Footer controls and reveal — 2026-10-16
+
+Owner-authorized team source `1c3db7a1`: add Show top divider and Enable scroll reveal above Section width, add Background media and rename Appearance to Color. Reveal survives editor selection/reload and disables when the Footer exceeds viewport height; info matches the reference theme. Existing variant CSS, preset content and saved layout are preserved; new options default off/none.
