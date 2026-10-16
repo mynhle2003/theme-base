@@ -226,15 +226,7 @@
           "type": "carousel_split",
           "settings": {
             "loop": false,
-            "transition_style": "fade",
-            "autoplay": false,
-            "pause_on_hover": true,
-            "autoplay_speed": 4,
-            "padding_top": 0,
-            "padding_bottom": 0,
-            "customize_mobile_padding": false,
-            "padding_top_mobile": 0,
-            "padding_bottom_mobile": 0
+            "transition_style": "fade"
           },
           "blocks": [
             {
@@ -242,17 +234,22 @@
               "blocks": [
                 {
                   "type": "image",
+                  "id": "image",
                   "static": true,
                   "settings": {
-                    "image_ratio_desktop": "ratio_5_4",
-                    "image_ratio_mobile": "ratio_5_4",
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_mobile": "custom",
                     "width_desktop": "fill",
-                    "width_mobile": "fill"
-                  },
-                  "id": "image"
+                    "width_mobile": "fill",
+                    "image_ratio_custom_width_desktop": 5,
+                    "image_ratio_custom_height_desktop": 4,
+                    "image_ratio_custom_width_mobile": 5,
+                    "image_ratio_custom_height_mobile": 4
+                  }
                 },
                 {
                   "type": "group",
+                  "id": "content",
                   "static": true,
                   "settings": {
                     "direction": "vertical",
@@ -269,9 +266,7 @@
                     {
                       "type": "eyebrow",
                       "settings": {
-                        "text": "<p>FROM THE PEOPLE</p>",
-                        "animation_type": "slide-bottom",
-                        "animation_delay": 50
+                        "text": "<p>FROM THE PEOPLE</p>"
                       }
                     },
                     {
@@ -280,9 +275,7 @@
                         "source": "library",
                         "icon": "five-stars",
                         "icon_width": 88,
-                        "custom_mobile": false,
-                        "animation_type": "slide-bottom",
-                        "animation_delay": 50
+                        "custom_mobile": false
                       }
                     },
                     {
@@ -291,9 +284,7 @@
                         "text": "<p>“The necklace looks amazing! Thank you so much for all of your help and outstanding customer service. What I love most is the attention to detail. Every gem sparkles beautifully honour”</p>",
                         "heading_size": "display",
                         "html_tag": "h3",
-                        "width": "fill",
-                        "animation_type": "slide-bottom",
-                        "animation_delay": 100
+                        "width": "fill"
                       }
                     },
                     {
@@ -301,13 +292,10 @@
                       "settings": {
                         "text": "<p>— Madison P, London</p>",
                         "text_size": "sm",
-                        "width": "fill",
-                        "animation_type": "slide-bottom",
-                        "animation_delay": 50
+                        "width": "fill"
                       }
                     }
-                  ],
-                  "id": "content"
+                  ]
                 }
               ],
               "settings": {
@@ -338,17 +326,22 @@
               "blocks": [
                 {
                   "type": "image",
+                  "id": "image",
                   "static": true,
                   "settings": {
-                    "image_ratio_desktop": "ratio_5_4",
-                    "image_ratio_mobile": "ratio_5_4",
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_mobile": "custom",
                     "width_desktop": "fill",
-                    "width_mobile": "fill"
-                  },
-                  "id": "image"
+                    "width_mobile": "fill",
+                    "image_ratio_custom_width_desktop": 5,
+                    "image_ratio_custom_height_desktop": 4,
+                    "image_ratio_custom_width_mobile": 5,
+                    "image_ratio_custom_height_mobile": 4
+                  }
                 },
                 {
                   "type": "group",
+                  "id": "content",
                   "static": true,
                   "settings": {
                     "direction": "vertical",
@@ -365,9 +358,7 @@
                     {
                       "type": "eyebrow",
                       "settings": {
-                        "text": "<p>FROM THE PEOPLE</p>",
-                        "animation_type": "slide-bottom",
-                        "animation_delay": 50
+                        "text": "<p>FROM THE PEOPLE</p>"
                       }
                     },
                     {
@@ -376,9 +367,7 @@
                         "source": "library",
                         "icon": "five-stars",
                         "icon_width": 88,
-                        "custom_mobile": false,
-                        "animation_type": "slide-bottom",
-                        "animation_delay": 50
+                        "custom_mobile": false
                       }
                     },
                     {
@@ -387,9 +376,7 @@
                         "text": "<p>\"They created a gorgeous piece for me! I have so much of their jewelry so it was difficult, but they outdid themselves again with something totally different than anything I have!\"</p>",
                         "heading_size": "display",
                         "html_tag": "h3",
-                        "width": "fill",
-                        "animation_type": "slide-bottom",
-                        "animation_delay": 100
+                        "width": "fill"
                       }
                     },
                     {
@@ -397,13 +384,10 @@
                       "settings": {
                         "text": "<p>— Rachel L, USA</p>",
                         "text_size": "sm",
-                        "width": "fill",
-                        "animation_type": "slide-bottom",
-                        "animation_delay": 50
+                        "width": "fill"
                       }
                     }
-                  ],
-                  "id": "content"
+                  ]
                 }
               ],
               "settings": {
