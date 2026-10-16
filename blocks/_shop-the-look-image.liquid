@@ -29,7 +29,7 @@
     assign image_height_desktop = '100%'
     assign image_fill_desktop = true
   endif
-  if image_ratio_desktop_setting == 'square' or image_ratio_desktop_setting == 'portrait' or image_ratio_desktop_setting == 'landscape' or image_ratio_desktop_setting == 'wide' or image_ratio_desktop_setting == 'custom'
+  if image_ratio_desktop != 'auto'
     assign image_height_desktop = '100%'
   endif
 
@@ -44,7 +44,7 @@
     assign image_height_mobile = '100%'
     assign image_fill_mobile = true
   endif
-  if image_ratio_mobile_setting == 'square' or image_ratio_mobile_setting == 'portrait' or image_ratio_mobile_setting == 'landscape' or image_ratio_mobile_setting == 'wide' or image_ratio_mobile_setting == 'custom'
+  if image_ratio_mobile != 'auto'
     assign image_height_mobile = '100%'
   endif
 
