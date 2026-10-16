@@ -2330,3 +2330,8 @@ templates/page.about-us.json
 - `snippets/variant-picker.liquid`
 - `snippets/video.liquid`
 - `snippets/view-all-button.liquid`
+
+
+### Countdown composition migration — 2026-10-16
+
+Owner-authorized migration from team `2a9a0caf`, personal main `2cf6e5ab`: rename preset to Countdown (custom), use dynamic blocks and the existing Custom section allow-list, unlock saved instances while preserving block IDs, order, content and all layout settings. Countdown timer runtime is unchanged.
