@@ -18,7 +18,7 @@
   endif
 
   assign blog_card_ratio_setting = block.settings.ratio | default: 'original'
-  unless blog_card_ratio_setting == 'original' or blog_card_ratio_setting == 'square' or blog_card_ratio_setting == 'portrait' or blog_card_ratio_setting == 'ratio_5_4' or blog_card_ratio_setting == 'landscape' or blog_card_ratio_setting == 'wide'
+  unless blog_card_ratio_setting == 'original' or blog_card_ratio_setting == 'square' or blog_card_ratio_setting == 'portrait' or blog_card_ratio_setting == 'ratio_6_7' or blog_card_ratio_setting == 'ratio_5_4' or blog_card_ratio_setting == 'landscape' or blog_card_ratio_setting == 'wide' or blog_card_ratio_setting contains 'ratio_' or blog_card_ratio_setting == 'custom' or blog_card_ratio_setting == 'original'
     assign blog_card_ratio_setting = 'original'
   endunless
   assign blog_card_media_layout = block.settings.media_layout | default: 'stacked'
@@ -31,6 +31,8 @@
       assign blog_card_ratio = '1'
     when 'portrait'
       assign blog_card_ratio = '0.8'
+    when 'ratio_6_7'
+      assign blog_card_ratio = '6 / 7'
     when 'ratio_5_4'
       assign blog_card_ratio = '1.25'
     when 'landscape'
@@ -38,6 +40,16 @@
     when 'wide'
       assign blog_card_ratio = '1.7778'
   endcase
+  capture blog_card_ratio
+    render 'image-ratio-number', setting: blog_card_ratio_setting, fallback: blog_card_ratio
+  endcapture
+  assign blog_card_ratio = blog_card_ratio | strip
+  if blog_card_ratio_setting == 'custom'
+    capture blog_card_ratio
+      render 'image-ratio-value', setting: 'custom', custom_width: block.settings.ratio_custom_width, custom_height: block.settings.ratio_custom_height
+    endcapture
+    assign blog_card_ratio = blog_card_ratio | strip
+  endif
 
   assign blog_card_alignment = block.settings.alignment | default: 'left'
   unless blog_card_alignment == 'left' or blog_card_alignment == 'center' or blog_card_alignment == 'right'
@@ -330,12 +342,24 @@
   "name": "Blog card",
   "tag": null,
   "blocks": [
-    { "type": "@theme" },
-    { "type": "blog-card-tag" },
-    { "type": "blog-card-title" },
-    { "type": "blog-card-description" },
-    { "type": "blog-card-meta" },
-    { "type": "blog-card-button" }
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "blog-card-tag"
+    },
+    {
+      "type": "blog-card-title"
+    },
+    {
+      "type": "blog-card-description"
+    },
+    {
+      "type": "blog-card-meta"
+    },
+    {
+      "type": "blog-card-button"
+    }
   ],
   "settings": [
     {
@@ -343,44 +367,70 @@
       "content": "t:general.media"
     },
     {
-  "type": "select",
-  "id": "ratio",
-  "label": "Ratio",
-  "options": [
-    {
-      "value": "original",
-      "label": "Auto"
+      "type": "select",
+      "id": "ratio",
+      "label": "Ratio",
+      "options": [
+        {
+          "value": "original",
+          "label": "Original"
+        },
+        {
+          "value": "ratio_1_1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "ratio_4_5",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "ratio_3_4",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.image_ratio.custom"
+        }
+      ],
+      "default": "original"
     },
-    {
-      "value": "square",
-      "label": "Square - 1:1"
-    },
-    {
-      "value": "portrait",
-      "label": "Portrait - 4:5"
-    },
-    {
-      "value": "ratio_5_4",
-      "label": "Landscape - 5:4"
-    },
-    {
-      "value": "landscape",
-      "label": "Landscape - 4:3"
-    },
-    {
-      "value": "wide",
-      "label": "Wide - 16:9"
-    }
-  ],
-  "default": "original"
-},
     {
       "type": "select",
       "id": "media_layout",
       "label": "Media layout",
       "options": [
-        { "value": "stacked", "label": "Stacked" },
-        { "value": "horizontal", "label": "Horizontal" }
+        {
+          "value": "stacked",
+          "label": "Stacked"
+        },
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        }
       ],
       "default": "stacked"
     },
@@ -393,9 +443,18 @@
       "id": "alignment",
       "label": "t:labels.alignment",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
       ],
       "default": "left"
     },
@@ -404,10 +463,22 @@
       "id": "position",
       "label": "t:labels.position",
       "options": [
-        { "value": "flex-start", "label": "Start" },
-        { "value": "center", "label": "Center" },
-        { "value": "flex-end", "label": "End" },
-        { "value": "space-between", "label": "Space between" }
+        {
+          "value": "flex-start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "End"
+        },
+        {
+          "value": "space-between",
+          "label": "Space between"
+        }
       ],
       "default": "space-between",
       "visible_if": "{{ block.settings.media_layout == 'horizontal' }}"
@@ -451,9 +522,18 @@
       "id": "corner_radius",
       "label": "t:labels.corner_radius",
       "options": [
-        { "value": "inherit", "label": "Inherit" },
-        { "value": "square", "label": "Square" },
-        { "value": "rounded", "label": "Rounded" }
+        {
+          "value": "inherit",
+          "label": "Inherit"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "rounded",
+          "label": "Rounded"
+        }
       ],
       "default": "inherit"
     },
@@ -462,9 +542,18 @@
       "id": "shadow",
       "label": "t:labels.shadow",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "small", "label": "Small" },
-        { "value": "medium", "label": "Medium" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        }
       ],
       "default": "none"
     },
@@ -477,8 +566,14 @@
       "id": "color_type",
       "label": "t:labels.type",
       "options": [
-        { "value": "inherit", "label": "t:options.color_type.inherit" },
-        { "value": "color_scheme", "label": "t:options.color_type.color_scheme" }
+        {
+          "value": "inherit",
+          "label": "t:options.color_type.inherit"
+        },
+        {
+          "value": "color_scheme",
+          "label": "t:options.color_type.color_scheme"
+        }
       ],
       "default": "inherit"
     },
@@ -582,6 +677,20 @@
       "unit": "px",
       "default": 0,
       "visible_if": "{{ block.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "number",
+      "id": "ratio_custom_width",
+      "label": "W",
+      "default": 16,
+      "visible_if": "{{ block.settings.ratio == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "ratio_custom_height",
+      "label": "H",
+      "default": 9,
+      "visible_if": "{{ block.settings.ratio == 'custom' }}"
     }
   ],
   "presets": [
@@ -599,8 +708,12 @@
             "padding_top": 0
           }
         },
-        { "type": "blog-card-title" },
-        { "type": "blog-card-description" },
+        {
+          "type": "blog-card-title"
+        },
+        {
+          "type": "blog-card-description"
+        },
         {
           "type": "blog-card-meta",
           "settings": {

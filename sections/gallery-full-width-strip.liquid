@@ -131,6 +131,21 @@
       justify-items: stretch;
     }
 
+    .gallery-full-width-strip__items > .gallery-strip-feature-item--first-mobile {
+      order: -1;
+      aspect-ratio: auto;
+    }
+
+    .gallery-strip-feature-item--first-mobile > .gallery-strip-item__image {
+      position: absolute;
+      inset: 0;
+    }
+
+    .gallery-full-width-strip__items > .gallery-strip-feature-item--first-mobile > .gallery-strip-item__content {
+      position: relative;
+      padding-block: 64px;
+    }
+
     .gallery-full-width-strip__items > .gallery-strip-feature-item {
       grid-column: 1 / -1;
       width: 100%;
@@ -325,11 +340,15 @@
       "blocks": [
         {
           "type": "gallery-strip-item",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/mara-community-gallery-1.png"
+          }
         },
         {
           "type": "gallery-strip-item",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/mara-community-gallery-2.png"
+          }
         },
         {
           "type": "gallery-strip-feature-item",
@@ -342,7 +361,10 @@
                   "settings": {
                     "text": "<p>Join our community</p>",
                     "html_tag": "h2",
-                    "heading_size": "display"
+                    "heading_size": "xl",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
                   }
                 },
                 {
@@ -352,13 +374,19 @@
                     "button_style": "tertiary",
                     "width": "fit",
                     "width_mobile": "fit",
-                    "show_icon": false
+                    "show_icon": false,
+                    "animation_type": "fade",
+                    "animation_delay": 150
                   }
                 }
               ],
               "settings": {
                 "content_color": "#FFFFFF",
-                "text_alignment": "center"
+                "text_alignment": "center",
+                "padding_top": 16,
+                "padding_bottom": 16,
+                "padding_left": 24,
+                "padding_right": 24
               }
             }
           ],
@@ -366,16 +394,21 @@
             "enable_overlay": true,
             "show_overlay": "always",
             "overlay_style": "solid",
-            "overlay_background": "#181818"
+            "overlay_background": "#181818",
+            "show_first_on_mobile": true
           }
         },
         {
           "type": "gallery-strip-item",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/mara-community-gallery-3.png"
+          }
         },
         {
           "type": "gallery-strip-item",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/mara-community-gallery-4.png"
+          }
         }
       ]
     }

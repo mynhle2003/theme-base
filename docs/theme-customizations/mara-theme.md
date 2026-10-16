@@ -12,21 +12,24 @@ Record only theme-specific section/block implementation changes here: Liquid/HTM
 
 | File/path | Base behavior | Theme-specific behavior | Reason | Update/merge rule |
 | --- | --- | --- | --- | --- |
+| `snippets/theme-button.liquid` | Shared button filters icon names through its own allow-list | Accept registered mara-quick-add-plus so icon-only Quick add produces SVG instead of an empty button | Fix missing Quick add icon reported by user,2026-10-16 | Keep namespaced glyph admitted alongside icon registry and both Quick add callers; preserve all other validation |
+| `snippets/product-card-quick-add.liquid`, `snippets/product-card-quick-add-overlay.liquid` | Icon mode renders cart glyph; overlay wrapper fills image width | Mara icon mode renders namespaced Figma plus and exposes icon modifier for aligned direct/overlay actions | User requested Figma Quick add parity on desktop/mobile,2026-10-16 | Preserve form/overlay attributes, loading states, labels and text/full-width setting paths; retain icon/CSS dependencies |
 | `sections/footer.liquid` | Base Footer composition | Preserve variant footer markup/CSS, settings and blocks while adopting top divider, Background media and viewport-aware reveal lifecycle | Owner-authorized Footer base rollout | Merge controls/runtime without replacing the variant preset or saved composition |
+| `snippets/media-card.liquid` | Each card reads its own presentation settings | Optional inherit_presentation mode lets fixed Banners supply ratio, position, gap, border, scheme and link target through scoped styles and captured child markup; other callers retain block settings | User requested shared Banners controls, 2026-10-16 | Preserve optional fallback and individual media/link/overlay ownership |
+
+| `sections/shop-the-look-carousel-banners.liquid` | Shop the look uses one static image and product list | Mara-only two-column composition with static Banners group; product active state drives ordered banner fades; editor banner selection reveals matching product; scoped lifecycle cleanup and reduced motion | User requested preset Shop the look: carousel banners; Figma 47015:19975 and 47228:14061, 2026-10-16 | Preserve section, preset, saved instances and shared product-list/media-card dependencies on base updates |
+| `blocks/_look-banners.liquid` | No ordered banner group in Shop the look | Static Banners slot allows add/remove/reorder of private Banner children | User requested merchant-editable banners | Preserve child type and order contract; nth banner pairs with nth product |
+| `blocks/_look-banner.liquid` | Shared Banner offers a Padding group | Private Banner reuses media-card renderer, removes Padding controls and offers no width controls; parent owns content inset | User requested a section-specific Banner based on Featured collection: Banner | Preserve private schema and media-card dependency; keep width/padding controls absent |
+
 | `assets/carousel-block.js` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
-| `assets/product-collection-carousel.js` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
 | `blocks/_header-localization.liquid` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
 | `blocks/blog-list.liquid` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
 | `blocks/carousel.liquid` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
 | `blocks/collection-tab.liquid` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
 | `blocks/product-list.liquid` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
-| `blocks/shop-the-look-products.liquid` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
 | `blocks/tabs-view-all-button.liquid` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
 | `sections/collection-tabs.liquid` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
 | `snippets/icon.liquid` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
-| `snippets/image-comparison.liquid` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
-| `snippets/social-icon.liquid` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
-| `snippets/social-links.liquid` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
 | `blocks/_shop-the-look-image.liquid` | Shared image and addable section block list | Only static section slots; private image retains variant ratio/media controls, removes layout width and padding controls; saved image data migrates with stable IDs | Owner-requested Shop the look base rollout | Keep section image private and preserve variant media values when merging |
 | `sections/shop-the-look-section.liquid` | Shared image and addable section block list | Only static section slots; private image retains variant ratio/media controls, removes layout width and padding controls; saved image data migrates with stable IDs | Owner-requested Shop the look base rollout | Keep section image private and preserve variant media values when merging |
 | `sections/featured-collection-banner.liquid` | Base has header/banner/product-list-banner roles and no CTA layout | Add existing dynamic View all button role; single-role composition places CTA at header right on desktop and after products on mobile, with duplicate-role flex fallback. Keep shared View all button and snippet dependencies. | User authorized Mara-only custom CTA on 2026-10-16; Figma47015:19779 /47228:14029 | Preserve CTA allow-list, four-block capacity, responsive placement and preset/instance on base updates; review shared button dependencies without overwriting theme composition. |
@@ -215,554 +218,87 @@ User requested retaining the original visibility condition. Removed Bottom's zer
 Updated source skills in agents-build-themes: store-content-media routes View all work to its Collections reference; build-preset coordinates limits, columns, catalog availability and actual visibility checks without changing original theme conditions or expanding content permissions.
 
 
-### Shop the look migration — 2026-10-16
+## 2026-10-16 — Editable split testimonial slides
 
-Owner-authorized team commit `bf4b69b5`: disallow extra section blocks; migrate static image to private `_shop-the-look-image`, retain saved media, IDs, ratio/height/radius/overlay controls and compatible variant settings; remove image layout width and padding controls. Shared Image is unchanged. Normalize Countdown preset label to Count down (Custom).
-
-## Base sync history
-
-### 2026-10-16 — Update from personal main
-
-- Previous main commit: `13865852ee204a3ccae27a2f50d5ea107a3bf180`
-- Updated through main commit: `793e6ecfbf7bce955fe5822518e863e4e2ac5fc5`
-- Main commits included: 1
-- Included main commits:
-  - `793e6ecfbf7bce955fe5822518e863e4e2ac5fc5` — chore(base): update base with 1 upstream commits through 1c3db7a1
-- Change summary:
-
-```text
-No file changes.
-```
+User explicitly requested unlocking the built slide blocks for add/remove/reorder, alongside two Figma slides and original media. `blocks/slide_split.liquid` now uses dynamic `content_for blocks`; static image/content wrappers and fixed half-width/reversed layout are removed so native groups/rows/columns control composition and order. Navigation retains existing carousel hooks, icons and localization; mobile controls reserve intrinsic height. `scripts/migrate-testimonial-carousel.cjs` unlocks legacy static slots and preserves current dynamic order. Keep this dynamic-child contract when updating from the base; do not restore fixed slots or reverse merchant order. Section/carousel/slide presets and homepage were synchronized. Sources and validation: `docs/audits/mara-testimonial-preset-2026-10-16.md`; original media receipt: `docs/audits/mara-testimonial-media-2026-10-16.json`.
 
 
-### 2026-10-16 — Update from personal main
+### Shop the look base synchronization — 2026-10-16
 
-- Previous main commit: `2593c6f2f1c69fdab3d90e2468446b55e8550055`
-- Updated through main commit: `13865852ee204a3ccae27a2f50d5ea107a3bf180`
-- Main commits included: 1
-- Included main commits:
-  - `13865852ee204a3ccae27a2f50d5ea107a3bf180` — chore(base): update base with 1 upstream commits through bf4b69b5
-- Change summary:
-
-```text
-sections/announcement-bar.liquid              |  66 +--
- sections/blog-posts.liquid                    | 375 +++++++++--------
- sections/collection-list-thumbnails.liquid    | 580 +++++++++++++++++++++++++-
- sections/featured-collection.liquid           | 196 ++++-----
- sections/footer.liquid                        |   2 +-
- sections/gallery-full-width-strip.liquid      | 317 ++++++++++----
- sections/hero.liquid                          |  98 ++---
- sections/image-comparison-custom.liquid       | 177 +++++++-
- sections/image-comparison-split-custom.liquid |   3 +-
- sections/rich-text.liquid                     | 168 ++++----
- 10 files changed, 1427 insertions(+), 555 deletions(-)
-```
-
-### Retained custom paths through main 13865852
-
-- `assets/breadcrumbs.css`
-- `assets/carousel-block.js`
-- `assets/carousel-slide.js`
-- `assets/cart-drawer-recommendations.js`
-- `assets/cart-drawer.css`
-- `assets/cart-page.css`
-- `assets/cart-page.js`
-- `assets/column-background-video.js`
-- `assets/columns-swipe.js`
-- `assets/component-collection-card.css`
-- `assets/component-pagination.css`
-- `assets/component-sections-promo-grid.css`
-- `assets/component-social-links.css`
-- `assets/editorial-text.js`
-- `assets/image-text-card-grid.js`
-- `assets/image-text-stacked-bands.js`
-- `assets/product-collection-carousel.js`
-- `assets/product-description.js`
-- `assets/product-information-extras.js`
-- `assets/product-list-promos.js`
-- `assets/product-media.js`
-- `assets/promo-grid.js`
-- `assets/quick-add.js`
-- `assets/quick-view.js`
-- `assets/swiper-12.2.0-effect-fade.min.css`
-- `assets/variant-picker.js`
-- `blocks/_bundle-product-list.liquid`
-- `blocks/_bundle-summary.liquid`
-- `blocks/_cart-content.liquid`
-- `blocks/_cart-order-summary.liquid`
-- `blocks/_cart-summary.liquid`
-- `blocks/_collection-filter.liquid`
-- `blocks/_collection-pagination.liquid`
-- `blocks/_collection-products.liquid`
-- `blocks/_collection-sort.liquid`
-- `blocks/_collections-list.liquid`
-- `blocks/_collections-page-card.liquid`
-- `blocks/_column.liquid`
-- `blocks/_columns-column.liquid`
-- `blocks/_comparison-table-features.liquid`
-- `blocks/_header-account.liquid`
-- `blocks/_header-cart.liquid`
-- `blocks/_header-divider.liquid`
-- `blocks/_header-localization.liquid`
-- `blocks/_header-logo.liquid`
-- `blocks/_header-mega-menu.liquid`
-- `blocks/_header-menu-toggle.liquid`
-- `blocks/_header-menu.liquid`
-- `blocks/_header-search.liquid`
-- `blocks/_header-top.liquid`
-- `blocks/_marquee-button.liquid`
-- `blocks/_marquee-countdown-timer.liquid`
-- `blocks/_marquee-coupon-code.liquid`
-- `blocks/_marquee-divider.liquid`
-- `blocks/_marquee-group.liquid`
-- `blocks/_marquee-heading.liquid`
-- `blocks/_marquee-icon.liquid`
-- `blocks/_marquee-image.liquid`
-- `blocks/_marquee-text.liquid`
-- `blocks/_mega-menu-banner.liquid`
-- `blocks/_mega-menu-banners.liquid`
-- `blocks/_overlay-product-media.liquid`
-- `blocks/_product-collection-grid.liquid`
-- `blocks/_product-details.liquid`
-- `blocks/_product-media.liquid`
-- `blocks/_search-input.liquid`
-- `blocks/_search-products.liquid`
-- `blocks/_shop-the-look-image.liquid`
-- `blocks/announcement-countdown-timer.liquid`
-- `blocks/banner.liquid`
-- `blocks/blog-card-button.liquid`
-- `blocks/blog-card-description.liquid`
-- `blocks/blog-card-meta.liquid`
-- `blocks/blog-card-tag.liquid`
-- `blocks/blog-card-title.liquid`
-- `blocks/blog-card.liquid`
-- `blocks/blog-list.liquid`
-- `blocks/blog-tag-filter.liquid`
-- `blocks/button-view-details.liquid`
-- `blocks/button.liquid`
-- `blocks/buttons.liquid`
-- `blocks/carousel.liquid`
-- `blocks/cart-free-shipping.liquid`
-- `blocks/cart-items.liquid`
-- `blocks/cart-order-note.liquid`
-- `blocks/cart-shipping-estimator.liquid`
-- `blocks/collection-card-button.liquid`
-- `blocks/collection-card-description.liquid`
-- `blocks/collection-card-title.liquid`
-- `blocks/collection-card.liquid`
-- `blocks/collection-list-items.liquid`
-- `blocks/collection-promo.liquid`
-- `blocks/collection-tab.liquid`
-- `blocks/collection-thumbnail.liquid`
-- `blocks/columns.liquid`
-- `blocks/comparison-table-column.liquid`
-- `blocks/comparison-table-row-value.liquid`
-- `blocks/comparison-table-row.liquid`
-- `blocks/contact-field.liquid`
-- `blocks/contact-form.liquid`
-- `blocks/countdown-timer.liquid`
-- `blocks/discount-code.liquid`
-- `blocks/divider.liquid`
-- `blocks/editorial-text.liquid`
-- `blocks/email-signup.liquid`
-- `blocks/eyebrow.liquid`
-- `blocks/faq_item.liquid`
-- `blocks/featured-post.liquid`
-- `blocks/first-card.liquid`
-- `blocks/gallery-hotspot.liquid`
-- `blocks/group.liquid`
-- `blocks/header.liquid`
-- `blocks/heading.liquid`
-- `blocks/hotspot.liquid`
-- `blocks/icon.liquid`
-- `blocks/image-card.liquid`
-- `blocks/image-comparison.liquid`
-- `blocks/image-text-card-grid-item.liquid`
-- `blocks/image-text-stacked-band.liquid`
-- `blocks/image.liquid`
-- `blocks/localization.liquid`
-- `blocks/logo.liquid`
-- `blocks/marquee-item.liquid`
-- `blocks/marquee.liquid`
-- `blocks/menu.liquid`
-- `blocks/pagination.liquid`
-- `blocks/payment-icons.liquid`
-- `blocks/policy-links.liquid`
-- `blocks/popup.liquid`
-- `blocks/press-item.liquid`
-- `blocks/press-quotes.liquid`
-- `blocks/previous-and-next-posts.liquid`
-- `blocks/product-accordion.liquid`
-- `blocks/product-badges.liquid`
-- `blocks/product-buy-accelerated-checkout.liquid`
-- `blocks/product-buy-add-to-cart.liquid`
-- `blocks/product-buy-buttons.liquid`
-- `blocks/product-buy-quantity.liquid`
-- `blocks/product-callout-gallery.liquid`
-- `blocks/product-callout.liquid`
-- `blocks/product-card-compact.liquid`
-- `blocks/product-card.liquid`
-- `blocks/product-description.liquid`
-- `blocks/product-inventory.liquid`
-- `blocks/product-list-banner.liquid`
-- `blocks/product-list.liquid`
-- `blocks/product-pickup-availability.liquid`
-- `blocks/product-price.liquid`
-- `blocks/product-recommendations.liquid`
-- `blocks/product-sticky-add-to-cart.liquid`
-- `blocks/product-title.liquid`
-- `blocks/product-variant-picker.liquid`
-- `blocks/promo-card-custom.liquid`
-- `blocks/promo-card.liquid`
-- `blocks/row.liquid`
-- `blocks/scroll-to.liquid`
-- `blocks/shop-the-look-product.liquid`
-- `blocks/shop-the-look-products.liquid`
-- `blocks/slide.liquid`
-- `blocks/social-links.liquid`
-- `blocks/spacer.liquid`
-- `blocks/tab-layout.liquid`
-- `blocks/tabs-view-all-button.liquid`
-- `blocks/tags-and-sharing.liquid`
-- `blocks/text.liquid`
-- `blocks/video.liquid`
-- `blocks/view-all-button.liquid`
-- `sections/breadcrumbs.liquid`
-- `sections/cart-drawer.liquid`
-- `sections/cart.liquid`
-- `sections/collection-page-breadcrumb.liquid`
-- `sections/collection-tabs.liquid`
-- `sections/custom-section.liquid`
-- `sections/featured-collection-banner.liquid`
-- `sections/header.liquid`
-- `sections/hotspot-full-width-carousel.liquid`
-- `sections/image-text-stacked-bands.liquid`
-- `sections/password.liquid`
-- `sections/product.liquid`
-- `sections/promo-grid-custom.liquid`
-- `sections/quick-add.liquid`
-- `sections/quick-view.liquid`
-- `sections/recently-viewed-card.liquid`
-- `sections/search-overlay.liquid`
-- `sections/shop-the-look-section.liquid`
-- `snippets/accordion-details.liquid`
-- `snippets/badge.liquid`
-- `snippets/carousel-navigation-icon.liquid`
-- `snippets/cart-surface-style.liquid`
-- `snippets/collection-card-render.liquid`
-- `snippets/comparison-table-column-content.liquid`
-- `snippets/comparison-table-column-shell.liquid`
-- `snippets/comparison-table-row-content.liquid`
-- `snippets/comparison-table-row-value-content.liquid`
-- `snippets/comparison-table-value.liquid`
-- `snippets/component-overlay.liquid`
-- `snippets/deferred-stylesheet.liquid`
-- `snippets/form-field.liquid`
-- `snippets/heading-size-token.liquid`
-- `snippets/icon.liquid`
-- `snippets/image-card-content.liquid`
-- `snippets/image-comparison.liquid`
-- `snippets/image.liquid`
-- `snippets/layout-flow-group-style.liquid`
-- `snippets/layout-flow-style.liquid`
-- `snippets/localization-overlay.liquid`
-- `snippets/localization-styles.liquid`
-- `snippets/marquee-letter-spacing.liquid`
-- `snippets/media-background.liquid`
-- `snippets/media-card.liquid`
-- `snippets/overlay-background.liquid`
-- `snippets/pagination-pages.liquid`
-- `snippets/pickup-availability-stores.liquid`
-- `snippets/price.liquid`
-- `snippets/product-badges.liquid`
-- `snippets/product-callout-hotspot.liquid`
-- `snippets/product-callout-runtime.liquid`
-- `snippets/product-card-image.liquid`
-- `snippets/product-card-placeholder.liquid`
-- `snippets/product-card-price.liquid`
-- `snippets/product-card-quick-add-overlay.liquid`
-- `snippets/product-card-quick-add.liquid`
-- `snippets/product-card-quick-view.liquid`
-- `snippets/product-card-swatches.liquid`
-- `snippets/product-card-title.liquid`
-- `snippets/product-card.liquid`
-- `snippets/product-collection-grid.liquid`
-- `snippets/product-hotspot.liquid`
-- `snippets/product-inventory-status.liquid`
-- `snippets/product-list-promo-items.liquid`
-- `snippets/product-list-promo-styles.liquid`
-- `snippets/product-media-lightbox.liquid`
-- `snippets/product-media.liquid`
-- `snippets/search-query-fields.liquid`
-- `snippets/share-button.liquid`
-- `snippets/size-style.liquid`
-- `snippets/social-icon.liquid`
-- `snippets/social-links.liquid`
-- `snippets/swatch-option.liquid`
-- `snippets/swatch.liquid`
-- `snippets/swiper-carousel.liquid`
-- `snippets/swiper-navigation.liquid`
-- `snippets/swiper-pagination.liquid`
-- `snippets/tab-layout-styles.liquid`
-- `snippets/theme-button.liquid`
-- `snippets/tooltip.liquid`
-- `snippets/variant-picker.liquid`
-- `snippets/video.liquid`
-- `snippets/view-all-button.liquid`
+Source: personal main `13865852`, imported from team dev `bf4b69b5`. Synced theme branch commit `dd23a40f478dd3da6ac305092e1c07d57cb236be`. Shop the look uses static slots and private Image, without image layout width or padding controls; existing local custom work, option values, content and layout remain. The full release/customization history is preserved in the committed version of this record.
 
 
-### Footer controls and reveal — 2026-10-16
+## 2026-10-16 — Mara testimonial navigation placement and fade
 
-Owner-authorized team source `1c3db7a1`: add Show top divider and Enable scroll reveal above Section width, add Background media and rename Appearance to Color. Reveal survives editor selection/reload and disables when the Footer exceeds viewport height; info matches the reference theme. Existing variant CSS, preset content and saved layout are preserved; new options default off/none.
+User explicitly requested a Mara-only customization to match navigation placement in Figma desktop `47015:22037` and mobile `47228:14046`. In `blocks/slide_split.liquid`, desktop controls are anchored inside the slide at the logical bottom-right edge, scoped to `.section-testimonial-split`; they no longer add a footer below the image. Mobile retains the bottom-right flow row with 24px spacing after content. Dynamic block order, existing icons, hit areas, disabled states, localization, and carousel runtime hooks are preserved. Keep this scoped placement when updating the base. Homepage and Testimonial: split / Carousel Add presets use `transition_style: fade`.
 
-### Retained custom paths through main 793e6ecf
+## Blog posts — Figma 6:7 image ratio (2026-10-16)
 
-- `assets/breadcrumbs.css`
-- `assets/carousel-block.js`
-- `assets/carousel-slide.js`
-- `assets/cart-drawer-recommendations.js`
-- `assets/cart-drawer.css`
-- `assets/cart-page.css`
-- `assets/cart-page.js`
-- `assets/column-background-video.js`
-- `assets/columns-swipe.js`
-- `assets/component-collection-card.css`
-- `assets/component-pagination.css`
-- `assets/component-sections-promo-grid.css`
-- `assets/component-social-links.css`
-- `assets/editorial-text.js`
-- `assets/image-text-card-grid.js`
-- `assets/image-text-stacked-bands.js`
-- `assets/product-collection-carousel.js`
-- `assets/product-description.js`
-- `assets/product-information-extras.js`
-- `assets/product-list-promos.js`
-- `assets/product-media.js`
-- `assets/promo-grid.js`
-- `assets/quick-add.js`
-- `assets/quick-view.js`
-- `assets/swiper-12.2.0-effect-fade.min.css`
-- `assets/variant-picker.js`
-- `blocks/_bundle-product-list.liquid`
-- `blocks/_bundle-summary.liquid`
-- `blocks/_cart-content.liquid`
-- `blocks/_cart-order-summary.liquid`
-- `blocks/_cart-summary.liquid`
-- `blocks/_collection-filter.liquid`
-- `blocks/_collection-pagination.liquid`
-- `blocks/_collection-products.liquid`
-- `blocks/_collection-sort.liquid`
-- `blocks/_collections-list.liquid`
-- `blocks/_collections-page-card.liquid`
-- `blocks/_column.liquid`
-- `blocks/_columns-column.liquid`
-- `blocks/_comparison-table-features.liquid`
-- `blocks/_header-account.liquid`
-- `blocks/_header-cart.liquid`
-- `blocks/_header-divider.liquid`
-- `blocks/_header-localization.liquid`
-- `blocks/_header-logo.liquid`
-- `blocks/_header-mega-menu.liquid`
-- `blocks/_header-menu-toggle.liquid`
-- `blocks/_header-menu.liquid`
-- `blocks/_header-search.liquid`
-- `blocks/_header-top.liquid`
-- `blocks/_marquee-button.liquid`
-- `blocks/_marquee-countdown-timer.liquid`
-- `blocks/_marquee-coupon-code.liquid`
-- `blocks/_marquee-divider.liquid`
-- `blocks/_marquee-group.liquid`
-- `blocks/_marquee-heading.liquid`
-- `blocks/_marquee-icon.liquid`
-- `blocks/_marquee-image.liquid`
-- `blocks/_marquee-text.liquid`
-- `blocks/_mega-menu-banner.liquid`
-- `blocks/_mega-menu-banners.liquid`
-- `blocks/_overlay-product-media.liquid`
-- `blocks/_product-collection-grid.liquid`
-- `blocks/_product-details.liquid`
-- `blocks/_product-media.liquid`
-- `blocks/_search-input.liquid`
-- `blocks/_search-products.liquid`
-- `blocks/_shop-the-look-image.liquid`
-- `blocks/announcement-countdown-timer.liquid`
-- `blocks/banner.liquid`
-- `blocks/blog-card-button.liquid`
-- `blocks/blog-card-description.liquid`
-- `blocks/blog-card-meta.liquid`
-- `blocks/blog-card-tag.liquid`
-- `blocks/blog-card-title.liquid`
-- `blocks/blog-card.liquid`
-- `blocks/blog-list.liquid`
-- `blocks/blog-tag-filter.liquid`
-- `blocks/button-view-details.liquid`
-- `blocks/button.liquid`
-- `blocks/buttons.liquid`
-- `blocks/carousel.liquid`
-- `blocks/cart-free-shipping.liquid`
-- `blocks/cart-items.liquid`
-- `blocks/cart-order-note.liquid`
-- `blocks/cart-shipping-estimator.liquid`
-- `blocks/collection-card-button.liquid`
-- `blocks/collection-card-description.liquid`
-- `blocks/collection-card-title.liquid`
-- `blocks/collection-card.liquid`
-- `blocks/collection-list-items.liquid`
-- `blocks/collection-promo.liquid`
-- `blocks/collection-tab.liquid`
-- `blocks/collection-thumbnail.liquid`
-- `blocks/columns.liquid`
-- `blocks/comparison-table-column.liquid`
-- `blocks/comparison-table-row-value.liquid`
-- `blocks/comparison-table-row.liquid`
-- `blocks/contact-field.liquid`
-- `blocks/contact-form.liquid`
-- `blocks/countdown-timer.liquid`
-- `blocks/discount-code.liquid`
-- `blocks/divider.liquid`
-- `blocks/editorial-text.liquid`
-- `blocks/email-signup.liquid`
-- `blocks/eyebrow.liquid`
-- `blocks/faq_item.liquid`
-- `blocks/featured-post.liquid`
-- `blocks/first-card.liquid`
-- `blocks/gallery-hotspot.liquid`
-- `blocks/group.liquid`
-- `blocks/header.liquid`
-- `blocks/heading.liquid`
-- `blocks/hotspot.liquid`
-- `blocks/icon.liquid`
-- `blocks/image-card.liquid`
-- `blocks/image-comparison.liquid`
-- `blocks/image-text-card-grid-item.liquid`
-- `blocks/image-text-stacked-band.liquid`
-- `blocks/image.liquid`
-- `blocks/localization.liquid`
-- `blocks/logo.liquid`
-- `blocks/marquee-item.liquid`
-- `blocks/marquee.liquid`
-- `blocks/menu.liquid`
-- `blocks/pagination.liquid`
-- `blocks/payment-icons.liquid`
-- `blocks/policy-links.liquid`
-- `blocks/popup.liquid`
-- `blocks/press-item.liquid`
-- `blocks/press-quotes.liquid`
-- `blocks/previous-and-next-posts.liquid`
-- `blocks/product-accordion.liquid`
-- `blocks/product-badges.liquid`
-- `blocks/product-buy-accelerated-checkout.liquid`
-- `blocks/product-buy-add-to-cart.liquid`
-- `blocks/product-buy-buttons.liquid`
-- `blocks/product-buy-quantity.liquid`
-- `blocks/product-callout-gallery.liquid`
-- `blocks/product-callout.liquid`
-- `blocks/product-card-compact.liquid`
-- `blocks/product-card.liquid`
-- `blocks/product-description.liquid`
-- `blocks/product-inventory.liquid`
-- `blocks/product-list-banner.liquid`
-- `blocks/product-list.liquid`
-- `blocks/product-pickup-availability.liquid`
-- `blocks/product-price.liquid`
-- `blocks/product-recommendations.liquid`
-- `blocks/product-sticky-add-to-cart.liquid`
-- `blocks/product-title.liquid`
-- `blocks/product-variant-picker.liquid`
-- `blocks/promo-card-custom.liquid`
-- `blocks/promo-card.liquid`
-- `blocks/row.liquid`
-- `blocks/scroll-to.liquid`
-- `blocks/shop-the-look-product.liquid`
-- `blocks/shop-the-look-products.liquid`
-- `blocks/slide.liquid`
-- `blocks/social-links.liquid`
-- `blocks/spacer.liquid`
-- `blocks/tab-layout.liquid`
-- `blocks/tabs-view-all-button.liquid`
-- `blocks/tags-and-sharing.liquid`
-- `blocks/text.liquid`
-- `blocks/video.liquid`
-- `blocks/view-all-button.liquid`
-- `sections/breadcrumbs.liquid`
-- `sections/cart-drawer.liquid`
-- `sections/cart.liquid`
-- `sections/collection-page-breadcrumb.liquid`
-- `sections/collection-tabs.liquid`
-- `sections/custom-section.liquid`
-- `sections/featured-collection-banner.liquid`
-- `sections/footer.liquid`
-- `sections/header.liquid`
-- `sections/hotspot-full-width-carousel.liquid`
-- `sections/image-text-stacked-bands.liquid`
-- `sections/password.liquid`
-- `sections/product.liquid`
-- `sections/promo-grid-custom.liquid`
-- `sections/quick-add.liquid`
-- `sections/quick-view.liquid`
-- `sections/recently-viewed-card.liquid`
-- `sections/search-overlay.liquid`
-- `snippets/accordion-details.liquid`
-- `snippets/badge.liquid`
-- `snippets/carousel-navigation-icon.liquid`
-- `snippets/cart-surface-style.liquid`
-- `snippets/collection-card-render.liquid`
-- `snippets/comparison-table-column-content.liquid`
-- `snippets/comparison-table-column-shell.liquid`
-- `snippets/comparison-table-row-content.liquid`
-- `snippets/comparison-table-row-value-content.liquid`
-- `snippets/comparison-table-value.liquid`
-- `snippets/component-overlay.liquid`
-- `snippets/deferred-stylesheet.liquid`
-- `snippets/form-field.liquid`
-- `snippets/heading-size-token.liquid`
-- `snippets/icon.liquid`
-- `snippets/image-card-content.liquid`
-- `snippets/image-comparison.liquid`
-- `snippets/image.liquid`
-- `snippets/layout-flow-group-style.liquid`
-- `snippets/layout-flow-style.liquid`
-- `snippets/localization-overlay.liquid`
-- `snippets/localization-styles.liquid`
-- `snippets/marquee-letter-spacing.liquid`
-- `snippets/media-background.liquid`
-- `snippets/media-card.liquid`
-- `snippets/overlay-background.liquid`
-- `snippets/pagination-pages.liquid`
-- `snippets/pickup-availability-stores.liquid`
-- `snippets/price.liquid`
-- `snippets/product-badges.liquid`
-- `snippets/product-callout-hotspot.liquid`
-- `snippets/product-callout-runtime.liquid`
-- `snippets/product-card-image.liquid`
-- `snippets/product-card-placeholder.liquid`
-- `snippets/product-card-price.liquid`
-- `snippets/product-card-quick-add-overlay.liquid`
-- `snippets/product-card-quick-add.liquid`
-- `snippets/product-card-quick-view.liquid`
-- `snippets/product-card-swatches.liquid`
-- `snippets/product-card-title.liquid`
-- `snippets/product-card.liquid`
-- `snippets/product-collection-grid.liquid`
-- `snippets/product-hotspot.liquid`
-- `snippets/product-inventory-status.liquid`
-- `snippets/product-list-promo-items.liquid`
-- `snippets/product-list-promo-styles.liquid`
-- `snippets/product-media-lightbox.liquid`
-- `snippets/product-media.liquid`
-- `snippets/search-query-fields.liquid`
-- `snippets/share-button.liquid`
-- `snippets/size-style.liquid`
-- `snippets/social-icon.liquid`
-- `snippets/social-links.liquid`
-- `snippets/swatch-option.liquid`
-- `snippets/swatch.liquid`
-- `snippets/swiper-carousel.liquid`
-- `snippets/swiper-navigation.liquid`
-- `snippets/swiper-pagination.liquid`
-- `snippets/tab-layout-styles.liquid`
-- `snippets/theme-button.liquid`
-- `snippets/tooltip.liquid`
-- `snippets/variant-picker.liquid`
-- `snippets/video.liquid`
-- `snippets/view-all-button.liquid`
+Explicit user request: add and synchronize the missing Figma ratio. `blocks/blog-card.liquid` adds `ratio_6_7` (Portrait - 6:7), accepts it in normalization and maps it to exact CSS `6 / 7`. Existing media CSS applies cover cropping at this ratio on desktop and mobile. Other option values/defaults remain compatible. Keep the schema option and Liquid mapping together when updating base.
+
+Configuration: the Blog posts Add section preset and homepage `our_stories` Blog card both select `ratio_6_7`. Figma desktop 47015:22124 has 517.33 × 603.56px media; mobile 47228:14080 has 343 × 400.17px media. Both are 6:7. No other blog/card instance is migrated.
+
+Validation: 5 direct Liquid render checks pass (6:7, existing 4:5/5:4, Auto and invalid fallback), schema/preset synchronization and `git diff --check` pass. Full Theme Check: 0 errors, 6 existing settings-count warnings. Existing `view-all-blog` suite: 9 pass, 3 failures in collection-tabs CTA expectations outside this ratio change; those files are unchanged by this task. Browser/Theme Editor visual QA unavailable; no deployment, commit or push.
+
+| `blocks/gallery-strip-feature-item.liquid`, `sections/gallery-full-width-strip.liquid` | Feature remains in merchant order with square ratio | Opt-in Show first on mobile adds a class; parent applies order -1 below 768px and content-driven height with 80px total vertical inset in Mara preset | User requested Mara-only Figma Gallery 47015:20289 / 47260:13564, 2026-10-16 | Preserve checkbox default false, desktop order, block attributes and mobile layout on base updates |
+| `blocks/gallery-strip-overlay-group.liquid` | 12px desktop / 8px mobile gap, inherited tracking | Mara uses 16px heading/button gap and 2px heading tracking | Match Gallery Figma | Preserve local typography without changing shared heading block |
+
+
+## Ratio values and labels aligned with Elara — 2026-10-16
+
+Aligned 23 ratio select option lists across 16 shared schema owners with the local Elara theme, including option value, label and order. Existing geometry is migrated to canonical ratio_N_D values in presets, templates and global product-card settings. Collection-thumbnail legacy portrait and landscape use their actual 2:3 and 3:2 geometry. Mara blog-card 6:7 selections migrate to Custom with dimensions 6 and 7. Original, custom and supported fill-height behavior remain available. Existing legacy values remain readable at runtime.
+
+Updated shared ratio resolution, numeric block/section consumers, collection-thumbnail and collection-tab panels, and product-card global tokens. Added custom dimension controls where needed without replacing existing dimension IDs. Shared ratio translations follow Elara. Banner and swatch ratio options already match Elara and remain unchanged.
+
+Validation: 23 exact Elara option lists; 218 saved preset/template ratio values valid; 12 shared helper render cases match Elara; 99 actual owner Liquid render cases passed. Theme Check: 0 errors, 6 existing settings-count warnings. No test files modified or output directory created. No Git commit or push in this follow-up.
+
+## Tab layout Sliding line — 2026-10-16
+
+User requested restoring Underline to main before introducing a separate Mara style. Existing `snippets/tab-layout-styles.liquid` rules are byte-for-byte preserved from local main; all previous Mara Collection tabs typography/gap/baseline overrides now select `tab-layout--sliding_line` only. Button and Underline retain main's styling. Collection tabs Add section preset and homepage now select Sliding line.
+
+New `style: sliding_line` uses a thin horizontal baseline and one2px moving indicator sized from the target tab's actual rectangle. Hover/focus previews a tab; leaving restores the selected tab; changing tabs updates the indicator without changing existing deferred product loading. Desktop section Horizontal automatically stacks tabs and uses a left-side2px baseline, with indicator height matching each tab including10px vertical padding and12px inset. Reference: Essen Figma `v6iKvP4OuW3y0A9bbxel5U`, node `46306:2059`. Only the vertical layout/line treatment transfers; Mara typography remains. Mobile returns to horizontal Tabs with Mobile alignment. Vertical layout is hidden and ignored for this style, including an old saved true value.
+
+Files: `blocks/tab-layout.liquid` normalizes/schema-loads the new option and its module; `snippets/tab-layout-styles.liquid` appends isolated styles; `assets/tab-layout-indicator.js` owns scoped measurement, hover/focus, vertical arrow keys, tab/resize/font updates and idempotent editor cleanup. Uses CSS transitions for position/width/height and respects reduced motion. Existing tab runtime remains the owner of tab activation, selection semantics and View all. `sections/collection-tabs.liquid`, `templates/index.json` and schema locale register/configure the new style. Preserve these namespaced additions and restored base rules on sync.
+
+Verification: explicit comparison confirms the complete main stylesheet prefix is unchanged; schema JSON/unique option assertions and JS syntax pass.2 indicator tests cover variable text widths, hover restoration, vertical height, touch exclusion and unload/reinitialize;16 existing tab deferred/card tests pass. Browser visual QA remains pending; no manual theme push/publication or Git delivery.
+
+
+## 2026-10-16 — Split carousel Navigation settings
+
+User requested the ordinary carousel Navigation controls with Left/Right positioning. `blocks/carousel_split.liquid` now owns a single shared `swiper-navigation` instance and exposes desktop visibility, Position (left/right), Style (primary/secondary/outline/icon_only), Icon and Behavior. Position applies on desktop and mobile. The default Right + Icon only + Long arrow + Always preserves the Figma appearance; homepage and section/carousel Add presets explicitly save these values. `slide_split` retains editable content blocks and no longer renders per-slide controls. This supersedes the earlier per-slide navigation ownership while preserving desktop bottom placement, mobile 24px spacing and fade.
+
+Validation: schema/preset setting checks, three focused existing testimonial runtime/preset tests and diff whitespace checks passed. Full Theme Check inspected 379 files: zero errors, six existing ExcessiveSettingsCount warnings, unsuppressed. Browser/Theme Editor visual verification unavailable because local browser use is disabled. No commit, push or manual deployment.
+
+
+Mobile navigation follow-up: added Show navigation on mobile and conditionally visible Position (mobile), Left/Right. Mobile visibility/alignment use independent data attributes; desktop Position is unchanged. Homepage, section and carousel presets enable mobile navigation with Right alignment, retaining Figma icon-only appearance and 24px spacing. Schema/preset validation, three focused existing tests and diff checks pass; full Theme Check: zero errors, six existing settings-count warnings. Browser visual QA unavailable.
+
+
+### Footer base synchronization — 2026-10-16
+
+Source: personal main `793e6ecf`, imported from team dev `1c3db7a1`. Synced theme branch commit `3ee3aca2c9af4e014e1a79e0e4653636c2401f90`. Footer adopts the top divider, Background media and viewport-aware reveal controls while preserving the variant composition; existing local custom work, option values, content and layout remain. The full release/customization history is preserved in the committed version of this record.
+
+
+### Announcement bar — optional close button (2026-10-16)
+
+Mara-only option `show_close_button` in `sections/announcement-bar.liquid`, default false; enabled in Mara preset and `sections/header-group.json`. Uses the existing `icon` snippet's `close` value, inherited scheme color, 16px icon and a right-edge button with focus outline. Symmetric content inset avoids text overlap. Figma header reference: `bH9A5237I07NWt19Cua9gL`, `47039:24637`; exact SVG/position comparison is pending because MCP quota was exhausted.
+
+`assets/announcement-bar.js` owns instance-local dismissal: destroy timers/listeners/observers, hide the surface for the current page only, and move focus to the next header control when available. No storage/cookies. Theme Editor section selection restores and initializes a dismissed surface; load/unload remains idempotent. Preserve the setting, conditional markup/CSS and runtime handlers when updating base. No global icon geometry changed.
+
+## Quick add icon treatment — 2026-10-16
+
+Existing current settings already select enabled=true, mobile=true, style=icon, full_width=false and scheme-3 (white primary surface/dark foreground). These values and saved factory presets are preserved. No existing option controls glyph, placement, dimensions or surface opacity.
+
+`snippets/icon.liquid` registers mara-quick-add-plus using the original SVG from the prior Figma mobile context47228:14029 (assetab594.svg). Preserve source24×24 dimensions/viewBox, path geometry and1.25 stroke; currentColor replaces source paint, duplicate SVG IDs removed, decorative accessibility attributes added. Cart/library icons are unchanged. A fresh Figma context request hit the View-seat MCP limit; prior high-fidelity context/screenshot plus downloaded original SVG supplied the design evidence.
+
+`assets/critical.css` adds product-card media-scoped icon/non-full-width styling: bottom/inline-end16px,40×40px square button,24px glyph,2px backdrop blur and60% surface opacity from the selected primary-background token. Hover foreground/background still follow scheme tokens. Direct-add form and multi-variant overlay share the icon modifier. Existing desktop hover/focus reveal, mobile visibility, text mode, full-width option and search-suggestion layout outside the media wrapper are preserved. No new schema settings or JS. Applies to all Mara product-card consumers.
+
+During base updates preserve this CSS, both Quick add snippets and icon registration together. Validation:13 cart/overlay tests passed, Theme Check0 errors/6 warnings, diff check passed. Browser automation is disabled in Work settings, so rendered desktop/mobile and live click verification remain pending; code validation is not visual parity proof. No manual push or publish.
+
+Quick add icon follow-up: the first implementation omitted the namespaced glyph from theme-button’s independent allow-list, producing an empty icon-only control. Added that exact key and a cross-file regression check covering both Quick add callers, button filtering and icon registration.14 tests pass; Theme Check0 errors/6 warnings. Localhost9300 has no listener for HTML readback; browser automation remains disabled, so live render verification is pending.
+
+
+## Header horizontal overflow — 2026-10-16
+
+The hidden desktop header-menu backdrop used 100vw and centered itself with translateX(-50%). With a 1920px browser window and 1905px document client width, its right edge reached 1912.5px and made the page scroll horizontally by 8px. Changed the backdrop to inset-inline:0 and width:100%, removing the horizontal transform. Mega-menu panels now consume the existing --header-mega-width measured by header.js instead of 100vw. No global overflow clipping was added.
+
+Live localhost:9300 measurements after reload: document/body scrollWidth equals document clientWidth at window widths 375,390,768,1024,1440,1920 (client widths 360,375,753,1009,1425,1905). No horizontal overflow in those checks. Theme Check:0 errors,6 existing settings-count warnings; git diff --check passes. No test files or output artifacts added.

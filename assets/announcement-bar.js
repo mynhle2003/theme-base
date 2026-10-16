@@ -283,10 +283,20 @@ const init = (root) => {
   const slides = Array.from(track.children);
   const sliderState = root.dataset.announcementType === 'slider' ? initSlider(root, slides, track) : { previous: null, next: null, onPrevious: null, onNext: null };
   const scrollingState = root.dataset.announcementType === 'scrolling' ? initScrolling(root, track) : { clones: [], resizeObserver: null, mutationObserver: null };
+  const closeButton = root.querySelector('[data-announcement-close]');
+  const onClose = () => {
+    const nextFocus = root.closest('.shopify-section')?.nextElementSibling?.querySelector('a[href], button, input, [tabindex="0"]');
+    destroy(root);
+    root.hidden = true;
+    nextFocus?.focus({ preventScroll: true });
+  };
+  closeButton?.addEventListener('click', onClose);
   const copyState = initCopyInteraction(root);
   root.dataset.announcementInitialized = 'true';
   states.set(root, {
     track,
+    closeButton,
+    onClose,
     ...sliderState,
     ...scrollingState,
     ...copyState,
@@ -298,6 +308,7 @@ const init = (root) => {
 const destroy = (root) => {
   const state = states.get(root);
   if (!state) return;
+  state.closeButton?.removeEventListener('click', state.onClose);
   state.previous?.removeEventListener('click', state.onPrevious);
   state.next?.removeEventListener('click', state.onNext);
   state.onClick && root.removeEventListener('click', state.onClick);
@@ -329,6 +340,13 @@ const destroyWithin = (root) => {
 };
 
 document.addEventListener('shopify:section:load', (event) => initWithin(event.target));
+document.addEventListener('shopify:section:select', (event) => {
+  const root = event.target.matches?.(selector) ? event.target : event.target.querySelector?.(selector);
+  if (root?.hidden) {
+    root.hidden = false;
+    init(root);
+  }
+});
 document.addEventListener('shopify:section:unload', (event) => destroyWithin(event.target));
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => initWithin(), { once: true });
 else initWithin();

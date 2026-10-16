@@ -34,6 +34,9 @@
   endcase
 
   assign quick_add_class = 'product-card__action product-card__quick-add product-card__action--motion-' | append: quick_add_motion_speed
+  if quick_add_style == 'icon'
+    assign quick_add_class = quick_add_class | append: ' product-card__quick-add--icon'
+  endif
   if full_width != false
     assign quick_add_class = quick_add_class | append: ' product-card__quick-add--full'
   endif
@@ -60,7 +63,7 @@
         aria_label: quick_add_accessible_label,
         type: 'submit',
         variant: 'primary',
-        icon: 'cart',
+        icon: 'mara-quick-add-plus',
         icon_only: true,
         loading_dots: true,
         motion_speed: quick_add_motion_speed,

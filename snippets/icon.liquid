@@ -26,7 +26,7 @@
   endunless
 
   assign icon_name = icon | default: 'arrow-right'
-  assign registered_icons = 'mara-header-search|mara-header-account|mara-header-cart|mara-header-chevron|mara-header-menu|pencil-square|lock-closed|arrow|arrow-left|arrow-right|paper-airplane|bars-3|bars|grip-vertical|compare|menu|chevron|chevron-down|chevron-left|chevron-right|x-mark|close|eye|magnifying-glass|search|shopping-bag|bag|cart|shopping-cart|cube|user|users|account|truck|shipping|tag|discount|trash|remove|document-text|note|receipt-percent|coupon|share|play|pause|plus|minus|check|check-circle|x-circle|comparison-yes|comparison-no|information-circle|circle|square|triangle|diamond|star|four-stars|five-stars|calendar|calendar-days|clock|comment|chat-bubble|chat-bubble-left-right|shield-check|vertical-rule|funnel|sliders|arrow_right|long_arrow_right|chevron_right|arrow_up_right|circle_arrow|circle_chevron|long_arrow_up|double_chevron|arrow_outline|square_chevron' | split: '|'
+  assign registered_icons = 'mara-quick-add-plus|mara-header-search|mara-header-account|mara-header-cart|mara-header-chevron|mara-header-menu|pencil-square|lock-closed|arrow|arrow-left|arrow-right|paper-airplane|bars-3|bars|grip-vertical|compare|menu|chevron|chevron-down|chevron-left|chevron-right|x-mark|close|eye|magnifying-glass|search|shopping-bag|bag|cart|shopping-cart|cube|user|users|account|truck|shipping|tag|discount|trash|remove|document-text|note|receipt-percent|coupon|share|play|pause|plus|minus|check|check-circle|x-circle|comparison-yes|comparison-no|information-circle|circle|square|triangle|diamond|star|four-stars|five-stars|calendar|calendar-days|clock|comment|chat-bubble|chat-bubble-left-right|shield-check|vertical-rule|funnel|sliders|arrow_right|long_arrow_right|chevron_right|arrow_up_right|circle_arrow|circle_chevron|long_arrow_up|double_chevron|arrow_outline|square_chevron' | split: '|'
   unless registered_icons contains icon_name
     assign icon_name = 'arrow-right'
   endunless
@@ -150,6 +150,8 @@
           echo '<svg viewBox="0 0 24 24" fill="none" focusable="false" aria-hidden="true"><path d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.541 6.348a1.125 1.125 0 0 1 0 1.971L6.917 19.334c-.75.412-1.667-.13-1.667-.986V5.653Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="var(--icon-stroke-width)" /></svg>'
         when 'pause'
           echo '<svg viewBox="0 0 24 24" fill="none" focusable="false" aria-hidden="true"><path d="M8.25 5.25v13.5m7.5-13.5v13.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="var(--icon-stroke-width)" /></svg>'
+        when 'mara-quick-add-plus'
+          echo '<svg focusable="false" aria-hidden="true" preserveAspectRatio="none" overflow="visible" style="display: block;" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M5 12H19M11.995 19L11.995 4.99999" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></g></svg>'
         when 'plus'
           echo '<svg viewBox="0 0 24 24" fill="none" focusable="false" aria-hidden="true"><path d="M12 4.5v15m7.5-7.5h-15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="var(--icon-stroke-width)" /></svg>'
         when 'minus'

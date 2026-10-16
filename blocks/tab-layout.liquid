@@ -10,7 +10,7 @@
 
 {% liquid
   assign tab_layout_style = block.settings.style | default: 'underline'
-  unless tab_layout_style == 'underline' or tab_layout_style == 'button'
+  unless tab_layout_style == 'underline' or tab_layout_style == 'button' or tab_layout_style == 'sliding_line'
     assign tab_layout_style = 'underline'
   endunless
 
@@ -20,6 +20,9 @@
   endunless
 
   assign tab_layout_vertical_layout = block.settings.vertical_layout
+  if tab_layout_style == 'sliding_line'
+    assign tab_layout_vertical_layout = false
+  endif
 
   assign tab_layout_gap_desktop = block.settings.gap_desktop | default: 16 | plus: 0
   if tab_layout_gap_desktop < 0 or tab_layout_gap_desktop > 100
@@ -181,6 +184,9 @@
 </div>
 
 {% render 'tab-layout-styles' %}
+{% if tab_layout_style == 'sliding_line' %}
+  <script data-theme-module="{{ 'tab-layout-indicator.js' | asset_url }}"></script>
+{% endif %}
 
 {% javascript %}
 (() => {
@@ -705,7 +711,7 @@
       "id": "vertical_layout",
       "label": "t:labels.vertical_layout",
       "default": false,
-      "visible_if": "{{ section.settings.layout_direction == 'horizontal' }}"
+      "visible_if": "{{ section.settings.layout_direction == 'horizontal' and block.settings.style != 'sliding_line' }}"
     },
     {
       "type": "select",
@@ -719,6 +725,10 @@
         {
           "value": "button",
           "label": "t:options.tab_style.button"
+        },
+        {
+          "value": "sliding_line",
+          "label": "t:options.tab_style.sliding_line"
         }
       ],
       "default": "underline"

@@ -16,7 +16,9 @@
         "eyebrow": {
           "type": "eyebrow",
           "settings": {
-            "text": "<p>[ FAQS ]</p>"
+            "text": "<p>[ FAQS ]</p>",
+            "animation_type": "fade",
+            "animation_delay": 0
           },
           "static": true
         },
@@ -25,14 +27,18 @@
           "settings": {
             "text": "<p>Frequently asked questions</p>",
             "html_tag": "h1",
-            "heading_size": "xl"
+            "heading_size": "xl",
+            "animation_type": "slide-bottom",
+            "animation_delay": 50
           },
           "static": true
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": ""
+            "text": "",
+            "animation_type": "fade",
+            "animation_delay": 100
           },
           "static": true
         }
@@ -592,7 +598,9 @@
         "eyebrow": {
           "type": "eyebrow",
           "settings": {
-            "text": ""
+            "text": "",
+            "animation_type": "fade",
+            "animation_delay": 0
           },
           "static": true
         },
@@ -601,7 +609,9 @@
           "settings": {
             "text": "<p>We're Here to Help</p>",
             "html_tag": "h2",
-            "heading_size": "lg"
+            "heading_size": "lg",
+            "animation_type": "slide-bottom",
+            "animation_delay": 50
           },
           "static": true
         },
@@ -610,7 +620,9 @@
           "settings": {
             "text": "<p>Can't find what you're looking for? Our team is always happy to help with questions about our pieces, sizing, orders, or anything else.</p>",
             "width": "custom",
-            "max_width": 640
+            "max_width": 640,
+            "animation_type": "fade",
+            "animation_delay": 100
           },
           "static": true
         },
@@ -621,7 +633,9 @@
             "button_link": "shopify://pages/contact",
             "button_style": "primary",
             "show_icon": false,
-            "padding_top": 16
+            "padding_top": 16,
+            "animation_type": "fade",
+            "animation_delay": 150
           }
         }
       },

@@ -18,12 +18,17 @@ function normalizeSettings(block) {
   }
 }
 function splitSlide(slide) {
+  const alreadySplit = slide.type === 'slide_split';
   slide.type = 'slide_split';
   slide.settings ||= {};
   slide.settings.position_horizontal ||= slide.settings.position || 'center';
   slide.settings.horizontal_alignment ||= slide.settings.alignment || 'left';
   normalizeSettings(slide);
-  if (slide.blocks?.image?.static && slide.blocks?.content?.static) return;
+  if (alreadySplit && Object.values(slide.blocks || {}).every((child) => ['image', 'group'].includes(child.type))) {
+    for (const child of Object.values(slide.blocks || {})) delete child.static;
+    slide.block_order ||= Object.keys(slide.blocks || {});
+    return;
+  }
   const children = slide.blocks || {};
   const ordered = [...(slide.block_order || Object.keys(children)), ...Object.keys(children)].filter((id, index, ids) => ids.indexOf(id) === index && children[id]);
   const imageId = ordered.find((id) => children[id].type === 'image');
@@ -38,9 +43,9 @@ function splitSlide(slide) {
     content.blocks[childId] = children[id];
     if (!children[id].static) content.block_order.push(childId);
   }
-  image.static = true; content.static = true;
+  delete image.static; delete content.static;
   slide.blocks = { image, content };
-  delete slide.block_order;
+  slide.block_order = ['image', 'content'];
 }
 function migrateTestimonialCarousel(document) {
   const before = JSON.stringify(document);

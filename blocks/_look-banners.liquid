@@ -1,0 +1,342 @@
+{% doc %}
+  Banners paired by their saved order with the Shop the look product list.
+  @example
+  {% content_for 'block', type: '_look-banners', id: 'banners' %}
+{% enddoc %}
+{% capture look_banner_classes %}image-card--look-banner image-card--position-desktop-{{ block.settings.position_desktop }} image-card--position-mobile-{{ block.settings.position_mobile }} image-card--radius-{{ block.settings.corner_radius }} color-scheme section-color-scope {{ block.settings.color_scheme }}{% endcapture %}
+{% capture look_banner_children %}{% content_for 'blocks' %}{% endcapture %}
+{% assign look_banner_children = look_banner_children | replace: 'image-card--look-banner', look_banner_classes %}
+{% if block.settings.open_in_new_tab %}
+  {% assign look_banner_children = look_banner_children | replace: 'data-look-banner-link', 'target="_blank" rel="noopener noreferrer"' %}
+{% endif %}
+{% capture look_ratio_desktop %}{% render 'image-ratio-value', setting: block.settings.image_ratio_desktop, fallback_ratio: 1, custom_width: block.settings.image_ratio_custom_width_desktop, custom_height: block.settings.image_ratio_custom_height_desktop %}{% endcapture %}
+{% capture look_ratio_mobile %}{% render 'image-ratio-value', setting: block.settings.image_ratio_mobile, fallback_ratio: 1, custom_width: block.settings.image_ratio_custom_width_mobile, custom_height: block.settings.image_ratio_custom_height_mobile %}{% endcapture %}
+<div id="LookBanners-{{ block.id }}" class="look-banners" data-look-banners {{ block.shopify_attributes }}>
+  {{ look_banner_children }}
+</div>
+{% style %}
+  #LookBanners-{{ block.id }} > .image-card {
+    {% unless block.settings.image_ratio_desktop == 'auto' %}aspect-ratio: {{ look_ratio_desktop | strip }};{% endunless %}
+    --image-card-custom-radius: {{ block.settings.custom_corner_radius }}px;
+    {% if block.settings.image_ratio_desktop == 'full_screen' %}height: 100vh; aspect-ratio: auto;{% endif %}
+  }
+  #LookBanners-{{ block.id }} .image-card__content { --layout-flow-gap: {{ block.settings.gap_desktop }}px; --layout-flow-gap-mobile: {{ block.settings.gap_mobile }}px; }
+  @media (max-width: 767.98px) {
+    #LookBanners-{{ block.id }} > .image-card {
+      height: auto;
+      {% if block.settings.image_ratio_mobile == 'auto' %}aspect-ratio: var(--image-card-ratio-mobile, var(--image-card-ratio, 1));{% else %}aspect-ratio: {{ look_ratio_mobile | strip }};{% endif %}
+    }
+  }
+{% endstyle %}
+{% schema %}
+{
+  "name": "Banners",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "_look-banner"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banners",
+      "blocks": [
+        {
+          "type": "_look-banner"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:general.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "t:labels.open_in_new_tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:general.size"
+    },
+    {
+      "type": "select",
+      "id": "device",
+      "label": "t:labels.device",
+      "options": [
+        {
+          "value": "desktop",
+          "label": "t:options.device.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.device.mobile"
+        }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio_desktop",
+      "label": "t:labels.image_ratio",
+      "options": [
+        {
+          "value": "full_screen",
+          "label": "t:options.section_height.full_screen"
+        },
+        {
+          "value": "auto",
+          "label": "t:options.image_ratio.auto"
+        },
+        {
+          "value": "square",
+          "label": "t:options.image_ratio.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:options.image_ratio.portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "t:options.image_ratio.landscape"
+        },
+        {
+          "value": "wide",
+          "label": "t:options.image_ratio.wide"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.image_ratio.custom"
+        }
+      ],
+      "default": "square",
+      "visible_if": "{{ block.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "number",
+      "id": "image_ratio_custom_width_desktop",
+      "label": "W",
+      "default": 16,
+      "visible_if": "{{ block.settings.device == 'desktop' and block.settings.image_ratio_desktop == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "image_ratio_custom_height_desktop",
+      "label": "H",
+      "default": 9,
+      "visible_if": "{{ block.settings.device == 'desktop' and block.settings.image_ratio_desktop == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio_mobile",
+      "label": "t:labels.image_ratio_mobile",
+      "options": [
+        {
+          "value": "auto",
+          "label": "t:options.image_ratio.auto"
+        },
+        {
+          "value": "square",
+          "label": "t:options.image_ratio.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:options.image_ratio.portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "t:options.image_ratio.landscape"
+        },
+        {
+          "value": "wide",
+          "label": "t:options.image_ratio.wide"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.image_ratio.custom"
+        }
+      ],
+      "default": "square",
+      "visible_if": "{{ block.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "number",
+      "id": "image_ratio_custom_width_mobile",
+      "label": "W (mobile)",
+      "default": 16,
+      "visible_if": "{{ block.settings.device == 'mobile' and block.settings.image_ratio_mobile == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "image_ratio_custom_height_mobile",
+      "label": "H (mobile)",
+      "default": 9,
+      "visible_if": "{{ block.settings.device == 'mobile' and block.settings.image_ratio_mobile == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.content"
+    },
+    {
+      "type": "select",
+      "id": "position_desktop",
+      "label": "t:labels.desktop_position",
+      "options": [
+        {
+          "value": "top_left",
+          "label": "Top left"
+        },
+        {
+          "value": "top_center",
+          "label": "Top center"
+        },
+        {
+          "value": "top_right",
+          "label": "Top right"
+        },
+        {
+          "value": "center_left",
+          "label": "Center left"
+        },
+        {
+          "value": "center_center",
+          "label": "Center center"
+        },
+        {
+          "value": "center_right",
+          "label": "Center right"
+        },
+        {
+          "value": "bottom_left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom_center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom_right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "bottom_left"
+    },
+    {
+      "type": "select",
+      "id": "position_mobile",
+      "label": "t:labels.mobile_position",
+      "options": [
+        {
+          "value": "top_left",
+          "label": "Top left"
+        },
+        {
+          "value": "top_center",
+          "label": "Top center"
+        },
+        {
+          "value": "top_right",
+          "label": "Top right"
+        },
+        {
+          "value": "center_left",
+          "label": "Center left"
+        },
+        {
+          "value": "center_center",
+          "label": "Center center"
+        },
+        {
+          "value": "center_right",
+          "label": "Center right"
+        },
+        {
+          "value": "bottom_left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom_center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom_right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "bottom_left"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "t:labels.desktop_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "t:labels.mobile_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "t:general.border"
+    },
+    {
+      "type": "select",
+      "id": "corner_radius",
+      "label": "t:labels.corner_radius",
+      "options": [
+        {
+          "value": "inherit",
+          "label": "t:options.radius_preset.inherit"
+        },
+        {
+          "value": "square",
+          "label": "t:options.radius_preset.square"
+        },
+        {
+          "value": "rounded",
+          "label": "t:options.radius_preset.rounded"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.radius_preset.custom"
+        }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "range",
+      "id": "custom_corner_radius",
+      "label": "t:labels.custom_corner_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.corner_radius == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}

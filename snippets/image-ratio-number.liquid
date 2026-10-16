@@ -1,0 +1,16 @@
+{% doc %}
+  Resolves canonical ratio_N_D presets while retaining an already normalized legacy value.
+  @param {string} setting - Saved ratio preset.
+  @param {string} fallback - Existing legacy/custom ratio value.
+{% enddoc %}
+{%- liquid
+  assign value = fallback
+  if setting contains 'ratio_'
+    assign parts = setting | remove_first: 'ratio_' | split: '_'
+    assign height = parts[1] | plus: 0
+    if height > 0
+      assign value = parts[0] | times: 1.0 | divided_by: height
+    endif
+  endif
+  echo value
+-%}

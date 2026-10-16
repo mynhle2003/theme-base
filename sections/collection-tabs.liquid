@@ -194,7 +194,7 @@
     order: 1;
   }
 
-  .collection-tabs__layout .tab-layout__tab {
+  .collection-tabs__layout .tab-layout--sliding_line .tab-layout__tab {
     font-weight: var(--button-font-weight, 500);
     letter-spacing: 0.6px;
     line-height: 1.5;
@@ -202,21 +202,20 @@
     color: var(--body-color);
   }
 
-  .collection-tabs__layout .tab-layout__tab:is(:hover, [aria-selected='true']) {
+  .collection-tabs__layout .tab-layout--sliding_line .tab-layout__tab:is(:hover, [aria-selected='true']) {
     color: var(--heading-color);
   }
 
-  .collection-tabs__layout .tab-layout__navigation {
+  .collection-tabs__layout .tab-layout--sliding_line .tab-layout__navigation {
     column-gap: var(--tab-layout-gap-desktop, 32px);
   }
 
-  .collection-tabs__layout .tab-layout--underline .tab-layout__navigation {
+  .collection-tabs__layout .tab-layout--sliding_line .tab-layout__navigation {
     width: fit-content;
     justify-self: var(--collection-tabs-controls-alignment, flex-start);
-    border-bottom: 1px solid var(--input-border-color);
   }
 
-  .collection-tabs__layout .tab-layout--underline .tab-layout__tab {
+  .collection-tabs__layout .tab-layout--sliding_line .tab-layout__tab {
     padding-bottom: 4px;
   }
 
@@ -382,7 +381,7 @@
   }
 
   @media (max-width: 767.98px) {
-    .collection-tabs__layout .tab-layout__navigation {
+    .collection-tabs__layout .tab-layout--sliding_line .tab-layout__navigation {
       column-gap: var(--tab-layout-gap-mobile, 32px);
     }
 
@@ -1007,7 +1006,9 @@
             {
               "type": "eyebrow",
               "settings": {
-                "text": "<p>Signature Silhouettes</p>"
+                "text": "<p>Signature Silhouettes</p>",
+                "animation_type": "fade",
+                "animation_delay": 0
               }
             },
             {
@@ -1015,7 +1016,9 @@
               "settings": {
                 "text": "<p>Editor’s Pick</p>",
                 "heading_size": "xl",
-                "html_tag": "h2"
+                "html_tag": "h2",
+                "animation_type": "slide-bottom",
+                "animation_delay": 50
               }
             }
           ],
@@ -1026,7 +1029,7 @@
           "static": true,
           "settings": {
             "vertical_layout": false,
-            "style": "underline",
+            "style": "sliding_line",
             "active_style": "primary",
             "gap_desktop": 32,
             "gap_mobile": 32,

@@ -71,7 +71,7 @@
       {% if announcement_overlay %}<div class="announcement-bar__overlay"></div>{% endif %}
     </div>
   {% endif %}
-  <div class="announcement-bar__inner">
+  <div class="announcement-bar__inner{% if section.settings.show_close_button %} announcement-bar__inner--dismissible{% endif %}">
     <button class="announcement-bar__control announcement-bar__control--previous" type="button" data-announcement-previous aria-label="Previous announcement">
       {% render 'carousel-navigation-icon', icon: announcement_navigation_icon, direction: 'previous' %}
     </button>
@@ -84,9 +84,21 @@
       {% render 'carousel-navigation-icon', icon: announcement_navigation_icon, direction: 'next' %}
     </button>
   </div>
+  {% if section.settings.show_close_button %}
+    <button class="announcement-bar__close" type="button" data-announcement-close aria-label="{{ 'accessibility.close' | t }}">
+      {% render 'icon', icon: 'close', width: 16, bare: true %}
+    </button>
+  {% endif %}
 </div>
 
 {% stylesheet %}
+  .announcement-bar[hidden] { display: none; }
+  .announcement-bar__inner--dismissible { padding-inline: 44px; }
+  .announcement-bar__close { position: absolute; z-index: 2; inset-inline-end: 12px; top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 32px; height: 32px; padding: 8px; border: 0; background: transparent; color: inherit; cursor: pointer; }
+  .announcement-bar__close svg { width: 16px; height: 16px; }
+  .announcement-bar__close:hover { opacity: 0.7; }
+  .announcement-bar__close:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
+
   .announcement-bar--slider .announcement-bar__viewport { transition: height var(--motion-duration-standard) var(--motion-ease-standard); }
   .announcement-bar--slider .announcement-bar__slides { transition: transform 420ms var(--motion-ease-standard); will-change: transform; }
   .announcement-bar--slider .announcement-bar__slides.announcement-bar--slider-reset { transition: none; }
@@ -130,6 +142,12 @@
     }
   ],
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_close_button",
+      "label": "Show close button",
+      "default": false
+    },
     {
       "type": "header",
       "content": "Bottom separator"
@@ -424,6 +442,7 @@
       "name": "Announcement bar",
       "category": "t:general.header",
       "settings": {
+        "show_close_button": true,
         "type": "slider",
         "speed": 1,
         "direction": "left",

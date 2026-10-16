@@ -7,6 +7,7 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const enabled = () => document.body.dataset.blockAnimations !== 'false' && !reduced.matches;
   const selector = '[data-block-animation], [data-component-reveal]';
+  const excludedSelector = '.section-header, .section-footer, .shopify-section-group-header-group, .shopify-section-group-footer-group, .section-faq-accordion, .section-faq-image-accordion, .announcement-bar';
   const cardSelector = 'article.testimonial-item, .product-card, .promo-card, .collection-card, .collection-card-kernel, .blog-card, .blog-first-card, article.image-card, .collection-thumbnail__link, .icon-text-cards__content > .group, .icon-text-cards__viewport > .swiper-wrapper > .swiper-slide > .group';
   const listSelector = '[data-product-list-mobile-promos], [data-product-carousel], .product-collection-grid, .collection-card-list__grid, .product-list__grid, [data-product-list], .image-cards-section__grid, [data-blog-list], .blog-grid, .collection-thumbnails__grid, .collection-thumbnails__carousel, .testimonial-carousel, .testimonials-cards__carousel, .icon-text-cards__content, .icon-text-cards__viewport > .swiper-wrapper';
   const scopeSelector = '[role="tabpanel"], .slideshow__swiper .swiper-slide';
@@ -98,7 +99,8 @@
   };
   const initialize = element => {
     // The stack controller owns media motion. Inert back cards are still visible.
-    if (element.closest('[data-multi-image]')) {
+    if (element.closest(excludedSelector) || element.closest('[data-multi-image]') ||
+        (element.matches('lh-editorial-text') && element.dataset.editorialReveal === 'true')) {
       const state = nodes.get(element);
       if (state) {stop(state);observer.unobserve(element);nodes.delete(element);}
       element.classList.remove('reveal-pending');
@@ -124,7 +126,7 @@
   const scan = (root = document) => {
     const cards = root.querySelectorAll?.(cardSelector) || [];
     cards.forEach(card => {
-      if (card.closest('.slideshow, .announcement-bar, dialog')) return;
+      if (card.closest(excludedSelector) || card.closest('.slideshow, dialog')) return;
       card.dataset.componentReveal = '';
       if (!card.dataset.blockAnimation) card.dataset.blockAnimation = card.matches('article.testimonial-item') ? 'fade' : 'slide-bottom';
       const list = card.closest(listSelector);
@@ -153,7 +155,7 @@
     });
     // Resource actions and forms share the entrance order of their content blocks.
     root.querySelectorAll?.('.collection-list-view-all, .email-signup-block, .product-callout__content').forEach(element => {
-      if (element.closest('dialog, .announcement-bar')) return;
+      if (element.closest(excludedSelector) || element.closest('dialog')) return;
       element.dataset.componentReveal = '';
       if (!element.dataset.blockAnimation || element.dataset.blockAnimation === 'none') element.dataset.blockAnimation = 'fade';
       const section = element.closest('.shopify-section');

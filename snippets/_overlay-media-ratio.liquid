@@ -12,14 +12,17 @@
 
 {% liquid
   assign overlay_ratio_setting = setting | default: fallback | default: 'auto'
+  if overlay_ratio_setting == 'original'
+    assign overlay_ratio_setting = 'auto'
+  endif
   assign overlay_ratio_fallback = fallback | default: 'auto'
-  unless overlay_ratio_setting == 'auto' or overlay_ratio_setting == 'square' or overlay_ratio_setting == 'portrait' or overlay_ratio_setting == 'ratio_5_4' or overlay_ratio_setting == 'landscape' or overlay_ratio_setting == 'wide' or overlay_ratio_setting == 'custom'
+  unless overlay_ratio_setting == 'auto' or overlay_ratio_setting == 'square' or overlay_ratio_setting == 'portrait' or overlay_ratio_setting == 'ratio_5_4' or overlay_ratio_setting == 'landscape' or overlay_ratio_setting == 'wide' or overlay_ratio_setting == 'custom' or overlay_ratio_setting contains 'ratio_' or overlay_ratio_setting == 'custom' or overlay_ratio_setting == 'original'
     assign overlay_ratio_setting = overlay_ratio_fallback
   endunless
 
   assign overlay_ratio = fallback_ratio | default: 'auto'
   case overlay_ratio_setting
-    when 'auto'
+    when 'auto', 'original'
       assign overlay_ratio = 'auto'
     when 'square'
       assign overlay_ratio = '1'
@@ -45,6 +48,10 @@
         assign overlay_ratio = fallback_ratio | default: '1'
       endif
   endcase
+  capture overlay_ratio
+    render 'image-ratio-number', setting: overlay_ratio_setting, fallback: overlay_ratio
+  endcapture
+  assign overlay_ratio = overlay_ratio | strip
 
   echo overlay_ratio_setting
   echo '|'

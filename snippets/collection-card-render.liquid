@@ -54,7 +54,7 @@
   if collection_card_ratio_setting == 'original'
     assign collection_card_ratio_setting = 'auto'
   endif
-  unless collection_card_ratio_setting == 'auto' or collection_card_ratio_setting == 'square' or collection_card_ratio_setting == 'portrait' or collection_card_ratio_setting == 'ratio_5_4' or collection_card_ratio_setting == 'landscape' or collection_card_ratio_setting == 'landscape_3_2' or collection_card_ratio_setting == 'portrait_2_3' or collection_card_ratio_setting == 'wide' or collection_card_ratio_setting == 'custom'
+  unless collection_card_ratio_setting == 'auto' or collection_card_ratio_setting == 'square' or collection_card_ratio_setting == 'portrait' or collection_card_ratio_setting == 'ratio_5_4' or collection_card_ratio_setting == 'landscape' or collection_card_ratio_setting == 'landscape_3_2' or collection_card_ratio_setting == 'portrait_2_3' or collection_card_ratio_setting == 'wide' or collection_card_ratio_setting == 'custom' or collection_card_ratio_setting contains 'ratio_' or collection_card_ratio_setting == 'custom' or collection_card_ratio_setting == 'original'
     assign collection_card_ratio_setting = 'auto'
   endunless
   assign collection_card_ratio = 'auto'
@@ -84,6 +84,10 @@
         assign collection_card_ratio = ratio_width | times: 1.0 | divided_by: ratio_height
       endif
   endcase
+  capture collection_card_ratio
+    render 'image-ratio-number', setting: collection_card_ratio_setting, fallback: collection_card_ratio
+  endcapture
+  assign collection_card_ratio = collection_card_ratio | strip
   assign collection_card_gap_desktop = block.settings.gap_desktop | default: 4 | plus: 0
   assign collection_card_gap_mobile = block.settings.gap_mobile | default: collection_card_gap_desktop | plus: 0
   if collection_card_gap_desktop < 0 or collection_card_gap_desktop > 40

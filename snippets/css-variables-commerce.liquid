@@ -41,6 +41,16 @@
     when 'landscape'
       assign product_card_image_ratio = '4 / 3'
   endcase
+  capture product_card_image_ratio
+    render 'image-ratio-number', setting: product_card_ratio, fallback: product_card_image_ratio
+  endcapture
+  assign product_card_image_ratio = product_card_image_ratio | strip
+  if product_card_ratio == 'custom'
+    capture product_card_image_ratio
+      render 'image-ratio-value', setting: 'custom', custom_width: settings.product_card_ratio_custom_width, custom_height: settings.product_card_ratio_custom_height
+    endcapture
+    assign product_card_image_ratio = product_card_image_ratio | strip
+  endif
   assign product_card_alignment = 'left'
   case settings.product_card_alignment
     when 'center'

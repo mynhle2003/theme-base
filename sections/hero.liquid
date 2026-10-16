@@ -45,6 +45,8 @@
   endunless
   if hero_layout == 'stack'
     assign hero_parallax_effect = 'none'
+  elsif hero_media_type == 'video'
+    assign hero_parallax_effect = 'fixed'
   endif
 
   assign hero_desktop_height = section.settings.desktop_height | default: 'medium'
@@ -378,7 +380,12 @@
         }
       ],
       "default": "none",
-      "visible_if": "{{ section.settings.layout == 'classic' }}"
+      "visible_if": "{{ section.settings.layout == 'classic' and section.settings.media_type == 'image' }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "Video heroes use the Fixed parallax effect.",
+      "visible_if": "{{ section.settings.layout == 'classic' and section.settings.media_type == 'video' }}"
     },
     {
       "type": "header",
@@ -710,7 +717,7 @@
         "show_overlay": true,
         "overlay_style": "solid",
         "overlay": "#00000033",
-        "parallax_effect": "none",
+        "parallax_effect": "fixed",
         "desktop_height": "large",
         "mobile_height": "large",
         "content_width": "fit",
@@ -733,7 +740,9 @@
             "text": "<p>veneta collection</p>",
             "heading_size": "display",
             "html_tag": "h1",
-            "width": "fit"
+            "width": "fit",
+            "animation_type": "slide-bottom",
+            "animation_delay": 50
           }
         },
         {
@@ -743,7 +752,9 @@
             "button_style": "tertiary",
             "show_icon": false,
             "width": "fit",
-            "width_mobile": "fit"
+            "width_mobile": "fit",
+            "animation_type": "fade",
+            "animation_delay": 150
           }
         }
       ]

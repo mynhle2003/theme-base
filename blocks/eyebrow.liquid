@@ -81,6 +81,7 @@
     class="{{ eyebrow_class }}"
     {% if eyebrow_style != blank %}style="{{ eyebrow_style }}"{% endif %}
     {% if block_plain_text == blank %}data-content-empty{% endif %}
+    {% render 'block-animation-attributes', block: block %}
     {{ block.shopify_attributes }}
   >
     {% if block.settings.show_icon %}
@@ -259,6 +260,52 @@
     },
     {
       "type": "header",
+      "content": "t:general.animation"
+    },
+    {
+      "type": "select",
+      "id": "animation_type",
+      "label": "t:labels.type",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.block_animation.none"
+        },
+        {
+          "value": "fade",
+          "label": "t:options.block_animation.fade"
+        },
+        {
+          "value": "scale",
+          "label": "t:options.block_animation.scale"
+        },
+        {
+          "value": "slide-left",
+          "label": "t:options.block_animation.slide_left"
+        },
+        {
+          "value": "slide-right",
+          "label": "t:options.block_animation.slide_right"
+        },
+        {
+          "value": "slide-bottom",
+          "label": "t:options.block_animation.slide_bottom"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "animation_delay",
+      "label": "t:labels.animation_delay",
+      "min": 0,
+      "max": 2000,
+      "step": 50,
+      "unit": "ms",
+      "default": 0
+    },
+    {
+      "type": "header",
       "content": "t:general.padding"
     },
     {
@@ -361,7 +408,9 @@
         "show_background": false,
         "show_icon": false,
         "icon": "circle",
-        "color_scheme": "scheme-1"
+        "color_scheme": "scheme-1",
+        "animation_type": "fade",
+        "animation_delay": 0
       }
     }
   ]

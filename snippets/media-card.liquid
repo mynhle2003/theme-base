@@ -2,6 +2,7 @@
   Shared media-card renderer for the Image card and Featured collection: Banner blocks.
 
   @param {object} media_card_block - The Theme block and its settings
+  @param {boolean} [inherit_presentation] - Parent supplies presentation classes, ratio, gap and link target
   @param {string} [children] - Rendered child blocks
   @param {string} [class_modifier] - Optional class added to the media card
   @param {boolean} [enable_sticky] - Whether the media card content sticks while scrolling
@@ -72,6 +73,10 @@
     assign image_card_height_mobile = 'ratio_1_1'
     assign image_card_ratio_desktop_setting = media_card_block.settings.image_ratio_desktop | default: 'square'
     assign image_card_ratio_mobile_setting = media_card_block.settings.image_ratio_mobile | default: 'square'
+    if inherit_presentation
+      assign image_card_ratio_desktop_setting = 'auto'
+      assign image_card_ratio_mobile_setting = 'auto'
+    endif
 
     assign image_card_ratio_desktop = media_card_block.settings.image.aspect_ratio
     if image_card_ratio_desktop == blank
@@ -228,10 +233,12 @@
   endif
   assign image_card_class = image_card_class | append: ' image-card--height-desktop-' | append: image_card_height_desktop
   assign image_card_class = image_card_class | append: ' image-card--height-mobile-' | append: image_card_height_mobile
+  unless inherit_presentation
   assign image_card_class = image_card_class | append: ' image-card--position-desktop-' | append: image_card_position_desktop
   assign image_card_class = image_card_class | append: ' image-card--position-mobile-' | append: image_card_position_mobile
   assign image_card_class = image_card_class | append: ' image-card--radius-' | append: image_card_radius
   assign image_card_class = image_card_class | append: ' color-scheme section-color-scope ' | append: image_card_scheme
+  endunless
   if class_modifier != blank
     assign image_card_class = image_card_class | append: ' ' | append: class_modifier
   endif
@@ -267,6 +274,10 @@
   {% assign image_card_content_justify = 'flex-start' %}
 {% endif %}
 
+{% if inherit_presentation %}
+  {% assign image_card_gap_desktop = blank %}
+  {% assign image_card_gap_mobile = blank %}
+{% endif %}
 {% capture image_card_content_style %}
   {% render 'layout-flow-style',
     direction: 'column',
@@ -307,6 +318,7 @@
   {% if image_card_has_link %}
     <a
       class="image-card__link"
+      {% if inherit_presentation %}data-look-banner-link{% endif %}
       href="{{ media_card_block.settings.link | escape }}"
       aria-label="{{ image_card_link_label | escape }}"
       {% if media_card_block.settings.open_in_new_tab %}

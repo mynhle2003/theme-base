@@ -1,0 +1,614 @@
+{% liquid
+  assign shop_the_look_section_width = 'page-width'
+  assign shop_the_look_section_no_padding = false
+  case section.settings.section_width
+    when 'full_width'
+      assign shop_the_look_section_width = 'full-width'
+    when 'full_width_no_padding'
+      assign shop_the_look_section_width = 'full-width'
+      assign shop_the_look_section_no_padding = true
+  endcase
+
+  assign shop_the_look_media_position = section.settings.media_position | default: 'right'
+  unless shop_the_look_media_position == 'left' or shop_the_look_media_position == 'right'
+    assign shop_the_look_media_position = 'right'
+  endunless
+
+  assign shop_the_look_mobile_media_position = section.settings.mobile_media_position | default: 'first'
+  unless shop_the_look_mobile_media_position == 'first' or shop_the_look_mobile_media_position == 'last'
+    assign shop_the_look_mobile_media_position = 'first'
+  endunless
+
+  assign shop_the_look_gap_desktop = section.settings.gap_desktop | default: 50 | plus: 0
+  if shop_the_look_gap_desktop < 0 or shop_the_look_gap_desktop > 100
+    assign shop_the_look_gap_desktop = 50
+  endif
+
+  assign shop_the_look_gap_mobile = section.settings.gap_mobile | default: 16 | plus: 0
+  if shop_the_look_gap_mobile < 0 or shop_the_look_gap_mobile > 100
+    assign shop_the_look_gap_mobile = 16
+  endif
+
+  assign shop_the_look_scheme = section.settings.color_scheme | default: 'scheme-1'
+  if section.settings.color_scheme.id != blank
+    assign shop_the_look_scheme = section.settings.color_scheme.id
+  endif
+  assign shop_the_look_scheme = shop_the_look_scheme | default: 'scheme-1' | handleize
+
+  assign shop_the_look_padding_top = section.settings.padding_top | default: 0 | plus: 0
+  assign shop_the_look_padding_bottom = section.settings.padding_bottom | default: 0 | plus: 0
+  assign shop_the_look_padding_top_mobile = section.settings.padding_top_mobile | default: 0 | plus: 0
+  assign shop_the_look_padding_bottom_mobile = section.settings.padding_bottom_mobile | default: 0 | plus: 0
+
+%}
+
+{% capture shop_the_look_style %}
+  {% if shop_the_look_gap_desktop != 50 %}--shop-the-look-gap-desktop: {{ shop_the_look_gap_desktop }}px;{% endif %}
+  {% if shop_the_look_gap_mobile != 16 %}--shop-the-look-gap-mobile: {{ shop_the_look_gap_mobile }}px;{% endif %}
+  {% if shop_the_look_padding_top != 0 %}--shop-the-look-padding-top: {{ shop_the_look_padding_top }}px;{% endif %}
+  {% if shop_the_look_padding_bottom != 0 %}--shop-the-look-padding-bottom: {{ shop_the_look_padding_bottom }}px;{% endif %}
+  {% if section.settings.customize_mobile_padding %}
+    {% if shop_the_look_padding_top_mobile != shop_the_look_padding_top %}--shop-the-look-padding-top-mobile: {{ shop_the_look_padding_top_mobile }}px;{% endif %}
+    {% if shop_the_look_padding_bottom_mobile != shop_the_look_padding_bottom %}--shop-the-look-padding-bottom-mobile: {{ shop_the_look_padding_bottom_mobile }}px;{% endif %}
+  {% endif %}
+{% endcapture %}
+{% assign shop_the_look_style = shop_the_look_style | strip %}
+
+<div
+  class="section-spacing shop-the-look-carousel-banners section-color-scope {{ shop_the_look_scheme }} shop-the-look-carousel-banners--media-{{ shop_the_look_media_position }} shop-the-look-carousel-banners--mobile-media-{{ shop_the_look_mobile_media_position }}{% if shop_the_look_section_no_padding %} shop-the-look-carousel-banners--no-padding{% endif %}"
+  {% if shop_the_look_style != blank %}style="{{ shop_the_look_style }}"{% endif %}
+  data-shop-the-look-section data-look-carousel-banners
+>
+  <div class="container {{ shop_the_look_section_width }} shop-the-look-carousel-banners__container{% if shop_the_look_section_no_padding %} shop-the-look-carousel-banners__container--no-padding{% endif %}">
+    <div class="shop-the-look-carousel-banners__layout">
+      <div class="shop-the-look-carousel-banners__media">
+        {% content_for 'block', type: '_look-banners', id: 'banners' %}
+      </div>
+
+      <div class="shop-the-look-carousel-banners__content section-content-scope">
+        {% content_for 'block', type: 'header', id: 'header' %}
+        {% content_for 'block', type: 'shop-the-look-products', id: 'product-list' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .shop-the-look-carousel-banners {
+    width: 100%;
+    min-width: 0;
+    padding-top: var(--shop-the-look-padding-top, 0px);
+    padding-bottom: var(--shop-the-look-padding-bottom, 0px);
+  }
+
+  .shop-the-look-carousel-banners--no-padding {
+    padding-inline: 0;
+  }
+
+  .shop-the-look-carousel-banners__container {
+    min-width: 0;
+  }
+
+  .shop-the-look-carousel-banners .container.shop-the-look-carousel-banners__container--no-padding {
+    padding-inline: 0;
+  }
+
+  .shop-the-look-carousel-banners__layout {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--shop-the-look-gap-desktop, 50px);
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .shop-the-look-carousel-banners__media,
+  .shop-the-look-carousel-banners__content {
+    min-width: 0;
+  }
+
+  .shop-the-look-carousel-banners__media {
+    position: relative;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    overflow: hidden;
+  }
+
+  .shop-the-look-carousel-banners__content {
+    display: flex;
+    grid-column: 1;
+    grid-row: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    padding: clamp(2.4rem, 5vw, 6.4rem) clamp(1.6rem, 5vw, 6.4rem);
+    background: var(--background-color);
+  }
+
+  .shop-the-look-carousel-banners__content > .block-header,
+  .shop-the-look-carousel-banners__content > .shop-the-look-products {
+    width: 100%;
+  }
+
+  .shop-the-look-carousel-banners__content > .block-header {
+    align-self: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .shop-the-look-carousel-banners__content > .block-header > * {
+    text-align: center;
+  }
+
+  .shop-the-look-carousel-banners--media-left .shop-the-look-carousel-banners__media {
+    grid-column: 1;
+  }
+
+  .shop-the-look-carousel-banners--media-left .shop-the-look-carousel-banners__content {
+    grid-column: 2;
+  }
+
+  @media (max-width: 767.98px) {
+    .shop-the-look-carousel-banners {
+      padding-top: var(--shop-the-look-padding-top-mobile, var(--shop-the-look-padding-top, 0px));
+      padding-bottom: var(--shop-the-look-padding-bottom-mobile, var(--shop-the-look-padding-bottom, 0px));
+    }
+
+    .shop-the-look-carousel-banners__layout {
+      display: flex;
+      flex-direction: column;
+      row-gap: var(--shop-the-look-gap-mobile, 16px);
+    }
+
+    .shop-the-look-carousel-banners__media {
+      order: 1;
+      width: 100%;
+      margin-inline: 0;
+    }
+
+    .shop-the-look-carousel-banners__content {
+      order: 2;
+      width: 100%;
+      padding: 0;
+      padding-inline: 16px;
+    }
+
+    .shop-the-look-carousel-banners--no-padding .shop-the-look-carousel-banners__content {
+      padding-inline: var(--page-margin-current);
+    }
+
+    .shop-the-look-carousel-banners__content { min-height: 0; }
+
+    .shop-the-look-carousel-banners--mobile-media-last .shop-the-look-carousel-banners__media {
+      order: 2;
+    }
+
+    .shop-the-look-carousel-banners--mobile-media-last .shop-the-look-carousel-banners__content {
+      order: 1;
+    }
+
+  }
+
+  .look-banners { display: grid; width: 100%; min-width: 0; }
+  .look-banners > .image-card { grid-area: 1 / 1; width: 100%; min-width: 0; }
+  .look-banners > .image-card:not(:first-child) { visibility: hidden; }
+  .look-banners[data-ready] > .image-card { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 400ms ease, visibility 400ms; }
+  .look-banners[data-ready] > .image-card[data-active] { opacity: 1; visibility: visible; pointer-events: auto; }
+  .image-card--look-banner .image-card__content { padding: 40px; }
+  .image-card--look-banner .heading-block { letter-spacing: 2px; }
+  .image-card--look-banner .background-media__image img { object-position: center top; }
+  .shop-the-look-carousel-banners__content { align-self: center; }
+  .shop-the-look-carousel-banners__content .shop-the-look-products__navigation { top: 50% !important; }
+  @media (max-width: 767.98px) {
+    .image-card--look-banner .image-card__content { padding: 24px 16px; }
+    .shop-the-look-carousel-banners__content { padding-block: 56px; }
+    .shop-the-look-carousel-banners__content .shop-the-look-products__items { max-width: 240px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .look-banners[data-ready] > .image-card { transition: none; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+(() => {
+  const instances = new WeakMap();
+  const initialize = (root) => {
+    if (instances.has(root)) return;
+    const banners = root.querySelector('[data-look-banners]');
+    const products = root.querySelector('[data-shop-the-look-products]');
+    if (!banners || !products) return;
+    const controller = new AbortController();
+    const getItems = () => Array.from(products.querySelectorAll('[data-shop-the-look-product]'));
+    const getBanners = () => Array.from(banners.children).filter((item) => item.matches('.image-card'));
+    const show = (index) => {
+      const slides = getBanners();
+      const activeIndex = Math.min(Math.max(index, 0), slides.length - 1);
+      slides.forEach((slide, i) => {
+        const active = i === activeIndex;
+        slide.toggleAttribute('data-active', active);
+        slide.setAttribute('aria-hidden', String(!active));
+        slide.inert = !active;
+        if (!active) slide.querySelectorAll('video').forEach((video) => video.pause());
+      });
+      banners.setAttribute('data-ready', '');
+    };
+    const refresh = () => show(Math.max(0, getItems().findIndex((item) => item.dataset.shopTheLookActive === 'true')));
+    const observer = new MutationObserver(refresh);
+    observer.observe(products, { subtree: true, childList: true, attributes: true, attributeFilter: ['data-shop-the-look-active'] });
+    root.addEventListener('shopify:block:select', (event) => {
+      const banner = event.target.closest?.('.image-card--look-banner');
+      if (!banner || !banners.contains(banner)) return;
+      const index = getBanners().indexOf(banner);
+      const swiper = products.querySelector('[data-product-carousel]')?.swiper;
+      if (swiper && !swiper.destroyed && index < getItems().length) swiper.slideTo(index, 0);
+      show(index);
+    }, { signal: controller.signal });
+    instances.set(root, { observer, controller });
+    refresh();
+  };
+  const roots = (scope) => [ ...(scope.matches?.('[data-look-carousel-banners]') ? [scope] : []), ...scope.querySelectorAll('[data-look-carousel-banners]') ];
+  const load = (scope) => roots(scope).forEach(initialize);
+  document.addEventListener('shopify:section:load', (event) => load(event.target));
+  document.addEventListener('shopify:section:unload', (event) => roots(event.target).forEach((root) => {
+    const state = instances.get(root);
+    state?.observer.disconnect();
+    state?.controller.abort();
+    instances.delete(root);
+  }));
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => load(document), { once: true });
+  else load(document);
+})();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Carousel banners",
+  "class": "section-shop-the-look-carousel-banners",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:general.layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:labels.section_width",
+      "options": [
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "t:options.section_width.full_width_no_padding"
+        }
+      ],
+      "default": "full_width"
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "t:labels.media_position",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "select",
+      "id": "mobile_media_position",
+      "label": "t:labels.mobile_image_position",
+      "options": [
+        {
+          "value": "first",
+          "label": "t:options.position.first"
+        },
+        {
+          "value": "last",
+          "label": "t:options.position.last"
+        }
+      ],
+      "default": "first"
+    },
+    {
+      "type": "header",
+      "content": "t:general.gap"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "t:options.device.desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "t:options.device.mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "t:general.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:general.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:labels.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:labels.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.customize_mobile_padding",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop the look: carousel banners",
+      "category": "t:general.content",
+      "settings": {
+        "section_width": "full_width_no_padding",
+        "media_position": "right",
+        "mobile_media_position": "first",
+        "gap_desktop": 0,
+        "gap_mobile": 0,
+        "color_scheme": "scheme-1",
+        "customize_mobile_padding": true,
+        "padding_top": 96,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      },
+      "blocks": [
+        {
+          "type": "_look-banners",
+          "static": true,
+          "id": "banners",
+          "blocks": [
+            {
+              "type": "_look-banner",
+              "settings": {
+                "show_overlay": true,
+                "overlay_style": "gradient",
+                "overlay_gradient": "linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.3) 100%)",
+                "image": "shopify://shop_images/mara-shop-the-look-beige-banner.avif",
+                "link": "shopify://products/mara-peekaboo-soft-beige"
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Effortless elegance in every detail</p>",
+                    "heading_size": "lg",
+                    "html_tag": "h2",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "View bag line",
+                    "button_style": "tertiary",
+                    "show_icon": false,
+                    "button_link": "shopify://products/mara-peekaboo-soft-beige",
+                    "animation_type": "fade",
+                    "animation_delay": 150
+                  }
+                }
+              ]
+            },
+            {
+              "type": "_look-banner",
+              "settings": {
+                "show_overlay": true,
+                "overlay_style": "gradient",
+                "overlay_gradient": "linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.3) 100%)",
+                "image": "shopify://shop_images/mara-peekaboo-soft-coffee-lifestyle.avif",
+                "link": "shopify://products/mara-peekaboo-soft-coffee"
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Quiet confidence in warm coffee tones</p>",
+                    "heading_size": "lg",
+                    "html_tag": "h2",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "Discover Coffee",
+                    "button_style": "tertiary",
+                    "show_icon": false,
+                    "button_link": "shopify://products/mara-peekaboo-soft-coffee",
+                    "animation_type": "fade",
+                    "animation_delay": 150
+                  }
+                }
+              ]
+            },
+            {
+              "type": "_look-banner",
+              "settings": {
+                "show_overlay": true,
+                "overlay_style": "gradient",
+                "overlay_gradient": "linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.3) 100%)",
+                "image": "shopify://shop_images/mara-peekaboo-soft-sage-lifestyle.avif",
+                "link": "shopify://products/mara-peekaboo-soft-sage-green"
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>A fresh perspective in soft sage green</p>",
+                    "heading_size": "lg",
+                    "html_tag": "h2",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "Discover Sage Green",
+                    "button_style": "tertiary",
+                    "show_icon": false,
+                    "button_link": "shopify://products/mara-peekaboo-soft-sage-green",
+                    "animation_type": "fade",
+                    "animation_delay": 150
+                  }
+                }
+              ]
+            }
+          ],
+          "settings": {
+            "image_ratio_desktop": "custom",
+            "position_mobile": "bottom_left",
+            "image_ratio_custom_width_mobile": 5,
+            "image_ratio_custom_height_desktop": 4,
+            "gap_mobile": 12,
+            "position_desktop": "bottom_left",
+            "color_scheme": "scheme-3",
+            "image_ratio_custom_width_desktop": 5,
+            "gap_desktop": 16,
+            "image_ratio_mobile": "custom",
+            "image_ratio_custom_height_mobile": 4
+          }
+        },
+        {
+          "type": "header",
+          "id": "header",
+          "static": true,
+          "settings": {
+            "width": "fill",
+            "gap_desktop": 12,
+            "gap_mobile": 12
+          },
+          "blocks": [
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Shop the look</p>",
+                "heading_size": "display",
+                "html_tag": "h2",
+                "animation_type": "slide-bottom",
+                "animation_delay": 50
+              }
+            }
+          ]
+        },
+        {
+          "type": "shop-the-look-products",
+          "static": true,
+          "settings": {
+            "layout_type": "carousel",
+            "columns_desktop": "1",
+            "columns_mobile": "1",
+            "show_navigation_on_desktop": true,
+            "show_pagination_on_desktop": false,
+            "navigation_icon": "long_arrow",
+            "navigation_position": "outside"
+          },
+          "id": "product-list",
+          "blocks": [
+            {
+              "type": "shop-the-look-product",
+              "settings": {
+                "show_hotspot": false,
+                "product": "mara-peekaboo-soft-beige"
+              }
+            },
+            {
+              "type": "shop-the-look-product",
+              "settings": {
+                "show_hotspot": false,
+                "product": "mara-peekaboo-soft-coffee"
+              }
+            },
+            {
+              "type": "shop-the-look-product",
+              "settings": {
+                "show_hotspot": false,
+                "product": "mara-peekaboo-soft-sage-green"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

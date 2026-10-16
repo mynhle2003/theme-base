@@ -6,7 +6,7 @@
 
 {% liquid
   assign press_item_ratio = block.settings.image_ratio | default: 'original'
-  unless press_item_ratio == 'original' or press_item_ratio == 'square' or press_item_ratio == 'portrait' or press_item_ratio == 'ratio_5_4' or press_item_ratio == 'landscape' or press_item_ratio == 'wide'
+  unless press_item_ratio == 'original' or press_item_ratio == 'square' or press_item_ratio == 'portrait' or press_item_ratio == 'ratio_5_4' or press_item_ratio == 'landscape' or press_item_ratio == 'wide' or press_item_ratio contains 'ratio_' or press_item_ratio == 'custom' or press_item_ratio == 'original'
     assign press_item_ratio = 'original'
   endunless
 
@@ -26,6 +26,16 @@
     when 'wide'
       assign press_item_ratio_value = '1.7778'
   endcase
+  capture press_item_ratio_value
+    render 'image-ratio-number', setting: press_item_ratio, fallback: press_item_ratio_value
+  endcapture
+  assign press_item_ratio_value = press_item_ratio_value | strip
+  if press_item_ratio == 'custom'
+    capture press_item_ratio_value
+      render 'image-ratio-value', setting: 'custom', custom_width: block.settings.image_ratio_custom_width, custom_height: block.settings.image_ratio_custom_height
+    endcapture
+    assign press_item_ratio_value = press_item_ratio_value | strip
+  endif
 
   assign press_item_radius = block.settings.corner_radius | default: 'square'
   unless press_item_radius == 'inherit' or press_item_radius == 'square' or press_item_radius == 'rounded' or press_item_radius == 'full' or press_item_radius == 'custom'
@@ -123,7 +133,11 @@
 {
   "name": "t:general.item",
   "tag": null,
-  "blocks": [{ "type": "heading" }],
+  "blocks": [
+    {
+      "type": "heading"
+    }
+  ],
   "settings": [
     {
       "type": "header",
@@ -144,47 +158,82 @@
       "content": "t:general.size"
     },
     {
-  "type": "select",
-  "id": "image_ratio",
-  "label": "t:labels.image_ratio",
-  "options": [
-    {
-      "value": "original",
-      "label": "t:options.image_ratio.original"
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:labels.image_ratio",
+      "options": [
+        {
+          "value": "original",
+          "label": "Original"
+        },
+        {
+          "value": "ratio_1_1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "ratio_4_5",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "ratio_3_4",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.image_ratio.custom"
+        }
+      ],
+      "default": "original"
     },
-    {
-      "value": "square",
-      "label": "t:options.image_ratio.square"
-    },
-    {
-      "value": "portrait",
-      "label": "t:options.image_ratio.portrait"
-    },
-    {
-      "value": "ratio_5_4",
-      "label": "t:options.image_ratio.ratio_5_4"
-    },
-    {
-      "value": "landscape",
-      "label": "t:options.image_ratio.landscape"
-    },
-    {
-      "value": "wide",
-      "label": "t:options.image_ratio.wide"
-    }
-  ],
-  "default": "original"
-},
     {
       "type": "select",
       "id": "corner_radius",
       "label": "t:labels.corner_radius",
       "options": [
-        { "value": "inherit", "label": "t:options.radius_preset.inherit" },
-        { "value": "square", "label": "t:options.radius_preset.square" },
-        { "value": "rounded", "label": "t:options.radius_preset.rounded" },
-        { "value": "full", "label": "t:options.radius_preset.full" },
-        { "value": "custom", "label": "t:options.radius_preset.custom" }
+        {
+          "value": "inherit",
+          "label": "t:options.radius_preset.inherit"
+        },
+        {
+          "value": "square",
+          "label": "t:options.radius_preset.square"
+        },
+        {
+          "value": "rounded",
+          "label": "t:options.radius_preset.rounded"
+        },
+        {
+          "value": "full",
+          "label": "t:options.radius_preset.full"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.radius_preset.custom"
+        }
       ],
       "default": "square"
     },
@@ -222,6 +271,20 @@
       "step": 5,
       "unit": "px",
       "default": 70
+    },
+    {
+      "type": "number",
+      "id": "image_ratio_custom_width",
+      "label": "W",
+      "default": 16,
+      "visible_if": "{{ block.settings.image_ratio == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "image_ratio_custom_height",
+      "label": "H",
+      "default": 9,
+      "visible_if": "{{ block.settings.image_ratio == 'custom' }}"
     }
   ],
   "presets": [

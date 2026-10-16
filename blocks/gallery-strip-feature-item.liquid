@@ -14,7 +14,7 @@
   assign overlay_background = effective_overlay | default: 'transparent'
 %}
 
-<div class="gallery-strip-item gallery-strip-feature-item gallery-strip-feature-item--overlay-{{ show_overlay }}" style="--gallery-strip-feature-overlay-background: {{ overlay_background | escape }};" {{ block.shopify_attributes }}>
+<div class="gallery-strip-item gallery-strip-feature-item gallery-strip-feature-item--overlay-{{ show_overlay }}{% if block.settings.show_first_on_mobile %} gallery-strip-feature-item--first-mobile{% endif %}" style="--gallery-strip-feature-overlay-background: {{ overlay_background | escape }};" {{ block.shopify_attributes }}>
   {% render 'image',
     image: image,
     mobile_image: mobile_image,
@@ -108,6 +108,12 @@
       "type": "checkbox",
       "id": "open_in_new_tab",
       "label": "Open link in new tab",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_first_on_mobile",
+      "label": "Show first on mobile",
       "default": false
     },
     {

@@ -185,18 +185,7 @@
 
 <article class="testimonial-split-slide swiper-slide" {{ block.shopify_attributes }}>
   <div class="{{ group_class }}"{% if group_style != blank %} style="{{ group_style }}"{% endif %}>
-    {% content_for 'block', type: 'image', id: 'image' %}
-  <div class="testimonial-split-slide__content">
-    {% content_for 'block', type: 'group', id: 'content' %}
-  <div class="testimonial-split-controls">
-    <button class="btn btn--unstyled testimonial-split-controls__button" type="button" data-carousel-previous aria-label="{{ 'collection_tabs.previous' | t | escape }}">
-      {% render 'carousel-navigation-icon', icon: 'long_arrow', direction: 'previous' %}
-    </button>
-    <button class="btn btn--unstyled testimonial-split-controls__button" type="button" data-carousel-next aria-label="{{ 'collection_tabs.next' | t | escape }}">
-      {% render 'carousel-navigation-icon', icon: 'long_arrow', direction: 'next' %}
-    </button>
-  </div>
-  </div>
+    {% content_for 'blocks' %}
   </div>
 </article>
 
@@ -209,7 +198,7 @@
     flex-wrap: nowrap;
   }
   .testimonial-split-layout--horizontal > * {
-    flex: 1 1 0%;
+    flex: 1 1 auto;
     min-width: 0;
   }
   @media (max-width: 767.98px) {
@@ -389,35 +378,8 @@
     }
   }
 
-  /* Legacy block files can remain on development themes after a nodelete sync. */
-  article.testimonial-split-slide.testimonial-split-slide.swiper-slide { display: block; flex: 0 0 100%; width: 100%; min-width: 0; }
-  .testimonial-split-slide > .testimonial-split-layout { flex: 0 0 100%; width: 100%; min-width: 0; height: 100%; }
-  .testimonial-split-slide > .testimonial-split-layout > .image-block { flex: 0 0 calc((100% - var(--group-gap-desktop, 16px)) / 2); width: 100%; min-width: 0; }
-  .testimonial-split-slide > .testimonial-split-layout > .testimonial-split-slide__content { display: flex; flex-direction: column; align-self: stretch; flex: 0 0 calc((100% - var(--group-gap-desktop, 16px)) / 2); width: 100%; min-width: 0; padding-inline: clamp(24px, 5vw, 96px); padding-block: 48px; }
-  .testimonial-split-slide > .testimonial-split-layout > .testimonial-split-slide__content > .group > .eyebrow-block { margin-bottom: 36px; font-size: var(--font-body-sm); line-height: var(--font-body-line-height); letter-spacing: 1.5px; }
-  .testimonial-split-slide > .testimonial-split-layout > .testimonial-split-slide__content > .group > .icon-block { margin-bottom: 10px; }
-  .testimonial-split-slide > .testimonial-split-layout > .testimonial-split-slide__content > .group > .heading-block { margin-bottom: 20px; font-size: var(--font-heading-lg); line-height: var(--font-heading-lg-line-height); }
-  .testimonial-split-slide > .testimonial-split-layout > .testimonial-split-slide__content > .group > .text-block { font-size: var(--font-body-sm); line-height: var(--font-body-line-height); }
-  @media (max-width: 767.98px) {
-    .testimonial-split-slide > .testimonial-split-layout > .image-block,
-    .testimonial-split-slide > .testimonial-split-layout > .testimonial-split-slide__content { flex: 0 1 auto; }
-    .testimonial-split-slide > .testimonial-split-layout > .testimonial-split-slide__content { flex: 1 0 auto; padding: 0 16px 56px; }
-    .testimonial-split-slide > .testimonial-split-layout > .testimonial-split-slide__content > .group > .eyebrow-block { margin-bottom: 24px; }
-    .testimonial-split-slide > .testimonial-split-layout > .testimonial-split-slide__content > .group > .heading-block { font-size: var(--font-heading-lg); }
-  }
-
-  .testimonial-split-controls { display: flex; flex-shrink: 0; align-items: center; gap: 16px; margin-top: 48px; }
-  .testimonial-split-controls__button { position: relative; padding: 0; width: 24px; min-width: 24px; height: 24px; }
-  .testimonial-split-controls__button::before { content: ''; position: absolute; inset: -10px; }
-  .testimonial-split-controls__button:disabled { opacity: 0.3; }
-  @media (max-width: 767.98px) { .testimonial-split-controls { margin-top: 24px; } }
-  /* Center the quote in the remaining space; controls stay at the shared slide bottom. */
-  .testimonial-split-slide__content > .group { min-width: 0; margin-block: auto; }
-
-  .testimonial-split-layout.testimonial-split-layout--horizontal { flex-direction: row-reverse; flex-wrap: nowrap; }
-  @media (max-width: 767.98px) {
-    .testimonial-split-layout.testimonial-split-layout--horizontal.testimonial-split-layout--mobile-vertical { flex-direction: column; }
-  }
+  .testimonial-split-slide.swiper-slide { display: block; flex: 0 0 100%; width: 100%; min-width: 0; }
+  .testimonial-split-slide > .testimonial-split-layout { width: 100%; min-width: 0; }
 {% endstylesheet %}
 
 {% schema %}
@@ -758,67 +720,113 @@
     {
       "blocks": [
         {
-          "type": "image",
-          "id": "image",
-          "static": true,
-          "settings": {
-            "image_ratio_desktop": "custom",
-            "image_ratio_mobile": "custom",
-            "width_desktop": "fill",
-            "width_mobile": "fill",
-            "image_ratio_custom_width_desktop": 5,
-            "image_ratio_custom_height_desktop": 4,
-            "image_ratio_custom_width_mobile": 5,
-            "image_ratio_custom_height_mobile": 4
-          }
-        },
-        {
           "type": "group",
-          "id": "content",
-          "static": true,
           "settings": {
             "direction": "vertical",
             "alignment": "left",
             "width": "fill",
             "gap_desktop": 0,
             "gap_mobile": 0,
-            "appearance_type": "inherit",
-            "border_type": "none",
-            "corner_radius": "square",
-            "shadow": "none"
+            "appearance_type": "inherit"
           },
           "blocks": [
             {
-              "type": "eyebrow",
+              "type": "row",
               "settings": {
-                "text": "<p>FROM THE PEOPLE</p>"
-              }
-            },
-            {
-              "type": "icon",
-              "settings": {
-                "source": "library",
-                "icon": "five-stars",
-                "icon_width": 88,
-                "custom_mobile": false
-              }
-            },
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>“The necklace looks amazing! Thank you so much for all of your help and outstanding customer service. What I love most is the attention to detail. Every gem sparkles beautifully honour”</p>",
-                "heading_size": "display",
-                "html_tag": "h3",
-                "width": "fill"
-              }
-            },
-            {
-              "type": "text",
-              "settings": {
-                "text": "<p>— Madison P, London</p>",
-                "text_size": "sm",
-                "width": "fill"
-              }
+                "gap_desktop": 80,
+                "gap_mobile": 32,
+                "alignment": "middle"
+              },
+              "blocks": [
+                {
+                  "type": "_column",
+                  "settings": {
+                    "width": "custom",
+                    "custom_width": 34,
+                    "alignment": "left"
+                  },
+                  "blocks": [
+                    {
+                      "type": "image",
+                      "settings": {
+                        "image_ratio_desktop": "ratio_1_1",
+                        "image_ratio_mobile": "ratio_1_1",
+                        "width_desktop": "fill",
+                        "width_mobile": "fill",
+                        "corner_radius": "square",
+                        "image": "shopify://shop_images/mara-testimonial-black-editorial.avif"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "_column",
+                  "settings": {
+                    "width": "custom",
+                    "custom_width": 48,
+                    "alignment": "left",
+                    "gap_desktop": 24,
+                    "gap_mobile": 24
+                  },
+                  "blocks": [
+                    {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>“A statement piece that turns heads.”</p>",
+                        "heading_size": "display",
+                        "html_tag": "h3"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>The craftsmanship is impeccable — every crystal catches the light beautifully. It’s bold but still elegant enough for evening events. I’ve received endless compliments.</p>",
+                        "text_size": "md"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>— Clara Montgomery, London</p>",
+                        "text_size": "md"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "_column",
+                  "settings": {
+                    "width": "custom",
+                    "custom_width": 18,
+                    "alignment": "center",
+                    "customize_mobile_alignment": true,
+                    "alignment_mobile": "left"
+                  },
+                  "blocks": [
+                    {
+                      "type": "image",
+                      "settings": {
+                        "image_ratio_desktop": "ratio_1_1",
+                        "image_ratio_mobile": "ratio_1_1",
+                        "width_desktop": "fill",
+                        "width_mobile": "custom",
+                        "width_custom_mobile": 35,
+                        "corner_radius": "square",
+                        "image": "shopify://shop_images/mara-testimonial-black-product.avif"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "settings": {
+                        "button_label": "View product",
+                        "button_style": "tertiary",
+                        "show_icon": false,
+                        "button_link": "shopify://products/mara-crystal-fringe-bag-black"
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -828,22 +836,9 @@
         "horizontal_alignment": "left",
         "alignment_mobile": "left",
         "gap_desktop": 0,
-        "gap_mobile": 40,
+        "gap_mobile": 0,
         "height": "fill",
-        "appearance_type": "scheme",
-        "color_scheme": "scheme-4",
-        "border_type": "none",
-        "corner_radius": "square",
-        "shadow": "none",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_left": 0,
-        "padding_right": 0,
-        "customize_mobile_padding": false,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0,
-        "padding_left_mobile": 0,
-        "padding_right_mobile": 0
+        "appearance_type": "inherit"
       },
       "name": "t:general.slide",
       "category": "t:general.carousel"

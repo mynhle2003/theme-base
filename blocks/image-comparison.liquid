@@ -82,6 +82,10 @@
         assign comparison_ratio_desktop = 1.7778
       endif
   endcase
+  capture comparison_ratio_desktop
+    render 'image-ratio-number', setting: comparison_ratio_desktop_setting, fallback: comparison_ratio_desktop
+  endcapture
+  assign comparison_ratio_desktop = comparison_ratio_desktop | strip
 
   assign comparison_ratio_mobile_setting = block.settings.image_ratio_mobile | default: 'original'
   assign comparison_ratio_mobile = comparison_ratio_desktop
@@ -127,6 +131,10 @@
         assign comparison_ratio_mobile = comparison_ratio_desktop
       endif
   endcase
+  capture comparison_ratio_mobile
+    render 'image-ratio-number', setting: comparison_ratio_mobile_setting, fallback: comparison_ratio_mobile
+  endcapture
+  assign comparison_ratio_mobile = comparison_ratio_mobile | strip
 
   assign comparison_width_desktop = '100%'
   assign comparison_width_desktop_setting = block.settings.width_desktop | default: 'fill'
@@ -406,27 +414,43 @@
       "options": [
         {
           "value": "original",
-          "label": "t:options.image_ratio.original"
+          "label": "Original"
         },
         {
-          "value": "square",
-          "label": "t:options.image_ratio.square"
+          "value": "ratio_1_1",
+          "label": "Square (1:1)"
         },
         {
-          "value": "portrait",
-          "label": "t:options.image_ratio.portrait"
+          "value": "ratio_4_5",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "ratio_3_4",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
         },
         {
           "value": "ratio_5_4",
-          "label": "t:options.image_ratio.ratio_5_4"
-        },
-        {
-          "value": "landscape",
-          "label": "t:options.image_ratio.landscape"
-        },
-        {
-          "value": "wide",
-          "label": "t:options.image_ratio.wide"
+          "label": "Landscape (5:4)"
         },
         {
           "value": "custom",
@@ -456,27 +480,43 @@
       "options": [
         {
           "value": "original",
-          "label": "t:options.image_ratio.original"
+          "label": "Original"
         },
         {
-          "value": "square",
-          "label": "t:options.image_ratio.square"
+          "value": "ratio_1_1",
+          "label": "Square (1:1)"
         },
         {
-          "value": "portrait",
-          "label": "t:options.image_ratio.portrait"
+          "value": "ratio_4_5",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "ratio_3_4",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
         },
         {
           "value": "ratio_5_4",
-          "label": "t:options.image_ratio.ratio_5_4"
-        },
-        {
-          "value": "landscape",
-          "label": "t:options.image_ratio.landscape"
-        },
-        {
-          "value": "wide",
-          "label": "t:options.image_ratio.wide"
+          "label": "Landscape (5:4)"
         },
         {
           "value": "custom",

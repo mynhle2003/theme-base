@@ -3228,7 +3228,10 @@ legend {
 }
 
 /* Shared Product/Promo card entrance state. */
-[data-component-reveal].reveal-pending { opacity:0; }
+[data-component-reveal].reveal-pending,
+[data-block-animation].reveal-pending { opacity:0; }
+[data-block-animation] { animation: none; }
+[data-block-animation='rotate-words'] .reveal-word { display:inline-block; }
 body[data-block-animations="false"] .reveal-pending { opacity:1!important; }
 @media (prefers-reduced-motion:reduce) { .reveal-pending { opacity:1!important; } }
 
@@ -3304,3 +3307,27 @@ body[data-block-animations="false"] .reveal-pending { opacity:1!important; }
 .header-logo.site-logo > .site-logo__image--overlay { display: none; }
 .header-top--transparent-scheme .site-logo:has(.site-logo__image--overlay) > :is(.site-logo__image--base, .site-logo__fallback) { display: none; }
 .header-top--transparent-scheme .header-logo.site-logo > .site-logo__image--overlay { display: block; }
+
+/* Mara Quick add: Figma icon treatment shared by direct-add and option overlay. */
+.product-card__media .product-card__quick-add--icon:not(.product-card__quick-add--full) {
+  inset-inline: auto 16px;
+  bottom: 16px;
+  width: 40px;
+}
+
+.product-card__media .product-card__quick-add--icon:not(.product-card__quick-add--full) .product-card__quick-add-button {
+  --button-radius: 0;
+  --button-icon-size: 24px;
+  --button-border-width: 0px;
+  --button-background: color-mix(in srgb, var(--button-primary-background) 60%, transparent);
+  --button-foreground: var(--button-primary-text);
+  --button-hover-background: var(--button-primary-hover-background);
+  --button-hover-foreground: var(--button-primary-hover-text);
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  min-height: 40px;
+  padding: 0;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
