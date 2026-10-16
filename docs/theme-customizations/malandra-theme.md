@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"793e6ecfbf7bce955fe5822518e863e4e2ac5fc5"} -->
+<!-- theme-base-sync-state: {"sha": "b7ffd45f46adb47ca54be8cf841f82a84fc97348"} -->
 # Customization record: malandra-theme
 
 Theme branch: `theme/malandra-theme`
@@ -245,6 +245,7 @@ This table records current implementation differences from personal `main`: Liqu
 | `sections/countdown.liquid` | Personal main `c07753a2`. | Existing theme-specific implementation, retained without code changes in this release. | Existing customization audit coverage. | Preserve existing theme implementation and composition outside the approved shared icon/underline fixes. |
 | `sections/search-overlay.liquid` | Personal main `c07753a2`. | Existing theme-specific implementation, retained without code changes in this release. | Existing customization audit coverage. | Preserve existing theme implementation and composition outside the approved shared icon/underline fixes. |
 | `snippets/header-figma-icon.liquid` | Personal main `c07753a2`. | Existing theme-specific implementation, retained without code changes in this release. | Existing customization audit coverage. | Preserve existing theme implementation and composition outside the approved shared icon/underline fixes. |
+| `snippets/media-background.liquid` | Personal main `b7ffd45f`. | Retain the existing theme implementation and custom options; apply only the approved media/ratio fix where relevant. | Preserve the theme layout and behavior while adopting the background fix. | Review future base changes against this retained implementation. |
 
 ## Figma catalog and card composition — 2026-10-07
 
@@ -3455,3 +3456,46 @@ Owner-authorized team source `1c3db7a1`: add Show top divider and Enable scroll 
 - `snippets/variant-picker.liquid`
 - `snippets/video.liquid`
 - `snippets/view-all-button.liquid`
+
+### 2026-10-16 — Port approved background media and ratio fixes
+
+- Team source: `328b2bee5e9f16c1079d4613755c5e966b65452a`; personal main: `b7ffd45f46adb47ca54be8cf841f82a84fc97348`.
+- Previous checkpoint: `793e6ecfbf7bce955fe5822518e863e4e2ac5fc5`.
+- Included main commit: `b7ffd45f` — chore(base): update base with 1 upstream commits through 328b2bee.
+- Owner approved applying this specific fix inside retained custom implementations, rebuilding affected ratio options from base and retaining custom options.
+- Preserve template/preset content, IDs, order, layout and existing custom setting IDs. Convert only equivalent Banner ratio aliases to canonical values.
+- Apply clipped one-pixel background paint and nested-picture sizing, exact Image card/Banner fractions and active image/video Original ratios. Keep unrelated local work outside the release.
+- Previously retained implementations not involved in this fix remain unchanged.
+- Updated paths:
+  - `assets/component-blocks-image-card.css`
+  - `assets/critical.css`
+  - `blocks/_columns-column.liquid`
+  - `blocks/banner.liquid`
+  - `blocks/image-card.liquid`
+  - `blocks/slide.liquid`
+  - `sections/bundle-builder.liquid`
+  - `sections/collection-list-thumbnails.liquid`
+  - `sections/collection-list.liquid`
+  - `sections/collections-with-background.liquid`
+  - `sections/collections-with-tabs.liquid`
+  - `sections/contact-form-custom.liquid`
+  - `sections/contact-information.liquid`
+  - `sections/custom-section.liquid`
+  - `sections/email-signup-form.liquid`
+  - `sections/featured-collection-banner.liquid`
+  - `sections/featured-product.liquid`
+  - `sections/gallery-carousel.liquid`
+  - `sections/gallery-full-width-strip.liquid`
+  - `sections/gallery-image-grid.liquid`
+  - `sections/icon-text-cards.liquid`
+  - `sections/icon-text-inline.liquid`
+  - `sections/image-cards.liquid`
+  - `sections/image-text-split-layout.liquid`
+  - `sections/promo-grid-custom.liquid`
+  - `sections/rich-text.liquid`
+  - `sections/scroll-reading-text.liquid`
+  - `sections/testimonial-carousel.liquid`
+  - `sections/video-product-carousel-custom.liquid`
+  - `snippets/image-ratio-value.liquid`
+  - `snippets/media-background.liquid`
+  - `snippets/media-card.liquid`

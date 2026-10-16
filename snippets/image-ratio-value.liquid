@@ -1,7 +1,7 @@
 {% doc %}
   Resolves a shared image ratio preset to a CSS aspect-ratio value.
 
-  @param {string} setting - The ratio preset: auto, square, portrait, landscape, wide, Figma ratio presets, or custom
+  @param {string} setting - The ratio preset: auto, square, portrait, landscape, wide, ratio_* presets, or custom
   @param {string} [fallback_ratio] - Ratio used for auto or an unknown preset
   @param {number} [custom_width] - Custom ratio numerator
   @param {number} [custom_height] - Custom ratio denominator
@@ -56,17 +56,19 @@
     when 'square'
       assign image_ratio_value = '1'
     when 'portrait'
-      assign image_ratio_value = '0.8'
+      assign image_ratio_value = '4 / 5'
     when 'landscape'
-      assign image_ratio_value = '1.3333'
+      assign image_ratio_value = '4 / 3'
     when 'wide'
-      assign image_ratio_value = '1.7778'
+      assign image_ratio_value = '16 / 9'
     when 'portrait_6_7'
       assign image_ratio_value = '6 / 7'
     when 'portrait_tall'
       assign image_ratio_value = '5 / 7'
     when 'portrait_2_3'
       assign image_ratio_value = '2 / 3'
+    when 'landscape_3_2'
+      assign image_ratio_value = '3 / 2'
     when 'landscape_5_4'
       assign image_ratio_value = '5 / 4'
     when 'wide_2_1'
