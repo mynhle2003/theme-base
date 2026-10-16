@@ -6,12 +6,12 @@ Chỉ ghi kế hoạch để đọc và update sau. **Chưa áp dụng code, upl
 
 | Mã update | Revision | Nội dung | Trạng thái Elara | Dependency |
 | --- | --- | --- | --- | --- |
-| MALANDRA-ELARA-HEADER-NAV-001 | 1 | Đồng bộ breakpoint, xử lý menu và overflow cắt mega menu | pending | Header/drawer hiện có của Elara |
-| MALANDRA-ELARA-HEADER-ACTIONS-001 | 1 | Icon vuông dùng biến chung; Gap actions thành padding; inspect chỉ ô icon | pending | NAV-001 nếu dùng chung contract mobile992px |
-| MALANDRA-ELARA-HEADER-COLOR-001 | 1 | Icon theo currentColor của scheme | pending | Kiểm tra SVG thực tế ở Elara |
-| MALANDRA-ELARA-ACCOUNT-001 | 1 | Account bottom sheet theo breakpoint header | pending | NAV-001; component Shopify còn export dialog part |
-| MALANDRA-ELARA-SEARCH-001 | 1 | Search input/button theo theme settings | pending | Form primitive, theme-button, predictive controller của Elara |
-| MALANDRA-ELARA-LOGO-001 | 1 | Alternate logo đúng nguồn, đổi layer không nhảy kích thước | pending | Chỉ áp dụng nếu Elara còn lỗi; giữ artwork riêng |
+| MALANDRA-ELARA-HEADER-NAV-001 | 1 | Đồng bộ breakpoint, xử lý menu và overflow cắt mega menu | applied — local patch 2026-10-15; xem receipt cuối doc | Header/drawer hiện có của Elara |
+| MALANDRA-ELARA-HEADER-ACTIONS-001 | 1 | Icon vuông dùng biến chung; Gap actions thành padding; inspect chỉ ô icon | applied — local patch 2026-10-15; xem receipt cuối doc | NAV-001 nếu dùng chung contract mobile992px |
+| MALANDRA-ELARA-HEADER-COLOR-001 | 1 | Icon theo currentColor của scheme | applied — local patch 2026-10-15; xem receipt cuối doc | Kiểm tra SVG thực tế ở Elara |
+| MALANDRA-ELARA-ACCOUNT-001 | 1 | Account bottom sheet theo breakpoint header | applied — local patch 2026-10-15; xem receipt cuối doc | NAV-001; component Shopify còn export dialog part |
+| MALANDRA-ELARA-SEARCH-001 | 1 | Search input/button theo theme settings | applied — local patch 2026-10-15; xem receipt cuối doc | Form primitive, theme-button, predictive controller của Elara |
+| MALANDRA-ELARA-LOGO-001 | 1 | Alternate logo đúng nguồn, đổi layer không nhảy kích thước | applied — local patch 2026-10-15; xem receipt cuối doc | Chỉ áp dụng nếu Elara còn lỗi; giữ artwork riêng |
 
 ## Điều kiện trước mọi update
 
@@ -101,11 +101,11 @@ Owner yêu cầu tối ưu Lighthouse tại Malandra và thêm vào doc update v
 
 | Mã update | Revision | Nội dung | Trạng thái Elara | Dependency |
 | --- | --- | --- | --- | --- |
-| MALANDRA-ELARA-LIGHTHOUSE-HERO-001 | 1 | Ưu tiên hero đầu trang; preload art-directed khớp picture; source-size caps | pending — chưa audit/apply | Cơ chế head `theme-lcp-preloads` và Hero đích |
-| MALANDRA-ELARA-LIGHTHOUSE-CSS-002 | 1 | Tám CSS owner tải theo component, giữ nguyên rules đích | pending — chưa audit/apply | Owner/asset contract đích; độc lập Hero |
-| MALANDRA-ELARA-LIGHTHOUSE-CONTRAST-003 | 1 | Tab inactive đủ tương phản theo scheme | pending — chưa audit/apply | Shared Tab Layout và schemes đích; độc lập hai mã trên |
-| MALANDRA-ELARA-LIGHTHOUSE-MARQUEE-004 | 1 | Idempotent cleanup, hết observer feedback và clone churn | pending — chưa audit/apply | Animation scan + marquee observer đích |
-| MALANDRA-ELARA-LIGHTHOUSE-ANIMATION-005 | 1 | Khởi tạo animation section dưới fold khi gần viewport | pending — chưa audit/apply | Giữ fix 004 nếu đích còn feedback; section lifecycle/IntersectionObserver |
+| MALANDRA-ELARA-LIGHTHOUSE-HERO-001 | 1 | Ưu tiên hero đầu trang; preload art-directed khớp picture; source-size caps | applied — local patch 2026-10-15; xem receipt cuối doc | Cơ chế head `theme-lcp-preloads` và Hero đích |
+| MALANDRA-ELARA-LIGHTHOUSE-CSS-002 | 1 | Tám CSS owner tải theo component, giữ nguyên rules đích | applied — local patch 2026-10-15; xem receipt cuối doc | Owner/asset contract đích; độc lập Hero |
+| MALANDRA-ELARA-LIGHTHOUSE-CONTRAST-003 | 1 | Tab inactive đủ tương phản theo scheme | applied — local patch 2026-10-15; xem receipt cuối doc | Shared Tab Layout và schemes đích; độc lập hai mã trên |
+| MALANDRA-ELARA-LIGHTHOUSE-MARQUEE-004 | 1 | Idempotent cleanup, hết observer feedback và clone churn | applied — local patch 2026-10-15; xem receipt cuối doc | Animation scan + marquee observer đích |
+| MALANDRA-ELARA-LIGHTHOUSE-ANIMATION-005 | 1 | Khởi tạo animation section dưới fold khi gần viewport | applied — local patch 2026-10-15; xem receipt cuối doc | Giữ fix 004 nếu đích còn feedback; section lifecycle/IntersectionObserver |
 
 ### MALANDRA-ELARA-LIGHTHOUSE-HERO-001
 
@@ -158,3 +158,29 @@ Revision 1. Nguồn `theme/malandra-theme`, checkpoint `12cb57fec308a4ef00800f13
 Accessibility các lần mới là 93: phát hiện metadata bài blog màu #999 trên trắng thiếu contrast; patch không thay màu này. Không dùng tối ưu animation để che audit; ghi gap riêng trong QA report. Source chỉ upload riêng animation asset lên draft 192330498347 lúc 13:34:57 giờ Việt Nam, readback khớp. Chưa Git commit/push patch 005, chưa đo lại desktop và chưa QA toàn bộ theme live; Elara vẫn pending. Các thay đổi layout/section khác đang được thực hiện riêng không thuộc upload này.
 
 Git release 005: owner yêu cầu commit/push; runtime đã được Shopify đồng bộ tại `52d8b37c`. Commit tài liệu/evidence tiếp theo giữ nguyên runtime này, không bao gồm file test. Các ghi chú chưa commit phía trên là trạng thái tại thời điểm đo; Elara vẫn pending.
+
+## Receipt Elara đã update — 2026-10-15
+
+Source: `../malandra-theme/docs/variant-updates/malandra-to-elara.md`, revision 1, source branch `theme/malandra-theme`, clean HEAD `a3aef5c8044e9e14443920da80e83b8358baf971`. Target: `theme/elara-theme`, before HEAD `bebd784bf4f236297b0a36c12c5ba6bbca9568a9`; after: local patch, not committed. User explicitly authorized the complete Malandra header preset with only the two Elara logo image links retained; this supersedes the source doc's earlier preset exclusion for this application.
+
+| Update ID | Code status | Target evidence and patch |
+| --- | --- | --- |
+| MALANDRA-ELARA-HEADER-NAV-001 | applied | Target had legacy desktop click handler, 991.98px boundary gap and desktop nav scroll-clipping utility. Removed handler/utility; complementary 992px CSS/JS boundary and resize cleanup. Browser click/hover/resize tests pass at 767/768/991/992/1024/1149/1150/1280px. |
+| MALANDRA-ELARA-HEADER-ACTIONS-001 | applied | Target repeated icon sizing and column gap; introduced icon variable, action padding, icon-relative cart badge and inspector inner targets. Browser square-icon/action-gap and LTR/RTL badge tests pass. Native signed-in Account and actual Editor inspector still require QA. |
+| MALANDRA-ELARA-HEADER-COLOR-001 | applied | Header icon snippet uses currentColor; imported requested header geometry. Browser normal/transparent scheme fixture checks recorded separately from native storefront QA. |
+| MALANDRA-ELARA-ACCOUNT-001 | applied | Native dialog part CSS extends mobile sheet to <992px; boundary close helper retained. Actual exported Shopify component parts, signed-in state and focus restoration need target storefront QA. |
+| MALANDRA-ELARA-SEARCH-001 | applied | Target unstyled compact submit and input font/placeholder overrides remained. Uses theme-button, shared form settings and grid close placement; smart input background uses shared token. Search settings/history/page/suggestions regression suite run. |
+| MALANDRA-ELARA-LOGO-001 | applied | Original target used global normal/transparent artwork. New requested header composition uses explicit block logo and transparent logo with those exact original links, no Malandra symbol; retains Malandra width/position/preset settings. |
+| MALANDRA-ELARA-LIGHTHOUSE-HERO-001 | applied | Target image Hero lacked explicit first-section priority and art-directed preload despite compatible head extraction markers. Imported implementation/helper only; retained complete Elara Hero schema, preset, media and video path. Liquid validator passes with two explicit-preload advisories. Network/editor QA remains. |
+| MALANDRA-ELARA-LIGHTHOUSE-CSS-002 | applied | All eight target owners still bundled CSS. Extracted the target's own CSS byte-for-byte (63,803 bytes), with synchronous asset dependencies. Hash ledger: docs/audits/elara-variant-update-2026-10-15.json. Existing horizontal collection work preserved: removing new asset link and reinserting its CSS reproduces the pre-update working file exactly. |
+| MALANDRA-ELARA-LIGHTHOUSE-CONTRAST-003 | applied | Target inactive tab mixed #636363 at 48% onto #fff (approximately #b4b4b4, below 4.5:1). Changed only that mix to 95% against scheme background. No separator/layout additions from source. Palette contrast evidence recorded in audit. |
+| MALANDRA-ELARA-LIGHTHOUSE-MARQUEE-004 | applied | Target actual runtime + marquee browser fixture reproduced 108 clone removals/600ms; after guarded class/data writes: 0, retaining 3 clones and one animation. Content update, resize, unload/reload and reduced motion pass. |
+| MALANDRA-ELARA-LIGHTHOUSE-ANIMATION-005 | applied | Target before fixture initialized distant section immediately (new acceptance assertion failed). After patch: near/zero-height roots immediate, distant root deferred, editor/no-observer immediate, pending unload/reload and reduced motion pass. |
+
+Header preset: `sections/header.liquid` and only the header entry of `sections/header-group.json` now match Malandra composition, except logo normal/transparent URLs and removal of Malandra symbol. Announcement and global settings are unchanged. The menu is intentionally `malandra-header`, with the source banner/collection resources; resource availability has not been checked against a deployed target. Header/footer block entrance animations remain None.
+
+Validation: Theme Check 0 errors / 5 existing ExcessiveSettingsCount warnings; JavaScript syntax and diff whitespace checks pass. Scoped Liquid validator: header, logo, header-top, Search overlay, Hero pass; hero-image has two preload advisories. Mega banner validator rejects the existing conditional HTML tag pattern (`<{% if ... %}a...`), also present before this update; Theme Check accepts it. Browser fixtures do not establish actual Theme Editor inspector/native Shopify Account integration, resource availability, first-paint network parity or Lighthouse scores. Code status remains applied until that target QA is complete.
+
+Preview: no explicit upload performed by this task; external watcher synchronization not verified. Publish: not performed. Git commit/push: not performed. No source scores claimed for Elara.
+
+QA receipt bổ sung: 54 scoped Header/Search/Slideshow checks và 2 Hero render parity/cap checks pass sau điều chỉnh đường dẫn fixture và CSS owner đã tách. Hai logo fixtures dùng SVG hình học nguồn chỉ để kiểm tra layer/size; artwork Elara thực tế còn cần storefront QA. Contrast ratios từng scheme lưu trong audit JSON. Source preset equality (ngoại trừ các logo fields) và config/settings_data.json byte-identical được assert.

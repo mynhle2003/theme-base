@@ -3499,3 +3499,10 @@ Owner-authorized team source `1c3db7a1`: add Show top divider and Enable scroll 
   - `snippets/image-ratio-value.liquid`
   - `snippets/media-background.liquid`
   - `snippets/media-card.liquid`
+
+### 2026-10-16 — Announcement background first-paint parity
+
+- Port the follow-up Announcement sizing fix from Mara after comparing the recent ratio/media and Header first-paint changes across variants.
+- `assets/critical.css`: cover direct `img` and responsive `picture > img` background markup. Scope geometry and cover selectors under `.announcement-bar` so shared `.image` CSS loaded later cannot reset absolute positioning or 100% height.
+- Existing Header first-paint rules, exact ratios, one-pixel clipped background paint and active image/video Original resolution were already present and remain in place.
+- Preserve section/block implementation outside this CSS fix, all settings/presets/templates, and unrelated local edits.
