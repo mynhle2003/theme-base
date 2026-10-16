@@ -1,6 +1,24 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"2a9a0cafe4797b96c9bb96cb45e09b84919815a3"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"fea78bca880496c72229f95929971e9c3865c255"} -->
 
 # Base update history
+
+## 2026-10-16 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `2a9a0cafe4797b96c9bb96cb45e09b84919815a3`
+- Updated through team commit: `fea78bca880496c72229f95929971e9c3865c255`
+- Team commits included: 1
+- Source changes:
+
+```text
+sections/countdown.liquid | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+- Included team commits:
+  - `fea78bca880496c72229f95929971e9c3865c255` — fix(countdown): label the custom composition preset
+
 
 ## 2026-10-16 — Update from upstream/dev
 
