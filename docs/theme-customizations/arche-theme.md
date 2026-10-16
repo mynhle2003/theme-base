@@ -18,6 +18,7 @@ Record every theme-specific change here before committing the code. During base 
 
 | File/path | Base behavior | Theme-specific behavior | Reason | Update/merge rule |
 | --- | --- | --- | --- | --- |
+| `blocks/_shop-the-look-image.liquid` | Shared image and addable section block list | Only static section slots; private image retains variant ratio/media controls, removes layout width and padding controls; saved image data migrates with stable IDs | Owner-requested Shop the look base rollout | Keep section image private and preserve variant media values when merging |
 | `blocks/_header-account.liquid` | Always requests a fixed account menu. | Request customer-account-main-menu only when present; otherwise retain Shopify default menu. | Avoid missing-menu errors. | Preserve account markup and fallback. |
 | `blocks/blog-card-button.liquid` | Generic Read more link. | Pass article title through aria_label and accessible_description. | Distinct accessible link names. | Keep contextual article and visible label. |
 | `snippets/theme-button.liquid` | No optional destination context. | Append escaped optional accessible_description in a visually-hidden span. | Accessible Blog Read more context. | Keep argument optional and visible label unchanged. |
@@ -2964,3 +2965,8 @@ Owner-authorized migration from team `2a9a0caf`, personal main `2cf6e5ab`: renam
 - `snippets/variant-picker.liquid`
 - `snippets/video.liquid`
 - `snippets/view-all-button.liquid`
+
+
+### Shop the look migration — 2026-10-16
+
+Owner-authorized team commit `bf4b69b5`: disallow extra section blocks; migrate static image to private `_shop-the-look-image`, retain saved media, IDs, ratio/height/radius/overlay controls and compatible variant settings; remove image layout width and padding controls. Shared Image is unchanged. Normalize Countdown preset label to Count down (Custom).
