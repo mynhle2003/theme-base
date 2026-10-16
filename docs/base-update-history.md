@@ -1,6 +1,25 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"bf4b69b5d132a22573ec6fc03ac8d70e14a04517"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"1c3db7a1ccc707313cfdcced84d4ee3498d01a4d"} -->
 
 # Base update history
+
+## 2026-10-16 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `bf4b69b5d132a22573ec6fc03ac8d70e14a04517`
+- Updated through team commit: `1c3db7a1ccc707313cfdcced84d4ee3498d01a4d`
+- Team commits included: 1
+- Source changes:
+
+```text
+locales/en.default.schema.json |   2 +
+ sections/footer.liquid         | 189 ++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 179 insertions(+), 12 deletions(-)
+```
+
+- Included team commits:
+  - `1c3db7a1ccc707313cfdcced84d4ee3498d01a4d` — fix(footer): add divider background and scroll reveal controls
+
 
 ## 2026-10-16 — Update from upstream/dev
 
