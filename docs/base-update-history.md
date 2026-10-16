@@ -1,6 +1,28 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"fea78bca880496c72229f95929971e9c3865c255"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"bf4b69b5d132a22573ec6fc03ac8d70e14a04517"} -->
 
 # Base update history
+
+## 2026-10-16 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `fea78bca880496c72229f95929971e9c3865c255`
+- Updated through team commit: `bf4b69b5d132a22573ec6fc03ac8d70e14a04517`
+- Team commits included: 1
+- Source changes:
+
+```text
+blocks/_shop-the-look-image.liquid    | 467 ++++++++++++++++++++++++++++++++++
+ sections/countdown.liquid             |   2 +-
+ sections/shop-the-look-section.liquid |  52 ++--
+ templates/index.json                  |  21 +-
+ templates/index.spinel-sync.json      |  21 +-
+ 5 files changed, 504 insertions(+), 59 deletions(-)
+```
+
+- Included team commits:
+  - `bf4b69b5d132a22573ec6fc03ac8d70e14a04517` — fix(shop-the-look): restrict blocks and isolate section image
+
 
 ## 2026-10-16 — Update from upstream/dev
 
