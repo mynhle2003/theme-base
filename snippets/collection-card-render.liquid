@@ -54,7 +54,7 @@
   if collection_card_ratio_setting == 'original'
     assign collection_card_ratio_setting = 'auto'
   endif
-  unless collection_card_ratio_setting == 'auto' or collection_card_ratio_setting == 'square' or collection_card_ratio_setting == 'portrait' or collection_card_ratio_setting == 'landscape' or collection_card_ratio_setting == 'landscape_3_2' or collection_card_ratio_setting == 'portrait_2_3' or collection_card_ratio_setting == 'wide' or collection_card_ratio_setting == 'custom'
+  unless collection_card_ratio_setting == 'auto' or collection_card_ratio_setting == 'square' or collection_card_ratio_setting == 'portrait' or collection_card_ratio_setting == 'ratio_5_4' or collection_card_ratio_setting == 'landscape' or collection_card_ratio_setting == 'landscape_3_2' or collection_card_ratio_setting == 'portrait_2_3' or collection_card_ratio_setting == 'wide' or collection_card_ratio_setting == 'custom'
     assign collection_card_ratio_setting = 'auto'
   endunless
   assign collection_card_ratio = 'auto'
@@ -63,6 +63,8 @@
       assign collection_card_ratio = '1'
     when 'portrait'
       assign collection_card_ratio = '0.8'
+    when 'ratio_5_4'
+      assign collection_card_ratio = '1.25'
     when 'landscape'
       assign collection_card_ratio = '1.3333'
     when 'landscape_3_2'
@@ -75,6 +77,11 @@
       assign collection_card_ratio = block.settings.ratio_custom | default: 1 | plus: 0
       if collection_card_ratio < 0.3 or collection_card_ratio > 3
         assign collection_card_ratio = 1
+      endif
+      assign ratio_width = block.settings.ratio_custom_width | plus: 0
+      assign ratio_height = block.settings.ratio_custom_height | plus: 0
+      if ratio_width > 0 and ratio_height > 0
+        assign collection_card_ratio = ratio_width | times: 1.0 | divided_by: ratio_height
       endif
   endcase
   assign collection_card_gap_desktop = block.settings.gap_desktop | default: 4 | plus: 0

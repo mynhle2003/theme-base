@@ -267,6 +267,7 @@
       item_class: 'product-list__item',
       items_data_attributes: 'data-product-list-items',
       next_slide_preview: product_list_show_next_slide_preview,
+      next_slide_preview_on_mobile: block.settings.show_next_slide_preview_on_mobile,
       carousel_id: product_list_carousel_id,
       aria_label: product_list_aria_label,
       previous_selector: '[data-product-list-previous]',
@@ -470,6 +471,13 @@
       "type": "checkbox",
       "id": "show_next_slide_preview_on_desktop",
       "label": "t:labels.show_next_slide_preview_on_desktop",
+      "default": false,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_next_slide_preview_on_mobile",
+      "label": "t:labels.show_next_slide_preview_on_mobile",
       "default": false,
       "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
     },

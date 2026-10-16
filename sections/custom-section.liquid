@@ -34,6 +34,9 @@
     when 'full_width'
       assign custom_section_width = 'full-width'
       assign custom_section_container_width = 'full-width'
+    when 'full_width_no_padding'
+      assign custom_section_width = 'full-bleed'
+      assign custom_section_container_width = 'full-width'
   endcase
 
   assign custom_section_scheme = section.settings.color_scheme | default: 'scheme-1'
@@ -129,6 +132,7 @@
       padding-bottom: var(--custom-section-padding-bottom-mobile, var(--custom-section-padding-bottom, 0px));
     }
   }
+  .custom-section--full-bleed > .custom-section__spacing > .custom-section__container { padding-inline: 0; }
 {% endstylesheet %}
 
 {% schema %}
@@ -228,6 +232,10 @@
         {
           "value": "full_width",
           "label": "t:options.section_width.full_width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "Full width without padding"
         }
       ],
       "default": "page_width"
@@ -364,6 +372,234 @@
         "color_scheme": "scheme-1",
         "customize_mobile_padding": false
       }
+    },
+    {
+      "name": "Image comparison (custom)",
+      "category": "t:general.media",
+      "settings": {
+        "section_width": "page_width",
+        "alignment": "center",
+        "content_gap": 40,
+        "customize_mobile_gap": true,
+        "content_gap_mobile": 32,
+        "color_scheme": "scheme-1",
+        "padding_top": 96,
+        "padding_bottom": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 0
+      },
+      "blocks": [
+        {
+          "type": "header",
+          "settings": {
+            "width": "custom",
+            "gap_desktop": 12,
+            "gap_mobile": 12,
+            "alignment": "center",
+            "max_width": 770,
+            "customize_mobile_size": true,
+            "width_mobile": "fill"
+          },
+          "blocks": [
+            {
+              "type": "eyebrow",
+              "settings": {
+                "text": "<p>Spy Small</p>"
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Choose your colour</p>",
+                "heading_size": "display",
+                "html_tag": "h2"
+              }
+            }
+          ]
+        },
+        {
+          "type": "image-comparison",
+          "settings": {
+            "comparison_style": "slider",
+            "initial_position": 50,
+            "handle_icon": "compare",
+            "direction": "horizontal",
+            "image_ratio_desktop": "custom",
+            "image_ratio_mobile": "custom",
+            "show_image_first_mobile": false,
+            "separate_images": false,
+            "width_desktop": "fill",
+            "limit_width": true,
+            "before_label": "<p>Peach bud pink</p>",
+            "after_label": "<p>Pale sage green</p>",
+            "font": "heading",
+            "font_size": "xl",
+            "letter_spacing": "relaxed",
+            "corner_radius": "square",
+            "custom_corner_radius": 0,
+            "handle_icon_color": "#262626",
+            "handle_background": "#FFFFFF",
+            "text_color": "#181818",
+            "text_background": "#000000",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "customize_mobile_padding": false,
+            "image_ratio_custom_width_desktop": 7,
+            "image_ratio_custom_height_desktop": 3,
+            "image_ratio_custom_width_mobile": 5,
+            "image_ratio_custom_height_mobile": 3,
+            "max_width_desktop": 1600,
+            "before_button_label": "View product",
+            "after_button_label": "View product",
+            "button_style": "tertiary",
+            "show_icon": false,
+            "before_image": "shopify://shop_images/mara-comparison-before-peach-pink.avif",
+            "after_image": "shopify://shop_images/mara-comparison-after-sage-green.avif",
+            "show_text_background": false,
+            "hide_title_on_mobile": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Text marquee (custom)",
+      "category": "t:general.content",
+      "settings": {
+        "section_width": "full_width_no_padding",
+        "alignment": "left",
+        "customize_mobile_alignment": true,
+        "alignment_mobile": "left",
+        "content_gap": 0,
+        "customize_mobile_gap": true,
+        "content_gap_mobile": 0,
+        "color_scheme": "scheme-1",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      },
+      "blocks": [
+        {
+          "type": "marquee",
+          "settings": {
+            "animation_direction": "backward",
+            "animation_speed": 1,
+            "gap_desktop": 16,
+            "gap_mobile": 12,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "show_top_divider": false,
+            "enable_parallax": false,
+            "alignment": "center",
+            "width": "fill",
+            "color_type": "inherit",
+            "show_bottom_divider": false
+          },
+          "blocks": [
+            {
+              "type": "_marquee-heading",
+              "settings": {
+                "text": "Timeless Appeal",
+                "heading_size": "custom",
+                "text_case": "uppercase",
+                "font": "heading",
+                "color_role": "text",
+                "opacity": 100,
+                "custom_heading_size": 44,
+                "custom_mobile": true,
+                "custom_heading_size_mobile": 28,
+                "letter_spacing": "fixed_2px",
+                "padding_inline": 16,
+                "padding_inline_mobile": 8,
+                "text_color": "#B3B3B3"
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "width_custom_desktop": 144,
+                "width_custom_mobile": 64,
+                "image_ratio": "ratio_1_1",
+                "corner_radius": "square",
+                "image": "shopify://shop_images/mara-marquee-timeless.avif",
+                "custom_image_crop": true,
+                "image_scale": 148.29,
+                "image_offset_x": -24.14,
+                "image_offset_y": -64.23
+              }
+            },
+            {
+              "type": "_marquee-heading",
+              "settings": {
+                "text": "Effortless Elegance",
+                "heading_size": "custom",
+                "text_case": "uppercase",
+                "font": "heading",
+                "color_role": "text",
+                "opacity": 100,
+                "custom_heading_size": 44,
+                "custom_mobile": true,
+                "custom_heading_size_mobile": 28,
+                "letter_spacing": "fixed_2px",
+                "padding_inline": 16,
+                "padding_inline_mobile": 8,
+                "text_color": "#B3B3B3"
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "width_custom_desktop": 144,
+                "width_custom_mobile": 64,
+                "image_ratio": "ratio_1_1",
+                "corner_radius": "square",
+                "image": "shopify://shop_images/mara-marquee-effortless.avif",
+                "custom_image_crop": true,
+                "image_scale": 129.54,
+                "image_offset_x": -14.77,
+                "image_offset_y": -51.08
+              }
+            },
+            {
+              "type": "_marquee-heading",
+              "settings": {
+                "text": "Quiet Confidence",
+                "heading_size": "custom",
+                "text_case": "uppercase",
+                "font": "heading",
+                "color_role": "text",
+                "opacity": 100,
+                "custom_heading_size": 44,
+                "custom_mobile": true,
+                "custom_heading_size_mobile": 28,
+                "letter_spacing": "fixed_2px",
+                "padding_inline": 16,
+                "padding_inline_mobile": 8,
+                "text_color": "#B3B3B3"
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "width_custom_desktop": 144,
+                "width_custom_mobile": 64,
+                "image_ratio": "ratio_1_1",
+                "corner_radius": "square",
+                "image": "shopify://shop_images/mara-marquee-quiet.avif",
+                "custom_image_crop": true,
+                "image_scale": 141.05,
+                "image_offset_x": -20.52,
+                "image_offset_y": -51.08
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

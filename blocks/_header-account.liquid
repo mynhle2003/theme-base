@@ -28,19 +28,19 @@
 %}
 
 {% if shop.customer_accounts_enabled %}
-  <shopify-account class="{{ account_class }}" menu="customer-account-main-menu" {{ block.shopify_attributes }}>
+  <shopify-account class="{{ account_class }}" {% if linklists['customer-account-main-menu'].links != blank %}menu="customer-account-main-menu"{% endif %} {% if account_type == 'text' %}{{ block.shopify_attributes }}{% endif %}>
     <span slot="signed-out-avatar" class="header-account__avatar" aria-label="{{ account_label | escape }}">
-      {% unless account_type == 'text' %}<span class="icon" aria-hidden="true">
-        {% render 'icon', icon: 'user', bare: true %}
+      {% unless account_type == 'text' %}<span class="icon" aria-hidden="true" {{ block.shopify_attributes }}>
+        {% render 'icon', icon: 'mara-header-account', bare: true %}
       </span>{% endunless %}
       {% unless account_type == 'icon' %}<span class="header-action__label {{ account_typography_class }}">{{ account_label | escape }}</span>{% endunless %}
       <span class="header-account__mobile-label">{{ 'customers.login.submit' | t }}</span>
     </span>
   </shopify-account>
 {% else %}
-  <a class="{{ account_class }}" href="{{ routes.account_login_url }}" aria-label="{{ account_label | escape }}" {{ block.shopify_attributes }}>
-    {% unless account_type == 'text' %}<span class="icon" aria-hidden="true">
-      {% render 'icon', icon: 'user', bare: true %}
+  <a class="{{ account_class }}" href="{{ routes.account_login_url }}" aria-label="{{ account_label | escape }}" {% if account_type == 'text' %}{{ block.shopify_attributes }}{% endif %}>
+    {% unless account_type == 'text' %}<span class="icon" aria-hidden="true" {{ block.shopify_attributes }}>
+      {% render 'icon', icon: 'mara-header-account', bare: true %}
     </span>{% endunless %}
     {% unless account_type == 'icon' %}<span class="header-action__label {{ account_typography_class }}">{{ account_label | escape }}</span>{% endunless %}
     <span class="header-account__mobile-label">{{ 'customers.login.submit' | t }}</span>
@@ -89,8 +89,6 @@
 
   .header-account .icon {
     display: inline-flex;
-    width: var(--header-icon-size, var(--icon-size-medium));
-    height: var(--header-icon-size, var(--icon-size-medium));
     flex: 0 0 auto;
   }
 
@@ -100,7 +98,7 @@
     height: 100%;
   }
 
-  @media (max-width: 991.98px) {
+  @media (width < 992px) {
     .header-account {
       min-height: var(--button-height-mobile);
     }
@@ -121,18 +119,9 @@
       "id": "type",
       "label": "Type",
       "options": [
-        {
-          "value": "icon",
-          "label": "Icon"
-        },
-        {
-          "value": "text",
-          "label": "Text"
-        },
-        {
-          "value": "icon_with_text",
-          "label": "Icon with text"
-        }
+        { "value": "icon", "label": "Icon" },
+        { "value": "text", "label": "Text" },
+        { "value": "icon_with_text", "label": "Icon with text" }
       ],
       "default": "icon_with_text"
     },
@@ -151,18 +140,9 @@
       "id": "font",
       "label": "Font",
       "options": [
-        {
-          "value": "body",
-          "label": "Body"
-        },
-        {
-          "value": "heading",
-          "label": "Heading"
-        },
-        {
-          "value": "accent",
-          "label": "Accent"
-        }
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
       ],
       "default": "accent"
     },
@@ -171,26 +151,11 @@
       "id": "font_size",
       "label": "Font size",
       "options": [
-        {
-          "value": "sm",
-          "label": "Small"
-        },
-        {
-          "value": "md",
-          "label": "Medium"
-        },
-        {
-          "value": "lg",
-          "label": "Large"
-        },
-        {
-          "value": "xl",
-          "label": "Extra large"
-        },
-        {
-          "value": "xxl",
-          "label": "Double extra large"
-        }
+        { "value": "sm", "label": "Small" },
+        { "value": "md", "label": "Medium" },
+        { "value": "lg", "label": "Large" },
+        { "value": "xl", "label": "Extra large" },
+        { "value": "xxl", "label": "Double extra large" }
       ],
       "default": "md"
     },
@@ -199,18 +164,9 @@
       "id": "letter_spacing",
       "label": "t:labels.letter_spacing",
       "options": [
-        {
-          "value": "tight",
-          "label": "t:options.letter_spacing.tight"
-        },
-        {
-          "value": "normal",
-          "label": "t:options.letter_spacing.normal"
-        },
-        {
-          "value": "relaxed",
-          "label": "t:options.letter_spacing.relaxed"
-        }
+        { "value": "tight", "label": "t:options.letter_spacing.tight" },
+        { "value": "normal", "label": "t:options.letter_spacing.normal" },
+        { "value": "relaxed", "label": "t:options.letter_spacing.relaxed" }
       ],
       "default": "normal"
     }

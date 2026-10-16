@@ -80,7 +80,7 @@
                 <span>{{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}</span>
               {% endif %}
             </span>
-            {% render 'icon', icon: 'chevron-down', class: 'header-localization__icon' %}
+            {% render 'icon', icon: 'mara-header-chevron', width: 16, class: 'header-localization__icon' %}
           </summary>
 
           <div class="header-localization__panel header-localization__desktop-panel">
@@ -112,7 +112,7 @@
         <details class="header-localization__details header-localization__details--language" data-header-submenu-trigger="{{ localization_trigger }}" data-localization-dialog-id="{{ language_dialog_id }}">
           <summary class="header-localization__summary" aria-controls="{{ language_dialog_id }}" aria-expanded="false">
             <span class="header-localization__language">{{ localization.language.endonym_name }}</span>
-            {% render 'icon', icon: 'chevron-down', class: 'header-localization__icon' %}
+            {% render 'icon', icon: 'mara-header-chevron', width: 16, class: 'header-localization__icon' %}
           </summary>
           <div class="header-localization__panel header-localization__desktop-panel">
             {% form 'localization', class: 'header-localization__form' %}
@@ -384,6 +384,7 @@
       animation: none;
     }
   }
+  .header-localization .header-localization__icon { --icon-width: 16px; width: 16px; height: 16px; }
 {% endstylesheet %}
 
 {% schema %}
@@ -400,14 +401,8 @@
       "id": "dropdown_trigger",
       "label": "t:labels.dropdown_trigger",
       "options": [
-        {
-          "value": "click",
-          "label": "t:options.dropdown_trigger.click"
-        },
-        {
-          "value": "hover",
-          "label": "t:options.dropdown_trigger.hover"
-        }
+        { "value": "click", "label": "t:options.dropdown_trigger.click" },
+        { "value": "hover", "label": "t:options.dropdown_trigger.hover" }
       ],
       "default": "click"
     },
@@ -456,18 +451,9 @@
       "id": "font_size",
       "label": "Font size",
       "options": [
-        {
-          "value": "xs",
-          "label": "Extra small"
-        },
-        {
-          "value": "sm",
-          "label": "Small"
-        },
-        {
-          "value": "md",
-          "label": "Medium"
-        }
+        { "value": "xs", "label": "Extra small" },
+        { "value": "sm", "label": "Small" },
+        { "value": "md", "label": "Medium" }
       ],
       "default": "md"
     }

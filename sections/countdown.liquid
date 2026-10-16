@@ -604,10 +604,10 @@
   ],
   "presets": [
     {
-      "name": "Countdown (custom)",
+      "name": "t:general.countdown",
       "category": "t:general.content",
       "settings": {
-        "section_width": "full_width",
+        "section_width": "page_width",
         "enable_boxed_layout": false,
         "direction": "horizontal",
         "position": "center",
@@ -615,17 +615,19 @@
         "customize_mobile_alignment": true,
         "alignment": "left",
         "alignment_mobile": "center",
-        "gap_desktop": 36,
-        "gap_mobile": 36,
+        "gap_desktop": 40,
+        "gap_mobile": 32,
         "color_scheme": "scheme-3",
         "boxed_color_scheme": "scheme-1",
         "boxed_padding_block": 70,
         "boxed_padding_inline": 50,
         "boxed_padding_block_mobile": 40,
         "boxed_padding_inline_mobile": 30,
-        "padding_top": 48,
-        "padding_bottom": 48,
-        "customize_mobile_padding": false
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
         {
@@ -634,34 +636,81 @@
             "direction": "vertical",
             "alignment": "left",
             "alignment_mobile": "center",
-            "width": "fit",
+            "width": "fill",
             "height": "fit",
-            "gap_desktop": 8,
-            "gap_mobile": 6,
+            "gap_desktop": 32,
+            "gap_mobile": 32,
             "appearance_type": "inherit",
             "border_type": "none",
             "corner_radius": "square",
             "shadow": "none",
-            "customize_mobile_padding": false
+            "customize_mobile_padding": false,
+            "customize_mobile_alignment": true,
+            "width_mobile": "fill"
           },
           "blocks": [
             {
-              "type": "heading",
+              "type": "group",
               "settings": {
-                "text": "<p>Flash sale: Up to 40% Off!</p>",
-                "heading_size": "display",
-                "html_tag": "h2",
-                "width": "fit",
-                "customize_mobile_size": false
-              }
+                "direction": "vertical",
+                "alignment": "left",
+                "alignment_mobile": "center",
+                "customize_mobile_alignment": true,
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 16,
+                "gap_mobile": 16,
+                "appearance_type": "inherit"
+              },
+              "blocks": [
+                {
+                  "type": "header",
+                  "settings": {
+                    "width": "fill",
+                    "inherit_alignment": true,
+                    "gap_desktop": 12,
+                    "gap_mobile": 12
+                  },
+                  "blocks": [
+                    {
+                      "type": "eyebrow",
+                      "settings": {
+                        "text": "<p>Limited release</p>"
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>Super sale up to 20% off</p>",
+                        "heading_size": "xl",
+                        "html_tag": "h2"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>For a limited time only. Discover refined essentials at exclusive prices.</p>",
+                    "text_size": "md"
+                  }
+                }
+              ]
             },
             {
-              "type": "text",
+              "type": "button",
               "settings": {
-                "text": "<p>Timeless quality, limited time offer. Don't miss out.</p>",
-                "text_size": "xs",
+                "button_label": "Shop the sale",
+                "button_link": "",
+                "button_style": "primary",
+                "button_open_in_new_tab": false,
+                "show_icon": false,
                 "width": "fit",
-                "customize_mobile_size": false
+                "width_mobile": "fit",
+                "customize_mobile_padding": false,
+                "hide_on_mobile": true,
+                "hide_on_desktop": false
               }
             }
           ]
@@ -670,27 +719,31 @@
           "type": "countdown-timer",
           "settings": {
             "style": "with_labels",
-            "show_background": true,
+            "show_background": false,
             "corner_radius": "square",
-            "type": "fixed_time",
-            "end_time": "2026-12-25 12:00",
-            "hide_when_expired": true,
-            "number_size": "md",
-            "label_size": "xs",
-            "color_type": "inherit"
+            "type": "recurring",
+            "end_time": "",
+            "hide_when_expired": false,
+            "number_size": "display",
+            "label_size": "sm",
+            "color_type": "inherit",
+            "duration_hours": 62,
+            "duration_minutes": 33
           }
         },
         {
           "type": "button",
           "settings": {
-            "button_label": "Shop sale",
+            "button_label": "Shop the sale",
             "button_link": "",
-            "button_style": "secondary",
+            "button_style": "primary",
             "button_open_in_new_tab": false,
             "show_icon": false,
             "width": "fit",
             "width_mobile": "fit",
-            "customize_mobile_padding": false
+            "customize_mobile_padding": false,
+            "hide_on_desktop": true,
+            "hide_on_mobile": false
           }
         }
       ]

@@ -10,7 +10,8 @@
   }
 
   .header.header--overlay {
-    background-color: transparent;
+    background-color: rgb(0 0 0 / 20%);
+    backdrop-filter: blur(2px);
   }
 
   .header--overlay:is(.header--is-scrolled, .header--submenu-open, .header--search-open, .header--cart-open) {
@@ -21,8 +22,12 @@
     background-color: var(--background-color);
   }
 
-  .header--overlay:has(.header-top--transparent-scheme) .header-top {
+  .header--overlay:has(.header-top--transparent-scheme):not(:is(.header--is-scrolled, .header--submenu-open, .header--search-open, .header--cart-open)) .header-top {
     background-color: transparent;
+  }
+
+  @media (width < 992px) {
+    .header.header--overlay { backdrop-filter: none; }
   }
 
   .header--overlap-first-section {
@@ -200,88 +205,106 @@
       "name": "t:general.header",
       "category": "t:general.header",
       "settings": {
-        "section_width": "page_width",
-        "icon_size": 20,
+        "section_width": "full_width",
+        "icon_size": 24,
         "sticky_type": "none",
         "color_scheme": "scheme-1",
-        "header_overlay": false,
-        "transparent_color_scheme": "scheme-1"
+        "header_overlay": true,
+        "transparent_color_scheme": "scheme-3"
       },
       "blocks": [
         {
           "type": "_header-top",
-          "id": "header-top",
           "static": true,
           "settings": {
-            "bottom_separator": "line",
-            "gap": 16,
-            "padding_top": 12,
-            "padding_bottom": 12,
+            "bottom_separator": "none",
+            "gap": 32,
+            "padding_top": 16,
+            "padding_bottom": 16,
             "customize_mobile_padding": true,
             "padding_top_mobile": 12,
-            "padding_bottom_mobile": 12
+            "padding_bottom_mobile": 12,
+            "actions_gap": 20,
+            "customize_mobile_gap": true,
+            "gap_mobile": 32,
+            "actions_gap_mobile": 20
           },
+          "id": "header-top",
           "blocks": [
             {
               "type": "_header-menu",
               "settings": {
-                "menu": "main-menu",
-                "gap": 24,
-                "show_dropdown_icon": true,
+                "menu": "mara-header",
+                "gap": 32,
+                "show_dropdown_icon": false,
                 "dropdown_trigger": "hover",
-                "font": "accent",
-                "font_size": "md",
-                "letter_spacing": "normal",
-                "text_case": "original"
+                "font": "body",
+                "font_size": "sm",
+                "letter_spacing": "relaxed",
+                "text_case": "uppercase",
+                "text_color": "",
+                "submenu_font": "body",
+                "submenu_font_size": "md",
+                "submenu_text_case": "original",
+                "submenu_text_color": ""
               },
-              "blocks": [
-                {
-                  "type": "_mega-menu-banners",
-                  "settings": {
-                    "menu_item": "Collections",
-                    "banner_width": 40,
-                    "gap": 12,
-                    "layout": "horizontal",
-                    "submenu_columns": "4",
-                    "limit_width": true,
-                    "max_width": 850
-                  },
-                  "blocks": [
-                    {
-                      "type": "_mega-menu-banner",
-                      "settings": {}
-                    },
-                    {
-                      "type": "_mega-menu-banner",
-                      "settings": {}
-                    }
-                  ]
-                }
-              ]
+              "blocks": []
+            },
+            {
+              "type": "_header-menu-toggle",
+              "settings": {},
+              "blocks": []
             },
             {
               "type": "_header-logo",
               "settings": {
-                "position": "center"
-              }
+                "position": "center",
+                "position_mobile": "left"
+              },
+              "blocks": []
             },
             {
-              "type": "_header-menu-toggle"
+              "type": "_header-localization",
+              "settings": {
+                "dropdown_trigger": "click",
+                "show_country_selector": true,
+                "show_country_name": false,
+                "show_country_flag": true,
+                "show_language_selector": false,
+                "font_size": "sm"
+              },
+              "blocks": []
             },
             {
-              "type": "_header-localization"
+              "type": "_header-search",
+              "settings": {
+                "type": "icon",
+                "label": "Search",
+                "font": "body",
+                "font_size": "md",
+                "letter_spacing": "relaxed"
+              },
+              "blocks": []
             },
             {
-              "type": "_header-divider"
+              "type": "_header-account",
+              "settings": {
+                "type": "icon",
+                "label": "Account",
+                "font": "body",
+                "font_size": "md",
+                "letter_spacing": "normal"
+              },
+              "blocks": []
             },
             {
-              "type": "_header-search"
-            },
-            {
-              "type": "_header-account"
-            },
-            {
-              "type": "_header-cart"
+              "type": "_header-cart",
+              "settings": {
+                "type": "icon",
+                "label": "Cart",
+                "badge_type": "primary"
+              },
+              "blocks": []
             }
           ]
         }

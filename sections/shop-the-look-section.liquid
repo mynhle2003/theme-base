@@ -256,15 +256,9 @@
   "class": "section-shop-the-look",
   "max_blocks": 3,
   "blocks": [
-    {
-      "type": "image"
-    },
-    {
-      "type": "header"
-    },
-    {
-      "type": "shop-the-look-products"
-    }
+    { "type": "image" },
+    { "type": "header" },
+    { "type": "shop-the-look-products" }
   ],
   "settings": [
     {
@@ -276,18 +270,9 @@
       "id": "section_width",
       "label": "t:labels.section_width",
       "options": [
-        {
-          "value": "page_width",
-          "label": "t:options.section_width.page_width"
-        },
-        {
-          "value": "full_width",
-          "label": "t:options.section_width.full_width"
-        },
-        {
-          "value": "full_width_no_padding",
-          "label": "t:options.section_width.full_width_no_padding"
-        }
+        { "value": "page_width", "label": "t:options.section_width.page_width" },
+        { "value": "full_width", "label": "t:options.section_width.full_width" },
+        { "value": "full_width_no_padding", "label": "t:options.section_width.full_width_no_padding" }
       ],
       "default": "full_width"
     },
@@ -296,14 +281,8 @@
       "id": "media_position",
       "label": "t:labels.media_position",
       "options": [
-        {
-          "value": "left",
-          "label": "t:options.alignment.left"
-        },
-        {
-          "value": "right",
-          "label": "t:options.alignment.right"
-        }
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "right", "label": "t:options.alignment.right" }
       ],
       "default": "right"
     },
@@ -312,14 +291,8 @@
       "id": "mobile_media_position",
       "label": "t:labels.mobile_image_position",
       "options": [
-        {
-          "value": "first",
-          "label": "t:options.position.first"
-        },
-        {
-          "value": "last",
-          "label": "t:options.position.last"
-        }
+        { "value": "first", "label": "t:options.position.first" },
+        { "value": "last", "label": "t:options.position.last" }
       ],
       "default": "first"
     },
@@ -411,98 +384,91 @@
     }
   ],
   "presets": [
-    {
-      "name": "t:general.shop_the_look",
-      "category": "t:general.content",
-      "settings": {
-        "section_width": "full_width",
-        "media_position": "right",
-        "mobile_media_position": "first",
-        "gap_desktop": 50,
-        "gap_mobile": 16,
-        "color_scheme": "scheme-1",
-        "customize_mobile_padding": false
+  {
+    "name": "t:general.shop_the_look",
+    "category": "t:general.content",
+    "settings": {
+      "section_width": "full_width_no_padding",
+      "media_position": "right",
+      "mobile_media_position": "first",
+      "gap_desktop": 0,
+      "gap_mobile": 56,
+      "color_scheme": "scheme-1",
+      "customize_mobile_padding": true,
+      "padding_top": 0,
+      "padding_bottom": 0,
+      "padding_top_mobile": 0,
+      "padding_bottom_mobile": 0
+    },
+    "blocks": [
+      {
+        "type": "image",
+        "static": true,
+        "settings": {
+          "image_ratio_desktop": "custom",
+          "image_ratio_mobile": "custom",
+          "width_desktop": "fill",
+          "width_mobile": "fill",
+          "corner_radius": "square",
+          "customize_mobile_padding": false,
+          "image_ratio_custom_width_desktop": 3,
+          "image_ratio_custom_height_desktop": 2,
+          "image_ratio_custom_width_mobile": 5,
+          "image_ratio_custom_height_mobile": 4
+        },
+        "id": "image"
       },
-      "blocks": [
-        {
-          "type": "image",
-          "id": "image",
-          "static": true,
-          "settings": {
-            "image_ratio_desktop": "auto",
-            "image_ratio_mobile": "auto",
-            "width_desktop": "fill",
-            "width_mobile": "fill",
-            "corner_radius": "square",
-            "customize_mobile_padding": false
-          }
+      {
+        "type": "header",
+        "static": true,
+        "settings": {
+          "width": "fill",
+          "gap_desktop": 12,
+          "gap_mobile": 12,
+          "alignment": "left"
         },
-        {
-          "type": "header",
-          "id": "header",
-          "static": true,
-          "settings": {
-            "width": "fit",
-            "gap_desktop": 12,
-            "gap_mobile": 8
+        "blocks": [
+          {
+            "type": "heading",
+            "settings": {
+              "text": "<p>Effortless elegance in every detail</p>",
+              "heading_size": "display",
+              "html_tag": "h2"
+            }
           },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Shop the Look</p>",
-                "heading_size": "display",
-                "html_tag": "h2"
-              }
-            },
-            {
-              "type": "spacer",
-              "settings": {
-                "unit_desktop": "pixel",
-                "size_desktop_px": 16,
-                "show_on_mobile": true,
-                "unit_mobile": "pixel",
-                "size_mobile_px": 12
-              }
+          {
+            "type": "button",
+            "settings": {
+              "button_label": "View bag line",
+              "button_style": "tertiary",
+              "show_icon": false
             }
-          ]
+          }
+        ],
+        "id": "header"
+      },
+      {
+        "type": "shop-the-look-products",
+        "static": true,
+        "blocks": [
+          {
+            "type": "shop-the-look-product",
+            "settings": {
+              "show_hotspot": false
+            }
+          }
+        ],
+        "settings": {
+          "layout_type": "grid",
+          "columns_desktop": "1",
+          "columns_mobile": "1",
+          "show_navigation_on_desktop": false,
+          "show_pagination_on_desktop": false
         },
-        {
-          "type": "shop-the-look-products",
-          "id": "product-list",
-          "static": true,
-          "blocks": [
-            {
-              "type": "shop-the-look-product",
-              "settings": {
-                "show_hotspot": true,
-                "hotspot_horizontal": 72,
-                "hotspot_vertical": 48,
-                "customize_mobile_position": false
-              }
-            },
-            {
-              "type": "shop-the-look-product",
-              "settings": {
-                "show_hotspot": true,
-                "hotspot_horizontal": 32,
-                "hotspot_vertical": 62,
-                "customize_mobile_position": false
-              }
-            },
-            {
-              "type": "shop-the-look-product",
-              "settings": {
-                "show_hotspot": true,
-                "hotspot_horizontal": 54,
-                "hotspot_vertical": 82,
-                "customize_mobile_position": false
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ]
+        "id": "product-list"
+      }
+    ]
+  }
+]
 }
 {% endschema %}

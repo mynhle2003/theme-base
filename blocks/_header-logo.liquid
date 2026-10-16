@@ -4,6 +4,7 @@
     assign logo_position = 'center'
   endunless
 
+  assign logo_position_mobile = block.settings.position_mobile | default: 'center'
   assign logo_width = settings.logo_width | default: 180 | plus: 0
   assign logo_width_mobile = settings.logo_width_mobile | default: 140 | plus: 0
   assign logo_sizes = '(min-width: 992px) ' | append: logo_width | append: 'px, ' | append: logo_width_mobile | append: 'px'
@@ -18,6 +19,8 @@
 
 <a
   class="{{ logo_class }}"
+  data-logo-desktop-position="{{ logo_position }}"
+  data-logo-mobile-position="{{ logo_position_mobile }}"
   href="{{ routes.root_url }}"
   aria-label="{{ shop.name | escape }}"
   {{ block.shopify_attributes }}
@@ -88,7 +91,7 @@
     transform: translateX(-50%);
   }
 
-  @media (max-width: 991.98px) {
+  @media (width < 992px) {
     .site-logo {
       width: min(var(--logo-width-mobile), 52vw);
       max-width: min(var(--logo-width-mobile), 52vw);
@@ -119,6 +122,22 @@
       "type": "select",
       "id": "position",
       "label": "t:labels.position",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "position_mobile",
+      "label": "t:labels.mobile_position",
       "options": [
         {
           "value": "left",

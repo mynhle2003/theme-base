@@ -47,6 +47,8 @@
       if gallery_ratio < 0.25 or gallery_ratio > 3
         assign gallery_ratio = 16 | divided_by: 9.0
       endif
+    when 'ratio_5_4'
+      assign gallery_ratio = '1.25'
     when '0.8', 'portrait'
       assign gallery_ratio = '0.8'
     else
@@ -174,6 +176,8 @@
   data-product-callout-hotspot-behavior="{{ block.settings.hotspot_behavior | default: 'click' }}"
   {% if gallery_layout == 'carousel' %}
     data-carousel-block
+    data-carousel-preview-requested="{{ gallery_show_preview }}"
+    data-carousel-preview-mobile="{{ block.settings.show_next_slide_preview_on_mobile }}"
     data-swiper-columns-desktop="{{ gallery_columns_desktop }}"
     data-swiper-columns-mobile="{{ gallery_columns_mobile }}"
     data-swiper-gap-desktop="{{ gallery_gap_desktop }}"
@@ -197,7 +201,8 @@
         root_class: 'product-callout-gallery__viewport',
         aria_label: gallery_navigation_label,
         pagination: gallery_pagination,
-        show_next_slide_preview: gallery_show_preview
+        show_next_slide_preview: gallery_show_preview,
+        show_next_slide_preview_on_mobile: block.settings.show_next_slide_preview_on_mobile
       %}
       {% if gallery_navigation_position != 'top' %}{{ gallery_navigation }}{% endif %}
     </div>
@@ -350,26 +355,11 @@
       "id": "columns_desktop",
       "label": "t:labels.desktop_columns",
       "options": [
-        {
-          "value": "2",
-          "label": "2"
-        },
-        {
-          "value": "3",
-          "label": "3"
-        },
-        {
-          "value": "4",
-          "label": "4"
-        },
-        {
-          "value": "5",
-          "label": "5"
-        },
-        {
-          "value": "6",
-          "label": "6"
-        }
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" },
+        { "value": "5", "label": "5" },
+        { "value": "6", "label": "6" }
       ],
       "default": "2"
     },
@@ -378,14 +368,8 @@
       "id": "columns_mobile",
       "label": "t:labels.mobile_columns",
       "options": [
-        {
-          "value": "1",
-          "label": "1"
-        },
-        {
-          "value": "2",
-          "label": "2"
-        }
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
       ],
       "default": "1"
     },
@@ -397,37 +381,48 @@
       "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
     },
     {
-      "type": "select",
-      "id": "image_ratio",
-      "label": "t:labels.image_ratio",
-      "options": [
-        {
-          "value": "auto",
-          "label": "t:options.image_ratio.auto"
-        },
-        {
-          "value": "square",
-          "label": "t:options.image_ratio.square"
-        },
-        {
-          "value": "portrait",
-          "label": "t:options.image_ratio.portrait"
-        },
-        {
-          "value": "landscape",
-          "label": "t:options.image_ratio.landscape"
-        },
-        {
-          "value": "wide",
-          "label": "t:options.image_ratio.wide"
-        },
-        {
-          "value": "custom",
-          "label": "t:options.image_ratio.custom"
-        }
-      ],
-      "default": "portrait"
+      "type": "checkbox",
+      "id": "show_next_slide_preview_on_mobile",
+      "label": "t:labels.show_next_slide_preview_on_mobile",
+      "default": false,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
     },
+    {
+  "type": "select",
+  "id": "image_ratio",
+  "label": "t:labels.image_ratio",
+  "options": [
+    {
+      "value": "auto",
+      "label": "t:options.image_ratio.auto"
+    },
+    {
+      "value": "square",
+      "label": "t:options.image_ratio.square"
+    },
+    {
+      "value": "portrait",
+      "label": "t:options.image_ratio.portrait"
+    },
+    {
+      "value": "ratio_5_4",
+      "label": "t:options.image_ratio.ratio_5_4"
+    },
+    {
+      "value": "landscape",
+      "label": "t:options.image_ratio.landscape"
+    },
+    {
+      "value": "wide",
+      "label": "t:options.image_ratio.wide"
+    },
+    {
+      "value": "custom",
+      "label": "t:options.image_ratio.custom"
+    }
+  ],
+  "default": "portrait"
+},
     {
       "type": "number",
       "id": "image_ratio_custom_width",
@@ -533,18 +528,9 @@
       "id": "navigation_position",
       "label": "t:labels.position",
       "options": [
-        {
-          "value": "outside",
-          "label": "t:options.collection_navigation_position.outside"
-        },
-        {
-          "value": "inside",
-          "label": "t:options.collection_navigation_position.inside"
-        },
-        {
-          "value": "top",
-          "label": "t:options.position.top"
-        }
+        { "value": "outside", "label": "t:options.collection_navigation_position.outside" },
+        { "value": "inside", "label": "t:options.collection_navigation_position.inside" },
+        { "value": "top", "label": "t:options.position.top" }
       ],
       "default": "inside",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop }}"
@@ -554,22 +540,10 @@
       "id": "navigation_style",
       "label": "t:labels.style",
       "options": [
-        {
-          "value": "primary",
-          "label": "t:options.button_variant.primary"
-        },
-        {
-          "value": "secondary",
-          "label": "t:options.button_variant.secondary"
-        },
-        {
-          "value": "outline",
-          "label": "t:options.button_variant.outline"
-        },
-        {
-          "value": "icon_only",
-          "label": "t:options.button_variant.icon_only"
-        }
+        { "value": "primary", "label": "t:options.button_variant.primary" },
+        { "value": "secondary", "label": "t:options.button_variant.secondary" },
+        { "value": "outline", "label": "t:options.button_variant.outline" },
+        { "value": "icon_only", "label": "t:options.button_variant.icon_only" }
       ],
       "default": "secondary",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop }}"
@@ -579,18 +553,9 @@
       "id": "navigation_icon",
       "label": "t:labels.icon",
       "options": [
-        {
-          "value": "chevron",
-          "label": "t:options.collection_navigation_icon.chevron"
-        },
-        {
-          "value": "arrow",
-          "label": "t:options.collection_navigation_icon.arrow"
-        },
-        {
-          "value": "long_arrow",
-          "label": "t:options.collection_navigation_icon.long_arrow"
-        }
+        { "value": "chevron", "label": "t:options.collection_navigation_icon.chevron" },
+        { "value": "arrow", "label": "t:options.collection_navigation_icon.arrow" },
+        { "value": "long_arrow", "label": "t:options.collection_navigation_icon.long_arrow" }
       ],
       "default": "chevron",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop }}"
@@ -600,14 +565,8 @@
       "id": "navigation_behavior",
       "label": "t:labels.behavior",
       "options": [
-        {
-          "value": "show_on_hover",
-          "label": "t:options.collection_navigation_behavior.show_on_hover"
-        },
-        {
-          "value": "always",
-          "label": "t:options.collection_navigation_behavior.always"
-        }
+        { "value": "show_on_hover", "label": "t:options.collection_navigation_behavior.show_on_hover" },
+        { "value": "always", "label": "t:options.collection_navigation_behavior.always" }
       ],
       "default": "show_on_hover",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop and block.settings.navigation_position != 'top' }}"
@@ -629,14 +588,8 @@
       "id": "pagination_type",
       "label": "t:labels.type",
       "options": [
-        {
-          "value": "progress_bar",
-          "label": "t:options.collection_pagination.progress_bar"
-        },
-        {
-          "value": "bullets",
-          "label": "t:options.collection_pagination.bullets"
-        }
+        { "value": "progress_bar", "label": "t:options.collection_pagination.progress_bar" },
+        { "value": "bullets", "label": "t:options.collection_pagination.bullets" }
       ],
       "default": "progress_bar",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop }}"

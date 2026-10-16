@@ -30,7 +30,8 @@ const getMobileSlidesPerView = (carousel) => {
 
   // The preview is intended for a one-column mobile layout. Keep an explicit
   // two-column choice intact instead of silently replacing it with 1.2.
-  if (columns === 1 && carousel.dataset.swiperNextSlidePreviewMobile === 'true') {
+  if (columns === 1 && carousel.dataset.swiperNextSlidePreviewMobile === 'true' &&
+      carousel.querySelectorAll(':scope > .swiper-wrapper > .swiper-slide').length > columns) {
     return 1.2;
   }
 

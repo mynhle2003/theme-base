@@ -63,6 +63,12 @@
 
   assign button_class = 'button-block size-style button-block--width-' | append: button_width
   assign button_class = button_class | append: ' button-block--width-mobile-' | append: button_width_mobile
+  if block.settings.hide_on_desktop
+    assign button_class = button_class | append: ' button-block--hide-desktop'
+  endif
+  if block.settings.hide_on_mobile
+    assign button_class = button_class | append: ' button-block--hide-mobile'
+  endif
   if button_label == blank
     assign button_class = button_class | append: ' button-block--empty'
   endif
@@ -140,6 +146,17 @@
 
     .button-block--width-mobile-fill .button-block__button {
       width: 100%;
+    }
+  }
+  @media (width >= 768px) {
+    .button-block.button-block--hide-desktop {
+      display: none;
+    }
+  }
+
+  @media (width < 768px) {
+    .button-block.button-block--hide-mobile {
+      display: none;
     }
   }
 {% endstylesheet %}
@@ -328,6 +345,22 @@
         }
       ],
       "default": "fit"
+    },
+    {
+      "type": "header",
+      "content": "Visible"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "Hide on mobile",
+      "default": false
     },
     {
       "type": "header",

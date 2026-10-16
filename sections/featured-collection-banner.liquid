@@ -143,9 +143,43 @@
     order: var(--featured-collection-banner-products-order, var(--featured-collection-role-order));
   }
 
+  /* CTA composition: one of each role. Duplicated roles retain the flex layout. */
+  .featured-collection-banner__content > .collection-list-view-all {
+    order: 4;
+    flex: 0 0 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+    min-width: 0;
+  }
+
+  .featured-collection-banner__content:has(> .collection-list-view-all):has(> .block-header):not(:has(> .block-header ~ .block-header, > .collection-list-view-all ~ .collection-list-view-all, > .image-card--featured-collection-banner ~ .image-card--featured-collection-banner, > .product-list-banner ~ .product-list-banner)) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   @media (min-width: 768px) {
     .featured-collection-banner__content {
       gap: var(--featured-collection-banner-gap-desktop, 30px);
+    }
+
+    .featured-collection-banner__content:has(> .collection-list-view-all):has(> .block-header):not(:has(> .block-header ~ .block-header, > .collection-list-view-all ~ .collection-list-view-all, > .image-card--featured-collection-banner ~ .image-card--featured-collection-banner, > .product-list-banner ~ .product-list-banner)) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      > .block-header { grid-area: 1 / 1; }
+      > .collection-list-view-all {
+        grid-area: 1 / 2;
+        justify-content: flex-end;
+        align-items: flex-end;
+        margin-top: 0;
+        padding-bottom: 32px;
+      }
+      > .image-card--featured-collection-banner { grid-area: 2 / 1; }
+      > .product-list-banner { grid-area: 2 / 2; }
+      &[data-banner-position="after"] > .image-card--featured-collection-banner { grid-column: 2; }
+      &[data-banner-position="after"] > .product-list-banner { grid-column: 1; }
+      &:not(:has(> .product-list-banner)) > .image-card--featured-collection-banner,
+      &:not(:has(> .image-card--featured-collection-banner)) > .product-list-banner { grid-column: 1 / -1; }
     }
 
     .featured-collection-banner__content > :is(.image-card--featured-collection-banner, .product-list-banner) {
@@ -172,22 +206,13 @@
 {
   "name": "t:general.featured_collection_banner",
   "class": "section-featured-collection-banner",
-  "enabled_on": {
-    "templates": [
-      "*"
-    ]
-  },
-  "max_blocks": 3,
+  "enabled_on": { "templates": ["*"] },
+  "max_blocks": 4,
   "blocks": [
-    {
-      "type": "header"
-    },
-    {
-      "type": "banner"
-    },
-    {
-      "type": "product-list-banner"
-    }
+    { "type": "header" },
+    { "type": "banner" },
+    { "type": "product-list-banner" },
+    { "type": "view-all-button" }
   ],
   "settings": [
     {
@@ -199,18 +224,9 @@
       "id": "section_width",
       "label": "t:labels.section_width",
       "options": [
-        {
-          "value": "page_width",
-          "label": "t:options.section_width.page_width"
-        },
-        {
-          "value": "full_width",
-          "label": "t:options.section_width.full_width"
-        },
-        {
-          "value": "full_width_no_padding",
-          "label": "t:options.section_width.full_width_no_padding"
-        }
+        { "value": "page_width", "label": "t:options.section_width.page_width" },
+        { "value": "full_width", "label": "t:options.section_width.full_width" },
+        { "value": "full_width_no_padding", "label": "t:options.section_width.full_width_no_padding" }
       ],
       "default": "page_width"
     },
@@ -219,14 +235,8 @@
       "id": "banner_position",
       "label": "t:labels.banner_position",
       "options": [
-        {
-          "value": "before",
-          "label": "t:options.banner_position.before"
-        },
-        {
-          "value": "after",
-          "label": "t:options.banner_position.after"
-        }
+        { "value": "before", "label": "t:options.banner_position.before" },
+        { "value": "after", "label": "t:options.banner_position.after" }
       ],
       "default": "before"
     },
@@ -318,119 +328,116 @@
     }
   ],
   "presets": [
-    {
-      "name": "Featured collection: Banner",
-      "category": "t:general.collection",
-      "settings": {
-        "section_width": "page_width",
-        "banner_position": "before",
-        "gap_desktop": 30,
-        "gap_mobile": 20,
-        "color_scheme": "scheme-1",
-        "padding_top": 50,
-        "padding_bottom": 50,
-        "customize_mobile_padding": false
+  {
+    "name": "Featured collection: Banner",
+    "category": "t:general.collection",
+    "settings": {
+      "section_width": "page_width",
+      "banner_position": "before",
+      "gap_desktop": 8,
+      "gap_mobile": 8,
+      "color_scheme": "scheme-1",
+      "padding_top": 96,
+      "padding_bottom": 96,
+      "customize_mobile_padding": true,
+      "padding_top_mobile": 56,
+      "padding_bottom_mobile": 56
+    },
+    "blocks": [
+      {
+        "type": "header",
+        "settings": {
+          "width": "fill",
+          "alignment": "left",
+          "gap_desktop": 12,
+          "gap_mobile": 12,
+          "customize_mobile_alignment": true,
+          "alignment_mobile": "center",
+          "inherit_alignment": false,
+          "padding_bottom": 32,
+          "customize_mobile_padding": true,
+          "padding_bottom_mobile": 24
+        },
+        "blocks": [
+          {
+            "type": "eyebrow",
+            "settings": {
+              "text": "<p>Modern classics</p>"
+            }
+          },
+          {
+            "type": "heading",
+            "settings": {
+              "text": "<p>Timeless pieces</p>",
+              "heading_size": "display",
+              "html_tag": "h2"
+            }
+          }
+        ]
       },
-      "blocks": [
-        {
-          "type": "header",
-          "settings": {
-            "width": "fill",
-            "alignment": "center",
-            "gap_desktop": 8,
-            "gap_mobile": 8
-          },
-          "blocks": [
-            {
-              "type": "eyebrow",
-              "settings": {
-                "text": "<p>SECTION TAG</p>"
-              }
-            },
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Main Heading Text Placeholder</p>",
-                "heading_size": "display",
-                "html_tag": "h2",
-                "width": "fit"
-              }
-            }
-          ]
+      {
+        "type": "banner",
+        "settings": {
+          "background_type": "image",
+          "show_overlay": false,
+          "color_scheme": "scheme-3",
+          "image_ratio_desktop": "custom",
+          "image_ratio_mobile": "custom",
+          "position_desktop": "bottom_left",
+          "position_mobile": "bottom_left",
+          "padding_top": 32,
+          "padding_bottom": 32,
+          "padding_left": 32,
+          "padding_right": 32,
+          "gap_desktop": 20,
+          "gap_mobile": 16,
+          "image_ratio_custom_width_desktop": 796,
+          "image_ratio_custom_height_desktop": 1014,
+          "image_ratio_custom_width_mobile": 686,
+          "image_ratio_custom_height_mobile": 963,
+          "corner_radius": "square",
+          "image": "shopify://shop_images/mara-timeless-banner.avif"
         },
-        {
-          "type": "banner",
-          "settings": {
-            "background_type": "image",
-            "show_overlay": false,
-            "color_scheme": "scheme-3",
-            "image_ratio_desktop": "square",
-            "image_ratio_mobile": "square",
-            "position_desktop": "bottom_left",
-            "position_mobile": "bottom_left",
-            "padding_top": 32,
-            "padding_bottom": 32,
-            "padding_left": 32,
-            "padding_right": 32,
-            "gap_desktop": 20,
-            "gap_mobile": 16
-          },
-          "blocks": [
-            {
-              "type": "eyebrow",
-              "settings": {
-                "text": "<p>Subheading</p>"
-              }
-            },
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Your Main Heading Goes Here</p>",
-                "heading_size": "display",
-                "html_tag": "h2",
-                "width": "fill"
-              }
-            },
-            {
-              "type": "button",
-              "settings": {
-                "button_label": "Button label",
-                "button_style": "tertiary",
-                "width": "fit",
-                "show_icon": true,
-                "icon": "arrow",
-                "icon_position": "after",
-                "icon_size": "inherit"
-              }
-            }
-          ]
+        "blocks": []
+      },
+      {
+        "type": "product-list-banner",
+        "settings": {
+          "collection": "timeless-pieces-mara",
+          "max_products": 4,
+          "columns_mobile": "1",
+          "enable_swipe_mobile": true,
+          "gap_horizontal": 8,
+          "gap_vertical": 8,
+          "gap_horizontal_mobile": 8,
+          "gap_vertical_mobile": 8
         },
-        {
-          "type": "product-list-banner",
-          "settings": {
-            "collection": "",
-            "max_products": 6,
-            "columns_mobile": "2",
-            "enable_swipe_mobile": true,
-            "gap_horizontal": 12,
-            "gap_vertical": 28,
-            "gap_horizontal_mobile": 8,
-            "gap_vertical_mobile": 24
-          },
-          "blocks": [
-            {
-              "type": "product-card",
-              "id": "product-card",
-              "static": true,
-              "settings": {
-                "color_type": "inherit",
-                "color_scheme": "scheme-1"
-              }
-            }
-          ]
+        "blocks": [
+          {
+            "type": "product-card",
+            "static": true,
+            "settings": {
+              "color_type": "color_scheme",
+              "color_scheme": "scheme-2"
+            },
+            "id": "product-card"
+          }
+        ]
+      },
+      {
+        "type": "view-all-button",
+        "settings": {
+          "button_label": "Shop all",
+          "button_link": "shopify://collections/timeless-pieces-mara",
+          "button_style": "text",
+          "button_style_mobile": "text",
+          "show_icon": false,
+          "show_icon_mobile": false,
+          "full_width_mobile": false
         }
-      ]
-    }
-  ]
+      }
+    ]
+  }
+]
 }
 {% endschema %}

@@ -698,79 +698,56 @@
     }
   ],
   "presets": [
-    {
-      "name": "Hero",
-      "category": "t:general.banners",
-      "settings": {
-        "color_scheme": "scheme-1",
-        "show_overlay": true
-      },
-      "blocks": [
-        {
-          "type": "eyebrow",
-          "settings": {
-            "text": "<p>The new chapter</p>"
-          }
-        },
-        {
-          "type": "heading",
-          "settings": {
-            "text": "<p>A world of light.<br>A jewel of your own.</p>",
-            "heading_size": "display",
-            "html_tag": "h1",
-            "width": "custom",
-            "max_width": 800
-          }
-        },
-        {
-          "type": "text",
-          "settings": {
-            "text": "<p>Meet Octavia. Colour held in a precise geometry, made to become part of your story.</p>",
-            "text_size": "sm",
-            "width": "custom",
-            "max_width": 480
-          }
-        },
-        {
-          "type": "button",
-          "settings": {
-            "button_label": "Discover Octavia",
-            "button_style": "primary"
-          }
-        },
-        {
-          "type": "spacer",
-          "settings": {
-            "unit_desktop": "pixel",
-            "size_desktop_px": 56,
-            "show_on_mobile": true,
-            "unit_mobile": "pixel",
-            "size_mobile_px": 40
-          }
-        },
-        {
-          "type": "eyebrow",
-          "settings": {
-            "text": "<p>Octavia three-stone ring / Two-hand gesture / Copy center</p>"
-          }
-        },
-        {
-          "type": "text",
-          "settings": {
-            "text": "<p>Focus 216.5 / 165 + 181.2 carat / Octavia / Enamel / Gold / Solid 925</p>",
-            "text_size": "xs"
-          }
-        },
-        {
-          "type": "scroll-to",
-          "settings": {
-            "button_label": "Scroll to discover",
-            "target_section_number": 2,
-            "button_style": "tertiary"
-          }
+  {
+    "name": "Hero",
+    "category": "t:general.banners",
+    "settings": {
+      "width": "full",
+      "layout": "classic",
+      "media_type": "video",
+      "video": "shopify://files/videos/mara-hero-veneta.mp4",
+      "mobile_video": "shopify://files/videos/mara-hero-veneta.mp4",
+      "show_overlay": true,
+      "overlay_style": "solid",
+      "overlay": "#00000033",
+      "parallax_effect": "none",
+      "desktop_height": "large",
+      "mobile_height": "large",
+      "content_width": "fit",
+      "desktop_position": "bottom_center",
+      "mobile_position": "bottom_center",
+      "desktop_gap": 20,
+      "mobile_gap": 20,
+      "content_color_scheme": "scheme-3",
+      "color_scheme": "scheme-3",
+      "padding_top": 80,
+      "padding_bottom": 80,
+      "customize_mobile_padding": true,
+      "padding_top_mobile": 40,
+      "padding_bottom_mobile": 40
+    },
+    "blocks": [
+      {
+        "type": "heading",
+        "settings": {
+          "text": "<p>veneta collection</p>",
+          "heading_size": "display",
+          "html_tag": "h1",
+          "width": "fit"
         }
-      ]
-    }
-  ]
+      },
+      {
+        "type": "button",
+        "settings": {
+          "button_label": "Shop collection",
+          "button_style": "tertiary",
+          "show_icon": false,
+          "width": "fit",
+          "width_mobile": "fit"
+        }
+      }
+    ]
+  }
+]
 }
 {% endschema %}

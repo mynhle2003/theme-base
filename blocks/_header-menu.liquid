@@ -89,7 +89,7 @@
 {% assign menu_style = menu_style | strip %}
 
   <nav
-    class="{{ menu_class }} {{ menu_typography_class }} scrollbar scrollbar--hidden scrollbar--vertical-until-desktop"
+    class="{{ menu_class }} {{ menu_typography_class }}"
     id="HeaderMenu-{{ section.id }}"
     aria-label="{{ 'accessibility.menu' | t }}"
     data-dropdown-trigger="{{ dropdown_trigger }}"
@@ -138,6 +138,7 @@
                 <a class="header-menu__link link-underline-trigger" href="{{ link.url }}"><span class="header-menu__top-link-label link-underline">{{ link.title | escape }}</span></a>
               {% endif %}
             </li>
+            {% unless forloop.last %}<li class="header-menu__gap" role="presentation" aria-hidden="true"></li>{% endunless %}
           {% endfor %}
       </ul>
       <div class="header-menu__mega-config" aria-hidden="true">{% content_for 'blocks' %}</div>
@@ -204,7 +205,7 @@
       </div>
       <footer class="header__mobile-drawer-footer">
         {% if shop.customer_accounts_enabled %}
-          <shopify-account class="header__mobile-drawer-account body-text" menu="customer-account-main-menu">
+          <shopify-account class="header__mobile-drawer-account body-text" {% if linklists['customer-account-main-menu'].links != blank %}menu="customer-account-main-menu"{% endif %}>
             <span slot="signed-out-avatar" class="header__mobile-drawer-account-avatar">
               <span>{{ 'customers.login.submit' | t }}</span>
             </span>
@@ -279,7 +280,25 @@
   .header-menu__list {
     align-items: center;
     flex-wrap: wrap;
-    gap: var(--header-menu-gap, 26px);
+    width: max-content;
+    max-width: 100%;
+    column-gap: min(8px, var(--header-menu-gap, 26px));
+    row-gap: var(--header-menu-gap, 26px);
+  }
+
+  /* Zero-basis spacers yield before the label items wrap. */
+  .header-menu__list > .header-menu__item {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .header-menu__gap {
+    width: max(0px, calc(var(--header-menu-gap, 26px) - 8px));
+    max-width: max(0px, calc(var(--header-menu-gap, 26px) - 8px));
+    min-width: 0;
+    flex: 1 1 0px;
+    margin-inline: calc(min(8px, var(--header-menu-gap, 26px)) / -2);
+    list-style: none;
   }
 
   .header-menu__item {
@@ -675,7 +694,7 @@
     display: contents;
   }
 
-  @media (max-width: 991.98px) {
+  @media (width < 992px) {
     /* The same drawer handles the mobile and tablet navigation. */
     .header-menu {
       display: none !important;
@@ -1139,11 +1158,7 @@
 {
   "name": "t:general.header_menu",
   "tag": null,
-  "blocks": [
-    {
-      "type": "_mega-menu-banners"
-    }
-  ],
+  "blocks": [{ "type": "_mega-menu-banners" }],
   "settings": [
     {
       "type": "header",
@@ -1176,14 +1191,8 @@
       "id": "dropdown_trigger",
       "label": "t:labels.dropdown_trigger",
       "options": [
-        {
-          "value": "click",
-          "label": "t:options.dropdown_trigger.click"
-        },
-        {
-          "value": "hover",
-          "label": "t:options.dropdown_trigger.hover"
-        }
+        { "value": "click", "label": "t:options.dropdown_trigger.click" },
+        { "value": "hover", "label": "t:options.dropdown_trigger.hover" }
       ],
       "default": "hover"
     },
@@ -1196,18 +1205,9 @@
       "id": "font",
       "label": "t:labels.font",
       "options": [
-        {
-          "value": "body",
-          "label": "t:options.menu_font.body"
-        },
-        {
-          "value": "heading",
-          "label": "t:options.menu_font.heading"
-        },
-        {
-          "value": "accent",
-          "label": "t:options.menu_font.accent"
-        }
+        { "value": "body", "label": "t:options.menu_font.body" },
+        { "value": "heading", "label": "t:options.menu_font.heading" },
+        { "value": "accent", "label": "t:options.menu_font.accent" }
       ],
       "default": "accent"
     },
@@ -1216,30 +1216,12 @@
       "id": "font_size",
       "label": "t:labels.font_size",
       "options": [
-        {
-          "value": "xs",
-          "label": "t:options.menu_font_size.extra_small"
-        },
-        {
-          "value": "sm",
-          "label": "t:options.menu_font_size.small"
-        },
-        {
-          "value": "md",
-          "label": "t:options.menu_font_size.medium"
-        },
-        {
-          "value": "lg",
-          "label": "t:options.menu_font_size.large"
-        },
-        {
-          "value": "xl",
-          "label": "t:options.menu_font_size.extra_large"
-        },
-        {
-          "value": "xxl",
-          "label": "t:options.menu_font_size.double_extra_large"
-        }
+        { "value": "xs", "label": "t:options.menu_font_size.extra_small" },
+        { "value": "sm", "label": "t:options.menu_font_size.small" },
+        { "value": "md", "label": "t:options.menu_font_size.medium" },
+        { "value": "lg", "label": "t:options.menu_font_size.large" },
+        { "value": "xl", "label": "t:options.menu_font_size.extra_large" },
+        { "value": "xxl", "label": "t:options.menu_font_size.double_extra_large" }
       ],
       "default": "md"
     },
@@ -1248,18 +1230,9 @@
       "id": "letter_spacing",
       "label": "t:labels.letter_spacing",
       "options": [
-        {
-          "value": "tight",
-          "label": "t:options.letter_spacing.tight"
-        },
-        {
-          "value": "normal",
-          "label": "t:options.letter_spacing.normal"
-        },
-        {
-          "value": "relaxed",
-          "label": "t:options.letter_spacing.relaxed"
-        }
+        { "value": "tight", "label": "t:options.letter_spacing.tight" },
+        { "value": "normal", "label": "t:options.letter_spacing.normal" },
+        { "value": "relaxed", "label": "t:options.letter_spacing.relaxed" }
       ],
       "default": "normal"
     },
@@ -1268,14 +1241,8 @@
       "id": "text_case",
       "label": "t:labels.text_case",
       "options": [
-        {
-          "value": "original",
-          "label": "t:options.text_case.original"
-        },
-        {
-          "value": "uppercase",
-          "label": "t:options.text_case.uppercase"
-        }
+        { "value": "original", "label": "t:options.text_case.original" },
+        { "value": "uppercase", "label": "t:options.text_case.uppercase" }
       ],
       "default": "original"
     },
@@ -1294,18 +1261,9 @@
       "id": "submenu_font",
       "label": "Font",
       "options": [
-        {
-          "value": "body",
-          "label": "Body"
-        },
-        {
-          "value": "heading",
-          "label": "Heading"
-        },
-        {
-          "value": "accent",
-          "label": "Accent"
-        }
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
       ],
       "default": "body"
     },
@@ -1314,26 +1272,11 @@
       "id": "submenu_font_size",
       "label": "Font size",
       "options": [
-        {
-          "value": "sm",
-          "label": "Small"
-        },
-        {
-          "value": "md",
-          "label": "Medium"
-        },
-        {
-          "value": "lg",
-          "label": "Large"
-        },
-        {
-          "value": "xl",
-          "label": "Extra large"
-        },
-        {
-          "value": "xxl",
-          "label": "Double extra large"
-        }
+        { "value": "sm", "label": "Small" },
+        { "value": "md", "label": "Medium" },
+        { "value": "lg", "label": "Large" },
+        { "value": "xl", "label": "Extra large" },
+        { "value": "xxl", "label": "Double extra large" }
       ],
       "default": "md"
     },
@@ -1342,14 +1285,8 @@
       "id": "submenu_text_case",
       "label": "Text case",
       "options": [
-        {
-          "value": "original",
-          "label": "Original"
-        },
-        {
-          "value": "uppercase",
-          "label": "Uppercase"
-        }
+        { "value": "original", "label": "Original" },
+        { "value": "uppercase", "label": "Uppercase" }
       ],
       "default": "original"
     },

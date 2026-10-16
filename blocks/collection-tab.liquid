@@ -110,8 +110,10 @@
     assign collection_tab_pagination_max_width = 260
   endif
 
+  assign collection_tab_view_all_limit = collection_tab_max_products
+
   assign collection_tab_show_navigation = false
-  if collection_tab_layout == 'carousel' and section.settings.show_navigation_on_desktop
+  if collection_tab_layout == 'carousel' and section.settings.show_navigation_on_desktop and section.settings.navigation_position != 'bottom'
     assign collection_tab_show_navigation = true
   endif
 
@@ -231,7 +233,7 @@
     data-collection-tab-trigger
     data-underline="active"
     data-tab-id="{{ collection_tab_id | escape }}"
-    data-view-all-available="{% if collection_tab_collection != blank and collection_tab_collection.products_count > collection_tab_max_products %}true{% else %}false{% endif %}"
+    data-view-all-available="{% if collection_tab_collection != blank and collection_tab_collection.products_count > collection_tab_view_all_limit %}true{% else %}false{% endif %}"
     {% if collection_tab_collection != blank %}data-collection-url="{{ collection_tab_collection.url | escape }}"{% endif %}
   >
     {{ collection_tab_label | escape }}
@@ -278,6 +280,7 @@
           item_class: 'collection-tab__product',
           items_data_attributes: 'data-collection-tab-products',
           next_slide_preview: section.settings.show_next_slide_preview_on_desktop,
+          next_slide_preview_on_mobile: section.settings.show_next_slide_preview_on_mobile,
           carousel_id: collection_tab_carousel_id,
           aria_label: collection_tab_label,
           previous_selector: '[data-collection-carousel-previous]',
@@ -318,6 +321,12 @@
         {% endif %}
 
       </div>
+    {% endif %}
+
+    {% if collection_tab_collection != blank and collection_tab_collection.products_count > collection_tab_view_all_limit %}
+      <noscript>
+        <p><a href="{{ collection_tab_collection.url | escape }}">{{ 'collection_tabs.view_all' | t }}</a></p>
+      </noscript>
     {% endif %}
 
     {% if collection_tab_collection != blank and collection_tab_has_products == false %}
@@ -405,9 +414,7 @@
   "name": "t:general.collection_tab",
   "tag": null,
   "blocks": [
-    {
-      "type": "promo-card"
-    }
+    { "type": "promo-card" }
   ],
   "settings": [
     {

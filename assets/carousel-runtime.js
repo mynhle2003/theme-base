@@ -2,7 +2,7 @@ import { EffectFade, Pagination } from './swiper-loader.js';
 import { bindSwiperAutoplay, createSwiperCarousel, destroySwiperCarousel } from './swiper-carousel.js';
 
 // Each owner gets independent state and scoped Theme Editor lifecycle.
-export const createCarouselRuntime = ({ rootSelector, slideSelector, onInitialize }) => {
+export const createCarouselRuntime = ({ rootSelector, slideSelector, onInitialize, resolveLayout }) => {
 const instances = new WeakMap();
 const desktopBreakpoint = 768;
 
@@ -545,15 +545,20 @@ const initialize = (root) => {
   const showNextSlidePreview = viewport.dataset.swiperNextSlidePreview === 'true';
   const desktopColumns = number(root.dataset.swiperColumnsDesktop, 4);
   const slideCount = Array.from(wrapper.children).filter((slide) => slide.classList.contains('swiper-slide')).length;
-  const previewEnabled = showNextSlidePreview && slideCount > desktopColumns;
+  const mobileColumns = number(root.dataset.swiperColumnsMobile, 1);
+  const layout = resolveLayout?.({ root, viewport, slideCount, desktopColumns, mobileColumns });
+  const desktopView = layout?.desktop ?? desktopColumns;
+  const mobileView = layout?.mobile ?? mobileColumns;
+  const fractionalLayout = desktopView > desktopColumns || mobileView > mobileColumns;
+  const previewEnabled = !layout?.contained && showNextSlidePreview && slideCount > desktopColumns;
   viewport.dataset.swiperNextSlidePreview = String(previewEnabled);
   // The shared Swiper preview attribute is a CSS-only overflow hook. Sections
   // that require centered-slide runtime must opt in explicitly on their root.
   const useCenteredSlidePreview = root.dataset.showNextSlidePreviewOnDesktop === 'true';
   const transition = root.dataset.transition === 'fade' ? 'fade' : 'slide';
-  const fade = transition === 'fade' && !useCenteredSlidePreview;
+  const fade = transition === 'fade' && !useCenteredSlidePreview && !fractionalLayout;
   if (fade) viewport.dataset.swiperNextSlidePreview = 'false';
-  const manualLoop = manualLoopRequested && loop ? createManualLoop(viewport) : null;
+  const manualLoop = (manualLoopRequested || fractionalLayout) && loop ? createManualLoop(viewport) : null;
   const paginationModules = pagination && !manualLoop ? [Pagination] : [];
   const modules = fade ? [EffectFade, ...paginationModules] : paginationModules;
   const options = {
@@ -563,11 +568,11 @@ const initialize = (root) => {
     ...(fade ? { fadeEffect: { crossFade: true } } : {}),
     preventInteractionOnTransition: true,
     speed: prefersReducedMotion() ? 0 : 600,
-    slidesPerView: fade ? 1 : number(root.dataset.swiperColumnsMobile, 1),
+    slidesPerView: fade ? 1 : mobileView,
     spaceBetween: fade ? 0 : number(root.dataset.swiperGapMobile, 12),
     breakpoints: {
       [desktopBreakpoint]: {
-        slidesPerView: fade ? 1 : desktopColumns,
+        slidesPerView: fade ? 1 : desktopView,
         spaceBetween: fade ? 0 : number(root.dataset.swiperGapDesktop, 16),
         ...(useCenteredSlidePreview ? { centeredSlides: true, spaceBetween: 24 } : {})
       }

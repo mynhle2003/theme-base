@@ -104,6 +104,13 @@
   assign carousel_padding_top_mobile = block.settings.padding_top_mobile | default: 0 | plus: 0
   assign carousel_padding_bottom_mobile = block.settings.padding_bottom_mobile | default: 0 | plus: 0
   assign carousel_customize_mobile_padding = block.settings.customize_mobile_padding
+  assign carousel_visible_desktop = carousel_columns_desktop
+  assign carousel_visible_mobile = carousel_columns_mobile
+  if block.blocks.size > carousel_columns_mobile and block.settings.show_next_slide_preview_on_mobile
+    if carousel_columns_mobile == 1
+      assign carousel_visible_mobile = 1.2
+    endif
+  endif
   assign carousel_id = 'Carousel-' | append: block.id
   assign carousel_delay = carousel_speed | times: 1000
   assign carousel_previous_label = 'collection_tabs.previous' | t
@@ -134,6 +141,8 @@
 {% endcapture %}
 
 {% capture carousel_style %}
+  --carousel-visible-columns-desktop: {{ carousel_visible_desktop }};
+  --carousel-visible-columns-mobile: {{ carousel_visible_mobile }};
   --carousel-padding-top: {{ carousel_padding_top }}px;
   --carousel-padding-bottom: {{ carousel_padding_bottom }}px;
   {% if carousel_customize_mobile_padding %}
@@ -178,6 +187,8 @@
   class="carousel-block carousel-block--width-{{ carousel_width_mode }}"
   style="{{ carousel_style | strip }}"
   data-carousel-block
+  data-carousel-preview-mobile="{{ block.settings.show_next_slide_preview_on_mobile }}"
+  data-carousel-contained-preview="false"
   data-carousel-preview-requested="{{ carousel_show_next_slide_preview }}"
   data-swiper-columns-desktop="{{ carousel_columns_desktop }}"
   data-swiper-columns-mobile="{{ carousel_columns_mobile }}"
@@ -229,6 +240,12 @@
     [data-carousel-block] .carousel-block__viewport > .swiper-pagination { margin-block-start: var(--carousel-pagination-padding-mobile, 0px); }
     [data-carousel-block] .swiper-pagination[data-pagination-visible-mobile='false'] { display: none; }
   }
+
+  [data-carousel-block] .carousel-block__viewport { --carousel-visible-columns: var(--carousel-visible-columns-desktop); --carousel-gap: var(--carousel-gap-desktop, 4px); }
+  [data-carousel-block] .carousel-block__viewport:not(.swiper-initialized) > .swiper-wrapper { column-gap: var(--carousel-gap); }
+  [data-carousel-block] .carousel-block__viewport:not(.swiper-initialized) > .swiper-wrapper > .swiper-slide { width: calc((100% + var(--carousel-gap)) / var(--carousel-visible-columns) - var(--carousel-gap)); }
+  [data-carousel-block][data-carousel-contained-preview='true'] .carousel-block__viewport { overflow: hidden; clip-path: none; }
+  @media (max-width: 767.98px) { [data-carousel-block] .carousel-block__viewport { --carousel-visible-columns: var(--carousel-visible-columns-mobile); --carousel-gap: var(--carousel-gap-mobile, 4px); overflow: hidden; clip-path: none; } }
 {% endstylesheet %}
 
 {% schema %}
@@ -297,6 +314,12 @@
       "type": "checkbox",
       "id": "show_next_slide_preview_on_desktop",
       "label": "t:labels.show_next_slide_preview_on_desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_next_slide_preview_on_mobile",
+      "label": "t:labels.show_next_slide_preview_on_mobile",
       "default": false
     },
     {

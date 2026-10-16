@@ -304,16 +304,44 @@
     {
       "name": "t:general.collection_list",
       "category": "t:general.collections",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56,
+        "desktop_alignment": "left",
+        "mobile_alignment": "center",
+        "gap_desktop": 40,
+        "gap_mobile": 28,
+        "section_width": "full_width"
+      },
       "blocks": [
         {
           "type": "header",
-          "id": "header",
           "static": true,
+          "settings": {
+            "alignment": "left",
+            "width": "fill",
+            "gap_desktop": 12,
+            "gap_mobile": 12,
+            "customize_mobile_alignment": true,
+            "alignment_mobile": "center"
+          },
+          "id": "header",
           "blocks": [
+            {
+              "type": "eyebrow",
+              "settings": {
+                "text": "<p>Form. Function. Finesse.</p>"
+              }
+            },
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Collection list</p>",
+                "text": "<p>Classic collections</p>",
+                "heading_size": "display",
                 "html_tag": "h2"
               }
             }
@@ -321,23 +349,82 @@
         },
         {
           "type": "view-all-button",
-          "id": "view-all",
-          "static": true
+          "static": true,
+          "settings": {
+            "button_label": "Shop all",
+            "button_style": "text",
+            "button_style_mobile": "text",
+            "full_width_mobile": false
+          },
+          "id": "view-all"
         },
         {
           "type": "collection-list-items",
-          "id": "collection-list",
           "static": true,
+          "settings": {
+            "collections": [
+              "shoulder-bags-mara",
+              "top-handle-bags-mara",
+              "evening-bags-mara",
+              "mini-bags-mara",
+              "crossbody-bags-mara"
+            ],
+            "layout": "carousel",
+            "columns_desktop": "5",
+            "columns_mobile": "1",
+            "gap_desktop": 8,
+            "gap_mobile": 8,
+            "show_next_slide_preview_on_mobile": true,
+            "show_navigation_on_desktop": false,
+            "show_pagination_on_desktop": false,
+            "show_next_slide_preview_on_desktop": false,
+            "pagination_top_padding_desktop": 48,
+            "pagination_top_padding_mobile": 24
+          },
+          "id": "collection-list",
           "blocks": [
             {
               "type": "collection-card",
-              "id": "collection-card",
               "static": true,
+              "settings": {
+                "ratio": "landscape",
+                "placement": "below_image",
+                "alignment": "left",
+                "gap_desktop": 4,
+                "gap_mobile": 2,
+                "media_corner_radius": "square",
+                "color_type": "color_scheme",
+                "color_scheme": "scheme-2",
+                "corner_radius": "square",
+                "padding_top": 20,
+                "padding_bottom": 20,
+                "padding_left": 20,
+                "padding_right": 20,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 16,
+                "padding_bottom_mobile": 16,
+                "padding_left_mobile": 16,
+                "padding_right_mobile": 16
+              },
+              "id": "collection-card",
               "blocks": [
                 {
                   "type": "collection-card-title",
-                  "id": "title",
-                  "static": true
+                  "static": true,
+                  "settings": {
+                    "heading_size": "custom",
+                    "html_tag": "h3",
+                    "show_product_count": false,
+                    "custom_heading_size": 16
+                  },
+                  "id": "title"
+                },
+                {
+                  "type": "collection-card-description",
+                  "settings": {
+                    "source": "product_count",
+                    "text_size": "md"
+                  }
                 }
               ]
             }

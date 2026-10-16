@@ -22,3 +22,10 @@ For your contribution to be accepted, you'll need to sign the [Shopify Contribut
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to your branch: `git push origin my-new-feature`
 5. Create a new Pull Request
+
+## Mara release rules
+
+- Keep Theme Check settings-count warnings visible. They may be temporarily accepted; do not disable or suppress the check without explicit approval.
+- Do not stage, commit, or push generated files under `output/`.
+- Do not include test-file changes in a release unless explicitly requested. When asked to discard output and test changes, restore tracked files and remove newly generated/untracked files only in those paths; preserve existing committed tests.
+- Run the full Theme Check with `--fail-level error` and review the staged file list before committing. Report any remaining warnings.

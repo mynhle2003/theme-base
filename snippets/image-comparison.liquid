@@ -20,6 +20,7 @@
   @param {boolean} [show_label_background] - Whether labels receive a background.
   @param {boolean} [show_image_first_mobile] - Whether the before image is first on mobile.
   @param {boolean} [separate_images] - Whether side-by-side images have a visible gap.
+  @param {object} [button_settings] - Optional block-owned per-side links and shared button styling.
   @param {string} [comparison_label] - Accessible name for the component.
   @param {string} [component_style] - Inline custom properties supplied by the caller.
 
@@ -62,6 +63,11 @@
     assign comparison_accessible_label = 'image_comparison.compare' | t
   endif
 
+  assign comparison_mobile_title_class = ''
+  if button_settings.hide_title_on_mobile
+    assign comparison_mobile_title_class = ' image-compare-shell--hide-titles-mobile'
+  endif
+
   assign comparison_variant_class = comparison_variant | replace: '_', '-'
   assign comparison_direction_class = comparison_direction | replace: '_', '-'
   assign comparison_mobile_order_class = ''
@@ -81,7 +87,7 @@
 %}
 
 <image-compare-component
-  class="image-compare-shell image-compare-shell--variant-{{ comparison_variant_class }} image-compare-shell--direction-{{ comparison_direction_class }}{{ comparison_mobile_order_class }}{{ comparison_label_background_class }}{{ comparison_separate_images_class }}"
+  class="image-compare-shell image-compare-shell--variant-{{ comparison_variant_class }} image-compare-shell--direction-{{ comparison_direction_class }}{{ comparison_mobile_order_class }}{{ comparison_label_background_class }}{{ comparison_separate_images_class }}{{ comparison_mobile_title_class }}"
   data-image-compare-shell
   data-comparison-style="{{ comparison_variant }}"
   data-comparison-direction="{{ comparison_direction }}"
@@ -104,7 +110,7 @@
           widths: '400, 600, 800, 1200, 1600, 2400',
           sizes: '100vw'
         %}
-        {% if before_label != blank %}
+        {% if before_label != blank and button_settings.before_button_label == blank %}
           <div class="image-compare__label image-compare__label--before" data-comparison-label="before">
             {{ before_label }}
           </div>
@@ -121,12 +127,55 @@
           widths: '400, 600, 800, 1200, 1600, 2400',
           sizes: '100vw'
         %}
-        {% if after_label != blank %}
+        {% if after_label != blank and button_settings.after_button_label == blank %}
           <div class="image-compare__label image-compare__label--after" data-comparison-label="after">
             {{ after_label }}
           </div>
         {% endif %}
       </div>
+
+      {% liquid
+        assign comparison_button_icon = blank
+        if button_settings.show_icon
+          assign comparison_button_icon = button_settings.icon | default: 'arrow_right'
+        endif
+      %}
+      {% if button_settings.before_button_label != blank %}
+        {% if comparison_variant == 'slider' %}<div class="image-compare__content-clip image-compare__content-clip--before">{% endif %}
+        <div class="image-compare__label image-compare__label--before image-compare__content" data-comparison-label="before">
+          {% if before_label != blank %}<div class="image-compare__title">{{ before_label }}</div>{% endif %}
+          {% render 'theme-button',
+            label: button_settings.before_button_label,
+            url: button_settings.before_button_link,
+            open_in_new_tab: button_settings.button_open_in_new_tab,
+            variant: button_settings.button_style,
+            icon: comparison_button_icon,
+            icon_position: button_settings.icon_position,
+            icon_size: button_settings.icon_size,
+            icon_width: button_settings.icon_width,
+            class: 'image-compare__button'
+          %}
+        </div>
+        {% if comparison_variant == 'slider' %}</div>{% endif %}
+      {% endif %}
+      {% if button_settings.after_button_label != blank %}
+        {% if comparison_variant == 'slider' %}<div class="image-compare__content-clip image-compare__content-clip--after">{% endif %}
+        <div class="image-compare__label image-compare__label--after image-compare__content" data-comparison-label="after">
+          {% if after_label != blank %}<div class="image-compare__title">{{ after_label }}</div>{% endif %}
+          {% render 'theme-button',
+            label: button_settings.after_button_label,
+            url: button_settings.after_button_link,
+            open_in_new_tab: button_settings.button_open_in_new_tab,
+            variant: button_settings.button_style,
+            icon: comparison_button_icon,
+            icon_position: button_settings.icon_position,
+            icon_size: button_settings.icon_size,
+            icon_width: button_settings.icon_width,
+            class: 'image-compare__button'
+          %}
+        </div>
+        {% if comparison_variant == 'slider' %}</div>{% endif %}
+      {% endif %}
 
       {% if comparison_variant == 'slider' %}
         <input
@@ -257,6 +306,57 @@
     line-height: var(--font-body-line-height);
     overflow-wrap: anywhere;
     text-transform: var(--image-compare-label-text-transform, var(--font-body-text-transform));
+  }
+
+  .image-compare__content-clip {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+  }
+
+  .image-compare__content-clip--before {
+    clip-path: inset(0 calc(100% - var(--image-compare-position, 50%)) 0 0);
+  }
+
+  .image-compare__content-clip--after {
+    clip-path: inset(0 0 0 var(--image-compare-position, 50%));
+  }
+
+  .image-compare-shell--direction-vertical .image-compare__content-clip--before {
+    clip-path: inset(0 0 calc(100% - var(--image-compare-position, 50%)) 0);
+  }
+
+  .image-compare-shell--direction-vertical .image-compare__content-clip--after {
+    clip-path: inset(var(--image-compare-position, 50%) 0 0);
+  }
+
+  .image-compare__content {
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    pointer-events: none;
+  }
+
+  .image-compare__content.image-compare__label--after {
+    align-items: flex-end;
+  }
+
+  .image-compare__button {
+    pointer-events: auto;
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  @media (max-width: 767.98px) {
+    .image-compare__content { gap: 8px; }
+
+    .image-compare-shell--hide-titles-mobile .image-compare__title,
+    .image-compare-shell--hide-titles-mobile .image-compare__label:not(.image-compare__content) {
+      display: none;
+    }
   }
 
   .image-compare__label p {
