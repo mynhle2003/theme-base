@@ -12,6 +12,7 @@ Record only theme-specific section/block implementation changes here: Liquid/HTM
 
 | File/path | Base behavior | Theme-specific behavior | Reason | Update/merge rule |
 | --- | --- | --- | --- | --- |
+| `sections/footer.liquid` | Base Footer composition | Preserve variant footer markup/CSS, settings and blocks while adopting top divider, Background media and viewport-aware reveal lifecycle | Owner-authorized Footer base rollout | Merge controls/runtime without replacing the variant preset or saved composition |
 | `assets/carousel-block.js` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
 | `assets/product-collection-carousel.js` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
 | `blocks/_header-localization.liquid` | Personal base at recorded checkpoint | Preexisting Mara implementation from the original remote theme revision, preserved byte-for-byte in this Shop the look rollout | Document existing custom ownership detected by check-custom | Preserve existing code; review upstream conflicts separately from private-image migration |
@@ -494,3 +495,8 @@ sections/announcement-bar.liquid              |  66 +--
 - `snippets/variant-picker.liquid`
 - `snippets/video.liquid`
 - `snippets/view-all-button.liquid`
+
+
+### Footer controls and reveal — 2026-10-16
+
+Owner-authorized team source `1c3db7a1`: add Show top divider and Enable scroll reveal above Section width, add Background media and rename Appearance to Color. Reveal survives editor selection/reload and disables when the Footer exceeds viewport height; info matches the reference theme. Existing variant CSS, preset content and saved layout are preserved; new options default off/none.
