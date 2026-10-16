@@ -18,6 +18,7 @@ Record every theme-specific change here before committing the code. During base 
 
 | File/path | Base behavior | Theme-specific behavior | Reason | Update/merge rule |
 | --- | --- | --- | --- | --- |
+| `sections/countdown.liquid` | Static Countdown composition | Dynamic Countdown (custom) with Custom section block choices; preserve timer logic, settings, preset content and saved block order | Owner-requested Countdown migration | Retain dynamic composition and theme layout values |
 | `snippets/meta-tags.liquid` | Description only when page_description present. | Fallback to existing og_description when missing. | ARCHE-ESSEN-LIGHTHOUSE-ACCESS-005. | Preserve theme/store copy and escaping; no source prose. |
 | `snippets/theme-button.liquid` | Shared button renders visible label. | Adds optional escaped visually-hidden accessible_description. | ARCHE-ESSEN-LIGHTHOUSE-ACCESS-005. | Keep existing callers unaffected when absent. |
 | `blocks/blog-card-button.liquid` | Read more lacks article-title context. | Accessible name includes escaped article title, visible label unchanged. | ARCHE-ESSEN-LIGHTHOUSE-ACCESS-005. | Retain caller/renderer optional description contract. |
