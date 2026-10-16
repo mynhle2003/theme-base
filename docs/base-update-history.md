@@ -1,6 +1,24 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"a0ac2424fa1c7ffe0e74833dd277312fba95068c"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"2a9a0cafe4797b96c9bb96cb45e09b84919815a3"} -->
 
 # Base update history
+
+## 2026-10-16 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `a0ac2424fa1c7ffe0e74833dd277312fba95068c`
+- Updated through team commit: `2a9a0cafe4797b96c9bb96cb45e09b84919815a3`
+- Team commits included: 1
+- Source changes:
+
+```text
+sections/countdown.liquid | 40 +++++++++++++++++++++++++---------------
+ 1 file changed, 25 insertions(+), 15 deletions(-)
+```
+
+- Included team commits:
+  - `2a9a0cafe4797b96c9bb96cb45e09b84919815a3` — fix(countdown): allow flexible theme block composition
+
 
 ## 2026-10-15 — Update from upstream/dev
 
