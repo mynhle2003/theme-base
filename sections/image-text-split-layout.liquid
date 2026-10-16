@@ -337,52 +337,37 @@
       "settings": {
         "section_width": "page_width",
         "position": "center",
-        "customize_mobile_position": false,
-        "position_mobile": "center",
         "content_gap": 64,
         "customize_mobile_gap": true,
-        "content_gap_mobile": 32,
-        "color_scheme": "scheme-1",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "customize_mobile_padding": false
+        "content_gap_mobile": 28,
+        "color_scheme": "scheme-2",
+        "padding_top": 96,
+        "padding_bottom": 48,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 28
       },
       "blocks": [
         {
-          "type": "header",
+          "type": "group",
           "settings": {
+            "direction": "vertical",
             "width": "fill",
+            "height": "fit",
             "alignment": "left",
-            "gap_desktop": 12,
-            "gap_mobile": 8
+            "gap_desktop": 0,
+            "gap_mobile": 0
           },
           "blocks": [
             {
-              "type": "eyebrow",
+              "type": "image",
               "settings": {
-                "text": "<p>New arrivals</p>"
-              }
-            },
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Build your base</p>",
-                "heading_size": "display",
-                "html_tag": "h2"
-              }
-            },
-            {
-              "type": "text",
-              "settings": {
-                "text": "<p>A flexible header composition for editorial content and product stories.</p>"
-              }
-            },
-            {
-              "type": "button",
-              "settings": {
-                "button_label": "Discover more",
-                "button_style": "primary",
-                "width": "fit"
+                "image": "shopify://shop_images/zevra-craft-emotion.avif",
+                "image_ratio_desktop": "ratio_4_3",
+                "image_ratio_mobile": "ratio_4_3",
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "corner_radius": "square"
               }
             }
           ]
@@ -391,26 +376,74 @@
           "type": "group",
           "settings": {
             "direction": "vertical",
-            "alignment": "left",
-            "gap_desktop": 0,
-            "gap_mobile": 0,
             "width": "fill",
             "height": "fit",
-            "appearance_type": "inherit",
-            "padding_top": 0,
-            "padding_bottom": 0,
-            "padding_left": 0,
-            "padding_right": 0,
-            "customize_mobile_padding": false
+            "alignment": "left",
+            "gap_desktop": 32,
+            "gap_mobile": 32,
+            "padding_left": 64,
+            "customize_mobile_padding": true,
+            "padding_left_mobile": 0
           },
           "blocks": [
             {
-              "type": "image",
+              "type": "group",
               "settings": {
-                "width_desktop": "fill",
-                "width_mobile": "fill",
-                "image_ratio_desktop": "auto",
-                "corner_radius": "square"
+                "direction": "vertical",
+                "width": "fill",
+                "height": "fit",
+                "alignment": "left",
+                "gap_desktop": 16,
+                "gap_mobile": 16
+              },
+              "blocks": [
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>HANDCRAFTED EXCELLENCE</p>"
+                  }
+                },
+                {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "width": "fill",
+                    "height": "fit",
+                    "alignment": "left",
+                    "gap_desktop": 24,
+                    "gap_mobile": 24
+                  },
+                  "blocks": [
+                    {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>Where Craft Meets Emotion</p>",
+                        "heading_size": "lg",
+                        "html_tag": "h2",
+                        "width": "fill"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Each MĀRA piece is meticulously handcrafted by artisans who understand that true luxury lies in the details. From precision stitching to hand-finished textures, every element embodies timeless artistry and emotional connection.</p>",
+                        "text_size": "md",
+                        "width": "fill"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "button",
+              "settings": {
+                "button_label": "Discover the Craft",
+                "button_link": "",
+                "button_style": "primary",
+                "show_icon": false,
+                "width": "fit",
+                "width_mobile": "fit"
               }
             }
           ]

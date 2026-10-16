@@ -494,167 +494,199 @@
       "name": "t:general.gallery_custom",
       "category": "t:general.media",
       "settings": {
-        "section_width": "full_width_no_padding",
+        "section_width": "full_width",
         "direction": "vertical",
-        "position": "center",
-        "horizontal_alignment": "space-between",
-        "customize_mobile_alignment": true,
-        "alignment": "center",
-        "alignment_mobile": "center",
-        "gap_desktop": 36,
-        "gap_mobile": 36,
+        "alignment": "left",
+        "gap_desktop": 8,
+        "gap_mobile": 8,
         "color_scheme": "scheme-1",
-        "padding_top": 0,
+        "padding_top": 96,
         "padding_bottom": 0,
-        "customize_mobile_padding": false
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 0
       },
       "blocks": [
         {
-          "type": "carousel",
+          "type": "row",
           "settings": {
-            "columns_desktop": "4",
-            "columns_mobile": "1",
-            "gap_desktop": 0,
-            "gap_mobile": 0,
-            "width": "fill",
-            "show_navigation_on_desktop": false,
-            "show_pagination_on_desktop": false,
-            "show_pagination_on_mobile": false,
-            "autoplay": false,
-            "padding_top": 0,
-            "padding_bottom": 0,
-            "customize_mobile_padding": false
+            "gap_desktop": 8,
+            "gap_mobile": 8
           },
           "blocks": [
             {
-              "type": "slide",
+              "type": "_column",
               "settings": {
-                "direction": "vertical",
+                "width": "custom",
+                "custom_width": 33,
                 "gap_desktop": 0,
-                "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false
+                "gap_mobile": 0
               },
               "blocks": [
                 {
-                  "type": "image",
+                  "type": "group",
                   "settings": {
-                    "image_ratio_desktop": "square",
-                    "image_ratio_mobile": "square",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "limit_width_desktop": false,
-                    "limit_width_mobile": false,
-                    "corner_radius": "square",
-                    "customize_mobile_padding": false
-                  }
+                    "direction": "vertical",
+                    "width": "fill",
+                    "height": "fit",
+                    "alignment": "left",
+                    "gap_desktop": 0,
+                    "gap_mobile": 0,
+                    "appearance_type": "scheme",
+                    "color_scheme": "scheme-3"
+                  },
+                  "blocks": [
+                    {
+                      "type": "image-card",
+                      "settings": {
+                        "background_type": "image",
+                        "show_overlay": true,
+                        "overlay_style": "solid",
+                        "overlay_color": "#181818",
+                        "width_desktop": "fill",
+                        "width_mobile": "fill",
+                        "height_desktop": "ratio_1_1",
+                        "height_mobile": "ratio_1_1",
+                        "position_desktop": "center_center",
+                        "position_mobile": "center_center",
+                        "gap_desktop": 16,
+                        "gap_mobile": 16,
+                        "color_scheme": "scheme-3",
+                        "padding_top": 16,
+                        "padding_bottom": 16,
+                        "padding_left": 20,
+                        "padding_right": 20,
+                        "enable_sticky": false
+                      },
+                      "blocks": [
+                        {
+                          "type": "heading",
+                          "settings": {
+                            "text": "<p>Join our community</p>",
+                            "heading_size": "xl",
+                            "html_tag": "h2",
+                            "width": "fill"
+                          }
+                        },
+                        {
+                          "type": "button",
+                          "settings": {
+                            "button_label": "Follow Us",
+                            "button_style": "tertiary",
+                            "show_icon": false,
+                            "width": "fit",
+                            "width_mobile": "fit"
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
             {
-              "type": "slide",
+              "type": "_column",
               "settings": {
-                "direction": "vertical",
+                "width": "fill",
                 "gap_desktop": 0,
-                "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false
+                "gap_mobile": 0
               },
               "blocks": [
                 {
-                  "type": "image",
+                  "type": "group",
                   "settings": {
-                    "image_ratio_desktop": "square",
-                    "image_ratio_mobile": "square",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "limit_width_desktop": false,
-                    "limit_width_mobile": false,
-                    "corner_radius": "square",
-                    "customize_mobile_padding": false
-                  }
+                    "direction": "horizontal",
+                    "width": "fill",
+                    "height": "fit",
+                    "alignment": "left",
+                    "gap_desktop": 8,
+                    "gap_mobile": 8,
+                    "customize_mobile_alignment": false
+                  },
+                  "blocks": [
+                    {
+                      "type": "image",
+                      "settings": {
+                        "image": "shopify://shop_images/mara-community-gallery-2.png",
+                        "image_ratio_desktop": "ratio_1_1",
+                        "image_ratio_mobile": "ratio_1_1",
+                        "width_desktop": "fill",
+                        "width_mobile": "fill",
+                        "corner_radius": "square"
+                      }
+                    },
+                    {
+                      "type": "image",
+                      "settings": {
+                        "image": "shopify://shop_images/zevra-gallery-mini-bag.avif",
+                        "image_ratio_desktop": "ratio_1_1",
+                        "image_ratio_mobile": "ratio_1_1",
+                        "width_desktop": "fill",
+                        "width_mobile": "fill",
+                        "corner_radius": "square"
+                      }
+                    }
+                  ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "settings": {
+            "direction": "horizontal",
+            "width": "fill",
+            "height": "fit",
+            "alignment": "left",
+            "gap_desktop": 8,
+            "gap_mobile": 8,
+            "customize_mobile_alignment": false
+          },
+          "blocks": [
+            {
+              "type": "image",
+              "settings": {
+                "image": "shopify://shop_images/mara-community-gallery-3.png",
+                "image_ratio_desktop": "ratio_1_1",
+                "image_ratio_mobile": "ratio_1_1",
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "corner_radius": "square"
+              }
             },
             {
-              "type": "slide",
+              "type": "image",
               "settings": {
-                "direction": "vertical",
-                "gap_desktop": 0,
-                "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false
-              },
-              "blocks": [
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "image_ratio_mobile": "square",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "limit_width_desktop": false,
-                    "limit_width_mobile": false,
-                    "corner_radius": "square",
-                    "customize_mobile_padding": false
-                  }
-                }
-              ]
+                "image": "shopify://shop_images/zevra-gallery-green-bag.avif",
+                "image_ratio_desktop": "ratio_1_1",
+                "image_ratio_mobile": "ratio_1_1",
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "corner_radius": "square"
+              }
             },
             {
-              "type": "slide",
+              "type": "image",
               "settings": {
-                "direction": "vertical",
-                "gap_desktop": 0,
-                "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false
-              },
-              "blocks": [
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "image_ratio_mobile": "square",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "limit_width_desktop": false,
-                    "limit_width_mobile": false,
-                    "corner_radius": "square",
-                    "customize_mobile_padding": false
-                  }
-                }
-              ]
+                "image": "shopify://shop_images/zevra-gallery-peekaboo-pair.avif",
+                "image_ratio_desktop": "ratio_1_1",
+                "image_ratio_mobile": "ratio_1_1",
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "corner_radius": "square"
+              }
             },
             {
-              "type": "slide",
+              "type": "image",
               "settings": {
-                "direction": "vertical",
-                "gap_desktop": 0,
-                "gap_mobile": 0,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "customize_mobile_padding": false
-              },
-              "blocks": [
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "image_ratio_mobile": "square",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "limit_width_desktop": false,
-                    "limit_width_mobile": false,
-                    "corner_radius": "square",
-                    "customize_mobile_padding": false
-                  }
-                }
-              ]
+                "image": "shopify://shop_images/mara-community-gallery-1.png",
+                "image_ratio_desktop": "ratio_1_1",
+                "image_ratio_mobile": "ratio_1_1",
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "corner_radius": "square"
+              }
             }
           ]
         }

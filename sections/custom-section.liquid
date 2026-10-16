@@ -365,19 +365,140 @@
       "name": "t:general.custom_section",
       "category": "t:general.layout",
       "settings": {
-        "section_width": "page_width",
-        "alignment": "left",
-        "customize_mobile_alignment": false,
-        "alignment_mobile": "left",
+        "section_width": "full_width_no_padding",
+        "alignment": "center",
+        "content_gap": 0,
         "color_scheme": "scheme-1",
-        "customize_mobile_padding": false
-      }
+        "padding_top": 96,
+        "padding_bottom": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 0
+      },
+      "blocks": [
+        {
+          "type": "marquee",
+          "settings": {
+            "width": "fill",
+            "gap_desktop": 16,
+            "gap_mobile": 16,
+            "alignment": "center",
+            "animation_speed": 1,
+            "animation_direction": "backward",
+            "show_top_divider": false,
+            "show_bottom_divider": false,
+            "show_blurred_edges": false
+          },
+          "blocks": [
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/zevra-brand-tory-burch.avif",
+                "image_ratio": "original",
+                "width_custom_desktop": 188,
+                "width_custom_mobile": 96,
+                "corner_radius": "square"
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/zevra-brand-fendi.avif",
+                "image_ratio": "original",
+                "width_custom_desktop": 188,
+                "width_custom_mobile": 96,
+                "corner_radius": "square"
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/zevra-brand-michael-kors.avif",
+                "image_ratio": "original",
+                "width_custom_desktop": 188,
+                "width_custom_mobile": 96,
+                "corner_radius": "square"
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/zevra-brand-bulgari.avif",
+                "image_ratio": "original",
+                "width_custom_desktop": 188,
+                "width_custom_mobile": 96,
+                "corner_radius": "square"
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/zevra-brand-mulberry.avif",
+                "image_ratio": "original",
+                "width_custom_desktop": 188,
+                "width_custom_mobile": 96,
+                "corner_radius": "square"
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/zevra-brand-marc-jacobs.avif",
+                "image_ratio": "original",
+                "width_custom_desktop": 188,
+                "width_custom_mobile": 96,
+                "corner_radius": "square"
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/zevra-brand-alexander-mcqueen.avif",
+                "image_ratio": "original",
+                "width_custom_desktop": 188,
+                "width_custom_mobile": 96,
+                "corner_radius": "square"
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/zevra-brand-celine.avif",
+                "image_ratio": "original",
+                "width_custom_desktop": 188,
+                "width_custom_mobile": 96,
+                "corner_radius": "square"
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/zevra-brand-jw-anderson.avif",
+                "image_ratio": "original",
+                "width_custom_desktop": 188,
+                "width_custom_mobile": 96,
+                "corner_radius": "square"
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/zevra-brand-dior.avif",
+                "image_ratio": "original",
+                "width_custom_desktop": 188,
+                "width_custom_mobile": 96,
+                "corner_radius": "square"
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Image comparison (custom)",
       "category": "t:general.media",
       "settings": {
-        "section_width": "page_width",
+        "section_width": "full_width",
         "alignment": "center",
         "content_gap": 40,
         "customize_mobile_gap": true,
@@ -414,7 +535,7 @@
               "type": "heading",
               "settings": {
                 "text": "<p>Choose your colour</p>",
-                "heading_size": "display",
+                "heading_size": "xl",
                 "html_tag": "h2",
                 "animation_type": "slide-bottom",
                 "animation_delay": 50
@@ -434,7 +555,7 @@
             "show_image_first_mobile": false,
             "separate_images": false,
             "width_desktop": "fill",
-            "limit_width": true,
+            "limit_width": false,
             "before_label": "<p>Peach bud pink</p>",
             "after_label": "<p>Pale sage green</p>",
             "font": "heading",

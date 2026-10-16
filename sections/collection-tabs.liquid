@@ -958,11 +958,11 @@
       "category": "t:general.collection",
       "settings": {
         "section_width": "full_width",
-        "layout_direction": "vertical",
-        "tab_position": "center",
+        "layout_direction": "horizontal",
+        "tab_position": "right",
         "mobile_alignment": "center",
         "gap_desktop": 40,
-        "gap_mobile": 32,
+        "gap_mobile": 28,
         "max_products": 5,
         "layout_type": "carousel",
         "columns_desktop": "4",
@@ -975,9 +975,9 @@
         "navigation_style": "icon_only",
         "navigation_icon": "long_arrow",
         "navigation_behavior": "always",
-        "show_pagination_on_desktop": false,
+        "show_pagination_on_desktop": true,
         "pagination_type": "progress_bar",
-        "pagination_top_padding_desktop": 48,
+        "pagination_top_padding_desktop": 40,
         "pagination_top_padding_mobile": 24,
         "pagination_limit_width": false,
         "pagination_max_width": 260,
@@ -989,55 +989,10 @@
         "padding_bottom": 96,
         "customize_mobile_padding": true,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 64,
+        "padding_bottom_mobile": 56,
         "show_next_slide_preview_on_mobile": true
       },
       "blocks": [
-        {
-          "type": "header",
-          "static": true,
-          "settings": {
-            "width": "fill",
-            "gap_desktop": 12,
-            "gap_mobile": 12,
-            "alignment": "center"
-          },
-          "blocks": [
-            {
-              "type": "eyebrow",
-              "settings": {
-                "text": "<p>Signature Silhouettes</p>",
-                "animation_type": "fade",
-                "animation_delay": 0
-              }
-            },
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Editor’s Pick</p>",
-                "heading_size": "xl",
-                "html_tag": "h2",
-                "animation_type": "slide-bottom",
-                "animation_delay": 50
-              }
-            }
-          ],
-          "id": "header"
-        },
-        {
-          "type": "tab-layout",
-          "static": true,
-          "settings": {
-            "vertical_layout": false,
-            "style": "sliding_line",
-            "active_style": "primary",
-            "gap_desktop": 32,
-            "gap_mobile": 32,
-            "font": "body",
-            "heading_size": "sm"
-          },
-          "id": "tab-layout"
-        },
         {
           "type": "collection-tab",
           "settings": {
@@ -1047,11 +1002,11 @@
           "blocks": [
             {
               "type": "product-card",
-              "static": true,
               "settings": {
                 "color_type": "inherit",
                 "color_scheme": "scheme-1"
               },
+              "static": true,
               "id": "product-card"
             }
           ]
@@ -1065,31 +1020,14 @@
           "blocks": [
             {
               "type": "product-card",
-              "static": true,
               "settings": {
                 "color_type": "inherit",
                 "color_scheme": "scheme-1"
               },
+              "static": true,
               "id": "product-card"
             }
           ]
-        },
-        {
-          "type": "tabs-view-all-button",
-          "static": true,
-          "settings": {
-            "button_label": "View all",
-            "button_style": "tertiary",
-            "show_icon": false,
-            "icon": "arrow_right",
-            "icon_position": "after",
-            "icon_size": "inherit",
-            "icon_width": 20,
-            "width": "fit",
-            "width_mobile": "fit",
-            "customize_mobile_padding": false
-          },
-          "id": "collection-tabs-view-all"
         }
       ]
     }

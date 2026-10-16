@@ -428,17 +428,16 @@
       "name": "t:general.image_cards",
       "category": "t:general.banners",
       "settings": {
-        "section_width": "page_width",
+        "section_width": "full_width_no_padding",
         "height": "auto",
-        "custom_height": 100,
         "direction": "horizontal",
         "vertical_on_mobile": true,
-        "gap_desktop": 32,
-        "gap_mobile": 8,
-        "color_scheme": "scheme-1",
-        "customize_mobile_padding": false,
-        "padding_top": 50,
-        "padding_bottom": 50,
+        "gap_desktop": 0,
+        "gap_mobile": 0,
+        "color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": true,
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 0
       },
@@ -446,49 +445,69 @@
         {
           "type": "image-card",
           "settings": {
+            "background_type": "image",
+            "image": "shopify://shop_images/zevra-hero-by-the-way.avif",
+            "mobile_image": "shopify://shop_images/zevra-hero-by-the-way.avif",
+            "show_overlay": true,
+            "overlay_style": "solid",
+            "overlay_color": "#00000033",
+            "width_desktop": "fill",
+            "width_mobile": "fill",
+            "height_desktop": "ratio_5_4",
+            "height_mobile": "ratio_3_4",
+            "enable_sticky": false,
+            "position_desktop": "bottom_left",
+            "position_mobile": "bottom_left",
+            "gap_desktop": 32,
+            "gap_mobile": 24,
             "color_scheme": "scheme-3",
-            "position_desktop": "center_center",
-            "position_mobile": "center_center",
-            "padding_top": 32,
-            "padding_bottom": 32,
-            "padding_left": 32,
-            "padding_right": 32
+            "padding_top": 80,
+            "padding_bottom": 80,
+            "padding_left": 56,
+            "padding_right": 56,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 40,
+            "padding_bottom_mobile": 40,
+            "padding_left_mobile": 16,
+            "padding_right_mobile": 16
           },
           "blocks": [
             {
-              "type": "eyebrow",
+              "type": "header",
               "settings": {
-                "text": "<p>Eyebrow</p>",
-                "animation_type": "fade",
-                "animation_delay": 0
-              }
-            },
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Heading</p>",
-                "heading_size": "display",
-                "html_tag": "h2",
-                "animation_type": "slide-bottom",
-                "animation_delay": 50
-              }
+                "width": "fill",
+                "alignment": "left",
+                "gap_desktop": 16,
+                "gap_mobile": 8
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>by the way</p>",
+                    "heading_size": "display",
+                    "html_tag": "h1",
+                    "width": "fill"
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Discover the perfect blend of elegance and functionality in our stunning bags</p>",
+                    "text_size": "md",
+                    "width": "fill"
+                  }
+                }
+              ]
             },
             {
               "type": "button",
               "settings": {
-                "button_label": "Button label",
-                "button_style": "primary",
-                "button_open_in_new_tab": false,
+                "button_label": "Shop now",
+                "button_style": "tertiary",
                 "show_icon": false,
-                "icon": "arrow",
-                "icon_position": "after",
-                "icon_size": "inherit",
-                "icon_width": 20,
                 "width": "fit",
-                "width_mobile": "fit",
-                "customize_mobile_padding": false,
-                "animation_type": "fade",
-                "animation_delay": 150
+                "width_mobile": "fit"
               }
             }
           ]
@@ -496,49 +515,69 @@
         {
           "type": "image-card",
           "settings": {
+            "background_type": "image",
+            "image": "shopify://shop_images/zevra-hero-peekaboo.avif",
+            "mobile_image": "shopify://shop_images/zevra-hero-peekaboo.avif",
+            "show_overlay": true,
+            "overlay_style": "solid",
+            "overlay_color": "#00000033",
+            "width_desktop": "fill",
+            "width_mobile": "fill",
+            "height_desktop": "ratio_5_4",
+            "height_mobile": "ratio_3_4",
+            "enable_sticky": false,
+            "position_desktop": "bottom_left",
+            "position_mobile": "bottom_left",
+            "gap_desktop": 32,
+            "gap_mobile": 24,
             "color_scheme": "scheme-3",
-            "position_desktop": "center_center",
-            "position_mobile": "center_center",
-            "padding_top": 32,
-            "padding_bottom": 32,
-            "padding_left": 32,
-            "padding_right": 32
+            "padding_top": 80,
+            "padding_bottom": 80,
+            "padding_left": 56,
+            "padding_right": 56,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 40,
+            "padding_bottom_mobile": 40,
+            "padding_left_mobile": 16,
+            "padding_right_mobile": 16
           },
           "blocks": [
             {
-              "type": "eyebrow",
+              "type": "header",
               "settings": {
-                "text": "<p>Eyebrow</p>",
-                "animation_type": "fade",
-                "animation_delay": 0
-              }
-            },
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Heading</p>",
-                "heading_size": "display",
-                "html_tag": "h2",
-                "animation_type": "slide-bottom",
-                "animation_delay": 50
-              }
+                "width": "fill",
+                "alignment": "left",
+                "gap_desktop": 16,
+                "gap_mobile": 8
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Peekaboo</p>",
+                    "heading_size": "display",
+                    "html_tag": "h2",
+                    "width": "fill"
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Explore our exclusive collection and find the perfect bag</p>",
+                    "text_size": "md",
+                    "width": "fill"
+                  }
+                }
+              ]
             },
             {
               "type": "button",
               "settings": {
-                "button_label": "Button label",
-                "button_style": "primary",
-                "button_open_in_new_tab": false,
+                "button_label": "Shop now",
+                "button_style": "tertiary",
                 "show_icon": false,
-                "icon": "arrow",
-                "icon_position": "after",
-                "icon_size": "inherit",
-                "icon_width": 20,
                 "width": "fit",
-                "width_mobile": "fit",
-                "customize_mobile_padding": false,
-                "animation_type": "fade",
-                "animation_delay": 150
+                "width_mobile": "fit"
               }
             }
           ]
