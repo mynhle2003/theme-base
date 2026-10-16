@@ -29,7 +29,7 @@
     assign shop_the_look_gap_mobile = 16
   endif
 
-  assign shop_the_look_image_block = section.blocks | where: 'type', 'image' | first
+  assign shop_the_look_image_block = section.blocks | where: 'type', '_shop-the-look-image' | first
   assign shop_the_look_image_ratio_desktop = 'auto'
   if shop_the_look_image_block != blank
     assign shop_the_look_image_ratio_desktop = shop_the_look_image_block.settings.image_ratio_desktop | default: 'auto'
@@ -72,7 +72,7 @@
   <div class="container {{ shop_the_look_section_width }} shop-the-look-section__container{% if shop_the_look_section_no_padding %} shop-the-look-section__container--no-padding{% endif %}">
     <div class="shop-the-look-section__layout">
       <div class="shop-the-look-section__media">
-        {% content_for 'block', type: 'image', id: 'image' %}
+        {% content_for 'block', type: '_shop-the-look-image', id: 'image' %}
         <div
           class="shop-the-look-section__hotspots"
           data-shop-the-look-hotspots
@@ -254,18 +254,6 @@
 {
   "name": "t:general.shop_the_look",
   "class": "section-shop-the-look",
-  "max_blocks": 3,
-  "blocks": [
-    {
-      "type": "image"
-    },
-    {
-      "type": "header"
-    },
-    {
-      "type": "shop-the-look-products"
-    }
-  ],
   "settings": [
     {
       "type": "header",
@@ -429,7 +417,7 @@
       },
       "blocks": [
         {
-          "type": "image",
+          "type": "_shop-the-look-image",
           "static": true,
           "settings": {
             "image": "shopify://shop_images/elara-shop-the-look-figma-crop.avif",
@@ -441,10 +429,7 @@
             "image_ratio_mobile": "custom",
             "image_ratio_custom_width_mobile": 6,
             "image_ratio_custom_height_mobile": 7,
-            "width_desktop": "fill",
-            "width_mobile": "fill",
-            "corner_radius": "square",
-            "customize_mobile_padding": false
+            "corner_radius": "square"
           },
           "id": "image"
         },

@@ -15,6 +15,7 @@ This table records current implementation differences from personal `main`: Liqu
 
 | File/path | Base behavior | Theme-specific behavior | Reason | Update/merge rule |
 | --- | --- | --- | --- | --- |
+| `blocks/_shop-the-look-image.liquid` | Shared image and addable section block list | Only static section slots; private image retains variant ratio/media controls, removes layout width and padding controls; saved image data migrates with stable IDs | Owner-requested Shop the look base rollout | Keep section image private and preserve variant media values when merging |
 | `assets/header.js`, `assets/critical.css`, `blocks/_header-top.liquid`, `blocks/_header-menu.liquid`, `blocks/_header-menu-toggle.liquid`, `blocks/_header-logo.liquid`, `blocks/_header-search.liquid`, `blocks/_header-account.liquid`, `blocks/_header-cart.liquid`, `blocks/_header-mega-menu.liquid`, `blocks/_mega-menu-banners.liquid`, `blocks/_mega-menu-banner.liquid`, `snippets/header-figma-icon.liquid` | Previous header navigation/actions and basic mega banners. | Adopt Malandra header contracts and requested visual composition; preserve two Elara logo URLs. | Owner requested variant update 2026-10-15. | Preserve logo artwork and shared responsive/editor/action contracts; see receipt below. |
 | `sections/hero.liquid`, `snippets/hero-image.liquid`, `sections/search-overlay.liquid`, `blocks/_search-input.liquid`, `assets/block-animations.js`, `snippets/tab-layout-styles.liquid` | Previous Hero/Search/animation/tab behavior. | First Hero priority/preload, shared Search appearance, idempotent marquee scan, deferred below-fold section preparation and inactive tab contrast. | MALANDRA-ELARA variant IDs recorded below. | Preserve Elara media/presets, native overlays, lifecycle and source-size caps. |
 | `sections/collections-with-background.liquid`, `sections/collections-with-tabs.liquid`, `sections/collection-banner.liquid`, `sections/featured-collection-horizontal.liquid`, `sections/slideshow.liquid`, `blocks/slideshow-slide.liquid`, `blocks/press-quotes.liquid`, `blocks/timeline-slide.liquid`, `assets/section-collections-with-background.css`, `assets/section-collections-with-tabs.css`, `assets/section-collection-banner.css`, `assets/section-featured-collection-horizontal.css`, `assets/section-slideshow.css`, `assets/block-slideshow-slide.css`, `assets/block-press-quotes.css`, `assets/block-timeline-slide.css` | CSS bundled globally. | Load byte-identical Elara CSS with each rendered owner. | MALANDRA-ELARA-LIGHTHOUSE-CSS-002. | Keep owner and stylesheet dependency together; preserve pre-existing horizontal collection edits. |
@@ -2617,3 +2618,8 @@ Owner-authorized migration from team `2a9a0caf`, personal main `2cf6e5ab`: renam
 - `snippets/variant-picker.liquid`
 - `snippets/video.liquid`
 - `snippets/view-all-button.liquid`
+
+
+### Shop the look migration — 2026-10-16
+
+Owner-authorized team commit `bf4b69b5`: disallow extra section blocks; migrate static image to private `_shop-the-look-image`, retain saved media, IDs, ratio/height/radius/overlay controls and compatible variant settings; remove image layout width and padding controls. Shared Image is unchanged. Normalize Countdown preset label to Count down (Custom).
