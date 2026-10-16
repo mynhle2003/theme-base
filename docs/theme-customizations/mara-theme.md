@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"2cf6e5ab70eaffa97d43ce8f6f9fb658034713bf"} -->
+<!-- theme-base-sync-state: {"sha":"2593c6f2f1c69fdab3d90e2468446b55e8550055"} -->
 # Customization record: mara-theme
 
 Theme branch: `theme/mara-theme`
@@ -21,6 +21,20 @@ Record only theme-specific section/block implementation changes here: Liquid/HTM
 | --- | --- | --- | --- |
 
 ## Base sync history
+
+### 2026-10-16 — Update from personal main
+
+- Previous main commit: `2cf6e5ab70eaffa97d43ce8f6f9fb658034713bf`
+- Updated through main commit: `2593c6f2f1c69fdab3d90e2468446b55e8550055`
+- Main commits included: 1
+- Included main commits:
+  - `2593c6f2f1c69fdab3d90e2468446b55e8550055` — chore(base): update base with 1 upstream commits through fea78bca
+- Change summary:
+
+```text
+No file changes.
+```
+
 
 ### 2026-10-16 — Update from personal main
 
