@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"b7ffd45f46adb47ca54be8cf841f82a84fc97348"} -->
+<!-- theme-base-sync-state: {"sha": "b7ffd45f46adb47ca54be8cf841f82a84fc97348"} -->
 # Customization record: elara-theme
 
 Theme branch: `theme/elara-theme`
@@ -3757,3 +3757,29 @@ Owner-authorized team source `1c3db7a1`: add Show top divider and Enable scroll 
 - `snippets/variant-picker.liquid`
 - `snippets/video.liquid`
 - `snippets/view-all-button.liquid`
+
+### 2026-10-16 — Port approved background media and ratio fixes
+
+- Team source: `328b2bee5e9f16c1079d4613755c5e966b65452a`; personal main: `b7ffd45f46adb47ca54be8cf841f82a84fc97348`.
+- Previous checkpoint: `b7ffd45f46adb47ca54be8cf841f82a84fc97348`.
+- Included main commit: `b7ffd45f` — chore(base): update base with 1 upstream commits through 328b2bee.
+- Owner approved applying this specific fix inside retained custom implementations, rebuilding affected ratio options from base and retaining custom options.
+- Preserve template/preset content, IDs, order, layout and existing custom setting IDs. Convert only equivalent Banner ratio aliases to canonical values.
+- Apply clipped one-pixel background paint and nested-picture sizing, exact Image card/Banner fractions and active image/video Original ratios. Keep unrelated local work outside the release.
+- Previously retained implementations not involved in this fix remain unchanged.
+- Updated paths:
+  - `blocks/_columns-column.liquid`
+  - `blocks/banner.liquid`
+  - `blocks/image-card.liquid`
+  - `blocks/slide.liquid`
+  - `sections/bundle-builder.liquid`
+  - `sections/collections-with-background.liquid`
+  - `sections/collections-with-tabs.liquid`
+  - `sections/email-signup-form.liquid`
+  - `sections/featured-collection-banner.liquid`
+  - `sections/featured-product.liquid`
+  - `sections/image-text-split-layout.liquid`
+  - `sections/video-product-carousel-custom.liquid`
+  - `snippets/image-ratio-value.liquid`
+  - `snippets/media-background.liquid`
+  - `snippets/media-card.liquid`
