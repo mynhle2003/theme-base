@@ -19,6 +19,7 @@ This table records current implementation differences from personal `main`: Liqu
 
 | File/path | Base behavior | Theme-specific behavior | Reason | Update/merge rule |
 | --- | --- | --- | --- | --- |
+| `blocks/_shop-the-look-image.liquid` | Shared image and addable section block list | Only static section slots; private image retains variant ratio/media controls, removes layout width and padding controls; saved image data migrates with stable IDs | Owner-requested Shop the look base rollout | Keep section image private and preserve variant media values when merging |
 | `assets/block-animations.js` | Build every section controller at startup, including far below the viewport. | Storefront defers far section controllers with a 300px approach observer; near/focused/zero-height roots, editor and missing-IO fallback remain immediate; pending unload unobserves. | Reduce mobile startup animation work, 2026-10-15. | Keep effect/delay/boot/focus/reduced-motion/no-JS contracts and marquee idempotence; see MALANDRA-ELARA-LIGHTHOUSE-ANIMATION-005 before applying elsewhere. |
 | `assets/block-animations.js` | Excluded nodes receive repeated no-op class/data writes during every scan. | Guard removal of absent reveal-pending and repeated animationInitialized=true writes; stop feedback into marquee clone MutationObserver. | Best Practices ImageElements stale-node error; 108→0 clone removals/600ms, 2026-10-15. | Preserve idempotent excluded-node cleanup alongside existing animation settings, exclusions and editor lifecycle; do not alter motion presets or SVG safety. |
 | `sections/hero.liquid`, `snippets/hero-image.liquid` | Hero uses generic image_tag without matching head hints. | First image Hero eager/high with media-qualified preload/picture parity and source-size caps; later Hero lazy/auto. | Lighthouse request discovery, 2026-10-15. | Preserve art direction/focal point, video path and existing head marker consumer; do not preload later heroes. |
@@ -2704,3 +2705,8 @@ Owner-authorized migration from team `2a9a0caf`, personal main `2cf6e5ab`: renam
 - `snippets/variant-picker.liquid`
 - `snippets/video.liquid`
 - `snippets/view-all-button.liquid`
+
+
+### Shop the look migration — 2026-10-16
+
+Owner-authorized team commit `bf4b69b5`: disallow extra section blocks; migrate static image to private `_shop-the-look-image`, retain saved media, IDs, ratio/height/radius/overlay controls and compatible variant settings; remove image layout width and padding controls. Shared Image is unchanged. Normalize Countdown preset label to Count down (Custom).

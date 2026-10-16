@@ -29,7 +29,7 @@
     assign shop_the_look_gap_mobile = 16
   endif
 
-  assign shop_the_look_image_block = section.blocks | where: 'type', 'image' | first
+  assign shop_the_look_image_block = section.blocks | where: 'type', '_shop-the-look-image' | first
   assign shop_the_look_image_ratio_desktop = 'auto'
   if shop_the_look_image_block != blank
     assign shop_the_look_image_ratio_desktop = shop_the_look_image_block.settings.image_ratio_desktop | default: 'auto'
@@ -72,7 +72,7 @@
   <div class="container {{ shop_the_look_section_width }} shop-the-look-section__container{% if shop_the_look_section_no_padding %} shop-the-look-section__container--no-padding{% endif %}">
     <div class="shop-the-look-section__layout">
       <div class="shop-the-look-section__media">
-        {% content_for 'block', type: 'image', id: 'image' %}
+        {% content_for 'block', type: '_shop-the-look-image', id: 'image' %}
         <div
           class="shop-the-look-section__hotspots"
           data-shop-the-look-hotspots
@@ -254,18 +254,6 @@
 {
   "name": "t:general.shop_the_look",
   "class": "section-shop-the-look",
-  "max_blocks": 3,
-  "blocks": [
-    {
-      "type": "image"
-    },
-    {
-      "type": "header"
-    },
-    {
-      "type": "shop-the-look-products"
-    }
-  ],
   "settings": [
     {
       "type": "header",
@@ -429,16 +417,13 @@
       },
       "blocks": [
         {
-          "type": "image",
+          "type": "_shop-the-look-image",
           "static": true,
           "settings": {
-            "alt_text": "Statement rings styled on a model’s hand",
+            "alt_text": "Statement rings styled on a model\u2019s hand",
             "image_ratio_desktop": "fill_height",
             "image_ratio_mobile": "ratio_1_1",
-            "width_desktop": "fill",
-            "width_mobile": "fill",
             "corner_radius": "square",
-            "customize_mobile_padding": false,
             "image": "shopify://shop_images/malandra-shop-the-look.avif",
             "mobile_image": "shopify://shop_images/malandra-shop-the-look.avif"
           },
