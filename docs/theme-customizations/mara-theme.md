@@ -12,6 +12,7 @@ Record only theme-specific section/block implementation changes here: Liquid/HTM
 
 | File/path | Base behavior | Theme-specific behavior | Reason | Update/merge rule |
 | --- | --- | --- | --- | --- |
+| `sections/countdown.liquid` | Static content, timer and button slots | Dynamic Countdown (custom), same block choices as this theme’s Custom section; preserve all section settings, timer runtime and existing preset content/layout. Saved instances unlock blocks with explicit order; generic child sizing replaces fixed slot selectors. | Owner requested team-base Countdown rollout, 2026-10-16 | Retain variant options and content; review composition migration together with templates |
 | _No customizations recorded yet_ | | | | |
 
 ## Base update decisions
@@ -191,3 +192,8 @@ blocks/_bundle-product-list.liquid             | 189 +++++++-
  sections/testimonials-horizontal-custom.liquid |  59 ++-
  158 files changed, 16791 insertions(+), 2758 deletions(-)
 ```
+
+
+### Countdown composition migration — 2026-10-16
+
+Owner-authorized migration from team `2a9a0caf`, personal main `2cf6e5ab`: rename preset to Countdown (custom), use dynamic blocks and the existing Custom section allow-list, unlock saved instances while preserving block IDs, order, content and all layout settings. Countdown timer runtime is unchanged.
