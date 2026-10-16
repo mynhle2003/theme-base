@@ -1,6 +1,54 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"1c3db7a1ccc707313cfdcced84d4ee3498d01a4d"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"328b2bee5e9f16c1079d4613755c5e966b65452a"} -->
 
 # Base update history
+
+## 2026-10-16 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `1c3db7a1ccc707313cfdcced84d4ee3498d01a4d`
+- Updated through team commit: `328b2bee5e9f16c1079d4613755c5e966b65452a`
+- Team commits included: 1
+- Source changes:
+
+```text
+assets/component-blocks-image-card.css      | 32 +++++-----
+ assets/critical.css                         | 21 +++++++
+ blocks/_columns-column.liquid               |  2 +-
+ blocks/banner.liquid                        | 92 +++++++++++++++++++++--------
+ blocks/image-card.liquid                    | 28 ++++-----
+ blocks/slide.liquid                         |  4 +-
+ sections/bundle-builder.liquid              |  4 +-
+ sections/collection-list-thumbnails.liquid  |  2 +-
+ sections/collection-list.liquid             |  4 +-
+ sections/collections-with-background.liquid |  4 +-
+ sections/collections-with-tabs.liquid       |  4 +-
+ sections/contact-form-custom.liquid         |  4 +-
+ sections/contact-information.liquid         |  2 +-
+ sections/custom-section.liquid              |  2 +-
+ sections/email-signup-form.liquid           |  2 +-
+ sections/featured-collection-banner.liquid  |  4 +-
+ sections/featured-product.liquid            |  2 +-
+ sections/gallery-carousel.liquid            |  2 +-
+ sections/gallery-full-width-strip.liquid    |  2 +-
+ sections/gallery-image-grid.liquid          |  2 +-
+ sections/icon-text-cards.liquid             |  2 +-
+ sections/icon-text-inline.liquid            |  2 +-
+ sections/image-cards.liquid                 |  2 +-
+ sections/image-text-split-layout.liquid     |  2 +-
+ sections/promo-grid-custom.liquid           |  2 +-
+ sections/rich-text.liquid                   |  2 +-
+ sections/scroll-reading-text.liquid         |  2 +-
+ sections/testimonial-carousel.liquid        |  2 +-
+ snippets/image-ratio-value.liquid           | 60 ++++++++++++++++---
+ snippets/media-background.liquid            | 36 +++++++----
+ snippets/media-card.liquid                  | 60 +++++++------------
+ 31 files changed, 244 insertions(+), 147 deletions(-)
+```
+
+- Included team commits:
+  - `328b2bee5e9f16c1079d4613755c5e966b65452a` — fix(media): normalize banner ratios and cover background pixel seams
+
 
 ## 2026-10-16 — Update from upstream/dev
 
