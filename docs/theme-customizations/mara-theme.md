@@ -394,3 +394,25 @@ Chevron retains its original path,24px viewBox and18px rendered box. Stroke1.666
   - `snippets/image-ratio-value.liquid`
   - `snippets/media-background.liquid`
   - `snippets/media-card.liquid`
+
+### 2026-10-16 — Announcement/Header first paint follow-up
+
+- Reference: Arche `assets/critical.css`, overlay Header first-paint rules. The previous media-ratio release did not port this separate Header fix.
+- Add the same server-rendered overlap geometry and transparent scheme rules to Mara before deferred section CSS or Header initialization.
+- Include both direct `img` and `picture > img` Announcement background markup in critical sizing and cover rules; a mobile image is optional. Scope these sizing selectors under `.announcement-bar` so later shared `.image` CSS cannot reset their absolute placement or height.
+- Preserve Announcement/Header settings, content, placement, animation, templates and preset values.
+
+
+### Announcement Close alignment — 2026-10-16
+
+Figma node47045:12545, inspected through its Header > Container > close layers:1920px root,1824px centered container,16px Close at right0/bottom8px. The visible icon therefore ends48px from the viewport edge. `sections/announcement-bar.liquid` now positions the32px button at page margin minus its8px padding, replacing the fixed12px button inset (20px icon inset). Uses existing desktop/tablet/mobile page-margin tokens and Foundation breakpoints768/1150; preserves centered vertical position, hit area, SVG and dismissal behavior. No global margins changed. Figma desktop alignment verified from Inspector; storefront render remains unverified.
+
+
+### Header edge action padding compensation — 2026-10-16
+
+`blocks/_header-top.liquid`: first/last action children in each Header column use negative logical outer margins from the existing `--header-action-padding-inline`. This cancels the extra half-Actions-gap inset at the column edges, while retaining action padding/hit area and interior icon spacing. Logos and menu blocks are excluded. The variable already switches to mobile Actions gap below992px; no duplicated gap calculations, fixed page margins or global spacing settings were introduced. Both logical directions are supported. Preserve these rules with the shared action-padding owner during base updates. Browser verification remains pending.
+
+
+## Split slide text reveal fix — 2026-10-16
+
+Split slide activation removes inert, but the block entrance observer previously reconciled only tabs and hero slides. Text already intersecting while inactive could remain reveal-pending after switching. Added .testimonial-split-slide to shared animation scopes so inert/class changes reset and reveal its content. Preserves merchant animation choices and reduced motion. Ten existing animation tests, three testimonial runtime/preset tests and a targeted inactive→active→inactive→active regression simulation pass. Full Theme Check: zero errors, six existing settings-count warnings. No test files changed; browser visual QA unavailable.

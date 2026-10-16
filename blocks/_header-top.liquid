@@ -203,6 +203,15 @@
       box-shadow var(--motion-duration-standard) var(--motion-ease-standard);
   }
 
+  /* Keep edge glyphs on the page margin while preserving action hit padding. */
+  .header-top .header__column > :is(.header-search, .header-account, .header-cart, .header-menu-toggle, .header-localization):first-child {
+    margin-inline-start: calc(-1 * var(--header-action-padding-inline));
+  }
+
+  .header-top .header__column > :is(.header-search, .header-account, .header-cart, .header-menu-toggle, .header-localization):last-child {
+    margin-inline-end: calc(-1 * var(--header-action-padding-inline));
+  }
+
   .header__column .header-logo--center {
     position: static;
     transform: none;
