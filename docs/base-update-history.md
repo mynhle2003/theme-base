@@ -1,6 +1,26 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"328b2bee5e9f16c1079d4613755c5e966b65452a"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"f355527087585e3356a58e47b69a9115067a684e"} -->
 
 # Base update history
+
+## 2026-10-16 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `328b2bee5e9f16c1079d4613755c5e966b65452a`
+- Updated through team commit: `f355527087585e3356a58e47b69a9115067a684e`
+- Team commits included: 1
+- Source changes:
+
+```text
+assets/critical.css        | 23 +++++++++++++++++++++--
+ blocks/_header-menu.liquid |  7 +++----
+ sections/footer.liquid     |  4 ++++
+ 3 files changed, 28 insertions(+), 6 deletions(-)
+```
+
+- Included team commits:
+  - `f355527087585e3356a58e47b69a9115067a684e` — fix(theme): stabilize header backgrounds and footer editor layout
+
 
 ## 2026-10-16 — Update from upstream/dev
 
