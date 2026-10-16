@@ -1956,3 +1956,8 @@ templates/page.about-us.json
 - Three-way integration preserves theme implementation outside the shared fixes. Custom SVG uses isolated image rendering and input validation; icon bounds use flex layout; shared underline uses positive internal padding and bottom zero.
 - Collection tabs dynamically allow only Collection tab. Static controls remain; all section settings and presets, templates, section-group composition and saved config are preserved. No structural preset rebuild is needed for this source change.
 - Scope: `assets/component-pagination.css`, `assets/component-search-suggestions.css`, `assets/critical.css`, `blocks/icon.liquid`, `sections/collection-tabs.liquid`, `snippets/css-variables.liquid`, `snippets/custom-icon-image.liquid`, `snippets/icon.liquid`, `snippets/tab-layout-styles.liquid`.
+
+
+### Countdown composition migration — 2026-10-16
+
+Owner-authorized migration from team `2a9a0caf`, personal main `2cf6e5ab`: rename preset to Countdown (custom), use dynamic blocks and the existing Custom section allow-list, unlock saved instances while preserving block IDs, order, content and all layout settings. Countdown timer runtime is unchanged.

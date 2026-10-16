@@ -1583,7 +1583,6 @@
       "blocks": {
         "content": {
           "type": "group",
-          "static": true,
           "settings": {
             "direction": "vertical",
             "position": "center",
@@ -1685,7 +1684,6 @@
         },
         "countdown": {
           "type": "countdown-timer",
-          "static": true,
           "settings": {
             "style": "with_labels",
             "show_background": true,
@@ -1718,7 +1716,6 @@
         },
         "button": {
           "type": "button",
-          "static": true,
           "settings": {
             "button_label": "SHOP SALE",
             "button_link": "",
@@ -1768,7 +1765,12 @@
         "customize_mobile_padding": true,
         "padding_top_mobile": 48,
         "padding_bottom_mobile": 48
-      }
+      },
+      "block_order": [
+        "content",
+        "countdown",
+        "button"
+      ]
     },
     "featured_product_heading": {
       "type": "rich-text",
