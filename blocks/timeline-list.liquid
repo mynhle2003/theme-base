@@ -667,8 +667,14 @@
       "id": "navigation_position",
       "label": "t:labels.position",
       "options": [
-        { "value": "outside", "label": "t:options.collection_navigation_position.outside" },
-        { "value": "inside", "label": "t:options.collection_navigation_position.inside" }
+        {
+          "value": "outside",
+          "label": "t:options.collection_navigation_position.outside"
+        },
+        {
+          "value": "inside",
+          "label": "t:options.collection_navigation_position.inside"
+        }
       ],
       "default": "outside"
     },
@@ -721,8 +727,14 @@
       "id": "navigation_behavior",
       "label": "t:labels.behavior",
       "options": [
-        { "value": "always", "label": "t:options.collection_navigation_behavior.always" },
-        { "value": "show_on_hover", "label": "t:options.collection_navigation_behavior.show_on_hover" }
+        {
+          "value": "always",
+          "label": "t:options.collection_navigation_behavior.always"
+        },
+        {
+          "value": "show_on_hover",
+          "label": "t:options.collection_navigation_behavior.show_on_hover"
+        }
       ],
       "default": "always",
       "visible_if": "{{ block.settings.navigation_position == 'inside' }}"

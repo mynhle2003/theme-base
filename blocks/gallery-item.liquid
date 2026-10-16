@@ -54,19 +54,106 @@
   "name": "Gallery item",
   "tag": null,
   "settings": [
-    { "type": "header", "content": "Image" },
-    { "type": "image_picker", "id": "image", "label": "Image" },
-    { "type": "image_picker", "id": "mobile_image", "label": "Mobile image" },
-    { "type": "text", "id": "alt_text", "label": "Alt text" },
-    { "type": "header", "content": "Profile" },
-    { "type": "image_picker", "id": "avatar_image", "label": "Avatar" },
-    { "type": "text", "id": "avatar_alt", "label": "Avatar alt text" },
-    { "type": "text", "id": "text", "label": "Text", "default": "@pam_sam" },
-    { "type": "select", "id": "social_network", "label": "Icon", "options": [{ "value": "none", "label": "None" }, { "value": "instagram", "label": "Instagram" }, { "value": "facebook", "label": "Facebook" }, { "value": "x", "label": "X" }, { "value": "tiktok", "label": "TikTok" }], "default": "instagram" },
-    { "type": "range", "id": "icon_size", "label": "Icon size", "min": 12, "max": 48, "step": 1, "unit": "px", "default": 24 },
-    { "type": "color", "alpha": true, "id": "social_background", "label": "Icon background", "default": "#F0E5E2" },
-    { "type": "url", "id": "social_url", "label": "Icon link" }
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image"
+    },
+    {
+      "type": "text",
+      "id": "alt_text",
+      "label": "Alt text"
+    },
+    {
+      "type": "header",
+      "content": "Profile"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_image",
+      "label": "Avatar"
+    },
+    {
+      "type": "text",
+      "id": "avatar_alt",
+      "label": "Avatar alt text"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "@pam_sam"
+    },
+    {
+      "type": "select",
+      "id": "social_network",
+      "label": "Icon",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "instagram",
+          "label": "Instagram"
+        },
+        {
+          "value": "facebook",
+          "label": "Facebook"
+        },
+        {
+          "value": "x",
+          "label": "X"
+        },
+        {
+          "value": "tiktok",
+          "label": "TikTok"
+        }
+      ],
+      "default": "instagram"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "social_background",
+      "label": "Icon background",
+      "default": "#F0E5E2"
+    },
+    {
+      "type": "url",
+      "id": "social_url",
+      "label": "Icon link"
+    }
   ],
-  "presets": [{ "name": "Gallery item", "category": "Gallery", "settings": { "text": "@pam_sam", "social_network": "instagram", "icon_size": 24 } }]
+  "presets": [
+    {
+      "name": "Gallery item",
+      "category": "Gallery",
+      "settings": {
+        "text": "@pam_sam",
+        "social_network": "instagram",
+        "icon_size": 24
+      }
+    }
+  ]
 }
 {% endschema %}

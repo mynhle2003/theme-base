@@ -172,12 +172,22 @@
 {
   "name": "t:general.featured_collection_banner",
   "class": "section-featured-collection-banner",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "max_blocks": 3,
   "blocks": [
-    { "type": "header" },
-    { "type": "banner" },
-    { "type": "product-list-banner" }
+    {
+      "type": "header"
+    },
+    {
+      "type": "banner"
+    },
+    {
+      "type": "product-list-banner"
+    }
   ],
   "settings": [
     {
@@ -189,9 +199,18 @@
       "id": "section_width",
       "label": "t:labels.section_width",
       "options": [
-        { "value": "page_width", "label": "t:options.section_width.page_width" },
-        { "value": "full_width", "label": "t:options.section_width.full_width" },
-        { "value": "full_width_no_padding", "label": "t:options.section_width.full_width_no_padding" }
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "t:options.section_width.full_width_no_padding"
+        }
       ],
       "default": "page_width"
     },
@@ -200,8 +219,14 @@
       "id": "banner_position",
       "label": "t:labels.banner_position",
       "options": [
-        { "value": "before", "label": "t:options.banner_position.before" },
-        { "value": "after", "label": "t:options.banner_position.after" }
+        {
+          "value": "before",
+          "label": "t:options.banner_position.before"
+        },
+        {
+          "value": "after",
+          "label": "t:options.banner_position.after"
+        }
       ],
       "default": "before"
     },

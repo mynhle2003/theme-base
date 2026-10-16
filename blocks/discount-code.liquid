@@ -80,20 +80,104 @@
   "name": "Discount code",
   "tag": null,
   "settings": [
-    { "type": "header", "content": "Gap" },
-    { "type": "range", "id": "gap_desktop", "label": "PC", "min": 0, "max": 30, "step": 1, "unit": "px", "default": 16 },
-    { "type": "range", "id": "gap_mobile", "label": "Mobile", "min": 0, "max": 30, "step": 1, "unit": "px", "default": 12 },
-    { "type": "header", "content": "Message" },
-    { "type": "richtext", "id": "message", "label": "Message", "default": "<p>50% off - use code:</p>" },
-    { "type": "color", "alpha": true, "id": "message_color", "label": "Color" },
-    { "type": "header", "content": "Discount code" },
-    { "type": "text", "id": "discount_code", "label": "Discount code", "info": "Create and view discount codes in [Discounts](https://admin.shopify.com/store/omnise-theme-base/discounts)", "default": "BIG50" },
-    { "type": "header", "content": "Button" },
-    { "type": "text", "id": "button_label", "label": "Label", "default": "Shop now" },
-    { "type": "url", "id": "button_link", "label": "Link" },
-    { "type": "checkbox", "id": "button_open_in_new_tab", "label": "Open in new tab", "default": false },
-    { "type": "select", "id": "button_style", "label": "Style", "options": [{ "value": "primary", "label": "t:options.button_variant.primary" }, { "value": "secondary", "label": "t:options.button_variant.secondary" }, { "value": "tertiary", "label": "t:options.button_variant.tertiary" }], "default": "tertiary" },
-    { "type": "checkbox", "id": "show_icon", "label": "Show icon", "default": false },
+    {
+      "type": "header",
+      "content": "Gap"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "PC",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Mobile",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Message"
+    },
+    {
+      "type": "richtext",
+      "id": "message",
+      "label": "Message",
+      "default": "<p>50% off - use code:</p>"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "message_color",
+      "label": "Color"
+    },
+    {
+      "type": "header",
+      "content": "Discount code"
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "label": "Discount code",
+      "info": "Create and view discount codes in [Discounts](https://admin.shopify.com/store/omnise-theme-base/discounts)",
+      "default": "BIG50"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_open_in_new_tab",
+      "label": "Open in new tab",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:options.button_variant.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.button_variant.secondary"
+        },
+        {
+          "value": "tertiary",
+          "label": "t:options.button_variant.tertiary"
+        }
+      ],
+      "default": "tertiary"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "Show icon",
+      "default": false
+    },
     {
       "type": "select",
       "id": "icon",
@@ -164,12 +248,49 @@
       "default": "after",
       "visible_if": "{{ block.settings.show_icon }}"
     },
-    { "type": "select", "id": "icon_size", "label": "Icon size", "options": [{ "value": "inherit", "label": "t:options.icon_size.inherit" }, { "value": "custom", "label": "t:options.icon_size.custom" }], "default": "inherit", "visible_if": "{{ block.settings.show_icon }}" },
-    { "type": "range", "id": "icon_width", "label": "Icon width", "min": 12, "max": 32, "step": 1, "unit": "px", "default": 20, "visible_if": "{{ block.settings.show_icon and block.settings.icon_size == 'custom' }}" }
+    {
+      "type": "select",
+      "id": "icon_size",
+      "label": "Icon size",
+      "options": [
+        {
+          "value": "inherit",
+          "label": "t:options.icon_size.inherit"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.icon_size.custom"
+        }
+      ],
+      "default": "inherit",
+      "visible_if": "{{ block.settings.show_icon }}"
+    },
+    {
+      "type": "range",
+      "id": "icon_width",
+      "label": "Icon width",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20,
+      "visible_if": "{{ block.settings.show_icon and block.settings.icon_size == 'custom' }}"
+    }
   ],
-  "presets": [{
-    "name": "Discount code",
-    "settings": { "gap_desktop": 16, "gap_mobile": 12, "message": "<p>50% off - use code:</p>", "discount_code": "BIG50", "button_label": "Shop now", "button_open_in_new_tab": false, "show_icon": false, "button_style": "tertiary" }
-  }]
+  "presets": [
+    {
+      "name": "Discount code",
+      "settings": {
+        "gap_desktop": 16,
+        "gap_mobile": 12,
+        "message": "<p>50% off - use code:</p>",
+        "discount_code": "BIG50",
+        "button_label": "Shop now",
+        "button_open_in_new_tab": false,
+        "show_icon": false,
+        "button_style": "tertiary"
+      }
+    }
+  ]
 }
 {% endschema %}

@@ -32,10 +32,32 @@
   "name": "Product recommendations",
   "tag": null,
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Complete the look" },
-    { "type": "product_list", "id": "products", "label": "Products", "limit": 12 },
-    { "type": "range", "id": "products_to_show", "label": "Product count", "min": 2, "max": 12, "step": 1, "default": 4 }
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Complete the look"
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Products",
+      "limit": 12
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Product count",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    }
   ],
-  "presets": [{ "name": "Product recommendations" }]
+  "presets": [
+    {
+      "name": "Product recommendations"
+    }
+  ]
 }
 {% endschema %}

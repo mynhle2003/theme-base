@@ -340,12 +340,24 @@
   "name": "Featured post",
   "tag": null,
   "blocks": [
-    { "type": "@theme" },
-    { "type": "blog-card-tag" },
-    { "type": "blog-card-title" },
-    { "type": "blog-card-description" },
-    { "type": "blog-card-button" },
-    { "type": "blog-card-meta" }
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "blog-card-tag"
+    },
+    {
+      "type": "blog-card-title"
+    },
+    {
+      "type": "blog-card-description"
+    },
+    {
+      "type": "blog-card-button"
+    },
+    {
+      "type": "blog-card-meta"
+    }
   ],
   "settings": [
     {
@@ -357,11 +369,26 @@
       "id": "ratio",
       "label": "Ratio",
       "options": [
-        { "value": "original", "label": "Auto" },
-        { "value": "square", "label": "Square" },
-        { "value": "portrait", "label": "Portrait" },
-        { "value": "landscape", "label": "Landscape" },
-        { "value": "wide", "label": "Wide" }
+        {
+          "value": "original",
+          "label": "Auto"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        }
       ],
       "default": "original"
     },
@@ -370,8 +397,14 @@
       "id": "media_layout",
       "label": "Media layout",
       "options": [
-        { "value": "stacked", "label": "Stacked" },
-        { "value": "horizontal", "label": "Horizontal" }
+        {
+          "value": "stacked",
+          "label": "Stacked"
+        },
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        }
       ],
       "default": "horizontal"
     },
@@ -391,9 +424,18 @@
       "id": "alignment",
       "label": "t:labels.alignment",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
       ],
       "default": "left"
     },
@@ -402,10 +444,22 @@
       "id": "position",
       "label": "t:labels.position",
       "options": [
-        { "value": "flex-start", "label": "Start" },
-        { "value": "center", "label": "Center" },
-        { "value": "flex-end", "label": "End" },
-        { "value": "space-between", "label": "Space between" }
+        {
+          "value": "flex-start",
+          "label": "Start"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "End"
+        },
+        {
+          "value": "space-between",
+          "label": "Space between"
+        }
       ],
       "default": "flex-start",
       "visible_if": "{{ block.settings.media_layout == 'horizontal' }}"
@@ -449,9 +503,18 @@
       "id": "corner_radius",
       "label": "t:labels.corner_radius",
       "options": [
-        { "value": "inherit", "label": "Inherit" },
-        { "value": "square", "label": "Square" },
-        { "value": "rounded", "label": "Rounded" }
+        {
+          "value": "inherit",
+          "label": "Inherit"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "rounded",
+          "label": "Rounded"
+        }
       ],
       "default": "inherit"
     },
@@ -460,9 +523,18 @@
       "id": "shadow",
       "label": "t:labels.shadow",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "small", "label": "Small" },
-        { "value": "medium", "label": "Medium" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        }
       ],
       "default": "none"
     },
@@ -475,8 +547,14 @@
       "id": "color_type",
       "label": "t:labels.type",
       "options": [
-        { "value": "inherit", "label": "t:options.color_type.inherit" },
-        { "value": "color_scheme", "label": "t:options.color_type.color_scheme" }
+        {
+          "value": "inherit",
+          "label": "t:options.color_type.inherit"
+        },
+        {
+          "value": "color_scheme",
+          "label": "t:options.color_type.color_scheme"
+        }
       ],
       "default": "inherit"
     },

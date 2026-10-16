@@ -133,10 +133,18 @@
 {
   "name": "t:general.featured_product",
   "class": "section-featured-product",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "_product-media" },
-    { "type": "_product-details" }
+    {
+      "type": "_product-media"
+    },
+    {
+      "type": "_product-details"
+    }
   ],
   "settings": [
     {
@@ -159,8 +167,14 @@
       "id": "width",
       "label": "t:labels.width",
       "options": [
-        { "value": "page", "label": "t:options.hero_width.page" },
-        { "value": "full", "label": "t:options.hero_width.full" }
+        {
+          "value": "page",
+          "label": "t:options.hero_width.page"
+        },
+        {
+          "value": "full",
+          "label": "t:options.hero_width.full"
+        }
       ],
       "default": "page"
     },
@@ -169,9 +183,18 @@
       "id": "media_width",
       "label": "t:labels.media_width",
       "options": [
-        { "value": "small", "label": "t:options.size.small" },
-        { "value": "medium", "label": "t:options.size.medium" },
-        { "value": "large", "label": "t:options.size.large" }
+        {
+          "value": "small",
+          "label": "t:options.size.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.size.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.size.large"
+        }
       ],
       "default": "medium"
     },

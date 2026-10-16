@@ -146,7 +146,11 @@
 {
   "name": "t:general.row",
   "tag": null,
-  "blocks": [{ "type": "_column" }],
+  "blocks": [
+    {
+      "type": "_column"
+    }
+  ],
   "settings": [
     {
       "type": "header",
@@ -177,9 +181,18 @@
       "id": "alignment",
       "label": "t:labels.alignment",
       "options": [
-        { "value": "top", "label": "t:options.vertical_alignment.top" },
-        { "value": "middle", "label": "t:options.vertical_alignment.middle" },
-        { "value": "bottom", "label": "t:options.vertical_alignment.bottom" }
+        {
+          "value": "top",
+          "label": "t:options.vertical_alignment.top"
+        },
+        {
+          "value": "middle",
+          "label": "t:options.vertical_alignment.middle"
+        },
+        {
+          "value": "bottom",
+          "label": "t:options.vertical_alignment.bottom"
+        }
       ],
       "default": "top"
     },
@@ -194,9 +207,18 @@
       "id": "alignment_mobile",
       "label": "t:labels.mobile_alignment",
       "options": [
-        { "value": "top", "label": "t:options.vertical_alignment.top" },
-        { "value": "middle", "label": "t:options.vertical_alignment.middle" },
-        { "value": "bottom", "label": "t:options.vertical_alignment.bottom" }
+        {
+          "value": "top",
+          "label": "t:options.vertical_alignment.top"
+        },
+        {
+          "value": "middle",
+          "label": "t:options.vertical_alignment.middle"
+        },
+        {
+          "value": "bottom",
+          "label": "t:options.vertical_alignment.bottom"
+        }
       ],
       "default": "top",
       "visible_if": "{{ block.settings.customize_mobile_alignment }}"

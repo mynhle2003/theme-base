@@ -306,12 +306,30 @@
       "id": "details_order",
       "label": "Details order",
       "options": [
-        { "value": "author_date_comment", "label": "Author, Date, Comment" },
-        { "value": "author_comment_date", "label": "Author, Comment, Date" },
-        { "value": "date_author_comment", "label": "Date, Author, Comment" },
-        { "value": "date_comment_author", "label": "Date, Comment, Author" },
-        { "value": "comment_author_date", "label": "Comment, Author, Date" },
-        { "value": "comment_date_author", "label": "Comment, Date, Author" }
+        {
+          "value": "author_date_comment",
+          "label": "Author, Date, Comment"
+        },
+        {
+          "value": "author_comment_date",
+          "label": "Author, Comment, Date"
+        },
+        {
+          "value": "date_author_comment",
+          "label": "Date, Author, Comment"
+        },
+        {
+          "value": "date_comment_author",
+          "label": "Date, Comment, Author"
+        },
+        {
+          "value": "comment_author_date",
+          "label": "Comment, Author, Date"
+        },
+        {
+          "value": "comment_date_author",
+          "label": "Comment, Date, Author"
+        }
       ],
       "default": "date_author_comment"
     },
@@ -325,8 +343,14 @@
       "id": "author_display_type",
       "label": "Display type",
       "options": [
-        { "value": "text", "label": "Text" },
-        { "value": "icon", "label": "Icon" }
+        {
+          "value": "text",
+          "label": "Text"
+        },
+        {
+          "value": "icon",
+          "label": "Icon"
+        }
       ],
       "default": "text",
       "visible_if": "{{ block.settings.show_author }}"
@@ -343,9 +367,18 @@
       "id": "author_icon",
       "label": "Choose icon",
       "options": [
-        { "value": "user", "label": "User" },
-        { "value": "users", "label": "Users" },
-        { "value": "document-text", "label": "Article" }
+        {
+          "value": "user",
+          "label": "User"
+        },
+        {
+          "value": "users",
+          "label": "Users"
+        },
+        {
+          "value": "document-text",
+          "label": "Article"
+        }
       ],
       "default": "user",
       "visible_if": "{{ block.settings.show_author and block.settings.author_display_type == 'icon' }}"
@@ -367,9 +400,18 @@
       "id": "date_icon",
       "label": "Choose icon",
       "options": [
-        { "value": "calendar", "label": "Calendar" },
-        { "value": "calendar-days", "label": "Calendar with days" },
-        { "value": "clock", "label": "Clock" }
+        {
+          "value": "calendar",
+          "label": "Calendar"
+        },
+        {
+          "value": "calendar-days",
+          "label": "Calendar with days"
+        },
+        {
+          "value": "clock",
+          "label": "Clock"
+        }
       ],
       "default": "calendar",
       "visible_if": "{{ block.settings.show_date and block.settings.show_date_icon }}"
@@ -379,10 +421,22 @@
       "id": "date_format",
       "label": "Date format",
       "options": [
-        { "value": "long", "label": "December 01, 2000" },
-        { "value": "medium", "label": "Dec 01, 2000" },
-        { "value": "numeric", "label": "12/01/2000" },
-        { "value": "iso", "label": "2000-12-01" }
+        {
+          "value": "long",
+          "label": "December 01, 2000"
+        },
+        {
+          "value": "medium",
+          "label": "Dec 01, 2000"
+        },
+        {
+          "value": "numeric",
+          "label": "12/01/2000"
+        },
+        {
+          "value": "iso",
+          "label": "2000-12-01"
+        }
       ],
       "default": "long",
       "visible_if": "{{ block.settings.show_date }}"
@@ -404,9 +458,18 @@
       "id": "comment_icon",
       "label": "Choose icon",
       "options": [
-        { "value": "comment", "label": "Comment bubble" },
-        { "value": "chat-bubble", "label": "Chat bubble" },
-        { "value": "chat-bubble-left-right", "label": "Conversation bubbles" }
+        {
+          "value": "comment",
+          "label": "Comment bubble"
+        },
+        {
+          "value": "chat-bubble",
+          "label": "Chat bubble"
+        },
+        {
+          "value": "chat-bubble-left-right",
+          "label": "Conversation bubbles"
+        }
       ],
       "default": "comment",
       "visible_if": "{{ block.settings.show_comment_count and block.settings.show_comment_icon }}"
@@ -421,12 +484,30 @@
       "id": "separator_icon",
       "label": "Choose icon",
       "options": [
-        { "value": "vertical-rule", "label": "Vertical rule" },
-        { "value": "minus", "label": "Horizontal rule" },
-        { "value": "dot", "label": "Middle dot" },
-        { "value": "bullet", "label": "Bullet" },
-        { "value": "slash", "label": "Slash" },
-        { "value": "none", "label": "Space only" }
+        {
+          "value": "vertical-rule",
+          "label": "Vertical rule"
+        },
+        {
+          "value": "minus",
+          "label": "Horizontal rule"
+        },
+        {
+          "value": "dot",
+          "label": "Middle dot"
+        },
+        {
+          "value": "bullet",
+          "label": "Bullet"
+        },
+        {
+          "value": "slash",
+          "label": "Slash"
+        },
+        {
+          "value": "none",
+          "label": "Space only"
+        }
       ],
       "default": "vertical-rule",
       "visible_if": "{{ block.settings.layout == 'horizontal' }}"
@@ -440,12 +521,30 @@
       "id": "size",
       "label": "Size",
       "options": [
-        { "value": "xs", "label": "Extra small" },
-        { "value": "sm", "label": "Small" },
-        { "value": "md", "label": "Medium" },
-        { "value": "lg", "label": "Large" },
-        { "value": "xl", "label": "Extra large" },
-        { "value": "xxl", "label": "2X large" }
+        {
+          "value": "xs",
+          "label": "Extra small"
+        },
+        {
+          "value": "sm",
+          "label": "Small"
+        },
+        {
+          "value": "md",
+          "label": "Medium"
+        },
+        {
+          "value": "lg",
+          "label": "Large"
+        },
+        {
+          "value": "xl",
+          "label": "Extra large"
+        },
+        {
+          "value": "xxl",
+          "label": "2X large"
+        }
       ],
       "default": "xs"
     },
@@ -464,8 +563,14 @@
       "id": "layout",
       "label": "Layout",
       "options": [
-        { "value": "horizontal", "label": "Horizontal" },
-        { "value": "vertical", "label": "Vertical" }
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        }
       ],
       "default": "horizontal"
     },

@@ -350,11 +350,26 @@
       "id": "columns_desktop",
       "label": "t:labels.desktop_columns",
       "options": [
-        { "value": "2", "label": "2" },
-        { "value": "3", "label": "3" },
-        { "value": "4", "label": "4" },
-        { "value": "5", "label": "5" },
-        { "value": "6", "label": "6" }
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        }
       ],
       "default": "2"
     },
@@ -363,8 +378,14 @@
       "id": "columns_mobile",
       "label": "t:labels.mobile_columns",
       "options": [
-        { "value": "1", "label": "1" },
-        { "value": "2", "label": "2" }
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
       ],
       "default": "1"
     },
@@ -380,12 +401,30 @@
       "id": "image_ratio",
       "label": "t:labels.image_ratio",
       "options": [
-        { "value": "auto", "label": "t:options.image_ratio.auto" },
-        { "value": "square", "label": "t:options.image_ratio.square" },
-        { "value": "portrait", "label": "t:options.image_ratio.portrait" },
-        { "value": "landscape", "label": "t:options.image_ratio.landscape" },
-        { "value": "wide", "label": "t:options.image_ratio.wide" },
-        { "value": "custom", "label": "t:options.image_ratio.custom" }
+        {
+          "value": "auto",
+          "label": "t:options.image_ratio.auto"
+        },
+        {
+          "value": "square",
+          "label": "t:options.image_ratio.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:options.image_ratio.portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "t:options.image_ratio.landscape"
+        },
+        {
+          "value": "wide",
+          "label": "t:options.image_ratio.wide"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.image_ratio.custom"
+        }
       ],
       "default": "portrait"
     },
@@ -494,9 +533,18 @@
       "id": "navigation_position",
       "label": "t:labels.position",
       "options": [
-        { "value": "outside", "label": "t:options.collection_navigation_position.outside" },
-        { "value": "inside", "label": "t:options.collection_navigation_position.inside" },
-        { "value": "top", "label": "t:options.position.top" }
+        {
+          "value": "outside",
+          "label": "t:options.collection_navigation_position.outside"
+        },
+        {
+          "value": "inside",
+          "label": "t:options.collection_navigation_position.inside"
+        },
+        {
+          "value": "top",
+          "label": "t:options.position.top"
+        }
       ],
       "default": "inside",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop }}"
@@ -506,10 +554,22 @@
       "id": "navigation_style",
       "label": "t:labels.style",
       "options": [
-        { "value": "primary", "label": "t:options.button_variant.primary" },
-        { "value": "secondary", "label": "t:options.button_variant.secondary" },
-        { "value": "outline", "label": "t:options.button_variant.outline" },
-        { "value": "icon_only", "label": "t:options.button_variant.icon_only" }
+        {
+          "value": "primary",
+          "label": "t:options.button_variant.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.button_variant.secondary"
+        },
+        {
+          "value": "outline",
+          "label": "t:options.button_variant.outline"
+        },
+        {
+          "value": "icon_only",
+          "label": "t:options.button_variant.icon_only"
+        }
       ],
       "default": "secondary",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop }}"
@@ -519,9 +579,18 @@
       "id": "navigation_icon",
       "label": "t:labels.icon",
       "options": [
-        { "value": "chevron", "label": "t:options.collection_navigation_icon.chevron" },
-        { "value": "arrow", "label": "t:options.collection_navigation_icon.arrow" },
-        { "value": "long_arrow", "label": "t:options.collection_navigation_icon.long_arrow" }
+        {
+          "value": "chevron",
+          "label": "t:options.collection_navigation_icon.chevron"
+        },
+        {
+          "value": "arrow",
+          "label": "t:options.collection_navigation_icon.arrow"
+        },
+        {
+          "value": "long_arrow",
+          "label": "t:options.collection_navigation_icon.long_arrow"
+        }
       ],
       "default": "chevron",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop }}"
@@ -531,8 +600,14 @@
       "id": "navigation_behavior",
       "label": "t:labels.behavior",
       "options": [
-        { "value": "show_on_hover", "label": "t:options.collection_navigation_behavior.show_on_hover" },
-        { "value": "always", "label": "t:options.collection_navigation_behavior.always" }
+        {
+          "value": "show_on_hover",
+          "label": "t:options.collection_navigation_behavior.show_on_hover"
+        },
+        {
+          "value": "always",
+          "label": "t:options.collection_navigation_behavior.always"
+        }
       ],
       "default": "show_on_hover",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop and block.settings.navigation_position != 'top' }}"
@@ -554,8 +629,14 @@
       "id": "pagination_type",
       "label": "t:labels.type",
       "options": [
-        { "value": "progress_bar", "label": "t:options.collection_pagination.progress_bar" },
-        { "value": "bullets", "label": "t:options.collection_pagination.bullets" }
+        {
+          "value": "progress_bar",
+          "label": "t:options.collection_pagination.progress_bar"
+        },
+        {
+          "value": "bullets",
+          "label": "t:options.collection_pagination.bullets"
+        }
       ],
       "default": "progress_bar",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop }}"
