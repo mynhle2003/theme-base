@@ -272,71 +272,80 @@
       "settings": {
         "max_width": 1024,
         "alignment": "center",
-        "gap_desktop": 12,
-        "gap_mobile": 12,
+        "gap_desktop": 32,
+        "gap_mobile": 28,
         "color_scheme": "scheme-1",
-        "padding_top": 40,
-        "padding_bottom": 32,
+        "padding_top": 144,
+        "padding_bottom": 144,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
+        "padding_top_mobile": 80,
+        "padding_bottom_mobile": 80
       },
       "blocks": [
         {
-          "type": "header",
-          "settings": {
-            "width": "fill",
-            "alignment": "center",
-            "gap_desktop": 8,
-            "gap_mobile": 8
-          },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Main Heading</p>",
-                "heading_size": "display",
-                "html_tag": "h2",
-                "width": "fit",
-                "animation_type": "slide-bottom",
-                "animation_delay": 50
-              }
-            }
-          ]
-        },
-        {
           "type": "press-quotes",
-          "id": "quotes",
           "static": true,
           "settings": {
-            "autoplay": true,
+            "autoplay": false,
             "pause_on_hover": true,
             "autoplay_speed": 4,
             "image_spacing_desktop": 32,
-            "image_spacing_mobile": 20,
-            "image_gap_desktop": 20,
-            "image_gap_mobile": 16
+            "image_spacing_mobile": 28,
+            "image_gap_desktop": 16,
+            "image_gap_mobile": 16,
+            "logo_position": "top",
+            "fade_logo_edges": true,
+            "show_navigation_on_desktop": true,
+            "show_navigation_on_mobile": true,
+            "navigation_position": "bottom",
+            "navigation_style": "icon_only",
+            "navigation_icon": "long_arrow",
+            "navigation_behavior": "always",
+            "show_pagination_on_desktop": true,
+            "show_pagination_on_mobile": true,
+            "pagination_type": "progress_bar",
+            "pagination_top_padding_desktop": 32,
+            "pagination_top_padding_mobile": 28,
+            "pagination_limit_width": true,
+            "pagination_max_width": 160
           },
+          "id": "quotes",
           "blocks": [
             {
               "type": "press-item",
               "settings": {
-                "image_ratio": "original",
+                "alt_text": "Michael Kors",
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
                 "corner_radius": "square",
-                "custom_corner_radius": 0,
-                "image_width_desktop": 100,
-                "image_width_mobile": 70
+                "image_width_desktop": 185,
+                "image_width_mobile": 170,
+                "image": "shopify://shop_images/zevra-press-michael-kors-2x1.avif"
               },
               "blocks": [
                 {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>Maecenas ut porta dui, eu consequat nunc. In hac habitasse platea dictumst. Sed sollicitudin orci at sapien dignissim, rhoncus facilisis libero pretium. Aenean id dapibus risus. Etiam non rhoncus nunc, eu commodo nunc. Aliquam sit amet condimentum nunc, rhoncus tincidunt libero. In mollis, nulla non hendrerit faucibus, sem massa auctor nibh.</p>",
-                    "heading_size": "display",
-                    "html_tag": "div",
+                    "text": "<p>“A statement piece that turns heads.”</p>",
+                    "heading_size": "custom",
+                    "html_tag": "h3",
                     "width": "fill",
                     "animation_type": "slide-bottom",
+                    "custom_heading_size": 26,
+                    "padding_bottom": 4,
                     "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>The craftsmanship is impeccable — every crystal catches the light beautifully. It’s bold but still elegant enough for evening events. I’ve received endless compliments.</p>",
+                    "width": "fill",
+                    "animation_type": "fade",
+                    "text_size": "md",
+                    "text_color": "#181818",
+                    "animation_delay": 100
                   }
                 }
               ]
@@ -344,22 +353,38 @@
             {
               "type": "press-item",
               "settings": {
-                "image_ratio": "original",
+                "alt_text": "BVLGARI",
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
                 "corner_radius": "square",
-                "custom_corner_radius": 0,
-                "image_width_desktop": 100,
-                "image_width_mobile": 70
+                "image_width_desktop": 185,
+                "image_width_mobile": 170,
+                "image": "shopify://shop_images/zevra-press-bulgari-2x1.avif"
               },
               "blocks": [
                 {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>Maecenas ut porta dui, eu consequat nunc. In hac habitasse platea dictumst. Sed sollicitudin orci at sapien dignissim, rhoncus facilisis libero pretium. Aenean id dapibus risus. Etiam non rhoncus nunc, eu commodo nunc. Aliquam sit amet condimentum nunc, rhoncus tincidunt libero. In mollis, nulla non hendrerit faucibus, sem massa auctor nibh.</p>",
-                    "heading_size": "display",
-                    "html_tag": "div",
+                    "text": "<p>“A statement piece that turns heads.”</p>",
+                    "heading_size": "custom",
+                    "html_tag": "h3",
                     "width": "fill",
                     "animation_type": "slide-bottom",
+                    "custom_heading_size": 26,
+                    "padding_bottom": 4,
                     "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>The craftsmanship is impeccable — every crystal catches the light beautifully. It’s bold but still elegant enough for evening events. I’ve received endless compliments.</p>",
+                    "width": "fill",
+                    "animation_type": "fade",
+                    "text_size": "md",
+                    "text_color": "#181818",
+                    "animation_delay": 100
                   }
                 }
               ]
@@ -367,22 +392,116 @@
             {
               "type": "press-item",
               "settings": {
-                "image_ratio": "original",
+                "alt_text": "DIOR",
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
                 "corner_radius": "square",
-                "custom_corner_radius": 0,
-                "image_width_desktop": 100,
-                "image_width_mobile": 70
+                "image_width_desktop": 185,
+                "image_width_mobile": 170,
+                "image": "shopify://shop_images/zevra-press-dior-2x1.avif"
               },
               "blocks": [
                 {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>Maecenas ut porta dui, eu consequat nunc. In hac habitasse platea dictumst. Sed sollicitudin orci at sapien dignissim, rhoncus facilisis libero pretium. Aenean id dapibus risus. Etiam non rhoncus nunc, eu commodo nunc. Aliquam sit amet condimentum nunc, rhoncus tincidunt libero. In mollis, nulla non hendrerit faucibus, sem massa auctor nibh.</p>",
-                    "heading_size": "display",
-                    "html_tag": "div",
+                    "text": "<p>“A statement piece that turns heads.”</p>",
+                    "heading_size": "custom",
+                    "html_tag": "h3",
                     "width": "fill",
                     "animation_type": "slide-bottom",
+                    "custom_heading_size": 26,
+                    "padding_bottom": 4,
                     "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>The craftsmanship is impeccable — every crystal catches the light beautifully. It’s bold but still elegant enough for evening events. I’ve received endless compliments.</p>",
+                    "width": "fill",
+                    "animation_type": "fade",
+                    "text_size": "md",
+                    "text_color": "#181818",
+                    "animation_delay": 100
+                  }
+                }
+              ]
+            },
+            {
+              "type": "press-item",
+              "settings": {
+                "alt_text": "JW Anderson",
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
+                "corner_radius": "square",
+                "image_width_desktop": 185,
+                "image_width_mobile": 170,
+                "image": "shopify://shop_images/zevra-press-jw-anderson-2x1.avif"
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>“A statement piece that turns heads.”</p>",
+                    "heading_size": "custom",
+                    "html_tag": "h3",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "custom_heading_size": 26,
+                    "padding_bottom": 4,
+                    "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>The craftsmanship is impeccable — every crystal catches the light beautifully. It’s bold but still elegant enough for evening events. I’ve received endless compliments.</p>",
+                    "width": "fill",
+                    "animation_type": "fade",
+                    "text_size": "md",
+                    "text_color": "#181818",
+                    "animation_delay": 100
+                  }
+                }
+              ]
+            },
+            {
+              "type": "press-item",
+              "settings": {
+                "alt_text": "Marc Jacobs",
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
+                "corner_radius": "square",
+                "image_width_desktop": 185,
+                "image_width_mobile": 170,
+                "image": "shopify://shop_images/zevra-press-marc-jacobs-2x1.avif"
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>“A statement piece that turns heads.”</p>",
+                    "heading_size": "custom",
+                    "html_tag": "h3",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "custom_heading_size": 26,
+                    "padding_bottom": 4,
+                    "animation_delay": 50
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>The craftsmanship is impeccable — every crystal catches the light beautifully. It’s bold but still elegant enough for evening events. I’ve received endless compliments.</p>",
+                    "width": "fill",
+                    "animation_type": "fade",
+                    "text_size": "md",
+                    "text_color": "#181818",
+                    "animation_delay": 100
                   }
                 }
               ]

@@ -1,3 +1,11 @@
+{% liquid
+  assign pagination_desktop = block.settings.show_pagination_on_desktop
+  assign pagination_mobile = block.settings.show_pagination_on_mobile
+  assign pagination_any = false
+  if pagination_desktop or pagination_mobile
+    assign pagination_any = true
+  endif
+%}
 {% doc %}
   Renders selected collections with one shared Collection Card child. The
   block owns the collection query, layout, carousel controls, pagination, and
@@ -14,6 +22,12 @@
   unless collection_list_layout == 'grid' or collection_list_layout == 'carousel'
     assign collection_list_layout = 'carousel'
   endunless
+
+  assign collection_list_featured_grid = false
+  if collection_list_layout == 'grid' and block.settings.grid_layout_desktop == 'featured'
+    assign collection_list_featured_grid = true
+  endif
+  assign collection_list_featured_row_gap = block.settings.featured_row_gap_desktop | default: 40 | at_least: 0 | at_most: 80
 
   assign collection_list_desktop_columns = block.settings.columns_desktop | default: 4 | plus: 0
   assign collection_list_mobile_columns = block.settings.columns_mobile | default: 1 | plus: 0
@@ -108,7 +122,7 @@
   endif
 
   assign collection_list_show_pagination = false
-  if collection_list_layout == 'carousel' and block.settings.show_pagination_on_desktop
+  if collection_list_layout == 'carousel' and pagination_any
     assign collection_list_show_pagination = true
   endif
 
@@ -150,7 +164,8 @@
 {% assign collection_list_pagination_style = collection_list_pagination_style | strip %}
 
 {% capture collection_list_navigation_center_style %}
-  {% if collection_list_show_pagination and collection_list_navigation_position != 'top' %}--swiper-navigation-center-offset: calc(({{ collection_list_pagination_top_padding_desktop }}px + {{ collection_list_pagination_size }}) / 2);{% endif %}
+  {% if collection_list_show_pagination and collection_list_navigation_position != 'top' %}--swiper-navigation-center-offset: {% if pagination_desktop %}calc(({{ collection_list_pagination_top_padding_desktop }}px + {{ collection_list_pagination_size }}) / 2){% else %}0px{% endif %};
+    --pagination-navigation-offset-mobile: {% if pagination_mobile %}calc(({{ collection_list_pagination_top_padding_mobile }}px + {{ collection_list_pagination_size }}) / 2){% else %}0px{% endif %};{% endif %}
 {% endcapture %}
 {% assign collection_list_navigation_center_style = collection_list_navigation_center_style | strip %}
 
@@ -225,7 +240,7 @@
     {% endcapture %}
 
     {% capture collection_list_pagination %}
-      {% render 'swiper-pagination',
+      {% render 'swiper-pagination', show_on_desktop: pagination_desktop, show_on_mobile: pagination_mobile,
         show: collection_list_show_pagination,
         type: collection_list_pagination_type,
         class: collection_list_pagination_class,
@@ -252,8 +267,8 @@
     </div>
   {% else %}
     <div
-      class="collection-card-list__grid section-list-layout__main"
-      style="--cards: {{ collection_list_desktop_columns }}; --cards-mobile: {{ collection_list_mobile_columns }}; --gap: {{ collection_list_gap_desktop }}px; --gap-mobile: {{ collection_list_gap_mobile }}px;"
+      class="collection-card-list__grid{% if collection_list_featured_grid %} collection-card-list__grid--featured{% endif %} section-list-layout__main"
+      style="--cards: {{ collection_list_desktop_columns }}; --cards-mobile: {{ collection_list_mobile_columns }}; --gap: {{ collection_list_gap_desktop }}px; --gap-mobile: {{ collection_list_gap_mobile }}px;{% if collection_list_featured_grid %} --featured-row-gap: {{ collection_list_featured_row_gap }}px;{% endif %}"
     >
       {{ collection_list_items }}
     </div>
@@ -276,6 +291,16 @@
     display: grid;
     grid-template-columns: repeat(var(--cards), minmax(0, 1fr));
     gap: var(--gap);
+  }
+
+  @media (min-width: 768px) {
+    .collection-card-list__grid--featured {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      row-gap: var(--featured-row-gap, 40px);
+    }
+    .collection-card-list__grid--featured > .collection-card-list__item:nth-child(-n + 2) {
+      grid-column: span 2;
+    }
   }
 
   .collection-card-list__navigation {
@@ -406,6 +431,23 @@
     },
     {
       "type": "select",
+      "id": "grid_layout_desktop",
+      "label": "Desktop grid layout",
+      "options": [
+        {
+          "value": "standard",
+          "label": "Standard"
+        },
+        {
+          "value": "featured",
+          "label": "Mixed sizes"
+        }
+      ],
+      "default": "standard",
+      "visible_if": "{{ block.settings.layout == 'grid' }}"
+    },
+    {
+      "type": "select",
       "id": "columns_desktop",
       "label": "t:labels.desktop_columns",
       "options": [
@@ -430,7 +472,8 @@
           "label": "6"
         }
       ],
-      "default": "4"
+      "default": "4",
+      "visible_if": "{{ block.settings.layout == 'carousel' or block.settings.grid_layout_desktop != 'featured' }}"
     },
     {
       "type": "select",
@@ -469,7 +512,7 @@
     {
       "type": "range",
       "id": "gap_desktop",
-      "label": "t:options.device.desktop",
+      "label": "Column gap desktop",
       "min": 0,
       "max": 40,
       "step": 1,
@@ -478,8 +521,19 @@
     },
     {
       "type": "range",
+      "id": "featured_row_gap_desktop",
+      "label": "Row gap desktop",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ block.settings.layout == 'grid' and block.settings.grid_layout_desktop == 'featured' }}"
+    },
+    {
+      "type": "range",
       "id": "gap_mobile",
-      "label": "t:options.device.mobile",
+      "label": "Row & column gap mobile",
       "min": 0,
       "max": 40,
       "step": 1,
@@ -590,7 +644,14 @@
     {
       "type": "checkbox",
       "id": "show_pagination_on_desktop",
-      "label": "t:labels.show_pagination",
+      "label": "t:labels.show_pagination_on_desktop",
+      "default": true,
+      "visible_if": "{{ block.settings.layout == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_mobile",
+      "label": "t:labels.show_pagination_on_mobile",
       "default": true,
       "visible_if": "{{ block.settings.layout == 'carousel' }}"
     },
@@ -609,7 +670,7 @@
         }
       ],
       "default": "progress_bar",
-      "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.show_pagination_on_desktop or block.settings.layout == 'carousel' and block.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "range",
@@ -631,14 +692,14 @@
       "step": 1,
       "unit": "px",
       "default": 24,
-      "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "checkbox",
       "id": "pagination_limit_width",
       "label": "t:labels.limit_width",
       "default": true,
-      "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.show_pagination_on_desktop and block.settings.pagination_type == 'progress_bar' }}"
+      "visible_if": "{{ block.settings.show_pagination_on_desktop and block.settings.pagination_type == 'progress_bar' or block.settings.show_pagination_on_mobile and block.settings.pagination_type == 'progress_bar' }}"
     },
     {
       "type": "range",
@@ -649,7 +710,7 @@
       "step": 10,
       "unit": "px",
       "default": 260,
-      "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.show_pagination_on_desktop and block.settings.pagination_type == 'progress_bar' and block.settings.pagination_limit_width }}"
+      "visible_if": "{{ block.settings.show_pagination_on_desktop and block.settings.pagination_limit_width or block.settings.show_pagination_on_mobile and block.settings.pagination_limit_width }}"
     },
     {
       "type": "header",
@@ -698,7 +759,11 @@
             }
           ]
         }
-      ]
+      ],
+      "settings": {
+        "show_pagination_on_desktop": true,
+        "show_pagination_on_mobile": true
+      }
     }
   ]
 }

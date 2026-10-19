@@ -306,11 +306,11 @@
       "category": "t:general.collections",
       "settings": {
         "color_scheme": "scheme-1",
-        "padding_top": 0,
-        "padding_bottom": 96,
+        "padding_top": 96,
+        "padding_bottom": 0,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 56,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 0,
         "desktop_alignment": "left",
         "mobile_alignment": "center",
         "gap_desktop": 40,
@@ -320,6 +320,7 @@
       "blocks": [
         {
           "type": "header",
+          "static": true,
           "settings": {
             "alignment": "left",
             "width": "fill",
@@ -328,12 +329,12 @@
             "customize_mobile_alignment": true,
             "alignment_mobile": "center"
           },
-          "static": true,
+          "id": "header",
           "blocks": [
             {
               "type": "eyebrow",
               "settings": {
-                "text": "<p>Lasting value</p>",
+                "text": "<p>Form. Function. Finesse.</p>",
                 "animation_type": "fade",
                 "animation_delay": 0
               }
@@ -341,74 +342,91 @@
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Crafted for journeys</p>",
+                "text": "<p>Classic collections</p>",
                 "heading_size": "xl",
                 "html_tag": "h2",
                 "animation_type": "slide-bottom",
                 "animation_delay": 50
               }
             }
-          ],
-          "id": "header"
+          ]
         },
         {
           "type": "view-all-button",
+          "static": true,
           "settings": {
             "button_label": "Explore collections",
             "button_style": "text",
             "button_style_mobile": "text",
-            "full_width_mobile": false
+            "full_width_mobile": false,
+            "button_link": "shopify://collections"
           },
-          "static": true,
           "id": "view-all"
         },
         {
           "type": "collection-list-items",
+          "static": true,
           "settings": {
             "collections": [
-              "simply-iconic-mara",
-              "the-everyday-classic-mara",
-              "the-modern-icon-mara"
+              "crossbody-bags-zevra",
+              "work-bags-zevra",
+              "mini-bags-zevra",
+              "top-handle-bags-zevra",
+              "shoulder-bags-zevra",
+              "evening-bags-zevra"
             ],
             "layout": "grid",
-            "columns_desktop": "3",
+            "grid_layout_desktop": "featured",
+            "featured_row_gap_desktop": 40,
+            "columns_desktop": "4",
             "columns_mobile": "1",
             "gap_desktop": 8,
-            "gap_mobile": 32,
+            "gap_mobile": 24,
             "show_navigation_on_desktop": false,
-            "show_pagination_on_desktop": false
+            "show_pagination_on_desktop": false,
+            "show_pagination_on_mobile": false
           },
-          "static": true,
+          "id": "collection-list",
           "blocks": [
             {
               "type": "collection-card",
+              "static": true,
               "settings": {
-                "ratio": "custom",
-                "ratio_custom_width": 6,
-                "ratio_custom_height": 7,
+                "ratio": "ratio_3_2",
                 "placement": "below_image",
                 "alignment": "center",
-                "gap_desktop": 6,
-                "gap_mobile": 6,
-                "padding_top": 24,
+                "gap_desktop": 4,
+                "gap_mobile": 4,
+                "media_corner_radius": "square",
                 "corner_radius": "square",
-                "media_corner_radius": "square"
+                "padding_top": 24,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 8,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
               },
-              "static": true,
+              "id": "collection-card",
               "blocks": [
                 {
-                  "type": "collection-card-description",
+                  "type": "collection-card-title",
+                  "static": true,
                   "settings": {
-                    "source": "description",
-                    "text_size": "md",
-                    "text_limit": "two"
-                  }
+                    "heading_size": "custom",
+                    "custom_heading_size": 20,
+                    "html_tag": "h3",
+                    "show_product_count": true,
+                    "product_count_font": "body",
+                    "product_count_font_size": "sm"
+                  },
+                  "id": "title"
                 }
-              ],
-              "id": "collection-card"
+              ]
             }
-          ],
-          "id": "collection-list"
+          ]
         }
       ]
     }

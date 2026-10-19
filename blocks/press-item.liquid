@@ -121,11 +121,18 @@
     align-self: stretch;
     width: 100%;
     min-width: 0;
-    gap: var(--layout-grid-gap, 1rem);
+    gap: var(--press-quotes-image-gap, var(--layout-grid-gap, 1rem));
   }
 
   .press-item__content:empty {
     display: none;
+  }
+  .press-item__content > .heading-block:first-child {
+    letter-spacing: 0.2rem;
+  }
+  @media (max-width: 767.98px) {
+    .press-item__content { gap: var(--press-quotes-image-gap-mobile, var(--press-quotes-image-gap)); }
+    .press-item__content > .heading-block:first-child { font-size: var(--font-heading-lg); }
   }
 {% endstylesheet %}
 
@@ -136,6 +143,9 @@
   "blocks": [
     {
       "type": "heading"
+    },
+    {
+      "type": "text"
     }
   ],
   "settings": [
@@ -305,7 +315,9 @@
             "text": "<p>Maecenas ut porta dui, eu consequat nunc. In hac habitasse platea dictumst. Sed sollicitudin orci at sapien dignissim, rhoncus facilisis libero pretium. Aenean id dapibus risus. Etiam non rhoncus nunc, eu commodo nunc. Aliquam sit amet condimentum nunc, rhoncus tincidunt libero. In mollis, nulla non hendrerit faucibus, sem massa auctor nibh.</p>",
             "heading_size": "display",
             "html_tag": "div",
-            "width": "fill"
+            "width": "fill",
+            "animation_type": "slide-bottom",
+            "animation_delay": 50
           }
         }
       ]

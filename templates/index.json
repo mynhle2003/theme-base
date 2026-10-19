@@ -88,7 +88,7 @@
             "product_gap_desktop": 8,
             "product_gap_mobile": 8,
             "show_navigation_on_desktop": true,
-            "navigation_position": "outside",
+            "navigation_position": "bottom",
             "navigation_style": "icon_only",
             "navigation_icon": "long_arrow",
             "show_pagination_on_desktop": true,
@@ -101,7 +101,8 @@
             "autoplay_pause_on_hover": true,
             "autoplay_speed": 4,
             "show_next_slide_preview_on_mobile": true,
-            "navigation_behavior": "always"
+            "navigation_behavior": "always",
+            "show_pagination_on_mobile": true
           },
           "blocks": {
             "product-card": {
@@ -234,7 +235,8 @@
             "gap_desktop": 8,
             "gap_mobile": 32,
             "show_navigation_on_desktop": false,
-            "show_pagination_on_desktop": false
+            "show_pagination_on_desktop": false,
+            "show_pagination_on_mobile": false
           }
         }
       },
@@ -296,86 +298,77 @@
           "type": "view-all-button",
           "static": true,
           "settings": {
-            "button_label": "Shop all",
+            "button_label": "Explore collections",
             "button_style": "text",
             "button_style_mobile": "text",
-            "full_width_mobile": false
+            "full_width_mobile": false,
+            "button_link": "shopify://collections"
           }
         },
         "collection-list": {
           "type": "collection-list-items",
           "static": true,
+          "settings": {
+            "collections": [
+              "crossbody-bags-zevra",
+              "work-bags-zevra",
+              "mini-bags-zevra",
+              "top-handle-bags-zevra",
+              "shoulder-bags-zevra",
+              "evening-bags-zevra"
+            ],
+            "layout": "grid",
+            "grid_layout_desktop": "featured",
+            "featured_row_gap_desktop": 40,
+            "columns_desktop": "4",
+            "columns_mobile": "1",
+            "gap_desktop": 8,
+            "gap_mobile": 24,
+            "show_navigation_on_desktop": false,
+            "show_pagination_on_desktop": false,
+            "show_pagination_on_mobile": false
+          },
           "blocks": {
             "collection-card": {
               "type": "collection-card",
               "static": true,
+              "settings": {
+                "ratio": "ratio_3_2",
+                "placement": "below_image",
+                "alignment": "center",
+                "gap_desktop": 4,
+                "gap_mobile": 4,
+                "media_corner_radius": "square",
+                "corner_radius": "square",
+                "padding_top": 24,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 8,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
               "blocks": {
                 "title": {
                   "type": "collection-card-title",
                   "static": true,
                   "settings": {
                     "heading_size": "custom",
+                    "custom_heading_size": 20,
                     "html_tag": "h3",
-                    "show_product_count": false,
-                    "custom_heading_size": 16
-                  }
-                },
-                "collection_card_description_2": {
-                  "type": "collection-card-description",
-                  "settings": {
-                    "source": "product_count",
-                    "text_size": "md"
+                    "show_product_count": true,
+                    "product_count_font": "body",
+                    "product_count_font_size": "sm"
                   }
                 }
-              },
-              "settings": {
-                "ratio": "ratio_4_3",
-                "placement": "below_image",
-                "alignment": "left",
-                "gap_desktop": 4,
-                "gap_mobile": 2,
-                "media_corner_radius": "square",
-                "color_type": "color_scheme",
-                "color_scheme": "scheme-2",
-                "corner_radius": "square",
-                "padding_top": 20,
-                "padding_bottom": 20,
-                "padding_left": 20,
-                "padding_right": 20,
-                "customize_mobile_padding": true,
-                "padding_top_mobile": 16,
-                "padding_bottom_mobile": 16,
-                "padding_left_mobile": 16,
-                "padding_right_mobile": 16
-              },
-              "block_order": [
-                "collection_card_description_2"
-              ]
+              }
             }
-          },
-          "settings": {
-            "collections": [
-              "shoulder-bags-mara",
-              "top-handle-bags-mara",
-              "evening-bags-mara",
-              "mini-bags-mara",
-              "crossbody-bags-mara"
-            ],
-            "layout": "carousel",
-            "columns_desktop": "5",
-            "columns_mobile": "1",
-            "gap_desktop": 8,
-            "gap_mobile": 8,
-            "show_next_slide_preview_on_mobile": true,
-            "show_navigation_on_desktop": false,
-            "show_pagination_on_desktop": false,
-            "show_next_slide_preview_on_desktop": false,
-            "pagination_top_padding_desktop": 48,
-            "pagination_top_padding_mobile": 24
           }
         }
       },
-      "disabled": true
+      "disabled": false
     },
     "limited_release": {
       "type": "countdown",
@@ -806,12 +799,12 @@
       "type": "collection-tabs",
       "settings": {
         "section_width": "full_width",
-        "layout_direction": "horizontal",
+        "layout_direction": "vertical",
         "tab_position": "right",
         "mobile_alignment": "center",
         "gap_desktop": 40,
         "gap_mobile": 28,
-        "max_products": 5,
+        "max_products": 8,
         "layout_type": "carousel",
         "columns_desktop": "4",
         "columns_mobile": "1",
@@ -838,7 +831,8 @@
         "customize_mobile_padding": true,
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 56,
-        "show_next_slide_preview_on_mobile": true
+        "show_next_slide_preview_on_mobile": true,
+        "show_pagination_on_mobile": false
       },
       "blocks": {
         "header": {
@@ -1018,7 +1012,7 @@
           "static": true,
           "settings": {
             "collection": "timeless-pieces-mara",
-            "max_products": 4,
+            "max_products": 6,
             "layout_type": "carousel",
             "columns_desktop": "4",
             "columns_mobile": "1",
@@ -1026,7 +1020,7 @@
             "product_gap_desktop": 8,
             "product_gap_mobile": 8,
             "show_navigation_on_desktop": true,
-            "navigation_position": "outside",
+            "navigation_position": "bottom",
             "navigation_style": "icon_only",
             "navigation_icon": "long_arrow",
             "show_pagination_on_desktop": true,
@@ -1039,7 +1033,8 @@
             "autoplay_pause_on_hover": true,
             "autoplay_speed": 4,
             "show_next_slide_preview_on_mobile": true,
-            "navigation_behavior": "always"
+            "navigation_behavior": "always",
+            "show_pagination_on_mobile": true
           },
           "blocks": {
             "product-card": {
@@ -1056,13 +1051,15 @@
       "disabled": false
     },
     "community_gallery": {
-      "type": "gallery-custom",
+      "type": "custom-section",
       "settings": {
         "section_width": "full_width",
-        "direction": "vertical",
         "alignment": "left",
-        "gap_desktop": 8,
-        "gap_mobile": 8,
+        "customize_mobile_alignment": true,
+        "alignment_mobile": "left",
+        "content_gap": 8,
+        "customize_mobile_gap": true,
+        "content_gap_mobile": 8,
         "color_scheme": "scheme-1",
         "padding_top": 96,
         "padding_bottom": 0,
@@ -1092,6 +1089,7 @@
                   "settings": {
                     "direction": "vertical",
                     "width": "fill",
+                    "width_mobile": "fill",
                     "height": "fit",
                     "alignment": "left",
                     "gap_desktop": 0,
@@ -1129,7 +1127,9 @@
                             "text": "<p>Join our community</p>",
                             "heading_size": "xl",
                             "html_tag": "h2",
-                            "width": "fill"
+                            "width": "fill",
+                            "animation_type": "slide-bottom",
+                            "animation_delay": 50
                           }
                         },
                         "button": {
@@ -1139,7 +1139,9 @@
                             "button_style": "tertiary",
                             "show_icon": false,
                             "width": "fit",
-                            "width_mobile": "fit"
+                            "width_mobile": "fit",
+                            "animation_type": "fade",
+                            "animation_delay": 150
                           }
                         }
                       },
@@ -1161,9 +1163,10 @@
             "images": {
               "type": "_column",
               "settings": {
-                "width": "fill",
+                "width": "custom",
                 "gap_desktop": 0,
-                "gap_mobile": 0
+                "gap_mobile": 0,
+                "custom_width": 67
               },
               "blocks": {
                 "pair": {
@@ -1175,7 +1178,8 @@
                     "alignment": "left",
                     "gap_desktop": 8,
                     "gap_mobile": 8,
-                    "customize_mobile_alignment": false
+                    "customize_mobile_alignment": false,
+                    "width_mobile": "fill"
                   },
                   "blocks": {
                     "one": {
@@ -1226,7 +1230,8 @@
             "alignment": "left",
             "gap_desktop": 8,
             "gap_mobile": 8,
-            "customize_mobile_alignment": false
+            "customize_mobile_alignment": false,
+            "width_mobile": "fill"
           },
           "blocks": {
             "one": {
@@ -1285,7 +1290,8 @@
       "block_order": [
         "top",
         "bottom"
-      ]
+      ],
+      "name": "Gallery (custom)"
     },
     "hero_pair": {
       "type": "image-cards",
@@ -1315,8 +1321,8 @@
             "overlay_color": "#00000033",
             "width_desktop": "fill",
             "width_mobile": "fill",
-            "height_desktop": "ratio_5_4",
-            "height_mobile": "ratio_3_4",
+            "height_desktop": "custom",
+            "height_mobile": "custom",
             "enable_sticky": false,
             "position_desktop": "bottom_left",
             "position_mobile": "bottom_left",
@@ -1331,7 +1337,11 @@
             "padding_top_mobile": 40,
             "padding_bottom_mobile": 40,
             "padding_left_mobile": 16,
-            "padding_right_mobile": 16
+            "padding_right_mobile": 16,
+            "image_ratio_custom_width_desktop": 960,
+            "image_ratio_custom_height_desktop": 800,
+            "image_ratio_custom_width_mobile": 375,
+            "image_ratio_custom_height_mobile": 500
           },
           "blocks": {
             "header": {
@@ -1349,7 +1359,9 @@
                     "text": "<p>by the way</p>",
                     "heading_size": "display",
                     "html_tag": "h1",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
                   }
                 },
                 "text": {
@@ -1357,7 +1369,9 @@
                   "settings": {
                     "text": "<p>Discover the perfect blend of elegance and functionality in our stunning bags</p>",
                     "text_size": "md",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "fade",
+                    "animation_delay": 100
                   }
                 }
               },
@@ -1373,7 +1387,9 @@
                 "button_style": "tertiary",
                 "show_icon": false,
                 "width": "fit",
-                "width_mobile": "fit"
+                "width_mobile": "fit",
+                "animation_type": "fade",
+                "animation_delay": 150
               }
             }
           },
@@ -1393,8 +1409,8 @@
             "overlay_color": "#00000033",
             "width_desktop": "fill",
             "width_mobile": "fill",
-            "height_desktop": "ratio_5_4",
-            "height_mobile": "ratio_3_4",
+            "height_desktop": "custom",
+            "height_mobile": "custom",
             "enable_sticky": false,
             "position_desktop": "bottom_left",
             "position_mobile": "bottom_left",
@@ -1409,7 +1425,11 @@
             "padding_top_mobile": 40,
             "padding_bottom_mobile": 40,
             "padding_left_mobile": 16,
-            "padding_right_mobile": 16
+            "padding_right_mobile": 16,
+            "image_ratio_custom_width_desktop": 960,
+            "image_ratio_custom_height_desktop": 800,
+            "image_ratio_custom_width_mobile": 375,
+            "image_ratio_custom_height_mobile": 500
           },
           "blocks": {
             "header": {
@@ -1426,8 +1446,10 @@
                   "settings": {
                     "text": "<p>Peekaboo</p>",
                     "heading_size": "display",
-                    "html_tag": "h2",
-                    "width": "fill"
+                    "html_tag": "h1",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
                   }
                 },
                 "text": {
@@ -1435,7 +1457,9 @@
                   "settings": {
                     "text": "<p>Explore our exclusive collection and find the perfect bag</p>",
                     "text_size": "md",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "fade",
+                    "animation_delay": 100
                   }
                 }
               },
@@ -1451,7 +1475,9 @@
                 "button_style": "tertiary",
                 "show_icon": false,
                 "width": "fit",
-                "width_mobile": "fit"
+                "width_mobile": "fit",
+                "animation_type": "fade",
+                "animation_delay": 150
               }
             }
           },
@@ -1466,418 +1492,7 @@
         "peekaboo"
       ]
     },
-    "craft_emotion": {
-      "type": "image-text-split-layout",
-      "settings": {
-        "section_width": "page_width",
-        "position": "center",
-        "content_gap": 64,
-        "customize_mobile_gap": true,
-        "content_gap_mobile": 28,
-        "color_scheme": "scheme-2",
-        "padding_top": 96,
-        "padding_bottom": 48,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 28
-      },
-      "blocks": {
-        "image": {
-          "type": "group",
-          "settings": {
-            "direction": "vertical",
-            "width": "fill",
-            "height": "fit",
-            "alignment": "left",
-            "gap_desktop": 0,
-            "gap_mobile": 0
-          },
-          "blocks": {
-            "image": {
-              "type": "image",
-              "settings": {
-                "image": "shopify://shop_images/zevra-craft-emotion.avif",
-                "image_ratio_desktop": "ratio_4_3",
-                "image_ratio_mobile": "ratio_4_3",
-                "width_desktop": "fill",
-                "width_mobile": "fill",
-                "corner_radius": "square"
-              }
-            }
-          },
-          "block_order": [
-            "image"
-          ]
-        },
-        "content": {
-          "type": "group",
-          "settings": {
-            "direction": "vertical",
-            "width": "fill",
-            "height": "fit",
-            "alignment": "left",
-            "gap_desktop": 32,
-            "gap_mobile": 32,
-            "padding_left": 64,
-            "customize_mobile_padding": true,
-            "padding_left_mobile": 0
-          },
-          "blocks": {
-            "title": {
-              "type": "group",
-              "settings": {
-                "direction": "vertical",
-                "width": "fill",
-                "height": "fit",
-                "alignment": "left",
-                "gap_desktop": 16,
-                "gap_mobile": 16
-              },
-              "blocks": {
-                "tag": {
-                  "type": "eyebrow",
-                  "settings": {
-                    "text": "<p>HANDCRAFTED EXCELLENCE</p>"
-                  }
-                },
-                "body": {
-                  "type": "group",
-                  "settings": {
-                    "direction": "vertical",
-                    "width": "fill",
-                    "height": "fit",
-                    "alignment": "left",
-                    "gap_desktop": 24,
-                    "gap_mobile": 24
-                  },
-                  "blocks": {
-                    "heading": {
-                      "type": "heading",
-                      "settings": {
-                        "text": "<p>Where Craft Meets Emotion</p>",
-                        "heading_size": "lg",
-                        "html_tag": "h2",
-                        "width": "fill"
-                      }
-                    },
-                    "text": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>Each MĀRA piece is meticulously handcrafted by artisans who understand that true luxury lies in the details. From precision stitching to hand-finished textures, every element embodies timeless artistry and emotional connection.</p>",
-                        "text_size": "md",
-                        "width": "fill"
-                      }
-                    }
-                  },
-                  "block_order": [
-                    "heading",
-                    "text"
-                  ]
-                }
-              },
-              "block_order": [
-                "tag",
-                "body"
-              ]
-            },
-            "button": {
-              "type": "button",
-              "settings": {
-                "button_label": "Discover the Craft",
-                "button_link": "",
-                "button_style": "primary",
-                "show_icon": false,
-                "width": "fit",
-                "width_mobile": "fit"
-              }
-            }
-          },
-          "block_order": [
-            "title",
-            "button"
-          ]
-        }
-      },
-      "block_order": [
-        "image",
-        "content"
-      ]
-    },
-    "effortless_design": {
-      "type": "image-text-split-layout",
-      "settings": {
-        "section_width": "page_width",
-        "position": "center",
-        "content_gap": 64,
-        "customize_mobile_gap": true,
-        "content_gap_mobile": 28,
-        "color_scheme": "scheme-2",
-        "padding_top": 48,
-        "padding_bottom": 48,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 36,
-        "padding_bottom_mobile": 28
-      },
-      "blocks": {
-        "image": {
-          "type": "group",
-          "settings": {
-            "direction": "vertical",
-            "width": "fill",
-            "height": "fit",
-            "alignment": "left",
-            "gap_desktop": 0,
-            "gap_mobile": 0
-          },
-          "blocks": {
-            "image": {
-              "type": "image",
-              "settings": {
-                "image": "shopify://shop_images/zevra-effortless-design.avif",
-                "image_ratio_desktop": "ratio_4_3",
-                "image_ratio_mobile": "ratio_4_3",
-                "width_desktop": "fill",
-                "width_mobile": "fill",
-                "corner_radius": "square"
-              }
-            }
-          },
-          "block_order": [
-            "image"
-          ]
-        },
-        "content": {
-          "type": "group",
-          "settings": {
-            "direction": "vertical",
-            "width": "fill",
-            "height": "fit",
-            "alignment": "left",
-            "gap_desktop": 32,
-            "gap_mobile": 32,
-            "padding_left": 64,
-            "customize_mobile_padding": true,
-            "padding_left_mobile": 0
-          },
-          "blocks": {
-            "title": {
-              "type": "group",
-              "settings": {
-                "direction": "vertical",
-                "width": "fill",
-                "height": "fit",
-                "alignment": "left",
-                "gap_desktop": 16,
-                "gap_mobile": 16
-              },
-              "blocks": {
-                "tag": {
-                  "type": "eyebrow",
-                  "settings": {
-                    "text": "<p>FUNCTION MEETS FINESSE</p>"
-                  }
-                },
-                "body": {
-                  "type": "group",
-                  "settings": {
-                    "direction": "vertical",
-                    "width": "fill",
-                    "height": "fit",
-                    "alignment": "left",
-                    "gap_desktop": 24,
-                    "gap_mobile": 24
-                  },
-                  "blocks": {
-                    "heading": {
-                      "type": "heading",
-                      "settings": {
-                        "text": "<p>Effortless by Design</p>",
-                        "heading_size": "lg",
-                        "html_tag": "h2",
-                        "width": "fill"
-                      }
-                    },
-                    "text": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>MĀRA designs are made for movement — from boardroom days to evening escapes. Lightweight structures, refined proportions, and impeccable materials create pieces that adapt to every chapter of modern life.</p>",
-                        "text_size": "md",
-                        "width": "fill"
-                      }
-                    }
-                  },
-                  "block_order": [
-                    "heading",
-                    "text"
-                  ]
-                }
-              },
-              "block_order": [
-                "tag",
-                "body"
-              ]
-            },
-            "button": {
-              "type": "button",
-              "settings": {
-                "button_label": "Explore the Collection",
-                "button_link": "shopify://collections/new-arrivals-mara",
-                "button_style": "primary",
-                "show_icon": false,
-                "width": "fit",
-                "width_mobile": "fit"
-              }
-            }
-          },
-          "block_order": [
-            "title",
-            "button"
-          ]
-        }
-      },
-      "block_order": [
-        "image",
-        "content"
-      ]
-    },
-    "quiet_luxury": {
-      "type": "image-text-split-layout",
-      "settings": {
-        "section_width": "page_width",
-        "position": "center",
-        "content_gap": 64,
-        "customize_mobile_gap": true,
-        "content_gap_mobile": 28,
-        "color_scheme": "scheme-2",
-        "padding_top": 48,
-        "padding_bottom": 96,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 36,
-        "padding_bottom_mobile": 56
-      },
-      "blocks": {
-        "image": {
-          "type": "group",
-          "settings": {
-            "direction": "vertical",
-            "width": "fill",
-            "height": "fit",
-            "alignment": "left",
-            "gap_desktop": 0,
-            "gap_mobile": 0
-          },
-          "blocks": {
-            "image": {
-              "type": "image",
-              "settings": {
-                "image": "shopify://shop_images/zevra-quiet-luxury.avif",
-                "image_ratio_desktop": "ratio_4_3",
-                "image_ratio_mobile": "ratio_4_3",
-                "width_desktop": "fill",
-                "width_mobile": "fill",
-                "corner_radius": "square"
-              }
-            }
-          },
-          "block_order": [
-            "image"
-          ]
-        },
-        "content": {
-          "type": "group",
-          "settings": {
-            "direction": "vertical",
-            "width": "fill",
-            "height": "fit",
-            "alignment": "left",
-            "gap_desktop": 32,
-            "gap_mobile": 32,
-            "padding_left": 64,
-            "customize_mobile_padding": true,
-            "padding_left_mobile": 0
-          },
-          "blocks": {
-            "title": {
-              "type": "group",
-              "settings": {
-                "direction": "vertical",
-                "width": "fill",
-                "height": "fit",
-                "alignment": "left",
-                "gap_desktop": 16,
-                "gap_mobile": 16
-              },
-              "blocks": {
-                "tag": {
-                  "type": "eyebrow",
-                  "settings": {
-                    "text": "<p>ELEVATED SIMPLICITY</p>"
-                  }
-                },
-                "body": {
-                  "type": "group",
-                  "settings": {
-                    "direction": "vertical",
-                    "width": "fill",
-                    "height": "fit",
-                    "alignment": "left",
-                    "gap_desktop": 24,
-                    "gap_mobile": 24
-                  },
-                  "blocks": {
-                    "heading": {
-                      "type": "heading",
-                      "settings": {
-                        "text": "<p>Luxury That Speaks Softly</p>",
-                        "heading_size": "lg",
-                        "html_tag": "h2",
-                        "width": "fill"
-                      }
-                    },
-                    "text": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>Quiet confidence defines the MĀRA woman. Her bag doesn’t shout — it whispers sophistication. Minimal lines, sculptural form, and a serene color palette come together to reflect pure, contemporary elegance.</p>",
-                        "text_size": "md",
-                        "width": "fill"
-                      }
-                    }
-                  },
-                  "block_order": [
-                    "heading",
-                    "text"
-                  ]
-                }
-              },
-              "block_order": [
-                "tag",
-                "body"
-              ]
-            },
-            "button": {
-              "type": "button",
-              "settings": {
-                "button_label": "Shop Icons",
-                "button_link": "shopify://collections/best-sellers-mara",
-                "button_style": "primary",
-                "show_icon": false,
-                "width": "fit",
-                "width_mobile": "fit"
-              }
-            }
-          },
-          "block_order": [
-            "title",
-            "button"
-          ]
-        }
-      },
-      "block_order": [
-        "image",
-        "content"
-      ]
-    },
-    "brand_logos": {
+    "text_marquee_logos": {
       "type": "custom-section",
       "settings": {
         "section_width": "full_width_no_padding",
@@ -1902,13 +1517,14 @@
             "animation_direction": "backward",
             "show_top_divider": false,
             "show_bottom_divider": false,
-            "show_blurred_edges": false
+            "show_blurred_edges": false,
+            "enable_parallax": false
           },
           "blocks": {
             "brand_0": {
               "type": "_marquee-image",
               "settings": {
-                "image": "shopify://shop_images/zevra-brand-tory-burch.avif",
+                "image": "shopify://shop_images/zevra-marquee-tory-burch-2x1.avif",
                 "image_ratio": "original",
                 "width_custom_desktop": 188,
                 "width_custom_mobile": 96,
@@ -1918,7 +1534,7 @@
             "brand_1": {
               "type": "_marquee-image",
               "settings": {
-                "image": "shopify://shop_images/zevra-brand-fendi.avif",
+                "image": "shopify://shop_images/zevra-marquee-fendi-2x1.avif",
                 "image_ratio": "original",
                 "width_custom_desktop": 188,
                 "width_custom_mobile": 96,
@@ -1928,7 +1544,7 @@
             "brand_2": {
               "type": "_marquee-image",
               "settings": {
-                "image": "shopify://shop_images/zevra-brand-michael-kors.avif",
+                "image": "shopify://shop_images/zevra-marquee-michael-kors-2x1.avif",
                 "image_ratio": "original",
                 "width_custom_desktop": 188,
                 "width_custom_mobile": 96,
@@ -1938,7 +1554,7 @@
             "brand_3": {
               "type": "_marquee-image",
               "settings": {
-                "image": "shopify://shop_images/zevra-brand-bulgari.avif",
+                "image": "shopify://shop_images/zevra-marquee-bulgari-2x1.avif",
                 "image_ratio": "original",
                 "width_custom_desktop": 188,
                 "width_custom_mobile": 96,
@@ -1948,7 +1564,7 @@
             "brand_4": {
               "type": "_marquee-image",
               "settings": {
-                "image": "shopify://shop_images/zevra-brand-mulberry.avif",
+                "image": "shopify://shop_images/zevra-marquee-mulberry-2x1.avif",
                 "image_ratio": "original",
                 "width_custom_desktop": 188,
                 "width_custom_mobile": 96,
@@ -1958,7 +1574,7 @@
             "brand_5": {
               "type": "_marquee-image",
               "settings": {
-                "image": "shopify://shop_images/zevra-brand-marc-jacobs.avif",
+                "image": "shopify://shop_images/zevra-marquee-marc-jacobs-2x1.avif",
                 "image_ratio": "original",
                 "width_custom_desktop": 188,
                 "width_custom_mobile": 96,
@@ -1968,7 +1584,7 @@
             "brand_6": {
               "type": "_marquee-image",
               "settings": {
-                "image": "shopify://shop_images/zevra-brand-alexander-mcqueen.avif",
+                "image": "shopify://shop_images/zevra-marquee-alexander-mcqueen-2x1.avif",
                 "image_ratio": "original",
                 "width_custom_desktop": 188,
                 "width_custom_mobile": 96,
@@ -1978,7 +1594,7 @@
             "brand_7": {
               "type": "_marquee-image",
               "settings": {
-                "image": "shopify://shop_images/zevra-brand-celine.avif",
+                "image": "shopify://shop_images/zevra-marquee-celine-2x1.avif",
                 "image_ratio": "original",
                 "width_custom_desktop": 188,
                 "width_custom_mobile": 96,
@@ -1988,7 +1604,7 @@
             "brand_8": {
               "type": "_marquee-image",
               "settings": {
-                "image": "shopify://shop_images/zevra-brand-jw-anderson.avif",
+                "image": "shopify://shop_images/zevra-marquee-jw-anderson-2x1.avif",
                 "image_ratio": "original",
                 "width_custom_desktop": 188,
                 "width_custom_mobile": 96,
@@ -1998,7 +1614,7 @@
             "brand_9": {
               "type": "_marquee-image",
               "settings": {
-                "image": "shopify://shop_images/zevra-brand-dior.avif",
+                "image": "shopify://shop_images/zevra-marquee-dior-2x1.avif",
                 "image_ratio": "original",
                 "width_custom_desktop": 188,
                 "width_custom_mobile": 96,
@@ -2022,11 +1638,11 @@
       },
       "block_order": [
         "logos"
-      ]
+      ],
+      "name": "Text marquee (custom)"
     },
     "brand_timeline": {
       "type": "timeline",
-      "disabled": true,
       "settings": {
         "section_width": "page_width",
         "desktop_alignment": "left",
@@ -2072,7 +1688,8 @@
                 "alignment": "left",
                 "alignment_mobile": "left",
                 "gap_desktop": 0,
-                "gap_mobile": 28
+                "gap_mobile": 28,
+                "height": "fit"
               },
               "blocks": {
                 "image": {
@@ -2083,7 +1700,8 @@
                     "image_ratio_mobile": "ratio_1_1",
                     "width_desktop": "fill",
                     "width_mobile": "fill",
-                    "corner_radius": "square"
+                    "corner_radius": "square",
+                    "show_image_first_mobile": true
                   }
                 },
                 "content": {
@@ -2106,9 +1724,11 @@
                       "type": "heading",
                       "settings": {
                         "text": "<p>The Beginning of Form</p>",
-                        "heading_size": "lg",
+                        "heading_size": "xl",
                         "html_tag": "h2",
-                        "width": "fill"
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50
                       }
                     },
                     "text": {
@@ -2116,7 +1736,234 @@
                       "settings": {
                         "text": "<p>The first collection was born from a single idea: to create bags that speak softly but leave a lasting impression. Each silhouette was refined through countless prototypes and the pursuit of balance between structure and softness.</p>",
                         "text_size": "md",
-                        "width": "fill"
+                        "width": "fill",
+                        "animation_type": "fade",
+                        "animation_delay": 100
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "heading",
+                    "text"
+                  ]
+                }
+              },
+              "block_order": [
+                "image",
+                "content"
+              ]
+            },
+            "year_2020": {
+              "type": "timeline-slide",
+              "settings": {
+                "timeline_label": "2020",
+                "direction": "horizontal",
+                "position_horizontal": "center",
+                "customize_mobile_alignment": true,
+                "alignment": "left",
+                "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 28,
+                "height": "fit"
+              },
+              "blocks": {
+                "image": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "ratio_1_1",
+                    "image_ratio_mobile": "ratio_1_1",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "corner_radius": "square",
+                    "show_image_first_mobile": true,
+                    "image": "shopify://shop_images/zevra-timeline-2020.avif"
+                  }
+                },
+                "content": {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "width": "fill",
+                    "height": "fit",
+                    "alignment": "left",
+                    "gap_desktop": 16,
+                    "gap_mobile": 16,
+                    "padding_left": 80,
+                    "padding_right": 80,
+                    "customize_mobile_padding": true,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
+                  },
+                  "blocks": {
+                    "heading": {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>Craft Refined</p>",
+                        "heading_size": "xl",
+                        "html_tag": "h2",
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50
+                      }
+                    },
+                    "text": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>MĀRA introduced its signature leatherwork, collaborating with artisans whose techniques have been passed down for generations. The brand began to be recognized for its quiet sophistication and sculptural minimalism.</p>",
+                        "text_size": "md",
+                        "width": "fill",
+                        "animation_type": "fade",
+                        "animation_delay": 100
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "heading",
+                    "text"
+                  ]
+                }
+              },
+              "block_order": [
+                "image",
+                "content"
+              ]
+            },
+            "year_2022": {
+              "type": "timeline-slide",
+              "settings": {
+                "timeline_label": "2022",
+                "direction": "horizontal",
+                "position_horizontal": "center",
+                "customize_mobile_alignment": true,
+                "alignment": "left",
+                "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 28,
+                "height": "fit"
+              },
+              "blocks": {
+                "image": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "ratio_1_1",
+                    "image_ratio_mobile": "ratio_1_1",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "corner_radius": "square",
+                    "show_image_first_mobile": true,
+                    "image": "shopify://shop_images/zevra-timeline-2022.avif"
+                  }
+                },
+                "content": {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "width": "fill",
+                    "height": "fit",
+                    "alignment": "left",
+                    "gap_desktop": 16,
+                    "gap_mobile": 16,
+                    "padding_left": 80,
+                    "padding_right": 80,
+                    "customize_mobile_padding": true,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
+                  },
+                  "blocks": {
+                    "heading": {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>The Modern Statement</p>",
+                        "heading_size": "xl",
+                        "html_tag": "h2",
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50
+                      }
+                    },
+                    "text": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>The line expanded to include versatile everyday icons — compact, architectural, and elegant. Each piece designed to transition seamlessly from day to night, embodying the effortless luxury that defines MĀRA.</p>",
+                        "text_size": "md",
+                        "width": "fill",
+                        "animation_type": "fade",
+                        "animation_delay": 100
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "heading",
+                    "text"
+                  ]
+                }
+              },
+              "block_order": [
+                "image",
+                "content"
+              ]
+            },
+            "year_2024": {
+              "type": "timeline-slide",
+              "settings": {
+                "timeline_label": "2024",
+                "direction": "horizontal",
+                "position_horizontal": "center",
+                "customize_mobile_alignment": true,
+                "alignment": "left",
+                "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 28,
+                "height": "fit"
+              },
+              "blocks": {
+                "image": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "ratio_1_1",
+                    "image_ratio_mobile": "ratio_1_1",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "corner_radius": "square",
+                    "show_image_first_mobile": true,
+                    "image": "shopify://shop_images/zevra-timeline-2024.avif"
+                  }
+                },
+                "content": {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "width": "fill",
+                    "height": "fit",
+                    "alignment": "left",
+                    "gap_desktop": 16,
+                    "gap_mobile": 16,
+                    "padding_left": 80,
+                    "padding_right": 80,
+                    "customize_mobile_padding": true,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
+                  },
+                  "blocks": {
+                    "heading": {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>Towards Timelessness</p>",
+                        "heading_size": "xl",
+                        "html_tag": "h2",
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50
+                      }
+                    },
+                    "text": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Every new creation honors the same philosophy: enduring beauty through craftsmanship. MĀRA continues to evolve, staying true to its essence — refined, intentional, and timelessly modern.</p>",
+                        "text_size": "md",
+                        "width": "fill",
+                        "animation_type": "fade",
+                        "animation_delay": 100
                       }
                     }
                   },
@@ -2133,10 +1980,741 @@
             }
           },
           "block_order": [
-            "year_2018"
+            "year_2018",
+            "year_2020",
+            "year_2022",
+            "year_2024"
           ]
         }
       }
+    },
+    "press": {
+      "type": "press",
+      "name": "Press",
+      "settings": {
+        "max_width": 1024,
+        "alignment": "center",
+        "gap_desktop": 32,
+        "gap_mobile": 28,
+        "color_scheme": "scheme-1",
+        "padding_top": 144,
+        "padding_bottom": 144,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 80,
+        "padding_bottom_mobile": 80
+      },
+      "blocks": {
+        "quotes": {
+          "type": "press-quotes",
+          "static": true,
+          "settings": {
+            "autoplay": false,
+            "pause_on_hover": true,
+            "autoplay_speed": 4,
+            "image_spacing_desktop": 32,
+            "image_spacing_mobile": 28,
+            "image_gap_desktop": 16,
+            "image_gap_mobile": 16,
+            "logo_position": "top",
+            "fade_logo_edges": true,
+            "show_navigation_on_desktop": true,
+            "show_navigation_on_mobile": true,
+            "navigation_position": "bottom",
+            "navigation_style": "icon_only",
+            "navigation_icon": "long_arrow",
+            "navigation_behavior": "always",
+            "show_pagination_on_desktop": true,
+            "show_pagination_on_mobile": true,
+            "pagination_type": "progress_bar",
+            "pagination_top_padding_desktop": 32,
+            "pagination_top_padding_mobile": 28,
+            "pagination_limit_width": true,
+            "pagination_max_width": 160
+          },
+          "blocks": {
+            "press_item_1": {
+              "type": "press-item",
+              "settings": {
+                "alt_text": "Michael Kors",
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
+                "corner_radius": "square",
+                "image_width_desktop": 185,
+                "image_width_mobile": 170,
+                "image": "shopify://shop_images/zevra-press-michael-kors-2x1.avif"
+              },
+              "blocks": {
+                "heading_1": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>“A statement piece that turns heads.”</p>",
+                    "heading_size": "custom",
+                    "html_tag": "h3",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "custom_heading_size": 26,
+                    "padding_bottom": 4,
+                    "animation_delay": 50
+                  }
+                },
+                "heading_2": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>The craftsmanship is impeccable — every crystal catches the light beautifully. It’s bold but still elegant enough for evening events. I’ve received endless compliments.</p>",
+                    "width": "fill",
+                    "animation_type": "fade",
+                    "text_size": "md",
+                    "text_color": "#181818",
+                    "animation_delay": 100
+                  }
+                }
+              },
+              "block_order": [
+                "heading_1",
+                "heading_2"
+              ]
+            },
+            "press_item_2": {
+              "type": "press-item",
+              "settings": {
+                "alt_text": "BVLGARI",
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
+                "corner_radius": "square",
+                "image_width_desktop": 185,
+                "image_width_mobile": 170,
+                "image": "shopify://shop_images/zevra-press-bulgari-2x1.avif"
+              },
+              "blocks": {
+                "heading_1": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>“A statement piece that turns heads.”</p>",
+                    "heading_size": "custom",
+                    "html_tag": "h3",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "custom_heading_size": 26,
+                    "padding_bottom": 4,
+                    "animation_delay": 50
+                  }
+                },
+                "heading_2": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>The craftsmanship is impeccable — every crystal catches the light beautifully. It’s bold but still elegant enough for evening events. I’ve received endless compliments.</p>",
+                    "width": "fill",
+                    "animation_type": "fade",
+                    "text_size": "md",
+                    "text_color": "#181818",
+                    "animation_delay": 100
+                  }
+                }
+              },
+              "block_order": [
+                "heading_1",
+                "heading_2"
+              ]
+            },
+            "press_item_3": {
+              "type": "press-item",
+              "settings": {
+                "alt_text": "DIOR",
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
+                "corner_radius": "square",
+                "image_width_desktop": 185,
+                "image_width_mobile": 170,
+                "image": "shopify://shop_images/zevra-press-dior-2x1.avif"
+              },
+              "blocks": {
+                "heading_1": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>“A statement piece that turns heads.”</p>",
+                    "heading_size": "custom",
+                    "html_tag": "h3",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "custom_heading_size": 26,
+                    "padding_bottom": 4,
+                    "animation_delay": 50
+                  }
+                },
+                "heading_2": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>The craftsmanship is impeccable — every crystal catches the light beautifully. It’s bold but still elegant enough for evening events. I’ve received endless compliments.</p>",
+                    "width": "fill",
+                    "animation_type": "fade",
+                    "text_size": "md",
+                    "text_color": "#181818",
+                    "animation_delay": 100
+                  }
+                }
+              },
+              "block_order": [
+                "heading_1",
+                "heading_2"
+              ]
+            },
+            "press_item_4": {
+              "type": "press-item",
+              "settings": {
+                "alt_text": "JW Anderson",
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
+                "corner_radius": "square",
+                "image_width_desktop": 185,
+                "image_width_mobile": 170,
+                "image": "shopify://shop_images/zevra-press-jw-anderson-2x1.avif"
+              },
+              "blocks": {
+                "heading_1": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>“A statement piece that turns heads.”</p>",
+                    "heading_size": "custom",
+                    "html_tag": "h3",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "custom_heading_size": 26,
+                    "padding_bottom": 4,
+                    "animation_delay": 50
+                  }
+                },
+                "heading_2": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>The craftsmanship is impeccable — every crystal catches the light beautifully. It’s bold but still elegant enough for evening events. I’ve received endless compliments.</p>",
+                    "width": "fill",
+                    "animation_type": "fade",
+                    "text_size": "md",
+                    "text_color": "#181818",
+                    "animation_delay": 100
+                  }
+                }
+              },
+              "block_order": [
+                "heading_1",
+                "heading_2"
+              ]
+            },
+            "press_item_5": {
+              "type": "press-item",
+              "settings": {
+                "alt_text": "Marc Jacobs",
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
+                "corner_radius": "square",
+                "image_width_desktop": 185,
+                "image_width_mobile": 170,
+                "image": "shopify://shop_images/zevra-press-marc-jacobs-2x1.avif"
+              },
+              "blocks": {
+                "heading_1": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>“A statement piece that turns heads.”</p>",
+                    "heading_size": "custom",
+                    "html_tag": "h3",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "custom_heading_size": 26,
+                    "padding_bottom": 4,
+                    "animation_delay": 50
+                  }
+                },
+                "heading_2": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>The craftsmanship is impeccable — every crystal catches the light beautifully. It’s bold but still elegant enough for evening events. I’ve received endless compliments.</p>",
+                    "width": "fill",
+                    "animation_type": "fade",
+                    "text_size": "md",
+                    "text_color": "#181818",
+                    "animation_delay": 100
+                  }
+                }
+              },
+              "block_order": [
+                "heading_1",
+                "heading_2"
+              ]
+            }
+          },
+          "block_order": [
+            "press_item_1",
+            "press_item_2",
+            "press_item_3",
+            "press_item_4",
+            "press_item_5"
+          ]
+        }
+      }
+    },
+    "scrolling_cards": {
+      "type": "scrolling-cards",
+      "settings": {
+        "section_width": "custom",
+        "custom_width": 1600,
+        "stack_effect": "fade",
+        "stack_gap_desktop": 96,
+        "stack_gap_mobile": 64,
+        "enable_sticky_mobile": false,
+        "gap_desktop": 0,
+        "gap_mobile": 0,
+        "color_scheme": "scheme-2",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      },
+      "blocks": {
+        "header": {
+          "type": "header",
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        },
+        "card_1": {
+          "type": "scrolling-card",
+          "settings": {
+            "direction": "horizontal",
+            "position": "center",
+            "alignment": "left",
+            "vertical_on_mobile": true,
+            "alignment_mobile": "left",
+            "gap_desktop": 64,
+            "gap_mobile": 28,
+            "border_thickness": 0,
+            "corner_radius": "square",
+            "shadow": "none",
+            "background_media": "none",
+            "show_overlay": false,
+            "backdrop_blur": 0,
+            "color_scheme": "scheme-2",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
+          },
+          "blocks": {
+            "image": {
+              "type": "image",
+              "settings": {
+                "image": "shopify://shop_images/zevra-craft-emotion.avif",
+                "image_ratio_desktop": "ratio_4_3",
+                "image_ratio_mobile": "ratio_4_3",
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "corner_radius": "square"
+              }
+            },
+            "content": {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "width": "fill",
+                "height": "fit",
+                "alignment": "left",
+                "gap_desktop": 32,
+                "gap_mobile": 32,
+                "padding_left": 64,
+                "customize_mobile_padding": true,
+                "padding_left_mobile": 0,
+                "width_mobile": "fill"
+              },
+              "blocks": {
+                "title": {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "width": "fill",
+                    "height": "fit",
+                    "alignment": "left",
+                    "gap_desktop": 16,
+                    "gap_mobile": 16
+                  },
+                  "blocks": {
+                    "tag": {
+                      "type": "eyebrow",
+                      "settings": {
+                        "text": "<p>HANDCRAFTED EXCELLENCE</p>",
+                        "animation_type": "fade",
+                        "animation_delay": 0
+                      }
+                    },
+                    "body": {
+                      "type": "group",
+                      "settings": {
+                        "direction": "vertical",
+                        "width": "fill",
+                        "height": "fit",
+                        "alignment": "left",
+                        "gap_desktop": 24,
+                        "gap_mobile": 24
+                      },
+                      "blocks": {
+                        "heading": {
+                          "type": "heading",
+                          "settings": {
+                            "text": "<p>Where Craft Meets Emotion</p>",
+                            "heading_size": "lg",
+                            "html_tag": "h2",
+                            "width": "fill",
+                            "animation_type": "slide-bottom",
+                            "animation_delay": 50
+                          }
+                        },
+                        "text": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Each MĀRA piece is meticulously handcrafted by artisans who understand that true luxury lies in the details. From precision stitching to hand-finished textures, every element embodies timeless artistry and emotional connection.</p>",
+                            "text_size": "md",
+                            "width": "fill",
+                            "animation_type": "fade",
+                            "animation_delay": 100
+                          }
+                        }
+                      },
+                      "block_order": [
+                        "heading",
+                        "text"
+                      ]
+                    }
+                  },
+                  "block_order": [
+                    "tag",
+                    "body"
+                  ]
+                },
+                "button": {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "Discover the Craft",
+                    "button_link": "",
+                    "button_style": "primary",
+                    "show_icon": false,
+                    "width": "fit",
+                    "width_mobile": "fit",
+                    "animation_type": "fade",
+                    "animation_delay": 150
+                  }
+                }
+              },
+              "block_order": [
+                "title",
+                "button"
+              ]
+            }
+          },
+          "block_order": [
+            "image",
+            "content"
+          ]
+        },
+        "card_2": {
+          "type": "scrolling-card",
+          "settings": {
+            "direction": "horizontal",
+            "position": "center",
+            "alignment": "left",
+            "vertical_on_mobile": true,
+            "alignment_mobile": "left",
+            "gap_desktop": 64,
+            "gap_mobile": 28,
+            "border_thickness": 0,
+            "corner_radius": "square",
+            "shadow": "none",
+            "background_media": "none",
+            "show_overlay": false,
+            "backdrop_blur": 0,
+            "color_scheme": "scheme-2",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
+          },
+          "blocks": {
+            "image": {
+              "type": "image",
+              "settings": {
+                "image": "shopify://shop_images/zevra-effortless-design.avif",
+                "image_ratio_desktop": "ratio_4_3",
+                "image_ratio_mobile": "ratio_4_3",
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "corner_radius": "square"
+              }
+            },
+            "content": {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "width": "fill",
+                "height": "fit",
+                "alignment": "left",
+                "gap_desktop": 32,
+                "gap_mobile": 32,
+                "padding_left": 64,
+                "customize_mobile_padding": true,
+                "padding_left_mobile": 0,
+                "width_mobile": "fill"
+              },
+              "blocks": {
+                "title": {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "width": "fill",
+                    "height": "fit",
+                    "alignment": "left",
+                    "gap_desktop": 16,
+                    "gap_mobile": 16
+                  },
+                  "blocks": {
+                    "tag": {
+                      "type": "eyebrow",
+                      "settings": {
+                        "text": "<p>FUNCTION MEETS FINESSE</p>",
+                        "animation_type": "fade",
+                        "animation_delay": 0
+                      }
+                    },
+                    "body": {
+                      "type": "group",
+                      "settings": {
+                        "direction": "vertical",
+                        "width": "fill",
+                        "height": "fit",
+                        "alignment": "left",
+                        "gap_desktop": 24,
+                        "gap_mobile": 24
+                      },
+                      "blocks": {
+                        "heading": {
+                          "type": "heading",
+                          "settings": {
+                            "text": "<p>Effortless by Design</p>",
+                            "heading_size": "lg",
+                            "html_tag": "h2",
+                            "width": "fill",
+                            "animation_type": "slide-bottom",
+                            "animation_delay": 50
+                          }
+                        },
+                        "text": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>MĀRA designs are made for movement — from boardroom days to evening escapes. Lightweight structures, refined proportions, and impeccable materials create pieces that adapt to every chapter of modern life.</p>",
+                            "text_size": "md",
+                            "width": "fill",
+                            "animation_type": "fade",
+                            "animation_delay": 100
+                          }
+                        }
+                      },
+                      "block_order": [
+                        "heading",
+                        "text"
+                      ]
+                    }
+                  },
+                  "block_order": [
+                    "tag",
+                    "body"
+                  ]
+                },
+                "button": {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "Explore the Collection",
+                    "button_link": "shopify://collections/new-arrivals-mara",
+                    "button_style": "primary",
+                    "show_icon": false,
+                    "width": "fit",
+                    "width_mobile": "fit",
+                    "animation_type": "fade",
+                    "animation_delay": 150
+                  }
+                }
+              },
+              "block_order": [
+                "title",
+                "button"
+              ]
+            }
+          },
+          "block_order": [
+            "image",
+            "content"
+          ]
+        },
+        "card_3": {
+          "type": "scrolling-card",
+          "settings": {
+            "direction": "horizontal",
+            "position": "center",
+            "alignment": "left",
+            "vertical_on_mobile": true,
+            "alignment_mobile": "left",
+            "gap_desktop": 64,
+            "gap_mobile": 28,
+            "border_thickness": 0,
+            "corner_radius": "square",
+            "shadow": "none",
+            "background_media": "none",
+            "show_overlay": false,
+            "backdrop_blur": 0,
+            "color_scheme": "scheme-2",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
+          },
+          "blocks": {
+            "image": {
+              "type": "image",
+              "settings": {
+                "image": "shopify://shop_images/zevra-quiet-luxury.avif",
+                "image_ratio_desktop": "ratio_4_3",
+                "image_ratio_mobile": "ratio_4_3",
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "corner_radius": "square"
+              }
+            },
+            "content": {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "width": "fill",
+                "height": "fit",
+                "alignment": "left",
+                "gap_desktop": 32,
+                "gap_mobile": 32,
+                "padding_left": 64,
+                "customize_mobile_padding": true,
+                "padding_left_mobile": 0,
+                "width_mobile": "fill"
+              },
+              "blocks": {
+                "title": {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "width": "fill",
+                    "height": "fit",
+                    "alignment": "left",
+                    "gap_desktop": 16,
+                    "gap_mobile": 16
+                  },
+                  "blocks": {
+                    "tag": {
+                      "type": "eyebrow",
+                      "settings": {
+                        "text": "<p>ELEVATED SIMPLICITY</p>",
+                        "animation_type": "fade",
+                        "animation_delay": 0
+                      }
+                    },
+                    "body": {
+                      "type": "group",
+                      "settings": {
+                        "direction": "vertical",
+                        "width": "fill",
+                        "height": "fit",
+                        "alignment": "left",
+                        "gap_desktop": 24,
+                        "gap_mobile": 24
+                      },
+                      "blocks": {
+                        "heading": {
+                          "type": "heading",
+                          "settings": {
+                            "text": "<p>Luxury That Speaks Softly</p>",
+                            "heading_size": "lg",
+                            "html_tag": "h2",
+                            "width": "fill",
+                            "animation_type": "slide-bottom",
+                            "animation_delay": 50
+                          }
+                        },
+                        "text": {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Quiet confidence defines the MĀRA woman. Her bag doesn’t shout — it whispers sophistication. Minimal lines, sculptural form, and a serene color palette come together to reflect pure, contemporary elegance.</p>",
+                            "text_size": "md",
+                            "width": "fill",
+                            "animation_type": "fade",
+                            "animation_delay": 100
+                          }
+                        }
+                      },
+                      "block_order": [
+                        "heading",
+                        "text"
+                      ]
+                    }
+                  },
+                  "block_order": [
+                    "tag",
+                    "body"
+                  ]
+                },
+                "button": {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "Shop Icons",
+                    "button_link": "shopify://collections/best-sellers-mara",
+                    "button_style": "primary",
+                    "show_icon": false,
+                    "width": "fit",
+                    "width_mobile": "fit",
+                    "animation_type": "fade",
+                    "animation_delay": 150
+                  }
+                }
+              },
+              "block_order": [
+                "title",
+                "button"
+              ]
+            }
+          },
+          "block_order": [
+            "image",
+            "content"
+          ]
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3"
+      ]
     }
   },
   "order": [
@@ -2147,11 +2725,10 @@
     "crafted_journeys",
     "limited_release",
     "choose_colour",
+    "press",
     "editors_pick",
-    "craft_emotion",
-    "effortless_design",
-    "quiet_luxury",
-    "brand_logos",
+    "scrolling_cards",
+    "text_marquee_logos",
     "timeless_pieces",
     "brand_timeline",
     "community_gallery"

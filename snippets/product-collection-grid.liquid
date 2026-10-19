@@ -29,9 +29,12 @@
   @param {string} [aria_label] - Accessible name for the carousel
   @param {string} [previous_selector] - CSS selector for the previous control
   @param {string} [next_selector] - CSS selector for the next control
+  @param {boolean} [show_pagination_on_desktop] - Desktop pagination visibility
+  @param {boolean} [show_pagination_on_mobile] - Mobile pagination visibility
   @param {boolean} [show_pagination] - Whether to render Swiper pagination
   @param {string} [pagination_type] - Progress bar or bullets pagination
   @param {string} [pagination_class] - Additional pagination classes
+  @param {string} [bottom_navigation] - Optional Collection tabs bottom navigation markup
   @param {string} [pagination_style] - Inline pagination custom properties
   @param {boolean} [autoplay] - Whether the carousel auto-rotates
   @param {boolean} [autoplay_pause_on_hover] - Whether pointer hover pauses autoplay
@@ -268,11 +271,21 @@
         <div
           class="swiper-pagination{% if pagination_class != blank %} {{ pagination_class }}{% endif %}"
           data-product-collection-pagination
+          {% render 'pagination-visibility', desktop: show_pagination_on_desktop, mobile: show_pagination_on_mobile %}
           data-pagination-type="{{ product_collection_grid_pagination_type }}"
           {% if product_collection_grid_pagination_style != blank %}style="{{ product_collection_grid_pagination_style }}"{% endif %}
         ></div>
       {% endif %}
     {% endcapture %}
+
+    {% if bottom_navigation != blank %}
+      {% capture product_collection_grid_pagination %}
+        <div class="collection-tab__footer swiper-pagination-host" data-pagination-type="{{ product_collection_grid_pagination_type }}" style="{{ pagination_style }}">
+          {{ product_collection_grid_pagination }}
+          {{ bottom_navigation }}
+        </div>
+      {% endcapture %}
+    {% endif %}
 
     {% render 'swiper-carousel',
       id: carousel_id,

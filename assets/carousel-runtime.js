@@ -292,6 +292,8 @@ const initializeReveal = (root) => {
       slide.setAttribute('aria-hidden', String(!isSelected));
     });
     updatePagination(index);
+    root.querySelectorAll('[data-reveal-bullet]').forEach((bullet) => bullet.setAttribute('aria-current', String(Number(bullet.dataset.revealBullet) === index)));
+    root.querySelector('[data-reveal-progress]')?.style.setProperty('--press-progress', String((index + 1) / slides.length));
     root.classList.add('reveal-initialized');
     if (alignPagination) centerPaginationButton(index, behavior);
 
@@ -507,7 +509,12 @@ const initializeReveal = (root) => {
     }, { capture: true, signal: controller.signal });
   }
 
-  updateLayout(0, { behavior: 'auto' });
+  root.querySelectorAll('[data-reveal-bullet]').forEach((bullet) => bullet.addEventListener('click', () => state.goTo(Number(bullet.dataset.revealBullet)), { signal: controller.signal }));
+  root.querySelector('[data-carousel-previous]')?.addEventListener('click', () => state.goTo(state.currentIndex - 1), { signal: controller.signal });
+  root.querySelector('[data-carousel-next]')?.addEventListener('click', () => state.goTo(state.currentIndex + 1), { signal: controller.signal });
+  window.addEventListener('resize', () => centerPaginationButton(state.currentIndex, 'auto'), { signal: controller.signal });
+  const initialIndex = Math.min(slides.length - 1, Math.max(0, number(root.dataset.carouselInitialIndex, 0)));
+  updateLayout(initialIndex, { behavior: 'auto' });
   instances.set(root, state);
 
   const autoplay = root.dataset.swiperAutoplay === 'true';

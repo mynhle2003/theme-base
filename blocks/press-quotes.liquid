@@ -57,9 +57,19 @@
 
 <div
   class="press-quotes reveal-carousel"
-  style="--press-quotes-image-spacing: {{ press_quotes_image_spacing_desktop }}px; --press-quotes-image-spacing-mobile: {{ press_quotes_image_spacing_mobile }}px; --press-quotes-image-gap: {{ press_quotes_image_gap_desktop }}px; --press-quotes-image-gap-mobile: {{ press_quotes_image_gap_mobile }}px;"
+  data-logo-position="{{ block.settings.logo_position | default: 'bottom' }}"
+  data-logo-fade="{{ block.settings.fade_logo_edges }}"
+  data-carousel-initial-index="2"
+  style="--press-pagination-width: {{ block.settings.pagination_max_width | default: 160 }}px; --press-pagination-spacing: {{ block.settings.pagination_top_padding_desktop | default: 32 }}px; --press-pagination-spacing-mobile: {{ block.settings.pagination_top_padding_mobile | default: 28 }}px; --press-quotes-image-spacing: {{ press_quotes_image_spacing_desktop }}px; --press-quotes-image-spacing-mobile: {{ press_quotes_image_spacing_mobile }}px; --press-quotes-image-gap: {{ press_quotes_image_gap_desktop }}px; --press-quotes-image-gap-mobile: {{ press_quotes_image_gap_mobile }}px;"
   data-carousel-block
   data-carousel-mode="reveal"
+  data-navigation-desktop="{{ block.settings.show_navigation_on_desktop }}"
+  data-navigation-mobile="{{ block.settings.show_navigation_on_mobile }}"
+  data-navigation-position="{{ block.settings.navigation_position | default: 'bottom' }}"
+  data-navigation-behavior="{{ block.settings.navigation_behavior | default: 'always' }}"
+  data-pagination-desktop="{{ block.settings.show_pagination_on_desktop }}"
+  data-pagination-mobile="{{ block.settings.show_pagination_on_mobile }}"
+  data-pagination-limited="{{ block.settings.pagination_limit_width }}"
   data-carousel-loop="{{ press_quotes_loop }}"
   data-swiper-autoplay="{{ press_quotes_autoplay }}"
   data-swiper-autoplay-pause-on-hover="{{ press_quotes_pause_on_hover }}"
@@ -86,6 +96,22 @@
         ></button>
       {% endfor %}
     </div>
+    {% if press_quotes_item_count > 1 %}
+      <div class="press-quotes__controls">
+        {% render 'swiper-navigation', show: true, centered: false,
+          style: block.settings.navigation_style, icon: block.settings.navigation_icon, behavior: 'always',
+          wrapper_class: 'press-quotes__arrows', previous_attribute: 'data-carousel-previous', next_attribute: 'data-carousel-next' %}
+        {% if block.settings.pagination_type == 'bullets' %}
+          <div class="press-quotes__bullets">
+            {% for press_item in block.blocks %}
+              <button type="button" class="btn--unstyled" data-reveal-bullet="{{ forloop.index0 }}" aria-label="{{ 'press.go_to_slide' | t: index: forloop.index | escape }}" aria-controls="{{ press_quotes_id }}" aria-current="{{ forloop.first }}"></button>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="press-quotes__progress" aria-hidden="true"><span data-reveal-progress></span></div>
+        {% endif %}
+      </div>
+    {% endif %}
   {% elsif request.design_mode %}
     <div class="press-quotes__empty" role="status">{{ 'press.empty_quotes' | t }}</div>
   {% endif %}
@@ -168,13 +194,13 @@
     cursor: pointer;
     font: inherit;
     line-height: 0;
-    opacity: 0.5;
+    opacity: 0.6;
     scroll-snap-align: center;
     transition: opacity var(--animation-speed-slow, 200ms) var(--animation-easing, ease-in-out);
   }
 
   .press-quotes.reveal-carousel .press-quotes__pagination-button[aria-current='false'] {
-    opacity: 0.5;
+    opacity: 0.6;
   }
 
   .press-quotes.reveal-carousel .press-quotes__pagination-button:hover,
@@ -258,6 +284,70 @@
       flex-basis: var(--press-quotes-image-width-mobile, 70px);
       width: var(--press-quotes-image-width-mobile, 70px);
     }
+  }
+  .press-quotes[data-logo-position='top'] .press-quotes__pagination { order: -1; }
+  .press-quotes[data-logo-fade='true'] .press-quotes__pagination {
+    mask-image: linear-gradient(to right, transparent, black 18%, black 82%, transparent);
+  }
+  .press-quotes__controls {
+    display: grid;
+    grid-template-columns: auto minmax(0, var(--press-pagination-width)) auto;
+    align-items: center;
+    gap: var(--press-quotes-image-spacing);
+    align-self: center;
+    max-width: 100%;
+    margin-top: calc(var(--press-pagination-spacing) - var(--press-quotes-image-spacing));
+  }
+  .press-quotes__arrows { display: contents; }
+  .press-quotes__controls .swiper-nav-button--prev { grid-column: 1; grid-row: 1; }
+  .press-quotes__controls .swiper-nav-button--next { grid-column: 3; grid-row: 1; }
+  .press-quotes__progress {
+    grid-column: 2; grid-row: 1; height: 2px;
+    background: var(--border-color);
+    overflow: hidden;
+  }
+  .press-quotes__progress span {
+    display: block; width: 100%; height: 100%; background: var(--heading-color);
+    transform: scaleX(var(--press-progress, 0)); transform-origin: left;
+  }
+  @media (max-width: 767.98px) {
+    .press-quotes__controls {
+      width: 100%; grid-template-columns: auto minmax(0, 1fr) auto;
+
+    }
+    .press-quotes[data-logo-position='top'] .press-quotes__pagination {
+      margin-inline: 0; padding-inline: 0; max-width: 100%;
+    }
+  }
+  .press-quotes { position: relative; }
+  .press-quotes__bullets { grid-column: 2; grid-row: 1; display: flex; justify-content: center; gap: 1rem; }
+  .press-quotes__bullets button { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; padding: 0; border: 0; background: transparent; cursor: pointer; }
+  .press-quotes__bullets button::after { content: ''; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--heading-color); opacity: 0.3; }
+  .press-quotes__bullets button[aria-current='true']::after { opacity: 1; }
+  .press-quotes[data-pagination-limited='true'] .press-quotes__progress { width: 100%; max-width: var(--press-pagination-width); justify-self: center; }
+  .press-quotes[data-pagination-limited='false'] .press-quotes__controls { width: 100%; grid-template-columns: auto minmax(0, 1fr) auto; }
+  @media (min-width: 768px) {
+    .press-quotes[data-navigation-desktop='false'] .press-quotes__arrows .swiper-nav-button { display: none; }
+    .press-quotes[data-pagination-desktop='false'] .press-quotes__progress,
+    .press-quotes[data-pagination-desktop='false'] .press-quotes__bullets { display: none; }
+    .press-quotes[data-pagination-desktop='false'] .press-quotes__controls { grid-template-columns: auto auto; }
+    .press-quotes[data-pagination-desktop='false'] .swiper-nav-button--next { grid-column: 2; }
+    .press-quotes[data-navigation-desktop='false'][data-pagination-desktop='false'] .press-quotes__controls { display: none; }
+    .press-quotes:not([data-navigation-position='bottom']) .press-quotes__arrows .swiper-nav-button { position: absolute; top: 50%; transform: translateY(-50%); }
+    .press-quotes[data-navigation-position='inside'] .swiper-nav-button--prev { left: 0; }
+    .press-quotes[data-navigation-position='inside'] .swiper-nav-button--next { right: 0; }
+    .press-quotes[data-navigation-position='outside'] .swiper-nav-button--prev { left: calc(-1 * var(--page-margin-desktop)); }
+    .press-quotes[data-navigation-position='outside'] .swiper-nav-button--next { right: calc(-1 * var(--page-margin-desktop)); }
+    .press-quotes[data-navigation-behavior='show_on_hover']:not(:hover):not(:focus-within) .press-quotes__arrows .swiper-nav-button { opacity: 0; pointer-events: none; }
+  }
+  @media (max-width: 767.98px) {
+    .press-quotes__controls { margin-top: calc(var(--press-pagination-spacing-mobile) - var(--press-quotes-image-spacing-mobile)); }
+    .press-quotes[data-navigation-mobile='false'] .press-quotes__arrows .swiper-nav-button { display: none; }
+    .press-quotes[data-pagination-mobile='false'] .press-quotes__progress,
+    .press-quotes[data-pagination-mobile='false'] .press-quotes__bullets { display: none; }
+    .press-quotes[data-pagination-mobile='false'] .press-quotes__controls { width: auto; grid-template-columns: auto auto; }
+    .press-quotes[data-pagination-mobile='false'] .swiper-nav-button--next { grid-column: 2; }
+    .press-quotes[data-navigation-mobile='false'][data-pagination-mobile='false'] .press-quotes__controls { display: none; }
   }
 {% endstylesheet %}
 
@@ -346,6 +436,205 @@
       "step": 1,
       "unit": "px",
       "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Logo layout"
+    },
+    {
+      "type": "select",
+      "id": "logo_position",
+      "label": "Logo position",
+      "options": [
+        {
+          "value": "top",
+          "label": "Above quote"
+        },
+        {
+          "value": "bottom",
+          "label": "Below quote"
+        }
+      ],
+      "default": "bottom"
+    },
+    {
+      "type": "checkbox",
+      "id": "fade_logo_edges",
+      "label": "Fade logo row edges",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:general.navigation"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation_on_desktop",
+      "label": "t:labels.show_navigation_on_desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation_on_mobile",
+      "label": "Show navigation on mobile",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "navigation_position",
+      "label": "t:labels.position",
+      "options": [
+        {
+          "value": "outside",
+          "label": "t:options.collection_navigation_position.outside"
+        },
+        {
+          "value": "inside",
+          "label": "t:options.collection_navigation_position.inside"
+        },
+        {
+          "value": "bottom",
+          "label": "t:options.vertical_alignment.bottom"
+        }
+      ],
+      "default": "inside",
+      "visible_if": "{{ block.settings.show_navigation_on_desktop or block.settings.show_navigation_on_mobile }}"
+    },
+    {
+      "type": "select",
+      "id": "navigation_style",
+      "label": "t:labels.style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:options.button_variant.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.button_variant.secondary"
+        },
+        {
+          "value": "outline",
+          "label": "t:options.button_variant.outline"
+        },
+        {
+          "value": "icon_only",
+          "label": "t:options.button_variant.icon_only"
+        }
+      ],
+      "default": "secondary",
+      "visible_if": "{{ block.settings.show_navigation_on_desktop or block.settings.show_navigation_on_mobile }}"
+    },
+    {
+      "type": "select",
+      "id": "navigation_icon",
+      "label": "t:labels.icon",
+      "options": [
+        {
+          "value": "chevron",
+          "label": "t:options.collection_navigation_icon.chevron"
+        },
+        {
+          "value": "arrow",
+          "label": "t:options.collection_navigation_icon.arrow"
+        },
+        {
+          "value": "long_arrow",
+          "label": "t:options.collection_navigation_icon.long_arrow"
+        }
+      ],
+      "default": "chevron",
+      "visible_if": "{{ block.settings.show_navigation_on_desktop or block.settings.show_navigation_on_mobile }}"
+    },
+    {
+      "type": "select",
+      "id": "navigation_behavior",
+      "label": "t:labels.behavior",
+      "options": [
+        {
+          "value": "show_on_hover",
+          "label": "t:options.collection_navigation_behavior.show_on_hover"
+        },
+        {
+          "value": "always",
+          "label": "t:options.collection_navigation_behavior.always"
+        }
+      ],
+      "default": "show_on_hover",
+      "visible_if": "{{ block.settings.show_navigation_on_desktop or block.settings.show_navigation_on_mobile }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.pagination"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_desktop",
+      "label": "t:labels.show_pagination_on_desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_mobile",
+      "label": "t:labels.show_pagination_on_mobile",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "pagination_type",
+      "label": "t:labels.type",
+      "options": [
+        {
+          "value": "progress_bar",
+          "label": "t:options.collection_pagination.progress_bar"
+        },
+        {
+          "value": "bullets",
+          "label": "t:options.collection_pagination.bullets"
+        }
+      ],
+      "default": "progress_bar",
+      "visible_if": "{{ block.settings.show_pagination_on_desktop or block.settings.show_pagination_on_mobile }}"
+    },
+    {
+      "type": "range",
+      "id": "pagination_top_padding_desktop",
+      "label": "t:labels.pagination_desktop_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ block.settings.show_pagination_on_desktop }}"
+    },
+    {
+      "type": "range",
+      "id": "pagination_top_padding_mobile",
+      "label": "t:labels.pagination_mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ block.settings.show_pagination_on_mobile }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "pagination_limit_width",
+      "label": "t:labels.limit_width",
+      "default": true,
+      "visible_if": "{{ block.settings.show_pagination_on_desktop and block.settings.pagination_type == 'progress_bar' or block.settings.show_pagination_on_mobile and block.settings.pagination_type == 'progress_bar' }}"
+    },
+    {
+      "type": "range",
+      "id": "pagination_max_width",
+      "label": "t:labels.max_width",
+      "min": 100,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 260,
+      "visible_if": "{{ block.settings.show_pagination_on_desktop and block.settings.pagination_limit_width or block.settings.show_pagination_on_mobile and block.settings.pagination_limit_width }}"
     }
   ]
 }

@@ -1504,12 +1504,15 @@ button.btn.swiper-nav-button--outline:hover {
 }
 
 .swiper-nav-button--icon-only,
-.btn.swiper-nav-button--icon-only {
-  --swiper-nav-size: var(--swiper-nav-icon-size, var(--icon-size-medium));
+.btn.swiper-nav-button--icon-only,
+button.btn.swiper-nav-button--icon-only {
+  --swiper-nav-icon-size: var(--icon-size-large);
+  --swiper-nav-size: calc(var(--swiper-nav-icon-size) + 2.4rem);
   width: fit-content;
-  min-width: 0;
+  min-width: calc(var(--swiper-nav-icon-size) + 2.4rem);
   height: fit-content;
-  min-height: 0;
+  min-height: calc(var(--swiper-nav-icon-size) + 2.4rem);
+  padding: 1.2rem;
 }
 
 .swiper-nav-button svg {
@@ -2152,8 +2155,11 @@ legend {
   min-width: 0;
   font-family: var(--product-card-title-font-family);
   font-size: var(--product-card-title-size);
-  line-height: var(--font-heading-md-line-height);
-  letter-spacing: var(--font-heading-letter-spacing);
+  /* Zevra: product titles follow the Figma card typography, not heading casing. */
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: capitalize;
   color: var(--heading-color);
 }
 
@@ -2191,6 +2197,10 @@ legend {
 }
 
 .product-card__price {
+  /* Zevra product-card price scale from the supplied Figma frames. */
+  --price-font-size: var(--font-body-sm);
+  --price-line-height: 1.5;
+  letter-spacing: 0.2px;
   width: 100%;
   justify-content: var(--product-card-content-alignment);
   text-align: var(--product-card-alignment);
@@ -3388,4 +3398,12 @@ body[data-block-animations="false"] .reveal-pending { opacity:1!important; }
   padding: 0;
   -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
+}
+
+/* Zevra: viewport-specific pagination, including hidden controls' spacing/focus. */
+@media (min-width: 768px) {
+  [data-pagination-visible-desktop='false'] { display: none !important; }
+}
+@media (max-width: 767.98px) {
+  [data-pagination-visible-mobile='false'] { display: none !important; }
 }

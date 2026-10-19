@@ -163,6 +163,133 @@
       justify-content: flex-end;
     }
   }
+  /* Zevra Timeline: keep global margins and all merchant spacing/color controls. */
+  .timeline-section .timeline-section__container.page-width {
+    max-width: calc(1600px + var(--page-margin-current, 0px) * 2);
+  }
+
+  .timeline-section .timeline-list[data-timeline-position='left']:has(.timeline-list__navigation--tabs) {
+    grid-template-columns: 100px minmax(0, 1fr);
+  }
+
+  .timeline-section .timeline-list[data-timeline-position='left'] .timeline-list__navigation--tabs {
+    overflow: visible;
+  }
+
+  .timeline-section .timeline-list[data-timeline-position='left'] .timeline-list__navigation--tabs .timeline-list__navigation-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .timeline-section .timeline-list[data-timeline-position='left'] .timeline-list__navigation--tabs .timeline-list__navigation-item {
+    flex: 0 0 auto;
+  }
+
+  .timeline-section .timeline-list[data-timeline-position='left'] .timeline-list__navigation--tabs .timeline-list__navigation-list::after {
+    display: none;
+  }
+
+  .timeline-section .timeline-list[data-timeline-position='left'] .timeline-list__navigation--tabs .timeline-list__control {
+    position: relative;
+    width: auto;
+    min-height: 0;
+    padding: 0 0 4px;
+    font-family: var(--font-heading-family);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 0.4px;
+    color: var(--timeline-list-inactive-color, var(--body-color));
+    text-align: right;
+    transition:
+      font-size 240ms var(--motion-ease-standard, ease),
+      line-height 240ms var(--motion-ease-standard, ease),
+      letter-spacing 240ms var(--motion-ease-standard, ease),
+      color 240ms var(--motion-ease-standard, ease);
+  }
+
+  /* Expand the pointer target without changing the Figma label spacing. */
+  .timeline-section .timeline-list[data-timeline-position='left'] .timeline-list__navigation--tabs .timeline-list__control::after {
+    position: absolute;
+    inset: 50% 0 auto;
+    min-width: 44px;
+    height: max(100%, 44px);
+    transform: translateY(-50%);
+    content: '';
+  }
+
+  .timeline-section .timeline-list[data-timeline-position='left'] .timeline-list__navigation--tabs .timeline-list__control.is-active {
+    font-size: var(--font-heading-xl);
+    line-height: 1.2;
+    letter-spacing: 2px;
+    color: var(--timeline-list-active-color, var(--heading-color));
+  }
+
+  .timeline-section .timeline-list[data-timeline-position='left'] .timeline-list__navigation--tabs .timeline-list__control > span {
+    font: inherit;
+    letter-spacing: inherit;
+    position: relative;
+  }
+
+  .timeline-section .timeline-list[data-timeline-position='left'] .timeline-list__navigation--tabs .timeline-list__control > span::after {
+    position: absolute;
+    inset: auto 0 -4px;
+    height: 1px;
+    background: currentColor;
+    content: '';
+    opacity: 0;
+    transition: opacity 240ms var(--motion-ease-standard, ease);
+  }
+
+  .timeline-section .timeline-list[data-timeline-position='left'] .timeline-list__navigation--tabs .timeline-list__control.is-active > span::after {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .timeline-section .timeline-list[data-timeline-position='left'] .timeline-list__navigation--tabs .timeline-list__control,
+    .timeline-section .timeline-list[data-timeline-position='left'] .timeline-list__navigation--tabs .timeline-list__control > span::after {
+      transition: none;
+    }
+  }
+
+  .timeline-section .timeline-list[data-timeline-position='left'] .carousel-slide-layout--horizontal {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .timeline-section .heading-block.heading-xl {
+    letter-spacing: 2px;
+  }
+
+  .timeline-section .text-block {
+    letter-spacing: 0.2px;
+  }
+
+  @media (max-width: 767.98px) {
+    .timeline-section .timeline-list[data-timeline-position='left']:has(.timeline-list__navigation--tabs) {
+      grid-template-columns: 52px minmax(0, 1fr);
+    }
+
+    .timeline-section .timeline-list[data-timeline-position='left'] .timeline-list__navigation--tabs .timeline-list__navigation-list {
+      justify-content: flex-start;
+      gap: 48px;
+    }
+
+    .timeline-section .timeline-list[data-timeline-position='left'] .timeline-list__navigation--tabs .timeline-list__control {
+      font-size: 18px;
+    }
+
+    .timeline-section .timeline-list[data-timeline-position='left'] .timeline-list__navigation--tabs .timeline-list__control.is-active {
+      font-size: var(--font-heading-xl);
+    }
+
+    .timeline-section .timeline-list[data-timeline-position='left'] .carousel-slide-layout--horizontal.carousel-slide-layout--mobile-vertical {
+      display: flex;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -340,305 +467,103 @@
         "section_width": "page_width",
         "desktop_alignment": "left",
         "mobile_alignment": "left",
-        "gap_desktop": 32,
-        "gap_mobile": 24,
-        "color_scheme": "scheme-1",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "customize_mobile_padding": false
+        "gap_desktop": 0,
+        "gap_mobile": 0,
+        "color_scheme": "scheme-3",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
         {
           "type": "header",
-          "id": "header",
           "static": true,
-          "settings": {
-            "width": "fill",
-            "alignment": "center",
-            "gap_desktop": 12,
-            "gap_mobile": 8
-          },
-          "blocks": [
-            {
-              "type": "eyebrow",
-              "settings": {
-                "text": "<p>SECTION TAG</p>"
-              }
-            },
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Main Heading Text Placeholder</p>",
-                "heading_size": "display",
-                "html_tag": "h2"
-              }
-            }
-          ]
+          "settings": {},
+          "id": "header",
+          "blocks": []
         },
         {
           "type": "timeline-list",
-          "id": "timeline-list",
           "static": true,
           "settings": {
-            "transition_style": "slide",
+            "position": "left",
+            "pagination_style": "tabs",
+            "transition_style": "fade",
             "show_next_slide_preview": false,
-            "gap_desktop": 16,
-            "gap_mobile": 12,
-            "show_navigation_on_desktop": true,
-            "navigation_position": "inside",
-            "navigation_behavior": "show_on_hover",
-            "navigation_style": "secondary",
-            "navigation_icon": "chevron",
-            "pagination_style": "dots_with_progress",
-            "position": "bottom"
+            "show_navigation_on_desktop": false,
+            "controls_spacing_desktop": 80,
+            "controls_spacing_mobile": 28,
+            "gap_desktop": 0,
+            "gap_mobile": 0
           },
+          "id": "timeline-list",
           "blocks": [
-            {
-              "type": "timeline-slide",
-              "settings": {
-                "timeline_label": "2014",
-                "direction": "horizontal",
-                "position_horizontal": "center",
-                "horizontal_alignment": "left",
-                "customize_mobile_alignment": true,
-                "alignment_mobile": "left",
-                "alignment": "left",
-                "gap_desktop": 24,
-                "gap_mobile": 16,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "color_scheme": "scheme-1",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none",
-                "customize_mobile_padding": false
-              },
-              "blocks": [
-                {
-                  "type": "group",
-                  "settings": {
-                    "direction": "vertical",
-                    "alignment": "left",
-                    "width": "fill",
-                    "height": "fit",
-                    "gap_desktop": 16,
-                    "gap_mobile": 12,
-                    "appearance_type": "inherit",
-                    "border_type": "none",
-                    "corner_radius": "square",
-                    "shadow": "none"
-                  },
-                  "blocks": [
-                    {
-                      "type": "eyebrow",
-                      "settings": {
-                        "text": "<p>SECTION TAG</p>"
-                      }
-                    },
-                    {
-                      "type": "heading",
-                      "settings": {
-                        "text": "<p>The beginning</p>",
-                        "heading_size": "display",
-                        "html_tag": "h3"
-                      }
-                    },
-                    {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>Share the moment that made this year important. Add a short story to support the heading above.</p>",
-                        "text_size": "md"
-                      }
-                    },
-                    {
-                      "type": "buttons",
-                      "settings": {
-                        "button_1_label": "Button label",
-                        "button_1_link": "/",
-                        "button_1_style": "primary",
-                        "direction": "row",
-                        "width": "fit",
-                        "gap": 12,
-                        "gap_mobile": 12
-                      }
-                    }
-                  ]
-                },
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "width_desktop": "fill",
-                    "show_image_first_mobile": true,
-                    "image_ratio_mobile": "square",
-                    "width_mobile": "fill"
-                  }
-                }
-              ]
-            },
-            {
-              "type": "timeline-slide",
-              "settings": {
-                "timeline_label": "2016",
-                "direction": "horizontal",
-                "position_horizontal": "center",
-                "horizontal_alignment": "left",
-                "customize_mobile_alignment": true,
-                "alignment_mobile": "left",
-                "alignment": "left",
-                "gap_desktop": 24,
-                "gap_mobile": 16,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "color_scheme": "scheme-1",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none",
-                "customize_mobile_padding": false
-              },
-              "blocks": [
-                {
-                  "type": "group",
-                  "settings": {
-                    "direction": "vertical",
-                    "alignment": "left",
-                    "width": "fill",
-                    "height": "fit",
-                    "gap_desktop": 16,
-                    "gap_mobile": 12,
-                    "appearance_type": "inherit",
-                    "border_type": "none",
-                    "corner_radius": "square",
-                    "shadow": "none"
-                  },
-                  "blocks": [
-                    {
-                      "type": "eyebrow",
-                      "settings": {
-                        "text": "<p>SECTION TAG</p>"
-                      }
-                    },
-                    {
-                      "type": "heading",
-                      "settings": {
-                        "text": "<p>Our first milestone</p>",
-                        "heading_size": "display",
-                        "html_tag": "h3"
-                      }
-                    },
-                    {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>Share the moment that made this year important. Add a short story to support the heading above.</p>",
-                        "text_size": "md"
-                      }
-                    },
-                    {
-                      "type": "buttons",
-                      "settings": {
-                        "button_1_label": "Button label",
-                        "button_1_link": "/",
-                        "button_1_style": "primary",
-                        "direction": "row",
-                        "width": "fit",
-                        "gap": 12,
-                        "gap_mobile": 12
-                      }
-                    }
-                  ]
-                },
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "width_desktop": "fill",
-                    "show_image_first_mobile": true,
-                    "image_ratio_mobile": "square",
-                    "width_mobile": "fill"
-                  }
-                }
-              ]
-            },
             {
               "type": "timeline-slide",
               "settings": {
                 "timeline_label": "2018",
                 "direction": "horizontal",
                 "position_horizontal": "center",
-                "horizontal_alignment": "left",
                 "customize_mobile_alignment": true,
-                "alignment_mobile": "left",
                 "alignment": "left",
-                "gap_desktop": 24,
-                "gap_mobile": 16,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "color_scheme": "scheme-1",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none",
-                "customize_mobile_padding": false
+                "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 28,
+                "height": "fit"
               },
               "blocks": [
+                {
+                  "type": "image",
+                  "settings": {
+                    "image": "shopify://shop_images/zevra-timeline-actual.avif",
+                    "image_ratio_desktop": "ratio_1_1",
+                    "image_ratio_mobile": "ratio_1_1",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "corner_radius": "square",
+                    "show_image_first_mobile": true
+                  }
+                },
                 {
                   "type": "group",
                   "settings": {
                     "direction": "vertical",
-                    "alignment": "left",
                     "width": "fill",
                     "height": "fit",
+                    "alignment": "left",
                     "gap_desktop": 16,
-                    "gap_mobile": 12,
-                    "appearance_type": "inherit",
-                    "border_type": "none",
-                    "corner_radius": "square",
-                    "shadow": "none"
+                    "gap_mobile": 16,
+                    "padding_left": 80,
+                    "padding_right": 80,
+                    "customize_mobile_padding": true,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
                   },
                   "blocks": [
                     {
-                      "type": "eyebrow",
-                      "settings": {
-                        "text": "<p>SECTION TAG</p>"
-                      }
-                    },
-                    {
                       "type": "heading",
                       "settings": {
-                        "text": "<p>Growing together</p>",
-                        "heading_size": "display",
-                        "html_tag": "h3"
+                        "text": "<p>The Beginning of Form</p>",
+                        "heading_size": "xl",
+                        "html_tag": "h2",
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50
                       }
                     },
                     {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Share the moment that made this year important. Add a short story to support the heading above.</p>",
-                        "text_size": "md"
-                      }
-                    },
-                    {
-                      "type": "buttons",
-                      "settings": {
-                        "button_1_label": "Button label",
-                        "button_1_link": "/",
-                        "button_1_style": "primary",
-                        "direction": "row",
-                        "width": "fit",
-                        "gap": 12,
-                        "gap_mobile": 12
+                        "text": "<p>The first collection was born from a single idea: to create bags that speak softly but leave a lasting impression. Each silhouette was refined through countless prototypes and the pursuit of balance between structure and softness.</p>",
+                        "text_size": "md",
+                        "width": "fill",
+                        "animation_type": "fade",
+                        "animation_delay": 100
                       }
                     }
                   ]
-                },
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "width_desktop": "fill",
-                    "show_image_first_mobile": true,
-                    "image_ratio_mobile": "square",
-                    "width_mobile": "fill"
-                  }
                 }
               ]
             },
@@ -648,80 +573,64 @@
                 "timeline_label": "2020",
                 "direction": "horizontal",
                 "position_horizontal": "center",
-                "horizontal_alignment": "left",
                 "customize_mobile_alignment": true,
-                "alignment_mobile": "left",
                 "alignment": "left",
-                "gap_desktop": 24,
-                "gap_mobile": 16,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "color_scheme": "scheme-1",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none",
-                "customize_mobile_padding": false
+                "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 28,
+                "height": "fit"
               },
               "blocks": [
+                {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "ratio_1_1",
+                    "image_ratio_mobile": "ratio_1_1",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "corner_radius": "square",
+                    "show_image_first_mobile": true,
+                    "image": "shopify://shop_images/zevra-timeline-2020.avif"
+                  }
+                },
                 {
                   "type": "group",
                   "settings": {
                     "direction": "vertical",
-                    "alignment": "left",
                     "width": "fill",
                     "height": "fit",
+                    "alignment": "left",
                     "gap_desktop": 16,
-                    "gap_mobile": 12,
-                    "appearance_type": "inherit",
-                    "border_type": "none",
-                    "corner_radius": "square",
-                    "shadow": "none"
+                    "gap_mobile": 16,
+                    "padding_left": 80,
+                    "padding_right": 80,
+                    "customize_mobile_padding": true,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
                   },
                   "blocks": [
                     {
-                      "type": "eyebrow",
-                      "settings": {
-                        "text": "<p>SECTION TAG</p>"
-                      }
-                    },
-                    {
                       "type": "heading",
                       "settings": {
-                        "text": "<p>A new chapter</p>",
-                        "heading_size": "display",
-                        "html_tag": "h3"
+                        "text": "<p>Craft Refined</p>",
+                        "heading_size": "xl",
+                        "html_tag": "h2",
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50
                       }
                     },
                     {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Share the moment that made this year important. Add a short story to support the heading above.</p>",
-                        "text_size": "md"
-                      }
-                    },
-                    {
-                      "type": "buttons",
-                      "settings": {
-                        "button_1_label": "Button label",
-                        "button_1_link": "/",
-                        "button_1_style": "primary",
-                        "direction": "row",
-                        "width": "fit",
-                        "gap": 12,
-                        "gap_mobile": 12
+                        "text": "<p>MĀRA introduced its signature leatherwork, collaborating with artisans whose techniques have been passed down for generations. The brand began to be recognized for its quiet sophistication and sculptural minimalism.</p>",
+                        "text_size": "md",
+                        "width": "fill",
+                        "animation_type": "fade",
+                        "animation_delay": 100
                       }
                     }
                   ]
-                },
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "width_desktop": "fill",
-                    "show_image_first_mobile": true,
-                    "image_ratio_mobile": "square",
-                    "width_mobile": "fill"
-                  }
                 }
               ]
             },
@@ -731,80 +640,131 @@
                 "timeline_label": "2022",
                 "direction": "horizontal",
                 "position_horizontal": "center",
-                "horizontal_alignment": "left",
                 "customize_mobile_alignment": true,
-                "alignment_mobile": "left",
                 "alignment": "left",
-                "gap_desktop": 24,
-                "gap_mobile": 16,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "color_scheme": "scheme-1",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none",
-                "customize_mobile_padding": false
+                "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 28,
+                "height": "fit"
               },
               "blocks": [
+                {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "ratio_1_1",
+                    "image_ratio_mobile": "ratio_1_1",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "corner_radius": "square",
+                    "show_image_first_mobile": true,
+                    "image": "shopify://shop_images/zevra-timeline-2022.avif"
+                  }
+                },
                 {
                   "type": "group",
                   "settings": {
                     "direction": "vertical",
-                    "alignment": "left",
                     "width": "fill",
                     "height": "fit",
+                    "alignment": "left",
                     "gap_desktop": 16,
-                    "gap_mobile": 12,
-                    "appearance_type": "inherit",
-                    "border_type": "none",
-                    "corner_radius": "square",
-                    "shadow": "none"
+                    "gap_mobile": 16,
+                    "padding_left": 80,
+                    "padding_right": 80,
+                    "customize_mobile_padding": true,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
                   },
                   "blocks": [
                     {
-                      "type": "eyebrow",
-                      "settings": {
-                        "text": "<p>SECTION TAG</p>"
-                      }
-                    },
-                    {
                       "type": "heading",
                       "settings": {
-                        "text": "<p>The journey continues</p>",
-                        "heading_size": "display",
-                        "html_tag": "h3"
+                        "text": "<p>The Modern Statement</p>",
+                        "heading_size": "xl",
+                        "html_tag": "h2",
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50
                       }
                     },
                     {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Share the moment that made this year important. Add a short story to support the heading above.</p>",
-                        "text_size": "md"
-                      }
-                    },
-                    {
-                      "type": "buttons",
-                      "settings": {
-                        "button_1_label": "Button label",
-                        "button_1_link": "/",
-                        "button_1_style": "primary",
-                        "direction": "row",
-                        "width": "fit",
-                        "gap": 12,
-                        "gap_mobile": 12
+                        "text": "<p>The line expanded to include versatile everyday icons — compact, architectural, and elegant. Each piece designed to transition seamlessly from day to night, embodying the effortless luxury that defines MĀRA.</p>",
+                        "text_size": "md",
+                        "width": "fill",
+                        "animation_type": "fade",
+                        "animation_delay": 100
                       }
                     }
                   ]
-                },
+                }
+              ]
+            },
+            {
+              "type": "timeline-slide",
+              "settings": {
+                "timeline_label": "2024",
+                "direction": "horizontal",
+                "position_horizontal": "center",
+                "customize_mobile_alignment": true,
+                "alignment": "left",
+                "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 28,
+                "height": "fit"
+              },
+              "blocks": [
                 {
                   "type": "image",
                   "settings": {
-                    "image_ratio_desktop": "square",
+                    "image_ratio_desktop": "ratio_1_1",
+                    "image_ratio_mobile": "ratio_1_1",
                     "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "corner_radius": "square",
                     "show_image_first_mobile": true,
-                    "image_ratio_mobile": "square",
-                    "width_mobile": "fill"
+                    "image": "shopify://shop_images/zevra-timeline-2024.avif"
                   }
+                },
+                {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "width": "fill",
+                    "height": "fit",
+                    "alignment": "left",
+                    "gap_desktop": 16,
+                    "gap_mobile": 16,
+                    "padding_left": 80,
+                    "padding_right": 80,
+                    "customize_mobile_padding": true,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
+                  },
+                  "blocks": [
+                    {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>Towards Timelessness</p>",
+                        "heading_size": "xl",
+                        "html_tag": "h2",
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Every new creation honors the same philosophy: enduring beauty through craftsmanship. MĀRA continues to evolve, staying true to its essence — refined, intentional, and timelessly modern.</p>",
+                        "text_size": "md",
+                        "width": "fill",
+                        "animation_type": "fade",
+                        "animation_delay": 100
+                      }
+                    }
+                  ]
                 }
               ]
             }

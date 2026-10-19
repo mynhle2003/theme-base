@@ -130,3 +130,10 @@ test('Shopify-minified CSS seconds preserve the same card timing as local millis
     assert.equal(h.played[0].options.duration,expected,duration);
   }
 });
+
+test('block delay honors the full editor range and caps out-of-range values', () => {
+  for (const [delay, expected] of [[2000, 2000], [2500, 2000], [-50, 0]]) {
+    const h = fixture({ delay });
+    assert.equal(h.played[0].options.delay, expected);
+  }
+});

@@ -1,3 +1,11 @@
+{% liquid
+  assign pagination_desktop = block.settings.show_pagination_on_desktop
+  assign pagination_mobile = block.settings.show_pagination_on_mobile
+  assign pagination_any = false
+  if pagination_desktop or pagination_mobile
+    assign pagination_any = true
+  endif
+%}
 {% doc %}
   Renders the product list and carousel for a Shop the look composition.
 
@@ -92,7 +100,7 @@
   assign shop_the_look_products_show_pagination = false
   if shop_the_look_products_layout == 'carousel'
     assign shop_the_look_products_show_pagination = true
-    if block.settings.show_pagination_on_desktop == false or block.settings.show_pagination_on_desktop == 'false'
+    if pagination_any == false
       assign shop_the_look_products_show_pagination = false
     endif
   endif
@@ -155,7 +163,8 @@
 {% assign shop_the_look_products_pagination_style = shop_the_look_products_pagination_style | strip %}
 
 {% capture shop_the_look_products_navigation_center_style %}
-  {% if shop_the_look_products_layout == 'carousel' and shop_the_look_products_show_pagination %}--swiper-navigation-center-offset: calc(({{ shop_the_look_products_pagination_top_padding_desktop }}px + {{ shop_the_look_products_pagination_size }}) / 2);{% endif %}
+  {% if shop_the_look_products_layout == 'carousel' and shop_the_look_products_show_pagination %}--swiper-navigation-center-offset: {% if pagination_desktop %}calc(({{ shop_the_look_products_pagination_top_padding_desktop }}px + {{ shop_the_look_products_pagination_size }}) / 2){% else %}0px{% endif %};
+    --pagination-navigation-offset-mobile: {% if pagination_mobile %}calc(({{ shop_the_look_products_pagination_top_padding_mobile }}px + {{ shop_the_look_products_pagination_size }}) / 2){% else %}0px{% endif %};{% endif %}
 {% endcapture %}
 {% assign shop_the_look_products_navigation_center_style = shop_the_look_products_navigation_center_style | strip %}
 
@@ -164,6 +173,7 @@
     <div
       class="swiper-pagination swiper-pagination--below shop-the-look-products__pagination shop-the-look-products__pagination--{{ shop_the_look_products_pagination_type }}"
       data-product-collection-pagination
+      {% render 'pagination-visibility', desktop: pagination_desktop, mobile: pagination_mobile %}
       data-pagination-type="{{ shop_the_look_products_pagination_type }}"
       style="{{ shop_the_look_products_pagination_style }}"
     ></div>
@@ -597,7 +607,11 @@
 {
   "name": "t:general.product_list",
   "tag": null,
-  "blocks": [{ "type": "shop-the-look-product" }],
+  "blocks": [
+    {
+      "type": "shop-the-look-product"
+    }
+  ],
   "settings": [
     {
       "type": "header",
@@ -608,8 +622,14 @@
       "id": "layout_type",
       "label": "t:labels.type",
       "options": [
-        { "value": "grid", "label": "t:options.product_list_layout.grid" },
-        { "value": "carousel", "label": "t:options.product_list_layout.carousel" }
+        {
+          "value": "grid",
+          "label": "t:options.product_list_layout.grid"
+        },
+        {
+          "value": "carousel",
+          "label": "t:options.product_list_layout.carousel"
+        }
       ],
       "default": "carousel"
     },
@@ -618,9 +638,18 @@
       "id": "columns_desktop",
       "label": "t:labels.desktop_columns",
       "options": [
-        { "value": "1", "label": "1" },
-        { "value": "2", "label": "2" },
-        { "value": "3", "label": "3" }
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        }
       ],
       "default": "1"
     },
@@ -629,8 +658,14 @@
       "id": "columns_mobile",
       "label": "t:labels.mobile_columns",
       "options": [
-        { "value": "1", "label": "1" },
-        { "value": "2", "label": "2" }
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
       ],
       "default": "1"
     },
@@ -689,8 +724,14 @@
       "id": "navigation_position",
       "label": "t:labels.position",
       "options": [
-        { "value": "outside", "label": "t:options.collection_navigation_position.outside" },
-        { "value": "inside", "label": "t:options.collection_navigation_position.inside" }
+        {
+          "value": "outside",
+          "label": "t:options.collection_navigation_position.outside"
+        },
+        {
+          "value": "inside",
+          "label": "t:options.collection_navigation_position.inside"
+        }
       ],
       "default": "outside",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop }}"
@@ -700,10 +741,22 @@
       "id": "navigation_style",
       "label": "t:labels.style",
       "options": [
-        { "value": "primary", "label": "t:options.button_variant.primary" },
-        { "value": "secondary", "label": "t:options.button_variant.secondary" },
-        { "value": "outline", "label": "t:options.button_variant.outline" },
-        { "value": "icon_only", "label": "t:options.button_variant.icon_only" }
+        {
+          "value": "primary",
+          "label": "t:options.button_variant.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.button_variant.secondary"
+        },
+        {
+          "value": "outline",
+          "label": "t:options.button_variant.outline"
+        },
+        {
+          "value": "icon_only",
+          "label": "t:options.button_variant.icon_only"
+        }
       ],
       "default": "icon_only",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop }}"
@@ -713,9 +766,18 @@
       "id": "navigation_icon",
       "label": "t:labels.icon",
       "options": [
-        { "value": "chevron", "label": "t:options.collection_navigation_icon.chevron" },
-        { "value": "arrow", "label": "t:options.collection_navigation_icon.arrow" },
-        { "value": "long_arrow", "label": "t:options.collection_navigation_icon.long_arrow" }
+        {
+          "value": "chevron",
+          "label": "t:options.collection_navigation_icon.chevron"
+        },
+        {
+          "value": "arrow",
+          "label": "t:options.collection_navigation_icon.arrow"
+        },
+        {
+          "value": "long_arrow",
+          "label": "t:options.collection_navigation_icon.long_arrow"
+        }
       ],
       "default": "chevron",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop }}"
@@ -725,8 +787,14 @@
       "id": "navigation_behavior",
       "label": "t:labels.behavior",
       "options": [
-        { "value": "show_on_hover", "label": "t:options.collection_navigation_behavior.show_on_hover" },
-        { "value": "always", "label": "t:options.collection_navigation_behavior.always" }
+        {
+          "value": "show_on_hover",
+          "label": "t:options.collection_navigation_behavior.show_on_hover"
+        },
+        {
+          "value": "always",
+          "label": "t:options.collection_navigation_behavior.always"
+        }
       ],
       "default": "always",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop }}"
@@ -739,7 +807,14 @@
     {
       "type": "checkbox",
       "id": "show_pagination_on_desktop",
-      "label": "t:labels.show_pagination",
+      "label": "t:labels.show_pagination_on_desktop",
+      "default": true,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_mobile",
+      "label": "t:labels.show_pagination_on_mobile",
       "default": true,
       "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
     },
@@ -748,11 +823,17 @@
       "id": "pagination_type",
       "label": "t:labels.type",
       "options": [
-        { "value": "progress_bar", "label": "t:options.collection_pagination.progress_bar" },
-        { "value": "bullets", "label": "t:options.collection_pagination.bullets" }
+        {
+          "value": "progress_bar",
+          "label": "t:options.collection_pagination.progress_bar"
+        },
+        {
+          "value": "bullets",
+          "label": "t:options.collection_pagination.bullets"
+        }
       ],
       "default": "progress_bar",
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop or block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "range",
@@ -774,14 +855,14 @@
       "step": 1,
       "unit": "px",
       "default": 24,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "checkbox",
       "id": "pagination_limit_width",
       "label": "t:labels.limit_width",
       "default": true,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop and block.settings.pagination_type == 'progress_bar' }}"
+      "visible_if": "{{ block.settings.show_pagination_on_desktop and block.settings.pagination_type == 'progress_bar' or block.settings.show_pagination_on_mobile and block.settings.pagination_type == 'progress_bar' }}"
     },
     {
       "type": "range",
@@ -792,7 +873,7 @@
       "step": 10,
       "unit": "px",
       "default": 260,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop and block.settings.pagination_type == 'progress_bar' and block.settings.pagination_limit_width }}"
+      "visible_if": "{{ block.settings.show_pagination_on_desktop and block.settings.pagination_limit_width or block.settings.show_pagination_on_mobile and block.settings.pagination_limit_width }}"
     },
     {
       "type": "header",
@@ -848,7 +929,8 @@
         "pagination_max_width": 260,
         "autoplay": false,
         "autoplay_pause_on_hover": true,
-        "autoplay_speed": 4
+        "autoplay_speed": 4,
+        "show_pagination_on_mobile": true
       },
       "blocks": [
         {

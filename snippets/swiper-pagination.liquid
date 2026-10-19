@@ -3,6 +3,8 @@
   owns the generated bullets or progress-bar fill; this component only keeps
   the markup, data contract, and spacing hook consistent across carousels.
 
+  @param {boolean} [show_on_desktop] - Desktop pagination visibility
+  @param {boolean} [show_on_mobile] - Mobile pagination visibility
   @param {boolean} [show] - Whether to render pagination
   @param {string} [type] - progress_bar or bullets
   @param {string} [class] - Additional pagination classes
@@ -31,6 +33,7 @@
   <div
     class="swiper-pagination {{ swiper_pagination_class | strip }}"
     data-swiper-pagination
+    {% render 'pagination-visibility', desktop: show_on_desktop, mobile: show_on_mobile %}
     data-product-collection-pagination
     data-pagination-type="{{ swiper_pagination_type }}"
     {% if attributes != blank %}{{ attributes }}{% endif %}

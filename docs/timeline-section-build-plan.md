@@ -124,3 +124,7 @@ status: IMPLEMENTED; STATIC REVALIDATION AND VISUAL QA PENDING
 - The open Theme Editor preview still showed the pre-fix rail labels and interaction after the local edits, so fresh visual confirmation of the updated runtime remains outstanding.
 - Timeline Slide mirrors Carousel Slide; the timeline rail supports horizontal and vertical axes. Storefront visual confirmation at desktop and mobile widths remains outstanding.
 - The Theme Editor remained unsaved to preserve its existing restore-last-session state.
+
+## Zevra Figma customization — 2026-10-19
+
+Role/placement/context and slots remain unchanged. Section owns a 1600px content cap inside existing global margins; the existing section/block settings retain colors, padding, image sources, typography size and content gap. Custom CSS is scoped to the Timeline section and left Tabs only: 100px desktop / 52px mobile year rail, right aligned active/inactive text with distinct typography, desktop space-between distribution and mobile 48px gap. Native heading/text blocks remain editable; local tracking matches Figma. Fix horizontal two-column sizing so content padding does not inflate its column. Runtime keeps existing Swiper/editor lifecycle; underline follows active label through CSS, avoiding stale measured geometry during font-size changes. QA: desktop/mobile browser geometry, all four tabs, keyboard focus, hidden-slide focus semantics, schema/Theme Check and no-JS source fallback. Shared top/bottom timeline controls remain unchanged.

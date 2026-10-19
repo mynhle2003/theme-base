@@ -1,0 +1,8 @@
+{% doc %}
+  Responsive visibility attributes for pagination, including fraction controls.
+  Omitted arguments preserve visibility for existing callers.
+  @param {boolean} [desktop] - Show pagination at widths of 768px and above
+  @param {boolean} [mobile] - Show pagination below 768px
+{% enddoc %}
+data-pagination-visible-desktop="{% if desktop == false %}false{% else %}true{% endif %}"
+data-pagination-visible-mobile="{% if mobile == false %}false{% else %}true{% endif %}"

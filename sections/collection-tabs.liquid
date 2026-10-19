@@ -59,11 +59,6 @@
       assign collection_tabs_mobile_controls_alignment = 'flex-end'
   endcase
 
-  assign collection_tabs_bottom_navigation = false
-  if collection_tabs_layout_type == 'carousel' and section.settings.show_navigation_on_desktop and section.settings.navigation_position == 'bottom'
-    assign collection_tabs_bottom_navigation = true
-  endif
-
   assign collection_tabs_scheme = section.settings.color_scheme | default: 'scheme-1'
   if section.settings.color_scheme.id != blank
     assign collection_tabs_scheme = section.settings.color_scheme.id
@@ -123,21 +118,8 @@
           {% content_for 'block', type: 'header', id: 'header' %}
           {% content_for 'block', type: 'tab-layout', id: 'tab-layout' %}
         </div>
-        <div
-          class="collection-tabs__actions section-content-slot{% if collection_tabs_bottom_navigation %} collection-tabs__actions--bottom{% endif %}"
-          {% if collection_tabs_bottom_navigation %}data-collection-tabs-navigation{% endif %}
-        >
-          {% if collection_tabs_bottom_navigation %}
-            <button class="btn btn-{{ section.settings.navigation_style | replace: 'icon_only', 'tertiary' | replace: 'outline', 'secondary' }} btn--{{ section.settings.navigation_style | replace: 'icon_only', 'tertiary' | replace: 'outline', 'secondary' }} btn--icon swiper-nav-button{% if section.settings.navigation_style == 'icon_only' %} swiper-nav-button--icon-only{% elsif section.settings.navigation_style == 'outline' %} swiper-nav-button--outline{% endif %} collection-tabs__bottom-previous" type="button" data-collection-tabs-navigation-previous aria-label="{{ 'collection_tabs.previous' | t | escape }}" disabled>
-              {% render 'carousel-navigation-icon', icon: section.settings.navigation_icon, direction: 'previous' %}
-            </button>
-          {% endif %}
+        <div class="collection-tabs__actions section-content-slot">
           {% content_for 'block', type: 'tabs-view-all-button', id: 'collection-tabs-view-all' %}
-          {% if collection_tabs_bottom_navigation %}
-            <button class="btn btn-{{ section.settings.navigation_style | replace: 'icon_only', 'tertiary' | replace: 'outline', 'secondary' }} btn--{{ section.settings.navigation_style | replace: 'icon_only', 'tertiary' | replace: 'outline', 'secondary' }} btn--icon swiper-nav-button{% if section.settings.navigation_style == 'icon_only' %} swiper-nav-button--icon-only{% elsif section.settings.navigation_style == 'outline' %} swiper-nav-button--outline{% endif %} collection-tabs__bottom-next" type="button" data-collection-tabs-navigation-next aria-label="{{ 'collection_tabs.next' | t | escape }}" disabled>
-              {% render 'carousel-navigation-icon', icon: section.settings.navigation_icon, direction: 'next' %}
-            </button>
-          {% endif %}
         </div>
       </div>
       <span class="visually-hidden" data-tab-load-status role="status" aria-live="polite"></span>
@@ -248,28 +230,6 @@
     order: 3;
   }
 
-  .collection-tabs__controls > .collection-tabs__actions--bottom {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    align-items: center;
-    width: 100%;
-    order: 3;
-  }
-
-  .collection-tabs__actions--bottom > .collection-tabs-view-all {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .collection-tabs__actions--bottom > .swiper-nav-button {
-    position: static;
-    transform: none;
-    grid-row: 1;
-  }
-
-  .collection-tabs__bottom-previous { grid-column: 1; justify-self: start; }
-  .collection-tabs__bottom-next { grid-column: 3; justify-self: end; }
-
   @media (min-width: 768px) {
     .collection-tabs__layout[data-layout-direction='vertical'][data-controls-alignment='center'] > .collection-tabs__controls > .collection-tabs__controls-group > .block-header {
       --flex-align: center;
@@ -357,22 +317,7 @@
       order: 2;
     }
 
-    .collection-tabs__layout[data-layout-direction='horizontal']:has(.collection-tabs__actions--bottom) {
-      grid-template-areas: 'header list' 'header actions';
-      row-gap: var(--collection-tabs-gap-desktop, 59px);
-    }
 
-    .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__controls > .collection-tabs__actions--bottom {
-      grid-area: actions;
-    }
-
-    .collection-tabs__layout[data-layout-direction='horizontal']:has(.collection-tabs__actions--bottom) > .collection-tabs__controls {
-      display: contents;
-    }
-
-    .collection-tabs__layout[data-layout-direction='horizontal']:has(.collection-tabs__actions--bottom) .collection-tabs__controls-group {
-      grid-area: header;
-    }
 
     .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__list {
       grid-area: list;
@@ -385,13 +330,6 @@
       column-gap: var(--tab-layout-gap-mobile, 32px);
     }
 
-    .collection-tabs__controls > .collection-tabs__actions--bottom {
-      display: contents;
-    }
-
-    .collection-tabs__actions--bottom > .swiper-nav-button {
-      display: none;
-    }
 
     .collection-tabs__layout {
       --collection-tabs-controls-alignment: var(--collection-tabs-controls-alignment-mobile, flex-start);
@@ -422,23 +360,7 @@
       gap: var(--collection-tabs-gap-mobile, var(--collection-tabs-gap-desktop, 59px));
     }
 
-    .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__controls > .collection-tabs__controls-group > .tab-layout,
-    .collection-tabs__layout[data-layout-direction='horizontal']:has(.collection-tabs__actions--bottom) {
-      grid-template-areas: 'header list' 'header actions';
-      row-gap: var(--collection-tabs-gap-desktop, 59px);
-    }
 
-    .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__controls > .collection-tabs__actions--bottom {
-      grid-area: actions;
-    }
-
-    .collection-tabs__layout[data-layout-direction='horizontal']:has(.collection-tabs__actions--bottom) > .collection-tabs__controls {
-      display: contents;
-    }
-
-    .collection-tabs__layout[data-layout-direction='horizontal']:has(.collection-tabs__actions--bottom) .collection-tabs__controls-group {
-      grid-area: header;
-    }
 
     .collection-tabs__layout[data-layout-direction='horizontal'] > .collection-tabs__list {
       width: 100%;
@@ -463,6 +385,62 @@
   .collection-tabs__controls-group:not(:has(> .block-header:not([data-content-empty]), [data-tab-navigation] > *)),
   .collection-tabs__layout .tab-layout:not(:has([data-tab-navigation] > *)) {
     display: none;
+  }
+
+  .collection-tabs__layout .collection-tab__footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    column-gap: 8px;
+    margin-top: var(--swiper-pagination-spacing, 0px);
+    min-width: 0;
+  }
+  .collection-tab__footer > .collection-tab__footer-navigation { display: contents; }
+  .collection-tabs__layout .collection-tab__footer > .swiper-pagination {
+    --swiper-pagination-color: var(--heading-color);
+    position: relative;
+    inset: auto;
+    grid-column: 1;
+    grid-row: 1;
+    width: min(100%, var(--swiper-pagination-width, 100%));
+    margin: 0;
+    transform: none;
+  }
+  .collection-tab__footer .swiper-nav-button {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    padding: 12px;
+    position: static;
+    grid-row: 1;
+    transform: none;
+  }
+  .collection-tab__footer .swiper-nav-button--prev { grid-column: 2; }
+  .collection-tab__footer .swiper-nav-button--next { grid-column: 3; }
+  .collection-tab__footer[data-pagination-type='progress_bar'] > .swiper-pagination {
+    width: calc(min(100%, var(--swiper-pagination-width, 100%)) - 24px);
+    margin-inline-end: 24px;
+  }
+  .collection-tabs__layout .collection-tab__footer[data-pagination-type='bullets'] {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+  .collection-tab__footer[data-pagination-type='bullets'] > .swiper-pagination {
+    grid-column: 2;
+    justify-self: center;
+  }
+  .collection-tab__footer[data-pagination-type='bullets'] .swiper-nav-button--prev { grid-column: 1; }
+  @media (max-width: 767.98px) {
+    .collection-tabs__layout .collection-tab__footer {
+      display: block;
+      margin-top: var(--swiper-pagination-spacing-mobile, 0px);
+    }
+    .collection-tab__footer .swiper-nav-button { display: none; }
+    .collection-tabs__layout .collection-tab__footer > .swiper-pagination {
+      width: min(100%, var(--swiper-pagination-width, 100%));
+      margin: 0 auto;
+    }
+    .collection-tab__footer:not(:has(> .swiper-pagination[data-pagination-visible-mobile='true'])) { display: none; }
   }
 {% endstylesheet %}
 
@@ -798,7 +776,14 @@
     {
       "type": "checkbox",
       "id": "show_pagination_on_desktop",
-      "label": "t:labels.show_pagination",
+      "label": "t:labels.show_pagination_on_desktop",
+      "default": true,
+      "visible_if": "{{ section.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_mobile",
+      "label": "t:labels.show_pagination_on_mobile",
       "default": true,
       "visible_if": "{{ section.settings.layout_type == 'carousel' }}"
     },
@@ -817,7 +802,7 @@
         }
       ],
       "default": "progress_bar",
-      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop or section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "range",
@@ -839,14 +824,14 @@
       "step": 1,
       "unit": "px",
       "default": 24,
-      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "checkbox",
       "id": "pagination_limit_width",
       "label": "t:labels.limit_width",
       "default": true,
-      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop and section.settings.pagination_type == 'progress_bar' }}"
+      "visible_if": "{{ section.settings.show_pagination_on_desktop and section.settings.pagination_type == 'progress_bar' or section.settings.show_pagination_on_mobile and section.settings.pagination_type == 'progress_bar' }}"
     },
     {
       "type": "range",
@@ -857,7 +842,7 @@
       "step": 10,
       "unit": "px",
       "default": 260,
-      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop and section.settings.pagination_type == 'progress_bar' and section.settings.pagination_limit_width }}"
+      "visible_if": "{{ section.settings.show_pagination_on_desktop and section.settings.pagination_limit_width or section.settings.show_pagination_on_mobile and section.settings.pagination_limit_width }}"
     },
     {
       "type": "header",
@@ -958,12 +943,12 @@
       "category": "t:general.collection",
       "settings": {
         "section_width": "full_width",
-        "layout_direction": "horizontal",
+        "layout_direction": "vertical",
         "tab_position": "right",
         "mobile_alignment": "center",
         "gap_desktop": 40,
         "gap_mobile": 28,
-        "max_products": 5,
+        "max_products": 8,
         "layout_type": "carousel",
         "columns_desktop": "4",
         "columns_mobile": "1",
@@ -990,9 +975,57 @@
         "customize_mobile_padding": true,
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 56,
-        "show_next_slide_preview_on_mobile": true
+        "show_next_slide_preview_on_mobile": true,
+        "show_pagination_on_mobile": false
       },
       "blocks": [
+        {
+          "type": "header",
+          "static": true,
+          "settings": {
+            "width": "fill",
+            "gap_desktop": 12,
+            "gap_mobile": 12,
+            "alignment": "left",
+            "customize_mobile_alignment": true,
+            "alignment_mobile": "center"
+          },
+          "id": "header",
+          "blocks": [
+            {
+              "type": "eyebrow",
+              "settings": {
+                "text": "<p>Signature Silhouettes</p>",
+                "animation_type": "fade",
+                "animation_delay": 0
+              }
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Editor’s Pick</p>",
+                "heading_size": "xl",
+                "html_tag": "h2",
+                "animation_type": "slide-bottom",
+                "animation_delay": 50
+              }
+            }
+          ]
+        },
+        {
+          "type": "tab-layout",
+          "static": true,
+          "settings": {
+            "vertical_layout": false,
+            "style": "sliding_line",
+            "active_style": "primary",
+            "gap_desktop": 32,
+            "gap_mobile": 32,
+            "font": "body",
+            "heading_size": "sm"
+          },
+          "id": "tab-layout"
+        },
         {
           "type": "collection-tab",
           "settings": {
@@ -1002,11 +1035,11 @@
           "blocks": [
             {
               "type": "product-card",
+              "static": true,
               "settings": {
                 "color_type": "inherit",
                 "color_scheme": "scheme-1"
               },
-              "static": true,
               "id": "product-card"
             }
           ]
@@ -1020,14 +1053,31 @@
           "blocks": [
             {
               "type": "product-card",
+              "static": true,
               "settings": {
                 "color_type": "inherit",
                 "color_scheme": "scheme-1"
               },
-              "static": true,
               "id": "product-card"
             }
           ]
+        },
+        {
+          "type": "tabs-view-all-button",
+          "static": true,
+          "settings": {
+            "button_label": "View all",
+            "button_style": "tertiary",
+            "show_icon": false,
+            "icon": "arrow_right",
+            "icon_position": "after",
+            "icon_size": "inherit",
+            "icon_width": 20,
+            "width": "fit",
+            "width_mobile": "fit",
+            "customize_mobile_padding": false
+          },
+          "id": "collection-tabs-view-all"
         }
       ]
     }

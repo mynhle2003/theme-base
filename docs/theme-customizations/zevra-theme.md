@@ -12,6 +12,12 @@ Record only theme-specific section/block implementation changes here: Liquid/HTM
 
 | File/path | Base behavior | Theme-specific behavior | Reason | Update/merge rule |
 | --- | --- | --- | --- | --- |
+| `blocks/collection-list-items.liquid` | Standard desktop Grid uses equal column widths and a shared gap | Zevra adds Desktop grid layout → Mixed sizes: first two cards span two of four columns, later cards use one column; Row gap desktop lives in Gap and only applies to this desktop mode. Standard Grid, Carousel and mobile column/gap behavior retain their prior defaults | User requested an option on existing Collection list, desktop only, on 2026-10-19 | Preserve grid_layout_desktop / featured_row_gap_desktop settings, conditional visibility and desktop media query; do not restore the discarded custom section/block types |
+| `sections/timeline.liquid` | Shared timeline rail uses equal rows, one label size and default page width; split slide padding inflates content column | Zevra Timeline has a1600px content cap, right aligned vertical tabs with active32/24px and inactive20/18px labels, text underline, desktop distributed rail/mobile48px gap and equal image/content grid; local heading/body tracking matches Figma | User explicitly requested theme-specific Timeline custom on2026-10-19 | Preserve Timeline-scoped CSS and existing merchant settings; do not apply these overrides to shared top/bottom rails or other sections; retain preset/template Fit height to avoid clipped mobile content |
+| `assets/swiper-carousel.css` | Bottom footer reserves a pagination column | Center Bottom navigation for Product list and Collection tabs when pagination is missing, locked, disabled or hidden on desktop | User requested centering when too few items suppress pagination on 2026-10-19 | Preserve shared reactive CSS selectors so item/breakpoint changes restore the pagination layout automatically |
+| `blocks/product-list.liquid` | Navigation positions Inside, Outside and Top | Zevra adds Bottom using the Collection tabs footer: shared arrows alongside pagination, always visible on desktop; arrows hidden on mobile with pagination visibility preserved | User requested Featured collection Bottom navigation parity and both section template presets on 2026-10-19 | Preserve bottom normalization, shared navigation render and grid footer handoff, scoped footer CSS and existing navigation modes during base updates |
+| `assets/critical.css`, `snippets/carousel-navigation-icon.liquid` | Icon-only carousel controls shrink to20px icons; base Long arrow paths use global stroke | Zevra navigation Icon only has12px padding and24px large icon (48px button); Long arrow uses original Figma left/right paths with1.25px stroke and inherited currentColor | User requested theme-wide Icon only padding and Long arrow parity with Press Figma on2026-10-19 | Keep changes limited to icon-only navigation and long_arrow branches; preserve shared consumer styling, direction, focus, disabled/hover states and24px viewBox; retain previous unrelated critical.css changes |
+| `blocks/press-quotes.liquid`, `blocks/press-item.liquid`, `assets/carousel-runtime.js` | Quotes above logo pagination; heading-only items; first slide selected | Zevra Press layout: logos above quotes, DIOR initially active, edge fade, shared arrows/progress; native Text descriptions. Existing settings control media, spacing, size and padding; Logo layout position/fade plus user-authorized Navigation/Pagination groups with independent mobile visibility | User authorized theme-specific Press matching Figma 47062:15032 / 47230:15700 on 2026-10-19, prioritizing options | Preserve 2:1 media and theme-specific layout; retain shared navigation snippet and native text/heading controls; keep reveal initial-index/progress hooks and abort cleanup scoped |
 | `blocks/product-list-banner.liquid`, `snippets/product-collection-grid.liquid` | Banner Product list has mobile swipe but no next-slide preview control | Conditional mobile preview checkbox forwarded through mobile-only carousel branch | User requested Mara-only mobile preview option and enabled preset,2026-10-16 | Preserve setting/pass-through; omitted/false stays disabled for other consumers |
 | `snippets/theme-button.liquid` | Shared button filters icon names through its own allow-list | Accept registered mara-quick-add-plus so icon-only Quick add produces SVG instead of an empty button | Fix missing Quick add icon reported by user,2026-10-16 | Keep namespaced glyph admitted alongside icon registry and both Quick add callers; preserve all other validation |
 | `snippets/product-card-quick-add.liquid`, `snippets/product-card-quick-add-overlay.liquid` | Icon mode renders cart glyph; overlay wrapper fills image width | Mara icon mode renders namespaced Figma plus and exposes icon modifier for aligned direct/overlay actions | User requested Figma Quick add parity on desktop/mobile,2026-10-16 | Preserve form/overlay attributes, loading states, labels and text/full-width setting paths; retain icon/CSS dependencies |
@@ -748,9 +754,67 @@ assets/critical.css                            | 19 ++++++
 
 Approved retained-custom exceptions for this update: port only the shared mega-menu width/backdrop and Footer layout-event lifecycle fixes from team f3555270. Preserve existing custom markup, settings, schema, presets and templates. Announcement first-paint/scoped background sizing was already released in the preceding theme commit.
 
+## 2026-10-19 — Independent pagination visibility
+
+| Custom paths | Before | Zevra behavior | Authority | Base update rule |
+| --- | --- | --- | --- | --- |
+| `sections/slideshow.liquid`, `sections/hotspot-full-width-carousel.liquid`, `sections/collection-list-thumbnails.liquid`, `sections/collection-tabs.liquid`, `blocks/collection-tab.liquid`, `blocks/collection-list-items.liquid`, `blocks/blog-list.liquid`, `blocks/product-callout-gallery.liquid`, `blocks/shop-the-look-products.liquid`, `blocks/product-list.liquid`, `sections/related-posts.liquid`, `snippets/product-collection-grid.liquid`, `snippets/swiper-pagination.liquid`, `snippets/pagination-visibility.liquid`, `assets/critical.css`, `assets/swiper-carousel.css` | A shared checkbox gated both viewports; Related posts forced mobile pagination | Independent desktop/mobile checkboxes and breakpoint visibility, markup when either enabled, no hidden pagination spacing/focus; Related posts mobile default now configurable. Collection tabs preset + homepage desktop on/mobile off per supplied Figma | User explicitly requested this theme-only custom on2026-10-19 | Preserve both setting IDs, migration values, snippet arguments/attributes, CSS visibility and per-viewport navigation offsets. Do not replace with base's shared checkbox; review upstream overlaps. |
+
+Schema-only mobile label corrections: `blocks/_product-media.liquid`, `sections/promo-grid-custom.liquid`; both only have mobile sliders and retain their mobile-only setting ID. Existing Carousel already has independent controls and remains unchanged. Preset/template migrations copy old checkbox state to both viewports; Related posts retains its former mobile-on default. No content/resources or unrelated composition was changed by this migration. See [verification](../audits/pagination-visibility-2026-10-19.md).
+
 ## Variant origin
 
 - Mara → Zevra; source `theme/mara-theme` at `b99df73e385d9acc37872335f6d58abad3dc1a79`, verified local and origin on 2026-10-16.
 - Inherits all implementation/custom dependencies and the original base checkpoint above.
 - [Initialization plan](../theme-init/zevra-theme.md); [variant updates](../variant-updates/zevra-theme.md).
 - No new custom implementation is authorized by init.
+
+## Scrolling cards — 2026-10-19
+
+User requested replacing three homepage split sections with Arche-style scrolling cards. Preserve the following custom implementations during base updates:
+
+| Path | Custom behavior | Review on base update |
+| --- | --- | --- |
+| `sections/scrolling-cards.liquid` | Stack effect data and configurable desktop/mobile card gaps; MĀRA preset. | Retain settings consumers and preset composition. |
+| `blocks/scrolling-card.liquid` | Runtime sticky-top fallback for viewport-centered stacking. | Keep CSS variable aligned with runtime. |
+| `assets/scrolling-cards.js` | Arche fade/scale runtime, ResizeObserver and editor cleanup. | Preserve singleton initialization, teardown and reduced-motion/mobile fallback. |
+
+## 2026-10-19 — Collection tabs bottom controls
+
+| Custom paths | Before | Zevra behavior | Authority | Base update rule |
+| --- | --- | --- | --- | --- |
+| `sections/collection-tabs.liquid`, `blocks/collection-tab.liquid`, `snippets/product-collection-grid.liquid` | Global bottom arrows in a separate row from per-tab pagination | Each carousel owns a bottom footer: Progress bar left, both arrows right; Bullets center with previous/next at opposite edges. Native scoped carousel navigation owns disabled state and tab lifecycle; View all remains a separate action. Mobile respects existing desktop-only navigation and independent pagination visibility. | User requested theme-only bottom controls matching Figma on2026-10-19 | Preserve optional bottom_navigation snippet argument, per-tab render and scoped footer CSS; other grid callers remain unchanged. |
+
+Validation: desktop1265px final progress bar and48px buttons share centerY877.5px; arrows x1113/1169,32px gutter after the bar. Bullets checked before button-size calibration: centered pagination and arrows at opposite edges, with equal centerY. Footer desktop spacing40px in preset and homepage matches supplied Figma; mobile visibility remains off. Temporarily selected Bullets in local homepage for browser QA, then restored Progress bar. Native Next click and tab switching exercised. Targeted20 tests passed; Theme Check0 errors/6 existing warnings. Mobile visual QA and exhaustive editor lifecycle remain unverified. No new JS or schema controls.
+
+### Bottom pagination color correction
+
+`assets/swiper-carousel.css` supports the neutral `.swiper-pagination-host` wrapper as well as direct Swiper pagination children; `snippets/product-collection-grid.liquid` adds that host to the Collection tabs footer. This restores shared progress/bullet styling, lock visibility and autoplay styling after nesting. `sections/collection-tabs.liquid` maps footer active color to the color scheme heading token. Preserve these dependencies with the bottom-controls custom. Browser computed progress fill verified rgb(24,24,24), #181818 matching Figma; no hardcoded blue override.20 targeted tests pass; Theme Check0 errors/6 inherited warnings.
+
+Bullets browser follow-up: compared shared CSS with local main and verified computed active shape32×8px, inactive shape8×8px, hit areas48/24px, active #181818. The restored host selectors preserve main’s elongated active bullet rather than Swiper’s fallback round dot. Temporary local Bullets selection restored to Progress bar after QA.
+
+## Navigation Icon only / Long arrow — 2026-10-19
+
+Figma source bH9A5237I07NWt19Cua9gL desktop47062:15032/mobile47230:15700. Original arrow SVG downloads895eb.svg(left),f5e9a.svg(right):24px viewBox,1.25px round stroke. Preserved path geometry and replaced fixed source color with currentColor for scheme/hover inheritance. No new settings. Shared navigation icon-only consumes existing large icon token24px plus12px padding on every side; other navigation styles retain their sizing. Consumers include Press, Collection tabs/lists, product/blog lists, common Carousel/Testimonial, slideshow, timeline, product media and any shared swiper-navigation owner selecting icon_only or long_arrow.
+
+Navigation verification: desktop Press computed button48×48px, padding12px, SVG24×24px; full control row320×48px. Original Figma Long arrow path and1.25px stroke verified in rendered DOM. Explicit button selector prevents Tertiary zero-padding override. Theme Check zero errors/six existing warnings; git diff --check passes. Mobile uses the same higher-specificity rule but native mobile viewport not directly checked. Screenshot /tmp/zevra-navigation-figma.png.
+
+## 2026-10-19 — Product card price size
+
+| Custom paths | Before | Zevra behavior | Authority | Base update rule |
+| --- | --- | --- | --- | --- |
+| `assets/critical.css` | Product card price inherits body-md16px | `.product-card__price` maps price font-size to body-sm14px, line-height1.5 (21px), tracking0.2px per supplied desktop/mobile Figma; scoped to reusable product cards | User explicitly requested theme-only product card price size matching Figma | Preserve scoped price variables/tracking on base updates; retain shared product/cart price defaults |
+
+## 2026-10-19 — Product card title typography
+
+| Custom paths | Before | Zevra behavior | Authority | Base update rule |
+| --- | --- | --- | --- | --- |
+| `assets/critical.css` | Product titles inherit heading weight/casing and1.4 leading | Product-card titles use500 weight,1.5 line-height, zero tracking and capitalize casing per Figma; existing16px desktop/mobile title-size settings and font-family mapping retained | User explicitly requested theme-only product card titles matching supplied Figma | Preserve scoped title typography on base updates; do not change global heading styles or product data |
+
+## 2026-10-19 — Gallery custom mobile content width
+
+Theme-only fix: `templates/index.json` community_gallery top/feature/feature group and matching `sections/gallery-custom.liquid` preset explicitly set `width_mobile: fill`. The Group schema default of fit produced a 0×0 group around a percentage-width image card on mobile. Preserve this explicit mobile width during base updates. Existing Group Device → Mobile → Width remains editable; shared blocks are unchanged. User authorized this correction.
+
+### Timeline active label motion — 2026-10-19
+
+`sections/timeline.liquid`: interpolate label font size, line height, tracking and color together over240ms with the shared motion easing. Underline fades through a label pseudo-element rather than appearing abruptly. This smooths the active/inactive height change and surrounding rail redistribution while preserving final Figma sizes. Reduced-motion disables both transitions. Scoped to Timeline left Tabs; no JS or schema changes.

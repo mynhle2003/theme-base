@@ -64,7 +64,7 @@
   }
 }
 
-.swiper > .swiper-pagination--below {
+:is(.swiper, .swiper-pagination-host) > .swiper-pagination--below {
   position: relative;
   inset: auto;
   width: var(--swiper-pagination-width, 100%);
@@ -74,18 +74,18 @@
 }
 
 @media (max-width: 767.98px) {
-  .swiper > .swiper-pagination--below {
+  :is(.swiper, .swiper-pagination-host) > .swiper-pagination--below {
     margin-block-start: var(--swiper-pagination-spacing-mobile, var(--swiper-pagination-spacing, 0px));
   }
 }
 
-.swiper > .swiper-pagination--below[data-pagination-type='progress_bar'] {
+:is(.swiper, .swiper-pagination-host) > .swiper-pagination--below[data-pagination-type='progress_bar'] {
   --swiper-pagination-progressbar-bg-color: color-mix(in srgb, var(--body-color) 20%, transparent);
   --swiper-pagination-color: var(--body-color);
 }
 
 /* Slideshow and hotspot controls share overlay geometry; sections own inset tokens. */
-.swiper > .swiper-pagination.swiper-pagination--overlay {
+:is(.swiper, .swiper-pagination-host) > .swiper-pagination.swiper-pagination--overlay {
   --swiper-pagination-color: var(--heading-color);
   --swiper-pagination-progressbar-bg-color: color-mix(in srgb, var(--heading-color) 30%, transparent);
   --swiper-pagination-bullet-inactive-color: color-mix(in srgb, var(--heading-color) 30%, transparent);
@@ -129,7 +129,7 @@
 }
 
 /* Progress bars span the same content inset regardless of bullet alignment. */
-.swiper > .swiper-pagination.swiper-pagination--overlay[data-pagination-type='progress_bar'] {
+:is(.swiper, .swiper-pagination-host) > .swiper-pagination.swiper-pagination--overlay[data-pagination-type='progress_bar'] {
   inset-block-end: var(--swiper-pagination-overlay-padding, 2.4rem);
   inset-inline: var(--swiper-pagination-inline-padding, var(--page-margin-current));
   min-height: 2px;
@@ -138,7 +138,7 @@
 }
 
 @media (max-width: 767.98px) {
-  .swiper > .swiper-pagination.swiper-pagination--overlay {
+  :is(.swiper, .swiper-pagination-host) > .swiper-pagination.swiper-pagination--overlay {
     --swiper-pagination-overlay-padding: 1.6rem;
   }
 
@@ -161,7 +161,7 @@
   }
 }
 
-.swiper > :is(
+:is(.swiper, .swiper-pagination-host) > :is(
   .swiper-pagination[data-pagination-type='bullets'],
   .swiper-pagination.swiper-pagination-bullets
 ) {
@@ -174,7 +174,7 @@
   gap: var(--swiper-pagination-bullet-gap, 8px);
 }
 
-.swiper > :is(
+:is(.swiper, .swiper-pagination-host) > :is(
   .swiper-pagination[data-pagination-type='bullets'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet {
@@ -197,17 +197,17 @@
 }
 
 /* State classes must win over the bullet layout, including before init. */
-.swiper > .swiper-pagination:is(.swiper-pagination-lock, .swiper-pagination-disabled),
+:is(.swiper, .swiper-pagination-host) > .swiper-pagination:is(.swiper-pagination-lock, .swiper-pagination-disabled),
 .swiper.swiper-pagination-disabled > .swiper-pagination,
 .swiper.swiper-carousel--grid > .swiper-pagination {
   display: none;
 }
 
-.swiper > :is(
+:is(.swiper, .swiper-pagination-host) > :is(
   .swiper-pagination[data-pagination-type='bullets'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet::before,
-.swiper > :is(
+:is(.swiper, .swiper-pagination-host) > :is(
   .swiper-pagination[data-pagination-type='bullets'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet::after {
@@ -227,14 +227,14 @@
     height var(--motion-duration-standard) var(--motion-ease-standard);
 }
 
-.swiper > :is(
+:is(.swiper, .swiper-pagination-host) > :is(
   .swiper-pagination[data-pagination-type='bullets'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet::before {
   background: var(--swiper-pagination-bullet-inactive-color, color-mix(in srgb, var(--body-color) 30%, transparent));
 }
 
-.swiper > :is(
+:is(.swiper, .swiper-pagination-host) > :is(
   .swiper-pagination[data-pagination-type='bullets'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet::after {
@@ -245,7 +245,7 @@
   transform-origin: left center;
 }
 
-.swiper > :is(
+:is(.swiper, .swiper-pagination-host) > :is(
   .swiper-pagination[data-pagination-type='bullets'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet-active {
@@ -254,11 +254,11 @@
   min-width: var(--swiper-pagination-bullet-active-hit-width, 48px);
 }
 
-.swiper > :is(
+:is(.swiper, .swiper-pagination-host) > :is(
   .swiper-pagination[data-pagination-type='bullets'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet-active::before,
-.swiper > :is(
+:is(.swiper, .swiper-pagination-host) > :is(
   .swiper-pagination[data-pagination-type='bullets'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet-active::after {
@@ -266,14 +266,14 @@
   height: var(--swiper-pagination-bullet-active-height, var(--swiper-pagination-bullet-height, 8px));
 }
 
-.swiper > :is(
+:is(.swiper, .swiper-pagination-host) > :is(
   .swiper-pagination[data-pagination-type='bullets'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet-active::before {
   background: color-mix(in srgb, var(--swiper-pagination-color, var(--body-color)) 24%, transparent);
 }
 
-.swiper > :is(
+:is(.swiper, .swiper-pagination-host) > :is(
   .swiper-pagination[data-pagination-type='bullets'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet-active::after {
@@ -283,11 +283,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .swiper > :is(
+  :is(.swiper, .swiper-pagination-host) > :is(
     .swiper-pagination[data-pagination-type='bullets'],
     .swiper-pagination.swiper-pagination-bullets
   ) .swiper-pagination-bullet::before,
-  .swiper > :is(
+  :is(.swiper, .swiper-pagination-host) > :is(
     .swiper-pagination[data-pagination-type='bullets'],
     .swiper-pagination.swiper-pagination-bullets
   ) .swiper-pagination-bullet::after {
@@ -350,7 +350,7 @@
 }
 
 
-.swiper > .swiper-pagination[data-autoplay-clock]:is([data-pagination-type='bullets'], .swiper-pagination-bullets) .swiper-pagination-bullet-active::after {
+:is(.swiper, .swiper-pagination-host) > .swiper-pagination[data-autoplay-clock]:is([data-pagination-type='bullets'], .swiper-pagination-bullets) .swiper-pagination-bullet-active::after {
   animation: none;
   transform: translate(-50%, -50%);
   clip-path: inset(0 var(--carousel-autoplay-remaining, 100%) 0 0 round var(--swiper-pagination-bullet-border-radius, 1000px));
@@ -360,7 +360,7 @@
   clip-path: inset(0 0 0 var(--carousel-autoplay-remaining, 100%) round var(--swiper-pagination-bullet-border-radius, 1000px));
 }
 
-.swiper > .swiper-pagination-progressbar[data-autoplay-clock] .swiper-pagination-progressbar-fill {
+:is(.swiper, .swiper-pagination-host) > .swiper-pagination-progressbar[data-autoplay-clock] .swiper-pagination-progressbar-fill {
   transform: none !important;
   transition: none !important;
   border-radius: inherit;
@@ -369,4 +369,26 @@
 
 .swiper.swiper-rtl > .swiper-pagination-progressbar[data-autoplay-clock] .swiper-pagination-progressbar-fill {
   clip-path: inset(0 0 0 var(--carousel-autoplay-remaining, 100%) round var(--swiper-pagination-progressbar-border-radius, 0px));
+}
+
+@media (max-width: 767.98px) {
+  .swiper-carousel__navigation--centered {
+    top: calc(50% - var(--pagination-navigation-offset-mobile, var(--swiper-navigation-center-offset, 0px)));
+  }
+}
+
+/* Bottom controls stay centered whenever pagination is absent or suppressed. */
+@media (min-width: 768px) {
+  :is(.product-list, .collection-tabs__layout) .collection-tab__footer:not(:has(> .swiper-pagination:not(.swiper-pagination-lock, .swiper-pagination-disabled, [hidden], [data-pagination-visible-desktop='false']))) {
+    grid-template-columns: auto auto;
+    justify-content: center;
+  }
+
+  :is(.product-list, .collection-tabs__layout) .collection-tab__footer:not(:has(> .swiper-pagination:not(.swiper-pagination-lock, .swiper-pagination-disabled, [hidden], [data-pagination-visible-desktop='false']))) .swiper-nav-button--prev {
+    grid-column: 1;
+  }
+
+  :is(.product-list, .collection-tabs__layout) .collection-tab__footer:not(:has(> .swiper-pagination:not(.swiper-pagination-lock, .swiper-pagination-disabled, [hidden], [data-pagination-visible-desktop='false']))) .swiper-nav-button--next {
+    grid-column: 2;
+  }
 }
