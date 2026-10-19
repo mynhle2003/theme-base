@@ -16,6 +16,11 @@
     assign column_width_mode = 'fill'
   endunless
 
+  assign column_height_mode = block.settings.height | default: 'fit'
+  unless column_height_mode == 'fit' or column_height_mode == 'fill'
+    assign column_height_mode = 'fit'
+  endunless
+
   assign column_custom_width = block.settings.custom_width | default: 50 | plus: 0
   if column_custom_width < 1 or column_custom_width > 100
     assign column_custom_width = 50
@@ -85,6 +90,7 @@
   endif
 
   assign column_class = 'block-column layout-flow layout-flow--responsive block-column--width-' | append: column_width_mode
+  assign column_class = column_class | append: ' block-column--height-' | append: column_height_mode
 %}
 
 {% capture column_style %}
@@ -154,6 +160,20 @@
   .block-column > * {
     min-width: 0;
     max-width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .block-row > .block-column--height-fill {
+      align-self: stretch;
+    }
+
+    .block-column--height-fill > .group--height-fill,
+    .block-column--height-fill > .image-card--height-desktop-fill,
+    .block-column--height-fill > .group--height-fill > .image-card--height-desktop-fill {
+      flex: 1 1 auto;
+      height: auto;
+      min-height: 0;
+    }
   }
 
   @media (max-width: 767.98px) {
@@ -271,6 +291,16 @@
       "unit": "%",
       "default": 50,
       "visible_if": "{{ block.settings.width == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "t:labels.height",
+      "options": [
+        { "value": "fit", "label": "t:options.width.fit" },
+        { "value": "fill", "label": "t:options.width.fill" }
+      ],
+      "default": "fit"
     },
     {
       "type": "range",

@@ -18,6 +18,8 @@
   @param {string} [crop] - The crop position of the image
   @param {string} [widths] - Optional responsive image widths
   @param {string} [sizes] - Optional responsive image sizes
+  @param {string} [loading] - Optional eager or lazy loading strategy
+  @param {string} [fetchpriority] - Optional image fetch priority
   @param {string} [placeholder] - Optional Shopify placeholder name when no image is selected
 
   @example
@@ -78,38 +80,39 @@
   {% if image != blank %}
     {% if mobile_image != blank %}
       {% capture mobile_srcset %}
-        {% assign responsive_widths = image_widths | default: '400, 600, 800, 1200, 1600, 2400' | split: ', ' %}
+        {% assign responsive_widths = image_widths | default: '400, 600, 800, 1200, 1600, 2400' | split: ',' %}
         {% for responsive_width in responsive_widths %}
-          {{ mobile_image | image_url: width: responsive_width }}{% unless forloop.last %}, {% endunless %}
+          {% assign candidate_width = responsive_width | strip | plus: 0 %}
+          {{ mobile_image | image_url: width: candidate_width }} {{ candidate_width }}w{% unless forloop.last %}, {% endunless %}
         {% endfor %}
       {% endcapture %}
       <picture>
-        <source media="(max-width: 767.98px)" srcset="{{ mobile_srcset | strip }}">
+        <source media="(max-width: 767.98px)" srcset="{{ mobile_srcset | strip }}"{% if image_sizes != blank %} sizes="{{ image_sizes | escape }}"{% endif %}>
         {% if image_widths != blank or image_sizes != blank %}
           {% if has_image_height %}
-            {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: widths: image_widths, sizes: image_sizes, alt: image_alt }}
+            {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: widths: image_widths, sizes: image_sizes, alt: image_alt, loading: loading, fetchpriority: fetchpriority }}
           {% else %}
-            {{ image | image_url: width: width | image_tag: widths: image_widths, sizes: image_sizes, alt: image_alt }}
+            {{ image | image_url: width: width | image_tag: widths: image_widths, sizes: image_sizes, alt: image_alt, loading: loading, fetchpriority: fetchpriority }}
           {% endif %}
         {% else %}
           {% if has_image_height %}
-            {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: alt: image_alt }}
+            {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: alt: image_alt, loading: loading, fetchpriority: fetchpriority }}
           {% else %}
-            {{ image | image_url: width: width | image_tag: alt: image_alt }}
+            {{ image | image_url: width: width | image_tag: alt: image_alt, loading: loading, fetchpriority: fetchpriority }}
           {% endif %}
         {% endif %}
       </picture>
     {% elsif image_widths != blank or image_sizes != blank %}
       {% if has_image_height %}
-        {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: widths: image_widths, sizes: image_sizes, alt: image_alt }}
+        {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: widths: image_widths, sizes: image_sizes, alt: image_alt, loading: loading, fetchpriority: fetchpriority }}
       {% else %}
-        {{ image | image_url: width: width | image_tag: widths: image_widths, sizes: image_sizes, alt: image_alt }}
+        {{ image | image_url: width: width | image_tag: widths: image_widths, sizes: image_sizes, alt: image_alt, loading: loading, fetchpriority: fetchpriority }}
       {% endif %}
     {% else %}
       {% if has_image_height %}
-        {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: alt: image_alt }}
+        {{ image | image_url: width: width, height: image_height_value, crop: crop | image_tag: alt: image_alt, loading: loading, fetchpriority: fetchpriority }}
       {% else %}
-        {{ image | image_url: width: width | image_tag: alt: image_alt }}
+        {{ image | image_url: width: width | image_tag: alt: image_alt, loading: loading, fetchpriority: fetchpriority }}
       {% endif %}
     {% endif %}
   {% else %}

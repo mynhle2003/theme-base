@@ -26,6 +26,29 @@
     assign image_card_size_desktop = image_card_width_desktop_value | append: 'vw'
   endif
 
+  if image_card_width_desktop_mode == 'fill' and section.settings.direction == 'horizontal' and section.blocks.size > 1
+    assign image_card_equal_widths = true
+    for sibling_card in section.blocks
+      if sibling_card.settings.width_desktop == 'custom'
+        assign image_card_equal_widths = false
+      endif
+    endfor
+    if image_card_equal_widths
+      assign image_card_size_desktop = 100.0 | divided_by: section.blocks.size | append: 'vw'
+    endif
+  endif
+
+  assign image_card_loading = 'lazy'
+  assign image_card_fetchpriority = 'auto'
+  if section.index == 1
+    assign image_card_loading = 'eager'
+    if section.blocks.first.id == block.id
+      assign image_card_fetchpriority = 'high'
+    endif
+  elsif section.index == nil
+    assign image_card_loading = 'eager'
+  endif
+
   assign image_card_max_width_desktop = '100%'
   assign image_card_max_width_desktop_value = block.settings.max_width_desktop | default: 1600 | plus: 0
   if image_card_max_width_desktop_value < 0 or image_card_max_width_desktop_value > 1600
@@ -212,6 +235,8 @@
       mobile_video: block.settings.mobile_video,
       alt: image_card_media_alt,
       sizes: image_card_sizes,
+      loading: image_card_loading,
+      fetchpriority: image_card_fetchpriority,
       aria_hidden: image_card_media_aria_hidden
     %}
   </div>
