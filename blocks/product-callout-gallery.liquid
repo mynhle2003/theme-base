@@ -1,3 +1,11 @@
+{% liquid
+  assign pagination_desktop = block.settings.show_pagination_on_desktop
+  assign pagination_mobile = block.settings.show_pagination_on_mobile
+  assign pagination_any = false
+  if pagination_desktop or pagination_mobile
+    assign pagination_any = true
+  endif
+%}
 {% doc %}
   The fixed Product callout slot in Hotspot Gallery. Its repeatable Hotspot
   children each own an image and Product/custom content; the parent owns the
@@ -101,7 +109,7 @@
   assign gallery_navigation_class = 'product-callout-gallery__navigation product-callout-gallery__navigation--' | append: gallery_navigation_position
 
   assign gallery_show_pagination = false
-  if gallery_layout == 'carousel' and block.settings.show_pagination_on_desktop
+  if gallery_layout == 'carousel' and pagination_any
     assign gallery_show_pagination = true
   endif
   assign gallery_pagination_type = block.settings.pagination_type | default: 'progress_bar'
@@ -143,7 +151,7 @@
 
 {% capture gallery_pagination %}
   {% if gallery_show_pagination %}
-    {% render 'swiper-pagination',
+    {% render 'swiper-pagination', show_on_desktop: pagination_desktop, show_on_mobile: pagination_mobile,
       show: true,
       type: gallery_pagination_type,
       class: gallery_pagination_class,
@@ -190,8 +198,8 @@
     data-swiper-gap-desktop="{{ gallery_gap_desktop }}"
     data-swiper-gap-mobile="{{ gallery_gap_mobile }}"
     data-swiper-pagination-type="{{ gallery_pagination_type }}"
-    data-swiper-pagination-desktop="{{ gallery_show_pagination }}"
-    data-swiper-pagination-mobile="{{ gallery_show_pagination }}"
+    data-swiper-pagination-desktop="{{ pagination_desktop }}"
+    data-swiper-pagination-mobile="{{ pagination_mobile }}"
     data-swiper-autoplay="false"
     data-swiper-autoplay-pause-on-hover="true"
     data-swiper-autoplay-delay="4000"
@@ -659,7 +667,14 @@
     {
       "type": "checkbox",
       "id": "show_pagination_on_desktop",
-      "label": "t:labels.show_pagination",
+      "label": "t:labels.show_pagination_on_desktop",
+      "default": true,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_mobile",
+      "label": "t:labels.show_pagination_on_mobile",
       "default": true,
       "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
     },
@@ -678,7 +693,7 @@
         }
       ],
       "default": "progress_bar",
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop or block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "range",
@@ -700,14 +715,14 @@
       "step": 1,
       "unit": "px",
       "default": 24,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "checkbox",
       "id": "pagination_limit_width",
       "label": "t:labels.limit_width",
       "default": true,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop and block.settings.pagination_type == 'progress_bar' }}"
+      "visible_if": "{{ block.settings.show_pagination_on_desktop and block.settings.pagination_type == 'progress_bar' or block.settings.show_pagination_on_mobile and block.settings.pagination_type == 'progress_bar' }}"
     },
     {
       "type": "range",
@@ -718,7 +733,7 @@
       "step": 10,
       "unit": "px",
       "default": 260,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop and block.settings.pagination_type == 'progress_bar' and block.settings.pagination_limit_width }}"
+      "visible_if": "{{ block.settings.show_pagination_on_desktop and block.settings.pagination_limit_width or block.settings.show_pagination_on_mobile and block.settings.pagination_limit_width }}"
     }
   ],
   "presets": [
@@ -739,7 +754,10 @@
             "horizontal_position": 70
           }
         }
-      ]
+      ],
+      "settings": {
+        "show_pagination_on_mobile": false
+      }
     }
   ]
 }

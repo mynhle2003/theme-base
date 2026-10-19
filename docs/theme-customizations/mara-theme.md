@@ -747,3 +747,22 @@ assets/critical.css                            | 19 ++++++
 
 
 Approved retained-custom exceptions for this update: port only the shared mega-menu width/backdrop and Footer layout-event lifecycle fixes from team f3555270. Preserve existing custom markup, settings, schema, presets and templates. Announcement first-paint/scoped background sizing was already released in the preceding theme commit.
+
+## 2026-10-19 — Zevra variant: Image card Custom ratio
+
+- Source: `../zevra-theme/docs/variant-updates/zevra-theme.md`, “Image card — Đồng bộ ratio và thêm Custom (2026-10-19)”; source HEAD `f3b62643` (source doc still describes the change as uncommitted).
+- Status: **applied** locally; Theme Editor/storefront visual QA remains pending. No commit, push or store update.
+- Target gap confirmed before editing: `blocks/image-card.liquid` lacked Custom options, four W/H settings and Custom CSS bindings on both devices.
+- Transferred only the documented ratio changes: ordered Square/Portrait/Landscape presets, independent desktop/mobile Custom W/H (16/9 defaults), device + Custom visibility conditions and scoped ratio variables using existing `snippets/image-ratio-value.liquid`. The snippet already falls back to 16/9 for non-positive dimensions.
+- Existing saved ratio values, defaults, Mara preset composition and media-loading behavior remain intact. Zevra-only product title typography and store media focal points were excluded.
+- Validation: schema JSON parses; transferred settings match source; visibility expressions and CSS bindings checked; existing option values/defaults/presets preserved; `git diff --check` passes. Full `shopify theme check --fail-level error`: 380 files, 0 errors, 7 `ExcessiveSettingsCount` warnings (`_bundle-summary`, `_comparison-table-features`, `comparison-table-column`, `editorial-text`, `group`, `image-card`, `image-comparison`). Image card now has 42 settings; warnings remain enabled.
+- Source ledger was read only; this target record captures the applied state. Do not mark visually verified until desktop/mobile Custom, Fill and preset modes are checked in Theme Editor/storefront.
+
+## 2026-10-19 — ZEVRA-PAGINATION-001: independent viewport visibility
+
+- Source: `../zevra-theme/docs/variant-updates/zevra-theme.md`, ID `ZEVRA-PAGINATION-001`, implementation originating at `78e41958`. Target: Mara; **applied**, browser/Theme Editor QA pending.
+- Target audit confirmed shared Desktop flags in Collection tabs/thumbnails, Slideshow, Hotspot carousel, Collection list items, Blog list, Product callout gallery, Shop the look products and Product list. Added independent mobile checkboxes, source pagination setting visibility conditions, rendering gates, viewport attributes and navigation center offsets. Collection tab consumes section settings. Related posts no longer forces mobile pagination on.
+- Added `pagination-visibility` with backward-compatible defaults, wired shared pagination/grid snippets and breakpoint visibility CSS. Preserved Mara layout, navigation composition, content, media and product typography; excluded Zevra bottom-navigation layout changes. Carousel already has independent flags; no duplicate controls added. Mara Press has logo-tab navigation but no generic pagination controls, so Zevra's separate Press control/layout feature was not imported. Resource pagination and Timeline navigation remain outside this contract.
+- Explicit user configuration: mobile pagination disabled in all applicable section/block presets, templates and product media instances (49 explicit flags audited). Existing template Desktop choices preserved; Slideshow/Hotspot legacy `show_pagination` values migrated to Desktop flags. Mobile-only settings retain their consumer and use the mobile-specific label.
+- Validation: 5/5 pagination checks passed using a temporary copy of source tests adapted to Mara paths/composition; all four viewport flag combinations, omitted-argument compatibility, preset/homepage mobile-off state and Shopify visibility expression limits checked. No repository test files changed. All preset/template mobile flags audited false and existing template desktop values preserved. Full Theme Check: 381 files, 0 errors, 7 visible `ExcessiveSettingsCount` warnings (same owners recorded above). `git diff --check` passed.
+- Pending: live computed visibility/spacing/focus, resize and Theme Editor save/reload QA. No commit, push or store update; source ledger remains read only.

@@ -3389,3 +3389,11 @@ body[data-block-animations="false"] .reveal-pending { opacity:1!important; }
   -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
 }
+
+/* Viewport-specific pagination, including hidden controls' spacing/focus. */
+@media (min-width: 768px) {
+  [data-pagination-visible-desktop='false'] { display: none !important; }
+}
+@media (max-width: 767.98px) {
+  [data-pagination-visible-mobile='false'] { display: none !important; }
+}

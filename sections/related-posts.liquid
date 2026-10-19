@@ -16,7 +16,7 @@
   <div class="container {{ related_posts_width }} related-posts__container">
     {% capture related_posts_heading_content %}{% content_for 'block', type: 'heading', id: 'heading' %}{% endcapture %}
     {% render 'section-content-slot', content: related_posts_heading_content, class: 'align-content' %}
-    {% capture related_posts_list_content %}{% content_for 'block', type: 'blog-list', id: 'blog-list', closest.blog: blog, excluded_article: article, mobile_pagination: true %}{% endcapture %}
+    {% capture related_posts_list_content %}{% content_for 'block', type: 'blog-list', id: 'blog-list', closest.blog: blog, excluded_article: article %}{% endcapture %}
     {% render 'section-content-slot', content: related_posts_list_content, class: 'related-posts__list' %}
   </div>
   {% if section.settings.show_bottom_divider %}<div class="related-posts__divider related-posts__divider--bottom{% if section.settings.divider_full_width %} related-posts__divider--full{% endif %}" aria-hidden="true"></div>{% endif %}
@@ -292,7 +292,8 @@
             "pagination_max_width": 260,
             "autoplay": false,
             "autoplay_pause_on_hover": true,
-            "autoplay_speed": 4
+            "autoplay_speed": 4,
+            "show_pagination_on_mobile": false
           },
           "blocks": [
             {

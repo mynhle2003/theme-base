@@ -1,3 +1,11 @@
+{% liquid
+  assign pagination_desktop = section.settings.show_pagination_on_desktop
+  assign pagination_mobile = section.settings.show_pagination_on_mobile
+  assign pagination_any = false
+  if pagination_desktop or pagination_mobile
+    assign pagination_any = true
+  endif
+%}
 {% comment %}
   Theme Block types/settings are not reliably exposed to the parent section,
   and editor-generated IDs do not identify the block type. Render each block
@@ -129,7 +137,7 @@
   endif
 
   assign hotspot_carousel_show_pagination = true
-  if section.settings.show_pagination == false
+  if pagination_any == false
     assign hotspot_carousel_show_pagination = false
   endif
 
@@ -206,8 +214,8 @@
     data-swiper-gap-desktop="0"
     data-swiper-gap-mobile="0"
     data-swiper-pagination-type="{{ hotspot_carousel_pagination_type }}"
-    data-swiper-pagination-desktop="{{ hotspot_carousel_show_pagination }}"
-    data-swiper-pagination-mobile="{{ hotspot_carousel_show_pagination }}"
+    data-swiper-pagination-desktop="{{ pagination_desktop }}"
+    data-swiper-pagination-mobile="{{ pagination_mobile }}"
     {% if hotspot_carousel_use_fraction %}data-carousel-controls-style="fraction"{% endif %}
     data-carousel-loop="{{ hotspot_carousel_has_multiple_slides }}"
     data-carousel-manual-loop="{{ hotspot_carousel_manual_loop }}"
@@ -231,7 +239,7 @@
     {% if section.blocks.size > 0 %}
       {% capture hotspot_carousel_pagination %}
         {% if hotspot_carousel_has_multiple_slides and hotspot_carousel_show_pagination and hotspot_carousel_use_fraction == false %}
-          {% render 'swiper-pagination',
+          {% render 'swiper-pagination', show_on_desktop: pagination_desktop, show_on_mobile: pagination_mobile,
             show: true,
             type: hotspot_carousel_pagination_type,
             class: hotspot_carousel_pagination_class
@@ -273,7 +281,7 @@
           {% endif %}
 
           {% if hotspot_carousel_has_multiple_slides and hotspot_carousel_show_pagination and hotspot_carousel_use_fraction %}
-            <div class="hotspot-full-width-carousel__fraction-controls hotspot-full-width-carousel__fraction-controls--desktop-{{ hotspot_carousel_pagination_position_desktop }} hotspot-full-width-carousel__fraction-controls--mobile-{{ hotspot_carousel_pagination_position_mobile }} {{ hotspot_carousel_controls_scheme_class }}">
+            <div {% render 'pagination-visibility', desktop: pagination_desktop, mobile: pagination_mobile %} class="hotspot-full-width-carousel__fraction-controls hotspot-full-width-carousel__fraction-controls--desktop-{{ hotspot_carousel_pagination_position_desktop }} hotspot-full-width-carousel__fraction-controls--mobile-{{ hotspot_carousel_pagination_position_mobile }} {{ hotspot_carousel_controls_scheme_class }}">
               {% if hotspot_carousel_show_arrows %}
                 <button class="btn btn--unstyled btn--icon swiper-nav-button hotspot-full-width-carousel__fraction-button" type="button" data-carousel-fraction-previous aria-label="{{ hotspot_carousel_previous_label | escape }}">
                   {% render 'carousel-navigation-icon', icon: hotspot_carousel_navigation_icon, direction: 'previous' %}
@@ -793,8 +801,14 @@
     },
     {
       "type": "checkbox",
-      "id": "show_pagination",
-      "label": "t:labels.show_pagination",
+      "id": "show_pagination_on_desktop",
+      "label": "t:labels.show_pagination_on_desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_mobile",
+      "label": "t:labels.show_pagination_on_mobile",
       "default": true
     },
     {
@@ -816,7 +830,7 @@
         }
       ],
       "default": "bullets",
-      "visible_if": "{{ section.settings.show_pagination }}"
+      "visible_if": "{{ section.settings.show_pagination_on_desktop or section.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "select",
@@ -837,7 +851,7 @@
         }
       ],
       "default": "left",
-      "visible_if": "{{ section.settings.show_pagination }}"
+      "visible_if": "{{ section.settings.show_pagination_on_desktop }}"
     },
     {
       "type": "select",
@@ -858,7 +872,7 @@
         }
       ],
       "default": "center",
-      "visible_if": "{{ section.settings.show_pagination }}"
+      "visible_if": "{{ section.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "text",
@@ -1017,7 +1031,6 @@
         "navigation_style": "primary",
         "navigation_icon": "arrow",
         "navigation_behavior": "show_on_hover",
-        "show_pagination": true,
         "pagination_type": "bullets",
         "pagination_position_desktop": "left",
         "pagination_position_mobile": "center",
@@ -1031,7 +1044,9 @@
         "padding_bottom": 40,
         "customize_mobile_padding": false,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_bottom_mobile": 40,
+        "show_pagination_on_desktop": true,
+        "show_pagination_on_mobile": false
       },
       "blocks": [
         {

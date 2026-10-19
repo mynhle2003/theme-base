@@ -798,7 +798,14 @@
     {
       "type": "checkbox",
       "id": "show_pagination_on_desktop",
-      "label": "t:labels.show_pagination",
+      "label": "t:labels.show_pagination_on_desktop",
+      "default": true,
+      "visible_if": "{{ section.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_mobile",
+      "label": "t:labels.show_pagination_on_mobile",
       "default": true,
       "visible_if": "{{ section.settings.layout_type == 'carousel' }}"
     },
@@ -817,7 +824,7 @@
         }
       ],
       "default": "progress_bar",
-      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop or section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "range",
@@ -839,14 +846,14 @@
       "step": 1,
       "unit": "px",
       "default": 24,
-      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "checkbox",
       "id": "pagination_limit_width",
       "label": "t:labels.limit_width",
       "default": true,
-      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop and section.settings.pagination_type == 'progress_bar' }}"
+      "visible_if": "{{ section.settings.show_pagination_on_desktop and section.settings.pagination_type == 'progress_bar' or section.settings.show_pagination_on_mobile and section.settings.pagination_type == 'progress_bar' }}"
     },
     {
       "type": "range",
@@ -857,7 +864,7 @@
       "step": 10,
       "unit": "px",
       "default": 260,
-      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop and section.settings.pagination_type == 'progress_bar' and section.settings.pagination_limit_width }}"
+      "visible_if": "{{ section.settings.show_pagination_on_desktop and section.settings.pagination_limit_width or section.settings.show_pagination_on_mobile and section.settings.pagination_limit_width }}"
     },
     {
       "type": "header",
@@ -990,7 +997,8 @@
         "customize_mobile_padding": true,
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 64,
-        "show_next_slide_preview_on_mobile": true
+        "show_next_slide_preview_on_mobile": true,
+        "show_pagination_on_mobile": false
       },
       "blocks": [
         {

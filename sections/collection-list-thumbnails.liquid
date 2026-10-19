@@ -1,4 +1,12 @@
 {% liquid
+  assign pagination_desktop = section.settings.show_pagination_on_desktop
+  assign pagination_mobile = section.settings.show_pagination_on_mobile
+  assign pagination_any = false
+  if pagination_desktop or pagination_mobile
+    assign pagination_any = true
+  endif
+%}
+{% liquid
   assign section_width = 'page-width'
   if section.settings.section_width == 'full_width'
     assign section_width = 'full-width'
@@ -22,7 +30,7 @@
     assign pagination_size = 'var(--swiper-pagination-bullet-size, 0.5rem)'
   endif
   assign show_pagination = false
-  if layout == 'carousel' and section.settings.show_pagination_on_desktop
+  if layout == 'carousel' and pagination_any
     assign show_pagination = true
   endif
   assign pagination_padding_desktop = section.settings.pagination_top_padding_desktop | default: 50 | plus: 0
@@ -43,7 +51,7 @@
   endif
   assign pagination_class = 'collection-thumbnails__pagination collection-thumbnails__pagination--' | append: pagination_type
   assign navigation_center_offset = blank
-  if show_pagination
+  if show_pagination and pagination_desktop
     assign navigation_center_offset = 'calc((' | append: pagination_padding_desktop | append: 'px + ' | append: pagination_size | append: ') / 2)'
   endif
 %}
@@ -54,7 +62,8 @@
 {% endcapture %}
 {% assign pagination_style = pagination_style | strip %}
 {% capture navigation_center_style %}
-  {% if navigation_center_offset != blank %}--swiper-navigation-center-offset: {{ navigation_center_offset }};{% endif %}
+  --swiper-navigation-center-offset: {{ navigation_center_offset | default: '0px' }};
+  --pagination-navigation-offset-mobile: {% if show_pagination and pagination_mobile %}calc(({{ pagination_padding_mobile }}px + {{ pagination_size }}) / 2){% else %}0px{% endif %};
 {% endcapture %}
 {% assign navigation_center_style = navigation_center_style | strip %}
 {% if layout == 'carousel' %}
@@ -68,7 +77,7 @@
       <div class="collection-thumbnails__carousel-wrap" data-collection-thumbnails>
         {% capture attrs %}data-collection-thumbnails-carousel data-layout="carousel" data-swiper-gap-desktop="{{ section.settings.gap_desktop }}" data-swiper-gap-mobile="{{ section.settings.gap_mobile }}" data-swiper-pagination-type="{{ pagination_type }}" data-swiper-previous-selector="[data-ct-prev]" data-swiper-next-selector="[data-ct-next]"{% endcapture %}
         {% capture pagination %}
-          {% render 'swiper-pagination', show: show_pagination, type: pagination_type, class: pagination_class, style: pagination_style %}
+          {% render 'swiper-pagination', show_on_desktop: pagination_desktop, show_on_mobile: pagination_mobile, show: show_pagination, type: pagination_type, class: pagination_class, style: pagination_style %}
         {% endcapture %}
         {% render 'swiper-carousel', id: carousel_id, content: items, root_class: 'collection-thumbnails__carousel', root_attributes: attrs, aria_label: 'Collection thumbnails', pagination: pagination %}
         {% render 'swiper-navigation', style: section.settings.navigation_style, icon: section.settings.navigation_icon, behavior: section.settings.navigation_behavior, wrapper_class: 'collection-thumbnails__navigation', previous_attribute: 'data-ct-prev', next_attribute: 'data-ct-next', previous_label: previous_label, next_label: next_label, center_style: navigation_center_style %}
@@ -594,7 +603,14 @@
     {
       "type": "checkbox",
       "id": "show_pagination_on_desktop",
-      "label": "t:labels.show_pagination",
+      "label": "t:labels.show_pagination_on_desktop",
+      "default": true,
+      "visible_if": "{{ section.settings.layout == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_mobile",
+      "label": "t:labels.show_pagination_on_mobile",
       "default": true,
       "visible_if": "{{ section.settings.layout == 'carousel' }}"
     },
@@ -613,7 +629,7 @@
         }
       ],
       "default": "progress_bar",
-      "visible_if": "{{ section.settings.layout == 'carousel' and section.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ section.settings.layout == 'carousel' and section.settings.show_pagination_on_desktop or section.settings.layout == 'carousel' and section.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "range",
@@ -635,14 +651,14 @@
       "step": 1,
       "unit": "px",
       "default": 24,
-      "visible_if": "{{ section.settings.layout == 'carousel' and section.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ section.settings.layout == 'carousel' and section.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "checkbox",
       "id": "pagination_limit_width",
       "label": "t:labels.limit_width",
       "default": true,
-      "visible_if": "{{ section.settings.layout == 'carousel' and section.settings.show_pagination_on_desktop and section.settings.pagination_type == 'progress_bar' }}"
+      "visible_if": "{{ section.settings.show_pagination_on_desktop and section.settings.pagination_type == 'progress_bar' or section.settings.show_pagination_on_mobile and section.settings.pagination_type == 'progress_bar' }}"
     },
     {
       "type": "range",
@@ -653,7 +669,7 @@
       "step": 10,
       "unit": "px",
       "default": 260,
-      "visible_if": "{{ section.settings.layout == 'carousel' and section.settings.show_pagination_on_desktop and section.settings.pagination_type == 'progress_bar' and section.settings.pagination_limit_width }}"
+      "visible_if": "{{ section.settings.show_pagination_on_desktop and section.settings.pagination_limit_width or section.settings.show_pagination_on_mobile and section.settings.pagination_limit_width }}"
     },
     {
       "type": "header",
@@ -793,7 +809,10 @@
         {
           "type": "collection-thumbnail"
         }
-      ]
+      ],
+      "settings": {
+        "show_pagination_on_mobile": false
+      }
     }
   ]
 }

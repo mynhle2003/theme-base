@@ -1,4 +1,12 @@
 {% liquid
+  assign pagination_desktop = section.settings.show_pagination_on_desktop
+  assign pagination_mobile = section.settings.show_pagination_on_mobile
+  assign pagination_any = false
+  if pagination_desktop or pagination_mobile
+    assign pagination_any = true
+  endif
+%}
+{% liquid
   assign slideshow_width = section.settings.width | default: 'full_bleed'
   unless slideshow_width == 'page' or slideshow_width == 'full' or slideshow_width == 'full_bleed'
     assign slideshow_width = 'full_bleed'
@@ -80,10 +88,11 @@
         {% content_for 'blocks' %}
       </div>
 
-      {% if section.settings.show_pagination %}
+      {% if pagination_any %}
         <div
           class="swiper-pagination swiper-pagination--overlay slideshow__pagination slideshow__pagination--{{ section.settings.pagination_type }} swiper-pagination--desktop-{{ section.settings.pagination_position_desktop }} swiper-pagination--mobile-{{ section.settings.pagination_position_mobile }}"
           data-slideshow-pagination
+          {% render 'pagination-visibility', desktop: pagination_desktop, mobile: pagination_mobile %}
           data-slideshow-control-scope
           data-pagination-type="{{ section.settings.pagination_type }}"
         ></div>
@@ -461,8 +470,14 @@
     },
     {
       "type": "checkbox",
-      "id": "show_pagination",
-      "label": "Show pagination",
+      "id": "show_pagination_on_desktop",
+      "label": "t:labels.show_pagination_on_desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_mobile",
+      "label": "t:labels.show_pagination_on_mobile",
       "default": true
     },
     {
@@ -484,7 +499,7 @@
         }
       ],
       "default": "bullets",
-      "visible_if": "{{ section.settings.show_pagination }}"
+      "visible_if": "{{ section.settings.show_pagination_on_desktop or section.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "select",
@@ -505,7 +520,7 @@
         }
       ],
       "default": "left",
-      "visible_if": "{{ section.settings.show_pagination }}"
+      "visible_if": "{{ section.settings.show_pagination_on_desktop }}"
     },
     {
       "type": "select",
@@ -526,7 +541,7 @@
         }
       ],
       "default": "center",
-      "visible_if": "{{ section.settings.show_pagination }}"
+      "visible_if": "{{ section.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "text",
@@ -699,7 +714,10 @@
             }
           ]
         }
-      ]
+      ],
+      "settings": {
+        "show_pagination_on_mobile": false
+      }
     }
   ]
 }

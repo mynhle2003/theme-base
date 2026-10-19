@@ -29,6 +29,8 @@
   @param {string} [aria_label] - Accessible name for the carousel
   @param {string} [previous_selector] - CSS selector for the previous control
   @param {string} [next_selector] - CSS selector for the next control
+  @param {boolean} [show_pagination_on_desktop] - Desktop pagination visibility
+  @param {boolean} [show_pagination_on_mobile] - Mobile pagination visibility
   @param {boolean} [show_pagination] - Whether to render Swiper pagination
   @param {string} [pagination_type] - Progress bar or bullets pagination
   @param {string} [pagination_class] - Additional pagination classes
@@ -268,6 +270,7 @@
         <div
           class="swiper-pagination{% if pagination_class != blank %} {{ pagination_class }}{% endif %}"
           data-product-collection-pagination
+          {% render 'pagination-visibility', desktop: show_pagination_on_desktop, mobile: show_pagination_on_mobile %}
           data-pagination-type="{{ product_collection_grid_pagination_type }}"
           {% if product_collection_grid_pagination_style != blank %}style="{{ product_collection_grid_pagination_style }}"{% endif %}
         ></div>
