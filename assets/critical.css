@@ -2911,14 +2911,14 @@ legend {
   color: var(--background-color);
 }
 
-.product-badge--tag {
-  background: var(--badge-tag-background);
-  color: var(--badge-tag-color);
+.product-card__badges .product-badge--manual {
+  background: var(--badge-collection-background);
+  color: var(--badge-collection-color);
 }
 
-.product-badge--tag-secondary {
-  background: var(--badge-tag-secondary-background);
-  color: var(--badge-tag-secondary-color);
+.product-card__badges .product-badge--manual:nth-child(2 of .product-badge--manual) {
+  background: var(--badge-collection-secondary-background);
+  color: var(--badge-collection-secondary-color);
 }
 
 .price {
