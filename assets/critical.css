@@ -20,7 +20,7 @@ body {
   margin: 0;
   min-height: 100svh;
   font-family: var(--font-body-family);
-  font-size: var(--font-body-md);
+  font-size: var(--font-body-size);
   font-style: var(--font-body-style);
   font-weight: var(--font-body-weight);
   line-height: var(--font-body-line-height);
@@ -154,7 +154,7 @@ body {
   height: 100%;
 }
 
-@media (max-width: 991.98px) {
+@media (width < 992px) {
   .header-top:not([data-layout-ready='true']) .header__blocks {
     min-height: var(--button-height-mobile);
     gap: 0.5rem;
@@ -645,7 +645,7 @@ a:focus-visible,
   background: var(--input-background-color);
   color: var(--input-text-color);
   font-family: var(--font-body-family);
-  font-size: var(--font-body-md);
+  font-size: var(--font-body-size);
   font-weight: var(--font-body-weight);
   line-height: var(--quantity-selector-height);
 }
@@ -732,14 +732,14 @@ textarea:disabled {
 dialog {
   z-index: var(--z-modal, 1000);
   border: 0;
-  border-radius: var(--drawer-radius);
+  border-radius: var(--card-radius-lg);
   background-color: var(--overlay-background-color);
   color: var(--overlay-text-color);
   box-shadow: var(--overlay-popover-shadow);
 }
 
 [popover] {
-  border-radius: var(--drawer-radius);
+  border-radius: var(--card-radius-lg);
   border: var(--overlay-popover-border-width) solid var(--overlay-border-color);
   background-color: var(--overlay-background-color);
   color: var(--overlay-text-color);
@@ -790,7 +790,7 @@ dialog {
 
 .bottom-sheet,
 [data-bottom-sheet] {
-  border-radius: var(--bottom-sheet-radius);
+  border-radius: var(--bottom-sheet-radius) var(--bottom-sheet-radius) 0 0;
   background-color: var(--overlay-background-color);
   color: var(--overlay-text-color);
 }
@@ -877,6 +877,7 @@ dialog[data-overlay-motion='popup'][open]::backdrop {
 }
 
 .overlay__title,
+.component-overlay__title,
 .popover__title,
 .drawer__title,
 [data-overlay-title] {
@@ -921,48 +922,6 @@ h6 {
   color: var(--heading-color);
 }
 
-h1 {
-  font-size: var(--font-heading-display);
-  line-height: var(--font-heading-display-line-height);
-  letter-spacing: var(--font-heading-display-letter-spacing);
-  text-transform: var(--font-heading-display-text-transform);
-}
-
-h2 {
-  font-size: var(--font-heading-xl);
-  line-height: var(--font-heading-xl-line-height);
-  letter-spacing: var(--font-heading-xl-letter-spacing);
-  text-transform: var(--font-heading-xl-text-transform);
-}
-
-h3 {
-  font-size: var(--font-heading-lg);
-  line-height: var(--font-heading-lg-line-height);
-  letter-spacing: var(--font-heading-lg-letter-spacing);
-  text-transform: var(--font-heading-lg-text-transform);
-}
-
-h4 {
-  font-size: var(--font-heading-md);
-  line-height: var(--font-heading-md-line-height);
-  letter-spacing: var(--font-heading-md-letter-spacing);
-  text-transform: var(--font-heading-md-text-transform);
-}
-
-h5 {
-  font-size: var(--font-heading-sm);
-  line-height: var(--font-heading-sm-line-height);
-  letter-spacing: var(--font-heading-sm-letter-spacing);
-  text-transform: var(--font-heading-sm-text-transform);
-}
-
-h6 {
-  font-size: var(--font-heading-xs);
-  line-height: var(--font-heading-xs-line-height);
-  letter-spacing: var(--font-heading-xs-letter-spacing);
-  text-transform: var(--font-heading-xs-text-transform);
-}
-
 .heading-text {
   font-family: var(--font-heading-family);
   font-style: var(--font-heading-style);
@@ -971,6 +930,7 @@ h6 {
   color: var(--heading-color);
 }
 
+h6,
 .heading-xs,
 .heading-h6 {
   font-size: var(--font-heading-xs);
@@ -979,6 +939,7 @@ h6 {
   text-transform: var(--font-heading-xs-text-transform);
 }
 
+h5,
 .heading-sm,
 .heading-h5 {
   font-size: var(--font-heading-sm);
@@ -987,6 +948,7 @@ h6 {
   text-transform: var(--font-heading-sm-text-transform);
 }
 
+h4,
 .heading-md,
 .heading-h4 {
   font-size: var(--font-heading-md);
@@ -995,6 +957,7 @@ h6 {
   text-transform: var(--font-heading-md-text-transform);
 }
 
+h3,
 .heading-lg,
 .heading-h3 {
   font-size: var(--font-heading-lg);
@@ -1003,6 +966,7 @@ h6 {
   text-transform: var(--font-heading-lg-text-transform);
 }
 
+h2,
 .heading-xl,
 .heading-h2 {
   font-size: var(--font-heading-xl);
@@ -1011,6 +975,7 @@ h6 {
   text-transform: var(--font-heading-xl-text-transform);
 }
 
+h1,
 .heading-display,
 .heading-h1 {
   font-size: var(--font-heading-display);
@@ -1024,10 +989,6 @@ h6 {
   line-height: var(--font-heading-custom-line-height);
   letter-spacing: var(--font-heading-custom-letter-spacing);
   text-transform: var(--font-heading-custom-text-transform);
-}
-
-.drawer__title.heading-custom {
-  font-size: var(--overlay-title-size);
 }
 
 .body-text,
@@ -1072,16 +1033,16 @@ h6 {
   font-weight: var(--font-accent-weight);
 }
 
-.tracking-tight { letter-spacing: -0.02em; }
-.tracking-normal { letter-spacing: 0em; }
-.tracking-relaxed { letter-spacing: 0.02em; }
+.tracking-tight { letter-spacing: var(--letter-spacing-tight); }
+.tracking-normal { letter-spacing: var(--letter-spacing-normal); }
+.tracking-relaxed { letter-spacing: var(--letter-spacing-relaxed); }
 
 .text-case-original { text-transform: none; }
 .text-case-uppercase { text-transform: uppercase; }
 
 .body-xs { font-size: var(--font-body-xs); }
 .body-sm { font-size: var(--font-body-sm); }
-.body-md { font-size: var(--font-body-md); }
+.body-md { font-size: var(--font-body-size); }
 .body-lg { font-size: var(--font-body-lg); }
 .body-xl { font-size: var(--font-body-xl); }
 .body-xxl { font-size: var(--font-body-xxl); }
@@ -1104,8 +1065,8 @@ h6 {
 
 .body-p3,
 .eyebrow-text {
-  font-family: var(--font-body-family);
-  font-style: var(--font-body-style);
+  font-family: var(--font-eyebrow-family);
+  font-style: var(--font-eyebrow-style);
   font-weight: var(--font-eyebrow-weight);
   font-size: var(--font-eyebrow-size);
   line-height: var(--font-eyebrow-line-height);
@@ -1131,7 +1092,7 @@ h6 {
   font-family: var(--font-body-family);
   font-style: var(--font-body-style);
   font-weight: var(--font-body-weight);
-  font-size: var(--font-body-md);
+  font-size: var(--font-body-size);
   line-height: var(--font-body-line-height);
   letter-spacing: var(--font-body-letter-spacing);
 }
@@ -1325,6 +1286,7 @@ input[type='submit'].btn {
   background: var(--button-background);
   color: var(--button-foreground);
   font-family: var(--button-font-family);
+  font-style: var(--button-font-style);
   font-size: var(--button-font-size);
   font-weight: var(--button-font-weight);
   letter-spacing: var(--button-letter-spacing);
@@ -2122,9 +2084,12 @@ legend {
 .product-card__title {
   min-width: 0;
   font-family: var(--product-card-title-font-family);
-  font-size: var(--product-card-title-size);
-  line-height: var(--font-heading-md-line-height);
-  letter-spacing: var(--font-heading-letter-spacing);
+  font-style: var(--product-card-title-font-style);
+  font-weight: var(--product-card-title-font-weight);
+  font-size: var(--product-card-title-font-size);
+  line-height: var(--product-card-title-line-height);
+  letter-spacing: var(--product-card-title-letter-spacing);
+  text-transform: var(--product-card-title-text-transform);
   color: var(--heading-color);
 }
 
@@ -2689,6 +2654,8 @@ legend {
   background: var(--accent-color);
   color: var(--background-color);
   font-family: var(--badge-font-family);
+  font-style: var(--badge-font-style);
+  text-transform: var(--badge-text-transform);
   font-size: var(--badge-font-size);
   font-weight: var(--badge-font-weight);
   letter-spacing: var(--badge-letter-spacing);
@@ -2718,7 +2685,8 @@ legend {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.5rem;
+  column-gap: var(--compare-at-price-spacing, 4px);
+  row-gap: 0;
   max-width: 100%;
   font-family: var(--price-font-family);
   font-style: var(--price-font-style);
@@ -2726,6 +2694,16 @@ legend {
   font-weight: var(--price-font-weight);
   line-height: var(--price-line-height);
   overflow-wrap: anywhere;
+}
+
+/* Card settings override only the shared price font contract in this context.
+ * Tracking inherits Body; sale/compare/unit styles remain owned by .price.
+ */
+.price--product-card {
+  --price-font-family: var(--product-card-price-font-family);
+  --price-font-style: var(--product-card-price-font-style);
+  --price-font-weight: var(--product-card-price-font-weight);
+  --price-font-size: var(--product-card-price-font-size);
 }
 
 .price__value {
@@ -2738,8 +2716,8 @@ legend {
 
 .price__compare-at {
   color: var(--price-compare-color);
-  font-size: 0.9em;
-  opacity: 0.72;
+  font-size: 1em;
+  opacity: 1;
 }
 
 .price__unit {
@@ -2933,10 +2911,6 @@ legend {
 
   .product-card__details {
     gap: var(--product-card-info-gap-mobile);
-  }
-
-  .product-card__title {
-    font-size: var(--product-card-title-size-mobile);
   }
 
   .product-card__swatches {
@@ -3243,6 +3217,57 @@ legend {
 body[data-block-animations="false"] .reveal-pending { opacity:1!important; }
 @media (prefers-reduced-motion:reduce) { .reveal-pending { opacity:1!important; } }
 
+/* Header action sizing and spacing have one owner, before and after layout JS. */
+.header-top {
+  --header-action-icon-size: var(--header-icon-size, 20px);
+  --header-action-padding-inline: calc(var(--header-actions-gap, 16px) / 2);
+}
+
+.header-top :is(.header__column, .header__blocks) > :is(.header-search, .header-account, .header-cart, .header-menu-toggle, .header-localization, .header-divider) {
+  padding-inline: var(--header-action-padding-inline);
+}
+
+.header-top :is(.header-search, .header-account, .header-cart, .header-menu-toggle) .icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: var(--header-action-icon-size);
+  height: var(--header-action-icon-size);
+}
+
+.header-top :is(.header-search, .header-account, .header-cart, .header-menu-toggle) .icon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+@media (width < 992px) {
+  .header-top {
+    --header-action-padding-inline: calc(var(--header-actions-gap-mobile, var(--header-actions-gap, 16px)) / 2);
+  }
+}
+
+/* Shopify's avatar button must not add a second layer of action spacing. */
+.header-top shopify-account {
+  --shopify-account-signed-in-avatar-size: var(--header-action-icon-size);
+}
+
+.header-top shopify-account::part(signed-out-avatar) {
+  min-width: 0;
+  width: auto;
+  padding: 0;
+}
+
+.header-top .header-action__icon-target {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: var(--header-action-icon-size);
+  height: var(--header-action-icon-size);
+}
+
+/* Keep global header logo layers stable before block stylesheet loads. */
+.header-logo.site-logo > .site-logo__image--overlay { display: none; }
+.header-top--transparent-scheme .site-logo:has(.site-logo__image--overlay) > :is(.site-logo__image--base, .site-logo__fallback) { display: none; }
+.header-top--transparent-scheme .header-logo.site-logo > .site-logo__image--overlay { display: block; }
+
 /* Native product-card collection badge appearance. */
 .product-card__media-overlay {
   top: 0;
@@ -3259,16 +3284,15 @@ body[data-block-animations="false"] .reveal-pending { opacity:1!important; }
 }
 
 .product-card__badges .product-badge {
-  --badge-font-size: 12px;
-  --badge-letter-spacing: 2px;
   --badge-padding: 2px 8px;
 
   justify-content: center;
   min-height: 22px;
   border: 0;
   line-height: 1.5;
+  letter-spacing: var(--badge-letter-spacing);
   text-align: center;
-  text-transform: uppercase;
+  text-transform: var(--badge-text-transform);
 }
 
 .product-card__badges .product-badge--manual {

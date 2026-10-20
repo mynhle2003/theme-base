@@ -2,9 +2,9 @@
   .hero__surface {
     position: relative;
     display: grid;
-    grid-template-rows: minmax(var(--hero-min-height, 72rem), max-content);
+    grid-template-rows: minmax(var(--hero-min-height, 80rem), max-content);
     width: 100%;
-    min-height: var(--hero-min-height, 72rem);
+    min-height: var(--hero-min-height, 80rem);
     overflow: visible;
   }
 
@@ -20,12 +20,18 @@
   }
 
   .hero--desktop-adapt { --hero-min-height: auto; }
-  .hero--desktop-extra_small { --hero-min-height: 42rem; }
-  .hero--desktop-small { --hero-min-height: 56rem; }
-  .hero--desktop-medium { --hero-min-height: 72rem; }
-  .hero--desktop-large { --hero-min-height: 90rem; }
-  .hero--desktop-extra_large { --hero-min-height: 108rem; }
+  .hero--desktop-extra_small { --hero-min-height: 46.7rem; }
+  .hero--desktop-small { --hero-min-height: 62.2rem; }
+  .hero--desktop-medium { --hero-min-height: 80rem; }
+  .hero--desktop-large { --hero-min-height: 100rem; }
+  .hero--desktop-extra_large { --hero-min-height: 120rem; }
   .hero--desktop-full_screen { --hero-min-height: 100svh; }
+
+  .hero--width-full.hero--classic.hero--desktop-extra_small:has(.media__inner > picture) { --hero-min-height: 39.2rem; }
+  .hero--width-full.hero--classic.hero--desktop-small:has(.media__inner > picture) { --hero-min-height: 52.2rem; }
+  .hero--width-full.hero--classic.hero--desktop-medium:has(.media__inner > picture) { --hero-min-height: 67.2rem; }
+  .hero--width-full.hero--classic.hero--desktop-large:has(.media__inner > picture) { --hero-min-height: 84rem; }
+  .hero--width-full.hero--classic.hero--desktop-extra_large:has(.media__inner > picture) { --hero-min-height: 100.8rem; }
 
   .hero__surface > .media {
     position: absolute;
@@ -118,6 +124,10 @@
     pointer-events: auto;
   }
 
+  .hero__content .heading-block p {
+    text-wrap: wrap;
+  }
+
   .hero__content--width-fit {
     width: fit-content;
     max-width: 100%;
@@ -201,12 +211,18 @@
 
   @media (max-width: 767.98px) {
     .hero--mobile-adapt { --hero-min-height: auto; }
-    .hero--mobile-extra_small { --hero-min-height: 40rem; }
-    .hero--mobile-small { --hero-min-height: 48rem; }
-    .hero--mobile-medium { --hero-min-height: 62rem; }
-    .hero--mobile-large { --hero-min-height: 76rem; }
-    .hero--mobile-extra_large { --hero-min-height: 90rem; }
+    .hero--mobile-extra_small { --hero-min-height: 46.5rem; }
+    .hero--mobile-small { --hero-min-height: 55.7rem; }
+    .hero--mobile-medium { --hero-min-height: 72rem; }
+    .hero--mobile-large { --hero-min-height: 88.3rem; }
+    .hero--mobile-extra_large { --hero-min-height: 104.5rem; }
     .hero--mobile-full_screen { --hero-min-height: 100svh; }
+
+    .hero--width-full.hero--classic.hero--mobile-extra_small:has(.media__inner > picture) { --hero-min-height: 40.3rem; }
+    .hero--width-full.hero--classic.hero--mobile-small:has(.media__inner > picture) { --hero-min-height: 48.3rem; }
+    .hero--width-full.hero--classic.hero--mobile-medium:has(.media__inner > picture) { --hero-min-height: 62.4rem; }
+    .hero--width-full.hero--classic.hero--mobile-large:has(.media__inner > picture) { --hero-min-height: 76.5rem; }
+    .hero--width-full.hero--classic.hero--mobile-extra_large:has(.media__inner > picture) { --hero-min-height: 90.6rem; }
 
     .hero__content {
       gap: var(--hero-content-gap-mobile, var(--hero-content-gap, 1.2rem));

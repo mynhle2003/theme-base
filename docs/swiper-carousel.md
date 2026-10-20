@@ -26,19 +26,15 @@ repair the preset composition while preserving its content.
 `sections/testimonial-carousel.liquid` keeps its saved section type but is named
 **Testimonial: split**. Split block labels in the editor are **Carousel** and
 **Slide**; their stable file/type IDs remain `carousel_split` and `slide_split`.
-It allows only `carousel_split` (maximum one). The split
-Carousel allows only `slide_split`; each split Slide renders fixed static
-`image` and `content` (Group) slots. The Group owns testimonial content.
-Desktop uses two equal columns with the image on the right; mobile stacks image
-above content. Previous/Next controls remain within the active slide's content. Inactive
-slides are inert; navigation focus moves to an enabled control on the newly
-active slide, and editor unload restores the slide state.
+The section mirrors Custom section's options/blocks and adds `carousel_split`, with up to 50 direct blocks. A Header can be added and reordered directly above Carousel. Both sections share `snippets/custom-section-layout.liquid` for the same responsive layout/surface behavior.
 
-`testimonial-split.js` initializes only `[data-testimonial-split]` roots. Common
-`carousel-block.js` initializes `[data-carousel-block]`. Both use
-`carousel-runtime.js` with separate state and editor cleanup. The split supports
-one visible slide, Slide/Fade transitions, looping and opt-in autoplay. It does
-not use common Carousel pagination or expose extra child types.
+The private Carousel allows only `slide_split`, which renders fixed static `image` and `content` Group slots. Preset/saved instance: Header → Carousel → three slide_split items. Each content Group contains the review composition and a `product-card-single` block.
+
+Product card single selects one product and calls the same `product-card` snippet used by Product list exactly once. It does not iterate a collection or inherit the parent's selected product. The shared renderer owns price, badges, swatches and quick actions; this block owns its width and optional horizontal mobile arrangement. The mistakenly created testimonial-card-single was removed at the user's request. Slide desktop image is left, mobile image is first; the existing static slot contract remains intact.
+
+`show_navigation` and `show_mobile_pagination` default false for existing carousels; the new preset enables them. In a vertical Testimonial section, navigation aligns alongside the preceding direct Header. Elsewhere it stays above the viewport. Mobile controls remain keyboard-accessible and appear on focus; progress is visible below the cards. Inactive slides are inert.
+
+`testimonial-split.js` initializes only `[data-testimonial-split]` roots through the shared lifecycle runtime. Common `carousel-block.js` remains independent. The common Carousel child contract is unchanged.
 
 The superseded `_testimonial-carousel`, `_testimonial-slide` and their runtime
 module are removed. Background and Horizontal testimonial sections retain the

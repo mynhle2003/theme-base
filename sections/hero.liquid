@@ -702,71 +702,98 @@
       "name": "Hero",
       "category": "t:general.banners",
       "settings": {
-        "color_scheme": "scheme-1",
-        "show_overlay": true
+        "color_scheme": "scheme-3",
+        "show_overlay": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "media_type": "video",
+        "desktop_height": "medium",
+        "mobile_height": "medium",
+        "desktop_position": "center_left",
+        "mobile_position": "center_center",
+        "content_color_scheme": "scheme-3",
+        "width": "full",
+        "layout": "classic",
+        "content_width": "fill",
+        "desktop_gap": 40,
+        "mobile_gap": 32,
+        "overlay_style": "solid",
+        "video": "shopify://files/videos/virelle-hero-move-freely.mp4",
+        "overlay": "#00000033"
       },
       "blocks": [
         {
-          "type": "eyebrow",
+          "type": "header",
           "settings": {
-            "text": "<p>The new chapter</p>"
-          }
-        },
-        {
-          "type": "heading",
-          "settings": {
-            "text": "<p>A world of light.<br>A jewel of your own.</p>",
-            "heading_size": "display",
-            "html_tag": "h1",
-            "width": "custom",
-            "max_width": 800
-          }
-        },
-        {
-          "type": "text",
-          "settings": {
-            "text": "<p>Meet Octavia. Colour held in a precise geometry, made to become part of your story.</p>",
-            "text_size": "sm",
-            "width": "custom",
-            "max_width": 480
-          }
+            "width": "fill",
+            "inherit_alignment": true,
+            "gap_desktop": 16,
+            "gap_mobile": 16
+          },
+          "blocks": [
+            {
+              "type": "group",
+              "settings": {
+                "direction": "horizontal",
+                "position_horizontal": "center",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": false,
+                "gap_desktop": 8,
+                "gap_mobile": 8,
+                "width": "fit",
+                "width_mobile": "fit",
+                "height": "fit",
+                "appearance_type": "inherit",
+                "backdrop_blur": 0,
+                "show_overlay": false
+              },
+              "blocks": [
+                {
+                  "type": "icon",
+                  "settings": {
+                    "source": "custom",
+                    "custom_icon": "<svg width=\"8\" height=\"8\" viewBox=\"0 0 8 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect width=\"8\" height=\"8\" fill=\"white\"/>\n</svg>",
+                    "icon_width": 8,
+                    "icon_padding": 0,
+                    "custom_mobile": false,
+                    "icon_width_mobile": 8,
+                    "icon_padding_mobile": 0
+                  }
+                },
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>No Roll. No Show.</p>",
+                    "show_icon": false,
+                    "icon": "square",
+                    "show_background": false
+                  }
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Move Freely, Live Fully</p>",
+                "html_tag": "h1",
+                "heading_size": "display",
+                "width": "fill"
+              }
+            }
+          ]
         },
         {
           "type": "button",
           "settings": {
-            "button_label": "Discover Octavia",
-            "button_style": "primary"
-          }
-        },
-        {
-          "type": "spacer",
-          "settings": {
-            "unit_desktop": "pixel",
-            "size_desktop_px": 56,
-            "show_on_mobile": true,
-            "unit_mobile": "pixel",
-            "size_mobile_px": 40
-          }
-        },
-        {
-          "type": "eyebrow",
-          "settings": {
-            "text": "<p>Octavia three-stone ring / Two-hand gesture / Copy center</p>"
-          }
-        },
-        {
-          "type": "text",
-          "settings": {
-            "text": "<p>Focus 216.5 / 165 + 181.2 carat / Octavia / Enamel / Gold / Solid 925</p>",
-            "text_size": "xs"
-          }
-        },
-        {
-          "type": "scroll-to",
-          "settings": {
-            "button_label": "Scroll to discover",
-            "target_section_number": 2,
-            "button_style": "tertiary"
+            "button_label": "Shop the collection",
+            "button_style": "primary",
+            "show_icon": false,
+            "button_link": "",
+            "width": "fit",
+            "width_mobile": "fit"
           }
         }
       ]

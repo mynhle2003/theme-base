@@ -1,0 +1,194 @@
+/* Shared Virelle outlined text for solid-color surfaces.
+ * Width describes the visible outside edge; fill must match the surface.
+ * Apply to a text element or a wrapper whose text descendants should inherit it.
+ */
+@supports (-webkit-text-stroke: 1px #999) {
+  .virelle-text-outline {
+    -webkit-text-stroke: var(--text-outline-width, 1px) var(--text-outline-color, #999);
+    -webkit-text-fill-color: transparent;
+  }
+
+  @supports (paint-order: stroke fill) {
+    .virelle-text-outline {
+      paint-order: stroke fill;
+      -webkit-text-stroke-width: var(--text-outline-stroke-width, calc(var(--text-outline-width, 1px) * 2));
+      -webkit-text-fill-color: var(--text-outline-fill, var(--background-color));
+    }
+  }
+}
+
+/* Photo/video surfaces must remain transparent instead of masking with a solid fill. */
+.virelle-text-outline--transparent {
+  --text-outline-fill: transparent;
+  --text-outline-stroke-width: var(--text-outline-width, 1px);
+}
+
+@media (forced-colors: active) {
+  .virelle-text-outline {
+    -webkit-text-fill-color: currentColor;
+    -webkit-text-stroke: 0;
+  }
+}
+
+.product-card__media-overlay {
+  top: 0;
+  left: 0;
+  max-width: 100%;
+}
+
+.product-card__badges {
+  top: 0;
+  left: 0;
+  max-width: 100%;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.product-card__badges .product-badge {
+  --badge-padding: 2px 8px;
+
+  justify-content: center;
+  min-height: 22px;
+  border: 0;
+  text-align: center;
+}
+
+.product-card__badges .product-badge--manual {
+  background: var(--badge-collection-background, #35b2b0);
+  color: var(--badge-collection-color, #fff);
+}
+
+/* Shop the look: Figma 48002:2312 / 48096:9438.
+ * Existing settings own columns, ratio, gaps, pagination width and icon style.
+ * The single-column composition alone needs a fixed card and navigation rail.
+ */
+.shop-the-look-section .shop-the-look-products--single-column .shop-the-look-products__carousel {
+  width: min(100%, 294px);
+  margin-inline: auto;
+  container-type: inline-size;
+}
+
+.shop-the-look-section .shop-the-look-products--single-column .shop-the-look-products__navigation--inside {
+  inset-inline: auto;
+  left: 50%;
+  top: calc(50cqi / (var(--product-card-image-ratio, 4 / 5)));
+  width: 438px;
+  max-width: calc(100cqi + 144px);
+  padding-inline: 0;
+  transform: translate(-50%, -50%);
+}
+
+.shop-the-look-section .shop-the-look-products__navigation-button {
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  min-height: 48px;
+  padding: 12px;
+  --swiper-nav-icon-size: 24px;
+}
+
+.shop-the-look-section .shop-the-look-products {
+  --swiper-pagination-progressbar-size: 4px;
+  --swiper-pagination-progressbar-border-radius: 10px;
+  --swiper-pagination-progressbar-bg-color: #666;
+}
+
+
+@media (max-width: 767.98px) {
+  .shop-the-look-section .product-card--quick-add-mobile .product-card__quick-add {
+    right: 20px;
+    bottom: 20px;
+    width: 40px;
+  }
+
+  .shop-the-look-section .product-card--quick-add-mobile .product-card__quick-add .product-card__quick-add-button {
+    --button-icon-size: 24px;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+  }
+}
+
+.shop-the-look-section .shop-the-look-products .swiper > .shop-the-look-products__pagination--progress_bar {
+  --swiper-pagination-color: var(--heading-color);
+  --swiper-pagination-progressbar-bg-color: #666;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Featured product quantity — Figma 48063:10282 / 48096:20308.
+ * Height, colors, border and radius remain controlled by theme/block settings.
+ */
+.featured-product .product-buy-buttons__quantity {
+  --virelle-quantity-height: var(--input-height, var(--button-height));
+  --virelle-quantity-border-width: var(--product-buy-quantity-border-width, var(--input-border-width));
+  max-width: 120px;
+}
+
+.featured-product .product-buy-buttons__quantity-label {
+  --quantity-label-font-weight: var(--font-body-weight);
+  --quantity-label-letter-spacing: 0.1px;
+  color: var(--heading-color);
+  line-height: 1.5;
+}
+
+.featured-product .product-buy-buttons__quantity-control {
+  grid-template-columns: 32px minmax(0, 1fr) 32px;
+  min-height: var(--virelle-quantity-height);
+}
+
+.featured-product .product-buy-buttons__quantity-control .form__control,
+.featured-product .product-buy-buttons__quantity-button {
+  min-height: calc(var(--virelle-quantity-height) - 2 * var(--virelle-quantity-border-width));
+}
+
+.featured-product .product-buy-buttons__quantity-control .form__control {
+  font-weight: var(--font-body-weight);
+  letter-spacing: 0.1px;
+  color: inherit;
+}
+
+.featured-product .product-buy-buttons__quantity-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.featured-product .product-buy-buttons__quantity-button:disabled {
+  opacity: 0.6;
+}
+
+@media (max-width: 767.98px) {
+  .featured-product .product-buy-buttons__quantity {
+    --virelle-quantity-height: var(--input-height-mobile, var(--input-height, var(--button-height-mobile)));
+  }
+}
+
+
+.product-card__media > .product-card__quick-add:not(.product-card__quick-add--full) {
+  left: auto;
+  width: fit-content;
+  max-width: calc(100% - 24px);
+}
+
+.product-card .product-card__quick-add-button,
+.product-card .product-card__quick-view-button {
+  --button-background: var(--button-primary-background);
+  --button-foreground: var(--button-primary-text);
+  --button-hover-background: var(--button-primary-hover-background);
+  --button-hover-foreground: var(--button-primary-hover-text);
+}
+
+@media (max-width: 767.98px) {
+  .product-card--quick-add-mobile .product-card__media > .product-card__quick-add {
+    width: 40px;
+  }
+
+  .product-card--quick-add-mobile .product-card__quick-add .product-card__quick-add-button {
+    --button-icon-size: 24px;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+  }
+}

@@ -2,9 +2,12 @@
   const HEADER_SELECTOR = '.header-top[data-header-root]';
   const headerStates = new Map();
   const headerResizeObservers = new Map();
+  const headerLayoutItems = new WeakMap();
   const submenuCloseTimers = new WeakMap();
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const isMobileMenuViewport = () => window.matchMedia('(max-width: 991.98px)').matches;
+  // Keep navigation mode complementary to CSS's desktop min-width: 992px.
+  const desktopMenuViewport = window.matchMedia('(min-width: 992px)');
+  const isMobileMenuViewport = () => !desktopMenuViewport.matches;
   const submenuTransitionBuffer = 16;
   const menuToggleButtons = new WeakSet();
   const megaMenuBackdropControls = new WeakSet();
@@ -419,20 +422,33 @@
     const centerColumn = headerTop?.querySelector('[data-header-column="center"]');
     const rightColumn = headerTop?.querySelector('[data-header-column="right"]');
 
-    if (!headerTop || !blocks || !leftColumn || !centerColumn || !rightColumn || headerTop.dataset.layoutReady === 'true') {
+    if (!headerTop || !blocks || !leftColumn || !centerColumn || !rightColumn) {
       return;
     }
 
-    const items = Array.from(blocks.children);
+    const items = headerLayoutItems.get(headerTop) || Array.from(blocks.children);
+    headerLayoutItems.set(headerTop, items);
     const logo = items.find((item) => item.matches('.header-logo'));
-    const logoPosition = logo?.classList.contains('header-logo--left') ? 'left' : 'center';
+    const mobile = isMobileMenuViewport();
+    const desktopPosition = logo?.dataset.logoDesktopPosition || (logo?.classList.contains('header-logo--left') ? 'left' : 'center');
+    const compact = window.matchMedia('(width < 768px)').matches;
+    const logoPosition = compact ? logo?.dataset.logoMobilePosition || 'center' : desktopPosition;
+    const layoutMode = `${mobile ? 'mobile' : 'desktop'}-${logoPosition}`;
+    if (headerTop.dataset.layoutMode === layoutMode) return;
+    const focusedElement = header.contains(document.activeElement) ? document.activeElement : null;
     headerTop.dataset.logoPosition = logoPosition;
+    logo?.classList.toggle('header-logo--left', logoPosition === 'left');
+    logo?.classList.toggle('header-logo--center', logoPosition === 'center');
 
     items.forEach((item) => {
       if (item.matches('.header-logo')) {
         (logoPosition === 'left' ? leftColumn : centerColumn).append(item);
       } else if (item.matches('.header-menu')) {
         (logoPosition === 'left' ? centerColumn : leftColumn).append(item);
+      } else if (mobile && item.matches('.header-search')) {
+        rightColumn.append(item);
+      } else if (mobile && item.matches('.header-menu-toggle')) {
+        leftColumn.append(item);
       } else if (item.matches('.header-menu-toggle')) {
         const columns = { left: leftColumn, center: centerColumn, right: rightColumn };
         (columns[item.dataset.headerPosition] || leftColumn).append(item);
@@ -443,7 +459,13 @@
       }
     });
 
+    if (mobile && logoPosition === 'left') {
+      const toggle = items.find((item) => item.matches('.header-menu-toggle'));
+      if (toggle && logo) leftColumn.insertBefore(toggle, logo);
+    }
     headerTop.dataset.layoutReady = 'true';
+    headerTop.dataset.layoutMode = layoutMode;
+    if (focusedElement?.isConnected && document.activeElement !== focusedElement) focusedElement.focus({ preventScroll: true });
   };
 
   const initializeMegaMenus = (header) => {
@@ -471,6 +493,7 @@
     const header = getHeaderRoot(headerTop);
     const existingHeaderState = headerStates.get(header);
     if (existingHeaderState) {
+      organizeHeaderLayout(header);
       synchronizeHeaderOverlay(header, headerTop);
       synchronizeHeaderColorScheme(header, true);
       synchronizeStickyType(header, existingHeaderState);
@@ -582,29 +605,6 @@
         if (isMobileMenuViewport() || trigger === 'hover' || !details.open) return;
         event.preventDefault();
         closeHeaderDetails(details);
-      });
-
-      summary?.addEventListener('click', (event) => {
-        if (isMobileMenuViewport()) return;
-        if (details.classList.contains('header-localization__details')) return;
-
-        const menu = details.closest('.header-menu');
-        if (!menu) return;
-        event.preventDefault();
-
-        menu.querySelectorAll('.header-menu__details.is-mobile-submenu-active').forEach((activeDetails) => {
-          activeDetails.classList.remove('is-mobile-submenu-active');
-          activeDetails.closest('.header-menu__item')?.classList.remove('is-mobile-submenu-active');
-          if (activeDetails !== details) activeDetails.removeAttribute('open');
-        });
-        details.open = true;
-        details.classList.add('is-mobile-submenu-active');
-        details.closest('.header-menu__item')?.classList.add('is-mobile-submenu-active');
-        menu.classList.add('header-menu--mobile-submenu-active');
-        menu.querySelectorAll('[data-header-menu-back]').forEach((back) => {
-          back.hidden = false;
-        });
-        scheduleUpdate();
       });
 
       details.addEventListener('toggle', () => {
@@ -986,8 +986,25 @@
     });
   };
 
+  desktopMenuViewport.addEventListener('change', () => {
+    // A surface opened in one navigation mode must not survive into the other.
+    restoreMobileMegaMenus();
+    headerStates.forEach(({ header }) => {
+      setHeaderMenuState(header, false, { restoreFocus: false });
+      header.querySelectorAll('shopify-account').forEach(closeAccountSheet);
+      header.querySelectorAll('.header-menu__details').forEach((details) => {
+        clearSubmenuClose(details);
+        details.open = false;
+        details.classList.remove('is-submenu-closing', 'is-mobile-submenu-active');
+      });
+      organizeHeaderLayout(header);
+    });
+    scheduleUpdate();
+  });
+
   window.addEventListener('scroll', scheduleUpdate, { passive: true });
   window.addEventListener('resize', () => {
+    headerStates.forEach(({ header }) => organizeHeaderLayout(header));
     restoreMobileMegaMenus();
     scheduleUpdate();
   });

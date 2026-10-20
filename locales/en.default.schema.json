@@ -147,7 +147,6 @@
     "display": "Display",
     "swatches": "Swatches",
     "badges": "Badges",
-    "product_status": "Product status",
     "sale_badge": "Sale badge",
     "prices": "Prices",
     "add_to_cart_button": "Add to cart button",
@@ -239,7 +238,12 @@
     "badge_rules": "Badge rules",
     "collection_badges": "Collection badges",
     "tag_badges": "Tag-based badges",
-    "accordion_options": "Accordion options"
+    "accordion_options": "Accordion options",
+    "button_typography": "Button",
+    "badge_typography": "Badges",
+    "product_card_price": "Product card price",
+    "sold_out_badge": "Sold out badge",
+    "product_status": "Product status"
   },
   "labels": {
     "columns_horizontal_mobile": "Horizontal (mobile)",
@@ -386,8 +390,8 @@
     "number_color": "Number color",
     "desktop_height": "Desktop height",
     "mobile_height": "Mobile height",
-    "desktop_tablet_horizontal_padding": "Desktop and tablet horizontal padding",
-    "mobile_horizontal_padding": "Mobile horizontal padding",
+    "desktop_tablet_horizontal_padding": "Desktop padding",
+    "mobile_horizontal_padding": "Mobile padding",
     "disabled_opacity": "Disabled opacity",
     "border_thickness": "Border thickness",
     "thickness": "Thickness",
@@ -495,6 +499,7 @@
     "enable_quick_view": "Enable quick view",
     "show_second_image_on_hover": "Show second image on hover",
     "show_sale_badge": "Show sale badge",
+    "show_tags": "Show tags",
     "show_sold_out_badge": "Show sold out badge",
     "display_sale_badge": "Display sale status",
     "display_sold_out_badge": "Display sold-out status",
@@ -733,12 +738,28 @@
     "description": "Description",
     "question": "Question",
     "answer": "Answer",
-    "initially_open": "Open by default"
+    "initially_open": "Open by default",
+    "outline_text": "Outline text",
+    "purchase_layout": "Quantity and Add to cart layout",
+    "role_accent": "Accent",
+    "buttons_and_inputs": "Buttons and inputs",
+    "inherit": "Default",
+    "eyebrow_color": "Eyebrow",
+    "font_weight": "Font weight"
   },
   "options": {
-    "slide_shadow": { "extra_small": "Extra small" },
-    "slide_radius": { "inherit": "Inherit", "custom": "Custom" },
-    "slide_background": { "none": "None", "image": "Image", "video": "Video" },
+    "slide_shadow": {
+      "extra_small": "Extra small"
+    },
+    "slide_radius": {
+      "inherit": "Inherit",
+      "custom": "Custom"
+    },
+    "slide_background": {
+      "none": "None",
+      "image": "Image",
+      "video": "Video"
+    },
     "overlay_style": {
       "solid": "Solid",
       "gradient": "Gradient"
@@ -906,7 +927,8 @@
     },
     "collection_pagination": {
       "progress_bar": "Progress bar",
-      "bullets": "Bullets"
+      "bullets": "Bullets",
+      "dots": "Dots"
     },
     "timeline_pagination": {
       "dots": "Dots",
@@ -921,7 +943,8 @@
     },
     "tab_style": {
       "underline": "Underline",
-      "button": "Button"
+      "button": "Button",
+      "outline": "Outline"
     },
     "tab_active_style": {
       "primary": "Primary",
@@ -1028,7 +1051,8 @@
       "grid": "Gallery grid",
       "stacked": "Single-column stack",
       "stacked_thumbnails": "Stack + thumbnail rail",
-      "two_column_grid": "Mosaic (two columns)"
+      "two_column_grid": "Mosaic (two columns)",
+      "carousel_two_items": "Carousel 2 items (custom)"
     },
     "product_media_mobile_layout": {
       "thumbnails": "Thumb rail",
@@ -1108,7 +1132,8 @@
       "with_labels": "With labels",
       "numbers_only": "Numbers only",
       "inline": "Inline",
-      "inline_superscript": "Inline (superscript)"
+      "inline_superscript": "Inline (superscript)",
+      "with_labels_colon": "With labels and separators (custom)"
     },
     "countdown_type": {
       "fixed_time": "Fixed time",
@@ -1134,15 +1159,22 @@
       "tight": "Tight",
       "normal": "Normal",
       "relaxed": "Relaxed",
-      "loose": "Loose"
+      "loose": "Loose",
+      "tighter": "Tighter",
+      "extra_loose": "Extra loose"
     },
     "letter_spacing": {
       "tight": "Tight",
       "normal": "Normal",
       "relaxed": "Relaxed",
       "loose": "Loose",
-      "reference": "1.2px",
-      "extra_loose": "Extra loose"
+      "extra_loose": "Extra loose",
+      "extra_tight": "Extra tight",
+      "super_tight": "Super tight",
+      "ultra_tight": "Ultra tight",
+      "tighter": "Tighter",
+      "ultra_loose": "Ultra loose",
+      "mega_loose": "Mega loose"
     },
     "product_card_style": {
       "standard": "Standard",
@@ -1375,7 +1407,8 @@
     "text_case": {
       "original": "Original",
       "uppercase": "Uppercase",
-      "capitalize": "Capitalize"
+      "capitalize": "Capitalize",
+      "lowercase": "Lowercase"
     },
     "color_role": {
       "scheme": "Scheme default",
@@ -1438,6 +1471,13 @@
       "body": "Body",
       "heading": "Heading",
       "accent": "Accent"
+    },
+    "purchase_layout": {
+      "inline": "Inline",
+      "stacked": "Vertical (custom)"
+    },
+    "font_weight": {
+      "body": "Default"
     }
   },
   "info": {
@@ -1464,7 +1504,7 @@
     "localization_manage_languages": "[Manage languages](https://admin.shopify.com/settings/languages)",
     "payment_icons": "Payment icons will appear once you set up payment methods.",
     "email_signup_subscription_preferences": "Customer selections will be saved in the \"Notes\" section of the customer profile.",
-    "heading_html_tag": "Choose the HTML tag that matches this content's role. Reserve H1–H6 for the document outline and use Paragraph for supporting copy.",
+    "heading_html_tag": "Use headings in order (H1 → H2 → H3) for better SEO and readability. If unsure, choose Paragraph.",
     "heading_text_color": "Clear the color to inherit the heading color from the active scheme.",
     "countdown_timezone": "The expiration date is calculated based on your store's primary timezone.",
     "countdown_end_time_format": "Use the format YYYY-MM-DD HH:MM (24-hour format). Example: 2025-12-25 18:00",
@@ -1514,5 +1554,48 @@
     "bottom_padding": "Bottom padding",
     "mobile_top_padding": "Mobile top padding",
     "mobile_bottom_padding": "Mobile bottom padding"
+  },
+  "custom_section": {
+    "page": "Page",
+    "full": "Full",
+    "full_no_padding": "Full (no padding)",
+    "auto": "Auto",
+    "full_screen": "Full screen",
+    "custom": "Custom",
+    "custom_height": "Custom height",
+    "divider": "Divider",
+    "show_top_divider": "Show top divider",
+    "show_bottom_divider": "Show bottom divider",
+    "full_width_divider": "Full-width divider",
+    "layout": "Layout",
+    "horizontal": "Horizontal",
+    "vertical": "Vertical",
+    "direction": "Direction",
+    "top": "Top",
+    "center": "Center",
+    "bottom": "Bottom",
+    "space_between": "Space between",
+    "position": "Position",
+    "left": "Left",
+    "right": "Right",
+    "alignment": "Alignment",
+    "vertical_on_mobile": "Vertical on mobile",
+    "enable_sticky_content": "Enable sticky content",
+    "gap": "Gap",
+    "none": "None",
+    "background": "Background",
+    "image": "Image",
+    "video": "Video",
+    "media": "Media",
+    "mobile_image_optional": "Mobile Image (optional)",
+    "overlay": "Overlay",
+    "overlay_color": "Overlay color",
+    "fixed": "Fixed",
+    "zoom": "Zoom",
+    "parallax_effect": "Parallax effect",
+    "color": "Color",
+    "desktop": "Desktop",
+    "mobile": "Mobile",
+    "section_height": "Section height"
   }
 }

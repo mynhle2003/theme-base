@@ -10,7 +10,7 @@
 
 {% liquid
   assign tab_layout_style = block.settings.style | default: 'underline'
-  unless tab_layout_style == 'underline' or tab_layout_style == 'button'
+  unless tab_layout_style == 'underline' or tab_layout_style == 'button' or tab_layout_style == 'outline'
     assign tab_layout_style = 'underline'
   endunless
 
@@ -164,7 +164,7 @@
 {% assign tab_layout_style_attribute = tab_layout_style_attribute | strip %}
 
 <div
-  class="tab-layout tab-layout--{{ tab_layout_style }} tab-layout--active-{{ tab_layout_active_style }}"
+  class="tab-layout tab-layout--{{ tab_layout_style }} tab-layout--active-{{ tab_layout_active_style }}{% if tab_layout_style == 'outline' %} virelle-text-outline{% endif %}"
   data-tab-layout
   data-tab-layout-ready="false"
   data-vertical-layout="{{ tab_layout_vertical_layout }}"
@@ -579,9 +579,22 @@
       });
     }
 
+    const revealMobileTab = (trigger) => {
+      if (!window.matchMedia('(max-width: 767.98px)').matches || navigation.scrollWidth <= navigation.clientWidth) return;
+      const viewport = navigation.getBoundingClientRect();
+      const tab = trigger.getBoundingClientRect();
+      if (tab.left >= viewport.left && tab.right <= viewport.right) return;
+      // Scroll this strip only: scrollIntoView can also move the page vertically.
+      navigation.scrollBy({
+        left: (tab.left + tab.right - viewport.left - viewport.right) / 2,
+        behavior: prefersReducedMotion() ? 'instant' : 'smooth'
+      });
+    };
+
     scope.addEventListener('click', (event) => {
       const target = event.target instanceof Element ? event.target.closest('[data-collection-tab-trigger]') : null;
       if (target && scope.contains(target)) {
+        revealMobileTab(target);
         setActiveTab(state, target.dataset.tabId, false, true);
         return;
       }
@@ -622,6 +635,7 @@
       if (event.key === 'End') nextIndex = state.entries.length - 1;
 
       event.preventDefault();
+      revealMobileTab(state.entries[nextIndex].trigger);
       setActiveTab(state, state.entries[nextIndex].trigger.dataset.tabId, true, true);
     }, { signal: controller.signal });
   };
@@ -713,7 +727,8 @@
       "label": "t:general.style",
       "options": [
         { "value": "underline", "label": "t:options.tab_style.underline" },
-        { "value": "button", "label": "t:options.tab_style.button" }
+        { "value": "button", "label": "t:options.tab_style.button" },
+        { "value": "outline", "label": "t:options.tab_style.outline" }
       ],
       "default": "underline"
     },

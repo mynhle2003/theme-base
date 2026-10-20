@@ -1,0 +1,208 @@
+{% doc %}
+  Shared surface, layout, background and responsive logic for composable sections.
+  @param {object} section - Owning section and its settings.
+  @param {string} children - Theme blocks captured in the section file.
+  @param {string} [root_class] - Additional section-specific class.
+{% enddoc %}
+{% liquid
+  assign section_width = section.settings.section_width | default: 'page_width'
+  assign container_width = 'page-width'
+  if section_width == 'full_width' or section_width == 'full_width_no_padding'
+    assign container_width = 'full-width'
+  endif
+  assign scheme = section.settings.color_scheme.id | default: section.settings.color_scheme | default: 'scheme-1' | handleize
+  assign direction = section.settings.direction | default: 'vertical'
+  assign alignment_source = section.settings.alignment | default: 'left'
+  if direction == 'horizontal'
+    assign alignment_source = section.settings.horizontal_alignment | default: 'left'
+  endif
+  assign alignment = 'flex-start'
+  case alignment_source
+    when 'center'
+      assign alignment = 'center'
+    when 'right'
+      assign alignment = 'flex-end'
+    when 'space-between'
+      assign alignment = 'space-between'
+  endcase
+  assign position = 'flex-start'
+  assign position_source = section.settings.position
+  if direction == 'horizontal'
+    assign position_source = section.settings.position_horizontal | default: 'center'
+  endif
+  if direction == 'horizontal' or section.settings.height == 'full_screen' or section.settings.height == 'custom'
+    case position_source
+      when 'center'
+        assign position = 'center'
+      when 'bottom'
+        assign position = 'flex-end'
+      when 'space-between'
+        assign position = 'space-between'
+    endcase
+  endif
+  assign mobile_vertical = false
+  if direction == 'horizontal' and section.settings.vertical_on_mobile
+    assign mobile_vertical = true
+  endif
+  assign mobile_alignment = alignment
+  assign customize_alignment_mobile = mobile_vertical
+  if direction != 'horizontal' and section.settings.customize_mobile_alignment
+    assign customize_alignment_mobile = true
+  endif
+  if customize_alignment_mobile
+    assign mobile_alignment = 'flex-start'
+    assign mobile_alignment_source = section.settings.alignment_mobile
+    if mobile_vertical
+      assign mobile_alignment_source = section.settings.horizontal_alignment_mobile
+    endif
+    case mobile_alignment_source
+      when 'center'
+        assign mobile_alignment = 'center'
+      when 'right'
+        assign mobile_alignment = 'flex-end'
+    endcase
+  endif
+  assign flow_direction = 'column'
+  assign flow_align = alignment
+  assign flow_justify = position
+  assign flow_mobile_direction = flow_direction
+  assign flow_mobile_align = mobile_alignment
+  assign flow_mobile_justify = position
+  if direction == 'horizontal'
+    assign flow_direction = 'row'
+    assign flow_align = position
+    assign flow_justify = alignment
+    assign flow_mobile_direction = 'row'
+    assign flow_mobile_align = position
+    assign flow_mobile_justify = alignment
+    if mobile_vertical
+      assign flow_mobile_direction = 'column'
+      assign flow_mobile_align = mobile_alignment
+      assign flow_mobile_justify = 'flex-start'
+    endif
+  endif
+  assign context_alignment = alignment
+  if context_alignment == 'space-between'
+    assign context_alignment = 'flex-start'
+  endif
+  assign context_alignment_mobile = mobile_alignment
+  if context_alignment_mobile == 'space-between'
+    assign context_alignment_mobile = 'flex-start'
+  endif
+  assign text_align = 'left'
+  if alignment == 'center'
+    assign text_align = 'center'
+  elsif alignment == 'flex-end'
+    assign text_align = 'right'
+  endif
+  assign text_align_mobile = text_align
+  if mobile_alignment == 'center'
+    assign text_align_mobile = 'center'
+  elsif mobile_alignment == 'flex-end'
+    assign text_align_mobile = 'right'
+  else
+    assign text_align_mobile = 'left'
+  endif
+  assign gap = section.settings.content_gap | default: 16
+  assign gap_mobile = gap
+  if section.settings.customize_mobile_gap
+    assign gap_mobile = section.settings.content_gap_mobile | default: 12
+  endif
+  assign padding_top = section.settings.padding_top | default: 0
+  assign padding_bottom = section.settings.padding_bottom | default: 0
+  assign padding_top_mobile = padding_top
+  assign padding_bottom_mobile = padding_bottom
+  if section.settings.customize_mobile_padding
+    assign padding_top_mobile = section.settings.padding_top_mobile | default: 0
+    assign padding_bottom_mobile = section.settings.padding_bottom_mobile | default: 0
+  endif
+  assign background_media = section.settings.background_media
+  if background_media == blank
+    assign background_media = 'none'
+    if section.settings.background_image != blank
+      assign background_media = 'image'
+    endif
+  endif
+  assign parallax = 'none'
+  if background_media == 'image' or background_media == 'video'
+    assign parallax = section.settings.parallax_effect | default: 'none'
+  endif
+  assign section_height = 'auto'
+  if section.settings.height == 'full_screen'
+    assign section_height = '100svh'
+  elsif section.settings.height == 'custom'
+    assign section_height = section.settings.custom_height | default: 100 | append: 'svh'
+  endif
+%}
+{% capture surface_style %}
+  --custom-section-height: {{ section_height }};
+  --section-padding-top: {{ padding_top }}px;
+  --section-padding-bottom: {{ padding_bottom }}px;
+  --section-padding-top-mobile: {{ padding_top_mobile }}px;
+  --section-padding-bottom-mobile: {{ padding_bottom_mobile }}px;
+  --flex-align: {{ context_alignment }};
+  --flex-align-mobile: {{ context_alignment_mobile }};
+  --text-align: {{ text_align }};
+  --custom-section-text-align-mobile: {{ text_align_mobile }};
+  {% if section.settings.background_color != blank %}--custom-section-background: {{ section.settings.background_color | escape }};{% endif %}
+  {% if background_media != 'none' and section.settings.show_overlay %}--custom-section-overlay: {{ section.settings.overlay_color | default: '#00000080' | escape }};{% endif %}
+{% endcapture %}
+{% capture content_style %}
+  {% render 'layout-flow-style', direction: flow_direction, wrap: 'nowrap', align_items: flow_align, justify_content: flow_justify, gap: gap, direction_mobile: flow_mobile_direction, align_items_mobile: flow_mobile_align, justify_content_mobile: flow_mobile_justify, gap_mobile: gap_mobile %}
+{% endcapture %}
+<script src="{{ 'custom-section.js' | asset_url }}" defer="defer"></script>
+<custom-section-layout
+  class="section-spacing custom-section{% if root_class != blank %} {{ root_class | escape }}{% endif %} color-scheme section-color-scope {{ scheme }}{% if section_width == 'full_width_no_padding' %} custom-section--edge-to-edge{% endif %}{% if section.settings.enable_sticky_content and direction == 'horizontal' %} custom-section--sticky{% endif %}{% if mobile_vertical %} custom-section--mobile-vertical{% endif %}"
+  data-direction="{{ direction | escape }}"
+  data-parallax="{{ parallax | escape }}"
+  style="{{ surface_style | strip }}"
+>
+  {% if section.settings.show_top_divider %}<div class="custom-section__divider custom-section__divider--top{% if section.settings.divider_full_width or section_width == 'full_width_no_padding' %} custom-section__divider--full{% else %} container {{ container_width }}{% endif %}" aria-hidden="true"></div>{% endif %}
+  {% if background_media == 'image' or background_media == 'video' %}
+    <div class="custom-section__background" aria-hidden="true">
+      <div class="custom-section__media">
+        {% render 'media-background', media_type: background_media, image: section.settings.background_image, mobile_image: section.settings.background_image_mobile, video: section.settings.background_video, sizes: '100vw', aria_hidden: true %}
+      </div>
+    </div>
+  {% endif %}
+  <div class="container {{ container_width }} custom-section__container">
+    <div class="custom-section__content layout-flow layout-flow--responsive" style="{{ content_style | strip }}">
+      {{ children }}
+    </div>
+  </div>
+  {% if section.settings.show_bottom_divider %}<div class="custom-section__divider custom-section__divider--bottom{% if section.settings.divider_full_width or section_width == 'full_width_no_padding' %} custom-section__divider--full{% else %} container {{ container_width }}{% endif %}" aria-hidden="true"></div>{% endif %}
+</custom-section-layout>
+{% stylesheet %}
+  .custom-section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    min-height: var(--custom-section-height, auto);
+    background: var(--custom-section-background, var(--background-color));
+    text-align: var(--text-align, left);
+    isolation: isolate;
+  }
+  .custom-section__container { position: relative; z-index: 1; display: flex; flex: 1; min-width: 0; }
+  .custom-section--edge-to-edge > .custom-section__container { padding-inline: 0; }
+  .custom-section__content { flex: 1; min-width: 0; max-width: 100%; }
+  .custom-section__content > * { min-width: 0; max-width: 100%; }
+  .custom-section__background { position: absolute; z-index: 0; inset: 0; overflow: clip; pointer-events: none; }
+  .custom-section__background::after { content: ''; position: absolute; inset: 0; background: var(--custom-section-overlay, transparent); }
+  .custom-section__media { position: absolute; inset: 0; }
+  .custom-section[data-parallax='fixed'] > .custom-section__background { clip-path: inset(0); }
+  .custom-section[data-parallax='fixed'] > .custom-section__background > .custom-section__media { position: fixed; inset: 0; height: 100svh; }
+  .custom-section__divider { position: absolute; z-index: 2; inset-inline: 0; height: 1px; pointer-events: none; }
+  .custom-section__divider::after { content: ''; display: block; border-top: 1px solid var(--border-color); }
+  .custom-section__divider--top { top: 0; }
+  .custom-section__divider--bottom { bottom: 0; }
+  .custom-section--sticky > .custom-section__container > .custom-section__content > * { position: sticky; top: calc(var(--header-sticky-height, 0px) + 24px); }
+  @media (max-width: 767.98px) {
+    .custom-section { --text-align: var(--custom-section-text-align-mobile, left); }
+    .custom-section--sticky.custom-section--mobile-vertical > .custom-section__container > .custom-section__content > * { position: relative; top: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .custom-section[data-parallax='fixed'] > .custom-section__background > .custom-section__media { position: absolute; height: 100%; }
+  }
+{% endstylesheet %}

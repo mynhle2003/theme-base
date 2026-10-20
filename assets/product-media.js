@@ -158,11 +158,19 @@ class ProductMediaGallery extends HTMLElement {
   get galleryMode() {
     if (this.mobileQuery.matches) return 'mobile';
     if (this.dataset.overlayPresentation === 'quick-add-strip') return 'quick-add-strip';
+    if (this.dataset.desktopLayout === 'carousel_two_items') return 'desktop-carousel-two-items';
     if (!['left_thumbnails', 'bottom_thumbnails'].includes(this.dataset.desktopLayout)) return 'desktop-static';
 
     const useLeftThumbnails = this.dataset.desktopLayout === 'left_thumbnails'
       && (this.desktopLeftThumbnailQuery?.matches ?? true);
     return useLeftThumbnails ? 'desktop-carousel-left' : 'desktop-carousel-bottom';
+  }
+
+  get gallerySlidesPerView() {
+    const twoItems = !this.mobileQuery?.matches
+      && this.dataset.overlayPresentation !== 'quick-add-strip'
+      && this.dataset.desktopLayout === 'carousel_two_items';
+    return twoItems ? Math.min(2, Math.max(1, this.visibleSlides().length)) : 1;
   }
 
   get quickAddStripSlidesPerView() {
@@ -276,9 +284,8 @@ class ProductMediaGallery extends HTMLElement {
 
     if (this.mainSwiper && this.activeGalleryMode === mode) {
       this.syncQuickAddStripSlidesPerView();
-      if (mode === 'quick-add-strip') {
-        this.mainSwiper.params.slidesPerView = this.quickAddStripSlidesPerView;
-      }
+      this.mainSwiper.params.slidesPerView = mode === 'quick-add-strip'
+        ? this.quickAddStripSlidesPerView : this.gallerySlidesPerView;
       this.thumbnailSwiper?.update();
       this.mainSwiper.update();
       if (preferredMediaId) this.showMedia(preferredMediaId, instant);
@@ -289,9 +296,11 @@ class ProductMediaGallery extends HTMLElement {
     this.activeGalleryMode = mode;
     const isMobile = mode === 'mobile';
     const isQuickAddStrip = mode === 'quick-add-strip';
-    const showThumbnails = (!isMobile && !isQuickAddStrip) || this.dataset.mobileLayout === 'thumbnails';
+    const isTwoItemCarousel = mode === 'desktop-carousel-two-items';
+    const showThumbnails = (!isMobile && !isQuickAddStrip && !isTwoItemCarousel)
+      || (isMobile && this.dataset.mobileLayout === 'thumbnails');
     const showPagination = isMobile && this.dataset.mobileLayout === 'slider' && this.dataset.mobileShowPagination === 'true';
-    const slidesPerView = isQuickAddStrip ? this.quickAddStripSlidesPerView : 1;
+    const slidesPerView = isQuickAddStrip ? this.quickAddStripSlidesPerView : this.gallerySlidesPerView;
     this.syncPaginationVisibility(showPagination);
     this.syncQuickAddStripSlidesPerView();
     const gapProperty = isMobile ? '--product-media-gap-mobile' : '--product-media-gap';
@@ -430,6 +439,7 @@ class ProductMediaGallery extends HTMLElement {
 
   handleBreakpoint() {
     const activeMediaId = this.activeMediaId();
+    this.syncGalleryOverflow();
     this.initializeGallery(activeMediaId);
   }
 
@@ -991,7 +1001,7 @@ class ProductMediaGallery extends HTMLElement {
 
   syncGalleryOverflow() {
     const visibleMediaCount = this.visibleSlides().length;
-    const hasOverflow = visibleMediaCount > 1;
+    const hasOverflow = visibleMediaCount > this.gallerySlidesPerView;
     this.dataset.visibleMediaCount = String(visibleMediaCount);
     this.syncQuickAddStripSlidesPerView();
     this.classList.toggle('product-media-gallery--single-media', !hasOverflow);

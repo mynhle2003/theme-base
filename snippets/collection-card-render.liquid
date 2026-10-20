@@ -18,6 +18,15 @@
     assign collection_card_scheme = block.settings.color_scheme.id
   endif
   assign collection_card_scheme = collection_card_scheme | default: 'scheme-1' | handleize
+  assign collection_card_alignment = block.settings.alignment | default: 'left'
+  assign collection_card_content_alignment = 'flex-start'
+  if collection_card_alignment == 'center'
+    assign collection_card_content_alignment = 'center'
+  elsif collection_card_alignment == 'right'
+    assign collection_card_content_alignment = 'flex-end'
+  else
+    assign collection_card_alignment = 'left'
+  endif
   assign collection_card_placement = block.settings.placement | default: 'below_image'
   assign collection_card_radius = 'var(--card-radius)'
   case block.settings.corner_radius
@@ -149,7 +158,7 @@
 <article
   class="collection-card-kernel collection-card-kernel--{{ collection_card_placement }} collection-card-kernel--{{ collection_card_ratio_setting }}{% if collection_card_is_placeholder %} collection-card-kernel--placeholder{% else %} collection-card-kernel--linked{% endif %}{% if request.design_mode %} collection-card-kernel--design-mode{% endif %}{% if block.settings.color_type == 'color_scheme' %} color-scheme section-color-scope {{ collection_card_scheme }}{% endif %}"
   data-collection-card
-  style="--card-border:{{ block.settings.border_thickness | default: 0 }}px;--card-align:{{ block.settings.alignment | default: 'left' }};--collection-card-radius:{{ collection_card_radius }};--collection-card-shadow:{{ collection_card_shadow }};--collection-card-ratio:{{ collection_card_ratio }};{% if collection_card_padding_style != blank %}{{ collection_card_padding_style }}{% endif %}"
+  style="--card-border:{{ block.settings.border_thickness | default: 0 }}px;--card-align:{{ collection_card_alignment }};--card-content-align:{{ collection_card_content_alignment }};--collection-card-radius:{{ collection_card_radius }};--collection-card-shadow:{{ collection_card_shadow }};--collection-card-ratio:{{ collection_card_ratio }};{% if collection_card_padding_style != blank %}{{ collection_card_padding_style }}{% endif %}"
   {{ block.shopify_attributes }}
 >
   <div class="collection-card-kernel__media{% if collection_card_image == blank %} placeholder-image{% endif %}">

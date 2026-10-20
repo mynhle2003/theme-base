@@ -59,6 +59,7 @@
   columns_desktop: '2',
   columns_mobile: product_list_banner_columns_mobile,
   mobile_carousel: block.settings.enable_swipe_mobile,
+  next_slide_preview_on_mobile: block.settings.show_next_slide_preview_on_mobile,
   gap_horizontal: block.settings.gap_horizontal,
   gap_vertical: block.settings.gap_vertical,
   gap_horizontal_mobile: block.settings.gap_horizontal_mobile,
@@ -103,6 +104,13 @@
         { "value": "2", "label": "2" }
       ],
       "default": "1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_next_slide_preview_on_mobile",
+      "label": "t:labels.show_next_slide_preview_on_mobile",
+      "default": false,
+      "visible_if": "{{ block.settings.enable_swipe_mobile }}"
     },
     {
       "type": "checkbox",
@@ -164,6 +172,7 @@
         "max_products": 6,
         "columns_mobile": "1",
         "enable_swipe_mobile": true,
+        "show_next_slide_preview_on_mobile": false,
         "gap_horizontal": 12,
         "gap_vertical": 28,
         "gap_horizontal_mobile": 8,

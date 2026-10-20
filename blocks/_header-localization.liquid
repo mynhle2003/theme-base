@@ -75,7 +75,7 @@
                 {{ localization.country | image_url: width: 24 | image_tag: class: 'header-localization__flag', alt: '' }}
               {% endif %}
               {% if show_country_name %}
-                <span>{{ localization.country.name }}</span>
+                <span>{{ localization.country.name }} ({{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }})</span>
               {% else %}
                 <span>{{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}</span>
               {% endif %}

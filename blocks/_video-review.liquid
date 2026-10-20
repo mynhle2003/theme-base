@@ -1,0 +1,91 @@
+{% doc %}
+  A video review with up to two block-owned products. The parent owns carousel
+  layout, video playback policy and product popup color context.
+{% enddoc %}
+{% liquid
+  assign video_label = block.settings.video.alt
+  if video_label == blank
+    assign video_label = 'video_reviews.label' | t
+  endif
+  assign poster = block.settings.cover_image | default: block.settings.video.preview_image
+  assign popup_scheme = section.settings.product_color_scheme.id | default: section.settings.product_color_scheme | default: 'scheme-1' | handleize
+  assign poster_url = blank
+  if poster != blank
+    assign poster_url = poster | image_url: width: 800
+  endif
+  assign play_label = 'video.play' | t
+  assign pause_label = 'video.pause' | t
+  assign mute_label = 'video_reviews.mute' | t
+  assign unmute_label = 'video_reviews.unmute' | t
+%}
+<div class="video-review swiper-slide" data-video-review {{ block.shopify_attributes }}>
+  <div class="video-review__surface">
+    <div class="video-review__media">
+      {% if block.settings.video != blank %}
+        {{ block.settings.video | video_tag: image_size: '800x', autoplay: false, loop: true, muted: true, controls: false, preload: 'none', playsinline: true, poster: poster_url, aria-label: video_label }}
+      {% elsif poster != blank %}
+        {{ poster | image_url: width: 800 | image_tag: loading: 'lazy', widths: '345, 480, 690, 800', sizes: '(max-width: 767px) 100vw, 25vw', class: 'video-review__cover', alt: video_label }}
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'video-review__placeholder' }}
+      {% endif %}
+    </div>
+    {% if block.settings.video != blank %}
+      <div class="video-review__controls" hidden>
+        <button class="video-review__control" type="button" data-review-play data-play-label="{{ play_label | escape }}" data-pause-label="{{ pause_label | escape }}" aria-label="{{ play_label | escape }}" aria-pressed="false">
+          <span data-play-icon>{% render 'icon', icon: 'play', bare: true %}</span><span data-pause-icon>{% render 'icon', icon: 'pause', bare: true %}</span>
+        </button>
+        <button class="video-review__control" type="button" data-review-mute data-mute-label="{{ mute_label | escape }}" data-unmute-label="{{ unmute_label | escape }}" aria-label="{{ unmute_label | escape }}" aria-pressed="true">
+          <span data-muted-icon class="video-review__asset-icon" style="--video-review-icon: url('{{ 'video-review-muted.svg' | asset_url }}');" aria-hidden="true"></span>
+          <svg data-sound-icon hidden width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Zm5 4a5 5 0 0 1 0 6m3-9a9 9 0 0 1 0 12" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    {% endif %}
+    {% if block.settings.products != blank %}
+      <div class="video-review__products">
+        {% for product in block.settings.products limit: 2 %}
+          {% assign popup_id = 'VideoProduct-' | append: section.id | append: '-' | append: block.id | append: '-' | append: product.id %}
+          <a class="video-review__thumbnail color-scheme {{ popup_scheme }}" href="{{ product.url | escape }}" data-review-product aria-controls="{{ popup_id }}" aria-expanded="false" aria-label="{{ 'video_reviews.view_product' | t: product: product.title | escape }}">
+            {% if product.featured_image != blank %}
+              {{ product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '64, 128, 160', sizes: '64px', alt: '' }}
+            {% else %}{{ 'product-1' | placeholder_svg_tag }}{% endif %}
+          </a>
+        {% endfor %}
+      </div>
+      {% for product in block.settings.products limit: 2 %}
+        {% assign popup_id = 'VideoProduct-' | append: section.id | append: '-' | append: block.id | append: '-' | append: product.id %}
+        <div id="{{ popup_id }}" class="video-review__popup color-scheme {{ popup_scheme }}" data-review-popup hidden inert data-product-information tabindex="-1" role="region" aria-label="{{ product.title | escape }}">
+          <button class="video-review__popup-close" type="button" data-review-close aria-label="{{ 'accessibility.close' | t | escape }}"><span class="video-review__asset-icon" style="--video-review-icon: url('{{ 'video-review-collapse.svg' | asset_url }}');" aria-hidden="true"></span></button>
+          {% render 'video-review-product', product: product, scope: popup_id %}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Video",
+  "tag": null,
+  "settings": [
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Products",
+      "limit": 2
+    },
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image",
+      "label": "Cover image"
+    }
+  ]
+}
+{% endschema %}

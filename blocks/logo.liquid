@@ -16,7 +16,7 @@
   endunless
 
   assign logo_width_mode = block.settings.width | default: 'fill'
-  unless logo_width_mode == 'fill' or logo_width_mode == 'custom'
+  unless logo_width_mode == 'fill' or logo_width_mode == 'custom' or logo_width_mode == 'height'
     assign logo_width_mode = 'fill'
   endunless
 
@@ -35,10 +35,18 @@
     assign logo_image = settings.logo_transparent
   endif
 
+  if logo_width_mode == 'height'
+    assign logo_ratio = logo_image.aspect_ratio | default: 1
+    assign logo_height = block.settings.height_desktop | default: 40
+    assign logo_height_mobile = block.settings.height_mobile | default: 40
+    assign logo_width = logo_height | times: logo_ratio
+    assign logo_width_mobile = logo_height_mobile | times: logo_ratio
+  endif
+
   assign logo_block_width = '100%'
   assign logo_block_width_mobile = '100%'
   assign logo_sizes = '100%'
-  if logo_width_mode == 'custom'
+  if logo_width_mode == 'custom' or logo_width_mode == 'height'
     assign logo_block_width = logo_width | append: 'px'
     assign logo_block_width_mobile = logo_width_mobile | append: 'px'
     assign logo_sizes = '(min-width: 768px) ' | append: logo_width | append: 'px, ' | append: logo_width_mobile | append: 'px'
@@ -157,8 +165,14 @@
       "id": "style",
       "label": "t:labels.style",
       "options": [
-        { "value": "default", "label": "t:options.logo_style.default" },
-        { "value": "transparent", "label": "t:options.logo_style.transparent" }
+        {
+          "value": "default",
+          "label": "t:options.logo_style.default"
+        },
+        {
+          "value": "transparent",
+          "label": "t:options.logo_style.transparent"
+        }
       ],
       "default": "default"
     },
@@ -167,8 +181,18 @@
       "id": "width",
       "label": "t:labels.width",
       "options": [
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "custom", "label": "t:options.width.custom" }
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        },
+        {
+          "value": "height",
+          "label": "Fixed height"
+        }
       ],
       "default": "fill"
     },
@@ -245,6 +269,28 @@
       "unit": "px",
       "default": 0,
       "visible_if": "{{ block.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "height_desktop",
+      "label": "Desktop height",
+      "min": 16,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ block.settings.width == 'height' }}"
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "label": "Mobile height",
+      "min": 16,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ block.settings.width == 'height' }}"
     }
   ],
   "presets": [

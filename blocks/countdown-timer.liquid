@@ -12,7 +12,7 @@
 
 {% liquid
   assign countdown_style = block.settings.style | default: 'with_labels'
-  unless countdown_style == 'with_labels' or countdown_style == 'inline' or countdown_style == 'inline_superscript' or countdown_style == 'numbers_only'
+  unless countdown_style == 'with_labels' or countdown_style == 'inline' or countdown_style == 'inline_superscript' or countdown_style == 'numbers_only' or countdown_style == 'with_labels_colon'
     assign countdown_style = 'with_labels'
   endunless
 
@@ -280,8 +280,18 @@
       assign countdown_radius = 'var(--radius-pill)'
   endcase
 
+  assign countdown_outline_allowed = false
+  if countdown_style == 'with_labels' or countdown_style == 'numbers_only' or countdown_style == 'with_labels_colon'
+    assign countdown_outline_allowed = true
+  endif
+
   assign countdown_style_class = countdown_style | replace: '_', '-'
+  assign countdown_outline_enabled = false
   assign countdown_class = 'countdown-timer countdown-timer--style-' | append: countdown_style_class
+  if countdown_outline_allowed and block.settings.outline_text
+    assign countdown_outline_enabled = true
+    assign countdown_class = countdown_class | append: ' countdown-timer--outline'
+  endif
   if block.settings.show_background == false or block.settings.show_background == 'false'
     assign countdown_class = countdown_class | append: ' countdown-timer--no-background'
   endif
@@ -317,25 +327,34 @@
   >
     <div class="countdown-timer__units" aria-hidden="true">
       <div class="countdown-timer__unit" data-countdown-unit="days" data-countdown-unit-label="{{ 'countdown.days' | t | escape }}">
-        <span class="countdown-timer__value" data-countdown-value="days">{{ countdown_days_display }}</span>
+        <span class="countdown-timer__value{% if countdown_outline_enabled %} virelle-text-outline{% endif %}" data-countdown-value="days">{{ countdown_days_display }}</span>
         {% if countdown_style != 'numbers_only' %}
           <span class="countdown-timer__label" data-countdown-label>{{ 'countdown.days' | t }}</span>
         {% endif %}
       </div>
+      {% if countdown_style == 'with_labels_colon' %}
+        <span class="countdown-timer__separator{% if countdown_outline_enabled %} virelle-text-outline{% endif %}">:</span>
+      {% endif %}
       <div class="countdown-timer__unit" data-countdown-unit="hours" data-countdown-unit-label="{{ 'countdown.hours' | t | escape }}">
-        <span class="countdown-timer__value" data-countdown-value="hours">{{ countdown_hours_display }}</span>
+        <span class="countdown-timer__value{% if countdown_outline_enabled %} virelle-text-outline{% endif %}" data-countdown-value="hours">{{ countdown_hours_display }}</span>
         {% if countdown_style != 'numbers_only' %}
           <span class="countdown-timer__label" data-countdown-label>{{ 'countdown.hours' | t }}</span>
         {% endif %}
       </div>
+      {% if countdown_style == 'with_labels_colon' %}
+        <span class="countdown-timer__separator{% if countdown_outline_enabled %} virelle-text-outline{% endif %}">:</span>
+      {% endif %}
       <div class="countdown-timer__unit" data-countdown-unit="minutes" data-countdown-unit-label="{{ 'countdown.minutes' | t | escape }}">
-        <span class="countdown-timer__value" data-countdown-value="minutes">{{ countdown_minutes_display }}</span>
+        <span class="countdown-timer__value{% if countdown_outline_enabled %} virelle-text-outline{% endif %}" data-countdown-value="minutes">{{ countdown_minutes_display }}</span>
         {% if countdown_style != 'numbers_only' %}
           <span class="countdown-timer__label" data-countdown-label>{{ 'countdown.minutes' | t }}</span>
         {% endif %}
       </div>
+      {% if countdown_style == 'with_labels_colon' %}
+        <span class="countdown-timer__separator{% if countdown_outline_enabled %} virelle-text-outline{% endif %}">:</span>
+      {% endif %}
       <div class="countdown-timer__unit" data-countdown-unit="seconds" data-countdown-unit-label="{{ 'countdown.seconds' | t | escape }}">
-        <span class="countdown-timer__value" data-countdown-value="seconds">{{ countdown_seconds_display }}</span>
+        <span class="countdown-timer__value{% if countdown_outline_enabled %} virelle-text-outline{% endif %}" data-countdown-value="seconds">{{ countdown_seconds_display }}</span>
         {% if countdown_style != 'numbers_only' %}
           <span class="countdown-timer__label" data-countdown-label>{{ 'countdown.seconds' | t }}</span>
         {% endif %}
@@ -521,6 +540,46 @@
     .countdown-timer--style-inline-superscript:not(.countdown-timer--no-background) .countdown-timer__units {
       padding: 0.6rem 0.5rem 0.5rem;
     }
+  }
+
+
+  .countdown-timer--style-with-labels-colon .countdown-timer__units {
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .countdown-timer--style-with-labels-colon .countdown-timer__unit {
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+  }
+
+  .countdown-timer__separator {
+    display: flex;
+    flex: 0 0 8px;
+    align-items: center;
+    justify-content: center;
+    height: calc(var(--countdown-number-size) * var(--countdown-number-line-height));
+    font-family: var(--font-heading-family);
+    font-style: var(--font-heading-style);
+    font-weight: var(--font-heading-weight);
+    font-size: var(--font-heading-lg);
+    line-height: var(--font-heading-lg-line-height);
+  }
+
+  .countdown-timer__value.virelle-text-outline {
+    --text-outline-color: var(--countdown-number-color);
+    --text-outline-fill: var(--countdown-background);
+  }
+
+  .countdown-timer--no-background .countdown-timer__value.virelle-text-outline,
+  .countdown-timer__separator.virelle-text-outline {
+    --text-outline-color: var(--countdown-number-color);
+    --text-outline-fill: var(--countdown-outline-surface, var(--background-color));
+  }
+
+  .countdown-timer :is(.countdown-timer__value, .countdown-timer__separator).virelle-text-outline--transparent {
+    --text-outline-fill: transparent;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -714,7 +773,8 @@
         { "value": "with_labels", "label": "t:options.countdown_style.with_labels" },
         { "value": "numbers_only", "label": "t:options.countdown_style.numbers_only" },
         { "value": "inline", "label": "t:options.countdown_style.inline" },
-        { "value": "inline_superscript", "label": "t:options.countdown_style.inline_superscript" }
+        { "value": "inline_superscript", "label": "t:options.countdown_style.inline_superscript" },
+        { "value": "with_labels_colon", "label": "t:options.countdown_style.with_labels_colon" }
       ],
       "default": "with_labels"
     },
@@ -807,7 +867,7 @@
         { "value": "custom", "label": "t:options.heading_size.custom" }
       ],
       "default": "md",
-      "visible_if": "{{ block.settings.style == 'with_labels' }}"
+      "visible_if": "{{ block.settings.style == 'with_labels' or block.settings.style == 'with_labels_colon' }}"
     },
     {
       "type": "range",
@@ -818,7 +878,7 @@
       "step": 1,
       "unit": "px",
       "default": 24,
-      "visible_if": "{{ block.settings.style == 'with_labels' and block.settings.number_size == 'custom' }}"
+      "visible_if": "{{ block.settings.number_size == 'custom' and block.settings.style != 'inline' and block.settings.style != 'inline_superscript' and block.settings.style != 'numbers_only' }}"
     },
     {
       "type": "select",
@@ -833,7 +893,7 @@
         { "value": "xxl", "label": "t:options.text_size.xxl" }
       ],
       "default": "sm",
-      "visible_if": "{{ block.settings.style == 'with_labels' }}"
+      "visible_if": "{{ block.settings.style == 'with_labels' or block.settings.style == 'with_labels_colon' }}"
     },
     {
       "type": "select",
@@ -874,6 +934,13 @@
       ],
       "default": "normal",
       "visible_if": "{{ block.settings.style == 'inline' or block.settings.style == 'inline_superscript' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "outline_text",
+      "label": "t:labels.outline_text",
+      "default": false,
+      "visible_if": "{{ block.settings.style == 'with_labels' or block.settings.style == 'numbers_only' or block.settings.style == 'with_labels_colon' }}"
     },
     {
       "type": "header",
@@ -1006,6 +1073,7 @@
       "category": "t:general.basic",
       "settings": {
         "style": "with_labels",
+        "outline_text": true,
         "show_background": true,
         "corner_radius": "square",
         "type": "fixed_time",

@@ -220,15 +220,16 @@
   }
 
   .product-media-gallery--desktop-left_thumbnails .media-gallery__navigation,
-  .product-media-gallery--desktop-bottom_thumbnails .media-gallery__navigation {
+  .product-media-gallery--desktop-bottom_thumbnails .media-gallery__navigation,
+  .product-media-gallery--desktop-carousel_two_items .media-gallery__navigation {
     display: grid;
   }
 
-  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__main {
+  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--desktop-carousel_two_items):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__main {
     overflow: visible;
   }
 
-  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__main > .swiper-wrapper {
+  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--desktop-carousel_two_items):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__main > .swiper-wrapper {
     display: grid;
     gap: var(--product-media-gap, var(--layout-grid-gap));
     transform: none !important;
@@ -248,7 +249,7 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__slide {
+  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--desktop-carousel_two_items):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__slide {
     width: auto !important;
   }
 
@@ -275,11 +276,13 @@
     transform: none !important;
   }
 
+  .product-media-gallery--desktop-carousel_two_items .media-thumbnails__carousel,
+  .product-media-gallery--desktop-carousel_two_items .product-media-gallery__pagination,
   .product-media-gallery--desktop-grid .media-thumbnails__carousel,
   .product-media-gallery--desktop-stacked .media-thumbnails__carousel,
   .product-media-gallery--desktop-two_column_grid .media-thumbnails__carousel,
-  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__pagination,
-  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--overlay-quick-add-strip) .media-gallery__navigation {
+  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--desktop-carousel_two_items):not(.product-media-gallery--overlay-quick-add-strip) .product-media-gallery__pagination,
+  .product-media-gallery:not(.product-media-gallery--desktop-left_thumbnails):not(.product-media-gallery--desktop-bottom_thumbnails):not(.product-media-gallery--desktop-carousel_two_items):not(.product-media-gallery--overlay-quick-add-strip) .media-gallery__navigation {
     display: none;
   }
 }
@@ -336,6 +339,33 @@
     --swiper-pagination-bullet-hit-size: 24px;
     --swiper-pagination-bullet-gap: 2px;
     gap: var(--swiper-pagination-bullet-gap, 8px);
+  }
+
+  /* Gallery pagination has no autoplay clock: keep the selected indicator fully
+     painted, including when the controls inherit a separate color scheme. */
+  .product-media-gallery__main > .product-media-gallery__pagination.swiper-pagination-bullets {
+    --swiper-pagination-color: var(--heading-color, currentColor);
+    --swiper-pagination-bullet-inactive-color: color-mix(in srgb, var(--heading-color, currentColor) 30%, transparent);
+  }
+
+  .product-media-gallery__main > .product-media-gallery__pagination.swiper-pagination-bullets .swiper-pagination-bullet-active::before {
+    background: var(--swiper-pagination-color);
+  }
+
+  .product-media-gallery__main > .product-media-gallery__pagination.swiper-pagination-bullets .swiper-pagination-bullet-active::after {
+    opacity: 1;
+    clip-path: inset(0 round var(--swiper-pagination-bullet-border-radius, 1000px));
+  }
+
+  /* Dots use the same native Swiper state/click handling as Bullets, with a
+     constant round indicator rather than an elongated selected bullet. */
+  .product-media-gallery__main > .product-media-gallery__pagination[data-pagination-type='dots'] {
+    --swiper-pagination-bullet-width: 8px;
+    --swiper-pagination-bullet-height: 8px;
+    --swiper-pagination-bullet-active-width: 8px;
+    --swiper-pagination-bullet-active-height: 8px;
+    --swiper-pagination-bullet-hit-width: 24px;
+    --swiper-pagination-bullet-active-hit-width: 24px;
   }
 
   .product-media-gallery--overlay .product-media-gallery__main .product-media {
@@ -682,5 +712,25 @@ html.product-media-lightbox-open {
     flex-basis: 5rem;
     width: 5rem;
     height: 5rem;
+  }
+}
+
+/* Two-item carousel keeps the media accessible before JavaScript loads. */
+@media (min-width: 768px) {
+  .product-media-gallery--desktop-carousel_two_items .product-media-gallery__main:not(.swiper-initialized) {
+    overflow-x: auto;
+  }
+
+  .product-media-gallery--desktop-carousel_two_items .product-media-gallery__main:not(.swiper-initialized) > .swiper-wrapper {
+    gap: var(--product-media-gap, 12px);
+  }
+
+  .product-media-gallery--desktop-carousel_two_items .product-media-gallery__main:not(.swiper-initialized) .product-media-gallery__slide {
+    flex: 0 0 calc((100% - var(--product-media-gap, 12px)) / 2);
+    height: auto;
+  }
+
+  .product-media-gallery--desktop-carousel_two_items.product-media-gallery--single-media[data-visible-media-count='1'] .product-media-gallery__main:not(.swiper-initialized) .product-media-gallery__slide {
+    flex-basis: 100%;
   }
 }

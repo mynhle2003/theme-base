@@ -31,6 +31,7 @@
 
     {% # Load and preload the critical CSS %}
     {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'virelle.css' | asset_url | stylesheet_tag }}
     <link rel="stylesheet" href="{{ 'component-overlay.css' | asset_url }}" media="print" onload="this.media='all'">
     <noscript>{{ 'component-overlay.css' | asset_url | stylesheet_tag }}</noscript>
     <script src="{{ 'component-overlay.js' | asset_url }}" defer></script>

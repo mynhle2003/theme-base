@@ -271,10 +271,18 @@
 {
   "name": "t:general.email_signup_form",
   "class": "section-email-signup-form",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "header" },
-    { "type": "email-signup" }
+    {
+      "type": "header"
+    },
+    {
+      "type": "email-signup"
+    }
   ],
   "settings": [
     {
@@ -286,9 +294,18 @@
       "id": "section_width",
       "label": "t:labels.section_width",
       "options": [
-        { "value": "page_width", "label": "t:options.section_width.page_width" },
-        { "value": "full_width", "label": "t:options.section_width.full_width" },
-        { "value": "full_width_no_padding", "label": "t:options.section_width.full_width_no_padding" }
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "t:options.section_width.full_width_no_padding"
+        }
       ],
       "default": "page_width"
     },
@@ -316,8 +333,14 @@
       "id": "form_layout",
       "label": "t:general.layout",
       "options": [
-        { "value": "horizontal", "label": "t:options.direction.horizontal" },
-        { "value": "vertical", "label": "t:options.direction.vertical" }
+        {
+          "value": "horizontal",
+          "label": "t:options.direction.horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "t:options.direction.vertical"
+        }
       ],
       "default": "horizontal"
     },
@@ -326,9 +349,18 @@
       "id": "form_position",
       "label": "t:labels.position",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "right", "label": "t:options.alignment.right" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
       ],
       "default": "center"
     },
@@ -444,62 +476,112 @@
         "alignment_mobile": "center",
         "form_layout": "horizontal",
         "form_position": "center",
-        "content_gap": 40,
-        "content_gap_mobile": 40,
-        "customize_mobile_gap": false,
+        "content_gap": 48,
+        "content_gap_mobile": 32,
+        "customize_mobile_gap": true,
         "color_scheme": "scheme-1",
-        "padding_top": 32,
-        "padding_bottom": 32,
-        "customize_mobile_padding": false
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
       },
       "blocks": [
         {
           "type": "header",
-          "id": "header",
           "static": true,
           "settings": {
-            "width": "fill",
+            "width": "custom",
             "alignment": "center",
-            "customize_mobile_alignment": false,
+            "customize_mobile_alignment": true,
             "gap_desktop": 8,
-            "gap_mobile": 8
+            "gap_mobile": 8,
+            "alignment_mobile": "center",
+            "max_width": 770,
+            "customize_mobile_size": true,
+            "width_mobile": "fill"
           },
+          "id": "header",
           "blocks": [
+            {
+              "type": "group",
+              "settings": {
+                "direction": "horizontal",
+                "position_horizontal": "center",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": false,
+                "gap_desktop": 8,
+                "gap_mobile": 8,
+                "width": "fit",
+                "width_mobile": "fit",
+                "height": "fit",
+                "appearance_type": "inherit",
+                "backdrop_blur": 0,
+                "show_overlay": false
+              },
+              "blocks": [
+                {
+                  "type": "icon",
+                  "settings": {
+                    "source": "custom",
+                    "custom_icon": "<svg width=\"8\" height=\"8\" viewBox=\"0 0 8 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect width=\"8\" height=\"8\" fill=\"#181818\"/>\n</svg>",
+                    "icon_width": 8,
+                    "icon_padding": 0,
+                    "custom_mobile": false,
+                    "icon_width_mobile": 8,
+                    "icon_padding_mobile": 0
+                  }
+                },
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>Get latest deals</p>",
+                    "show_icon": false,
+                    "icon": "square"
+                  }
+                }
+              ]
+            },
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Main Heading Placeholder</p>",
-                "heading_size": "display",
-                "html_tag": "h2"
+                "text": "<p>Join our newsletter</p>",
+                "html_tag": "h2",
+                "heading_size": "xl",
+                "width": "fill"
               }
             },
             {
               "type": "text",
               "settings": {
-                "text": "<p>This is placeholder text for a short paragraph that explains the purpose of this section. It gives users a clear reason to subscribe or take action.</p>"
+                "text": "<p>Sign up today and get special product releases and exclusive sales!</p>",
+                "text_size": "md",
+                "width": "fill",
+                "padding_top": 4
               }
             }
           ]
         },
         {
           "type": "email-signup",
-          "id": "email-signup",
           "static": true,
           "settings": {
             "form_layout": "horizontal",
-            "input_placeholder": "Name",
-            "button_label": "Submit",
+            "input_placeholder": "Your email",
+            "button_label": "Subscribe",
             "button_style": "primary",
             "show_icon": false,
             "gap_desktop": 12,
             "gap_mobile": 12,
             "width_desktop": "fill",
             "limit_width_desktop": true,
-            "max_width_desktop": 500,
+            "max_width_desktop": 580,
             "width_mobile": "fill",
             "limit_width_mobile": false,
-            "vertical_on_mobile": false
-          }
+            "vertical_on_mobile": true,
+            "field_height": "large"
+          },
+          "id": "email-signup"
         }
       ]
     }

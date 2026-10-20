@@ -98,23 +98,23 @@
 }
 
 .product-price--tracking-tight .price {
-  letter-spacing: -0.02em;
+  letter-spacing: var(--letter-spacing-tight);
 }
 
 .product-price--tracking-normal .price {
-  letter-spacing: 0;
+  letter-spacing: var(--letter-spacing-normal);
 }
 
 .product-price--tracking-relaxed .price {
-  letter-spacing: 0.02em;
+  letter-spacing: var(--letter-spacing-relaxed);
 }
 
 .product-price--tracking-loose .price {
-  letter-spacing: 0.04em;
+  letter-spacing: var(--letter-spacing-loose);
 }
 
 .product-price--tracking-extra_loose .price {
-  letter-spacing: 0.08em;
+  letter-spacing: var(--letter-spacing-extra-loose);
 }
 
 .product-price__sale-badge {
@@ -1004,4 +1004,16 @@ product-sticky-layout.product-information__layout > .product-details {
   .product-accordion__content {
     padding-block-end: var(--product-accordion-content-gap-mobile, var(--product-accordion-content-gap, 1rem));
   }
+}
+
+.product-buy-buttons--stacked .product-buy-buttons__purchase {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.product-buy-buttons--stacked .product-buy-buttons__quantity {
+  width: 100%;
+  max-width: var(--product-buy-quantity-max-width, 12rem);
+  gap: 8px;
 }

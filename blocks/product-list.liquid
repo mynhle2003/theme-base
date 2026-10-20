@@ -238,6 +238,9 @@
   <script data-theme-module="{{ 'product-collection-carousel.js' | asset_url }}"></script>
 {% endif %}
 
+{% comment %}Source contract for parent sections: static block settings are resolved inside their own render scope.{% endcomment %}
+<!--product-list-source:{{ product_list_collection.handle }}:{{ product_list_max_products }}:{% if product_list_recommendations and product_list_recommendation_items != blank %}recommendations{% else %}collection{% endif %}:end-product-list-source-->
+
 <div
   class="product-list section-list-layout__bridge"
   data-product-list
@@ -267,6 +270,7 @@
       item_class: 'product-list__item',
       items_data_attributes: 'data-product-list-items',
       next_slide_preview: product_list_show_next_slide_preview,
+      next_slide_preview_on_mobile: block.settings.show_next_slide_preview_on_mobile,
       carousel_id: product_list_carousel_id,
       aria_label: product_list_aria_label,
       previous_selector: '[data-product-list-previous]',
@@ -470,6 +474,13 @@
       "type": "checkbox",
       "id": "show_next_slide_preview_on_desktop",
       "label": "t:labels.show_next_slide_preview_on_desktop",
+      "default": false,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_next_slide_preview_on_mobile",
+      "label": "t:labels.show_next_slide_preview_on_mobile",
       "default": false,
       "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
     },
@@ -704,6 +715,7 @@
         "columns_desktop": "4",
         "columns_mobile": "1",
         "show_next_slide_preview_on_desktop": false,
+        "show_next_slide_preview_on_mobile": false,
         "product_gap_desktop": 4,
         "product_gap_mobile": 4,
         "show_navigation_on_desktop": true,

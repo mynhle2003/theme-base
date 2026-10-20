@@ -1,8 +1,9 @@
 {% doc %}
   Renders the fixed View all action for the Collection tabs section. Collection
   tabs assigns the destination and overflow visibility from the active tab.
-  The first tab initializes the server-rendered state; no action is emitted
-  when none of the selected collections exceeds the section display limit.
+  The first tab initializes the server-rendered state when its resource is
+  readable. Generic Theme Blocks may hide sibling settings; in that case the
+  action starts hidden until tab runtime applies the same overflow rule.
   This block
   intentionally keeps its resource-driven schema separate from the standard
   View all button block.
@@ -34,10 +35,20 @@
     assign collection_tabs_view_all_limit = 8
   endif
   assign collection_tabs_view_all_tabs = section.blocks | where: 'type', 'collection-tab'
+  assign collection_tabs_view_all_runtime_source = false
+  if collection_tabs_view_all_tabs == empty
+    assign collection_tabs_view_all_tabs = section.blocks | where: 'type', '@theme'
+    if collection_tabs_view_all_tabs.size > 0
+      assign collection_tabs_view_all_runtime_source = true
+    endif
+  endif
   assign collection_tabs_view_all_initial_tab = collection_tabs_view_all_tabs | first
   assign collection_tabs_view_all_initial_collection = collection_tabs_view_all_initial_tab.settings.collection
   assign collection_tabs_view_all_has_overflow = false
   for collection_tabs_view_all_tab in collection_tabs_view_all_tabs
+    if collection_tabs_view_all_tab.settings.collection != blank
+      assign collection_tabs_view_all_runtime_source = false
+    endif
     if collection_tabs_view_all_tab.settings.collection != blank and collection_tabs_view_all_tab.settings.collection.products_count > collection_tabs_view_all_limit
       assign collection_tabs_view_all_has_overflow = true
       break
@@ -88,7 +99,8 @@
   {% assign collection_tabs_view_all_label = 'collection_tabs.view_all' | t %}
 {% endif %}
 
-{% if collection_tabs_view_all_has_overflow and collection_tabs_view_all_label != blank %}
+{% if collection_tabs_view_all_has_overflow or collection_tabs_view_all_runtime_source %}
+  {% if collection_tabs_view_all_label != blank %}
   <div
     class="{{ collection_tabs_view_all_class }}{% if block.settings.hide_view_all_mobile %} collection-tabs-view-all--hide-mobile{% endif %}"
     data-collection-tabs-view-all-wrapper
@@ -111,6 +123,7 @@
       attributes: collection_tabs_view_all_attributes
     %}
   </div>
+  {% endif %}
 {% endif %}
 
 {% stylesheet %}

@@ -219,61 +219,116 @@ const initSlider = (root, slides, track) => {
 };
 
 const initScrolling = (root, track) => {
-  if (Number(root.dataset.announcementSpeed) === 0 || reducedMotion()) return { clones: [], resizeObserver: null, mutationObserver: null };
+  const clones = [];
+  if (Number(root.dataset.announcementSpeed) === 0) return { clones };
   const viewport = root.querySelector('[data-announcement-viewport]');
-  let clones = [];
-  let isSyncing = false;
-  let mutationObserver;
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let frame = 0;
+  let destroyed = false;
+  let measuredLayout = '';
+  const originalSlides = () => [...track.children].filter((slide) => !slide.hasAttribute('data-announcement-clone'));
+  const observeMutations = () => mutationObserver.observe(track, {
+    attributes: true, childList: true, characterData: true, subtree: true,
+  });
+  const layoutSignature = () => [
+    viewport?.clientWidth || 0,
+    getComputedStyle(track).columnGap,
+    ...originalSlides().map((slide) => {
+      const style = getComputedStyle(slide);
+      return [slide.getBoundingClientRect().width, style.marginLeft, style.marginRight].join(',');
+    }),
+  ].join(':');
+  const scrollingAnimation = () => track.getAnimations().find((animation) => animation.animationName?.startsWith('announcement-scroll-'));
 
   const syncClones = () => {
-    if (isSyncing) return;
-    isSyncing = true;
-    mutationObserver?.disconnect();
+    if (destroyed) return;
+    mutationObserver.disconnect();
+    const previousAnimation = scrollingAnimation();
+    const previousDuration = Number(previousAnimation?.effect?.getComputedTiming().duration);
+    const previousPhase = previousDuration && previousAnimation.currentTime !== null ? Number(previousAnimation.currentTime) / previousDuration : 0;
     clones.forEach((clone) => clone.remove());
-    const originalSlides = [...track.children].filter((slide) => !slide.hasAttribute('data-announcement-clone'));
     clones.length = 0;
-    if (originalSlides.length === 0) {
-      isSyncing = false;
+    const originals = originalSlides();
+    const slides = originals.filter((slide) => slide.getClientRects().length && slide.getBoundingClientRect().width > 0);
+    resizeObserver.disconnect();
+    resizeObserver.observe(viewport || track);
+    originals.forEach((slide) => resizeObserver.observe(slide));
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+    // Include the trailing gap: one cycle ends at the next original sequence.
+    const distance = slides.reduce((width, slide) => {
+      const style = getComputedStyle(slide);
+      return width + slide.getBoundingClientRect().width + (parseFloat(style.marginLeft) || 0) + (parseFloat(style.marginRight) || 0) + gap;
+    }, 0);
+    measuredLayout = layoutSignature();
+    if (!slides.length || distance <= 0 || !viewport?.clientWidth || motion.matches) {
+      root.classList.remove('announcement-bar--ready');
+      track.style.removeProperty('--announcement-bar-loop-distance');
+      track.style.removeProperty('--announcement-bar-duration');
+      observeMutations();
       return;
     }
 
-    const appendCloneSet = () => {
-      originalSlides.forEach((slide) => {
-        const clone = slide.cloneNode(true);
+    const copyCount = Math.max(1, Math.ceil((viewport.clientWidth + gap) / distance));
+    const fragment = document.createDocumentFragment();
+    for (let set = 0; set < copyCount; set += 1) {
+      slides.forEach((slide) => {
+        const clone = sanitizeEditorAttributes(slide.cloneNode(true));
         disableEntranceAnimation(clone);
         setFocusableState(clone);
+        clone.setAttribute('inert', '');
         clone.dataset.announcementClone = 'true';
-        track.append(clone);
+        fragment.appendChild(clone);
         clones.push(clone);
       });
-    };
-
-    appendCloneSet();
-    const firstClone = clones[0];
-    const loopDistance = firstClone.getBoundingClientRect().left - track.getBoundingClientRect().left;
-    let cloneSetCount = 1;
-    while (track.scrollWidth < (viewport?.clientWidth || 0) + loopDistance && cloneSetCount < 100) {
-      appendCloneSet();
-      cloneSetCount += 1;
     }
-    track.style.setProperty('--announcement-bar-loop-distance', `${loopDistance}px`);
+    track.appendChild(fragment);
+    const speed = Math.max(0.1, Math.min(2, Number(root.dataset.announcementSpeed) || 1));
+    const duration = distance / (60 * speed);
+    track.style.setProperty('--announcement-bar-loop-distance', `${distance}px`);
+    track.style.setProperty('--announcement-bar-duration', `${duration}s`);
     root.classList.add('announcement-bar--ready');
-    mutationObserver?.observe(track, { attributes: true, childList: true, subtree: true });
-    isSyncing = false;
+    const animation = scrollingAnimation();
+    if (animation && previousAnimation) animation.currentTime = previousPhase * duration * 1000;
+    observeMutations();
   };
 
-  mutationObserver = new MutationObserver((mutations) => {
+  const scheduleSync = () => {
+    if (destroyed || frame) return;
+    frame = window.requestAnimationFrame(() => {
+      frame = 0;
+      syncClones();
+    });
+  };
+  const mutationObserver = new MutationObserver((mutations) => {
     if (mutations.some((mutation) => {
-      if (mutation.type === 'attributes' && (mutation.attributeName === 'class' || mutation.attributeName === 'style')) return false;
-      if (mutation.type === 'attributes' && mutation.attributeName.startsWith('data-shopify-editor')) return false;
-      return !mutation.target.closest?.('[data-announcement-clone]');
-    })) syncClones();
+      const element = mutation.target.nodeType === 1 ? mutation.target : mutation.target.parentElement;
+      if (element?.closest('[data-announcement-clone]')) return false;
+      if (element?.closest('[data-discount-code-status]')) return false;
+      if (mutation.type === 'attributes') {
+        if (mutation.target === track) return false;
+        if (mutation.attributeName.startsWith('data-shopify-editor')) return false;
+      }
+      return true;
+    })) scheduleSync();
   });
-
-  const resizeObserver = new ResizeObserver(() => syncClones());
-  resizeObserver.observe(viewport || track);
+  const resizeObserver = new ResizeObserver(() => {
+    if (layoutSignature() !== measuredLayout) scheduleSync();
+  });
+  motion.addEventListener('change', scheduleSync);
+  document.fonts?.ready.then(() => {
+    if (!destroyed && layoutSignature() !== measuredLayout) scheduleSync();
+  });
   syncClones();
-  return { clones, resizeObserver, mutationObserver };
+  return {
+    clones, resizeObserver, mutationObserver,
+    destroyScrolling: () => {
+      destroyed = true;
+      if (frame) window.cancelAnimationFrame(frame);
+      motion.removeEventListener('change', scheduleSync);
+      track.style.removeProperty('--announcement-bar-loop-distance');
+      track.style.removeProperty('--announcement-bar-duration');
+    },
+  };
 };
 
 const init = (root) => {
@@ -310,6 +365,7 @@ const destroy = (root) => {
     root.removeEventListener('focusin', state.pause);
     root.removeEventListener('focusout', state.resume);
   }
+  state.destroyScrolling?.();
   state.scrollingResizeObserver?.disconnect();
   state.mutationObserver?.disconnect();
   state.clones?.forEach((clone) => clone.remove());

@@ -179,7 +179,7 @@
 
   <product-buy-buttons
     id="ProductBuyButtons-{{ section.id }}-{{ block.id }}"
-    class="product-buy-buttons"
+    class="product-buy-buttons{% if block.settings.purchase_layout == 'stacked' %} product-buy-buttons--stacked{% endif %}"
     data-product-buy-buttons
     data-section-id="{{ section.id }}"
     data-current-variant-id="{{ current_variant_id }}"
@@ -293,7 +293,9 @@
           {% content_for 'block', type: 'product-buy-quantity', id: 'quantity', form_id: form_id, quantity_min: quantity_min, quantity_step: quantity_step, quantity_max: quantity_max %}
           {% content_for 'block', type: 'product-buy-add-to-cart', id: 'add-to-cart', label: add_to_cart_label_with_price, product_unavailable: product_unavailable %}
         </div>
+        {% unless block.settings.show_accelerated_checkout == false %}
         {% content_for 'block', type: 'product-buy-accelerated-checkout', id: 'accelerated-checkout', form: form, product_unavailable: product_unavailable %}
+        {% endunless %}
 
         {% if show_price %}
           <div hidden data-add-to-cart-label-templates aria-hidden="true">
@@ -391,6 +393,28 @@
       "label": "t:labels.show_back_in_stock_button",
       "info": "t:info.product_back_in_stock_button",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_accelerated_checkout",
+      "label": "t:labels.show_accelerated_checkout",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "purchase_layout",
+      "label": "t:labels.purchase_layout",
+      "default": "inline",
+      "options": [
+        {
+          "value": "inline",
+          "label": "t:options.purchase_layout.inline"
+        },
+        {
+          "value": "stacked",
+          "label": "t:options.purchase_layout.stacked"
+        }
+      ]
     },
     {
       "type": "header",

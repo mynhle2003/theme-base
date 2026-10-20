@@ -51,7 +51,7 @@ const initialize = (root) => {
       destroySwiperCarousel(state.mobileSwiper);
       state.mobileSwiper = null;
     }
-    if (mobileQuery.matches) {
+    if (mobileQuery.matches && root.dataset.mobileLayout !== 'tabs') {
       tablist.hidden = true;
       tablist.setAttribute('aria-hidden', 'true');
       entries.forEach((entry) => {
@@ -63,6 +63,7 @@ const initialize = (root) => {
     }
     tablist.hidden = false;
     tablist.removeAttribute('aria-hidden');
+    tablist.setAttribute('aria-orientation', mobileQuery.matches || root.dataset.titleLayout === 'vertical' ? 'vertical' : 'horizontal');
     activate(state, entries.find((entry) => entry.trigger.getAttribute('aria-selected') === 'true')?.id || entries[0].id);
   };
   updatePresentation();
@@ -84,7 +85,7 @@ const initialize = (root) => {
   }, { signal: controller.signal });
 
   tablist.addEventListener('pointerover', (event) => {
-    if (event.pointerType === 'touch') return;
+    if (mobileQuery.matches || event.pointerType === 'touch') return;
     const trigger = event.target.closest('[data-collections-background-trigger]');
     const entry = entries.find((candidate) => candidate.trigger === trigger);
     if (entry) activate(state, entry.id);

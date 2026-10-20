@@ -21,7 +21,7 @@
     background-color: var(--background-color);
   }
 
-  .header--overlay:has(.header-top--transparent-scheme) .header-top {
+  .header--overlay:has(.header-top--transparent-scheme):not(:is(.header--is-scrolled, .header--submenu-open, .header--search-open, .header--cart-open)) .header-top {
     background-color: transparent;
   }
 
@@ -90,6 +90,32 @@
 
   .header__container {
     min-width: 0;
+  }
+
+  .header .header-mega-menu__banner-media { aspect-ratio: 6 / 7; }
+  .header .header-mega-menu__banner-image { height: 100%; object-fit: cover; }
+  .header .header-top { --body-color: var(--heading-color); }
+  .header-top .header__container { width: calc(100% - 100px); max-width: none; }
+  .header-top--separator-line { border-bottom: 0.5px solid #ccc; }
+  .header-top .header__column,
+  .header-top :where(.header-search, .header-account, .header-cart, .header-menu-toggle) { min-height: 44px; }
+  .header-top .header-localization__country { text-transform: uppercase; }
+  .header-top .header-localization__icon { display: none; }
+  .header-top .header-localization__flag { width: 16px; height: 12px; }
+  @media (768px <= width < 992px) {
+    .header-top .header__container { width: calc(100% - 60px); }
+    .header-top .header__column .header-account { display: inline-flex; }
+    .header-top .header__column .header-search,
+    .header-top .header__column .header-account,
+    .header-top .header__column .header-cart { min-height: 44px; }
+    .header-top[data-layout-ready='true'] .header__column--center { justify-content: center; }
+  }
+  @media (width < 768px) {
+    .header-top .header__container { width: calc(100% - 32px); }
+    .header-top .header__column,
+    .header-top :where(.header-search, .header-cart, .header-menu-toggle) { min-height: 40px; }
+    .header-top .header-menu-toggle { margin-inline-start: -8px; }
+    .header-top .header-cart { margin-inline-end: -8px; }
   }
 {% endstylesheet %}
 
@@ -171,81 +197,200 @@
       "name": "t:general.header",
       "category": "t:general.header",
       "settings": {
-        "section_width": "page_width",
-        "icon_size": 20,
-        "sticky_type": "none",
+        "section_width": "full_width",
+        "icon_size": 24,
+        "sticky_type": "scroll_up",
         "color_scheme": "scheme-1",
-        "header_overlay": false,
-        "transparent_color_scheme": "scheme-1"
+        "header_overlay": true,
+        "transparent_color_scheme": "scheme-3"
       },
       "blocks": [
         {
           "type": "_header-top",
-          "id": "header-top",
           "static": true,
           "settings": {
             "bottom_separator": "line",
-            "gap": 16,
-            "padding_top": 12,
-            "padding_bottom": 12,
+            "gap": 32,
+            "padding_top": 14,
+            "padding_bottom": 14,
             "customize_mobile_padding": true,
             "padding_top_mobile": 12,
-            "padding_bottom_mobile": 12
+            "padding_bottom_mobile": 12,
+            "actions_gap": 24,
+            "customize_mobile_gap": true,
+            "gap_mobile": 16,
+            "actions_gap_mobile": 16
           },
-
+          "id": "header-top",
           "blocks": [
             {
               "type": "_header-menu",
               "settings": {
-                "menu": "main-menu",
-                "gap": 24,
-                "show_dropdown_icon": true,
+                "menu": "virelle-header",
+                "gap": 40,
+                "show_dropdown_icon": false,
                 "dropdown_trigger": "hover",
-                "font": "accent",
-                "font_size": "md",
+                "font": "body",
+                "font_size": "sm",
                 "letter_spacing": "normal",
-                "text_case": "original"
+                "text_case": "uppercase",
+                "text_color": "",
+                "submenu_font": "body",
+                "submenu_font_size": "md",
+                "submenu_text_case": "original",
+                "submenu_text_color": ""
               },
               "blocks": [
                 {
                   "type": "_mega-menu-banners",
                   "settings": {
-                    "menu_item": "Collections",
-                    "banner_width": 40,
+                    "menu_item": "Shop",
+                    "highlight_menu_item": false,
+                    "highlight_color": "#000000",
+                    "banner_width": 50,
                     "gap": 12,
                     "layout": "horizontal",
-                    "submenu_columns": "4",
-                    "limit_width": true,
-                    "max_width": 850
+                    "submenu_columns": "2",
+                    "limit_width": false,
+                    "max_width": 850,
+                    "collections": [],
+                    "font": "accent",
+                    "font_size": "xl",
+                    "letter_spacing": "normal"
                   },
                   "blocks": [
-                    { "type": "_mega-menu-banner", "settings": {} },
-                    { "type": "_mega-menu-banner", "settings": {} }
+                    {
+                      "type": "_mega-menu-banner",
+                      "settings": {
+                        "link": "/collections/virelle-new-arrivals",
+                        "open_new_tab": false,
+                        "layout": "content_on_image",
+                        "limit_width": false,
+                        "max_width": 700,
+                        "overlay": false,
+                        "overlay_color": "#00000073",
+                        "subheading": "",
+                        "heading": "Stay fit. Stay fashionable.",
+                        "text": "",
+                        "alignment": "left",
+                        "content_position": "bottom",
+                        "heading_size": "custom",
+                        "custom_heading_size": 28,
+                        "text_size": "md",
+                        "label": "Shop the collection",
+                        "button_style": "tertiary",
+                        "show_icon": false,
+                        "icon": "arrow_right",
+                        "icon_position": "right",
+                        "full_width": false,
+                        "content_gap": 12,
+                        "button_spacing": 16,
+                        "color_scheme": "scheme-3",
+                        "padding_top": 40,
+                        "padding_bottom": 40,
+                        "padding_left": 32,
+                        "padding_right": 32,
+                        "customize_mobile_padding": false,
+                        "padding_top_mobile": 40,
+                        "padding_bottom_mobile": 40,
+                        "padding_left_mobile": 40,
+                        "padding_right_mobile": 40,
+                        "image": "shopify://shop_images/virelle-header-stay-fit.avif"
+                      }
+                    },
+                    {
+                      "type": "_mega-menu-banner",
+                      "settings": {
+                        "link": "/collections/virelle-t-shirts-tops",
+                        "open_new_tab": false,
+                        "layout": "content_on_image",
+                        "limit_width": false,
+                        "max_width": 700,
+                        "overlay": false,
+                        "overlay_color": "#00000073",
+                        "subheading": "",
+                        "heading": "Sporty chic vibes",
+                        "text": "",
+                        "alignment": "left",
+                        "content_position": "bottom",
+                        "heading_size": "custom",
+                        "custom_heading_size": 28,
+                        "text_size": "md",
+                        "label": "Shop the collection",
+                        "button_style": "tertiary",
+                        "show_icon": false,
+                        "icon": "arrow_right",
+                        "icon_position": "right",
+                        "full_width": false,
+                        "content_gap": 12,
+                        "button_spacing": 16,
+                        "color_scheme": "scheme-3",
+                        "padding_top": 40,
+                        "padding_bottom": 40,
+                        "padding_left": 32,
+                        "padding_right": 32,
+                        "customize_mobile_padding": false,
+                        "padding_top_mobile": 40,
+                        "padding_bottom_mobile": 40,
+                        "padding_left_mobile": 40,
+                        "padding_right_mobile": 40,
+                        "image": "shopify://shop_images/virelle-header-sporty-chic.avif"
+                      }
+                    }
                   ]
                 }
               ]
             },
             {
               "type": "_header-logo",
-              "settings": { "position": "center" }
+              "settings": {
+                "position": "center",
+                "position_mobile": "left"
+              }
             },
             {
-              "type": "_header-menu-toggle"
+              "type": "_header-menu-toggle",
+              "settings": {}
             },
             {
-              "type": "_header-localization"
+              "type": "_header-localization",
+              "settings": {
+                "dropdown_trigger": "click",
+                "show_country_selector": true,
+                "show_country_name": true,
+                "show_country_flag": true,
+                "show_language_selector": false,
+                "font_size": "sm"
+              }
             },
             {
-              "type": "_header-divider"
+              "type": "_header-search",
+              "settings": {
+                "type": "icon",
+                "label": "Search",
+                "font": "accent",
+                "font_size": "md",
+                "letter_spacing": "relaxed",
+                "show_on_mobile": true
+              }
             },
             {
-              "type": "_header-search"
+              "type": "_header-account",
+              "settings": {
+                "type": "icon",
+                "label": "Account",
+                "font": "accent",
+                "font_size": "md",
+                "letter_spacing": "normal"
+              }
             },
             {
-              "type": "_header-account"
-            },
-            {
-              "type": "_header-cart"
+              "type": "_header-cart",
+              "settings": {
+                "type": "icon",
+                "label": "Cart",
+                "badge_type": "primary"
+              }
             }
           ]
         }

@@ -571,6 +571,7 @@
   }
 
   .main-collection__active-filter {
+    border-radius: var(--tag-radius);
     gap: 8px;
     padding: 8px 12px;
     background: color-mix(in srgb, var(--color-text) 6%, var(--color-background));
@@ -1120,7 +1121,7 @@
       max-height: 85dvh;
       margin: 0;
       overflow: visible;
-      border-radius: 14px 14px 0 0;
+      border-radius: var(--bottom-sheet-radius) var(--bottom-sheet-radius) 0 0;
       background: transparent;
       box-shadow: 0 -14px 42px rgb(0 0 0 / 12%);
       transform: translateY(100%);
@@ -1545,7 +1546,7 @@
   .collection-columns__option > .collection-columns__option-input:active + .collection-columns__option-content { transform: none; }
 }
 
-.main-collection__sort-listbox { border-radius: var(--drawer-radius); box-shadow: 0 .75rem 1.5rem color-mix(in srgb, var(--shadow-color) 15%, transparent); }
+.main-collection__sort-listbox { border-radius: var(--card-radius-lg); box-shadow: 0 .75rem 1.5rem color-mix(in srgb, var(--shadow-color) 15%, transparent); }
 .main-collection__sort-option-button { border-radius: var(--radius-square); }
 
 /* Drawer gutters belong only to the dialog presentation, not the grid sidebar. */

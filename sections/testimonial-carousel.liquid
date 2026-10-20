@@ -1,93 +1,5 @@
-{% liquid
-  assign section_alignment = 'start'
-  case section.settings.alignment
-    when 'center'
-      assign section_alignment = 'center'
-    when 'right'
-      assign section_alignment = 'end'
-  endcase
-
-  assign section_alignment_mobile = section_alignment
-  if section.settings.customize_mobile_alignment
-    assign section_alignment_mobile = 'start'
-    case section.settings.alignment_mobile
-      when 'center'
-        assign section_alignment_mobile = 'center'
-      when 'right'
-        assign section_alignment_mobile = 'end'
-    endcase
-  endif
-
-  assign padding_top = section.settings.padding_top | default: 0 | plus: 0
-  assign padding_bottom = section.settings.padding_bottom | default: 0 | plus: 0
-  assign padding_top_mobile = section.settings.padding_top_mobile | default: 0 | plus: 0
-  assign padding_bottom_mobile = section.settings.padding_bottom_mobile | default: 0 | plus: 0
-  assign section_width = 'page-width'
-  assign container_width = 'page-width'
-  if section.settings.section_width == 'full_width'
-    assign section_width = 'full-width'
-    assign container_width = 'full-width'
-  elsif section.settings.section_width == 'full_width_no_padding'
-    assign section_width = 'full-width-no-padding'
-    assign container_width = 'full-width full-width--no-padding'
-  endif
-
-  assign color_scheme = section.settings.color_scheme | default: 'scheme-1'
-  if section.settings.color_scheme.id != blank
-    assign color_scheme = section.settings.color_scheme.id
-  endif
-  assign color_scheme = color_scheme | default: 'scheme-1' | handleize
-%}
-
-{% capture section_style %}
-  {% if section_alignment != 'start' %}--flex-align: {{ section_alignment }};{% endif %}
-  {% if section.settings.customize_mobile_alignment and section_alignment_mobile != section_alignment %}--flex-align-mobile: {{ section_alignment_mobile }};{% endif %}
-  {% if section.settings.background_color != blank %}--testimonial-carousel-background-color: {{ section.settings.background_color | escape }};{% endif %}
-  {% if padding_top != 0 %}--testimonial-carousel-padding-top: {{ padding_top }}px;{% endif %}
-  {% if padding_bottom != 0 %}--testimonial-carousel-padding-bottom: {{ padding_bottom }}px;{% endif %}
-  {% if section.settings.customize_mobile_padding %}
-    {% if padding_top_mobile != padding_top %}--testimonial-carousel-padding-top-mobile: {{ padding_top_mobile }}px;{% endif %}
-    {% if padding_bottom_mobile != padding_bottom %}--testimonial-carousel-padding-bottom-mobile: {{ padding_bottom_mobile }}px;{% endif %}
-  {% endif %}
-{% endcapture %}
-
-
-<div class="testimonial-carousel testimonial-carousel--{{ section_width }}">
-  <div class="section-spacing testimonial-carousel__spacing color-scheme section-color-scope {{ color_scheme }}"{% if section_style != blank %} style="{{ section_style | strip }}"{% endif %}>
-    {% if section.settings.background_image != blank %}
-      <div class="testimonial-carousel__background" aria-hidden="true">
-        {{ section.settings.background_image | image_url: width: 2000 | image_tag: class: 'background-media-paint' }}
-      </div>
-    {% endif %}
-
-    <div class="container {{ container_width }} testimonial-carousel__container">
-      <div class="testimonial-carousel__content align-content">
-        {% content_for 'blocks' %}
-      </div>
-    </div>
-  </div>
-</div>
-
-{% stylesheet %}
-  .testimonial-carousel { width: 100%; min-width: 0; }
-  .testimonial-carousel__spacing {
-    position: relative;
-    overflow: clip;
-    width: 100%;
-    padding-top: var(--testimonial-carousel-padding-top, 0px);
-    padding-bottom: var(--testimonial-carousel-padding-bottom, 0px);
-    background-color: var(--testimonial-carousel-background-color, var(--background-color));
-  }
-  .testimonial-carousel__container { position: relative; z-index: 1; }
-  .testimonial-carousel__container.full-width--no-padding { padding-inline: 0; }
-  .testimonial-carousel__background { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-  .testimonial-carousel__background img { display: block; width: 100%; height: 100%; object-fit: cover; }
-  .testimonial-carousel__content { min-width: 0; }
-  .testimonial-carousel .carousel-block__container { position: relative; }
-  @media (max-width: 767.98px) {
-    .testimonial-carousel__spacing { padding-top: var(--testimonial-carousel-padding-top-mobile, var(--testimonial-carousel-padding-top, 0px)); padding-bottom: var(--testimonial-carousel-padding-bottom-mobile, var(--testimonial-carousel-padding-bottom, 0px)); }
-  }
-{% endstylesheet %}
+{% capture children %}{% content_for 'blocks' %}{% endcapture %}
+{% render 'custom-section-layout', section: section, children: children, root_class: 'testimonial-carousel' %}
 
 {% schema %}
 {
@@ -101,9 +13,103 @@
   "blocks": [
     {
       "type": "carousel_split"
+    },
+    {
+      "type": "carousel"
+    },
+    {
+      "type": "header"
+    },
+    {
+      "type": "heading"
+    },
+    {
+      "type": "editorial-text"
+    },
+    {
+      "type": "eyebrow"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "image-comparison"
+    },
+    {
+      "type": "image-card"
+    },
+    {
+      "type": "video"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "buttons"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "spacer"
+    },
+    {
+      "type": "group"
+    },
+    {
+      "type": "marquee"
+    },
+    {
+      "type": "row"
+    },
+    {
+      "type": "columns"
+    },
+    {
+      "type": "email-signup"
+    },
+    {
+      "type": "contact-form"
+    },
+    {
+      "type": "product-list"
+    },
+    {
+      "type": "countdown-timer"
+    },
+    {
+      "type": "product-card-compact"
+    },
+    {
+      "type": "payment-icons"
+    },
+    {
+      "type": "comparison-table"
+    },
+    {
+      "type": "popup"
+    },
+    {
+      "type": "social-links"
+    },
+    {
+      "type": "discount-code"
+    },
+    {
+      "type": "faq_accordion"
     }
   ],
   "settings": [
+    {
+      "type": "header",
+      "content": "t:custom_section.layout"
+    },
     {
       "type": "select",
       "id": "section_width",
@@ -111,37 +117,364 @@
       "options": [
         {
           "value": "page_width",
-          "label": "t:options.section_width.page_width"
+          "label": "t:custom_section.page"
         },
         {
           "value": "full_width",
-          "label": "t:options.section_width.full_width"
+          "label": "t:custom_section.full"
         },
         {
           "value": "full_width_no_padding",
-          "label": "t:options.section_width.full_width_no_padding"
+          "label": "t:custom_section.full_no_padding"
         }
       ],
       "default": "page_width"
     },
     {
-      "type": "text_alignment",
+      "type": "select",
+      "id": "height",
+      "label": "t:custom_section.section_height",
+      "options": [
+        {
+          "value": "auto",
+          "label": "t:custom_section.auto"
+        },
+        {
+          "value": "full_screen",
+          "label": "t:custom_section.full_screen"
+        },
+        {
+          "value": "custom",
+          "label": "t:custom_section.custom"
+        }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "range",
+      "id": "custom_height",
+      "label": "t:custom_section.custom_height",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.height == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "t:custom_section.direction",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "t:custom_section.horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "t:custom_section.vertical"
+        }
+      ],
+      "default": "vertical"
+    },
+    {
+      "type": "select",
       "id": "alignment",
       "label": "t:labels.alignment",
-      "default": "left"
+      "default": "left",
+      "visible_if": "{{ section.settings.direction != 'horizontal' }}",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:custom_section.left"
+        },
+        {
+          "value": "center",
+          "label": "t:custom_section.center"
+        },
+        {
+          "value": "right",
+          "label": "t:custom_section.right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "t:custom_section.position",
+      "options": [
+        {
+          "value": "top",
+          "label": "t:custom_section.top"
+        },
+        {
+          "value": "center",
+          "label": "t:custom_section.center"
+        },
+        {
+          "value": "bottom",
+          "label": "t:custom_section.bottom"
+        },
+        {
+          "value": "space-between",
+          "label": "t:custom_section.space_between"
+        }
+      ],
+      "default": "top",
+      "visible_if": "{{ section.settings.direction == 'vertical' and section.settings.height != 'auto' }}"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment",
+      "label": "t:custom_section.alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:custom_section.left"
+        },
+        {
+          "value": "center",
+          "label": "t:custom_section.center"
+        },
+        {
+          "value": "right",
+          "label": "t:custom_section.right"
+        },
+        {
+          "value": "space-between",
+          "label": "t:custom_section.space_between"
+        }
+      ],
+      "default": "left",
+      "visible_if": "{{ section.settings.direction == 'horizontal' }}"
+    },
+    {
+      "type": "select",
+      "id": "position_horizontal",
+      "label": "t:custom_section.position",
+      "options": [
+        {
+          "value": "top",
+          "label": "t:custom_section.top"
+        },
+        {
+          "value": "center",
+          "label": "t:custom_section.center"
+        },
+        {
+          "value": "bottom",
+          "label": "t:custom_section.bottom"
+        }
+      ],
+      "default": "center",
+      "visible_if": "{{ section.settings.direction == 'horizontal' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "vertical_on_mobile",
+      "label": "t:custom_section.vertical_on_mobile",
+      "default": true,
+      "visible_if": "{{ section.settings.direction == 'horizontal' }}"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment_mobile",
+      "label": "t:labels.mobile_alignment",
+      "default": "left",
+      "visible_if": "{{ section.settings.direction == 'horizontal' and section.settings.vertical_on_mobile }}",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:custom_section.left"
+        },
+        {
+          "value": "center",
+          "label": "t:custom_section.center"
+        },
+        {
+          "value": "right",
+          "label": "t:custom_section.right"
+        }
+      ]
     },
     {
       "type": "checkbox",
       "id": "customize_mobile_alignment",
       "label": "t:labels.customize_mobile_alignment",
-      "default": false
+      "default": false,
+      "visible_if": "{{ section.settings.direction != 'horizontal' }}"
     },
     {
-      "type": "text_alignment",
+      "type": "select",
       "id": "alignment_mobile",
       "label": "t:labels.mobile_alignment",
       "default": "left",
-      "visible_if": "{{ section.settings.customize_mobile_alignment }}"
+      "visible_if": "{{ section.settings.direction != 'horizontal' and section.settings.customize_mobile_alignment }}",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:custom_section.left"
+        },
+        {
+          "value": "center",
+          "label": "t:custom_section.center"
+        },
+        {
+          "value": "right",
+          "label": "t:custom_section.right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_content",
+      "label": "t:custom_section.enable_sticky_content",
+      "default": false,
+      "visible_if": "{{ section.settings.direction == 'horizontal' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:custom_section.divider"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_top_divider",
+      "label": "t:custom_section.show_top_divider",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bottom_divider",
+      "label": "t:custom_section.show_bottom_divider",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "divider_full_width",
+      "label": "t:custom_section.full_width_divider",
+      "default": true,
+      "visible_if": "{{ section.settings.section_width != 'full_width_no_padding' and section.settings.show_top_divider or section.settings.show_bottom_divider }}"
+    },
+    {
+      "type": "header",
+      "content": "t:custom_section.gap"
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "t:custom_section.desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_gap",
+      "label": "t:labels.customize_mobile_layout",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "content_gap_mobile",
+      "label": "t:custom_section.mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 12,
+      "visible_if": "{{ section.settings.customize_mobile_gap }}"
+    },
+    {
+      "type": "header",
+      "content": "t:custom_section.background"
+    },
+    {
+      "type": "select",
+      "id": "background_media",
+      "label": "t:custom_section.media",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:custom_section.none"
+        },
+        {
+          "value": "image",
+          "label": "t:custom_section.image"
+        },
+        {
+          "value": "video",
+          "label": "t:custom_section.video"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:labels.background_image",
+      "visible_if": "{{ section.settings.background_media == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_mobile",
+      "label": "t:custom_section.mobile_image_optional",
+      "visible_if": "{{ section.settings.background_media == 'image' }}"
+    },
+    {
+      "type": "video",
+      "id": "background_video",
+      "label": "t:custom_section.video",
+      "visible_if": "{{ section.settings.background_media == 'video' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "t:custom_section.overlay",
+      "default": true,
+      "visible_if": "{{ section.settings.background_media != 'none' }}"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "t:custom_section.overlay_color",
+      "alpha": true,
+      "default": "#00000080",
+      "visible_if": "{{ section.settings.background_media != 'none' and section.settings.show_overlay }}"
+    },
+    {
+      "type": "select",
+      "id": "parallax_effect",
+      "label": "t:custom_section.parallax_effect",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:custom_section.none"
+        },
+        {
+          "value": "fixed",
+          "label": "t:custom_section.fixed"
+        },
+        {
+          "value": "vertical",
+          "label": "t:custom_section.vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "t:custom_section.horizontal"
+        },
+        {
+          "value": "zoom",
+          "label": "t:custom_section.zoom"
+        }
+      ],
+      "default": "none",
+      "visible_if": "{{ section.settings.background_media != 'none' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:custom_section.color"
     },
     {
       "type": "color_scheme",
@@ -154,11 +487,6 @@
       "alpha": true,
       "id": "background_color",
       "label": "t:labels.background"
-    },
-    {
-      "type": "image_picker",
-      "id": "background_image",
-      "label": "t:labels.background_image"
     },
     {
       "type": "header",
@@ -218,19 +546,104 @@
       "name": "Testimonial: split",
       "category": "Trust & social proof",
       "settings": {
-        "section_width": "full_width_no_padding",
-        "color_scheme": "scheme-4"
+        "section_width": "page_width",
+        "color_scheme": "scheme-1",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48,
+        "direction": "vertical",
+        "content_gap": 48,
+        "customize_mobile_gap": true,
+        "content_gap_mobile": 32
       },
       "blocks": [
+        {
+          "type": "header",
+          "settings": {
+            "width": "fill",
+            "inherit_alignment": false,
+            "alignment": "left",
+            "customize_mobile_alignment": true,
+            "alignment_mobile": "center",
+            "gap_desktop": 12,
+            "gap_mobile": 12
+          },
+          "blocks": [
+            {
+              "type": "group",
+              "settings": {
+                "direction": "horizontal",
+                "position_horizontal": "center",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": false,
+                "gap_desktop": 8,
+                "gap_mobile": 8,
+                "width": "fit",
+                "width_mobile": "fit",
+                "height": "fit",
+                "appearance_type": "inherit",
+                "backdrop_blur": 0,
+                "show_overlay": false
+              },
+              "blocks": [
+                {
+                  "type": "icon",
+                  "settings": {
+                    "source": "custom",
+                    "custom_icon": "<svg width=\"8\" height=\"8\" viewBox=\"0 0 8 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect width=\"8\" height=\"8\" fill=\"#181818\"/>\n</svg>",
+                    "icon_width": 8,
+                    "icon_padding": 0,
+                    "custom_mobile": false,
+                    "icon_width_mobile": 8,
+                    "icon_padding_mobile": 0
+                  }
+                },
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>Our commitment</p>",
+                    "show_icon": false,
+                    "icon": "square"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>What athletes are saying</p>",
+                "html_tag": "h2",
+                "heading_size": "display",
+                "width": "fill"
+              }
+            }
+          ]
+        },
         {
           "type": "carousel_split",
           "settings": {
             "loop": false,
-            "transition_style": "fade"
+            "transition_style": "slide",
+            "show_mobile_pagination": true,
+            "show_navigation": true
           },
           "blocks": [
             {
               "type": "slide_split",
+              "settings": {
+                "position_horizontal": "top",
+                "horizontal_alignment": "left",
+                "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 32,
+                "height": "fill",
+                "appearance_type": "inherit",
+                "border_type": "none",
+                "corner_radius": "square",
+                "shadow": "none"
+              },
               "blocks": [
                 {
                   "type": "image",
@@ -241,10 +654,11 @@
                     "image_ratio_mobile": "custom",
                     "width_desktop": "fill",
                     "width_mobile": "fill",
-                    "image_ratio_custom_width_desktop": 5,
-                    "image_ratio_custom_height_desktop": 4,
-                    "image_ratio_custom_width_mobile": 5,
-                    "image_ratio_custom_height_mobile": 4
+                    "image_ratio_custom_width_desktop": 1,
+                    "image_ratio_custom_height_desktop": 1,
+                    "image_ratio_custom_width_mobile": 4,
+                    "image_ratio_custom_height_mobile": 3,
+                    "image": "shopify://shop_images/virelle-testimonial-eva.avif"
                   }
                 },
                 {
@@ -253,76 +667,96 @@
                   "static": true,
                   "settings": {
                     "direction": "vertical",
-                    "alignment": "left",
                     "width": "fill",
-                    "gap_desktop": 0,
-                    "gap_mobile": 0,
-                    "appearance_type": "inherit",
-                    "border_type": "none",
-                    "corner_radius": "square",
-                    "shadow": "none"
+                    "alignment": "left",
+                    "gap_desktop": 48,
+                    "gap_mobile": 24,
+                    "appearance_type": "inherit"
                   },
                   "blocks": [
                     {
-                      "type": "eyebrow",
+                      "type": "group",
                       "settings": {
-                        "text": "<p>FROM THE PEOPLE</p>"
-                      }
+                        "direction": "vertical",
+                        "width": "fill",
+                        "alignment": "left",
+                        "gap_desktop": 16,
+                        "gap_mobile": 16,
+                        "appearance_type": "inherit"
+                      },
+                      "blocks": [
+                        {
+                          "type": "icon",
+                          "settings": {
+                            "source": "custom",
+                            "icon": "five-stars",
+                            "icon_width": 88,
+                            "icon_padding": 0,
+                            "custom_icon": "<svg width=\"88\" height=\"16\" viewBox=\"0 0 88 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M8.00032 12.1134L4.76872 14.0498C4.62596 14.1402 4.47671 14.1789 4.32097 14.166C4.16523 14.1531 4.02896 14.1015 3.91216 14.0111C3.79535 13.9208 3.7045 13.8079 3.63961 13.6726C3.57472 13.5373 3.56174 13.3855 3.60068 13.2172L4.45724 9.55739L1.59553 7.09816C1.46575 6.98197 1.38476 6.84952 1.35258 6.70081C1.32039 6.55209 1.32999 6.40699 1.38139 6.2655C1.43278 6.12402 1.51065 6.00783 1.615 5.91695C1.71934 5.82607 1.8621 5.76798 2.04328 5.74268L5.81997 5.41349L7.28002 1.96669C7.34491 1.81178 7.44563 1.69559 7.58216 1.61814C7.71869 1.54068 7.85808 1.50195 8.00032 1.50195C8.14256 1.50195 8.28195 1.54068 8.41848 1.61814C8.55501 1.69559 8.65572 1.81178 8.72061 1.96669L10.1807 5.41349L13.9574 5.74268C14.1391 5.76849 14.2818 5.82659 14.3856 5.91695C14.4895 6.00732 14.5673 6.1235 14.6192 6.2655C14.6712 6.40751 14.681 6.55287 14.6488 6.70158C14.6167 6.8503 14.5354 6.98249 14.4051 7.09816L11.5434 9.55739L12.4 13.2172C12.4389 13.385 12.4259 13.5368 12.361 13.6726C12.2961 13.8084 12.2053 13.9213 12.0885 14.0111C11.9717 14.101 11.8354 14.1526 11.6797 14.166C11.5239 14.1795 11.3747 14.1407 11.2319 14.0498L8.00032 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M26.0003 12.1134L22.7687 14.0498C22.626 14.1402 22.4767 14.1789 22.321 14.166C22.1652 14.1531 22.029 14.1015 21.9122 14.0111C21.7954 13.9208 21.7045 13.8079 21.6396 13.6726C21.5747 13.5373 21.5617 13.3855 21.6007 13.2172L22.4572 9.55739L19.5955 7.09816C19.4657 6.98197 19.3848 6.84952 19.3526 6.70081C19.3204 6.55209 19.33 6.40699 19.3814 6.2655C19.4328 6.12402 19.5107 6.00783 19.615 5.91695C19.7193 5.82607 19.8621 5.76798 20.0433 5.74268L23.82 5.41349L25.28 1.96669C25.3449 1.81178 25.4456 1.69559 25.5822 1.61814C25.7187 1.54068 25.8581 1.50195 26.0003 1.50195C26.1426 1.50195 26.2819 1.54068 26.4185 1.61814C26.555 1.69559 26.6557 1.81178 26.7206 1.96669L28.1807 5.41349L31.9574 5.74268C32.1391 5.76849 32.2818 5.82659 32.3856 5.91695C32.4895 6.00732 32.5673 6.1235 32.6192 6.2655C32.6712 6.40751 32.681 6.55287 32.6488 6.70158C32.6167 6.8503 32.5354 6.98249 32.4051 7.09816L29.5434 9.55739L30.4 13.2172C30.4389 13.385 30.4259 13.5368 30.361 13.6726C30.2961 13.8084 30.2053 13.9213 30.0885 14.0111C29.9717 14.101 29.8354 14.1526 29.6797 14.166C29.5239 14.1795 29.3747 14.1407 29.2319 14.0498L26.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M44.0003 12.1134L40.7687 14.0498C40.626 14.1402 40.4767 14.1789 40.321 14.166C40.1652 14.1531 40.029 14.1015 39.9122 14.0111C39.7954 13.9208 39.7045 13.8079 39.6396 13.6726C39.5747 13.5373 39.5617 13.3855 39.6007 13.2172L40.4572 9.55739L37.5955 7.09816C37.4657 6.98197 37.3848 6.84952 37.3526 6.70081C37.3204 6.55209 37.33 6.40699 37.3814 6.2655C37.4328 6.12402 37.5107 6.00783 37.615 5.91695C37.7193 5.82607 37.8621 5.76798 38.0433 5.74268L41.82 5.41349L43.28 1.96669C43.3449 1.81178 43.4456 1.69559 43.5822 1.61814C43.7187 1.54068 43.8581 1.50195 44.0003 1.50195C44.1426 1.50195 44.2819 1.54068 44.4185 1.61814C44.555 1.69559 44.6557 1.81178 44.7206 1.96669L46.1807 5.41349L49.9574 5.74268C50.1391 5.76849 50.2818 5.82659 50.3856 5.91695C50.4895 6.00732 50.5673 6.1235 50.6192 6.2655C50.6712 6.40751 50.681 6.55287 50.6488 6.70158C50.6167 6.8503 50.5354 6.98249 50.4051 7.09816L47.5434 9.55739L48.4 13.2172C48.4389 13.385 48.4259 13.5368 48.361 13.6726C48.2961 13.8084 48.2053 13.9213 48.0885 14.0111C47.9717 14.101 47.8354 14.1526 47.6797 14.166C47.5239 14.1795 47.3747 14.1407 47.2319 14.0498L44.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M62.0003 12.1134L58.7687 14.0498C58.626 14.1402 58.4767 14.1789 58.321 14.166C58.1652 14.1531 58.029 14.1015 57.9122 14.0111C57.7954 13.9208 57.7045 13.8079 57.6396 13.6726C57.5747 13.5373 57.5617 13.3855 57.6007 13.2172L58.4572 9.55739L55.5955 7.09816C55.4657 6.98197 55.3848 6.84952 55.3526 6.70081C55.3204 6.55209 55.33 6.40699 55.3814 6.2655C55.4328 6.12402 55.5107 6.00783 55.615 5.91695C55.7193 5.82607 55.8621 5.76798 56.0433 5.74268L59.82 5.41349L61.28 1.96669C61.3449 1.81178 61.4456 1.69559 61.5822 1.61814C61.7187 1.54068 61.8581 1.50195 62.0003 1.50195C62.1426 1.50195 62.2819 1.54068 62.4185 1.61814C62.555 1.69559 62.6557 1.81178 62.7206 1.96669L64.1807 5.41349L67.9574 5.74268C68.1391 5.76849 68.2818 5.82659 68.3856 5.91695C68.4895 6.00732 68.5673 6.1235 68.6192 6.2655C68.6712 6.40751 68.681 6.55287 68.6488 6.70158C68.6167 6.8503 68.5354 6.98249 68.4051 7.09816L65.5434 9.55739L66.4 13.2172C66.4389 13.385 66.4259 13.5368 66.361 13.6726C66.2961 13.8084 66.2053 13.9213 66.0885 14.0111C65.9717 14.101 65.8354 14.1526 65.6797 14.166C65.5239 14.1795 65.3747 14.1407 65.2319 14.0498L62.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M80.0003 12.1134L76.7687 14.0498C76.626 14.1402 76.4767 14.1789 76.321 14.166C76.1652 14.1531 76.029 14.1015 75.9122 14.0111C75.7954 13.9208 75.7045 13.8079 75.6396 13.6726C75.5747 13.5373 75.5617 13.3855 75.6007 13.2172L76.4572 9.55739L73.5955 7.09816C73.4657 6.98197 73.3848 6.84952 73.3526 6.70081C73.3204 6.55209 73.33 6.40699 73.3814 6.2655C73.4328 6.12402 73.5107 6.00783 73.615 5.91695C73.7193 5.82607 73.8621 5.76798 74.0433 5.74268L77.82 5.41349L79.28 1.96669C79.3449 1.81178 79.4456 1.69559 79.5822 1.61814C79.7187 1.54068 79.8581 1.50195 80.0003 1.50195C80.1426 1.50195 80.2819 1.54068 80.4185 1.61814C80.555 1.69559 80.6557 1.81178 80.7206 1.96669L82.1807 5.41349L85.9574 5.74268C86.1391 5.76849 86.2818 5.82659 86.3856 5.91695C86.4895 6.00732 86.5673 6.1235 86.6192 6.2655C86.6712 6.40751 86.681 6.55287 86.6488 6.70158C86.6167 6.8503 86.5354 6.98249 86.4051 7.09816L83.5434 9.55739L84.4 13.2172C84.4389 13.385 84.4259 13.5368 84.361 13.6726C84.2961 13.8084 84.2053 13.9213 84.0885 14.0111C83.9717 14.101 83.8354 14.1526 83.6797 14.166C83.5239 14.1795 83.3747 14.1407 83.2319 14.0498L80.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<mask id=\"mask0_48338_19796\" style=\"mask-type:alpha\" maskUnits=\"userSpaceOnUse\" x=\"73\" y=\"1\" width=\"14\" height=\"14\">\n<path d=\"M80.0003 12.1134L76.7687 14.0498C76.626 14.1402 76.4767 14.1789 76.321 14.166C76.1652 14.1531 76.029 14.1015 75.9122 14.0111C75.7954 13.9208 75.7045 13.8079 75.6396 13.6726C75.5747 13.5373 75.5617 13.3855 75.6007 13.2172L76.4572 9.55739L73.5955 7.09816C73.4657 6.98197 73.3848 6.84952 73.3526 6.70081C73.3204 6.55209 73.33 6.40699 73.3814 6.2655C73.4328 6.12402 73.5107 6.00783 73.615 5.91695C73.7193 5.82607 73.8621 5.76798 74.0433 5.74268L77.82 5.41349L79.28 1.96669C79.3449 1.81178 79.4456 1.69559 79.5822 1.61814C79.7187 1.54068 79.8581 1.50195 80.0003 1.50195C80.1426 1.50195 80.2819 1.54068 80.4185 1.61814C80.555 1.69559 80.6557 1.81178 80.7206 1.96669L82.1807 5.41349L85.9574 5.74268C86.1391 5.76849 86.2818 5.82659 86.3856 5.91695C86.4895 6.00732 86.5673 6.1235 86.6192 6.2655C86.6712 6.40751 86.681 6.55287 86.6488 6.70158C86.6167 6.8503 86.5354 6.98249 86.4051 7.09816L83.5434 9.55739L84.4 13.2172C84.4389 13.385 84.4259 13.5368 84.361 13.6726C84.2961 13.8084 84.2053 13.9213 84.0885 14.0111C83.9717 14.101 83.8354 14.1526 83.6797 14.166C83.5239 14.1795 83.3747 14.1407 83.2319 14.0498L80.0003 12.1134Z\" fill=\"#FFB74B\"/>\n</mask>\n<g mask=\"url(#mask0_48338_19796)\">\n<rect x=\"80\" y=\"1\" width=\"7\" height=\"14\" fill=\"#E6E6E6\"/>\n</g>\n</svg>",
+                            "accessible_label": "4.5 out of 5 stars"
+                          }
+                        },
+                        {
+                          "type": "group",
+                          "settings": {
+                            "direction": "vertical",
+                            "width": "fill",
+                            "alignment": "left",
+                            "gap_desktop": 12,
+                            "gap_mobile": 12,
+                            "appearance_type": "inherit"
+                          },
+                          "blocks": [
+                            {
+                              "type": "text",
+                              "settings": {
+                                "text": "<p>The waistband stays securely in place, offering reliable support during both sprints and squats.</p>",
+                                "text_size": "md",
+                                "width": "fill",
+                                "text_color": "#181818"
+                              }
+                            },
+                            {
+                              "type": "heading",
+                              "settings": {
+                                "text": "<p>Eva Johnson</p>",
+                                "html_tag": "h3",
+                                "heading_size": "custom",
+                                "custom_heading_size": 18,
+                                "width": "fill"
+                              }
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
-                      "type": "icon",
+                      "type": "product-card-single",
                       "settings": {
-                        "source": "library",
-                        "icon": "five-stars",
-                        "icon_width": 88,
-                        "custom_mobile": false
-                      }
-                    },
-                    {
-                      "type": "heading",
-                      "settings": {
-                        "text": "<p>“The necklace looks amazing! Thank you so much for all of your help and outstanding customer service. What I love most is the attention to detail. Every gem sparkles beautifully honour”</p>",
-                        "heading_size": "display",
-                        "html_tag": "h3",
-                        "width": "fill"
-                      }
-                    },
-                    {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>— Madison P, London</p>",
-                        "text_size": "sm",
-                        "width": "fill"
+                        "max_width": 390,
+                        "horizontal_on_mobile": true,
+                        "color_type": "inherit",
+                        "product": "virelle-effortless-seamless-leggings"
                       }
                     }
                   ]
                 }
-              ],
-              "settings": {
-                "position_horizontal": "center",
-                "horizontal_alignment": "left",
-                "alignment_mobile": "left",
-                "gap_desktop": 0,
-                "gap_mobile": 40,
-                "height": "fill",
-                "appearance_type": "scheme",
-                "color_scheme": "scheme-4",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none",
-                "padding_top": 0,
-                "padding_bottom": 0,
-                "padding_left": 0,
-                "padding_right": 0,
-                "customize_mobile_padding": false,
-                "padding_top_mobile": 0,
-                "padding_bottom_mobile": 0,
-                "padding_left_mobile": 0,
-                "padding_right_mobile": 0
-              }
+              ]
             },
             {
               "type": "slide_split",
+              "settings": {
+                "position_horizontal": "top",
+                "horizontal_alignment": "left",
+                "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 32,
+                "height": "fill",
+                "appearance_type": "inherit",
+                "border_type": "none",
+                "corner_radius": "square",
+                "shadow": "none"
+              },
               "blocks": [
                 {
                   "type": "image",
@@ -333,10 +767,11 @@
                     "image_ratio_mobile": "custom",
                     "width_desktop": "fill",
                     "width_mobile": "fill",
-                    "image_ratio_custom_width_desktop": 5,
-                    "image_ratio_custom_height_desktop": 4,
-                    "image_ratio_custom_width_mobile": 5,
-                    "image_ratio_custom_height_mobile": 4
+                    "image_ratio_custom_width_desktop": 1,
+                    "image_ratio_custom_height_desktop": 1,
+                    "image_ratio_custom_width_mobile": 4,
+                    "image_ratio_custom_height_mobile": 3,
+                    "image": "shopify://shop_images/virelle-testimonial-ava.avif"
                   }
                 },
                 {
@@ -345,79 +780,200 @@
                   "static": true,
                   "settings": {
                     "direction": "vertical",
-                    "alignment": "left",
                     "width": "fill",
-                    "gap_desktop": 0,
-                    "gap_mobile": 0,
-                    "appearance_type": "inherit",
-                    "border_type": "none",
-                    "corner_radius": "square",
-                    "shadow": "none"
+                    "alignment": "left",
+                    "gap_desktop": 48,
+                    "gap_mobile": 24,
+                    "appearance_type": "inherit"
                   },
                   "blocks": [
                     {
-                      "type": "eyebrow",
+                      "type": "group",
                       "settings": {
-                        "text": "<p>FROM THE PEOPLE</p>"
-                      }
+                        "direction": "vertical",
+                        "width": "fill",
+                        "alignment": "left",
+                        "gap_desktop": 16,
+                        "gap_mobile": 16,
+                        "appearance_type": "inherit"
+                      },
+                      "blocks": [
+                        {
+                          "type": "icon",
+                          "settings": {
+                            "source": "custom",
+                            "icon": "five-stars",
+                            "icon_width": 88,
+                            "icon_padding": 0,
+                            "custom_icon": "<svg width=\"88\" height=\"16\" viewBox=\"0 0 88 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M8.00032 12.1134L4.76872 14.0498C4.62596 14.1402 4.47671 14.1789 4.32097 14.166C4.16523 14.1531 4.02896 14.1015 3.91216 14.0111C3.79535 13.9208 3.7045 13.8079 3.63961 13.6726C3.57472 13.5373 3.56174 13.3855 3.60068 13.2172L4.45724 9.55739L1.59553 7.09816C1.46575 6.98197 1.38476 6.84952 1.35258 6.70081C1.32039 6.55209 1.32999 6.40699 1.38139 6.2655C1.43278 6.12402 1.51065 6.00783 1.615 5.91695C1.71934 5.82607 1.8621 5.76798 2.04328 5.74268L5.81997 5.41349L7.28002 1.96669C7.34491 1.81178 7.44563 1.69559 7.58216 1.61814C7.71869 1.54068 7.85808 1.50195 8.00032 1.50195C8.14256 1.50195 8.28195 1.54068 8.41848 1.61814C8.55501 1.69559 8.65572 1.81178 8.72061 1.96669L10.1807 5.41349L13.9574 5.74268C14.1391 5.76849 14.2818 5.82659 14.3856 5.91695C14.4895 6.00732 14.5673 6.1235 14.6192 6.2655C14.6712 6.40751 14.681 6.55287 14.6488 6.70158C14.6167 6.8503 14.5354 6.98249 14.4051 7.09816L11.5434 9.55739L12.4 13.2172C12.4389 13.385 12.4259 13.5368 12.361 13.6726C12.2961 13.8084 12.2053 13.9213 12.0885 14.0111C11.9717 14.101 11.8354 14.1526 11.6797 14.166C11.5239 14.1795 11.3747 14.1407 11.2319 14.0498L8.00032 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M26.0003 12.1134L22.7687 14.0498C22.626 14.1402 22.4767 14.1789 22.321 14.166C22.1652 14.1531 22.029 14.1015 21.9122 14.0111C21.7954 13.9208 21.7045 13.8079 21.6396 13.6726C21.5747 13.5373 21.5617 13.3855 21.6007 13.2172L22.4572 9.55739L19.5955 7.09816C19.4657 6.98197 19.3848 6.84952 19.3526 6.70081C19.3204 6.55209 19.33 6.40699 19.3814 6.2655C19.4328 6.12402 19.5107 6.00783 19.615 5.91695C19.7193 5.82607 19.8621 5.76798 20.0433 5.74268L23.82 5.41349L25.28 1.96669C25.3449 1.81178 25.4456 1.69559 25.5822 1.61814C25.7187 1.54068 25.8581 1.50195 26.0003 1.50195C26.1426 1.50195 26.2819 1.54068 26.4185 1.61814C26.555 1.69559 26.6557 1.81178 26.7206 1.96669L28.1807 5.41349L31.9574 5.74268C32.1391 5.76849 32.2818 5.82659 32.3856 5.91695C32.4895 6.00732 32.5673 6.1235 32.6192 6.2655C32.6712 6.40751 32.681 6.55287 32.6488 6.70158C32.6167 6.8503 32.5354 6.98249 32.4051 7.09816L29.5434 9.55739L30.4 13.2172C30.4389 13.385 30.4259 13.5368 30.361 13.6726C30.2961 13.8084 30.2053 13.9213 30.0885 14.0111C29.9717 14.101 29.8354 14.1526 29.6797 14.166C29.5239 14.1795 29.3747 14.1407 29.2319 14.0498L26.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M44.0003 12.1134L40.7687 14.0498C40.626 14.1402 40.4767 14.1789 40.321 14.166C40.1652 14.1531 40.029 14.1015 39.9122 14.0111C39.7954 13.9208 39.7045 13.8079 39.6396 13.6726C39.5747 13.5373 39.5617 13.3855 39.6007 13.2172L40.4572 9.55739L37.5955 7.09816C37.4657 6.98197 37.3848 6.84952 37.3526 6.70081C37.3204 6.55209 37.33 6.40699 37.3814 6.2655C37.4328 6.12402 37.5107 6.00783 37.615 5.91695C37.7193 5.82607 37.8621 5.76798 38.0433 5.74268L41.82 5.41349L43.28 1.96669C43.3449 1.81178 43.4456 1.69559 43.5822 1.61814C43.7187 1.54068 43.8581 1.50195 44.0003 1.50195C44.1426 1.50195 44.2819 1.54068 44.4185 1.61814C44.555 1.69559 44.6557 1.81178 44.7206 1.96669L46.1807 5.41349L49.9574 5.74268C50.1391 5.76849 50.2818 5.82659 50.3856 5.91695C50.4895 6.00732 50.5673 6.1235 50.6192 6.2655C50.6712 6.40751 50.681 6.55287 50.6488 6.70158C50.6167 6.8503 50.5354 6.98249 50.4051 7.09816L47.5434 9.55739L48.4 13.2172C48.4389 13.385 48.4259 13.5368 48.361 13.6726C48.2961 13.8084 48.2053 13.9213 48.0885 14.0111C47.9717 14.101 47.8354 14.1526 47.6797 14.166C47.5239 14.1795 47.3747 14.1407 47.2319 14.0498L44.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M62.0003 12.1134L58.7687 14.0498C58.626 14.1402 58.4767 14.1789 58.321 14.166C58.1652 14.1531 58.029 14.1015 57.9122 14.0111C57.7954 13.9208 57.7045 13.8079 57.6396 13.6726C57.5747 13.5373 57.5617 13.3855 57.6007 13.2172L58.4572 9.55739L55.5955 7.09816C55.4657 6.98197 55.3848 6.84952 55.3526 6.70081C55.3204 6.55209 55.33 6.40699 55.3814 6.2655C55.4328 6.12402 55.5107 6.00783 55.615 5.91695C55.7193 5.82607 55.8621 5.76798 56.0433 5.74268L59.82 5.41349L61.28 1.96669C61.3449 1.81178 61.4456 1.69559 61.5822 1.61814C61.7187 1.54068 61.8581 1.50195 62.0003 1.50195C62.1426 1.50195 62.2819 1.54068 62.4185 1.61814C62.555 1.69559 62.6557 1.81178 62.7206 1.96669L64.1807 5.41349L67.9574 5.74268C68.1391 5.76849 68.2818 5.82659 68.3856 5.91695C68.4895 6.00732 68.5673 6.1235 68.6192 6.2655C68.6712 6.40751 68.681 6.55287 68.6488 6.70158C68.6167 6.8503 68.5354 6.98249 68.4051 7.09816L65.5434 9.55739L66.4 13.2172C66.4389 13.385 66.4259 13.5368 66.361 13.6726C66.2961 13.8084 66.2053 13.9213 66.0885 14.0111C65.9717 14.101 65.8354 14.1526 65.6797 14.166C65.5239 14.1795 65.3747 14.1407 65.2319 14.0498L62.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M80.0003 12.1134L76.7687 14.0498C76.626 14.1402 76.4767 14.1789 76.321 14.166C76.1652 14.1531 76.029 14.1015 75.9122 14.0111C75.7954 13.9208 75.7045 13.8079 75.6396 13.6726C75.5747 13.5373 75.5617 13.3855 75.6007 13.2172L76.4572 9.55739L73.5955 7.09816C73.4657 6.98197 73.3848 6.84952 73.3526 6.70081C73.3204 6.55209 73.33 6.40699 73.3814 6.2655C73.4328 6.12402 73.5107 6.00783 73.615 5.91695C73.7193 5.82607 73.8621 5.76798 74.0433 5.74268L77.82 5.41349L79.28 1.96669C79.3449 1.81178 79.4456 1.69559 79.5822 1.61814C79.7187 1.54068 79.8581 1.50195 80.0003 1.50195C80.1426 1.50195 80.2819 1.54068 80.4185 1.61814C80.555 1.69559 80.6557 1.81178 80.7206 1.96669L82.1807 5.41349L85.9574 5.74268C86.1391 5.76849 86.2818 5.82659 86.3856 5.91695C86.4895 6.00732 86.5673 6.1235 86.6192 6.2655C86.6712 6.40751 86.681 6.55287 86.6488 6.70158C86.6167 6.8503 86.5354 6.98249 86.4051 7.09816L83.5434 9.55739L84.4 13.2172C84.4389 13.385 84.4259 13.5368 84.361 13.6726C84.2961 13.8084 84.2053 13.9213 84.0885 14.0111C83.9717 14.101 83.8354 14.1526 83.6797 14.166C83.5239 14.1795 83.3747 14.1407 83.2319 14.0498L80.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<mask id=\"mask0_48338_19796\" style=\"mask-type:alpha\" maskUnits=\"userSpaceOnUse\" x=\"73\" y=\"1\" width=\"14\" height=\"14\">\n<path d=\"M80.0003 12.1134L76.7687 14.0498C76.626 14.1402 76.4767 14.1789 76.321 14.166C76.1652 14.1531 76.029 14.1015 75.9122 14.0111C75.7954 13.9208 75.7045 13.8079 75.6396 13.6726C75.5747 13.5373 75.5617 13.3855 75.6007 13.2172L76.4572 9.55739L73.5955 7.09816C73.4657 6.98197 73.3848 6.84952 73.3526 6.70081C73.3204 6.55209 73.33 6.40699 73.3814 6.2655C73.4328 6.12402 73.5107 6.00783 73.615 5.91695C73.7193 5.82607 73.8621 5.76798 74.0433 5.74268L77.82 5.41349L79.28 1.96669C79.3449 1.81178 79.4456 1.69559 79.5822 1.61814C79.7187 1.54068 79.8581 1.50195 80.0003 1.50195C80.1426 1.50195 80.2819 1.54068 80.4185 1.61814C80.555 1.69559 80.6557 1.81178 80.7206 1.96669L82.1807 5.41349L85.9574 5.74268C86.1391 5.76849 86.2818 5.82659 86.3856 5.91695C86.4895 6.00732 86.5673 6.1235 86.6192 6.2655C86.6712 6.40751 86.681 6.55287 86.6488 6.70158C86.6167 6.8503 86.5354 6.98249 86.4051 7.09816L83.5434 9.55739L84.4 13.2172C84.4389 13.385 84.4259 13.5368 84.361 13.6726C84.2961 13.8084 84.2053 13.9213 84.0885 14.0111C83.9717 14.101 83.8354 14.1526 83.6797 14.166C83.5239 14.1795 83.3747 14.1407 83.2319 14.0498L80.0003 12.1134Z\" fill=\"#FFB74B\"/>\n</mask>\n<g mask=\"url(#mask0_48338_19796)\">\n<rect x=\"80\" y=\"1\" width=\"7\" height=\"14\" fill=\"#E6E6E6\"/>\n</g>\n</svg>",
+                            "accessible_label": "4.5 out of 5 stars"
+                          }
+                        },
+                        {
+                          "type": "group",
+                          "settings": {
+                            "direction": "vertical",
+                            "width": "fill",
+                            "alignment": "left",
+                            "gap_desktop": 12,
+                            "gap_mobile": 12,
+                            "appearance_type": "inherit"
+                          },
+                          "blocks": [
+                            {
+                              "type": "text",
+                              "settings": {
+                                "text": "<p>The sport bra offers excellent support and comfort, making it perfect for pilates.</p>",
+                                "text_size": "md",
+                                "width": "fill",
+                                "text_color": "#181818"
+                              }
+                            },
+                            {
+                              "type": "heading",
+                              "settings": {
+                                "text": "<p>Ava Brown</p>",
+                                "html_tag": "h3",
+                                "heading_size": "custom",
+                                "custom_heading_size": 18,
+                                "width": "fill"
+                              }
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
-                      "type": "icon",
+                      "type": "product-card-single",
                       "settings": {
-                        "source": "library",
-                        "icon": "five-stars",
-                        "icon_width": 88,
-                        "custom_mobile": false
-                      }
-                    },
-                    {
-                      "type": "heading",
-                      "settings": {
-                        "text": "<p>\"They created a gorgeous piece for me! I have so much of their jewelry so it was difficult, but they outdid themselves again with something totally different than anything I have!\"</p>",
-                        "heading_size": "display",
-                        "html_tag": "h3",
-                        "width": "fill"
-                      }
-                    },
-                    {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>— Rachel L, USA</p>",
-                        "text_size": "sm",
-                        "width": "fill"
+                        "max_width": 390,
+                        "horizontal_on_mobile": true,
+                        "color_type": "inherit",
+                        "product": "virelle-timeless-strappy-bralette"
                       }
                     }
                   ]
                 }
-              ],
+              ]
+            },
+            {
+              "type": "slide_split",
               "settings": {
-                "position_horizontal": "center",
+                "position_horizontal": "top",
                 "horizontal_alignment": "left",
                 "alignment_mobile": "left",
                 "gap_desktop": 0,
-                "gap_mobile": 40,
+                "gap_mobile": 32,
                 "height": "fill",
-                "appearance_type": "scheme",
-                "color_scheme": "scheme-4",
+                "appearance_type": "inherit",
                 "border_type": "none",
                 "corner_radius": "square",
-                "shadow": "none",
-                "padding_top": 0,
-                "padding_bottom": 0,
-                "padding_left": 0,
-                "padding_right": 0,
-                "customize_mobile_padding": false,
-                "padding_top_mobile": 0,
-                "padding_bottom_mobile": 0,
-                "padding_left_mobile": 0,
-                "padding_right_mobile": 0
-              }
+                "shadow": "none"
+              },
+              "blocks": [
+                {
+                  "type": "image",
+                  "id": "image",
+                  "static": true,
+                  "settings": {
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_mobile": "custom",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "image_ratio_custom_width_desktop": 1,
+                    "image_ratio_custom_height_desktop": 1,
+                    "image_ratio_custom_width_mobile": 4,
+                    "image_ratio_custom_height_mobile": 3,
+                    "image": "shopify://shop_images/virelle-testimonial-harper.avif"
+                  }
+                },
+                {
+                  "type": "group",
+                  "id": "content",
+                  "static": true,
+                  "settings": {
+                    "direction": "vertical",
+                    "width": "fill",
+                    "alignment": "left",
+                    "gap_desktop": 48,
+                    "gap_mobile": 24,
+                    "appearance_type": "inherit"
+                  },
+                  "blocks": [
+                    {
+                      "type": "group",
+                      "settings": {
+                        "direction": "vertical",
+                        "width": "fill",
+                        "alignment": "left",
+                        "gap_desktop": 16,
+                        "gap_mobile": 16,
+                        "appearance_type": "inherit"
+                      },
+                      "blocks": [
+                        {
+                          "type": "icon",
+                          "settings": {
+                            "source": "custom",
+                            "icon": "five-stars",
+                            "icon_width": 88,
+                            "icon_padding": 0,
+                            "custom_icon": "<svg width=\"88\" height=\"16\" viewBox=\"0 0 88 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M8.00032 12.1134L4.76872 14.0498C4.62596 14.1402 4.47671 14.1789 4.32097 14.166C4.16523 14.1531 4.02896 14.1015 3.91216 14.0111C3.79535 13.9208 3.7045 13.8079 3.63961 13.6726C3.57472 13.5373 3.56174 13.3855 3.60068 13.2172L4.45724 9.55739L1.59553 7.09816C1.46575 6.98197 1.38476 6.84952 1.35258 6.70081C1.32039 6.55209 1.32999 6.40699 1.38139 6.2655C1.43278 6.12402 1.51065 6.00783 1.615 5.91695C1.71934 5.82607 1.8621 5.76798 2.04328 5.74268L5.81997 5.41349L7.28002 1.96669C7.34491 1.81178 7.44563 1.69559 7.58216 1.61814C7.71869 1.54068 7.85808 1.50195 8.00032 1.50195C8.14256 1.50195 8.28195 1.54068 8.41848 1.61814C8.55501 1.69559 8.65572 1.81178 8.72061 1.96669L10.1807 5.41349L13.9574 5.74268C14.1391 5.76849 14.2818 5.82659 14.3856 5.91695C14.4895 6.00732 14.5673 6.1235 14.6192 6.2655C14.6712 6.40751 14.681 6.55287 14.6488 6.70158C14.6167 6.8503 14.5354 6.98249 14.4051 7.09816L11.5434 9.55739L12.4 13.2172C12.4389 13.385 12.4259 13.5368 12.361 13.6726C12.2961 13.8084 12.2053 13.9213 12.0885 14.0111C11.9717 14.101 11.8354 14.1526 11.6797 14.166C11.5239 14.1795 11.3747 14.1407 11.2319 14.0498L8.00032 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M26.0003 12.1134L22.7687 14.0498C22.626 14.1402 22.4767 14.1789 22.321 14.166C22.1652 14.1531 22.029 14.1015 21.9122 14.0111C21.7954 13.9208 21.7045 13.8079 21.6396 13.6726C21.5747 13.5373 21.5617 13.3855 21.6007 13.2172L22.4572 9.55739L19.5955 7.09816C19.4657 6.98197 19.3848 6.84952 19.3526 6.70081C19.3204 6.55209 19.33 6.40699 19.3814 6.2655C19.4328 6.12402 19.5107 6.00783 19.615 5.91695C19.7193 5.82607 19.8621 5.76798 20.0433 5.74268L23.82 5.41349L25.28 1.96669C25.3449 1.81178 25.4456 1.69559 25.5822 1.61814C25.7187 1.54068 25.8581 1.50195 26.0003 1.50195C26.1426 1.50195 26.2819 1.54068 26.4185 1.61814C26.555 1.69559 26.6557 1.81178 26.7206 1.96669L28.1807 5.41349L31.9574 5.74268C32.1391 5.76849 32.2818 5.82659 32.3856 5.91695C32.4895 6.00732 32.5673 6.1235 32.6192 6.2655C32.6712 6.40751 32.681 6.55287 32.6488 6.70158C32.6167 6.8503 32.5354 6.98249 32.4051 7.09816L29.5434 9.55739L30.4 13.2172C30.4389 13.385 30.4259 13.5368 30.361 13.6726C30.2961 13.8084 30.2053 13.9213 30.0885 14.0111C29.9717 14.101 29.8354 14.1526 29.6797 14.166C29.5239 14.1795 29.3747 14.1407 29.2319 14.0498L26.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M44.0003 12.1134L40.7687 14.0498C40.626 14.1402 40.4767 14.1789 40.321 14.166C40.1652 14.1531 40.029 14.1015 39.9122 14.0111C39.7954 13.9208 39.7045 13.8079 39.6396 13.6726C39.5747 13.5373 39.5617 13.3855 39.6007 13.2172L40.4572 9.55739L37.5955 7.09816C37.4657 6.98197 37.3848 6.84952 37.3526 6.70081C37.3204 6.55209 37.33 6.40699 37.3814 6.2655C37.4328 6.12402 37.5107 6.00783 37.615 5.91695C37.7193 5.82607 37.8621 5.76798 38.0433 5.74268L41.82 5.41349L43.28 1.96669C43.3449 1.81178 43.4456 1.69559 43.5822 1.61814C43.7187 1.54068 43.8581 1.50195 44.0003 1.50195C44.1426 1.50195 44.2819 1.54068 44.4185 1.61814C44.555 1.69559 44.6557 1.81178 44.7206 1.96669L46.1807 5.41349L49.9574 5.74268C50.1391 5.76849 50.2818 5.82659 50.3856 5.91695C50.4895 6.00732 50.5673 6.1235 50.6192 6.2655C50.6712 6.40751 50.681 6.55287 50.6488 6.70158C50.6167 6.8503 50.5354 6.98249 50.4051 7.09816L47.5434 9.55739L48.4 13.2172C48.4389 13.385 48.4259 13.5368 48.361 13.6726C48.2961 13.8084 48.2053 13.9213 48.0885 14.0111C47.9717 14.101 47.8354 14.1526 47.6797 14.166C47.5239 14.1795 47.3747 14.1407 47.2319 14.0498L44.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M62.0003 12.1134L58.7687 14.0498C58.626 14.1402 58.4767 14.1789 58.321 14.166C58.1652 14.1531 58.029 14.1015 57.9122 14.0111C57.7954 13.9208 57.7045 13.8079 57.6396 13.6726C57.5747 13.5373 57.5617 13.3855 57.6007 13.2172L58.4572 9.55739L55.5955 7.09816C55.4657 6.98197 55.3848 6.84952 55.3526 6.70081C55.3204 6.55209 55.33 6.40699 55.3814 6.2655C55.4328 6.12402 55.5107 6.00783 55.615 5.91695C55.7193 5.82607 55.8621 5.76798 56.0433 5.74268L59.82 5.41349L61.28 1.96669C61.3449 1.81178 61.4456 1.69559 61.5822 1.61814C61.7187 1.54068 61.8581 1.50195 62.0003 1.50195C62.1426 1.50195 62.2819 1.54068 62.4185 1.61814C62.555 1.69559 62.6557 1.81178 62.7206 1.96669L64.1807 5.41349L67.9574 5.74268C68.1391 5.76849 68.2818 5.82659 68.3856 5.91695C68.4895 6.00732 68.5673 6.1235 68.6192 6.2655C68.6712 6.40751 68.681 6.55287 68.6488 6.70158C68.6167 6.8503 68.5354 6.98249 68.4051 7.09816L65.5434 9.55739L66.4 13.2172C66.4389 13.385 66.4259 13.5368 66.361 13.6726C66.2961 13.8084 66.2053 13.9213 66.0885 14.0111C65.9717 14.101 65.8354 14.1526 65.6797 14.166C65.5239 14.1795 65.3747 14.1407 65.2319 14.0498L62.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M80.0003 12.1134L76.7687 14.0498C76.626 14.1402 76.4767 14.1789 76.321 14.166C76.1652 14.1531 76.029 14.1015 75.9122 14.0111C75.7954 13.9208 75.7045 13.8079 75.6396 13.6726C75.5747 13.5373 75.5617 13.3855 75.6007 13.2172L76.4572 9.55739L73.5955 7.09816C73.4657 6.98197 73.3848 6.84952 73.3526 6.70081C73.3204 6.55209 73.33 6.40699 73.3814 6.2655C73.4328 6.12402 73.5107 6.00783 73.615 5.91695C73.7193 5.82607 73.8621 5.76798 74.0433 5.74268L77.82 5.41349L79.28 1.96669C79.3449 1.81178 79.4456 1.69559 79.5822 1.61814C79.7187 1.54068 79.8581 1.50195 80.0003 1.50195C80.1426 1.50195 80.2819 1.54068 80.4185 1.61814C80.555 1.69559 80.6557 1.81178 80.7206 1.96669L82.1807 5.41349L85.9574 5.74268C86.1391 5.76849 86.2818 5.82659 86.3856 5.91695C86.4895 6.00732 86.5673 6.1235 86.6192 6.2655C86.6712 6.40751 86.681 6.55287 86.6488 6.70158C86.6167 6.8503 86.5354 6.98249 86.4051 7.09816L83.5434 9.55739L84.4 13.2172C84.4389 13.385 84.4259 13.5368 84.361 13.6726C84.2961 13.8084 84.2053 13.9213 84.0885 14.0111C83.9717 14.101 83.8354 14.1526 83.6797 14.166C83.5239 14.1795 83.3747 14.1407 83.2319 14.0498L80.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<mask id=\"mask0_48338_19796\" style=\"mask-type:alpha\" maskUnits=\"userSpaceOnUse\" x=\"73\" y=\"1\" width=\"14\" height=\"14\">\n<path d=\"M80.0003 12.1134L76.7687 14.0498C76.626 14.1402 76.4767 14.1789 76.321 14.166C76.1652 14.1531 76.029 14.1015 75.9122 14.0111C75.7954 13.9208 75.7045 13.8079 75.6396 13.6726C75.5747 13.5373 75.5617 13.3855 75.6007 13.2172L76.4572 9.55739L73.5955 7.09816C73.4657 6.98197 73.3848 6.84952 73.3526 6.70081C73.3204 6.55209 73.33 6.40699 73.3814 6.2655C73.4328 6.12402 73.5107 6.00783 73.615 5.91695C73.7193 5.82607 73.8621 5.76798 74.0433 5.74268L77.82 5.41349L79.28 1.96669C79.3449 1.81178 79.4456 1.69559 79.5822 1.61814C79.7187 1.54068 79.8581 1.50195 80.0003 1.50195C80.1426 1.50195 80.2819 1.54068 80.4185 1.61814C80.555 1.69559 80.6557 1.81178 80.7206 1.96669L82.1807 5.41349L85.9574 5.74268C86.1391 5.76849 86.2818 5.82659 86.3856 5.91695C86.4895 6.00732 86.5673 6.1235 86.6192 6.2655C86.6712 6.40751 86.681 6.55287 86.6488 6.70158C86.6167 6.8503 86.5354 6.98249 86.4051 7.09816L83.5434 9.55739L84.4 13.2172C84.4389 13.385 84.4259 13.5368 84.361 13.6726C84.2961 13.8084 84.2053 13.9213 84.0885 14.0111C83.9717 14.101 83.8354 14.1526 83.6797 14.166C83.5239 14.1795 83.3747 14.1407 83.2319 14.0498L80.0003 12.1134Z\" fill=\"#FFB74B\"/>\n</mask>\n<g mask=\"url(#mask0_48338_19796)\">\n<rect x=\"80\" y=\"1\" width=\"7\" height=\"14\" fill=\"#E6E6E6\"/>\n</g>\n</svg>",
+                            "accessible_label": "4.5 out of 5 stars"
+                          }
+                        },
+                        {
+                          "type": "group",
+                          "settings": {
+                            "direction": "vertical",
+                            "width": "fill",
+                            "alignment": "left",
+                            "gap_desktop": 12,
+                            "gap_mobile": 12,
+                            "appearance_type": "inherit"
+                          },
+                          "blocks": [
+                            {
+                              "type": "text",
+                              "settings": {
+                                "text": "<p>They feature a high waistband that offers excellent support and a flattering fit, making them perfect for any workout.</p>",
+                                "text_size": "md",
+                                "width": "fill",
+                                "text_color": "#181818"
+                              }
+                            },
+                            {
+                              "type": "heading",
+                              "settings": {
+                                "text": "<p>Harper Anderson</p>",
+                                "html_tag": "h3",
+                                "heading_size": "custom",
+                                "custom_heading_size": 18,
+                                "width": "fill"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "product-card-single",
+                      "settings": {
+                        "max_width": 390,
+                        "horizontal_on_mobile": true,
+                        "color_type": "inherit",
+                        "product": "virelle-soft-motion-leggings"
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
       ]
     }
   ],
-  "max_blocks": 1
+  "max_blocks": 50
 }
 {% endschema %}

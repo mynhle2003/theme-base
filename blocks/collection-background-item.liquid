@@ -23,6 +23,10 @@
   elsif item_image == blank
     assign item_media_is_placeholder = true
   endif
+  assign item_mobile_width = 1000
+  if section.settings.mobile_layout == 'tabs'
+    assign item_mobile_width = 2400
+  endif
   assign item_id = 'CollectionBackground-' | append: section.id | append: '-' | append: block.id
   assign item_placeholder = 'collection-1'
   assign item_scheme = section.settings.collection_color_scheme | default: 'scheme-1'
@@ -31,7 +35,7 @@
   endif
 %}
 <div class="collection-background-item swiper-slide" data-collections-background-item data-item-id="{{ item_id }}" {{ block.shopify_attributes }}>
-  <button id="{{ item_id }}-tab" class="collection-background-item__trigger" type="button" role="tab" aria-selected="false" aria-controls="{{ item_id }}-panel" tabindex="-1" data-collections-background-trigger>{{ item_title | escape }}{% if section.settings.show_product_count and item_collection != blank %}<span class="collection-background-item__count">{{ item_collection.all_products_count }}</span>{% endif %}</button>
+  <button id="{{ item_id }}-tab" class="collection-background-item__trigger{% if section.settings.outline_text %} virelle-text-outline virelle-text-outline--transparent{% endif %}" type="button" role="tab" aria-selected="false" aria-controls="{{ item_id }}-panel" tabindex="-1" data-collections-background-trigger>{{ item_title | escape }}{% if section.settings.show_product_count and item_collection != blank %}<span class="collection-background-item__count">{{ item_collection.all_products_count }}</span>{% endif %}</button>
   <div id="{{ item_id }}-panel" class="collection-background-item__panel color-scheme section-color-scope {{ item_scheme }}" role="tabpanel" aria-labelledby="{{ item_id }}-tab" data-collections-background-panel>
     <{{ section.settings.heading_tag }} class="visually-hidden">{{ item_title | escape }}</{{ section.settings.heading_tag }}>
     <div class="media collection-background-item__media" aria-hidden="true">
@@ -39,7 +43,7 @@
         {% if block.settings.media_type == 'video' and block.settings.video != blank %}
           {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, image_size: '2400x' }}
         {% elsif item_image != blank %}
-          <picture>{% if item_mobile_image != blank %}<source media="(max-width: 767.98px)" srcset="{{ item_mobile_image | image_url: width: 1000 }}">{% endif %}{{ item_image | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 2000, 2400', sizes: '100vw', alt: '' }}</picture>
+          <picture>{% if item_mobile_image != blank %}<source media="(max-width: 767.98px)" srcset="{{ item_mobile_image | image_url: width: item_mobile_width }}">{% endif %}{{ item_image | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 2000, 2400', sizes: '100vw', loading: 'eager', alt: '' }}</picture>
         {% else %}
           {{ item_placeholder | placeholder_svg_tag }}
         {% endif %}

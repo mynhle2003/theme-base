@@ -1,0 +1,60 @@
+{% doc %}
+  Resolves a shared typography choice into a primitive CSS token.
+  @param {string} kind - line_height, spacing or case
+  @param {string} value - Schema choice
+{% enddoc %}
+{%- liquid
+  case kind
+    when 'line_height'
+      case value
+        when 'tighter'
+          echo 'var(--line-height-tighter)'
+        when 'tight'
+          echo 'var(--line-height-tight)'
+        when 'normal'
+          echo 'var(--line-height-normal)'
+        when 'relaxed'
+          echo 'var(--line-height-relaxed)'
+        when 'loose'
+          echo 'var(--line-height-loose)'
+        when 'extra_loose'
+          echo 'var(--line-height-extra-loose)'
+        else
+          echo 'var(--line-height-normal)'
+      endcase
+    when 'spacing'
+      case value
+        when 'extra_tight'
+          echo 'var(--letter-spacing-extra-tight)'
+        when 'super_tight'
+          echo 'var(--letter-spacing-super-tight)'
+        when 'ultra_tight'
+          echo 'var(--letter-spacing-ultra-tight)'
+        when 'tighter'
+          echo 'var(--letter-spacing-tighter)'
+        when 'tight'
+          echo 'var(--letter-spacing-tight)'
+        when 'normal'
+          echo 'var(--letter-spacing-normal)'
+        when 'relaxed'
+          echo 'var(--letter-spacing-relaxed)'
+        when 'loose'
+          echo 'var(--letter-spacing-loose)'
+        when 'extra_loose'
+          echo 'var(--letter-spacing-extra-loose)'
+        when 'ultra_loose'
+          echo 'var(--letter-spacing-ultra-loose)'
+        when 'mega_loose'
+          echo 'var(--letter-spacing-mega-loose)'
+        else
+          echo 'var(--letter-spacing-normal)'
+      endcase
+    when 'case'
+      case value
+        when 'uppercase', 'lowercase', 'capitalize'
+          echo value
+        else
+          echo 'none'
+      endcase
+  endcase
+-%}

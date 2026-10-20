@@ -1,0 +1,74 @@
+{
+  "source": {
+    "file": "yTXlAfT0miBGgRuuYM4OMp",
+    "homepage": "48002:1686",
+    "verified_children": [
+      "48049:2486",
+      "48002:1687",
+      "48002:2407",
+      "48002:2605",
+      "48002:2592"
+    ]
+  },
+  "changes": [
+    {
+      "id": "max_page_width",
+      "old": 1600,
+      "new": 1700
+    },
+    {
+      "id": "button_letter_spacing",
+      "old": "reference",
+      "new": "normal"
+    },
+    {
+      "id": "input_height_desktop",
+      "old": 48,
+      "new": 56
+    },
+    {
+      "id": "form_input_typography",
+      "old": "md",
+      "new": "sm"
+    }
+  ],
+  "saved_presets_unchanged": true,
+  "schema_unchanged": true,
+  "preview_verified": false,
+  "preview_blocker": "Local browser use is disabled in Work settings",
+  "theme_check": {
+    "errors": 0,
+    "warnings": 8
+  },
+  "gaps": [
+    "H2 desktop 50px cannot be represented by current 32–72px range with step 4; retained nearest existing 48px.",
+    "H4 desktop 18px is below existing minimum 24px; retained 24px. Icon width text custom preset already uses supported local 18px heading override.",
+    "Heading tracking is fixed by role (-1.28/-0.8/-0.64/-0.48px), while Figma uses -1.2/-0.6/0/0px.",
+    "Button tracking -0.2px is unavailable; selected nearest normal 0px instead of reference 1.2px.",
+    "Body/input tracking 0.1px and product-card title weight 500 have no matching independent controls."
+  ],
+  "store_mutations": false,
+  "explicit_push_or_publish": false,
+  "mapping": {
+    "max_page_width": {
+      "figma": "1600px content in 1920px frame; 50px global desktop side padding",
+      "consumer": "snippets/css-variables.liquid --page-width → assets/critical.css .page-width",
+      "impact": "All page-width containers; 1700px border-box minus 100px padding gives 1600px content. Full-width containers and mobile margin settings unchanged."
+    },
+    "input_height_desktop": {
+      "figma": "Newsletter 48002:2609, 56px form height",
+      "consumer": "snippets/css-variables.liquid → shared form height tokens",
+      "impact": "Desktop form controls using global input height, including newsletter; mobile remains 44px."
+    },
+    "form_input_typography": {
+      "figma": "Newsletter 48002:2609, Roboto 14px",
+      "consumer": "--form-input-font-size = --font-body-sm",
+      "impact": "All controls consuming global form input typography on desktop/mobile."
+    },
+    "button_letter_spacing": {
+      "figma": "Hero, featured collection and newsletter buttons: -0.2px",
+      "consumer": "--button-letter-spacing → shared button primitive",
+      "impact": "All buttons consuming the shared token; normal = 0px is nearest supported choice."
+    }
+  }
+}

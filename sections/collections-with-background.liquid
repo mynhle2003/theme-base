@@ -81,11 +81,11 @@
   .collections-with-background__frame--full_width { max-width: none; }
   .collections-with-background__frame--full_width_no_padding { width: 100%; max-width: none; }
   .collections-with-background__frame--adapt { min-height: 0; aspect-ratio: var(--collections-background-aspect-ratio); }
-  .collections-with-background__frame--extra_small { min-height: 28rem; }
-  .collections-with-background__frame--small { min-height: 36rem; }
-  .collections-with-background__frame--medium { min-height: 44rem; }
-  .collections-with-background__frame--large { min-height: 52rem; }
-  .collections-with-background__frame--extra_large { min-height: 62rem; }
+  .collections-with-background__frame--extra_small { min-height: 38.1818rem; }
+  .collections-with-background__frame--small { min-height: 49.0909rem; }
+  .collections-with-background__frame--medium { min-height: 60rem; }
+  .collections-with-background__frame--large { min-height: 70.9091rem; }
+  .collections-with-background__frame--extra_large { min-height: 84.5455rem; }
   .collections-with-background__frame--full_screen { min-height: 100svh; }
   /* Scope these above Swiper's base selectors: desktop panels must remain a full-frame stack. */
   .collections-with-background .collections-with-background__mobile-swiper, .collections-with-background .collections-with-background__panels, .collections-with-background .collection-background-item, .collections-with-background .collection-background-item__panel { position: absolute; inset: 0; }
@@ -117,9 +117,10 @@
   [data-title-layout='horizontal'] .collections-with-background__titles { flex-flow: row wrap; align-items: center; }
   .collection-background-item__trigger { position: relative; z-index: 1; padding: 0; border: 0; background: transparent; color: inherit; cursor: pointer; font: var(--font-heading-style) var(--font-heading-weight) var(--collections-background-heading-size) / var(--collections-background-heading-line-height) var(--font-heading-family); letter-spacing: var(--collections-background-heading-spacing); text-transform: var(--collections-background-heading-transform); opacity: var(--collections-background-text-opacity, .6); transition: opacity var(--motion-duration-standard) var(--motion-ease-standard); }
   .collection-background-item__trigger[aria-selected='true'], .collection-background-item__trigger:hover, .collection-background-item__trigger:focus-visible { opacity: 1; }
-  .collection-background-item__count { display: inline-block; margin-inline-start: .35em; color: var(--body-color); font-size: .55em; vertical-align: super; -webkit-text-stroke: 0; }
+  .collection-background-item__count { display: inline-block; margin-inline-start: .35em; color: var(--body-color); font-size: .55em; vertical-align: super; -webkit-text-stroke: 0; -webkit-text-fill-color: currentColor; }
   .collection-background-item__mobile-title { display: none; }
-  [data-outline-text='true'] .collection-background-item__trigger:not([aria-selected='true']) { color: transparent; -webkit-text-stroke: 1px var(--body-color); }
+  [data-outline-text='true'] .collection-background-item__trigger { --text-outline-color: var(--body-color); }
+  [data-outline-text='true'] .collection-background-item__trigger[aria-selected='true'] { -webkit-text-stroke-width: 0; -webkit-text-fill-color: currentColor; }
   .collection-background-item__trigger:focus-visible { outline: 2px solid currentColor; outline-offset: .25rem; }
   @media (prefers-reduced-motion: reduce) { .collection-background-item__panel, .collection-background-item__media :is(.media__inner > img, .media__inner > video, .media__inner > svg, .media__inner > picture > img) { transition: none; } }
   .is-sticky-title .collections-with-background__titles { position: fixed; z-index: var(--z-sticky, 20); }
@@ -157,12 +158,656 @@
     [data-mobile-position='bottom_center'] .collection-background-item__mobile-title { inset: auto 1rem 1rem; text-align: center; }
     [data-mobile-position='bottom_right'] .collection-background-item__mobile-title { inset: auto 1rem 1rem auto; text-align: right; }
   }
+
+  .collections-with-background__titles { color: var(--heading-color); row-gap: var(--collections-background-gap); column-gap: 8rem; }
+  .collections-with-background .collection-background-item__trigger { padding-inline: 3.2rem; letter-spacing: -1.2px; }
+  .collections-with-background .collection-background-item__media img { object-position: 50% 40.7%; }
+  @media (max-width: 767.98px) {
+    .collections-with-background[data-mobile-layout='tabs'] .collections-with-background__frame { min-height: 60rem; overflow: hidden; aspect-ratio: auto; }
+    .collections-with-background[data-mobile-layout='tabs'] .collections-with-background__frame--mobile-height-adapt { min-height: 0; aspect-ratio: var(--collections-background-mobile-aspect-ratio); }
+    .collections-with-background[data-mobile-layout='tabs'] .collections-with-background__frame--mobile-height-extra_small { min-height: 45rem; }
+    .collections-with-background[data-mobile-layout='tabs'] .collections-with-background__frame--mobile-height-small { min-height: 56.3rem; }
+    .collections-with-background[data-mobile-layout='tabs'] .collections-with-background__frame--mobile-height-medium { min-height: 60rem; }
+    .collections-with-background[data-mobile-layout='tabs'] :is(.collections-with-background__mobile-swiper, .collections-with-background__panels, .collection-background-item) { position: absolute; inset: 0; display: block; width: 100%; height: 100%; aspect-ratio: auto; }
+    [data-mobile-layout='tabs'] .collection-background-item { pointer-events: none; }
+    [data-mobile-layout='tabs'] .collection-background-item.is-active { pointer-events: auto; }
+    [data-mobile-layout='tabs'] .collection-background-item__panel { z-index: 0; visibility: hidden; opacity: 0; }
+    [data-mobile-layout='tabs'] .collection-background-item.is-active .collection-background-item__panel { z-index: 1; visibility: visible; opacity: 1; }
+    [data-mobile-layout='tabs'] .collections-with-background__titles { display: flex !important; flex-direction: column; gap: var(--collections-background-gap-mobile); width: calc(100% - 3.2rem); }
+    [data-mobile-layout='tabs'] .collection-background-item__trigger { font-size: var(--collections-background-heading-size-mobile); line-height: var(--collections-background-heading-line-height-mobile); letter-spacing: var(--collections-background-heading-spacing-mobile); text-transform: var(--collections-background-heading-transform-mobile); }
+    [data-mobile-layout='tabs'] .collection-background-item__mobile-title { display: none; }
+    [data-mobile-layout='tabs'][data-mobile-position='top_left'] .collections-with-background__titles { inset: 1.6rem auto auto 1.6rem; transform: none; align-items: flex-start; }
+    [data-mobile-layout='tabs'][data-mobile-position='top_center'] .collections-with-background__titles { inset: 1.6rem 50% auto auto; transform: translateX(50%); align-items: center; }
+    [data-mobile-layout='tabs'][data-mobile-position='top_right'] .collections-with-background__titles { inset: 1.6rem 1.6rem auto auto; transform: none; align-items: flex-end; }
+    [data-mobile-layout='tabs'][data-mobile-position='center_left'] .collections-with-background__titles { inset: 50% auto auto 1.6rem; transform: translateY(-50%); align-items: flex-start; }
+    [data-mobile-layout='tabs'][data-mobile-position='center_center'] .collections-with-background__titles { inset: 50% 50% auto auto; transform: translate(50%, -50%); align-items: center; }
+    [data-mobile-layout='tabs'][data-mobile-position='center_right'] .collections-with-background__titles { inset: 50% 1.6rem auto auto; transform: translateY(-50%); align-items: flex-end; }
+    [data-mobile-layout='tabs'][data-mobile-position='bottom_left'] .collections-with-background__titles { inset: auto auto 1.6rem 1.6rem; transform: none; align-items: flex-start; }
+    [data-mobile-layout='tabs'][data-mobile-position='bottom_center'] .collections-with-background__titles { inset: auto 50% 1.6rem auto; transform: translateX(50%); align-items: center; }
+    [data-mobile-layout='tabs'][data-mobile-position='bottom_right'] .collections-with-background__titles { inset: auto 1.6rem 1.6rem auto; transform: none; align-items: flex-end; }
+
+    .collections-with-background[data-mobile-layout='tabs'] .collection-background-item__trigger { padding-inline: 0; width: 100%; }
+    .collections-with-background[data-mobile-layout='tabs'] .collections-with-background__titles { width: calc(100% - (var(--page-margin-current) * 2)); }
+    .collections-with-background[data-mobile-layout='tabs'] .collection-background-item__media picture { inset: 0; width: 100%; height: 100%; }
+    .collections-with-background[data-mobile-layout='tabs'] .collection-background-item .collection-background-item__media .media__inner > picture > img { inset: auto; top: -49.19%; left: 50%; width: auto; min-width: 100%; max-width: none; height: 223.45%; transform: translateX(-50.6%); object-position: center; }
+    .collections-with-background[data-mobile-layout='tabs'] .collection-background-item__trigger:not([aria-selected='true']):hover { opacity: var(--collections-background-text-opacity); }
+  }
 {% endstylesheet %}
 
 {% schema %}
-{"name":"Collections background","class":"section-collections-with-background","enabled_on":{"templates":["index"]},"max_blocks":12,"blocks":[{"type":"collection-background-item"}],"settings":[
-{"type":"header","content":"Layout"},{"type":"select","id":"section_width","label":"Section width","options":[{"value":"page_width","label":"Page"},{"value":"full_width","label":"Full"},{"value":"full_width_no_padding","label":"Full (no padding)"}],"default":"full_width_no_padding"},{"type":"checkbox","id":"show_product_count","label":"Show product count","default":true},{"type":"select","id":"title_layout","label":"Title layout","options":[{"value":"horizontal","label":"Horizontal"},{"value":"vertical","label":"Vertical"}],"default":"horizontal"},{"type":"range","id":"title_max_width","label":"Title max width","min":300,"max":1600,"step":50,"unit":"px","default":1100},{"type":"select","id":"desktop_position","label":"Desktop position","options":[{"value":"top_left","label":"Top left"},{"value":"top_center","label":"Top center"},{"value":"top_right","label":"Top right"},{"value":"center_left","label":"Center left"},{"value":"center_center","label":"Center center"},{"value":"center_right","label":"Center right"},{"value":"bottom_left","label":"Bottom left"},{"value":"bottom_center","label":"Bottom center"},{"value":"bottom_right","label":"Bottom right"}],"default":"center_center"},{"type":"checkbox","id":"sticky_title","label":"Sticky title","default":false},{"type":"range","id":"gap","label":"Gap","min":0,"max":100,"step":1,"unit":"px","default":60},{"type":"select","id":"height","label":"Height","options":[{"value":"adapt","label":"Adapt to first media"},{"value":"extra_small","label":"Extra small"},{"value":"small","label":"Small"},{"value":"medium","label":"Medium"},{"value":"large","label":"Large"},{"value":"extra_large","label":"Extra large"},{"value":"full_screen","label":"Full screen"}],"default":"full_screen"},
-{"type":"header","content":"Mobile layout"},{"type":"select","id":"mobile_width","label":"Width","options":[{"value":"page","label":"Page"},{"value":"full","label":"Full"}],"default":"page"},{"type":"select","id":"mobile_layout","label":"Mobile layout","options":[{"value":"horizontal","label":"Horizontal"},{"value":"vertical","label":"Vertical"}],"default":"horizontal"},{"type":"select","id":"mobile_position","label":"Mobile position","options":[{"value":"top_left","label":"Top left"},{"value":"top_center","label":"Top center"},{"value":"top_right","label":"Top right"},{"value":"center_left","label":"Center left"},{"value":"center_center","label":"Center center"},{"value":"center_right","label":"Center right"},{"value":"bottom_left","label":"Bottom left"},{"value":"bottom_center","label":"Bottom center"},{"value":"bottom_right","label":"Bottom right"}],"default":"bottom_left"},{"type":"range","id":"gap_mobile","label":"Gap","min":0,"max":100,"step":1,"unit":"px","default":8},{"type":"select","id":"mobile_height","label":"Card height (mobile)","options":[{"value":"adapt","label":"Adapt to first media"},{"value":"extra_small","label":"Extra small"},{"value":"small","label":"Small"},{"value":"medium","label":"Medium"}],"default":"adapt"},
-{"type":"header","content":"Title typography"},{"type":"select","id":"heading_size","label":"Desktop size","options":[{"value":"display","label":"t:options.heading_size.display"},{"value":"xl","label":"t:options.heading_size.xl"},{"value":"lg","label":"t:options.heading_size.lg"},{"value":"md","label":"t:options.heading_size.md"},{"value":"sm","label":"t:options.heading_size.sm"},{"value":"xs","label":"t:options.heading_size.xs"},{"value":"custom","label":"t:options.heading_size.custom"}],"default":"display"},{"type":"range","id":"custom_heading_size","label":"Custom size","min":10,"max":100,"step":1,"unit":"px","default":24,"visible_if":"{{ section.settings.heading_size == 'custom' }}"},{"type":"select","id":"heading_size_mobile","label":"Mobile size","options":[{"value":"display","label":"t:options.heading_size.display"},{"value":"xl","label":"t:options.heading_size.xl"},{"value":"lg","label":"t:options.heading_size.lg"},{"value":"md","label":"t:options.heading_size.md"},{"value":"sm","label":"t:options.heading_size.sm"},{"value":"xs","label":"t:options.heading_size.xs"},{"value":"custom","label":"t:options.heading_size.custom"}],"default":"lg"},{"type":"range","id":"custom_heading_size_mobile","label":"Custom size","min":10,"max":100,"step":1,"unit":"px","default":24,"visible_if":"{{ section.settings.heading_size_mobile == 'custom' }}"},{"type":"select","id":"heading_tag","label":"t:labels.html_tag","info":"t:info.heading_html_tag","options":[{"value":"div","label":"t:options.html_tag.paragraph"},{"value":"h1","label":"t:options.html_tag.h1"},{"value":"h2","label":"t:options.html_tag.h2"},{"value":"h3","label":"t:options.html_tag.h3"},{"value":"h4","label":"t:options.html_tag.h4"},{"value":"h5","label":"t:options.html_tag.h5"},{"value":"h6","label":"t:options.html_tag.h6"}],"default":"h2"},{"type":"checkbox","id":"outline_text","label":"Outline text","default":false},{"type":"range","id":"text_opacity","label":"Text opacity","min":0,"max":100,"step":5,"unit":"%","default":60},
-{"type":"header","content":"t:general.appearance"},{"type":"select","id":"background_media","label":"t:general.media","options":[{"value":"none","label":"t:options.background_media.none"},{"value":"image","label":"t:general.image"},{"value":"video","label":"t:general.video"}],"default":"none"},{"type":"image_picker","id":"background_image","label":"t:labels.background_image","visible_if":"{{ section.settings.background_media == 'image' }}"},{"type":"video","id":"background_video","label":"t:labels.background_video","visible_if":"{{ section.settings.background_media == 'video' }}"},{"type":"color_scheme","id":"color_scheme","label":"t:labels.color_scheme","default":"scheme-1"},{"type":"color_scheme","id":"collection_color_scheme","label":"Collection color scheme","default":"scheme-1"},{"type":"header","content":"t:general.padding"},{"type":"range","id":"padding_top","label":"t:labels.top_padding","min":0,"max":120,"step":4,"unit":"px","default":0},{"type":"range","id":"padding_bottom","label":"t:labels.bottom_padding","min":0,"max":120,"step":4,"unit":"px","default":0},{"type":"checkbox","id":"customize_mobile_padding","label":"t:labels.customize_mobile_padding","default":false},{"type":"range","id":"padding_top_mobile","label":"t:labels.mobile_top_padding","min":0,"max":120,"step":4,"unit":"px","default":0,"visible_if":"{{ section.settings.customize_mobile_padding }}"},{"type":"range","id":"padding_bottom_mobile","label":"t:labels.mobile_bottom_padding","min":0,"max":120,"step":4,"unit":"px","default":0,"visible_if":"{{ section.settings.customize_mobile_padding }}"}],"presets":[{"name":"Collections background","category":"Collections","blocks":[{"type":"collection-background-item"},{"type":"collection-background-item"},{"type":"collection-background-item"},{"type":"collection-background-item"},{"type":"collection-background-item"}]}]}
+{
+  "name": "Collections background",
+  "class": "section-collections-with-background",
+  "enabled_on": {
+    "templates": [
+      "index"
+    ]
+  },
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "collection-background-item"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        {
+          "value": "page_width",
+          "label": "Page"
+        },
+        {
+          "value": "full_width",
+          "label": "Full"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "Full (no padding)"
+        }
+      ],
+      "default": "full_width_no_padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "Show product count",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "title_layout",
+      "label": "Title layout",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        }
+      ],
+      "default": "horizontal"
+    },
+    {
+      "type": "range",
+      "id": "title_max_width",
+      "label": "Title max width",
+      "min": 300,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "default": 1100
+    },
+    {
+      "type": "select",
+      "id": "desktop_position",
+      "label": "Desktop position",
+      "options": [
+        {
+          "value": "top_left",
+          "label": "Top left"
+        },
+        {
+          "value": "top_center",
+          "label": "Top center"
+        },
+        {
+          "value": "top_right",
+          "label": "Top right"
+        },
+        {
+          "value": "center_left",
+          "label": "Center left"
+        },
+        {
+          "value": "center_center",
+          "label": "Center center"
+        },
+        {
+          "value": "center_right",
+          "label": "Center right"
+        },
+        {
+          "value": "bottom_left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom_center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom_right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "center_center"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_title",
+      "label": "Sticky title",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt to first media"
+        },
+        {
+          "value": "extra_small",
+          "label": "Extra small"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "extra_large",
+          "label": "Extra large"
+        },
+        {
+          "value": "full_screen",
+          "label": "Full screen"
+        }
+      ],
+      "default": "full_screen"
+    },
+    {
+      "type": "header",
+      "content": "Mobile layout"
+    },
+    {
+      "type": "select",
+      "id": "mobile_width",
+      "label": "Width",
+      "options": [
+        {
+          "value": "page",
+          "label": "Page"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ],
+      "default": "page"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile layout",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        },
+        {
+          "value": "tabs",
+          "label": "Background tabs (custom)"
+        }
+      ],
+      "default": "horizontal"
+    },
+    {
+      "type": "select",
+      "id": "mobile_position",
+      "label": "Mobile position",
+      "options": [
+        {
+          "value": "top_left",
+          "label": "Top left"
+        },
+        {
+          "value": "top_center",
+          "label": "Top center"
+        },
+        {
+          "value": "top_right",
+          "label": "Top right"
+        },
+        {
+          "value": "center_left",
+          "label": "Center left"
+        },
+        {
+          "value": "center_center",
+          "label": "Center center"
+        },
+        {
+          "value": "center_right",
+          "label": "Center right"
+        },
+        {
+          "value": "bottom_left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom_center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom_right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "bottom_left"
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "select",
+      "id": "mobile_height",
+      "label": "Card height (mobile)",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt to first media"
+        },
+        {
+          "value": "extra_small",
+          "label": "Extra small"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "header",
+      "content": "Title typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Desktop size",
+      "options": [
+        {
+          "value": "display",
+          "label": "t:options.heading_size.display"
+        },
+        {
+          "value": "xl",
+          "label": "t:options.heading_size.xl"
+        },
+        {
+          "value": "lg",
+          "label": "t:options.heading_size.lg"
+        },
+        {
+          "value": "md",
+          "label": "t:options.heading_size.md"
+        },
+        {
+          "value": "sm",
+          "label": "t:options.heading_size.sm"
+        },
+        {
+          "value": "xs",
+          "label": "t:options.heading_size.xs"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.heading_size.custom"
+        }
+      ],
+      "default": "display"
+    },
+    {
+      "type": "range",
+      "id": "custom_heading_size",
+      "label": "Custom size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ section.settings.heading_size == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "heading_size_mobile",
+      "label": "Mobile size",
+      "options": [
+        {
+          "value": "display",
+          "label": "t:options.heading_size.display"
+        },
+        {
+          "value": "xl",
+          "label": "t:options.heading_size.xl"
+        },
+        {
+          "value": "lg",
+          "label": "t:options.heading_size.lg"
+        },
+        {
+          "value": "md",
+          "label": "t:options.heading_size.md"
+        },
+        {
+          "value": "sm",
+          "label": "t:options.heading_size.sm"
+        },
+        {
+          "value": "xs",
+          "label": "t:options.heading_size.xs"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.heading_size.custom"
+        }
+      ],
+      "default": "lg"
+    },
+    {
+      "type": "range",
+      "id": "custom_heading_size_mobile",
+      "label": "Custom size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ section.settings.heading_size_mobile == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:labels.html_tag",
+      "info": "t:info.heading_html_tag",
+      "options": [
+        {
+          "value": "div",
+          "label": "t:options.html_tag.paragraph"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.html_tag.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.html_tag.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.html_tag.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.html_tag.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.html_tag.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.html_tag.h6"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "checkbox",
+      "id": "outline_text",
+      "label": "Outline text",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "text_opacity",
+      "label": "Text opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "t:general.appearance"
+    },
+    {
+      "type": "select",
+      "id": "background_media",
+      "label": "t:general.media",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.background_media.none"
+        },
+        {
+          "value": "image",
+          "label": "t:general.image"
+        },
+        {
+          "value": "video",
+          "label": "t:general.video"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:labels.background_image",
+      "visible_if": "{{ section.settings.background_media == 'image' }}"
+    },
+    {
+      "type": "video",
+      "id": "background_video",
+      "label": "t:labels.background_video",
+      "visible_if": "{{ section.settings.background_media == 'video' }}"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "collection_color_scheme",
+      "label": "Collection color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:general.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:labels.top_padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:labels.bottom_padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.customize_mobile_padding",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.mobile_top_padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.mobile_bottom_padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collections background",
+      "category": "Collections",
+      "blocks": [
+        {
+          "type": "collection-background-item",
+          "settings": {
+            "collection": "virelle-t-shirts-tops",
+            "custom_title": "T-SHIRTS & TOPS",
+            "media_type": "image",
+            "show_overlay": true,
+            "overlay_color": "#00000033",
+            "overlay_style": "solid",
+            "image": "shopify://shop_images/virelle-collections-tops-desert-figma.avif"
+          },
+          "blocks": []
+        },
+        {
+          "type": "collection-background-item",
+          "settings": {
+            "collection": "virelle-jogger-bottoms",
+            "custom_title": "JOGGER & BOTTOMS",
+            "media_type": "image",
+            "show_overlay": true,
+            "overlay_color": "#00000033",
+            "overlay_style": "solid",
+            "image": "shopify://shop_images/virelle-collections-joggers-desert.avif"
+          },
+          "blocks": []
+        },
+        {
+          "type": "collection-background-item",
+          "settings": {
+            "collection": "virelle-jackets-hoodies",
+            "custom_title": "JACKETS & HOODIES",
+            "media_type": "image",
+            "show_overlay": true,
+            "overlay_color": "#00000033",
+            "overlay_style": "solid",
+            "image": "shopify://shop_images/virelle-collections-jackets-desert.avif"
+          },
+          "blocks": []
+        }
+      ],
+      "settings": {
+        "section_width": "full_width_no_padding",
+        "show_product_count": false,
+        "title_layout": "horizontal",
+        "title_max_width": 1600,
+        "desktop_position": "center_center",
+        "sticky_title": false,
+        "gap": 56,
+        "height": "medium",
+        "mobile_width": "full",
+        "mobile_layout": "tabs",
+        "mobile_position": "center_center",
+        "gap_mobile": 40,
+        "mobile_height": "medium",
+        "heading_size": "display",
+        "custom_heading_size": 24,
+        "heading_size_mobile": "display",
+        "custom_heading_size_mobile": 24,
+        "heading_tag": "h2",
+        "outline_text": false,
+        "text_opacity": 40,
+        "background_media": "none",
+        "color_scheme": "scheme-3",
+        "collection_color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": false,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    }
+  ]
+}
 {% endschema %}

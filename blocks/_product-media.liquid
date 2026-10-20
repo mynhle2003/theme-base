@@ -15,7 +15,7 @@
   assign selected_media_found = false
 
   assign media_desktop_layout = block.settings.desktop_layout | default: 'left_thumbnails'
-  unless media_desktop_layout == 'left_thumbnails' or media_desktop_layout == 'bottom_thumbnails' or media_desktop_layout == 'grid' or media_desktop_layout == 'stacked' or media_desktop_layout == 'stacked_thumbnails' or media_desktop_layout == 'two_column_grid'
+  unless media_desktop_layout == 'left_thumbnails' or media_desktop_layout == 'bottom_thumbnails' or media_desktop_layout == 'grid' or media_desktop_layout == 'stacked' or media_desktop_layout == 'stacked_thumbnails' or media_desktop_layout == 'two_column_grid' or media_desktop_layout == 'carousel_two_items'
     assign media_desktop_layout = 'left_thumbnails'
   endunless
 
@@ -35,7 +35,7 @@
   endif
 
   assign media_mobile_pagination_type = block.settings.mobile_pagination_type | default: 'bullets'
-  unless media_mobile_pagination_type == 'progress_bar' or media_mobile_pagination_type == 'bullets'
+  unless media_mobile_pagination_type == 'progress_bar' or media_mobile_pagination_type == 'bullets' or media_mobile_pagination_type == 'dots'
     assign media_mobile_pagination_type = 'bullets'
   endunless
 
@@ -283,7 +283,8 @@
         { "value": "grid", "label": "t:options.product_media_layout.grid" },
         { "value": "stacked", "label": "t:options.product_media_layout.stacked" },
         { "value": "stacked_thumbnails", "label": "t:options.product_media_layout.stacked_thumbnails" },
-        { "value": "two_column_grid", "label": "t:options.product_media_layout.two_column_grid" }
+        { "value": "two_column_grid", "label": "t:options.product_media_layout.two_column_grid" },
+        { "value": "carousel_two_items", "label": "t:options.product_media_layout.carousel_two_items" }
       ],
       "default": "left_thumbnails"
     },
@@ -370,7 +371,8 @@
       "label": "t:labels.type",
       "options": [
         { "value": "progress_bar", "label": "t:options.collection_pagination.progress_bar" },
-        { "value": "bullets", "label": "t:options.collection_pagination.bullets" }
+        { "value": "bullets", "label": "t:options.collection_pagination.bullets" },
+        { "value": "dots", "label": "t:options.collection_pagination.dots" }
       ],
       "default": "bullets",
       "visible_if": "{{ block.settings.mobile_layout == 'slider' and block.settings.mobile_show_pagination }}"

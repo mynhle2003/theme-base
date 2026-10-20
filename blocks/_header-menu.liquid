@@ -89,7 +89,7 @@
 {% assign menu_style = menu_style | strip %}
 
   <nav
-    class="{{ menu_class }} {{ menu_typography_class }} scrollbar scrollbar--hidden scrollbar--vertical-until-desktop"
+    class="{{ menu_class }} {{ menu_typography_class }}"
     id="HeaderMenu-{{ section.id }}"
     aria-label="{{ 'accessibility.menu' | t }}"
     data-dropdown-trigger="{{ dropdown_trigger }}"
@@ -138,6 +138,7 @@
                 <a class="header-menu__link link-underline-trigger" href="{{ link.url }}"><span class="header-menu__top-link-label link-underline">{{ link.title | escape }}</span></a>
               {% endif %}
             </li>
+            {% unless forloop.last %}<li class="header-menu__gap" role="presentation" aria-hidden="true"></li>{% endunless %}
           {% endfor %}
       </ul>
       <div class="header-menu__mega-config" aria-hidden="true">{% content_for 'blocks' %}</div>
@@ -204,7 +205,7 @@
       </div>
       <footer class="header__mobile-drawer-footer">
         {% if shop.customer_accounts_enabled %}
-          <shopify-account class="header__mobile-drawer-account body-text" menu="customer-account-main-menu">
+          <shopify-account class="header__mobile-drawer-account body-text" {% if linklists['customer-account-main-menu'].links != blank %}menu="customer-account-main-menu"{% endif %}>
             <span slot="signed-out-avatar" class="header__mobile-drawer-account-avatar">
               <span>{{ 'customers.login.submit' | t }}</span>
             </span>
@@ -279,7 +280,25 @@
   .header-menu__list {
     align-items: center;
     flex-wrap: wrap;
-    gap: var(--header-menu-gap, 26px);
+    width: max-content;
+    max-width: 100%;
+    column-gap: min(8px, var(--header-menu-gap, 26px));
+    row-gap: var(--header-menu-gap, 26px);
+  }
+
+  /* Zero-basis spacers yield before the label items wrap. */
+  .header-menu__list > .header-menu__item {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .header-menu__gap {
+    width: max(0px, calc(var(--header-menu-gap, 26px) - 8px));
+    max-width: max(0px, calc(var(--header-menu-gap, 26px) - 8px));
+    min-width: 0;
+    flex: 1 1 0px;
+    margin-inline: calc(min(8px, var(--header-menu-gap, 26px)) / -2);
+    list-style: none;
   }
 
   .header-menu__item {
@@ -674,7 +693,7 @@
     display: contents;
   }
 
-  @media (max-width: 991.98px) {
+  @media (width < 992px) {
     /* The same drawer handles the mobile and tablet navigation. */
     .header-menu {
       display: none !important;

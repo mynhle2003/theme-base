@@ -61,7 +61,7 @@
 
 {% capture eyebrow_style %}
   {% if border_thickness != 0 %}--eyebrow-border-width: {{ border_thickness }}px;{% endif %}
-  {% if block.settings.corner_radius != blank and block.settings.corner_radius != 'square' %}--eyebrow-radius: {{ eyebrow_radius }};{% endif %}
+  {% if block.settings.corner_radius != blank and block.settings.corner_radius != 'inherit' %}--eyebrow-radius: {{ eyebrow_radius }};{% endif %}
   {% if padding_top != 0 %}--eyebrow-padding-top: {{ padding_top }}px;{% endif %}
   {% if padding_bottom != 0 %}--eyebrow-padding-bottom: {{ padding_bottom }}px;{% endif %}
   {% if padding_left != 0 %}--eyebrow-padding-left: {{ padding_left }}px;{% endif %}
@@ -112,8 +112,8 @@
   }
 
   .eyebrow-block.eyebrow-text {
-    color: var(--eyebrow-block-color, var(--accent-color));
-    border-radius: var(--eyebrow-radius, var(--radius-square, 0px));
+    color: var(--eyebrow-block-color, var(--heading-color));
+    border-radius: var(--eyebrow-radius, var(--subheading-radius, 0px));
   }
 
   .eyebrow-block--background {
@@ -189,10 +189,22 @@
       "id": "icon",
       "label": "t:labels.icon",
       "options": [
-        { "value": "circle", "label": "t:options.eyebrow_icon.circle" },
-        { "value": "square", "label": "t:options.eyebrow_icon.square" },
-        { "value": "triangle", "label": "t:options.eyebrow_icon.triangle" },
-        { "value": "diamond", "label": "t:options.eyebrow_icon.diamond" }
+        {
+          "value": "circle",
+          "label": "t:options.eyebrow_icon.circle"
+        },
+        {
+          "value": "square",
+          "label": "t:options.eyebrow_icon.square"
+        },
+        {
+          "value": "triangle",
+          "label": "t:options.eyebrow_icon.triangle"
+        },
+        {
+          "value": "diamond",
+          "label": "t:options.eyebrow_icon.diamond"
+        }
       ],
       "default": "circle",
       "visible_if": "{{ block.settings.show_icon }}"
@@ -218,10 +230,26 @@
       "id": "corner_radius",
       "label": "t:labels.corner_radius",
       "options": [
-        { "value": "square", "label": "t:options.radius_preset.square" },
-        { "value": "slightly_rounded", "label": "t:options.radius_preset.slightly_rounded" },
-        { "value": "rounded", "label": "t:options.radius_preset.rounded" },
-        { "value": "pill", "label": "t:options.radius_preset.pill" }
+        {
+          "value": "inherit",
+          "label": "t:labels.inherit"
+        },
+        {
+          "value": "square",
+          "label": "t:options.radius_preset.square"
+        },
+        {
+          "value": "slightly_rounded",
+          "label": "t:options.radius_preset.slightly_rounded"
+        },
+        {
+          "value": "rounded",
+          "label": "t:options.radius_preset.rounded"
+        },
+        {
+          "value": "pill",
+          "label": "t:options.radius_preset.pill"
+        }
       ],
       "default": "square",
       "visible_if": "{{ block.settings.show_background }}"

@@ -147,6 +147,8 @@
 {% stylesheet %}
   .collection-card-button {
     display: block;
+    align-self: var(--card-content-align, flex-start);
+    max-width: 100%;
     min-width: 0;
     padding-top: var(--collection-card-button-padding-top, 0px);
     padding-right: var(--collection-card-button-padding-right, 0px);
@@ -168,6 +170,10 @@
       padding-right: var(--collection-card-button-padding-right-mobile, var(--collection-card-button-padding-right, 0px));
       padding-bottom: var(--collection-card-button-padding-bottom-mobile, var(--collection-card-button-padding-bottom, 0px));
       padding-left: var(--collection-card-button-padding-left-mobile, var(--collection-card-button-padding-left, 0px));
+    }
+
+    .collection-card-button--width-mobile-fit .collection-card-button__button {
+      width: fit-content;
     }
 
     .collection-card-button--width-mobile-fill .collection-card-button__button {

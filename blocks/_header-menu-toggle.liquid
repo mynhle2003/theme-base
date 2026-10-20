@@ -13,13 +13,14 @@
   aria-label="Open menu"
   data-header-position="{{ menu_toggle_position }}"
   data-header-menu-toggle
-  {{ block.shopify_attributes }}
 >
+  <span class="header-action__icon-target" {{ block.shopify_attributes }}>
   <span class="icon header-menu-toggle__open-icon" aria-hidden="true">
-    {% render 'icon', icon: 'bars-3', bare: true %}
+    {% render 'virelle-icon', icon: 'menu' %}
   </span>
   <span class="icon header-menu-toggle__close-icon" aria-hidden="true">
     {% render 'icon', icon: 'x-mark', bare: true %}
+  </span>
   </span>
   <span class="visually-hidden">Menu</span>
 </button>
@@ -30,16 +31,14 @@
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    width: var(--button-height);
-    min-width: var(--button-height);
+    width: auto;
+    min-width: 0;
     min-height: var(--button-height);
     color: var(--body-color);
   }
 
   .header-menu-toggle .icon {
     display: inline-flex;
-    width: var(--header-icon-size, var(--icon-size-medium));
-    height: var(--header-icon-size, var(--icon-size-medium));
   }
 
   .header-menu-toggle .icon svg {
@@ -60,17 +59,14 @@
     display: inline-flex !important;
   }
 
-  @media (max-width: 991.98px) {
+  @media (width < 992px) {
     .header-top[data-layout-ready='true'] .header__column--center:has(.header-menu-toggle[data-header-position='center']) {
       justify-content: center;
     }
 
     .header-menu-toggle.btn {
       display: inline-flex;
-      width: 24px;
-      min-width: 24px;
-      height: 24px;
-      min-height: 24px;
+      min-height: var(--header-action-icon-size);
     }
   }
 {% endstylesheet %}

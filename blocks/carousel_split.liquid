@@ -12,11 +12,11 @@
   assign delay = speed | times: 1000
   assign carousel_label = 'general.testimonial_split' | t
 %}
-<script data-theme-module="{{ 'testimonial-split.js' | asset_url }}"></script>
-{% if transition == 'fade' %}
-  <link rel="stylesheet" href="{{ 'swiper-12.2.0-effect-fade.min.css' | asset_url }}" media="print" onload="this.media='all'">
-  <noscript>{{ 'swiper-12.2.0-effect-fade.min.css' | asset_url | stylesheet_tag }}</noscript>
-{% endif %}
+{% capture pagination %}
+  {% if block.settings.show_mobile_pagination %}
+    {% render 'swiper-pagination', type: 'progress_bar', class: 'testimonial-split-carousel__pagination', style: '--swiper-pagination-width: 80px; --swiper-pagination-spacing-mobile: 32px;' %}
+  {% endif %}
+{% endcapture %}
 {% capture slides %}{% content_for 'blocks' %}{% endcapture %}
 {% capture carousel_style %}
   --carousel-padding-top: {{ block.settings.padding_top | default: 0 }}px;
@@ -26,16 +26,51 @@
     --carousel-padding-bottom-mobile: {{ block.settings.padding_bottom_mobile | default: 0 }}px;
   {% endif %}
 {% endcapture %}
-<div class="testimonial-split-carousel" style="{{ carousel_style | strip }}" data-testimonial-split
+<div class="testimonial-split-carousel" style="{{ carousel_style | strip }}" data-testimonial-split data-header-navigation="{{ block.settings.show_navigation }}"
   data-transition="{{ transition }}" data-swiper-columns-desktop="1" data-swiper-columns-mobile="1"
-  data-swiper-gap-desktop="0" data-swiper-gap-mobile="0" data-swiper-pagination-desktop="false" data-swiper-pagination-mobile="false"
+  data-swiper-gap-desktop="0" data-swiper-gap-mobile="0" data-swiper-pagination-desktop="false" data-swiper-pagination-mobile="{{ block.settings.show_mobile_pagination }}" data-swiper-pagination-type="progress_bar"
   data-carousel-loop="{{ block.settings.loop }}" data-swiper-autoplay="{{ block.settings.autoplay }}"
   data-swiper-autoplay-pause-on-hover="{{ block.settings.pause_on_hover }}" data-swiper-autoplay-delay="{{ delay }}"
   {{ block.shopify_attributes }}>
-  {% render 'swiper-carousel', id: carousel_id, content: slides, root_class: 'testimonial-split-carousel__viewport', aria_label: carousel_label, autoplay: block.settings.autoplay, pause_on_hover: block.settings.pause_on_hover, autoplay_delay: delay, show_next_slide_preview: false, show_next_slide_preview_on_mobile: false %}
+  <script data-theme-module="{{ 'testimonial-split.js' | asset_url }}"></script>
+{% if transition == 'fade' %}
+  <link rel="stylesheet" href="{{ 'swiper-12.2.0-effect-fade.min.css' | asset_url }}" media="print" onload="this.media='all'">
+  <noscript>{{ 'swiper-12.2.0-effect-fade.min.css' | asset_url | stylesheet_tag }}</noscript>
+{% endif %}
+
+  {% if block.settings.show_navigation %}
+    <div class="testimonial-split-carousel__navigation-row">
+      {% render 'swiper-navigation', show: true, style: 'primary', centered: false, behavior: 'always', icon: 'chevron', wrapper_class: 'testimonial-split-carousel__navigation', previous_attribute: 'data-carousel-previous', next_attribute: 'data-carousel-next' %}
+    </div>
+  {% endif %}
+  {% render 'swiper-carousel', pagination: pagination, id: carousel_id, content: slides, root_class: 'testimonial-split-carousel__viewport', aria_label: carousel_label, autoplay: block.settings.autoplay, pause_on_hover: block.settings.pause_on_hover, autoplay_delay: delay, show_next_slide_preview: false, show_next_slide_preview_on_mobile: false %}
 </div>
 {% stylesheet %}
-  .testimonial-split-carousel { width: 100%; min-width: 0; padding-block: var(--carousel-padding-top, 0px) var(--carousel-padding-bottom, 0px); }
+  .testimonial-split-carousel[data-header-navigation="true"] .testimonial-split-controls { display: none; }
+
+  .section-testimonial-split [data-direction="vertical"] > .custom-section__container > .custom-section__content > .block-header:has(+ .testimonial-split-carousel[data-header-navigation="true"]) { padding-inline-end: 128px; }
+  .section-testimonial-split [data-direction="vertical"] > .custom-section__container > .custom-section__content > .block-header + .testimonial-split-carousel > .testimonial-split-carousel__navigation-row { position: absolute; inset-inline-end: 0; bottom: calc(100% + var(--layout-flow-gap, 48px)); margin: 0; }
+  @media (max-width: 767.98px) {
+    .section-testimonial-split [data-direction="vertical"] > .custom-section__container > .custom-section__content > .block-header:has(+ .testimonial-split-carousel[data-header-navigation="true"]) { padding-inline-end: 0; }
+    .section-testimonial-split [data-direction="vertical"] > .custom-section__container > .custom-section__content > .block-header + .testimonial-split-carousel > .testimonial-split-carousel__navigation-row { position: static; }
+    .testimonial-split-carousel__navigation-row:focus-within { height: auto; margin-bottom: 24px; }
+  }
+
+  .testimonial-split-carousel__navigation-row { display: flex; justify-content: flex-end; margin-bottom: 32px; }
+  .testimonial-split-carousel__navigation { display: flex; flex: 0 0 auto; position: static; gap: 16px; }
+  .testimonial-split-carousel__pagination { display: none; --swiper-pagination-progressbar-size: 4px; --swiper-pagination-progressbar-border-radius: 2px; }
+  .testimonial-split-carousel:not(:has(.swiper-initialized)) .testimonial-split-carousel__navigation { visibility: hidden; }
+  .testimonial-split-carousel__viewport:not(.swiper-initialized):has(.testimonial-split-slide) { overflow-x: auto; }
+  .testimonial-split-carousel__viewport:not(.swiper-initialized):has(.testimonial-split-slide) > .swiper-wrapper { transform: none; }
+  .testimonial-split-carousel__viewport:not(.swiper-initialized) .testimonial-split-slide { flex: 0 0 100%; }
+  @media (max-width: 767.98px) {
+    .testimonial-split-carousel__navigation-row { height: 0; margin: 0; }
+    .testimonial-split-carousel__navigation { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+    .testimonial-split-carousel__navigation:focus-within { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }
+    .testimonial-split-carousel__pagination { display: block; }
+  }
+
+  .testimonial-split-carousel { position: relative; width: 100%; min-width: 0; padding-block: var(--carousel-padding-top, 0px) var(--carousel-padding-bottom, 0px); }
   .testimonial-split-carousel__viewport > .swiper-wrapper { column-gap: 0; }
   .testimonial-split-carousel__viewport { width: 100%; min-width: 0; }
   .testimonial-split-carousel__viewport > .swiper-wrapper > .testimonial-split-slide { flex-basis: 100%; }
@@ -56,6 +91,18 @@
     }
   ],
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_navigation",
+      "label": "Show navigation",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_pagination",
+      "label": "Show mobile progress bar",
+      "default": false
+    },
     {
       "type": "select",
       "id": "transition_style",
@@ -163,11 +210,25 @@
     {
       "settings": {
         "loop": false,
-        "transition_style": "fade"
+        "transition_style": "slide",
+        "show_mobile_pagination": true,
+        "show_navigation": true
       },
       "blocks": [
         {
           "type": "slide_split",
+          "settings": {
+            "position_horizontal": "top",
+            "horizontal_alignment": "left",
+            "alignment_mobile": "left",
+            "gap_desktop": 0,
+            "gap_mobile": 32,
+            "height": "fill",
+            "appearance_type": "inherit",
+            "border_type": "none",
+            "corner_radius": "square",
+            "shadow": "none"
+          },
           "blocks": [
             {
               "type": "image",
@@ -178,10 +239,11 @@
                 "image_ratio_mobile": "custom",
                 "width_desktop": "fill",
                 "width_mobile": "fill",
-                "image_ratio_custom_width_desktop": 5,
-                "image_ratio_custom_height_desktop": 4,
-                "image_ratio_custom_width_mobile": 5,
-                "image_ratio_custom_height_mobile": 4
+                "image_ratio_custom_width_desktop": 1,
+                "image_ratio_custom_height_desktop": 1,
+                "image_ratio_custom_width_mobile": 4,
+                "image_ratio_custom_height_mobile": 3,
+                "image": "shopify://shop_images/virelle-testimonial-eva.avif"
               }
             },
             {
@@ -190,76 +252,96 @@
               "static": true,
               "settings": {
                 "direction": "vertical",
-                "alignment": "left",
                 "width": "fill",
-                "gap_desktop": 0,
-                "gap_mobile": 0,
-                "appearance_type": "inherit",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none"
+                "alignment": "left",
+                "gap_desktop": 48,
+                "gap_mobile": 24,
+                "appearance_type": "inherit"
               },
               "blocks": [
                 {
-                  "type": "eyebrow",
+                  "type": "group",
                   "settings": {
-                    "text": "<p>FROM THE PEOPLE</p>"
-                  }
+                    "direction": "vertical",
+                    "width": "fill",
+                    "alignment": "left",
+                    "gap_desktop": 16,
+                    "gap_mobile": 16,
+                    "appearance_type": "inherit"
+                  },
+                  "blocks": [
+                    {
+                      "type": "icon",
+                      "settings": {
+                        "source": "custom",
+                        "icon": "five-stars",
+                        "icon_width": 88,
+                        "icon_padding": 0,
+                        "custom_icon": "<svg width=\"88\" height=\"16\" viewBox=\"0 0 88 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M8.00032 12.1134L4.76872 14.0498C4.62596 14.1402 4.47671 14.1789 4.32097 14.166C4.16523 14.1531 4.02896 14.1015 3.91216 14.0111C3.79535 13.9208 3.7045 13.8079 3.63961 13.6726C3.57472 13.5373 3.56174 13.3855 3.60068 13.2172L4.45724 9.55739L1.59553 7.09816C1.46575 6.98197 1.38476 6.84952 1.35258 6.70081C1.32039 6.55209 1.32999 6.40699 1.38139 6.2655C1.43278 6.12402 1.51065 6.00783 1.615 5.91695C1.71934 5.82607 1.8621 5.76798 2.04328 5.74268L5.81997 5.41349L7.28002 1.96669C7.34491 1.81178 7.44563 1.69559 7.58216 1.61814C7.71869 1.54068 7.85808 1.50195 8.00032 1.50195C8.14256 1.50195 8.28195 1.54068 8.41848 1.61814C8.55501 1.69559 8.65572 1.81178 8.72061 1.96669L10.1807 5.41349L13.9574 5.74268C14.1391 5.76849 14.2818 5.82659 14.3856 5.91695C14.4895 6.00732 14.5673 6.1235 14.6192 6.2655C14.6712 6.40751 14.681 6.55287 14.6488 6.70158C14.6167 6.8503 14.5354 6.98249 14.4051 7.09816L11.5434 9.55739L12.4 13.2172C12.4389 13.385 12.4259 13.5368 12.361 13.6726C12.2961 13.8084 12.2053 13.9213 12.0885 14.0111C11.9717 14.101 11.8354 14.1526 11.6797 14.166C11.5239 14.1795 11.3747 14.1407 11.2319 14.0498L8.00032 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M26.0003 12.1134L22.7687 14.0498C22.626 14.1402 22.4767 14.1789 22.321 14.166C22.1652 14.1531 22.029 14.1015 21.9122 14.0111C21.7954 13.9208 21.7045 13.8079 21.6396 13.6726C21.5747 13.5373 21.5617 13.3855 21.6007 13.2172L22.4572 9.55739L19.5955 7.09816C19.4657 6.98197 19.3848 6.84952 19.3526 6.70081C19.3204 6.55209 19.33 6.40699 19.3814 6.2655C19.4328 6.12402 19.5107 6.00783 19.615 5.91695C19.7193 5.82607 19.8621 5.76798 20.0433 5.74268L23.82 5.41349L25.28 1.96669C25.3449 1.81178 25.4456 1.69559 25.5822 1.61814C25.7187 1.54068 25.8581 1.50195 26.0003 1.50195C26.1426 1.50195 26.2819 1.54068 26.4185 1.61814C26.555 1.69559 26.6557 1.81178 26.7206 1.96669L28.1807 5.41349L31.9574 5.74268C32.1391 5.76849 32.2818 5.82659 32.3856 5.91695C32.4895 6.00732 32.5673 6.1235 32.6192 6.2655C32.6712 6.40751 32.681 6.55287 32.6488 6.70158C32.6167 6.8503 32.5354 6.98249 32.4051 7.09816L29.5434 9.55739L30.4 13.2172C30.4389 13.385 30.4259 13.5368 30.361 13.6726C30.2961 13.8084 30.2053 13.9213 30.0885 14.0111C29.9717 14.101 29.8354 14.1526 29.6797 14.166C29.5239 14.1795 29.3747 14.1407 29.2319 14.0498L26.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M44.0003 12.1134L40.7687 14.0498C40.626 14.1402 40.4767 14.1789 40.321 14.166C40.1652 14.1531 40.029 14.1015 39.9122 14.0111C39.7954 13.9208 39.7045 13.8079 39.6396 13.6726C39.5747 13.5373 39.5617 13.3855 39.6007 13.2172L40.4572 9.55739L37.5955 7.09816C37.4657 6.98197 37.3848 6.84952 37.3526 6.70081C37.3204 6.55209 37.33 6.40699 37.3814 6.2655C37.4328 6.12402 37.5107 6.00783 37.615 5.91695C37.7193 5.82607 37.8621 5.76798 38.0433 5.74268L41.82 5.41349L43.28 1.96669C43.3449 1.81178 43.4456 1.69559 43.5822 1.61814C43.7187 1.54068 43.8581 1.50195 44.0003 1.50195C44.1426 1.50195 44.2819 1.54068 44.4185 1.61814C44.555 1.69559 44.6557 1.81178 44.7206 1.96669L46.1807 5.41349L49.9574 5.74268C50.1391 5.76849 50.2818 5.82659 50.3856 5.91695C50.4895 6.00732 50.5673 6.1235 50.6192 6.2655C50.6712 6.40751 50.681 6.55287 50.6488 6.70158C50.6167 6.8503 50.5354 6.98249 50.4051 7.09816L47.5434 9.55739L48.4 13.2172C48.4389 13.385 48.4259 13.5368 48.361 13.6726C48.2961 13.8084 48.2053 13.9213 48.0885 14.0111C47.9717 14.101 47.8354 14.1526 47.6797 14.166C47.5239 14.1795 47.3747 14.1407 47.2319 14.0498L44.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M62.0003 12.1134L58.7687 14.0498C58.626 14.1402 58.4767 14.1789 58.321 14.166C58.1652 14.1531 58.029 14.1015 57.9122 14.0111C57.7954 13.9208 57.7045 13.8079 57.6396 13.6726C57.5747 13.5373 57.5617 13.3855 57.6007 13.2172L58.4572 9.55739L55.5955 7.09816C55.4657 6.98197 55.3848 6.84952 55.3526 6.70081C55.3204 6.55209 55.33 6.40699 55.3814 6.2655C55.4328 6.12402 55.5107 6.00783 55.615 5.91695C55.7193 5.82607 55.8621 5.76798 56.0433 5.74268L59.82 5.41349L61.28 1.96669C61.3449 1.81178 61.4456 1.69559 61.5822 1.61814C61.7187 1.54068 61.8581 1.50195 62.0003 1.50195C62.1426 1.50195 62.2819 1.54068 62.4185 1.61814C62.555 1.69559 62.6557 1.81178 62.7206 1.96669L64.1807 5.41349L67.9574 5.74268C68.1391 5.76849 68.2818 5.82659 68.3856 5.91695C68.4895 6.00732 68.5673 6.1235 68.6192 6.2655C68.6712 6.40751 68.681 6.55287 68.6488 6.70158C68.6167 6.8503 68.5354 6.98249 68.4051 7.09816L65.5434 9.55739L66.4 13.2172C66.4389 13.385 66.4259 13.5368 66.361 13.6726C66.2961 13.8084 66.2053 13.9213 66.0885 14.0111C65.9717 14.101 65.8354 14.1526 65.6797 14.166C65.5239 14.1795 65.3747 14.1407 65.2319 14.0498L62.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M80.0003 12.1134L76.7687 14.0498C76.626 14.1402 76.4767 14.1789 76.321 14.166C76.1652 14.1531 76.029 14.1015 75.9122 14.0111C75.7954 13.9208 75.7045 13.8079 75.6396 13.6726C75.5747 13.5373 75.5617 13.3855 75.6007 13.2172L76.4572 9.55739L73.5955 7.09816C73.4657 6.98197 73.3848 6.84952 73.3526 6.70081C73.3204 6.55209 73.33 6.40699 73.3814 6.2655C73.4328 6.12402 73.5107 6.00783 73.615 5.91695C73.7193 5.82607 73.8621 5.76798 74.0433 5.74268L77.82 5.41349L79.28 1.96669C79.3449 1.81178 79.4456 1.69559 79.5822 1.61814C79.7187 1.54068 79.8581 1.50195 80.0003 1.50195C80.1426 1.50195 80.2819 1.54068 80.4185 1.61814C80.555 1.69559 80.6557 1.81178 80.7206 1.96669L82.1807 5.41349L85.9574 5.74268C86.1391 5.76849 86.2818 5.82659 86.3856 5.91695C86.4895 6.00732 86.5673 6.1235 86.6192 6.2655C86.6712 6.40751 86.681 6.55287 86.6488 6.70158C86.6167 6.8503 86.5354 6.98249 86.4051 7.09816L83.5434 9.55739L84.4 13.2172C84.4389 13.385 84.4259 13.5368 84.361 13.6726C84.2961 13.8084 84.2053 13.9213 84.0885 14.0111C83.9717 14.101 83.8354 14.1526 83.6797 14.166C83.5239 14.1795 83.3747 14.1407 83.2319 14.0498L80.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<mask id=\"mask0_48338_19796\" style=\"mask-type:alpha\" maskUnits=\"userSpaceOnUse\" x=\"73\" y=\"1\" width=\"14\" height=\"14\">\n<path d=\"M80.0003 12.1134L76.7687 14.0498C76.626 14.1402 76.4767 14.1789 76.321 14.166C76.1652 14.1531 76.029 14.1015 75.9122 14.0111C75.7954 13.9208 75.7045 13.8079 75.6396 13.6726C75.5747 13.5373 75.5617 13.3855 75.6007 13.2172L76.4572 9.55739L73.5955 7.09816C73.4657 6.98197 73.3848 6.84952 73.3526 6.70081C73.3204 6.55209 73.33 6.40699 73.3814 6.2655C73.4328 6.12402 73.5107 6.00783 73.615 5.91695C73.7193 5.82607 73.8621 5.76798 74.0433 5.74268L77.82 5.41349L79.28 1.96669C79.3449 1.81178 79.4456 1.69559 79.5822 1.61814C79.7187 1.54068 79.8581 1.50195 80.0003 1.50195C80.1426 1.50195 80.2819 1.54068 80.4185 1.61814C80.555 1.69559 80.6557 1.81178 80.7206 1.96669L82.1807 5.41349L85.9574 5.74268C86.1391 5.76849 86.2818 5.82659 86.3856 5.91695C86.4895 6.00732 86.5673 6.1235 86.6192 6.2655C86.6712 6.40751 86.681 6.55287 86.6488 6.70158C86.6167 6.8503 86.5354 6.98249 86.4051 7.09816L83.5434 9.55739L84.4 13.2172C84.4389 13.385 84.4259 13.5368 84.361 13.6726C84.2961 13.8084 84.2053 13.9213 84.0885 14.0111C83.9717 14.101 83.8354 14.1526 83.6797 14.166C83.5239 14.1795 83.3747 14.1407 83.2319 14.0498L80.0003 12.1134Z\" fill=\"#FFB74B\"/>\n</mask>\n<g mask=\"url(#mask0_48338_19796)\">\n<rect x=\"80\" y=\"1\" width=\"7\" height=\"14\" fill=\"#E6E6E6\"/>\n</g>\n</svg>",
+                        "accessible_label": "4.5 out of 5 stars"
+                      }
+                    },
+                    {
+                      "type": "group",
+                      "settings": {
+                        "direction": "vertical",
+                        "width": "fill",
+                        "alignment": "left",
+                        "gap_desktop": 12,
+                        "gap_mobile": 12,
+                        "appearance_type": "inherit"
+                      },
+                      "blocks": [
+                        {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>The waistband stays securely in place, offering reliable support during both sprints and squats.</p>",
+                            "text_size": "md",
+                            "width": "fill",
+                            "text_color": "#181818"
+                          }
+                        },
+                        {
+                          "type": "heading",
+                          "settings": {
+                            "text": "<p>Eva Johnson</p>",
+                            "html_tag": "h3",
+                            "heading_size": "custom",
+                            "custom_heading_size": 18,
+                            "width": "fill"
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
-                  "type": "icon",
+                  "type": "product-card-single",
                   "settings": {
-                    "source": "library",
-                    "icon": "five-stars",
-                    "icon_width": 88,
-                    "custom_mobile": false
-                  }
-                },
-                {
-                  "type": "heading",
-                  "settings": {
-                    "text": "<p>“The necklace looks amazing! Thank you so much for all of your help and outstanding customer service. What I love most is the attention to detail. Every gem sparkles beautifully honour”</p>",
-                    "heading_size": "display",
-                    "html_tag": "h3",
-                    "width": "fill"
-                  }
-                },
-                {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>— Madison P, London</p>",
-                    "text_size": "sm",
-                    "width": "fill"
+                    "max_width": 390,
+                    "horizontal_on_mobile": true,
+                    "color_type": "inherit",
+                    "product": "virelle-effortless-seamless-leggings"
                   }
                 }
               ]
             }
-          ],
-          "settings": {
-            "position_horizontal": "center",
-            "horizontal_alignment": "left",
-            "alignment_mobile": "left",
-            "gap_desktop": 0,
-            "gap_mobile": 40,
-            "height": "fill",
-            "appearance_type": "scheme",
-            "color_scheme": "scheme-4",
-            "border_type": "none",
-            "corner_radius": "square",
-            "shadow": "none",
-            "padding_top": 0,
-            "padding_bottom": 0,
-            "padding_left": 0,
-            "padding_right": 0,
-            "customize_mobile_padding": false,
-            "padding_top_mobile": 0,
-            "padding_bottom_mobile": 0,
-            "padding_left_mobile": 0,
-            "padding_right_mobile": 0
-          }
+          ]
         },
         {
           "type": "slide_split",
+          "settings": {
+            "position_horizontal": "top",
+            "horizontal_alignment": "left",
+            "alignment_mobile": "left",
+            "gap_desktop": 0,
+            "gap_mobile": 32,
+            "height": "fill",
+            "appearance_type": "inherit",
+            "border_type": "none",
+            "corner_radius": "square",
+            "shadow": "none"
+          },
           "blocks": [
             {
               "type": "image",
@@ -270,10 +352,11 @@
                 "image_ratio_mobile": "custom",
                 "width_desktop": "fill",
                 "width_mobile": "fill",
-                "image_ratio_custom_width_desktop": 5,
-                "image_ratio_custom_height_desktop": 4,
-                "image_ratio_custom_width_mobile": 5,
-                "image_ratio_custom_height_mobile": 4
+                "image_ratio_custom_width_desktop": 1,
+                "image_ratio_custom_height_desktop": 1,
+                "image_ratio_custom_width_mobile": 4,
+                "image_ratio_custom_height_mobile": 3,
+                "image": "shopify://shop_images/virelle-testimonial-ava.avif"
               }
             },
             {
@@ -282,73 +365,194 @@
               "static": true,
               "settings": {
                 "direction": "vertical",
-                "alignment": "left",
                 "width": "fill",
-                "gap_desktop": 0,
-                "gap_mobile": 0,
-                "appearance_type": "inherit",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none"
+                "alignment": "left",
+                "gap_desktop": 48,
+                "gap_mobile": 24,
+                "appearance_type": "inherit"
               },
               "blocks": [
                 {
-                  "type": "eyebrow",
+                  "type": "group",
                   "settings": {
-                    "text": "<p>FROM THE PEOPLE</p>"
-                  }
+                    "direction": "vertical",
+                    "width": "fill",
+                    "alignment": "left",
+                    "gap_desktop": 16,
+                    "gap_mobile": 16,
+                    "appearance_type": "inherit"
+                  },
+                  "blocks": [
+                    {
+                      "type": "icon",
+                      "settings": {
+                        "source": "custom",
+                        "icon": "five-stars",
+                        "icon_width": 88,
+                        "icon_padding": 0,
+                        "custom_icon": "<svg width=\"88\" height=\"16\" viewBox=\"0 0 88 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M8.00032 12.1134L4.76872 14.0498C4.62596 14.1402 4.47671 14.1789 4.32097 14.166C4.16523 14.1531 4.02896 14.1015 3.91216 14.0111C3.79535 13.9208 3.7045 13.8079 3.63961 13.6726C3.57472 13.5373 3.56174 13.3855 3.60068 13.2172L4.45724 9.55739L1.59553 7.09816C1.46575 6.98197 1.38476 6.84952 1.35258 6.70081C1.32039 6.55209 1.32999 6.40699 1.38139 6.2655C1.43278 6.12402 1.51065 6.00783 1.615 5.91695C1.71934 5.82607 1.8621 5.76798 2.04328 5.74268L5.81997 5.41349L7.28002 1.96669C7.34491 1.81178 7.44563 1.69559 7.58216 1.61814C7.71869 1.54068 7.85808 1.50195 8.00032 1.50195C8.14256 1.50195 8.28195 1.54068 8.41848 1.61814C8.55501 1.69559 8.65572 1.81178 8.72061 1.96669L10.1807 5.41349L13.9574 5.74268C14.1391 5.76849 14.2818 5.82659 14.3856 5.91695C14.4895 6.00732 14.5673 6.1235 14.6192 6.2655C14.6712 6.40751 14.681 6.55287 14.6488 6.70158C14.6167 6.8503 14.5354 6.98249 14.4051 7.09816L11.5434 9.55739L12.4 13.2172C12.4389 13.385 12.4259 13.5368 12.361 13.6726C12.2961 13.8084 12.2053 13.9213 12.0885 14.0111C11.9717 14.101 11.8354 14.1526 11.6797 14.166C11.5239 14.1795 11.3747 14.1407 11.2319 14.0498L8.00032 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M26.0003 12.1134L22.7687 14.0498C22.626 14.1402 22.4767 14.1789 22.321 14.166C22.1652 14.1531 22.029 14.1015 21.9122 14.0111C21.7954 13.9208 21.7045 13.8079 21.6396 13.6726C21.5747 13.5373 21.5617 13.3855 21.6007 13.2172L22.4572 9.55739L19.5955 7.09816C19.4657 6.98197 19.3848 6.84952 19.3526 6.70081C19.3204 6.55209 19.33 6.40699 19.3814 6.2655C19.4328 6.12402 19.5107 6.00783 19.615 5.91695C19.7193 5.82607 19.8621 5.76798 20.0433 5.74268L23.82 5.41349L25.28 1.96669C25.3449 1.81178 25.4456 1.69559 25.5822 1.61814C25.7187 1.54068 25.8581 1.50195 26.0003 1.50195C26.1426 1.50195 26.2819 1.54068 26.4185 1.61814C26.555 1.69559 26.6557 1.81178 26.7206 1.96669L28.1807 5.41349L31.9574 5.74268C32.1391 5.76849 32.2818 5.82659 32.3856 5.91695C32.4895 6.00732 32.5673 6.1235 32.6192 6.2655C32.6712 6.40751 32.681 6.55287 32.6488 6.70158C32.6167 6.8503 32.5354 6.98249 32.4051 7.09816L29.5434 9.55739L30.4 13.2172C30.4389 13.385 30.4259 13.5368 30.361 13.6726C30.2961 13.8084 30.2053 13.9213 30.0885 14.0111C29.9717 14.101 29.8354 14.1526 29.6797 14.166C29.5239 14.1795 29.3747 14.1407 29.2319 14.0498L26.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M44.0003 12.1134L40.7687 14.0498C40.626 14.1402 40.4767 14.1789 40.321 14.166C40.1652 14.1531 40.029 14.1015 39.9122 14.0111C39.7954 13.9208 39.7045 13.8079 39.6396 13.6726C39.5747 13.5373 39.5617 13.3855 39.6007 13.2172L40.4572 9.55739L37.5955 7.09816C37.4657 6.98197 37.3848 6.84952 37.3526 6.70081C37.3204 6.55209 37.33 6.40699 37.3814 6.2655C37.4328 6.12402 37.5107 6.00783 37.615 5.91695C37.7193 5.82607 37.8621 5.76798 38.0433 5.74268L41.82 5.41349L43.28 1.96669C43.3449 1.81178 43.4456 1.69559 43.5822 1.61814C43.7187 1.54068 43.8581 1.50195 44.0003 1.50195C44.1426 1.50195 44.2819 1.54068 44.4185 1.61814C44.555 1.69559 44.6557 1.81178 44.7206 1.96669L46.1807 5.41349L49.9574 5.74268C50.1391 5.76849 50.2818 5.82659 50.3856 5.91695C50.4895 6.00732 50.5673 6.1235 50.6192 6.2655C50.6712 6.40751 50.681 6.55287 50.6488 6.70158C50.6167 6.8503 50.5354 6.98249 50.4051 7.09816L47.5434 9.55739L48.4 13.2172C48.4389 13.385 48.4259 13.5368 48.361 13.6726C48.2961 13.8084 48.2053 13.9213 48.0885 14.0111C47.9717 14.101 47.8354 14.1526 47.6797 14.166C47.5239 14.1795 47.3747 14.1407 47.2319 14.0498L44.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M62.0003 12.1134L58.7687 14.0498C58.626 14.1402 58.4767 14.1789 58.321 14.166C58.1652 14.1531 58.029 14.1015 57.9122 14.0111C57.7954 13.9208 57.7045 13.8079 57.6396 13.6726C57.5747 13.5373 57.5617 13.3855 57.6007 13.2172L58.4572 9.55739L55.5955 7.09816C55.4657 6.98197 55.3848 6.84952 55.3526 6.70081C55.3204 6.55209 55.33 6.40699 55.3814 6.2655C55.4328 6.12402 55.5107 6.00783 55.615 5.91695C55.7193 5.82607 55.8621 5.76798 56.0433 5.74268L59.82 5.41349L61.28 1.96669C61.3449 1.81178 61.4456 1.69559 61.5822 1.61814C61.7187 1.54068 61.8581 1.50195 62.0003 1.50195C62.1426 1.50195 62.2819 1.54068 62.4185 1.61814C62.555 1.69559 62.6557 1.81178 62.7206 1.96669L64.1807 5.41349L67.9574 5.74268C68.1391 5.76849 68.2818 5.82659 68.3856 5.91695C68.4895 6.00732 68.5673 6.1235 68.6192 6.2655C68.6712 6.40751 68.681 6.55287 68.6488 6.70158C68.6167 6.8503 68.5354 6.98249 68.4051 7.09816L65.5434 9.55739L66.4 13.2172C66.4389 13.385 66.4259 13.5368 66.361 13.6726C66.2961 13.8084 66.2053 13.9213 66.0885 14.0111C65.9717 14.101 65.8354 14.1526 65.6797 14.166C65.5239 14.1795 65.3747 14.1407 65.2319 14.0498L62.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M80.0003 12.1134L76.7687 14.0498C76.626 14.1402 76.4767 14.1789 76.321 14.166C76.1652 14.1531 76.029 14.1015 75.9122 14.0111C75.7954 13.9208 75.7045 13.8079 75.6396 13.6726C75.5747 13.5373 75.5617 13.3855 75.6007 13.2172L76.4572 9.55739L73.5955 7.09816C73.4657 6.98197 73.3848 6.84952 73.3526 6.70081C73.3204 6.55209 73.33 6.40699 73.3814 6.2655C73.4328 6.12402 73.5107 6.00783 73.615 5.91695C73.7193 5.82607 73.8621 5.76798 74.0433 5.74268L77.82 5.41349L79.28 1.96669C79.3449 1.81178 79.4456 1.69559 79.5822 1.61814C79.7187 1.54068 79.8581 1.50195 80.0003 1.50195C80.1426 1.50195 80.2819 1.54068 80.4185 1.61814C80.555 1.69559 80.6557 1.81178 80.7206 1.96669L82.1807 5.41349L85.9574 5.74268C86.1391 5.76849 86.2818 5.82659 86.3856 5.91695C86.4895 6.00732 86.5673 6.1235 86.6192 6.2655C86.6712 6.40751 86.681 6.55287 86.6488 6.70158C86.6167 6.8503 86.5354 6.98249 86.4051 7.09816L83.5434 9.55739L84.4 13.2172C84.4389 13.385 84.4259 13.5368 84.361 13.6726C84.2961 13.8084 84.2053 13.9213 84.0885 14.0111C83.9717 14.101 83.8354 14.1526 83.6797 14.166C83.5239 14.1795 83.3747 14.1407 83.2319 14.0498L80.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<mask id=\"mask0_48338_19796\" style=\"mask-type:alpha\" maskUnits=\"userSpaceOnUse\" x=\"73\" y=\"1\" width=\"14\" height=\"14\">\n<path d=\"M80.0003 12.1134L76.7687 14.0498C76.626 14.1402 76.4767 14.1789 76.321 14.166C76.1652 14.1531 76.029 14.1015 75.9122 14.0111C75.7954 13.9208 75.7045 13.8079 75.6396 13.6726C75.5747 13.5373 75.5617 13.3855 75.6007 13.2172L76.4572 9.55739L73.5955 7.09816C73.4657 6.98197 73.3848 6.84952 73.3526 6.70081C73.3204 6.55209 73.33 6.40699 73.3814 6.2655C73.4328 6.12402 73.5107 6.00783 73.615 5.91695C73.7193 5.82607 73.8621 5.76798 74.0433 5.74268L77.82 5.41349L79.28 1.96669C79.3449 1.81178 79.4456 1.69559 79.5822 1.61814C79.7187 1.54068 79.8581 1.50195 80.0003 1.50195C80.1426 1.50195 80.2819 1.54068 80.4185 1.61814C80.555 1.69559 80.6557 1.81178 80.7206 1.96669L82.1807 5.41349L85.9574 5.74268C86.1391 5.76849 86.2818 5.82659 86.3856 5.91695C86.4895 6.00732 86.5673 6.1235 86.6192 6.2655C86.6712 6.40751 86.681 6.55287 86.6488 6.70158C86.6167 6.8503 86.5354 6.98249 86.4051 7.09816L83.5434 9.55739L84.4 13.2172C84.4389 13.385 84.4259 13.5368 84.361 13.6726C84.2961 13.8084 84.2053 13.9213 84.0885 14.0111C83.9717 14.101 83.8354 14.1526 83.6797 14.166C83.5239 14.1795 83.3747 14.1407 83.2319 14.0498L80.0003 12.1134Z\" fill=\"#FFB74B\"/>\n</mask>\n<g mask=\"url(#mask0_48338_19796)\">\n<rect x=\"80\" y=\"1\" width=\"7\" height=\"14\" fill=\"#E6E6E6\"/>\n</g>\n</svg>",
+                        "accessible_label": "4.5 out of 5 stars"
+                      }
+                    },
+                    {
+                      "type": "group",
+                      "settings": {
+                        "direction": "vertical",
+                        "width": "fill",
+                        "alignment": "left",
+                        "gap_desktop": 12,
+                        "gap_mobile": 12,
+                        "appearance_type": "inherit"
+                      },
+                      "blocks": [
+                        {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>The sport bra offers excellent support and comfort, making it perfect for pilates.</p>",
+                            "text_size": "md",
+                            "width": "fill",
+                            "text_color": "#181818"
+                          }
+                        },
+                        {
+                          "type": "heading",
+                          "settings": {
+                            "text": "<p>Ava Brown</p>",
+                            "html_tag": "h3",
+                            "heading_size": "custom",
+                            "custom_heading_size": 18,
+                            "width": "fill"
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
-                  "type": "icon",
+                  "type": "product-card-single",
                   "settings": {
-                    "source": "library",
-                    "icon": "five-stars",
-                    "icon_width": 88,
-                    "custom_mobile": false
-                  }
-                },
-                {
-                  "type": "heading",
-                  "settings": {
-                    "text": "<p>\"They created a gorgeous piece for me! I have so much of their jewelry so it was difficult, but they outdid themselves again with something totally different than anything I have!\"</p>",
-                    "heading_size": "display",
-                    "html_tag": "h3",
-                    "width": "fill"
-                  }
-                },
-                {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>— Rachel L, USA</p>",
-                    "text_size": "sm",
-                    "width": "fill"
+                    "max_width": 390,
+                    "horizontal_on_mobile": true,
+                    "color_type": "inherit",
+                    "product": "virelle-timeless-strappy-bralette"
                   }
                 }
               ]
             }
-          ],
+          ]
+        },
+        {
+          "type": "slide_split",
           "settings": {
-            "position_horizontal": "center",
+            "position_horizontal": "top",
             "horizontal_alignment": "left",
             "alignment_mobile": "left",
             "gap_desktop": 0,
-            "gap_mobile": 40,
+            "gap_mobile": 32,
             "height": "fill",
-            "appearance_type": "scheme",
-            "color_scheme": "scheme-4",
+            "appearance_type": "inherit",
             "border_type": "none",
             "corner_radius": "square",
-            "shadow": "none",
-            "padding_top": 0,
-            "padding_bottom": 0,
-            "padding_left": 0,
-            "padding_right": 0,
-            "customize_mobile_padding": false,
-            "padding_top_mobile": 0,
-            "padding_bottom_mobile": 0,
-            "padding_left_mobile": 0,
-            "padding_right_mobile": 0
-          }
+            "shadow": "none"
+          },
+          "blocks": [
+            {
+              "type": "image",
+              "id": "image",
+              "static": true,
+              "settings": {
+                "image_ratio_desktop": "custom",
+                "image_ratio_mobile": "custom",
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "image_ratio_custom_width_desktop": 1,
+                "image_ratio_custom_height_desktop": 1,
+                "image_ratio_custom_width_mobile": 4,
+                "image_ratio_custom_height_mobile": 3,
+                "image": "shopify://shop_images/virelle-testimonial-harper.avif"
+              }
+            },
+            {
+              "type": "group",
+              "id": "content",
+              "static": true,
+              "settings": {
+                "direction": "vertical",
+                "width": "fill",
+                "alignment": "left",
+                "gap_desktop": 48,
+                "gap_mobile": 24,
+                "appearance_type": "inherit"
+              },
+              "blocks": [
+                {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "width": "fill",
+                    "alignment": "left",
+                    "gap_desktop": 16,
+                    "gap_mobile": 16,
+                    "appearance_type": "inherit"
+                  },
+                  "blocks": [
+                    {
+                      "type": "icon",
+                      "settings": {
+                        "source": "custom",
+                        "icon": "five-stars",
+                        "icon_width": 88,
+                        "icon_padding": 0,
+                        "custom_icon": "<svg width=\"88\" height=\"16\" viewBox=\"0 0 88 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M8.00032 12.1134L4.76872 14.0498C4.62596 14.1402 4.47671 14.1789 4.32097 14.166C4.16523 14.1531 4.02896 14.1015 3.91216 14.0111C3.79535 13.9208 3.7045 13.8079 3.63961 13.6726C3.57472 13.5373 3.56174 13.3855 3.60068 13.2172L4.45724 9.55739L1.59553 7.09816C1.46575 6.98197 1.38476 6.84952 1.35258 6.70081C1.32039 6.55209 1.32999 6.40699 1.38139 6.2655C1.43278 6.12402 1.51065 6.00783 1.615 5.91695C1.71934 5.82607 1.8621 5.76798 2.04328 5.74268L5.81997 5.41349L7.28002 1.96669C7.34491 1.81178 7.44563 1.69559 7.58216 1.61814C7.71869 1.54068 7.85808 1.50195 8.00032 1.50195C8.14256 1.50195 8.28195 1.54068 8.41848 1.61814C8.55501 1.69559 8.65572 1.81178 8.72061 1.96669L10.1807 5.41349L13.9574 5.74268C14.1391 5.76849 14.2818 5.82659 14.3856 5.91695C14.4895 6.00732 14.5673 6.1235 14.6192 6.2655C14.6712 6.40751 14.681 6.55287 14.6488 6.70158C14.6167 6.8503 14.5354 6.98249 14.4051 7.09816L11.5434 9.55739L12.4 13.2172C12.4389 13.385 12.4259 13.5368 12.361 13.6726C12.2961 13.8084 12.2053 13.9213 12.0885 14.0111C11.9717 14.101 11.8354 14.1526 11.6797 14.166C11.5239 14.1795 11.3747 14.1407 11.2319 14.0498L8.00032 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M26.0003 12.1134L22.7687 14.0498C22.626 14.1402 22.4767 14.1789 22.321 14.166C22.1652 14.1531 22.029 14.1015 21.9122 14.0111C21.7954 13.9208 21.7045 13.8079 21.6396 13.6726C21.5747 13.5373 21.5617 13.3855 21.6007 13.2172L22.4572 9.55739L19.5955 7.09816C19.4657 6.98197 19.3848 6.84952 19.3526 6.70081C19.3204 6.55209 19.33 6.40699 19.3814 6.2655C19.4328 6.12402 19.5107 6.00783 19.615 5.91695C19.7193 5.82607 19.8621 5.76798 20.0433 5.74268L23.82 5.41349L25.28 1.96669C25.3449 1.81178 25.4456 1.69559 25.5822 1.61814C25.7187 1.54068 25.8581 1.50195 26.0003 1.50195C26.1426 1.50195 26.2819 1.54068 26.4185 1.61814C26.555 1.69559 26.6557 1.81178 26.7206 1.96669L28.1807 5.41349L31.9574 5.74268C32.1391 5.76849 32.2818 5.82659 32.3856 5.91695C32.4895 6.00732 32.5673 6.1235 32.6192 6.2655C32.6712 6.40751 32.681 6.55287 32.6488 6.70158C32.6167 6.8503 32.5354 6.98249 32.4051 7.09816L29.5434 9.55739L30.4 13.2172C30.4389 13.385 30.4259 13.5368 30.361 13.6726C30.2961 13.8084 30.2053 13.9213 30.0885 14.0111C29.9717 14.101 29.8354 14.1526 29.6797 14.166C29.5239 14.1795 29.3747 14.1407 29.2319 14.0498L26.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M44.0003 12.1134L40.7687 14.0498C40.626 14.1402 40.4767 14.1789 40.321 14.166C40.1652 14.1531 40.029 14.1015 39.9122 14.0111C39.7954 13.9208 39.7045 13.8079 39.6396 13.6726C39.5747 13.5373 39.5617 13.3855 39.6007 13.2172L40.4572 9.55739L37.5955 7.09816C37.4657 6.98197 37.3848 6.84952 37.3526 6.70081C37.3204 6.55209 37.33 6.40699 37.3814 6.2655C37.4328 6.12402 37.5107 6.00783 37.615 5.91695C37.7193 5.82607 37.8621 5.76798 38.0433 5.74268L41.82 5.41349L43.28 1.96669C43.3449 1.81178 43.4456 1.69559 43.5822 1.61814C43.7187 1.54068 43.8581 1.50195 44.0003 1.50195C44.1426 1.50195 44.2819 1.54068 44.4185 1.61814C44.555 1.69559 44.6557 1.81178 44.7206 1.96669L46.1807 5.41349L49.9574 5.74268C50.1391 5.76849 50.2818 5.82659 50.3856 5.91695C50.4895 6.00732 50.5673 6.1235 50.6192 6.2655C50.6712 6.40751 50.681 6.55287 50.6488 6.70158C50.6167 6.8503 50.5354 6.98249 50.4051 7.09816L47.5434 9.55739L48.4 13.2172C48.4389 13.385 48.4259 13.5368 48.361 13.6726C48.2961 13.8084 48.2053 13.9213 48.0885 14.0111C47.9717 14.101 47.8354 14.1526 47.6797 14.166C47.5239 14.1795 47.3747 14.1407 47.2319 14.0498L44.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M62.0003 12.1134L58.7687 14.0498C58.626 14.1402 58.4767 14.1789 58.321 14.166C58.1652 14.1531 58.029 14.1015 57.9122 14.0111C57.7954 13.9208 57.7045 13.8079 57.6396 13.6726C57.5747 13.5373 57.5617 13.3855 57.6007 13.2172L58.4572 9.55739L55.5955 7.09816C55.4657 6.98197 55.3848 6.84952 55.3526 6.70081C55.3204 6.55209 55.33 6.40699 55.3814 6.2655C55.4328 6.12402 55.5107 6.00783 55.615 5.91695C55.7193 5.82607 55.8621 5.76798 56.0433 5.74268L59.82 5.41349L61.28 1.96669C61.3449 1.81178 61.4456 1.69559 61.5822 1.61814C61.7187 1.54068 61.8581 1.50195 62.0003 1.50195C62.1426 1.50195 62.2819 1.54068 62.4185 1.61814C62.555 1.69559 62.6557 1.81178 62.7206 1.96669L64.1807 5.41349L67.9574 5.74268C68.1391 5.76849 68.2818 5.82659 68.3856 5.91695C68.4895 6.00732 68.5673 6.1235 68.6192 6.2655C68.6712 6.40751 68.681 6.55287 68.6488 6.70158C68.6167 6.8503 68.5354 6.98249 68.4051 7.09816L65.5434 9.55739L66.4 13.2172C66.4389 13.385 66.4259 13.5368 66.361 13.6726C66.2961 13.8084 66.2053 13.9213 66.0885 14.0111C65.9717 14.101 65.8354 14.1526 65.6797 14.166C65.5239 14.1795 65.3747 14.1407 65.2319 14.0498L62.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<path d=\"M80.0003 12.1134L76.7687 14.0498C76.626 14.1402 76.4767 14.1789 76.321 14.166C76.1652 14.1531 76.029 14.1015 75.9122 14.0111C75.7954 13.9208 75.7045 13.8079 75.6396 13.6726C75.5747 13.5373 75.5617 13.3855 75.6007 13.2172L76.4572 9.55739L73.5955 7.09816C73.4657 6.98197 73.3848 6.84952 73.3526 6.70081C73.3204 6.55209 73.33 6.40699 73.3814 6.2655C73.4328 6.12402 73.5107 6.00783 73.615 5.91695C73.7193 5.82607 73.8621 5.76798 74.0433 5.74268L77.82 5.41349L79.28 1.96669C79.3449 1.81178 79.4456 1.69559 79.5822 1.61814C79.7187 1.54068 79.8581 1.50195 80.0003 1.50195C80.1426 1.50195 80.2819 1.54068 80.4185 1.61814C80.555 1.69559 80.6557 1.81178 80.7206 1.96669L82.1807 5.41349L85.9574 5.74268C86.1391 5.76849 86.2818 5.82659 86.3856 5.91695C86.4895 6.00732 86.5673 6.1235 86.6192 6.2655C86.6712 6.40751 86.681 6.55287 86.6488 6.70158C86.6167 6.8503 86.5354 6.98249 86.4051 7.09816L83.5434 9.55739L84.4 13.2172C84.4389 13.385 84.4259 13.5368 84.361 13.6726C84.2961 13.8084 84.2053 13.9213 84.0885 14.0111C83.9717 14.101 83.8354 14.1526 83.6797 14.166C83.5239 14.1795 83.3747 14.1407 83.2319 14.0498L80.0003 12.1134Z\" fill=\"#FFB74B\"/>\n<mask id=\"mask0_48338_19796\" style=\"mask-type:alpha\" maskUnits=\"userSpaceOnUse\" x=\"73\" y=\"1\" width=\"14\" height=\"14\">\n<path d=\"M80.0003 12.1134L76.7687 14.0498C76.626 14.1402 76.4767 14.1789 76.321 14.166C76.1652 14.1531 76.029 14.1015 75.9122 14.0111C75.7954 13.9208 75.7045 13.8079 75.6396 13.6726C75.5747 13.5373 75.5617 13.3855 75.6007 13.2172L76.4572 9.55739L73.5955 7.09816C73.4657 6.98197 73.3848 6.84952 73.3526 6.70081C73.3204 6.55209 73.33 6.40699 73.3814 6.2655C73.4328 6.12402 73.5107 6.00783 73.615 5.91695C73.7193 5.82607 73.8621 5.76798 74.0433 5.74268L77.82 5.41349L79.28 1.96669C79.3449 1.81178 79.4456 1.69559 79.5822 1.61814C79.7187 1.54068 79.8581 1.50195 80.0003 1.50195C80.1426 1.50195 80.2819 1.54068 80.4185 1.61814C80.555 1.69559 80.6557 1.81178 80.7206 1.96669L82.1807 5.41349L85.9574 5.74268C86.1391 5.76849 86.2818 5.82659 86.3856 5.91695C86.4895 6.00732 86.5673 6.1235 86.6192 6.2655C86.6712 6.40751 86.681 6.55287 86.6488 6.70158C86.6167 6.8503 86.5354 6.98249 86.4051 7.09816L83.5434 9.55739L84.4 13.2172C84.4389 13.385 84.4259 13.5368 84.361 13.6726C84.2961 13.8084 84.2053 13.9213 84.0885 14.0111C83.9717 14.101 83.8354 14.1526 83.6797 14.166C83.5239 14.1795 83.3747 14.1407 83.2319 14.0498L80.0003 12.1134Z\" fill=\"#FFB74B\"/>\n</mask>\n<g mask=\"url(#mask0_48338_19796)\">\n<rect x=\"80\" y=\"1\" width=\"7\" height=\"14\" fill=\"#E6E6E6\"/>\n</g>\n</svg>",
+                        "accessible_label": "4.5 out of 5 stars"
+                      }
+                    },
+                    {
+                      "type": "group",
+                      "settings": {
+                        "direction": "vertical",
+                        "width": "fill",
+                        "alignment": "left",
+                        "gap_desktop": 12,
+                        "gap_mobile": 12,
+                        "appearance_type": "inherit"
+                      },
+                      "blocks": [
+                        {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>They feature a high waistband that offers excellent support and a flattering fit, making them perfect for any workout.</p>",
+                            "text_size": "md",
+                            "width": "fill",
+                            "text_color": "#181818"
+                          }
+                        },
+                        {
+                          "type": "heading",
+                          "settings": {
+                            "text": "<p>Harper Anderson</p>",
+                            "html_tag": "h3",
+                            "heading_size": "custom",
+                            "custom_heading_size": 18,
+                            "width": "fill"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "product-card-single",
+                  "settings": {
+                    "max_width": 390,
+                    "horizontal_on_mobile": true,
+                    "color_type": "inherit",
+                    "product": "virelle-soft-motion-leggings"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ],
       "name": "t:general.carousel",

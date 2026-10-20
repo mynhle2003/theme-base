@@ -42,7 +42,7 @@
 
 {% if blog_card_description_text != blank or request.design_mode %}
   <div
-    class="blog-card-description blog-card-description--limit-{{ blog_card_description_limit }} body-{{ blog_card_description_size }}"
+    class="blog-card-description blog-card-description--limit-{{ blog_card_description_limit }} body-{{ blog_card_description_size }}{% if block.settings.hide_on_mobile %} blog-card-description--hide-mobile{% endif %}"
     {% if blog_card_description_style != blank %}style="{{ blog_card_description_style }}"{% endif %}
     {{ block.shopify_attributes }}
   >
@@ -78,6 +78,9 @@
   .blog-card-description--limit-three .blog-card-description__text { -webkit-line-clamp: 3; }
 
   @media (max-width: 767.98px) {
+    .blog-card-description--hide-mobile {
+      display: none;
+    }
     .blog-card-description {
       padding-top: var(--blog-card-description-padding-top-mobile, var(--blog-card-description-padding-top, 0px));
       padding-bottom: var(--blog-card-description-padding-bottom-mobile, var(--blog-card-description-padding-bottom, 6px));
@@ -91,14 +94,32 @@
   "tag": null,
   "settings": [
     {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
       "type": "select",
       "id": "text_limit",
       "label": "Text limit",
       "options": [
-        { "value": "no_limit", "label": "No limit" },
-        { "value": "one", "label": "1 line" },
-        { "value": "two", "label": "2 lines" },
-        { "value": "three", "label": "3 lines" }
+        {
+          "value": "no_limit",
+          "label": "No limit"
+        },
+        {
+          "value": "one",
+          "label": "1 line"
+        },
+        {
+          "value": "two",
+          "label": "2 lines"
+        },
+        {
+          "value": "three",
+          "label": "3 lines"
+        }
       ],
       "default": "two"
     },
@@ -107,12 +128,30 @@
       "id": "size",
       "label": "Font size",
       "options": [
-        { "value": "xs", "label": "Extra small" },
-        { "value": "sm", "label": "Small" },
-        { "value": "md", "label": "Medium" },
-        { "value": "lg", "label": "Large" },
-        { "value": "xl", "label": "Extra large" },
-        { "value": "xxl", "label": "2X large" }
+        {
+          "value": "xs",
+          "label": "Extra small"
+        },
+        {
+          "value": "sm",
+          "label": "Small"
+        },
+        {
+          "value": "md",
+          "label": "Medium"
+        },
+        {
+          "value": "lg",
+          "label": "Large"
+        },
+        {
+          "value": "xl",
+          "label": "Extra large"
+        },
+        {
+          "value": "xxl",
+          "label": "2X large"
+        }
       ],
       "default": "sm"
     },

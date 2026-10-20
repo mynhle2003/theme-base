@@ -1,10 +1,6 @@
 {% liquid
   assign primary_font = settings.type_primary_font
   assign body_font = primary_font
-  assign button_font_weight = settings.button_font_weight | default: 'inherit'
-  unless button_font_weight == '300' or button_font_weight == '400' or button_font_weight == '500' or button_font_weight == '600' or button_font_weight == '700' or button_font_weight == '800' or button_font_weight == '900'
-    assign button_font_weight = 'inherit'
-  endunless
   assign heading_font = settings.type_heading_font
   assign accent_font = settings.type_accent_font
   if heading_font == blank
@@ -123,173 +119,114 @@
   assign section_gap = 48
   assign grid_gap = 24
   assign body_size = settings.type_body_size | default: 16
-  assign body_xs_size = 12
-  assign body_sm_size = 14
-  assign body_lg_size = 18
-  assign body_xl_size = 20
-  assign body_xxl_size = 24
-  assign body_leading = '1.5'
-  case settings.type_body_leading
-    when 'normal'
-      assign body_leading = '1.5'
-    when 'relaxed'
-      assign body_leading = '1.6'
-    when 'loose'
-      assign body_leading = '1.75'
-  endcase
-
+  assign body_xs_size = body_size | plus: -4
+  assign body_sm_size = body_size | plus: -2
+  assign body_lg_size = body_size | plus: 2
+  assign body_xl_size = body_size | plus: 4
+  assign body_xxl_size = body_size | plus: 8
+  capture body_leading
+    render 'typography-token', kind: 'line_height', value: settings.type_body_leading
+  endcapture
+  assign body_leading = body_leading | strip
   assign heading_weight = heading_font.weight | default: '400'
-  assign heading_letter_spacing = '0px'
-  case settings.type_letter_spacing
-    when 'tight'
-      assign heading_letter_spacing = '-0.2px'
-    when 'relaxed'
-      assign heading_letter_spacing = '0.2px'
-  endcase
-
-  assign heading_1_letter_spacing = '-1.28px'
-  assign heading_2_letter_spacing = '-0.8px'
-  assign heading_3_letter_spacing = '-0.64px'
-  assign heading_4_letter_spacing = '-0.48px'
-  assign heading_5_letter_spacing = '0em'
-  assign heading_6_letter_spacing = '0em'
+  capture heading_1_letter_spacing
+    render 'typography-token', kind: 'spacing', value: settings.type_heading_1_letter_spacing
+  endcapture
+  assign heading_1_letter_spacing = heading_1_letter_spacing | strip
+  capture heading_2_letter_spacing
+    render 'typography-token', kind: 'spacing', value: settings.type_heading_2_letter_spacing
+  endcapture
+  assign heading_2_letter_spacing = heading_2_letter_spacing | strip
+  capture heading_3_letter_spacing
+    render 'typography-token', kind: 'spacing', value: settings.type_heading_3_letter_spacing
+  endcapture
+  assign heading_3_letter_spacing = heading_3_letter_spacing | strip
+  capture heading_4_letter_spacing
+    render 'typography-token', kind: 'spacing', value: settings.type_heading_4_letter_spacing
+  endcapture
+  assign heading_4_letter_spacing = heading_4_letter_spacing | strip
+  capture heading_5_letter_spacing
+    render 'typography-token', kind: 'spacing', value: settings.type_heading_5_letter_spacing
+  endcapture
+  assign heading_5_letter_spacing = heading_5_letter_spacing | strip
+  capture heading_6_letter_spacing
+    render 'typography-token', kind: 'spacing', value: settings.type_heading_6_letter_spacing
+  endcapture
+  assign heading_6_letter_spacing = heading_6_letter_spacing | strip
+  assign heading_letter_spacing = heading_4_letter_spacing
 
   assign heading_1_size_desktop = settings.type_heading_1_size_desktop | default: 64
-  assign heading_1_size_tablet = settings.type_heading_1_size_tablet | default: 52
   assign heading_1_size_mobile = settings.type_heading_1_size_mobile | default: 40
   assign heading_2_size_desktop = settings.type_heading_2_size_desktop | default: 40
-  assign heading_2_size_tablet = settings.type_heading_2_size_tablet | default: 34
   assign heading_2_size_mobile = settings.type_heading_2_size_mobile | default: 30
   assign heading_3_size_desktop = settings.type_heading_3_size_desktop | default: 32
-  assign heading_3_size_tablet = settings.type_heading_3_size_tablet | default: 22
   assign heading_3_size_mobile = settings.type_heading_3_size_mobile | default: 20
   assign heading_4_size_desktop = settings.type_heading_4_size_desktop | default: 24
   assign heading_4_size_mobile = settings.type_heading_4_size_mobile | default: 18
   assign heading_5_size_desktop = settings.type_heading_5_size_desktop | default: 18
-  assign heading_5_size_tablet = settings.type_heading_5_size_tablet | default: 15
-  assign heading_5_size_mobile = settings.type_heading_5_size_mobile | default: 15
   assign heading_6_size_desktop = settings.type_heading_6_size_desktop | default: 16
-  assign heading_6_size_mobile = settings.type_heading_6_size_mobile | default: 14
 
-  assign heading_1_line_height = '1.2'
-  case settings.type_heading_1_line_height
-    when 'tight'
-      assign heading_1_line_height = '1.1'
-    when 'normal'
-      assign heading_1_line_height = '1.2'
-    when 'relaxed'
-      assign heading_1_line_height = '1.3'
-  endcase
-  assign heading_2_line_height = '1.2'
-  case settings.type_heading_2_line_height
-    when 'tight'
-      assign heading_2_line_height = '1.1'
-    when 'normal'
-      assign heading_2_line_height = '1.2'
-    when 'relaxed'
-      assign heading_2_line_height = '1.3'
-  endcase
-  assign heading_2_line_height_tablet = heading_2_line_height
-  if settings.type_heading_2_line_height == 'normal'
-    assign heading_2_line_height_tablet = '1.3'
-  endif
-  assign heading_3_line_height = '1.3'
-  case settings.type_heading_3_line_height
-    when 'tight'
-      assign heading_3_line_height = '1.2'
-    when 'normal'
-      assign heading_3_line_height = '1.3'
-    when 'relaxed'
-      assign heading_3_line_height = '1.4'
-  endcase
-  assign heading_4_line_height = '1.4'
-  case settings.type_heading_4_line_height
-    when 'tight'
-      assign heading_4_line_height = '1.3'
-    when 'normal'
-      assign heading_4_line_height = '1.4'
-    when 'relaxed'
-      assign heading_4_line_height = '1.5'
-  endcase
-  assign heading_5_line_height = '1.5'
-  case settings.type_heading_5_line_height
-    when 'tight'
-      assign heading_5_line_height = '1.4'
-    when 'normal'
-      assign heading_5_line_height = '1.5'
-    when 'relaxed'
-      assign heading_5_line_height = '1.6'
-  endcase
-  assign heading_6_line_height = '1.5'
-  case settings.type_heading_6_line_height
-    when 'tight'
-      assign heading_6_line_height = '1.4'
-    when 'normal'
-      assign heading_6_line_height = '1.5'
-    when 'relaxed'
-      assign heading_6_line_height = '1.6'
-  endcase
-
-  assign heading_1_text_case = 'none'
-  if settings.type_heading_1_case == 'uppercase'
-    assign heading_1_text_case = 'uppercase'
-  elsif settings.type_heading_1_case == 'capitalize'
-    assign heading_1_text_case = 'capitalize'
-  endif
-  assign heading_2_text_case = 'none'
-  if settings.type_heading_2_case == 'uppercase'
-    assign heading_2_text_case = 'uppercase'
-  elsif settings.type_heading_2_case == 'capitalize'
-    assign heading_2_text_case = 'capitalize'
-  endif
-  assign heading_3_text_case = 'none'
-  if settings.type_heading_3_case == 'uppercase'
-    assign heading_3_text_case = 'uppercase'
-  elsif settings.type_heading_3_case == 'capitalize'
-    assign heading_3_text_case = 'capitalize'
-  endif
-  assign heading_4_text_case = 'none'
-  if settings.type_heading_4_case == 'uppercase'
-    assign heading_4_text_case = 'uppercase'
-  elsif settings.type_heading_4_case == 'capitalize'
-    assign heading_4_text_case = 'capitalize'
-  endif
-  assign heading_5_text_case = 'none'
-  if settings.type_heading_5_case == 'uppercase'
-    assign heading_5_text_case = 'uppercase'
-  elsif settings.type_heading_5_case == 'capitalize'
-    assign heading_5_text_case = 'capitalize'
-  endif
-  assign heading_6_text_case = 'none'
-  if settings.type_heading_6_case == 'uppercase'
-    assign heading_6_text_case = 'uppercase'
-  elsif settings.type_heading_6_case == 'capitalize'
-    assign heading_6_text_case = 'capitalize'
-  endif
-
+  capture heading_1_line_height
+    render 'typography-token', kind: 'line_height', value: settings.type_heading_1_line_height
+  endcapture
+  assign heading_1_line_height = heading_1_line_height | strip
+  capture heading_1_text_case
+    render 'typography-token', kind: 'case', value: settings.type_heading_1_case
+  endcapture
+  assign heading_1_text_case = heading_1_text_case | strip
+  capture heading_2_line_height
+    render 'typography-token', kind: 'line_height', value: settings.type_heading_2_line_height
+  endcapture
+  assign heading_2_line_height = heading_2_line_height | strip
+  capture heading_2_text_case
+    render 'typography-token', kind: 'case', value: settings.type_heading_2_case
+  endcapture
+  assign heading_2_text_case = heading_2_text_case | strip
+  capture heading_3_line_height
+    render 'typography-token', kind: 'line_height', value: settings.type_heading_3_line_height
+  endcapture
+  assign heading_3_line_height = heading_3_line_height | strip
+  capture heading_3_text_case
+    render 'typography-token', kind: 'case', value: settings.type_heading_3_case
+  endcapture
+  assign heading_3_text_case = heading_3_text_case | strip
+  capture heading_4_line_height
+    render 'typography-token', kind: 'line_height', value: settings.type_heading_4_line_height
+  endcapture
+  assign heading_4_line_height = heading_4_line_height | strip
+  capture heading_4_text_case
+    render 'typography-token', kind: 'case', value: settings.type_heading_4_case
+  endcapture
+  assign heading_4_text_case = heading_4_text_case | strip
+  capture heading_5_line_height
+    render 'typography-token', kind: 'line_height', value: settings.type_heading_5_line_height
+  endcapture
+  assign heading_5_line_height = heading_5_line_height | strip
+  capture heading_5_text_case
+    render 'typography-token', kind: 'case', value: settings.type_heading_5_case
+  endcapture
+  assign heading_5_text_case = heading_5_text_case | strip
+  capture heading_6_line_height
+    render 'typography-token', kind: 'line_height', value: settings.type_heading_6_line_height
+  endcapture
+  assign heading_6_line_height = heading_6_line_height | strip
+  capture heading_6_text_case
+    render 'typography-token', kind: 'case', value: settings.type_heading_6_case
+  endcapture
+  assign heading_6_text_case = heading_6_text_case | strip
   assign eyebrow_size = settings.type_eyebrow_size | default: 12
-  assign eyebrow_line_height = '1.5'
-  case settings.type_eyebrow_line_height
-    when 'tight'
-      assign eyebrow_line_height = '1.3'
-    when 'normal'
-      assign eyebrow_line_height = '1.5'
-    when 'relaxed'
-      assign eyebrow_line_height = '1.6'
-  endcase
-  assign eyebrow_letter_spacing = '0em'
-  case settings.type_eyebrow_letter_spacing
-    when 'relaxed'
-      assign eyebrow_letter_spacing = '0.02em'
-    when 'loose'
-      assign eyebrow_letter_spacing = '0.08em'
-    when 'extra_loose'
-      assign eyebrow_letter_spacing = '0.2em'
-  endcase
-  assign eyebrow_text_case = 'none'
-  if settings.type_eyebrow_case == 'uppercase'
-    assign eyebrow_text_case = 'uppercase'
-  endif
+  capture eyebrow_line_height
+    render 'typography-token', kind: 'line_height', value: settings.type_eyebrow_line_height
+  endcapture
+  assign eyebrow_line_height = eyebrow_line_height | strip
+  capture eyebrow_letter_spacing
+    render 'typography-token', kind: 'spacing', value: settings.type_eyebrow_letter_spacing
+  endcapture
+  assign eyebrow_letter_spacing = eyebrow_letter_spacing | strip
+  capture eyebrow_text_case
+    render 'typography-token', kind: 'case', value: settings.type_eyebrow_case
+  endcapture
+  assign eyebrow_text_case = eyebrow_text_case | strip
 
   assign motion_image_zoom = 1.04
   assign product_card_image_zoom = 1.06
@@ -391,7 +328,7 @@
       assign bottom_sheet_radius = 'var(--radius-extra)'
   endcase
 
-  assign overlay_radius = drawer_radius
+  assign overlay_radius = 'var(--card-radius-lg)'
   assign border_width = settings.shape_border_width
   if border_width == blank
     assign border_width = 1
@@ -423,54 +360,71 @@
   assign button_padding_inline_desktop = settings.button_padding_inline_desktop | default: 30
   assign button_padding_inline_mobile = settings.button_padding_inline_mobile | default: 16
   assign button_disabled_opacity = settings.button_disabled_opacity | default: 60 | divided_by: 100.0
-  assign button_font_size = '13px'
-  case settings.button_font_size
-    when '10px', '12px', '13px', '14px', '15px', '16px'
-      assign button_font_size = settings.button_font_size
+  assign button_font_size = settings.button_font_size_px | default: 13 | append: 'px'
+  capture button_letter_spacing
+    render 'typography-token', kind: 'spacing', value: settings.button_letter_spacing
+  endcapture
+  assign button_letter_spacing = button_letter_spacing | strip
+  assign button_role = settings.button_primary_font | default: 'body'
+  assign button_font = body_font
+  case settings.button_primary_font
+    when 'heading'
+      assign button_font = heading_font
+    when 'accent'
+      assign button_font = accent_font
   endcase
-  assign button_font_size_mobile = '15px'
-  case settings.button_font_size_mobile
-    when '12px', '13px', '14px', '15px', '16px'
-      assign button_font_size_mobile = settings.button_font_size_mobile
+  assign button_font_weight = '--font-' | append: settings.button_primary_font | append: '-weight)' | prepend: 'var('
+  if settings.button_primary_font == blank
+    assign button_font_weight = 'var(--font-body-weight)'
+  endif
+  assign button_requested_weight = settings.button_font_weight | default: 'body'
+  if button_requested_weight == 'body'
+    assign button_requested_weight = body_font.weight | default: '400' | append: ''
+  endif
+  if button_requested_weight != blank
+    assign button_weight_variant = button_font | font_modify: 'weight', button_requested_weight
+    if button_weight_variant != blank
+      assign button_font = button_weight_variant
+      assign button_font_weight = button_font.weight
+      if settings.button_font_weight == 'body'
+        assign button_font_weight = 'var(--font-body-weight)'
+      endif
+    endif
+  endif
+  assign badge_font = body_font
+  case settings.badge_font
+    when 'heading'
+      assign badge_font = heading_font
+    when 'accent'
+      assign badge_font = accent_font
   endcase
-  assign button_letter_spacing = '0em'
-  case settings.button_letter_spacing
-    when 'relaxed'
-      assign button_letter_spacing = '0.02em'
-    when 'loose'
-      assign button_letter_spacing = '0.08em'
-    when 'reference'
-      assign button_letter_spacing = '1.2px'
-    when 'extra_loose'
-      assign button_letter_spacing = '0.14em'
-  endcase
-
-  assign button_primary_font_family = 'var(--font-body-family)'
-  if settings.button_primary_font == 'heading'
-    assign button_primary_font_family = 'var(--font-heading-family)'
+  assign badge_font_weight = '--font-' | append: settings.badge_font | append: '-weight)' | prepend: 'var('
+  if settings.badge_font == blank
+    assign badge_font_weight = 'var(--font-body-weight)'
   endif
-  assign button_secondary_font_family = 'var(--font-body-family)'
-  if settings.button_secondary_font == 'heading'
-    assign button_secondary_font_family = 'var(--font-heading-family)'
+  assign badge_requested_weight = settings.badge_font_weight | default: 'body'
+  if badge_requested_weight == 'body'
+    assign badge_requested_weight = body_font.weight | default: '400' | append: ''
   endif
-  assign button_tertiary_font_family = 'var(--font-body-family)'
-  if settings.button_tertiary_font == 'heading'
-    assign button_tertiary_font_family = 'var(--font-heading-family)'
+  if badge_requested_weight != blank
+    assign badge_weight_variant = badge_font | font_modify: 'weight', badge_requested_weight
+    if badge_weight_variant != blank
+      assign badge_font = badge_weight_variant
+      assign badge_font_weight = badge_font.weight
+      if settings.badge_font_weight == 'body'
+        assign badge_font_weight = 'var(--font-body-weight)'
+      endif
+    endif
   endif
-
-  assign button_primary_text_case = 'uppercase'
-  if settings.button_primary_text_case == 'original'
-    assign button_primary_text_case = 'none'
-  endif
-  assign button_secondary_text_case = 'uppercase'
-  if settings.button_secondary_text_case == 'original'
-    assign button_secondary_text_case = 'none'
-  endif
-  assign button_tertiary_text_case = 'uppercase'
-  if settings.button_tertiary_text_case == 'original'
-    assign button_tertiary_text_case = 'none'
-  endif
-
+  assign button_primary_font_family = '--font-' | append: button_role | append: '-family' | prepend: 'var(' | append: ')'
+  assign button_secondary_font_family = button_primary_font_family
+  assign button_tertiary_font_family = button_primary_font_family
+  capture button_primary_text_case
+    render 'typography-token', kind: 'case', value: settings.button_primary_text_case
+  endcapture
+  assign button_primary_text_case = button_primary_text_case | strip
+  assign button_secondary_text_case = button_primary_text_case
+  assign button_tertiary_text_case = button_primary_text_case
   assign button_primary_border_width = settings.button_primary_border_width | default: 1
   assign button_secondary_border_width = settings.button_secondary_border_width | default: 1
   assign button_tertiary_underline = 'underline'
@@ -500,24 +454,16 @@
   if input_border_width == blank
     assign input_border_width = 1
   endif
-  assign input_radius = 'var(--radius-rounded)'
-  case settings.input_radius_style
-    when 'square'
-      assign input_radius = 'var(--radius-square)'
-    when 'slightly_rounded'
-      assign input_radius = 'var(--radius-slight)'
-    when 'pill'
-      assign input_radius = 'var(--radius-pill)'
-  endcase
+  assign input_radius = button_radius
 
-  assign form_label_font_size = 'var(--font-body-md)'
+  assign form_label_font_size = 'var(--font-body-size)'
   case settings.form_label_typography
     when 'xs'
       assign form_label_font_size = 'var(--font-body-xs)'
     when 'sm', 'body-sm'
       assign form_label_font_size = 'var(--font-body-sm)'
     when 'md', 'body-md'
-      assign form_label_font_size = 'var(--font-body-md)'
+      assign form_label_font_size = 'var(--font-body-size)'
     when 'lg', 'body-lg'
       assign form_label_font_size = 'var(--font-body-lg)'
     when 'xl'
@@ -525,14 +471,14 @@
     when 'xxl'
       assign form_label_font_size = 'var(--font-body-xxl)'
   endcase
-  assign form_input_font_size = 'var(--font-body-md)'
+  assign form_input_font_size = 'var(--font-body-size)'
   case settings.form_input_typography
     when 'xs'
       assign form_input_font_size = 'var(--font-body-xs)'
     when 'sm', 'body-sm'
       assign form_input_font_size = 'var(--font-body-sm)'
     when 'md', 'body-md'
-      assign form_input_font_size = 'var(--font-body-md)'
+      assign form_input_font_size = 'var(--font-body-size)'
     when 'lg', 'body-lg'
       assign form_input_font_size = 'var(--font-body-lg)'
     when 'xl'
@@ -540,14 +486,14 @@
     when 'xxl'
       assign form_input_font_size = 'var(--font-body-xxl)'
   endcase
-  assign form_helper_font_size = 'var(--font-body-md)'
+  assign form_helper_font_size = 'var(--font-body-size)'
   case settings.form_helper_typography
     when 'xs'
       assign form_helper_font_size = 'var(--font-body-xs)'
     when 'sm', 'body-sm'
       assign form_helper_font_size = 'var(--font-body-sm)'
     when 'md', 'body-md'
-      assign form_helper_font_size = 'var(--font-body-md)'
+      assign form_helper_font_size = 'var(--font-body-size)'
     when 'lg', 'body-lg'
       assign form_helper_font_size = 'var(--font-body-lg)'
     when 'xl'
@@ -555,14 +501,14 @@
     when 'xxl'
       assign form_helper_font_size = 'var(--font-body-xxl)'
   endcase
-  assign form_error_font_size = 'var(--font-body-md)'
+  assign form_error_font_size = 'var(--font-body-size)'
   case settings.form_error_typography
     when 'xs'
       assign form_error_font_size = 'var(--font-body-xs)'
     when 'sm', 'body-sm'
       assign form_error_font_size = 'var(--font-body-sm)'
     when 'md', 'body-md'
-      assign form_error_font_size = 'var(--font-body-md)'
+      assign form_error_font_size = 'var(--font-body-size)'
     when 'lg', 'body-lg'
       assign form_error_font_size = 'var(--font-body-lg)'
     when 'xl'
@@ -592,9 +538,10 @@
   assign product_card_title_font_family = 'var(--font-heading-family)'
   if settings.product_card_title_font == 'body'
     assign product_card_title_font_family = 'var(--font-body-family)'
+  elsif settings.product_card_title_font == 'accent'
+    assign product_card_title_font_family = 'var(--font-accent-family)'
   endif
   assign product_card_title_size_desktop = settings.product_card_title_size_desktop | default: 20
-  assign product_card_title_size_mobile = settings.product_card_title_size_mobile | default: 18
   assign product_card_ratio = settings.product_card_ratio | default: 'natural'
   assign product_card_image_ratio = 'auto'
   case product_card_ratio
@@ -769,29 +716,16 @@
   assign swatch_radius = radius_swatches
 
   assign badge_radius = radius_badges_subheadings
-  assign badge_sale_price = settings.badge_sale_price_color | default: 'var(--sale-price-color)'
   assign badge_sale_background = settings.badge_sale_background_color | default: 'var(--sale-price-color)'
   assign badge_sale_color = settings.badge_sale_text_color | default: 'var(--button-primary-text)'
   assign badge_sold_out_background = settings.badge_sold_out_background_color | default: 'var(--border-color)'
   assign badge_sold_out_color = settings.badge_sold_out_text_color | default: 'var(--body-color)'
 
-  assign overlay_title_size = 'var(--font-heading-md)'
-  case settings.overlay_title_size
-    when 'display', 'heading_1'
-      assign overlay_title_size = 'var(--font-heading-display)'
-    when 'xl', 'heading_2'
-      assign overlay_title_size = 'var(--font-heading-xl)'
-    when 'lg', 'heading_3'
-      assign overlay_title_size = 'var(--font-heading-lg)'
-    when 'md', 'heading_4'
-      assign overlay_title_size = 'var(--font-heading-md)'
-    when 'sm', 'heading_5'
-      assign overlay_title_size = 'var(--font-heading-sm)'
-    when 'xs', 'heading_6'
-      assign overlay_title_size = 'var(--font-heading-xs)'
-    when 'custom'
-      assign overlay_title_size = settings.overlay_custom_title_size | default: 24 | append: 'px'
-  endcase
+  capture overlay_heading_size
+    render 'overlay-heading-size', size: settings.overlay_title_size
+  endcapture
+  assign overlay_heading_size = overlay_heading_size | strip
+  assign overlay_title_size = 'var(--font-heading-' | append: overlay_heading_size | append: ')'
 
   assign overlay_backdrop_blur = settings.overlay_backdrop_blur
   if overlay_backdrop_blur == blank
@@ -842,10 +776,30 @@
   if overlay_z_modal == blank
     assign overlay_z_modal = 1000
   endif
+  capture card_title_leading
+    render 'typography-token', kind: 'line_height', value: settings.product_card_title_line_height
+  endcapture
+  assign card_title_leading = card_title_leading | strip
+  capture card_title_spacing
+    render 'typography-token', kind: 'spacing', value: settings.product_card_title_letter_spacing
+  endcapture
+  assign card_title_spacing = card_title_spacing | strip
+  capture card_title_case
+    render 'typography-token', kind: 'case', value: settings.product_card_title_text_case
+  endcapture
+  assign card_title_case = card_title_case | strip
+  capture badge_spacing
+    render 'typography-token', kind: 'spacing', value: settings.badge_letter_spacing
+  endcapture
+  assign badge_spacing = badge_spacing | strip
+  capture badge_case
+    render 'typography-token', kind: 'case', value: settings.badge_text_case
+  endcapture
+  assign badge_case = badge_case | strip
 %}
 
 {% style %}
-  {% render 'font-faces', body_font: body_font, heading_font: heading_font, accent_font: accent_font, button_font_weight: button_font_weight %}
+  {% render 'font-faces', body_font: body_font, heading_font: heading_font, accent_font: accent_font, button_font: button_font, badge_font: badge_font %}
 
   :root {
     --header-height: 0px;
@@ -893,21 +847,40 @@
     --placeholder-background-color: color-mix(in srgb, var(--background-color) 92%, var(--body-color));
     --placeholder-fill-color: color-mix(in srgb, var(--body-color) 30%, transparent);
 
+    --line-height-tighter: 1.1;
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.3;
+    --line-height-relaxed: 1.4;
+    --line-height-loose: 1.5;
+    --line-height-extra-loose: 1.6;
+    --letter-spacing-extra-tight: -2px;
+    --letter-spacing-super-tight: -1.5px;
+    --letter-spacing-ultra-tight: -1.2px;
+    --letter-spacing-tighter: -0.6px;
+    --letter-spacing-tight: -0.2px;
+    --letter-spacing-normal: 0em;
+    --letter-spacing-relaxed: 0.1px;
+    --letter-spacing-loose: 0.4px;
+    --letter-spacing-extra-loose: 0.8px;
+    --letter-spacing-ultra-loose: 1.2px;
+    --letter-spacing-mega-loose: 2px;
+
     --font-body-xs: {{ body_xs_size }}px;
     --font-body-sm: {{ body_sm_size }}px;
-    --font-body-md: {{ body_size }}px;
+    --font-body-size: {{ body_size }}px;
+    --font-body-md: var(--font-body-size);
     --font-body-lg: {{ body_lg_size }}px;
     --font-body-xl: {{ body_xl_size }}px;
     --font-body-xxl: {{ body_xxl_size }}px;
     --font-body-line-height: {{ body_leading }};
-    --font-body-letter-spacing: 0em;
+    --font-body-letter-spacing: var(--letter-spacing-relaxed);
     --font-body-text-transform: none;
     --font-heading-xs: {{ heading_6_size_desktop }}px;
     --font-heading-sm: {{ heading_5_size_desktop }}px;
-    --font-heading-md: {{ heading_4_size_desktop }}px;
-    --font-heading-lg: {{ heading_3_size_desktop }}px;
-    --font-heading-xl: {{ heading_2_size_desktop }}px;
-    --font-heading-display: {{ heading_1_size_desktop }}px;
+    --font-heading-md: {% render 'fluid-type-size', start: heading_4_size_mobile, end: heading_4_size_desktop, from: 375, to: 1150 %};
+    --font-heading-lg: {% render 'fluid-type-size', start: heading_3_size_mobile, end: heading_3_size_desktop, from: 375, to: 1150 %};
+    --font-heading-xl: {% render 'fluid-type-size', start: heading_2_size_mobile, end: heading_2_size_desktop, from: 375, to: 1150 %};
+    --font-heading-display: {% render 'fluid-type-size', start: heading_1_size_mobile, end: heading_1_size_desktop, from: 375, to: 1150 %};
     --font-heading-xs-line-height: {{ heading_6_line_height }};
     --font-heading-sm-line-height: {{ heading_5_line_height }};
     --font-heading-md-line-height: {{ heading_4_line_height }};
@@ -931,12 +904,14 @@
     --font-heading-xs-letter-spacing: {{ heading_6_letter_spacing }};
     --font-heading-custom-letter-spacing: var(--font-heading-md-letter-spacing);
     --font-heading-letter-spacing: {{ heading_letter_spacing }};
+    --font-eyebrow-family: var(--font-{{ settings.type_eyebrow_font | default: 'accent' }}-family);
+    --font-eyebrow-style: var(--font-{{ settings.type_eyebrow_font | default: 'accent' }}-style);
     --font-eyebrow-size: {{ eyebrow_size }}px;
     --font-eyebrow-line-height: {{ eyebrow_line_height }};
     --font-eyebrow-letter-spacing: {{ eyebrow_letter_spacing }};
     --font-eyebrow-text-transform: {{ eyebrow_text_case }};
-    --font-eyebrow-weight: 500;
-    --type-body-size: var(--font-body-md);
+    --font-eyebrow-weight: var(--font-{{ settings.type_eyebrow_font | default: 'accent' }}-weight);
+    --type-body-size: var(--font-body-size);
     --type-body-leading: var(--font-body-line-height);
     --type-heading-1-size: var(--font-heading-display);
     --type-heading-2-size: var(--font-heading-xl);
@@ -946,7 +921,7 @@
     --type-heading-6-size: var(--font-heading-xs);
     --type-role-title-size: var(--font-heading-xl);
     --type-role-subtitle-size: var(--font-heading-md);
-    --type-role-body-size: var(--font-body-md);
+    --type-role-body-size: var(--font-body-size);
     --type-heading-leading: var(--font-heading-xl-line-height);
     --type-letter-spacing: var(--font-heading-letter-spacing);
     --type-label-case: var(--font-eyebrow-text-transform);
@@ -1031,9 +1006,10 @@
     --button-padding-inline-mobile: {{ button_padding_inline_mobile }}px;
     --button-disabled-opacity: {{ button_disabled_opacity }};
     --button-font-size: {{ button_font_size }};
-    --button-font-size-mobile: {{ button_font_size_mobile }};
+    --button-font-size-mobile: var(--button-font-size);
     --button-letter-spacing: {{ button_letter_spacing }};
-    --button-font-weight: {% if button_font_weight == 'inherit' %}var(--font-body-weight){% else %}{{ button_font_weight }}{% endif %};
+    --button-font-style: var(--font-{{ button_role }}-style);
+    --button-font-weight: {{ button_font_weight }};
     --button-font-family: {{ button_primary_font_family }};
     --button-text-case: {{ button_primary_text_case }};
     --button-border-width: {{ button_primary_border_width }}px;
@@ -1083,8 +1059,16 @@
     --product-card-border-width: {{ product_card_border_width }}px;
     --product-card-shadow: {{ product_card_shadow }};
     --product-card-title-font-family: {{ product_card_title_font_family }};
-    --product-card-title-size: {{ product_card_title_size_desktop }}px;
-    --product-card-title-size-mobile: {{ product_card_title_size_mobile }}px;
+    --product-card-title-font-style: var(--font-{{ settings.product_card_title_font | default: 'heading' }}-style);
+    --product-card-title-font-weight: var(--font-{{ settings.product_card_title_font | default: 'heading' }}-weight);
+    --product-card-title-line-height: {{ card_title_leading }};
+    --product-card-title-letter-spacing: {{ card_title_spacing }};
+    --product-card-title-text-transform: {{ card_title_case }};
+    --product-card-title-font-size: {{ product_card_title_size_desktop }}px;
+    --product-card-price-font-family: var(--font-{{ settings.product_card_price_font | default: 'body' }}-family);
+    --product-card-price-font-style: var(--font-{{ settings.product_card_price_font | default: 'body' }}-style);
+    --product-card-price-font-weight: var(--font-{{ settings.product_card_price_font | default: 'body' }}-weight);
+    --product-card-price-font-size: {{ settings.product_card_price_size | default: body_size }}px;
     --product-card-image-ratio: {{ product_card_image_ratio }};
     --product-card-alignment: {{ product_card_alignment }};
     --product-card-content-alignment: {{ product_card_content_alignment }};
@@ -1096,7 +1080,13 @@
     --product-card-info-gap: {{ product_card_info_gap_desktop }}px;
     --product-card-info-gap-mobile: {{ product_card_info_gap_mobile }}px;
     --card-radius: {{ media_container_radius }};
+    --card-radius-xs: calc(var(--card-radius) * 0.3);
+    --card-radius-sm: calc(var(--card-radius) * 0.6);
+    --card-radius-lg: calc(var(--card-radius) * 1.3);
     --media-radius: {{ media_container_radius }};
+    --media-radius-xs: calc(var(--media-radius) * 0.3);
+    --media-radius-sm: calc(var(--media-radius) * 0.6);
+    --media-radius-lg: calc(var(--media-radius) * 1.3);
     --product-card-quick-add-enabled: {{ product_card_quick_add_enabled }};
     --product-card-quick-add-mobile: {{ product_card_quick_add_mobile }};
     --product-card-quick-add-style: {{ product_card_quick_add_style }};
@@ -1145,12 +1135,13 @@
     --overlay-close-radius: {{ overlay_close_radius }};
     --bottom-sheet-radius: {{ bottom_sheet_radius }};
     --overlay-radius: {{ overlay_radius }};
-    --badge-font-family: var(--font-body-family);
-    --badge-font-size: var(--font-body-xs);
-    --badge-font-weight: 500;
-    --badge-letter-spacing: var(--font-body-letter-spacing);
+    --badge-font-family: var(--font-{{ settings.badge_font | default: 'body' }}-family);
+    --badge-font-style: var(--font-{{ settings.badge_font | default: 'body' }}-style);
+    --badge-text-transform: {{ badge_case }};
+    --badge-font-size: {{ settings.badge_font_size | default: 12 }}px;
+    --badge-font-weight: {{ badge_font_weight }};
+    --badge-letter-spacing: {{ badge_spacing }};
     --badge-padding: 0.2rem 0.55rem;
-    --badge-sale-price: {{ badge_sale_price }};
     --badge-sale-background: {{ badge_sale_background }};
     --badge-sale-color: {{ badge_sale_color }};
     --badge-sold-out-background: {{ badge_sold_out_background }};
@@ -1158,11 +1149,12 @@
 
     --price-font-family: var(--font-body-family);
     --price-font-style: var(--font-body-style);
-    --price-font-size: var(--font-body-md);
+    --price-font-size: var(--font-body-size);
     --price-font-weight: var(--font-body-weight);
     --price-line-height: var(--font-body-line-height);
-    --price-sale-color: var(--badge-sale-price);
-    --price-compare-color: var(--body-color);
+    --compare-at-price-spacing: 4px;
+    --price-sale-color: var(--sale-price-color);
+    --price-compare-color: #808080;
     --price-unit-color: var(--body-color);
 
     --overlay-background-color: {{ overlay_background }};
@@ -1184,29 +1176,6 @@
     --z-base: {{ overlay_z_base | default: 10 }};
     --z-drawer: {{ overlay_z_drawer | default: 200 }};
     --z-modal: {{ overlay_z_modal | default: 1000 }};
-  }
-
-  @media (min-width: 768px) and (max-width: 1149.98px) {
-    :root {
-      --font-heading-xs: {{ heading_6_size_desktop }}px;
-      --font-heading-sm: {{ heading_5_size_tablet }}px;
-      --font-heading-md: {{ heading_4_size_desktop }}px;
-      --font-heading-lg: {{ heading_3_size_tablet }}px;
-      --font-heading-xl: {{ heading_2_size_tablet }}px;
-      --font-heading-display: {{ heading_1_size_tablet }}px;
-      --font-heading-xl-line-height: {{ heading_2_line_height_tablet }};
-    }
-  }
-
-  @media (max-width: 767.98px) {
-    :root {
-      --font-heading-xs: {{ heading_6_size_mobile }}px;
-      --font-heading-sm: {{ heading_5_size_mobile }}px;
-      --font-heading-md: {{ heading_4_size_mobile }}px;
-      --font-heading-lg: {{ heading_3_size_mobile }}px;
-      --font-heading-xl: {{ heading_2_size_mobile }}px;
-      --font-heading-display: {{ heading_1_size_mobile }}px;
-    }
   }
 
   {% for scheme in settings.color_schemes %}
@@ -1248,7 +1217,7 @@
       --input-focus-color: var(--accent-color);
       --input-focus: var(--input-focus-color);
       --input-text-color: var(--body-color);
-      --price-compare-color: var(--body-color);
+      --price-compare-color: #808080;
       --price-unit-color: var(--body-color);
       --border-color: {{ scheme_border }};
       --input-border-color: var(--border-color);
@@ -1291,18 +1260,4 @@
     }
   {% endfor %}
 
-  .btn {
-    {% if settings.button_primary_background_color != blank %}
-      --button-primary-background: {{ settings.button_primary_background_color }};
-    {% endif %}
-    {% if settings.button_primary_text_color != blank %}
-      --button-primary-text: {{ settings.button_primary_text_color }};
-    {% endif %}
-    {% if settings.button_secondary_background_color != blank %}
-      --button-secondary-background: {{ settings.button_secondary_background_color }};
-    {% endif %}
-    {% if settings.button_secondary_text_color != blank %}
-      --button-secondary-text: {{ settings.button_secondary_text_color }};
-    {% endif %}
-  }
 {% endstyle %}

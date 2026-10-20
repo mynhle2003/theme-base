@@ -1,0 +1,555 @@
+{
+  "date": "2026-10-20",
+  "theme": "virelle-theme",
+  "branch": "theme/virelle-theme",
+  "source": {
+    "workbook": "https://docs.google.com/spreadsheets/d/18wHD4UxSomLRIE3yQvWWEDMultZAtjiJblAjb6aaVlg/edit?gid=455321062#gid=455321062",
+    "comparison_csv_sha256": "999fa26d24d6126b7b99029532f85f90eac5702e53b7710df777604e535e2c86",
+    "rows": 68,
+    "mode": "Read live public CSV export; no sheet edit"
+  },
+  "before_settings_data_sha256": "4821aca905e93576491173cb98f674540b8d196d23555184e768e4a75b7cc4c8",
+  "provisional_tokens": {
+    "--letter-spacing-extra-tight": "-0.10em",
+    "--letter-spacing-super-tight": "-0.08em",
+    "--letter-spacing-ultra-tight": "-0.06em"
+  },
+  "files": [
+    "assets/component-search-suggestions.css",
+    "assets/component-overlay.css",
+    "assets/critical.css",
+    "assets/section-collection.css",
+    "assets/virelle.css",
+    "assets/cart-page.css",
+    "blocks/heading.liquid",
+    "blocks/eyebrow.liquid",
+    "config/settings_schema.json",
+    "config/settings_data.json",
+    "locales/en.default.schema.json",
+    "snippets/css-variables.liquid",
+    "snippets/font-faces.liquid",
+    "snippets/typography-token.liquid",
+    "snippets/fluid-type-size.liquid",
+    "tests/theme-settings-sync.test.cjs",
+    "docs/theme-customizations/virelle-theme.md",
+    "docs/audits/virelle-theme-settings-sync-2026-10-20.json",
+    "docs/audits/virelle-theme-settings-sync-2026-10-20.md"
+  ],
+  "verification": {
+    "scoped_tests": "40 passed, 0 failed",
+    "migration_runtime": "Style preservation requirement removed. Tests verify the active shared contract, all standard selections, valid saved data, role propagation and removed-control independence.",
+    "theme_check": "0 errors, 7 warnings",
+    "existing_test_failures": "6 obsolete product-card-tags assertions + 1 footer fixture assertion reproduce on pre-edit snapshot.",
+    "toolkit_validator": "Unavailable: bundled @shopify/theme-check-common missing; used installed Shopify CLI Theme Check.",
+    "browser": "Unverified: browser use disabled in Work settings.",
+    "store": "No theme push/publish or Theme Editor save."
+  },
+  "policy": "Latest user instruction: remove old values/compatibility controls; previous style need not be preserved; Figma configuration follows separately.",
+  "prior_migrations": {
+    "settings_data_migration": {
+      "current": [
+        {
+          "setting": "type_body_leading",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "loose",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "type_letter_spacing",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "legacy_heading",
+          "reason": "Explicit legacy choice preserves previous tracking; standard choices use shared primitive scale."
+        },
+        {
+          "setting": "type_heading_1_line_height",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "tight",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "type_heading_2_line_height",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "legacy_tablet",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "type_heading_4_line_height",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "relaxed",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "type_heading_5_line_height",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "loose",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "type_heading_6_line_height",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "loose",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "type_eyebrow_line_height",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "loose",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "type_eyebrow_letter_spacing",
+          "operation": "migrate",
+          "before": "extra_loose",
+          "after": "legacy_two_px",
+          "reason": "Explicit legacy choice preserves previous tracking; standard choices use shared primitive scale."
+        },
+        {
+          "setting": "button_font_size",
+          "operation": "migrate",
+          "before": "14px",
+          "after": 14,
+          "reason": "Select px string converted to numeric range, retaining pixel value."
+        },
+        {
+          "setting": "button_font_size_mobile",
+          "operation": "migrate",
+          "before": "14px",
+          "after": 14,
+          "reason": "Select px string converted to numeric range, retaining pixel value."
+        },
+        {
+          "setting": "button_secondary_font",
+          "operation": "remove",
+          "before": "body",
+          "after": null,
+          "reason": "Redundant/removed key; output inherited from canonical control or explicit replacement already exists."
+        },
+        {
+          "setting": "button_secondary_text_case",
+          "operation": "remove",
+          "before": "uppercase",
+          "after": null,
+          "reason": "Redundant/removed key; output inherited from canonical control or explicit replacement already exists."
+        },
+        {
+          "setting": "button_tertiary_font",
+          "operation": "remove",
+          "before": "body",
+          "after": null,
+          "reason": "Redundant/removed key; output inherited from canonical control or explicit replacement already exists."
+        },
+        {
+          "setting": "input_radius_style",
+          "operation": "remove",
+          "before": "square",
+          "after": null,
+          "reason": "Redundant/removed key; output inherited from canonical control or explicit replacement already exists."
+        },
+        {
+          "setting": "product_card_gap",
+          "operation": "remove",
+          "before": "standard",
+          "after": null,
+          "reason": "Redundant/removed key; output inherited from canonical control or explicit replacement already exists."
+        },
+        {
+          "setting": "type_eyebrow_font",
+          "operation": "add",
+          "before": null,
+          "after": "accent",
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "badge_font",
+          "operation": "add",
+          "before": null,
+          "after": "body",
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "badge_font_size",
+          "operation": "add",
+          "before": null,
+          "after": 12,
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "badge_letter_spacing",
+          "operation": "add",
+          "before": null,
+          "after": "legacy_card",
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "badge_text_case",
+          "operation": "add",
+          "before": null,
+          "after": "legacy_card",
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "product_card_title_line_height",
+          "operation": "add",
+          "before": null,
+          "after": "inherit",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "product_card_title_letter_spacing",
+          "operation": "add",
+          "before": null,
+          "after": "normal",
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "product_card_title_text_case",
+          "operation": "add",
+          "before": null,
+          "after": "inherit",
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "product_card_price_font",
+          "operation": "add",
+          "before": null,
+          "after": "body",
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "product_card_price_size",
+          "operation": "add",
+          "before": null,
+          "after": 14,
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        }
+      ],
+      "Spinel": [
+        {
+          "setting": "type_body_leading",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "loose",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "type_letter_spacing",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "legacy_heading",
+          "reason": "Explicit legacy choice preserves previous tracking; standard choices use shared primitive scale."
+        },
+        {
+          "setting": "type_heading_1_line_height",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "tight",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "type_heading_2_line_height",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "legacy_tablet",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "type_heading_4_line_height",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "relaxed",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "type_heading_5_line_height",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "loose",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "type_heading_6_line_height",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "loose",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "type_eyebrow_line_height",
+          "operation": "migrate",
+          "before": "normal",
+          "after": "loose",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "type_eyebrow_letter_spacing",
+          "operation": "migrate",
+          "before": "extra_loose",
+          "after": "legacy_two_px",
+          "reason": "Explicit legacy choice preserves previous tracking; standard choices use shared primitive scale."
+        },
+        {
+          "setting": "button_font_size",
+          "operation": "migrate",
+          "before": "13px",
+          "after": 13,
+          "reason": "Select px string converted to numeric range, retaining pixel value."
+        },
+        {
+          "setting": "button_secondary_font",
+          "operation": "remove",
+          "before": "body",
+          "after": null,
+          "reason": "Redundant/removed key; output inherited from canonical control or explicit replacement already exists."
+        },
+        {
+          "setting": "button_secondary_text_case",
+          "operation": "remove",
+          "before": "original",
+          "after": null,
+          "reason": "Redundant/removed key; output inherited from canonical control or explicit replacement already exists."
+        },
+        {
+          "setting": "button_tertiary_font",
+          "operation": "remove",
+          "before": "body",
+          "after": null,
+          "reason": "Redundant/removed key; output inherited from canonical control or explicit replacement already exists."
+        },
+        {
+          "setting": "button_tertiary_text_case",
+          "operation": "remove",
+          "before": "original",
+          "after": null,
+          "reason": "Redundant/removed key; output inherited from canonical control or explicit replacement already exists."
+        },
+        {
+          "setting": "product_card_title_font",
+          "operation": "migrate",
+          "before": "display",
+          "after": "heading",
+          "reason": "Display and Heading were the same font role; canonicalize removed display value to heading."
+        },
+        {
+          "setting": "product_card_gap",
+          "operation": "remove",
+          "before": "standard",
+          "after": null,
+          "reason": "Redundant/removed key; output inherited from canonical control or explicit replacement already exists."
+        },
+        {
+          "setting": "social_show_labels",
+          "operation": "remove",
+          "before": false,
+          "after": null,
+          "reason": "Redundant/removed key; output inherited from canonical control or explicit replacement already exists."
+        },
+        {
+          "setting": "button_font_size_mobile",
+          "operation": "migrate",
+          "before": "15px",
+          "after": 15,
+          "reason": "Select px string converted to numeric range, retaining pixel value."
+        },
+        {
+          "setting": "type_eyebrow_font",
+          "operation": "add",
+          "before": null,
+          "after": "accent",
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "badge_font",
+          "operation": "add",
+          "before": null,
+          "after": "body",
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "badge_font_size",
+          "operation": "add",
+          "before": null,
+          "after": 12,
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "badge_letter_spacing",
+          "operation": "add",
+          "before": null,
+          "after": "legacy_card",
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "badge_text_case",
+          "operation": "add",
+          "before": null,
+          "after": "legacy_card",
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "product_card_title_line_height",
+          "operation": "add",
+          "before": null,
+          "after": "inherit",
+          "reason": "Enum migration by numeric line height; preserve output, including H2 tablet legacy branch."
+        },
+        {
+          "setting": "product_card_title_letter_spacing",
+          "operation": "add",
+          "before": null,
+          "after": "normal",
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "product_card_title_text_case",
+          "operation": "add",
+          "before": null,
+          "after": "inherit",
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "product_card_price_font",
+          "operation": "add",
+          "before": null,
+          "after": "body",
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        },
+        {
+          "setting": "product_card_price_size",
+          "operation": "add",
+          "before": null,
+          "after": 14,
+          "reason": "New control initialized from existing Virelle output; temporary configuration, not copied from sample."
+        }
+      ]
+    },
+    "button_font_size_upload_fix": {
+      "cause": "Same IDs changed from string select to numeric range while remote current data/schema still had old types.",
+      "id_migration": {
+        "button_font_size": "button_font_size_px",
+        "button_font_size_mobile": "button_font_size_mobile_px"
+      },
+      "values": {
+        "current": {
+          "desktop": 14,
+          "mobile": 14
+        },
+        "Spinel": {
+          "desktop": 13,
+          "mobile": 15
+        }
+      },
+      "runtime": "Prefer numeric range IDs; legacy px string fallback; CSS token names unchanged.",
+      "remote_validation": "Not performed; no push/save."
+    }
+  },
+  "settings_data_migration": {
+    "current": {
+      "removed": {
+        "type_heading_1_size_tablet": 52,
+        "type_heading_2_size_tablet": 34,
+        "type_heading_3_size_tablet": 22,
+        "type_heading_5_size_tablet": 15,
+        "type_heading_5_size_mobile": 15,
+        "type_heading_6_size_mobile": 14,
+        "button_tertiary_text_case": "original",
+        "product_card_title_size_mobile": 18,
+        "button_font_weight": "500",
+        "button_font_size_mobile_px": 14
+      },
+      "replaced": {
+        "type_letter_spacing": {
+          "before": "legacy_heading",
+          "after": "normal"
+        },
+        "type_heading_2_line_height": {
+          "before": "legacy_tablet",
+          "after": "normal"
+        },
+        "type_eyebrow_letter_spacing": {
+          "before": "legacy_two_px",
+          "after": "normal"
+        },
+        "badge_letter_spacing": {
+          "before": "legacy_card",
+          "after": "normal"
+        },
+        "badge_text_case": {
+          "before": "legacy_card",
+          "after": "original"
+        },
+        "product_card_title_line_height": {
+          "before": "inherit",
+          "after": "normal"
+        },
+        "product_card_title_text_case": {
+          "before": "inherit",
+          "after": "original"
+        }
+      }
+    },
+    "Spinel": {
+      "removed": {
+        "type_heading_5_size_mobile": 15,
+        "type_heading_6_size_mobile": 14,
+        "input_radius_style": "rounded",
+        "product_card_title_size_mobile": 18,
+        "type_heading_1_size_tablet": 52,
+        "type_heading_2_size_tablet": 34,
+        "type_heading_3_size_tablet": 22,
+        "type_heading_5_size_tablet": 15,
+        "button_font_size_mobile_px": 15
+      },
+      "replaced": {
+        "type_letter_spacing": {
+          "before": "legacy_heading",
+          "after": "normal"
+        },
+        "type_heading_2_line_height": {
+          "before": "legacy_tablet",
+          "after": "normal"
+        },
+        "type_eyebrow_letter_spacing": {
+          "before": "legacy_two_px",
+          "after": "normal"
+        },
+        "button_letter_spacing": {
+          "before": "reference",
+          "after": "normal"
+        },
+        "badge_letter_spacing": {
+          "before": "legacy_card",
+          "after": "normal"
+        },
+        "badge_text_case": {
+          "before": "legacy_card",
+          "after": "original"
+        },
+        "product_card_title_line_height": {
+          "before": "inherit",
+          "after": "normal"
+        },
+        "product_card_title_text_case": {
+          "before": "inherit",
+          "after": "original"
+        }
+      }
+    }
+  },
+  "active_contract": {
+    "letter_spacing": "Exactly eleven shared standard choices; no legacy/reference/role-specific numeric fallback.",
+    "line_height": "Exactly six shared choices 1.1–1.6; Normal 1.3, no H2 tablet exception.",
+    "button_typography": "One font role, font size range button_font_size_px, spacing, case. All variants and viewports share them. Weight/style come from selected role.",
+    "headings": "H1-H4 desktop/mobile, single fluid interpolation at 375–1150px; H5/H6 one size each. No tablet or H5/H6 mobile setting.",
+    "product_title": "One size, font role, six line heights, eleven spacing values, four cases.",
+    "radius": "Input and button share button_radius_style; no input override.",
+    "data": "Removed fields deleted from current and Spinel; unsupported choices replaced with canonical defaults; unrelated content/palette retained."
+  }
+}

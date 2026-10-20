@@ -1,0 +1,98 @@
+{% doc %}
+  Renders exactly one selected product with the shared Product list card renderer.
+  The product picker owns context; this block never iterates a collection.
+{% enddoc %}
+{% liquid
+  assign card_product = block.settings.product
+  assign card_width = block.settings.max_width | default: 390 | at_least: 200 | at_most: 600
+%}
+  <div class="product-card-single{% if block.settings.horizontal_on_mobile %} product-card-single--horizontal-mobile{% endif %}"
+    style="--single-product-width: {{ card_width }}px;" {{ block.shopify_attributes }}>
+    {% render 'product-card', product: card_product, color_type: block.settings.color_type, color_scheme: block.settings.color_scheme, heading_tag: 'h3' %}
+  </div>
+{% stylesheet %}
+  .product-card-single { width: min(100%, var(--single-product-width, 390px)); }
+  .product-card-single .product-card { width: 100%; }
+  @media (max-width: 767.98px) {
+    .product-card-single--horizontal-mobile { width: 100%; }
+    .product-card-single--horizontal-mobile .product-card { position: relative; display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; align-items: center; padding: 0; }
+    .product-card-single--horizontal-mobile .product-card__media { position: static; overflow: visible; }
+    .product-card-single--horizontal-mobile .product-card__media > a { display: block; aspect-ratio: 4 / 5; overflow: hidden; }
+    .product-card-single--horizontal-mobile .product-card__media img { height: 100%; object-fit: cover; }
+    .product-card-single--horizontal-mobile .product-card__media-overlay { inset: 0 auto auto 0; }
+    .product-card-single--horizontal-mobile .product-card__content { padding: 0 60px 0 0; }
+    .product-card-single--horizontal-mobile .product-card__swatches,
+    .product-card-single--horizontal-mobile .product-card__quick-view { display: none; }
+    .product-card-single--horizontal-mobile .product-card__quick-add { inset: 50% 0 auto auto; transform: translateY(-50%); opacity: 1; pointer-events: auto; }
+    .product-card-single--horizontal-mobile .product-card__quick-add .btn { width: 44px; min-width: 44px; height: 44px; min-height: 44px; }
+  }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "Product card",
+  "tag": null,
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum width",
+      "min": 200,
+      "max": 600,
+      "step": 5,
+      "unit": "px",
+      "default": 390
+    },
+    {
+      "type": "checkbox",
+      "id": "horizontal_on_mobile",
+      "label": "Horizontal on mobile",
+      "default": false
+    },
+    {
+      "type": "paragraph",
+      "content": "t:info.product_card_settings"
+    },
+    {
+      "type": "header",
+      "content": "t:general.appearance"
+    },
+    {
+      "type": "select",
+      "id": "color_type",
+      "label": "t:labels.type",
+      "options": [
+        {
+          "value": "inherit",
+          "label": "t:options.color_type.inherit"
+        },
+        {
+          "value": "color_scheme",
+          "label": "t:options.color_type.color_scheme"
+        }
+      ],
+      "default": "inherit"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ block.settings.color_type == 'color_scheme' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product card",
+      "category": "t:general.product",
+      "settings": {
+        "color_type": "inherit"
+      }
+    }
+  ]
+}
+{% endschema %}
