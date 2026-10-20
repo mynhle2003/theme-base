@@ -8,7 +8,7 @@ Doc này là nhật ký các đợt nhận update từ theme khác để đối 
 
 Đã nhận code đến **đợt 3** (12 mã Header/Size Guide/Press/Lighthouse r1), **đợt 4** (ARCHE-ESSEN-HEADER-PRESET-007 r1) và **đợt 5** (ESSEN-HEADER-LOGO-FIGMA-001 r1). Tổng 14 mã mới sau commit 058c2b51. Trạng thái implementation/configuration: applied; kiểm tra local đã đạt. Đã commit/push tại `34a8ca27`; receipt release bên dưới ghi SHA đầy đủ.
 
-Phần còn chưa hoàn tất: PRODUCT-BADGES-002 appearance/settings theo Figma nguồn; QA live storefront/Theme Editor và đo Lighthouse production. Upload preview/publish chưa thực hiện. Các thay đổi Header/Announcement riêng ngoài phạm vi và test tương ứng vẫn giữ local. Không đánh dấu verified cho các phần chưa QA live.
+Phần còn chưa hoàn tất: QA live storefront/Theme Editor và đo Lighthouse production. Upload preview/publish chưa thực hiện. Các thay đổi Header/Announcement riêng ngoài phạm vi và test tương ứng vẫn giữ local. Không đánh dấu verified cho các phần chưa QA live.
 
 ## Tra nhanh — cập nhật đến 2026-10-14
 
@@ -22,10 +22,8 @@ Phần còn chưa hoàn tất: PRODUCT-BADGES-002 appearance/settings theo Figma
 | ARCHE-ESSEN-VARIANT-PICKER-001 | 1 | Đổi size giữ ảnh đang xem; đổi swatch mới chuyển gallery | `116e03ed`; applied |
 | ARCHE-ESSEN-HEADER-ALIGNMENT-001 | 1 | Header block kế thừa alignment từ section | `116e03ed`; applied |
 | ARCHE-ESSEN-SIZE-GUIDE-001 | 1 | Size guide dùng Button Tertiary, bỏ CSS trigger riêng | `116e03ed`; applied |
-| ARCHE-ESSEN-PRODUCT-CARD-TAGS-001 | 1 | Show tags mặc định false, tối đa ba tag, escape/prefix/tone | `116e03ed`; applied |
 | ARCHE-ESSEN-FORM-INPUT-CSS-001 | 1 | Input modifier có owner trong foundation CSS | `116e03ed`; applied |
 | ARCHE-ESSEN-BLOCK-ANIMATION-001 | 1 | Runtime về pinned personal main; giữ preset/saved animation | `116e03ed`; applied |
-| ARCHE-ESSEN-PRODUCT-BADGES-002 | 1, một phần | Loại status tags trùng và primary tag text #111111 | `116e03ed`; shared logic applied, appearance/settings pending |
 | ARCHE-ESSEN-IMAGE-CARD-001 | 1 | Ảnh tràn 1px/cạnh để che khe do làm tròn pixel | `595a3548`; applied, đã commit/push |
 | ARCHE-ESSEN-SIZE-GUIDE-DIALOG-002 | 1 | Legacy modal/invalid/default → popup | `34a8ca27`; applied, đã commit/push, live QA pending |
 | ARCHE-ESSEN-HEADER-LOGO-002 | 1 | Independent desktop/mobile position | `34a8ca27`; applied, đã commit/push, live QA pending |
@@ -50,11 +48,11 @@ Tất cả mục applied trên còn QA live storefront/Theme Editor trước ver
 
 **Nguồn:** doc Arche → Essen ngày 2026-10-13 và patch từ working tree Arche được đọc tại thời điểm thực hiện. Các patch shared chưa được chốt thành một source commit duy nhất trong receipt ban đầu; không suy ra source revision từ HEAD Arche ở lần đọc sau. Riêng animation lấy đúng personal main `e84d0689249b5ae26d3c5c066c90348e4aae06f4`, không lấy runtime custom Arche.
 
-**Mã nhận:** TAB-LAYOUT-001 r1, SLIDESHOW-002 r2, CUSTOM-SECTIONS-001 r1, VARIANT-PICKER-001 r1, HEADER-ALIGNMENT-001 r1, SIZE-GUIDE-001 r1, PRODUCT-CARD-TAGS-001 r1, FORM-INPUT-CSS-001 r1, BLOCK-ANIMATION-001 r1; PRODUCT-BADGES-002 r1 chỉ nhận shared logic. Tất cả dùng prefix `ARCHE-ESSEN-` như bảng tra nhanh.
+**Mã nhận:** TAB-LAYOUT-001 r1, SLIDESHOW-002 r2, CUSTOM-SECTIONS-001 r1, VARIANT-PICKER-001 r1, HEADER-ALIGNMENT-001 r1, SIZE-GUIDE-001 r1, FORM-INPUT-CSS-001 r1, BLOCK-ANIMATION-001 r1. Tất cả dùng prefix `ARCHE-ESSEN-` như bảng tra nhanh.
 
 **Bảo toàn:** giữ đủ 424 Type/Delay entries với identity mapping; template và `config/settings_data.json` byte-identical trước/sau. Không chuyển layout Only icon, preset, ảnh/content hoặc catalog riêng của Arche. Badge appearance/settings vẫn theo Essen. Ba custom section đã có `@theme` được skipped; `custom-section` không có tên/preset `(custom)` nên không sửa.
 
-**Pending tại thời điểm đợt 1:** IMAGE-CARD-001 chưa áp dụng vì chưa có bằng chứng lỗi tại Essen; PRODUCT-BADGES-002 chưa nhận appearance/settings Figma Arche. Lịch sử này giữ nguyên, dù Image card được nhận ở đợt 2.
+**Pending tại thời điểm đợt 1:** IMAGE-CARD-001 chưa áp dụng vì chưa có bằng chứng lỗi tại Essen; Lịch sử này giữ nguyên, dù Image card được nhận ở đợt 2.
 
 **QA:** 39 scoped tests PASS; 82 Chrome cases PASS (40 progress, 42 gap/alignment/motion). Theme Check 0 errors / 5 existing settings-count warnings; JS syntax và diff check PASS. Ba assertions cũ trong `product-media-variant.test.cjs` thất bại cả runtime HEAD ban đầu và patch; không phải regression mới. Customization coverage còn thiếu Header/Footer ngoài scope. AI Toolkit Liquid validator thiếu dependency; dùng Shopify CLI Theme Check. Chi tiết và giới hạn QA ở receipt đích.
 
@@ -152,6 +150,6 @@ Khi đã commit/push hoặc upload/publish, bổ sung sự kiện với SHA ho�
 - Header preset theo Arche; kích thước logo theo Figma desktop/tablet/mobile 104/96/80px, giữ tài nguyên logo Essen.
 - QA local: 80 scoped tests, 67 Chrome cases đợt 3, 8 logo breakpoint cases đợt 5 và 6 Liquid contract cases PASS. Full Theme Check trên workspace và snapshot Git index: 0 errors / 5 warnings ExcessiveSettingsCount cũ; staged diff check PASS.
 - Các sửa Header/Announcement riêng trong assets/critical.css, sections/header.liquid, sections/announcement-bar.liquid và tests/announcement-bar-layout.test.cjs giữ local, ngoài release.
-- Pending: PRODUCT-BADGES-002 appearance/settings; live storefront/Theme Editor QA và đo Lighthouse production. Chưa upload/publish; chưa đánh dấu verified.
+- Pending: live storefront/Theme Editor QA và đo Lighthouse production. Chưa upload/publish; chưa đánh dấu verified.
 
 Mốc tiếp tục lần sau: đọc bảng tra nhanh trước; code đã nhận đến đợt 5, không apply lại 14 mã trên. Hoàn tất phần pending hoặc nhận revision/mã mới rồi bổ sung sự kiện lịch sử.

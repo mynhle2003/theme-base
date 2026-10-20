@@ -413,7 +413,7 @@ loading không làm thay đổi shape.
 | radius_variant_pickers | select | square, slightly_rounded, rounded, pill | square | `--variant-radius` |
 | radius_swatches | select | square, slightly_rounded, rounded, pill | square | `--swatch-radius` |
 | radius_navigation | select | square, slightly_rounded, rounded, pill | pill | `--navigation-radius` |
-| radius_tags | select | square, slightly_rounded, rounded, pill | square | `--tag-radius` cho custom product-card tags |
+| radius_tags | select | square, slightly_rounded, rounded, pill | square | `--tag-radius` cho thẻ nội dung |
 | radius_media_containers | select | square, slightly_rounded, rounded, extra_rounded | square | `--card-radius` và `--media-radius`; media, product cards, pop-ups, popovers, blocks |
 | radius_drawers | select | square, slightly_rounded, rounded, extra_rounded | square | `--drawer-radius` và default `--overlay-radius` |
 | radius_bottom_sheets | select | square, slightly_rounded, rounded, extra_rounded | slightly_rounded | `--bottom-sheet-radius` |
@@ -1007,7 +1007,7 @@ the scheme tokens.
   sale price/background/text and sold-out background/text independently.
 - Sale supports Text, Percentage, Percentage only and Amount saved, including
   localized amount/percentage output.
-- Collection badges and custom product-card tags are not exposed or rendered.
+- Collection badges use Badges → Collection badge.
 - Badge text remains readable and focus/interaction context is not obscured on
   mobile or with long labels.
 

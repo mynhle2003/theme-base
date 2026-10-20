@@ -13,10 +13,8 @@ Tất cả mã dùng prefix **ARCHE-ESSEN**; `applied` là đã nhận code, ch�
 | ARCHE-ESSEN-VARIANT-PICKER-001 | 1 | applied | 116e03ed |
 | ARCHE-ESSEN-HEADER-ALIGNMENT-001 | 1 | applied | 116e03ed |
 | ARCHE-ESSEN-SIZE-GUIDE-001 | 1 | applied | 116e03ed |
-| ARCHE-ESSEN-PRODUCT-CARD-TAGS-001 | 1 | applied | 116e03ed |
 | ARCHE-ESSEN-FORM-INPUT-CSS-001 | 1 | applied | 116e03ed |
 | ARCHE-ESSEN-BLOCK-ANIMATION-001 | 1 | applied | 116e03ed |
-| ARCHE-ESSEN-PRODUCT-BADGES-002 | 1 | shared logic applied; appearance/settings pending | 116e03ed |
 
 Source tracker: [Arche handoff](../../../arche-theme/docs/variant-updates/arche-to-essen.md). Target branch `theme/essen-theme`, HEAD before application `acb809562bf01eb1f301e88439504d3c93bfc141`. Shared patches read from the local Arche working tree; animation implementation comes exclusively from pinned personal main `e84d0689249b5ae26d3c5c066c90348e4aae06f4`. Initial application was committed and pushed as `116e03edddb1783ae6fdafb4ae7cc17e076636dc` on 2026-10-14. The Image card follow-up below was subsequently committed/pushed as `595a3548`. Preview upload and publication were not performed.
 
@@ -29,10 +27,8 @@ Source tracker: [Arche handoff](../../../arche-theme/docs/variant-updates/arche-
 | ARCHE-ESSEN-VARIANT-PICKER-001 | 1 | applied; live editor pending | Target runtime fixture changed viewed media from 10 to 20 for a size choice. Fieldset now exposes resolved swatch intent, picker emits updateMedia and gallery guards filtering/rebuild/navigation while always updating currentVariantId. Commerce updates still run; missing intent retains old event semantics. |
 | ARCHE-ESSEN-HEADER-ALIGNMENT-001 | 1 | applied; live editor pending | Real target Header CSS returned start for parent Center/Right. Desktop/mobile fallback now reads --text-align-default; explicit Header alignment still wins. Block schema/preset unchanged. This is the composition Header block, separate from concurrently edited storefront Header section. |
 | ARCHE-ESSEN-SIZE-GUIDE-001 | 1 | applied; live editor pending | Trigger lacked Tertiary classes and CSS forced accent color, font, underline and padding. Uses shared btn/btn-tertiary and label/text/underline contract; removed both private trigger rules. Dialog controls and shared opening runtime preserved. |
-| ARCHE-ESSEN-PRODUCT-CARD-TAGS-001 | 1 | applied; live editor pending | No Show tags setting or card tag resolver existed. Added default-false checkbox/locale, caller gating, up to three escaped nonempty tags, legacy prefix stripping, primary/secondary tones. Preserved Essen badge geometry/typography and all saved settings. Product-page manual badges unchanged. |
 | ARCHE-ESSEN-FORM-INPUT-CSS-001 | 1 | applied; live editor pending | First Theme Check reported only five settings-count warnings; post-patch full check reported the seven input modifier warnings described by the source. Added the documented subset selector to the existing foundation :where rule. Final check removes all seven; declarations, specificity and exclusions unchanged. |
 | ARCHE-ESSEN-BLOCK-ANIMATION-001 | 1 | applied; live editor pending | Target runtime only selected explicit leaf hooks; target Chrome fixture gave zero article Image card animations. Runtime now byte-identical to pinned main and article animates once without child double transform. Restore body motion switch, remove old head boot and old Rotate words runtime CSS. No replacement schema exists at this main revision: identity mapping preserves existing controls/hooks and every preset/saved value. |
-| ARCHE-ESSEN-PRODUCT-BADGES-002 | 1 | applied shared logic; appearance/settings pending | Status-tag exclusion transferred without consuming the three-tag limit; primary tag text uses #111111. Arche Poppins/10px geometry and current color/radius/Show tags values were not applied without confirming the target appearance gap; existing Essen appearance/settings remain intact. No catalog changes. |
 
 All rows marked applied remain unverified on a live storefront/Theme Editor. Badge appearance/settings remain pending target evidence. Image seam follow-up is now applied locally as explicitly requested by the owner. Do not treat source QA or local fixtures as live verification.
 

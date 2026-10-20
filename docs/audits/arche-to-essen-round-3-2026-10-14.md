@@ -4,7 +4,7 @@ Target `theme/essen-theme`, HEAD before update `058c2b511eba1f3e69842333ce7b205a
 
 ## Codes received
 
-Every code below is revision 1, applied locally; live storefront/Theme Editor verification remains pending. Previous received revisions were not reapplied. PRODUCT-BADGES-002 appearance/settings stays pending as documented in the earlier receipt.
+Every code below is revision 1, applied locally; live storefront/Theme Editor verification remains pending. Previous received revisions were not reapplied.
 
 | Full code | Source revision | Target paths | Application / preservation |
 | --- | --- | --- | --- |
