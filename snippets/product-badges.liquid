@@ -3,8 +3,8 @@
   or product details composition.
 
   Sold-out status takes precedence over sale status. Collection rules and custom
-  badge tags are opt-in and only evaluated when the caller enables manual
-  badges. Empty labels and disabled badge states are omitted.
+  badge tags on product pages are opt-in through manual badges. Empty labels
+  and disabled badge states are omitted.
 
   @param {product} product - Product represented by the card
   @param {boolean} [show_sale_badge] - Whether sale status may be displayed
@@ -92,7 +92,7 @@
   endif
 
   assign custom_tag_badges_visible = false
-  if show_manual_badges and settings.badge_custom_enabled and product != blank
+  if context != 'product-card' and show_manual_badges and settings.badge_custom_enabled and product != blank
     for product_tag in product.tags limit: 12
       assign clean_product_tag = product_tag | strip
       assign normalized_tag = clean_product_tag | downcase
@@ -116,6 +116,7 @@
     assign has_visible_badge = true
   endif
 %}
+
 
 {% if has_visible_badge %}
   {% assign badges_class = 'product-card__badges' %}

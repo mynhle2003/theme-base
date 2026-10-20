@@ -12,9 +12,15 @@ Record only theme-specific section/block implementation changes here: Liquid/HTM
 
 | File/path | Base behavior | Theme-specific behavior | Reason | Update/merge rule |
 | --- | --- | --- | --- | --- |
-| _No customizations recorded yet_ | | | | |
+| `snippets/product-card.liquid`, `snippets/product-badges.liquid`, `snippets/badge.liquid`, `assets/critical.css` | Collection badge rules already match product collections. | Cards use native collection rules; card-scoped CSS styles collection badges, retaining geometry and turquoise badge appearance. Product-page prefixed tags retain their existing path. | Owner requested native Collection badge migration on 2026-10-20. | Preserve card styling; use existing Collection badge settings only. Keep badge membership in existing Theme Settings. |
 
 ## Base update decisions
 
 | Base commit | Files reviewed | Decision and reason | Approved by/date |
 | --- | --- | --- | --- |
+
+## Native Collection badge migration — 2026-10-20
+
+See [migration plan](../product-card-collection-badge-migration.md). Existing status badges and product-page prefixed-tag behavior are retained. Current labels are mapped to verified collection membership in local settings_data.
+
+Validation: JSON/schema and actual Liquid fixture checks pass; Theme Check has no errors. Live desktop/mobile/Figma QA remains pending. No commit/push/deploy.

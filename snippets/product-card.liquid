@@ -230,7 +230,9 @@
       {% render 'product-badges',
         product: product,
         show_sale_badge: show_sale_badge,
-        show_sold_out_badge: show_sold_out_badge
+        context: 'product-card',
+        show_sold_out_badge: show_sold_out_badge,
+        show_manual_badges: true
       %}
     </div>
 

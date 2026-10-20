@@ -3242,3 +3242,36 @@ legend {
 [data-component-reveal].reveal-pending { opacity:0; }
 body[data-block-animations="false"] .reveal-pending { opacity:1!important; }
 @media (prefers-reduced-motion:reduce) { .reveal-pending { opacity:1!important; } }
+
+/* Native product-card collection badge appearance. */
+.product-card__media-overlay {
+  top: 0;
+  left: 0;
+  max-width: 100%;
+}
+
+.product-card__badges {
+  top: 0;
+  left: 0;
+  max-width: 100%;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.product-card__badges .product-badge {
+  --badge-font-size: 12px;
+  --badge-letter-spacing: 2px;
+  --badge-padding: 2px 8px;
+
+  justify-content: center;
+  min-height: 22px;
+  border: 0;
+  line-height: 1.5;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.product-card__badges .product-badge--manual {
+  background: var(--badge-collection-background, #35b2b0);
+  color: var(--badge-collection-color, #fff);
+}
