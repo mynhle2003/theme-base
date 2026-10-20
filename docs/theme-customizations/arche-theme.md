@@ -18,6 +18,7 @@ Record every theme-specific change here before committing the code. During base 
 
 | File/path | Base behavior | Theme-specific behavior | Reason | Update/merge rule |
 | --- | --- | --- | --- | --- |
+| `snippets/product-card.liquid`, `snippets/product-badges.liquid`, `snippets/badge.liquid`, `snippets/css-variables.liquid`, `assets/critical.css` | Collection badge rules already match product collections. | Cards use native collection rules; card-scoped CSS styles collection badges, retaining geometry and first/second badge appearance. Product-page prefixed tags retain their existing path. | Owner requested native Collection badge migration on 2026-10-20. | Preserve card styling; use existing Collection badge settings only. Keep badge membership in existing Theme Settings. |
 | `blocks/_shop-the-look-image.liquid` | Shared image and addable section block list | Only static section slots; private image retains variant ratio/media controls, removes layout width and padding controls; saved image data migrates with stable IDs | Owner-requested Shop the look base rollout | Keep section image private and preserve variant media values when merging |
 | `blocks/_header-account.liquid` | Always requests a fixed account menu. | Request customer-account-main-menu only when present; otherwise retain Shopify default menu. | Avoid missing-menu errors. | Preserve account markup and fallback. |
 | `blocks/blog-card-button.liquid` | Generic Read more link. | Pass article title through aria_label and accessible_description. | Distinct accessible link names. | Keep contextual article and visible label. |
@@ -85,8 +86,6 @@ Record every theme-specific change here before committing the code. During base 
 | `blocks/_header-top.liquid` | Mobile uses asymmetric columns and the desktop action gap. | Centered mobile logo uses balanced side columns. Existing gap becomes Gap menu, with separate actions_gap; optional gap_mobile/actions_gap_mobile override desktop values only when Customize for mobile is enabled. | Match the Figma mobile Header arrangement. | Preserve balanced center geometry and check 320px through tablet widths. |
 | `assets/critical.css` (Header first-paint rules) | Pre-JS mobile layout derives from desktop left class. | First-paint logo placement reads Mobile position; menu and Search group on the left for Center. | Avoid logo jumping when Header JS initializes. | Keep server-rendered and initialized arrangements aligned; preserve other existing critical CSS customizations. |
 | `blocks/_mega-menu-banner.liquid` | Banner handwrites button markup. | Render button_style through shared theme-button with tertiary, underline and icons. Hidden menu images use explicit lazy loading and auto responsive sizes with mobile/desktop fallback. | Synchronize global buttons and avoid competing with the hero image. | Retain renderer and image loading hints; verify buttons, menu open, mobile drawer and editor. Transfer image hints independently via ARCHE-ESSEN-LIGHTHOUSE-MEDIA-003. |
-| `snippets/badge.liquid` | Sale/sold-out/manual badge tones. | Adds tag and tag-secondary tones. | Optional Product-card tags. | Preserve existing tones, shared escaping and tag tokens. |
-| `snippets/product-badges.liquid` | Status and configured manual badges. | Up to three card tags gated by Show tags; product-page manual path remains. | Reuse Elara tag logic without duplicate prefixed badges. | Preserve card/page ownership, status precedence and tag limit. |
 | `assets/variant-picker.js` | Option changes select variant media. | Only swatch changes update media; all options continue updating commerce state. | Preserve browsed images when changing size. | Keep updateMedia event intent aligned with product-media.js. |
 | `blocks/blog-list.liquid` | Desktop one-column modifier only. | Adds the mobile one-column modifier when mobile grid columns equal one. | Match mobile blog layout. | Preserve option gating on layout and mobile column count. |
 | `blocks/header.liquid` | Shared header composition. | Arche header spacing and composition follow the current preset. | Match Arche section headers. | Review upstream spacing changes and retain merchant controls. |
@@ -1950,20 +1949,6 @@ Final Theme Check: 0 errors / 12 existing warnings outside the changed files. gi
 Validation for the shared hotspot shell: Chrome local fixture at 320/375/767px passes shared radius/handle, focus, scroll lock, Escape/backdrop/close, breakpoint dismissal and editor unload/reload with no runtime errors. 32 related overlay/product/picker tests pass. Full Theme Check: 0 errors / 12 existing warnings; diff check passes. This fixture does not verify a live Theme Editor save/reload.
 
 
-## Product-card Show tags — 2026-10-13
-
-| File/path | Base behavior | Arche behavior | Reason | Update/merge rule |
-| --- | --- | --- | --- | --- |
-| `snippets/product-card.liquid` | Passes sale/sold-out switches to shared badges. | Passes global Show tags and explicit product-card context. | Enable optional card tags as in Elara. | Preserve switch/context without enabling additional manual rules. |
-| `snippets/product-badges.liquid` | Status and configured manual badges. | Up to three nonempty card tags, strips legacy badge prefix; manual tag path remains product-page only. | Avoid duplicate card tags and preserve status precedence. | Keep card/page ownership, prefix handling, escaping and three-tag limit. |
-| `snippets/badge.liquid` | Sale, sold-out and manual tones. | Adds tag and tag-secondary tones. | Reuse shared badge markup. | Keep existing tones and escaped text. |
-| `snippets/css-variables.liquid` | Status badge tokens. | Adds the four Elara tag color tokens. | Provide primary/secondary card-tag colors. | Keep shared token mapping. |
-| `assets/critical.css` | Shared status/manual badge styles. | Tag tones consume shared tokens; existing Arche badge typography, radius and wrap remain. | Add optional tags without importing Elara card geometry. | Preserve theme appearance and new tone selectors. |
-
-Setting `product_card_show_tags` defaults false; no saved preset/settings mutation. Transfer tracked as ARCHE-ESSEN-PRODUCT-CARD-TAGS-001; Essen pending and must inspect its gap before applying. Live storefront/Theme Editor QA pending.
-
-Show tags validation: four Liquid render tests pass for off/empty, prefix/escaping/limit, status coexistence and product-page manual tags. Full Theme Check: 0 errors / 12 existing warnings; diff check passes. The broader theme-settings suite has one existing Footer social-links expectation failure, reproduced unchanged at HEAD before the Show tags patch (footer preset uses menu); it is outside this change. Live Theme Editor save/reload remains pending.
-
 ## Scrolling cards Stack transition restore — 2026-10-13
 
 The Shopify editor merge removed the section's `stack_effect` schema and `data-stack-effect` binding while the runtime retained both effects. Restored the existing section-owned Scale/Fade control, its Fade default/preset, and the homepage Fade selection. Preserve schema, data attribute and runtime together during future editor/base merges. No Card-level option is introduced by this fix.
@@ -1974,15 +1959,6 @@ The Shopify editor merge removed the section's `stack_effect` schema and `data-s
 Owner requested warning fixes and a variant-update handoff for Essen, then explicitly deferred the five settings-count warnings. `assets/critical.css` now declares `.form__control.form__control--input` with the existing form exclusions inside the existing foundation `:where` rule. This selector is a subset of the existing form-control selector, with the same declarations and zero specificity; existing component overrides and merchant settings remain intact. Resolves seven `ValidScopedCSSClass` warnings without relying on another component's stylesheet.
 
 Validation: Theme Check 0 errors / 5 deferred `ExcessiveSettingsCount` warnings; 18 product controls/overlay/search tests PASS; git diff --check PASS. Recommended settings threshold remains 40, with no check disabled. Live storefront/Theme Editor QA pending. Transfer instructions: [ARCHE-ESSEN-FORM-INPUT-CSS-001](../variant-updates/arche-to-essen.md#arche-essen-form-input-css-001--cảnh-báo-css-input-dùng-chung). Essen must audit its own warning/CSS gap before applying; target pending, no Essen code change or store upload/publish. Local source patch uncommitted.
-
-
-## Product card tags and status badges — 2026-10-13
-
-User requested Figma-only catalog tags, Show tags enabled, and matching NEW/SALE/SOLD OUT card badges. Figma desktop 46306:2048 and shared badge component set 34147:1638 are the sources. Removed non-design tags from the 11 products consumed by the homepage tabs/New release; PO 02 and ST 02 retain New, and Sale tags remain untouched. Existing Shopify tag spelling New differs from source text new; uppercase presentation matches Figma. No shared-store tag renaming, price or stock changes.
-
-Implementation paths: assets/critical.css (card badge typography/geometry and tag border colors), snippets/css-variables.liquid (primary tag text #111111), snippets/product-badges.liquid (skip sale/soldout status labels in custom-tag loop). Existing options in config/settings_data.json enable product_card_show_tags, set radius_badges_subheadings=slightly_rounded, sale background #D94100 and sold-out background/text #FFFFFF/#111111. Color and radius remain merchant-editable; font family/weight and border width consume existing tokens. Card-only font size 10px, uppercase, tracking 1.4px, padding and min-height 22px have no matching badge options. Global badge color/radius settings also supply other badge consumers.
-
-Validation: five Liquid badge tests pass; Theme Check 0 errors / 5 existing settings-count warnings; diff check passes. Browser readback confirms all homepage cards have only New or automatic Sale. Desktop computed styles match Figma. Sold-out precedence is covered by Liquid rendering tests; no catalog stock was changed to stage sold-out. Variant handoff: ARCHE-ESSEN-PRODUCT-BADGES-002 in docs/variant-updates/arche-to-essen.md.
 
 
 ## Blog author source restored — 2026-10-13
@@ -4256,3 +4232,9 @@ Owner-authorized team source `1c3db7a1`: add Show top divider and Enable scroll 
 
 
 Approved retained-custom exceptions for this update: port only the shared mega-menu width/backdrop and Footer layout-event lifecycle fixes from team f3555270. Preserve existing custom markup, settings, schema, presets and templates. Announcement first-paint/scoped background sizing was already released in the preceding theme commit.
+
+## Native Collection badge migration — 2026-10-20
+
+See [migration plan](../product-card-collection-badge-migration.md). Existing status badges and product-page prefixed-tag behavior are retained. Current labels are mapped to verified collection membership in local settings_data.
+
+Validation: JSON/schema and actual Liquid fixture checks pass; Theme Check has no errors. Live desktop/mobile/Figma QA remains pending. No commit/push/deploy.

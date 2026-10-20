@@ -1,4 +1,4 @@
-# Arche → Essen: Variant picker, Size guide, Product-card tags và các fix dùng chung
+# Arche → Essen: Variant picker, Size guide, các fix dùng chung
 
 Ngày: 2026-10-13. Nguồn: `arche-theme`, branch `theme/arche-theme`, HEAD `f340ad0e3facf5e0ad9c6eba0700ae4e12e0f131` + patch local chưa commit. Đích: `../essen-theme`, branch `theme/essen-theme`, HEAD đã audit `acb809562bf01eb1f301e88439504d3c93bfc141`; chưa áp dụng update.
 
@@ -21,7 +21,6 @@ Quy tắc: `agents-build-themes/skills/build/new/build-theme/references/variant-
 | --- | --- | --- | --- | --- | --- |
 | ARCHE-ESSEN-SIZE-GUIDE-001 | 1 | Size guide dùng Button Tertiary; xóa CSS riêng | snippets/variant-picker.liquid; assets/critical.css — commit 314ff1e6 | pending | Shared Tertiary button/underline contract |
 | ARCHE-ESSEN-SIZE-GUIDE-DIALOG-002 | 1 | Dialog Size Guide căn giữa viewport như Quick View; nội dung dùng body-sm | snippets/variant-picker.liquid; tests/product-controls.test.cjs — commit 4c01f5a8 | pending — chưa audit/apply tại Essen | Shared component-overlay popup và typography body-sm; độc lập trigger Tertiary |
-| ARCHE-ESSEN-PRODUCT-CARD-TAGS-001 | 1 | Checkbox Show tags và tối đa ba tag trên Product cards | config/settings_schema.json; snippets/product-card.liquid; snippets/product-badges.liquid; snippets/badge.liquid; snippets/css-variables.liquid; assets/critical.css; locales/en.default.schema.json — patch local trước commit | pending | Shared badge primitive và card context; độc lập Size guide |
 
 | Mã update cảnh báo | Revision | Phạm vi | Nguồn | Trạng thái Essen | Dependency |
 | --- | --- | --- | --- | --- | --- |
@@ -273,24 +272,6 @@ Bằng chứng nguồn: 35 tests product-controls/component-overlay/overlay-prod
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | ARCHE-ESSEN-SIZE-GUIDE-DIALOG-002 | 1 | 4c01f5a8 | pending — chưa audit/apply | chưa upload / chưa publish |
 
-## ARCHE-ESSEN-PRODUCT-CARD-TAGS-001 — Show tags trong Product cards
-
-Ngày 2026-10-13, revision 1. Nguồn Arche `theme/arche-theme`, patch local trước commit, tham khảo implementation local của `../elara-theme`. Đích `../essen-theme`, branch `theme/essen-theme`: pending, chưa áp dụng.
-
-- Thêm checkbox `product_card_show_tags`, mặc định false, ngay sau Show sold out badge trong Theme Settings → Product cards → Display; label `t:labels.show_tags`. Không sửa settings/preset đã lưu.
-- `snippets/product-card.liquid` truyền switch và `context: 'product-card'` vào `product-badges`. Resolver render tối đa ba tag không rỗng theo thứ tự `product.tags`, strip khoảng trắng và tiền tố `badge:` không phân biệt hoa thường; label escape qua `badge`. Bật tags không phụ thuộc Sale/Sold out; Sold out vẫn ưu tiên Sale. Tắt tags không sinh wrapper rỗng.
-- Theo Elara, card không đi qua nhánh manual `badge:` cũ để tránh duplicate; product-page manual badges giữ nguyên. Không bật thêm collection/manual rules ở caller Arche. `badge` chấp nhận `tag`/`tag-secondary`; tag thứ hai dùng tone phụ, thứ nhất/ba dùng tone chính. CSS tiêu thụ bốn token tag trong `css-variables`, dùng màu tương ứng Elara; giữ typography/radius/layout badge hiện có của Arche. Không chuyển custom geometry Elara.
-- Files: `config/settings_schema.json`, `locales/en.default.schema.json`, `snippets/product-card.liquid`, `snippets/product-badges.liquid`, `snippets/badge.liquid`, `snippets/css-variables.liquid`, `assets/critical.css`.
-- Khi được yêu cầu update Essen, kiểm tra setting/logic tương đương đã tồn tại hay chưa. Nếu gap còn tồn tại, chỉ chuyển patch của consumer; giữ schema/preset và appearance của đích. QA tags on/off, empty tags, hơn ba tag, prefix, ký tự HTML, Sale/Sold out, product-page manual badges, wrap desktop/mobile và Theme Editor save/reload trước verified. Chưa sửa/upload/publish Essen.
-
-QA nguồn Show tags: bốn Liquid render tests PASS; full Theme Check 0 errors / 12 existing warnings; diff check PASS. Một test Footer của suite theme-settings lỗi sẵn tại HEAD, ngoài phạm vi patch; không thay footer preset. Chưa QA live editor ở Arche/Essen.
-
-| Ngày | Mã | Revision đích | Trạng thái | Bằng chứng |
-| --- | --- | --- | --- | --- |
-| 2026-10-13 | ARCHE-ESSEN-SIZE-GUIDE-001 | chưa áp dụng | pending | Commit nguồn 314ff1e6; Essen phải kiểm tra gap trước update. |
-| 2026-10-13 | ARCHE-ESSEN-PRODUCT-CARD-TAGS-001 | chưa áp dụng | pending | Bốn render tests và Theme Check nguồn pass; chưa mutation/upload/publish Essen. |
-
-
 ## ARCHE-ESSEN-FORM-INPUT-CSS-001 — Cảnh báo CSS input dùng chung
 
 Ngày: 2026-10-13. Revision: 1. Nguồn: `arche-theme`, branch `theme/arche-theme`, HEAD `98fb9bc1aa0fffe21201f4f7ac68150c322cfc37` + patch local chưa commit. Đích: `essen-theme`, branch dự kiến `theme/essen-theme`; Essen pending, chưa audit/apply/upload/publish trong tác vụ này.
@@ -336,24 +317,6 @@ Các settings có consumer trực tiếp hoặc dynamic/snippet; không xóa ch�
 | 2026-10-13 | ARCHE-ESSEN-FORM-INPUT-CSS-001 | chưa áp dụng | pending | Arche hết 7 CSS warnings; Essen chưa audit/sửa/upload/publish. |
 
 
-## ARCHE-ESSEN-PRODUCT-BADGES-002 — Tags, Sale và Sold out theo Figma
-
-Ngày 2026-10-13. Owner yêu cầu ghi chú update variant; Essen **pending**, chưa áp dụng. Nguồn: Arche local, chưa commit. Figma desktop 46306:2048; shared Badges 34147:1638, Sold out 34147:1639.
-
-| File | Chuyển thay đổi |
-| --- | --- |
-| assets/critical.css | Card NEW/SALE/SOLD OUT: Poppins từ token font sẵn có, 10px, weight từ badge token (500), uppercase, tracking 1.4px, line-height 1.5, min-height 22px; padding 2px/8px trừ border-width hiện có. Radius dùng --badge-radius, không đóng cứng. Tag border dùng màu nền tương ứng. |
-| snippets/css-variables.liquid | Tag primary text #111111 thay #181818; giữ trắng và secondary tone hiện có. |
-| snippets/product-badges.liquid | Bỏ sale/soldout (kể cả dạng có khoảng trắng, dấu -/_, legacy badge:) trong custom-tag loop; không tính vào giới hạn 3 tag. Giữ automatic sale/sold-out, sold-out precedence và Show tags gating. |
-| config/settings_data.json current | Dùng option sẵn có: product_card_show_tags=true, radius_badges_subheadings=slightly_rounded (4px), badge_sale_background_color=#D94100, badge_sale_text_color=#FFFFFF, badge_sold_out_background_color=#FFFFFF, badge_sold_out_text_color=#111111. Giữ preset khác. |
-| tests/product-card-tags.test.cjs | Thêm regression cho status-tag exclusion và không tiêu hao giới hạn tag. |
-
-Khi update Essen: audit code/settings đích trước, chuyển patch theo diff nhỏ; giữ option màu/bo góc/font/border, không thay bằng CSS hardcoded. Color/radius settings là global nên kiểm tra cả consumers ngoài product card. Không copy nguyên settings_data hoặc ghi đè các customizations khác. Chỉ các thông số card chưa có option mới nằm trong CSS.
-
-Catalog là dữ liệu store, không được chuyển bằng Git: không chạy lại cleanup trên store khác. Với catalog được yêu cầu đồng bộ Figma, chỉ gắn tag đúng product trong nguồn; không thêm New/Bestseller mặc định, badge: prefix, vendor/template hoặc Figma-* marker. Source text new hiện được store tái sử dụng thành New; CSS uppercase hiển thị NEW. Không rename tag dùng chung để đổi case. Sale/Sold out lấy trạng thái commerce, không tạo tag hay đổi stock để giả lập. Quy tắc duy trì tại agents-build-themes/skills/setup-store/store-content-media/references/products.md.
-
-Bằng chứng nguồn: 5 tests PASS, Theme Check 0 errors / 5 existing deferred warnings, diff check PASS; homepage DOM readback xác nhận 11 sản phẩm không còn tag ngoài Figma (ngoại lệ Sale giữ nguyên). Desktop NEW/SALE có 10px, tracking 1.4px, bo góc 4px và cao 22px. Sold-out verified qua source component/Liquid logic; live target sold-out và Theme Editor save/reload phải QA khi áp dụng Essen.
-
 ## Receipt Essen — 2026-10-14
 
 Owner yêu cầu đọc doc, kiểm tra và update trong repo Essen. Đích `theme/essen-theme`, HEAD trước sửa `acb809562bf01eb1f301e88439504d3c93bfc141`; patch local chưa commit. [Receipt đầy đủ tại Essen](../../../essen-theme/docs/audits/arche-to-essen-2026-10-14.md) ghi bằng chứng đích, file sở hữu và QA còn thiếu. Receipt này cập nhật các trạng thái pending lịch sử ở trên; không dùng QA Arche làm QA Essen.
@@ -367,10 +330,8 @@ Owner yêu cầu đọc doc, kiểm tra và update trong repo Essen. Đích `the
 | ARCHE-ESSEN-VARIANT-PICKER-001 | 1 | applied — local | Target fixture tái hiện đổi size vẫn chuyển ảnh; swatch intent và gallery guard đã áp dụng, commerce updates giữ nguyên. Live QA pending. |
 | ARCHE-ESSEN-HEADER-ALIGNMENT-001 | 1 | applied — local | CSS đích trả start cho parent Center/Right trước sửa; fallback token và local override pass desktop/mobile. Live editor pending. |
 | ARCHE-ESSEN-SIZE-GUIDE-001 | 1 | applied — local | Trigger thiếu Tertiary và có CSS riêng; chuyển shared button/underline, giữ dialog runtime. Live color/underline/open-close QA pending. |
-| ARCHE-ESSEN-PRODUCT-CARD-TAGS-001 | 1 | applied — local | Target thiếu switch/resolver; thêm default false, ba tag, prefix/escape/status precedence; năm Liquid tests trên snippets Essen pass. Giữ geometry/settings Essen. Live editor pending. |
 | ARCHE-ESSEN-FORM-INPUT-CSS-001 | 1 | applied — local | Baseline đầu chỉ có năm warnings; lần check sau phát hiện bảy input warnings. Thêm subset selector :where không đổi declarations/specificity. Final Theme Check 0 errors/5 existing warnings. Live forms QA pending. |
 | ARCHE-ESSEN-BLOCK-ANIMATION-001 | 1 | applied — local | Runtime byte-identical personal main e84d0689249b5ae26d3c5c066c90348e4aae06f4; identity mapping giữ đủ 424 giá trị cũ, template/saved settings byte-identical. Dọn mô tả runtime custom cũ, giữ leaf hooks/CSS/khác biệt ngoài animation. Live editor pending. |
-| ARCHE-ESSEN-PRODUCT-BADGES-002 | 1 | applied — shared logic; appearance pending | Chuyển status-tag exclusion và primary tag text #111111. Chưa xác minh gap appearance Figma ở Essen nên giữ typography/geometry/radius/color/current settings; không mutation catalog. |
 
 QA đích: 39 scoped tests PASS; 40 progress + 42 gap/alignment/motion Chrome cases PASS; JS syntax và diff check PASS; Theme Check 0 errors/5 existing settings-count warnings. Ba assertions product-media-variant cũ thất bại cả HEAD gốc và patch, không phải regression mới. Customization coverage còn thiếu Header/Footer ngoài phạm vi update; các path thuộc update đã được record. AI Toolkit Liquid validator thiếu dependency; dùng Shopify CLI Theme Check. Chưa verified live storefront/Theme Editor. Không commit/push/upload/publish; giữ Header/Announcement đang được chỉnh đồng thời trong workspace.
 
@@ -558,9 +519,7 @@ Bao gồm hai tối ưu mới ngày 14/10 và các tối ưu đã có trong chec
 
 Owner yêu cầu tiếp tục đọc Arche để update variant Essen. Đích `theme/essen-theme`, HEAD trước sửa `058c2b511eba1f3e69842333ce7b205a19929494`; patch đợt 3 local, chưa commit/push/upload/publish. Nguồn code Arche clean HEAD `21e1dc5c4e462625efd267ebb9b7ef641a8473a4` khi audit; commit từng mã ở bảng dưới. [Receipt đích đợt 3](../../../essen-theme/docs/audits/arche-to-essen-round-3-2026-10-14.md), [history/tra nhanh](../../../essen-theme/docs/variant-update-history.md).
 
-Các pending của đợt hướng dẫn Header/Press/Lighthouse/Size Guide bên trên là lịch sử trước audit; trạng thái mới của các mã trong đợt 3 là applied local, live QA chưa verified. Các mã cũ đã nhận không áp lại. Release trước: shared đợt 1 `116e03ed`; Image card `595a3548`; doc release history `058c2b51`, đều đã push Essen. Badge appearance/settings PRODUCT-BADGES-002 vẫn pending.
-
-| Mã đầy đủ | Revision | Commit nguồn | Essen mới nhất / bằng chứng |
+Các pending của đợt hướng dẫn Header/Press/Lighthouse/Size Guide bên trên là lịch sử trước audit; trạng thái mới của các mã trong đợt 3 là applied local, live QA chưa verified. Các mã cũ đã nhận không áp lại. Release trước: shared đợt 1 `116e03ed`; Image card `595a3548`; doc release history `058c2b51`, đều đã push Essen. | Mã đầy đủ | Revision | Commit nguồn | Essen mới nhất / bằng chứng |
 | --- | --- | --- | --- |
 | ARCHE-ESSEN-SIZE-GUIDE-DIALOG-002 | 1 | 4c01f5a8 | applied local — Popup normalization/body-sm; 25 target Chrome shell cases. |
 | ARCHE-ESSEN-HEADER-LOGO-002 | 1 | 8cbc1913 | applied local — Desktop/mobile positions, reparent/focus/resize; giữ candidates/logo Essen. |
@@ -589,4 +548,4 @@ QA: preset/instance đích exact source; 20 block instances hợp lệ theo type
 
 ### Essen release receipt — 2026-10-14, đợt 3–5
 
-Essen đã commit/push 12 mã shared r1 đợt 3 và ARCHE-ESSEN-HEADER-PRESET-007 r1 đợt 4 tại `34a8ca27bbcc0c525b84bc8f4f9cf8b4f3c105cd` trên `origin/theme/essen-theme`. Cùng release có ESSEN-HEADER-LOGO-FIGMA-001 r1 đợt 5: logo desktop/tablet/mobile 104/96/80px theo Figma Essen, giữ tài nguyên logo Essen. Mốc đích hoàn tất code đến đợt 5; lịch sử chi tiết: essen-theme/docs/variant-update-history.md. Full Theme Check workspace/index 0 errors / 5 warnings cũ. Appearance/settings PRODUCT-BADGES-002, live QA và Lighthouse production còn pending; chưa upload/publish, chưa verified.
+Essen đã commit/push 12 mã shared r1 đợt 3 và ARCHE-ESSEN-HEADER-PRESET-007 r1 đợt 4 tại `34a8ca27bbcc0c525b84bc8f4f9cf8b4f3c105cd` trên `origin/theme/essen-theme`. Cùng release có ESSEN-HEADER-LOGO-FIGMA-001 r1 đợt 5: logo desktop/tablet/mobile 104/96/80px theo Figma Essen, giữ tài nguyên logo Essen. Mốc đích hoàn tất code đến đợt 5; lịch sử chi tiết: essen-theme/docs/variant-update-history.md. Full Theme Check workspace/index 0 errors / 5 warnings cũ. chưa upload/publish, chưa verified.
