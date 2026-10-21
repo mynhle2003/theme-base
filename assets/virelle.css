@@ -192,3 +192,78 @@
     min-height: 40px;
   }
 }
+
+/* Featured product picker: Figma 48063:10282 / 48096:20308.
+ * Theme settings retain swatch/pill height, radius, spacing and picker style.
+ * Block typography overrides retain precedence over the body tracking fallback.
+ */
+.product-variant-picker {
+  /* Resolve at the block so the body's Input style option is inherited first. */
+  --variant-border-width: var(--input-border-width);
+}
+
+.product-variant-picker .variant-picker__option-header > .variant-picker__label {
+  color: var(--heading-color);
+  line-height: 1.5;
+  letter-spacing: var(--variant-label-letter-spacing, var(--font-body-letter-spacing));
+}
+
+.product-variant-picker .variant-picker__selected-value {
+  color: inherit;
+}
+
+.product-variant-picker .variant-picker__option:not(.variant-picker__option--color) .variant-picker__selected-value {
+  display: none;
+}
+
+.product-variant-picker .variant-picker__button:not(.swatch-control) {
+  min-inline-size: 52px;
+  justify-content: center;
+  padding-inline: 16px;
+  line-height: 1.5;
+  letter-spacing: var(--variant-input-letter-spacing, var(--font-body-letter-spacing));
+  color: var(--heading-color);
+}
+
+.product-variant-picker .variant-picker__control--radio:checked + .variant-picker__button {
+  border-color: var(--heading-color);
+  background: var(--heading-color);
+  color: var(--background-color);
+}
+
+.product-variant-picker .swatch-control--border:has(> input:checked) .swatch-control__visual {
+  border-color: var(--heading-color);
+}
+
+.product-variant-picker .variant-picker__size-chart-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--heading-color);
+  font-family: var(--variant-label-font-family, var(--font-body-family));
+  font-style: var(--variant-label-font-style, var(--font-body-style));
+  font-weight: var(--variant-label-font-weight, var(--font-body-weight));
+  font-size: var(--variant-label-font-size, var(--font-body-sm));
+  line-height: 1.5;
+  letter-spacing: var(--variant-label-letter-spacing, var(--font-body-letter-spacing));
+  text-decoration: none;
+}
+
+.product-variant-picker .variant-picker__size-chart-trigger:hover {
+  text-decoration: underline;
+}
+
+.product-variant-picker .variant-picker__size-chart-trigger svg {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  padding: 1px;
+}
+
+.product-variant-picker .variant-picker__button--sold-out:not(.swatch__label)::after {
+  background-color: transparent;
+  background-image: linear-gradient(to top right,
+    transparent calc(50% - 0.5px),
+    var(--input-border-color) 50%,
+    transparent calc(50% + 0.5px));
+}

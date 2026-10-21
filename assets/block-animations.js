@@ -7,6 +7,7 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const enabled = () => document.body.dataset.blockAnimations !== 'false' && !reduced.matches;
   const selector = '[data-block-animation], [data-component-reveal]';
+  const excludedSurface = '.section-header, .section-footer, .section-announcement-bar, .announcement-bar, .section-faq, .section-faqs, .section-faq-accordion, .section-faq-image-accordion, dialog, [data-marquee-clone], [data-announcement-clone]';
   const cardSelector = 'article.testimonial-item, .product-card, .promo-card, .collection-card, .collection-card-kernel, .blog-card, .blog-first-card, article.image-card, .collection-thumbnail__link, .icon-text-cards__content > .group, .icon-text-cards__viewport > .swiper-wrapper > .swiper-slide > .group';
   const listSelector = '[data-product-list-mobile-promos], [data-product-carousel], .product-collection-grid, .collection-card-list__grid, .product-list__grid, [data-product-list], .image-cards-section__grid, [data-blog-list], .blog-grid, .collection-thumbnails__grid, .collection-thumbnails__carousel, .testimonial-carousel, .testimonials-cards__carousel, .icon-text-cards__content, .icon-text-cards__viewport > .swiper-wrapper';
   const scopeSelector = '[role="tabpanel"], .slideshow__swiper .swiper-slide';
@@ -46,7 +47,7 @@
     const tokens = getComputedStyle(element);
     const tabMotion = element.closest('[data-collection-tab-panel]') && element.matches(cardSelector);
     const stagger = Number(element.dataset.animationStagger) || 0;
-    const delay = Math.min(1500, Math.max(0, (Number(element.dataset.animationDelay) || 0) +
+    const delay = Math.min(2000, Math.max(0, (Number(element.dataset.animationDelay) || 0) +
       (tabMotion ? Number(element.dataset.animationTabDelay) || 0 : stagger)));
     const duration = tabMotion ? durationMilliseconds(tokens.getPropertyValue('--tab-card-duration'), 500) :
       Math.max(700, durationMilliseconds(tokens.getPropertyValue('--motion-duration-slow'), 700));
@@ -97,6 +98,12 @@
     });
   };
   const initialize = element => {
+    if (element.closest(excludedSurface) || element.dataset.editorialReveal === 'true') {
+      const state = nodes.get(element);
+      if (state) {stop(state);observer.unobserve(element);nodes.delete(element);}
+      element.classList.remove('reveal-pending');
+      return;
+    }
     // The stack controller owns media motion. Inert back cards are still visible.
     if (element.closest('[data-multi-image]')) {
       const state = nodes.get(element);
@@ -124,7 +131,7 @@
   const scan = (root = document) => {
     const cards = root.querySelectorAll?.(cardSelector) || [];
     cards.forEach(card => {
-      if (card.closest('.slideshow, .announcement-bar, dialog')) return;
+      if (card.closest(excludedSurface) || card.closest('.slideshow')) return;
       card.dataset.componentReveal = '';
       if (!card.dataset.blockAnimation) card.dataset.blockAnimation = card.matches('article.testimonial-item') ? 'fade' : 'slide-bottom';
       const list = card.closest(listSelector);
@@ -153,7 +160,7 @@
     });
     // Resource actions and forms share the entrance order of their content blocks.
     root.querySelectorAll?.('.collection-list-view-all, .email-signup-block, .product-callout__content').forEach(element => {
-      if (element.closest('dialog, .announcement-bar')) return;
+      if (element.closest(excludedSurface)) return;
       element.dataset.componentReveal = '';
       if (!element.dataset.blockAnimation || element.dataset.blockAnimation === 'none') element.dataset.blockAnimation = 'fade';
       const section = element.closest('.shopify-section');
@@ -176,7 +183,7 @@
   const mutations = new MutationObserver(records => {
     records.forEach(record => {
       if (record.type === 'childList') record.addedNodes.forEach(node => {if (node instanceof Element) scan(node);});
-      else if (record.attributeName === 'data-block-animation' || record.attributeName === 'data-animation-delay') {
+      else if (record.attributeName === 'data-block-animation' || record.attributeName === 'data-animation-delay' || record.attributeName === 'data-editorial-reveal') {
         initialize(record.target);
         record.target.querySelectorAll(selector).forEach(initialize);
       }
@@ -193,8 +200,12 @@
     nodes.forEach((state, element) => {if (!element.isConnected) {stop(state);observer.unobserve(element);nodes.delete(element);}});
   });
   scan();
-  mutations.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden','aria-hidden','inert','class','data-block-animation','data-animation-delay']});
+  mutations.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden','aria-hidden','inert','class','data-block-animation','data-animation-delay','data-editorial-reveal']});
   document.addEventListener('shopify:section:load',event => scan(event.target));
+  document.addEventListener('shopify:section:unload',event => nodes.forEach((state,element) => {
+    if (!event.target.contains(element)) return;
+    stop(state);observer.unobserve(element);element.classList.remove('reveal-pending');nodes.delete(element);
+  }));
   // Responsive row changes update future stagger without replaying visible cards.
   let resizeFrame;
   window.addEventListener?.('resize', () => {

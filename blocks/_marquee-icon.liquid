@@ -68,6 +68,7 @@
 %}
 
 {% capture icon_style %}
+  --marquee-animation-delay: {{ block.settings.animation_delay | default: 0 | plus: 0 | at_least: 0 | at_most: 2000 | divided_by: 50.0 | round | times: 50 }}ms;
   --marquee-icon-block-width: {{ icon_width }}px;
   --marquee-icon-block-padding: {{ icon_padding }}px;
   --marquee-icon-block-width-mobile: {{ icon_width_mobile }}px;
@@ -406,6 +407,16 @@
       "default": "none"
     },
     {
+      "type": "range",
+      "id": "animation_delay",
+      "label": "t:labels.animation_delay",
+      "min": 0,
+      "max": 2000,
+      "step": 50,
+      "unit": "ms",
+      "default": 0
+    },
+    {
       "type": "header",
       "content": "t:general.padding"
     },
@@ -463,13 +474,15 @@
       "name": "t:general.icon",
       "category": "t:general.basic",
       "settings": {
+        "animation_delay": 50,
         "source": "library",
         "icon": "truck",
         "open_in_new_tab": false,
         "icon_width": 24,
         "icon_padding": 0,
         "custom_mobile": false,
-        "customize_mobile_padding": false
+        "customize_mobile_padding": false,
+        "animation": "scale"
       }
     }
   ]

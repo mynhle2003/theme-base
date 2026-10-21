@@ -114,6 +114,7 @@
     class="{{ heading_class }}"
     {% if heading_style != blank %}style="{{ heading_style }}"{% endif %}
     {% if block_plain_text == blank %}data-content-empty{% endif %}
+    {% if block.settings.animation_type != blank and block.settings.animation_type != 'none' %}{% render 'block-animation-attributes', block: block, allow_rotate_words: true %}{% endif %}
     {{ block.shopify_attributes }}
   >{{ block.settings.text }}</{{ heading_tag }}>
 {% else %}
@@ -121,6 +122,7 @@
     class="heading-block size-style heading-block--empty"
     {% if heading_style != blank %}style="{{ heading_style }}"{% endif %}
     {% if block_plain_text == blank %}data-content-empty{% endif %}
+    {% if block.settings.animation_type != blank and block.settings.animation_type != 'none' %}{% render 'block-animation-attributes', block: block, allow_rotate_words: true %}{% endif %}
     {{ block.shopify_attributes }}
   ></div>
 {% endif %}
@@ -369,6 +371,56 @@
       "unit": "px",
       "default": 0,
       "visible_if": "{{ block.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.animation"
+    },
+    {
+      "type": "select",
+      "id": "animation_type",
+      "label": "t:labels.type",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.block_animation.none"
+        },
+        {
+          "value": "fade",
+          "label": "t:options.block_animation.fade"
+        },
+        {
+          "value": "scale",
+          "label": "t:options.block_animation.scale"
+        },
+        {
+          "value": "slide-left",
+          "label": "t:options.block_animation.slide_left"
+        },
+        {
+          "value": "slide-right",
+          "label": "t:options.block_animation.slide_right"
+        },
+        {
+          "value": "slide-bottom",
+          "label": "t:options.block_animation.slide_bottom"
+        },
+        {
+          "value": "rotate-words",
+          "label": "t:options.block_animation.rotate_words"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "animation_delay",
+      "label": "t:labels.animation_delay",
+      "min": 0,
+      "max": 2000,
+      "step": 50,
+      "unit": "ms",
+      "default": 0
     }
   ],
   "presets": [
@@ -376,6 +428,8 @@
       "name": "t:general.heading",
       "category": "t:general.basic",
       "settings": {
+        "animation_delay": 50,
+        "animation_type": "slide-bottom",
         "text": "<p>Heading</p>",
         "heading_size": "display",
         "html_tag": "h2",

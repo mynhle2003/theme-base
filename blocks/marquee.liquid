@@ -215,6 +215,8 @@
   [data-marquee-animation='slide_left']{animation:mq-enter-left .6s ease both;}
   [data-marquee-animation='slide_right']{animation:mq-enter-right .6s ease both;}
   [data-marquee-animation='slide_bottom']{animation:mq-enter-bottom .6s ease both;}
+  [data-marquee-animation] { animation-delay: var(--marquee-animation-delay, 0ms); }
+  body[data-block-animations='false'] [data-marquee-animation] { animation: none; }
   @keyframes mq-enter-fade{from{opacity:0;}to{opacity:1;}}
   @keyframes mq-enter-scale{from{scale:.85;opacity:0;}to{scale:1;opacity:1;}}
   @keyframes mq-enter-left{from{translate:-24px 0;opacity:0;}to{translate:0;opacity:1;}}

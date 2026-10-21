@@ -3213,7 +3213,9 @@ legend {
 }
 
 /* Shared Product/Promo card entrance state. */
-[data-component-reveal].reveal-pending { opacity:0; }
+[data-component-reveal].reveal-pending,
+[data-block-animation].reveal-pending { opacity:0; }
+.reveal-word { display:inline-block; transform-origin:50% 100%; }
 body[data-block-animations="false"] .reveal-pending { opacity:1!important; }
 @media (prefers-reduced-motion:reduce) { .reveal-pending { opacity:1!important; } }
 

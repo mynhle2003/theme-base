@@ -243,8 +243,12 @@
         {
           "type": "header",
           "blocks": [
-            { "type": "heading", "settings": { "text": "<p>Build your bundle</p>", "heading_size": "display", "html_tag": "h2" } },
-            { "type": "text", "settings": { "text": "<p>The choice is yours. With our bundle builder, select any combination from our range of products. The easiest way to keep everyone happy.</p>" } }
+            { "type": "heading", "settings": {
+  "animation_delay": 50,
+  "animation_type": "slide-bottom", "text": "<p>Build your bundle</p>", "heading_size": "display", "html_tag": "h2" } },
+            { "type": "text", "settings": {
+  "animation_delay": 100,
+  "animation_type": "fade", "text": "<p>The choice is yours. With our bundle builder, select any combination from our range of products. The easiest way to keep everyone happy.</p>" } }
           ]
         },
         { "type": "_bundle-product-list", "id": "products", "static": true },

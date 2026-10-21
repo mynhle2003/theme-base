@@ -338,7 +338,7 @@
       <div class="countdown-timer__unit" data-countdown-unit="hours" data-countdown-unit-label="{{ 'countdown.hours' | t | escape }}">
         <span class="countdown-timer__value{% if countdown_outline_enabled %} virelle-text-outline{% endif %}" data-countdown-value="hours">{{ countdown_hours_display }}</span>
         {% if countdown_style != 'numbers_only' %}
-          <span class="countdown-timer__label" data-countdown-label>{{ 'countdown.hours' | t }}</span>
+          <span class="countdown-timer__label" data-countdown-label>{% if countdown_style == 'with_labels_colon' %}{{ 'countdown.hours_short' | t }}{% else %}{{ 'countdown.hours' | t }}{% endif %}</span>
         {% endif %}
       </div>
       {% if countdown_style == 'with_labels_colon' %}
@@ -347,7 +347,7 @@
       <div class="countdown-timer__unit" data-countdown-unit="minutes" data-countdown-unit-label="{{ 'countdown.minutes' | t | escape }}">
         <span class="countdown-timer__value{% if countdown_outline_enabled %} virelle-text-outline{% endif %}" data-countdown-value="minutes">{{ countdown_minutes_display }}</span>
         {% if countdown_style != 'numbers_only' %}
-          <span class="countdown-timer__label" data-countdown-label>{{ 'countdown.minutes' | t }}</span>
+          <span class="countdown-timer__label" data-countdown-label>{% if countdown_style == 'with_labels_colon' %}{{ 'countdown.minutes_short' | t }}{% else %}{{ 'countdown.minutes' | t }}{% endif %}</span>
         {% endif %}
       </div>
       {% if countdown_style == 'with_labels_colon' %}
@@ -356,7 +356,7 @@
       <div class="countdown-timer__unit" data-countdown-unit="seconds" data-countdown-unit-label="{{ 'countdown.seconds' | t | escape }}">
         <span class="countdown-timer__value{% if countdown_outline_enabled %} virelle-text-outline{% endif %}" data-countdown-value="seconds">{{ countdown_seconds_display }}</span>
         {% if countdown_style != 'numbers_only' %}
-          <span class="countdown-timer__label" data-countdown-label>{{ 'countdown.seconds' | t }}</span>
+          <span class="countdown-timer__label" data-countdown-label>{% if countdown_style == 'with_labels_colon' %}{{ 'countdown.seconds_short' | t }}{% else %}{{ 'countdown.seconds' | t }}{% endif %}</span>
         {% endif %}
       </div>
     </div>
@@ -549,9 +549,14 @@
   }
 
   .countdown-timer--style-with-labels-colon .countdown-timer__unit {
-    min-width: 0;
+    min-width: var(--countdown-number-size);
     min-height: 0;
     padding: 0;
+  }
+
+  .countdown-timer--style-with-labels-colon .countdown-timer__label {
+    margin-top: 0;
+    color: var(--countdown-number-color, var(--heading-color));
   }
 
   .countdown-timer__separator {

@@ -21,8 +21,9 @@
   @param {string} [swatch_height_ratio_override] - Optional local CSS aspect ratio for swatches
   @param {boolean} [show_option_names] - Whether option legends remain visible
   @param {string} [size_chart_option_name] - Product option name that should expose the size guide
+  @param {boolean} [size_chart_icon] - Show the Virelle ruler artwork beside the size guide
   @param {page} [size_chart_page] - Page or dynamic page source rendered by the size guide
-  @param {string} [size_chart_desktop_layout] - Desktop size guide presentation: popup or drawer
+  @param {string} [size_chart_desktop_layout] - Desktop size guide presentation: modal or drawer
   @param {string} [size_chart_mobile_layout] - Mobile size guide presentation: bottom_sheet or drawer
   @param {number} [size_chart_width] - Maximum desktop size guide width in pixels
 
@@ -112,6 +113,9 @@
   unless size_chart_desktop_layout == 'modal' or size_chart_desktop_layout == 'drawer'
     assign size_chart_desktop_layout = 'modal'
   endunless
+  if size_chart_desktop_layout == 'modal'
+    assign size_chart_desktop_layout = 'popup'
+  endif
   assign size_chart_mobile_layout = size_chart_mobile_layout | default: 'bottom_sheet'
   unless size_chart_mobile_layout == 'bottom_sheet' or size_chart_mobile_layout == 'drawer'
     assign size_chart_mobile_layout = 'bottom_sheet'
@@ -221,7 +225,7 @@
       endif
     %}
 
-    <fieldset class="variant-picker__option{% if option_uses_swatches %} variant-picker__option--swatches{% endif %}" data-option-index="{{ option_index }}">
+    <fieldset class="variant-picker__option{% if option_is_color %} variant-picker__option--color{% endif %}{% if option_uses_swatches %} variant-picker__option--swatches{% endif %}" data-option-index="{{ option_index }}">
       <legend id="{{ option_id }}-label" class="visually-hidden">
         {{ product_option.name | escape }}
       </legend>
@@ -241,6 +245,7 @@
               aria-expanded="false"
               data-size-chart-trigger
             >
+              {% if size_chart_icon %}{% render 'virelle-icon', icon: 'ruler' %}{% endif %}
               {{ size_chart_label | escape }}
             </button>
           {% endif %}
