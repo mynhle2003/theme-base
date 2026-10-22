@@ -2,7 +2,7 @@
   assign width = block.settings.width_custom_desktop | default: 300
   assign mobile_width = block.settings.width_custom_mobile | default: 50
   capture ratio
-    render 'image-ratio-value', setting: block.settings.image_ratio
+    render 'image-ratio-value', setting: block.settings.image_ratio, custom_width: block.settings.image_ratio_custom_width, custom_height: block.settings.image_ratio_custom_height
   endcapture
   assign ratio = ratio | strip
   assign radius = 'var(--media-radius, 0px)'
@@ -52,35 +52,60 @@
         },
         {
           "value": "ratio_1_1",
-          "label": "Square 1:1"
+          "label": "Square (1:1)"
         },
         {
           "value": "ratio_4_5",
-          "label": "Portrait 4:5"
+          "label": "Portrait (4:5)"
         },
         {
           "value": "ratio_3_4",
-          "label": "Portrait 3:4"
+          "label": "Portrait (3:4)"
         },
         {
           "value": "ratio_2_3",
-          "label": "Portrait 2:3"
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
         },
         {
           "value": "ratio_16_9",
-          "label": "Landscape 16:9"
+          "label": "Landscape (16:9)"
         },
         {
           "value": "ratio_3_2",
-          "label": "Landscape 3:2"
+          "label": "Landscape (3:2)"
         },
         {
           "value": "ratio_4_3",
-          "label": "Landscape 4:3"
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.image_ratio.custom"
         }
       ],
       "default": "original"
     },
+    {
+      "type": "number",
+      "id": "image_ratio_custom_width",
+      "label": "W",
+      "default": 16,
+      "visible_if": "{{ block.settings.image_ratio == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "image_ratio_custom_height",
+      "label": "H",
+      "default": 9,
+      "visible_if": "{{ block.settings.image_ratio == 'custom' }}"},
     {
       "type": "url",
       "id": "image_link",

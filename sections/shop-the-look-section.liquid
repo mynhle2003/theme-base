@@ -34,7 +34,7 @@
   if shop_the_look_image_block != blank
     assign shop_the_look_image_ratio_desktop = shop_the_look_image_block.settings.image_ratio_desktop | default: 'auto'
   endif
-  unless shop_the_look_image_ratio_desktop == 'auto' or shop_the_look_image_ratio_desktop == 'square' or shop_the_look_image_ratio_desktop == 'portrait' or shop_the_look_image_ratio_desktop == 'landscape' or shop_the_look_image_ratio_desktop == 'wide' or shop_the_look_image_ratio_desktop == 'custom'
+  unless shop_the_look_image_ratio_desktop == 'fill_height' or shop_the_look_image_ratio_desktop == 'auto' or shop_the_look_image_ratio_desktop == 'square' or shop_the_look_image_ratio_desktop == 'portrait' or shop_the_look_image_ratio_desktop == 'landscape' or shop_the_look_image_ratio_desktop == 'wide' or shop_the_look_image_ratio_desktop == 'portrait_6_7' or shop_the_look_image_ratio_desktop == 'portrait_tall' or shop_the_look_image_ratio_desktop == 'portrait_2_3' or shop_the_look_image_ratio_desktop == 'landscape_5_4' or shop_the_look_image_ratio_desktop == 'wide_2_1' or shop_the_look_image_ratio_desktop == 'custom' or shop_the_look_image_ratio_desktop == 'ratio_1_1' or shop_the_look_image_ratio_desktop == 'ratio_4_5' or shop_the_look_image_ratio_desktop == 'ratio_5_4' or shop_the_look_image_ratio_desktop == 'ratio_6_7' or shop_the_look_image_ratio_desktop == 'ratio_7_6' or shop_the_look_image_ratio_desktop == 'ratio_5_7' or shop_the_look_image_ratio_desktop == 'ratio_7_5' or shop_the_look_image_ratio_desktop == 'ratio_2_3' or shop_the_look_image_ratio_desktop == 'ratio_3_2' or shop_the_look_image_ratio_desktop == 'ratio_4_3' or shop_the_look_image_ratio_desktop == 'ratio_3_4' or shop_the_look_image_ratio_desktop == 'ratio_2_1' or shop_the_look_image_ratio_desktop == 'ratio_1_2' or shop_the_look_image_ratio_desktop == 'ratio_16_9' or shop_the_look_image_ratio_desktop == 'ratio_9_16' or shop_the_look_image_ratio_desktop == 'ratio_12_5' or shop_the_look_image_ratio_desktop == 'ratio_5_12' or shop_the_look_image_ratio_desktop == 'ratio_48_17' or shop_the_look_image_ratio_desktop == 'ratio_17_48' or shop_the_look_image_ratio_desktop == 'ratio_5_8' or shop_the_look_image_ratio_desktop == 'ratio_8_5'
     assign shop_the_look_image_ratio_desktop = 'auto'
   endunless
 
@@ -425,10 +425,10 @@
             "open_in_new_tab": false,
             "alt_text": "Athlete wearing a black sports bra and leggings seated on a rock beside the water",
             "device": "desktop",
-            "image_ratio_desktop": "square",
+            "image_ratio_desktop": "ratio_1_1",
             "image_ratio_custom_width_desktop": 16,
             "image_ratio_custom_height_desktop": 9,
-            "image_ratio_mobile": "square",
+            "image_ratio_mobile": "ratio_1_1",
             "image_ratio_custom_width_mobile": 16,
             "image_ratio_custom_height_mobile": 9,
             "corner_radius": "square",
@@ -467,47 +467,15 @@
           "id": "header",
           "blocks": [
             {
-              "type": "group",
-              "settings": {
-                "direction": "horizontal",
-                "position_horizontal": "center",
-                "horizontal_alignment": "left",
-                "customize_mobile_alignment": false,
-                "gap_desktop": 8,
-                "gap_mobile": 8,
-                "width": "fit",
-                "width_mobile": "fit",
-                "height": "fit",
-                "appearance_type": "inherit",
-                "backdrop_blur": 0,
-                "show_overlay": false
-              },
-              "blocks": [
-                {
-                  "type": "icon",
-                  "settings": {
-                    "animation_delay": 0,
-                    "animation_type": "fade",
-                    "source": "custom",
-                    "custom_icon": "<svg width=\"8\" height=\"8\" viewBox=\"0 0 8 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect width=\"8\" height=\"8\" fill=\"white\"/>\n</svg>",
-                    "icon_width": 8,
-                    "icon_padding": 0,
-                    "custom_mobile": false,
-                    "icon_width_mobile": 8,
-                    "icon_padding_mobile": 0
-                  }
-                },
-                {
-                  "type": "eyebrow",
+              "type":  "eyebrow",
                   "settings": {
                     "animation_delay": 0,
                     "animation_type": "fade",
                     "text": "<p>Inspiration</p>",
-                    "show_icon": false,
+                    "show_icon": true,
                     "icon": "square"
                   }
-                }
-              ]
+
             },
             {
               "type": "heading",

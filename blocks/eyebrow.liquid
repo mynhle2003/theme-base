@@ -86,7 +86,7 @@
   >
     {% if block.settings.show_icon %}
       <span class="icon eyebrow-block__icon eyebrow-block__icon--{{ eyebrow_icon }}" aria-hidden="true">
-        {% render 'icon', icon: eyebrow_icon, bare: true %}
+        {% render 'eyebrow-icon', icon: eyebrow_icon %}
       </span>
     {% endif %}
     <div class="eyebrow-block__content">{{ block.settings.text }}</div>
@@ -101,7 +101,7 @@
     --eyebrow-default-padding-left: 0px;
     display: flex;
     align-items: center;
-    gap: 0.5em;
+    gap: var(--eyebrow-icon-gap, 8px);
     width: fit-content;
     max-width: 100%;
     padding-top: var(--eyebrow-padding-top, var(--eyebrow-default-padding-top));
@@ -137,10 +137,17 @@
     height: 1em;
   }
 
-  .eyebrow-block__icon svg {
+  .eyebrow-block .eyebrow-block__icon svg {
     display: block;
+    stroke: none;
     width: 1em;
     height: 1em;
+  }
+
+  .eyebrow-block__icon--square,
+  .eyebrow-block .eyebrow-block__icon--square svg {
+    width: 8px;
+    height: 8px;
   }
 
   @media (max-width: 767.98px) {
@@ -264,6 +271,52 @@
     },
     {
       "type": "header",
+      "content": "t:general.animation"
+    },
+    {
+      "type": "select",
+      "id": "animation_type",
+      "label": "t:labels.type",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.block_animation.none"
+        },
+        {
+          "value": "fade",
+          "label": "t:options.block_animation.fade"
+        },
+        {
+          "value": "scale",
+          "label": "t:options.block_animation.scale"
+        },
+        {
+          "value": "slide-left",
+          "label": "t:options.block_animation.slide_left"
+        },
+        {
+          "value": "slide-right",
+          "label": "t:options.block_animation.slide_right"
+        },
+        {
+          "value": "slide-bottom",
+          "label": "t:options.block_animation.slide_bottom"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "animation_delay",
+      "label": "t:labels.animation_delay",
+      "min": 0,
+      "max": 2000,
+      "step": 50,
+      "unit": "ms",
+      "default": 0
+    },
+    {
+      "type": "header",
       "content": "t:general.padding"
     },
     {
@@ -355,52 +408,6 @@
       "unit": "px",
       "default": 0,
       "visible_if": "{{ block.settings.customize_mobile_padding }}"
-    },
-    {
-      "type": "header",
-      "content": "t:general.animation"
-    },
-    {
-      "type": "select",
-      "id": "animation_type",
-      "label": "t:labels.type",
-      "options": [
-        {
-          "value": "none",
-          "label": "t:options.block_animation.none"
-        },
-        {
-          "value": "fade",
-          "label": "t:options.block_animation.fade"
-        },
-        {
-          "value": "scale",
-          "label": "t:options.block_animation.scale"
-        },
-        {
-          "value": "slide-left",
-          "label": "t:options.block_animation.slide_left"
-        },
-        {
-          "value": "slide-right",
-          "label": "t:options.block_animation.slide_right"
-        },
-        {
-          "value": "slide-bottom",
-          "label": "t:options.block_animation.slide_bottom"
-        }
-      ],
-      "default": "none"
-    },
-    {
-      "type": "range",
-      "id": "animation_delay",
-      "label": "t:labels.animation_delay",
-      "min": 0,
-      "max": 2000,
-      "step": 50,
-      "unit": "ms",
-      "default": 0
     }
   ],
   "presets": [

@@ -116,7 +116,7 @@
     assign padding_top_mobile = section.settings.padding_top_mobile | default: 0
     assign padding_bottom_mobile = section.settings.padding_bottom_mobile | default: 0
   endif
-  assign background_media = section.settings.background_media
+  assign background_media = section.settings.background | default: section.settings.background_media
   if background_media == blank
     assign background_media = 'none'
     if section.settings.background_image != blank
@@ -144,7 +144,7 @@
   --flex-align-mobile: {{ context_alignment_mobile }};
   --text-align: {{ text_align }};
   --custom-section-text-align-mobile: {{ text_align_mobile }};
-  {% if section.settings.background_color != blank %}--custom-section-background: {{ section.settings.background_color | escape }};{% endif %}
+  {% if section.type != 'custom-section' and section.settings.background_color != blank %}--custom-section-background: {{ section.settings.background_color | escape }};{% endif %}
   {% if background_media != 'none' and section.settings.show_overlay %}--custom-section-overlay: {{ section.settings.overlay_color | default: '#00000080' | escape }};{% endif %}
 {% endcapture %}
 {% capture content_style %}

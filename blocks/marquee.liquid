@@ -83,6 +83,12 @@
   </div>
 </div>
 
+<noscript>
+  <style>
+    .marquee--block .marquee__track { width: 100%; flex-wrap: wrap; will-change: auto; }
+  </style>
+</noscript>
+
 {% stylesheet %}
   .marquee--block .marquee__track > .marquee-item-layout { width: fit-content; max-width: max-content; --group-background-color: transparent; }
   .marquee--block .marquee__track > .marquee-item-layout--horizontal { flex-wrap: nowrap; }
@@ -119,21 +125,15 @@
 
   .marquee--block .marquee__track {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: var(--marquee-align, center);
     justify-content: flex-start;
     gap: var(--marquee-gap, 40px);
-    width: 100%;
+    width: max-content;
     min-width: 0;
     max-width: none;
     animation: none;
     will-change: transform;
-  }
-
-  .marquee--block.marquee--measuring .marquee__track,
-  .marquee--block.marquee--ready .marquee__track {
-    width: max-content;
-    flex-wrap: nowrap;
   }
 
   .marquee--block.marquee--ready .marquee__track {

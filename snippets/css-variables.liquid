@@ -544,14 +544,10 @@
   assign product_card_title_size_desktop = settings.product_card_title_size_desktop | default: 20
   assign product_card_ratio = settings.product_card_ratio | default: 'natural'
   assign product_card_image_ratio = 'auto'
-  case product_card_ratio
-    when 'square'
-      assign product_card_image_ratio = '1 / 1'
-    when 'portrait'
-      assign product_card_image_ratio = '4 / 5'
-    when 'landscape'
-      assign product_card_image_ratio = '4 / 3'
-  endcase
+  capture product_card_image_ratio
+    render 'image-ratio-value', setting: product_card_ratio, fallback_ratio: 'auto', custom_width: settings.product_card_ratio_custom_width, custom_height: settings.product_card_ratio_custom_height
+  endcapture
+  assign product_card_image_ratio = product_card_image_ratio | strip
   assign product_card_alignment = 'left'
   case settings.product_card_alignment
     when 'center'

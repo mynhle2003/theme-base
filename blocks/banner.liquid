@@ -169,7 +169,7 @@
       "options": [
         {
           "value": "full_screen",
-          "label": "t:options.section_height.full_screen"
+          "label": "Full screen"
         },
         {
           "value": "original",
@@ -213,7 +213,7 @@
         },
         {
           "value": "custom",
-          "label": "Custom"
+          "label": "t:options.image_ratio.custom"
         }
       ],
       "default": "ratio_1_1",
@@ -280,7 +280,7 @@
         },
         {
           "value": "custom",
-          "label": "Custom"
+          "label": "t:options.image_ratio.custom"
         }
       ],
       "default": "ratio_1_1",
@@ -289,14 +289,14 @@
     {
       "type": "number",
       "id": "image_ratio_custom_width_mobile",
-      "label": "W (mobile)",
+      "label": "W",
       "default": 16,
       "visible_if": "{{ block.settings.device == 'mobile' and block.settings.image_ratio_mobile == 'custom' }}"
     },
     {
       "type": "number",
       "id": "image_ratio_custom_height_mobile",
-      "label": "H (mobile)",
+      "label": "H",
       "default": 9,
       "visible_if": "{{ block.settings.device == 'mobile' and block.settings.image_ratio_mobile == 'custom' }}"
     },

@@ -54,19 +54,34 @@
   assign aspect_ratio_desktop_setting = block.settings.aspect_ratio_desktop | default: block.settings.aspect_ratio | default: 'original'
   assign aspect_ratio_desktop = 'auto'
   case aspect_ratio_desktop_setting
+    when 'ratio_1_1', 'ratio_4_5', 'ratio_5_4', 'ratio_6_7', 'ratio_7_6', 'ratio_5_7', 'ratio_7_5', 'ratio_2_3', 'ratio_3_2', 'ratio_4_3', 'ratio_3_4', 'ratio_2_1', 'ratio_1_2', 'ratio_16_9', 'ratio_9_16', 'ratio_12_5', 'ratio_5_12', 'ratio_48_17', 'ratio_17_48', 'ratio_5_8', 'ratio_8_5'
+      capture aspect_ratio_desktop
+        render 'image-ratio-value', setting: aspect_ratio_desktop_setting
+      endcapture
+      assign aspect_ratio_desktop = aspect_ratio_desktop | strip
     when 'square'
       assign aspect_ratio_desktop = '1'
+    when 'portrait_tall'
+      assign aspect_ratio_desktop = '5 / 7'
     when 'portrait'
       assign aspect_ratio_desktop = '0.8'
     when 'landscape'
       assign aspect_ratio_desktop = '1.3333'
     when 'wide'
       assign aspect_ratio_desktop = '1.7778'
+    when 'portrait_6_7'
+      assign aspect_ratio_desktop = '6 / 7'
+    when 'portrait_2_3'
+      assign aspect_ratio_desktop = '2 / 3'
+    when 'landscape_5_4'
+      assign aspect_ratio_desktop = '5 / 4'
+    when 'wide_2_1'
+      assign aspect_ratio_desktop = '2 / 1'
     when 'custom'
-      assign aspect_ratio_desktop = block.settings.custom_aspect_ratio_desktop | default: block.settings.custom_aspect_ratio | default: 1 | plus: 0
-      if aspect_ratio_desktop < 0.3 or aspect_ratio_desktop > 3
-        assign aspect_ratio_desktop = 1
-      endif
+      capture aspect_ratio_desktop
+        render 'image-ratio-value', setting: 'custom', custom_width: block.settings.aspect_ratio_desktop_custom_width, custom_height: block.settings.aspect_ratio_desktop_custom_height
+      endcapture
+      assign aspect_ratio_desktop = aspect_ratio_desktop | strip
     when 'original'
     else
       assign aspect_ratio_desktop = 'auto'
@@ -88,19 +103,34 @@
   assign aspect_ratio_mobile_setting = block.settings.aspect_ratio_mobile | default: aspect_ratio_desktop_setting | default: 'original'
   assign aspect_ratio_mobile = 'auto'
   case aspect_ratio_mobile_setting
+    when 'ratio_1_1', 'ratio_4_5', 'ratio_5_4', 'ratio_6_7', 'ratio_7_6', 'ratio_5_7', 'ratio_7_5', 'ratio_2_3', 'ratio_3_2', 'ratio_4_3', 'ratio_3_4', 'ratio_2_1', 'ratio_1_2', 'ratio_16_9', 'ratio_9_16', 'ratio_12_5', 'ratio_5_12', 'ratio_48_17', 'ratio_17_48', 'ratio_5_8', 'ratio_8_5'
+      capture aspect_ratio_mobile
+        render 'image-ratio-value', setting: aspect_ratio_mobile_setting
+      endcapture
+      assign aspect_ratio_mobile = aspect_ratio_mobile | strip
     when 'square'
       assign aspect_ratio_mobile = '1'
+    when 'portrait_tall'
+      assign aspect_ratio_mobile = '5 / 7'
     when 'portrait'
       assign aspect_ratio_mobile = '0.8'
     when 'landscape'
       assign aspect_ratio_mobile = '1.3333'
     when 'wide'
       assign aspect_ratio_mobile = '1.7778'
+    when 'portrait_6_7'
+      assign aspect_ratio_mobile = '6 / 7'
+    when 'portrait_2_3'
+      assign aspect_ratio_mobile = '2 / 3'
+    when 'landscape_5_4'
+      assign aspect_ratio_mobile = '5 / 4'
+    when 'wide_2_1'
+      assign aspect_ratio_mobile = '2 / 1'
     when 'custom'
-      assign aspect_ratio_mobile = block.settings.custom_aspect_ratio_mobile | default: block.settings.custom_aspect_ratio_desktop | default: block.settings.custom_aspect_ratio | default: 1 | plus: 0
-      if aspect_ratio_mobile < 0.3 or aspect_ratio_mobile > 3
-        assign aspect_ratio_mobile = 1
-      endif
+      capture aspect_ratio_mobile
+        render 'image-ratio-value', setting: 'custom', custom_width: block.settings.aspect_ratio_mobile_custom_width, custom_height: block.settings.aspect_ratio_mobile_custom_height
+      endcapture
+      assign aspect_ratio_mobile = aspect_ratio_mobile | strip
     when 'original'
     else
       assign aspect_ratio_mobile = 'auto'
@@ -227,8 +257,10 @@
   --video-block-radius: {{ video_radius }};
   --video-play-button-size: {{ play_button_size_desktop }}px;
   --video-play-button-size-mobile: {{ play_button_size_mobile }}px;
+  {% if block.settings.customize_play_button_colors %}
   --video-play-button-background: {{ block.settings.play_button_background_color | default: '#FFFFFF' | escape }};
   --video-play-button-icon: {{ block.settings.play_button_icon_color | default: '#1C1C1C' | escape }};
+  {% endif %}
   --video-block-padding-top: {{ padding_top }}px;
   --video-block-padding-bottom: {{ padding_bottom }}px;
   --video-block-padding-left: {{ padding_left }}px;
@@ -405,12 +437,20 @@
       "visible_if": "{{ block.settings.video_source == 'uploaded' }}"
     },
     {
+      "type": "checkbox",
+      "id": "customize_play_button_colors",
+      "label": "Custom play button colors",
+      "default": false,
+      "info": "Uses Primary button colors when off.",
+      "visible_if": "{{ block.settings.video_source == 'uploaded' }}"
+    },
+    {
       "type": "color",
       "alpha": true,
       "id": "play_button_background_color",
       "label": "t:labels.play_button_background_color",
       "default": "#FFFFFF",
-      "visible_if": "{{ block.settings.video_source == 'uploaded' }}"
+      "visible_if": "{{ block.settings.video_source == 'uploaded' and block.settings.customize_play_button_colors }}"
     },
     {
       "type": "color",
@@ -418,7 +458,7 @@
       "id": "play_button_icon_color",
       "label": "t:labels.play_button_icon_color",
       "default": "#1C1C1C",
-      "visible_if": "{{ block.settings.video_source == 'uploaded' }}"
+      "visible_if": "{{ block.settings.video_source == 'uploaded' and block.settings.customize_play_button_colors }}"
     },
     {
       "type": "header",
@@ -431,39 +471,63 @@
       "options": [
         {
           "value": "original",
-          "label": "t:options.aspect_ratio.original"
+          "label": "Original"
         },
         {
-          "value": "square",
-          "label": "t:options.aspect_ratio.square"
+          "value": "ratio_1_1",
+          "label": "Square (1:1)"
         },
         {
-          "value": "portrait",
-          "label": "t:options.aspect_ratio.portrait"
+          "value": "ratio_4_5",
+          "label": "Portrait (4:5)"
         },
         {
-          "value": "landscape",
-          "label": "t:options.aspect_ratio.landscape"
+          "value": "ratio_3_4",
+          "label": "Portrait (3:4)"
         },
         {
-          "value": "wide",
-          "label": "t:options.aspect_ratio.wide"
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
         },
         {
           "value": "custom",
-          "label": "t:options.aspect_ratio.custom"
+          "label": "t:options.image_ratio.custom"
         }
       ],
       "default": "original"
     },
     {
-      "type": "range",
-      "id": "custom_aspect_ratio_desktop",
-      "label": "t:labels.desktop_custom_aspect_ratio",
-      "min": 0.3,
-      "max": 3,
-      "step": 0.1,
-      "default": 1,
+      "type": "number",
+      "id": "aspect_ratio_desktop_custom_width",
+      "label": "W",
+      "default": 16,
+      "visible_if": "{{ block.settings.aspect_ratio_desktop == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "aspect_ratio_desktop_custom_height",
+      "label": "H",
+      "default": 9,
       "visible_if": "{{ block.settings.aspect_ratio_desktop == 'custom' }}"
     },
     {
@@ -521,39 +585,63 @@
       "options": [
         {
           "value": "original",
-          "label": "t:options.aspect_ratio.original"
+          "label": "Original"
         },
         {
-          "value": "square",
-          "label": "t:options.aspect_ratio.square"
+          "value": "ratio_1_1",
+          "label": "Square (1:1)"
         },
         {
-          "value": "portrait",
-          "label": "t:options.aspect_ratio.portrait"
+          "value": "ratio_4_5",
+          "label": "Portrait (4:5)"
         },
         {
-          "value": "landscape",
-          "label": "t:options.aspect_ratio.landscape"
+          "value": "ratio_3_4",
+          "label": "Portrait (3:4)"
         },
         {
-          "value": "wide",
-          "label": "t:options.aspect_ratio.wide"
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
         },
         {
           "value": "custom",
-          "label": "t:options.aspect_ratio.custom"
+          "label": "t:options.image_ratio.custom"
         }
       ],
       "default": "original"
     },
     {
-      "type": "range",
-      "id": "custom_aspect_ratio_mobile",
-      "label": "t:labels.mobile_custom_aspect_ratio",
-      "min": 0.3,
-      "max": 3,
-      "step": 0.1,
-      "default": 1,
+      "type": "number",
+      "id": "aspect_ratio_mobile_custom_width",
+      "label": "W (mobile)",
+      "default": 16,
+      "visible_if": "{{ block.settings.aspect_ratio_mobile == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "aspect_ratio_mobile_custom_height",
+      "label": "H (mobile)",
+      "default": 9,
       "visible_if": "{{ block.settings.aspect_ratio_mobile == 'custom' }}"
     },
     {
@@ -785,9 +873,8 @@
         "autoplay": false,
         "loop_video": false,
         "aspect_ratio_desktop": "original",
-        "custom_aspect_ratio_desktop": 1,
+
         "aspect_ratio_mobile": "original",
-        "custom_aspect_ratio_mobile": 1,
         "show_video_first_mobile": false,
         "play_button_size_desktop": 50,
         "play_button_size_mobile": 40,
@@ -797,7 +884,11 @@
         "limit_width_mobile": false,
         "corner_radius": "inherit",
         "customize_mobile_padding": false
-      }
+      ,
+        "aspect_ratio_desktop_custom_width": 1,
+        "aspect_ratio_desktop_custom_height": 1,
+        "aspect_ratio_mobile_custom_width": 1,
+        "aspect_ratio_mobile_custom_height": 1}
     }
   ]
 }

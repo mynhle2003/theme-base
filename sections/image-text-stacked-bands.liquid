@@ -4,6 +4,24 @@
   assign stacked_bands_desktop_ratio_setting = section.settings.image_ratio | default: 'auto'
   assign stacked_bands_desktop_ratio = stacked_bands_auto_ratio
   case stacked_bands_desktop_ratio_setting
+    when 'ratio_1_1'
+      assign stacked_bands_desktop_ratio = 1 | times: 1.0 | divided_by: 1
+    when 'ratio_4_5'
+      assign stacked_bands_desktop_ratio = 4 | times: 1.0 | divided_by: 5
+    when 'ratio_5_4'
+      assign stacked_bands_desktop_ratio = 5 | times: 1.0 | divided_by: 4
+    when 'ratio_2_3'
+      assign stacked_bands_desktop_ratio = 2 | times: 1.0 | divided_by: 3
+    when 'ratio_3_2'
+      assign stacked_bands_desktop_ratio = 3 | times: 1.0 | divided_by: 2
+    when 'ratio_4_3'
+      assign stacked_bands_desktop_ratio = 4 | times: 1.0 | divided_by: 3
+    when 'ratio_3_4'
+      assign stacked_bands_desktop_ratio = 3 | times: 1.0 | divided_by: 4
+    when 'ratio_16_9'
+      assign stacked_bands_desktop_ratio = 16 | times: 1.0 | divided_by: 9
+    when 'ratio_9_16'
+      assign stacked_bands_desktop_ratio = 9 | times: 1.0 | divided_by: 16
     when 'square'
       assign stacked_bands_desktop_ratio = 1
     when 'portrait'
@@ -13,14 +31,32 @@
     when 'wide'
       assign stacked_bands_desktop_ratio = 1.7778
     when 'custom'
-      assign stacked_bands_desktop_ratio_width = section.settings.custom_image_ratio_width | default: 16 | times: 1.0
-      assign stacked_bands_desktop_ratio_height = section.settings.custom_image_ratio_height | default: 9 | times: 1.0
+      assign stacked_bands_desktop_ratio_width = section.settings.custom_image_ratio_width | default: 16 | times: 1.0 | at_least: 0.01
+      assign stacked_bands_desktop_ratio_height = section.settings.custom_image_ratio_height | default: 9 | times: 1.0 | at_least: 0.01
       assign stacked_bands_desktop_ratio = stacked_bands_desktop_ratio_width | divided_by: stacked_bands_desktop_ratio_height
   endcase
   assign stacked_bands_mobile_ratio = stacked_bands_desktop_ratio
   if section.settings.customize_mobile_image
     assign stacked_bands_mobile_ratio_setting = section.settings.image_ratio_mobile | default: stacked_bands_desktop_ratio_setting
     case stacked_bands_mobile_ratio_setting
+      when 'ratio_1_1'
+        assign stacked_bands_mobile_ratio = 1 | times: 1.0 | divided_by: 1
+      when 'ratio_4_5'
+        assign stacked_bands_mobile_ratio = 4 | times: 1.0 | divided_by: 5
+      when 'ratio_5_4'
+        assign stacked_bands_mobile_ratio = 5 | times: 1.0 | divided_by: 4
+      when 'ratio_2_3'
+        assign stacked_bands_mobile_ratio = 2 | times: 1.0 | divided_by: 3
+      when 'ratio_3_2'
+        assign stacked_bands_mobile_ratio = 3 | times: 1.0 | divided_by: 2
+      when 'ratio_4_3'
+        assign stacked_bands_mobile_ratio = 4 | times: 1.0 | divided_by: 3
+      when 'ratio_3_4'
+        assign stacked_bands_mobile_ratio = 3 | times: 1.0 | divided_by: 4
+      when 'ratio_16_9'
+        assign stacked_bands_mobile_ratio = 16 | times: 1.0 | divided_by: 9
+      when 'ratio_9_16'
+        assign stacked_bands_mobile_ratio = 9 | times: 1.0 | divided_by: 16
       when 'square'
         assign stacked_bands_mobile_ratio = 1
       when 'portrait'
@@ -30,8 +66,8 @@
       when 'wide'
         assign stacked_bands_mobile_ratio = 1.7778
       when 'custom'
-        assign stacked_bands_mobile_ratio_width = section.settings.custom_image_ratio_width_mobile | default: section.settings.custom_image_ratio_width | default: 16 | times: 1.0
-        assign stacked_bands_mobile_ratio_height = section.settings.custom_image_ratio_height_mobile | default: section.settings.custom_image_ratio_height | default: 9 | times: 1.0
+        assign stacked_bands_mobile_ratio_width = section.settings.custom_image_ratio_width_mobile | default: section.settings.custom_image_ratio_width | default: 16 | times: 1.0 | at_least: 0.01
+        assign stacked_bands_mobile_ratio_height = section.settings.custom_image_ratio_height_mobile | default: section.settings.custom_image_ratio_height | default: 9 | times: 1.0 | at_least: 0.01
         assign stacked_bands_mobile_ratio = stacked_bands_mobile_ratio_width | divided_by: stacked_bands_mobile_ratio_height
       else
         assign stacked_bands_mobile_ratio = stacked_bands_auto_ratio
@@ -238,17 +274,37 @@
       "id": "image_ratio",
       "label": "Image ratio",
       "options": [
-        { "value": "auto", "label": "Auto" },
-        { "value": "square", "label": "Square - 1:1" },
-        { "value": "portrait", "label": "Portrait - 4:5" },
-        { "value": "landscape", "label": "Landscape - 4:3" },
-        { "value": "wide", "label": "Wide - 16:9" },
-        { "value": "custom", "label": "Custom" }
+        { "value": "original", "label": "Original" },
+        { "value": "ratio_1_1", "label": "Square (1:1)" },
+        { "value": "ratio_4_5", "label": "Portrait (4:5)" },
+        { "value": "ratio_3_4", "label": "Portrait (3:4)" },
+        { "value": "ratio_2_3", "label": "Portrait (2:3)"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)" },
+        { "value": "custom", "label": "t:options.image_ratio.custom" }
       ],
-      "default": "auto"
+      "default": "original"
     },
-    { "type": "number", "id": "custom_image_ratio_width", "label": "Width", "default": 16, "visible_if": "{{ section.settings.image_ratio == 'custom' }}" },
-    { "type": "number", "id": "custom_image_ratio_height", "label": "Height", "info": "Numbers only. Width 16 + Height 9 = 16:9.", "default": 9, "visible_if": "{{ section.settings.image_ratio == 'custom' }}" },
+    { "type": "number", "id": "custom_image_ratio_width", "label": "W", "default": 16, "visible_if": "{{ section.settings.image_ratio == 'custom' }}" },
+    { "type": "number", "id": "custom_image_ratio_height", "label": "H", "info": "Numbers only. Width 16 + Height 9 = 16:9.", "default": 9, "visible_if": "{{ section.settings.image_ratio == 'custom' }}" },
     { "type": "range", "id": "image_max_width", "label": "Desktop max width", "min": 20, "max": 100, "step": 5, "unit": "%", "default": 100 },
     { "type": "checkbox", "id": "customize_mobile_image", "label": "Customize for mobile", "default": false },
     {
@@ -256,18 +312,38 @@
       "id": "image_ratio_mobile",
       "label": "Mobile image ratio",
       "options": [
-        { "value": "auto", "label": "Auto" },
-        { "value": "square", "label": "Square - 1:1" },
-        { "value": "portrait", "label": "Portrait - 4:5" },
-        { "value": "landscape", "label": "Landscape - 4:3" },
-        { "value": "wide", "label": "Wide - 16:9" },
-        { "value": "custom", "label": "Custom" }
+        { "value": "original", "label": "Original" },
+        { "value": "ratio_1_1", "label": "Square (1:1)" },
+        { "value": "ratio_4_5", "label": "Portrait (4:5)" },
+        { "value": "ratio_3_4", "label": "Portrait (3:4)" },
+        { "value": "ratio_2_3", "label": "Portrait (2:3)"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)" },
+        { "value": "custom", "label": "t:options.image_ratio.custom" }
       ],
-      "default": "auto",
+      "default": "original",
       "visible_if": "{{ section.settings.customize_mobile_image }}"
     },
-    { "type": "number", "id": "custom_image_ratio_width_mobile", "label": "Mobile width", "default": 16, "visible_if": "{{ section.settings.customize_mobile_image and section.settings.image_ratio_mobile == 'custom' }}" },
-    { "type": "number", "id": "custom_image_ratio_height_mobile", "label": "Mobile height", "info": "Numbers only. Width 16 + Height 9 = 16:9.", "default": 9, "visible_if": "{{ section.settings.customize_mobile_image and section.settings.image_ratio_mobile == 'custom' }}" },
+    { "type": "number", "id": "custom_image_ratio_width_mobile", "label": "W (mobile)", "default": 16, "visible_if": "{{ section.settings.customize_mobile_image and section.settings.image_ratio_mobile == 'custom' }}" },
+    { "type": "number", "id": "custom_image_ratio_height_mobile", "label": "H (mobile)", "info": "Numbers only. Width 16 + Height 9 = 16:9.", "default": 9, "visible_if": "{{ section.settings.customize_mobile_image and section.settings.image_ratio_mobile == 'custom' }}" },
     { "type": "range", "id": "image_max_width_mobile", "label": "Mobile max width", "min": 20, "max": 100, "step": 5, "unit": "%", "default": 100, "visible_if": "{{ section.settings.customize_mobile_image }}" },
     { "type": "header", "content": "Mobile slider" },
     { "type": "checkbox", "id": "mobile_autoplay", "label": "Enable autoplay", "default": true },
@@ -391,12 +467,12 @@
       "category": "Text",
       "settings": {
         "section_width": "page_width",
-        "image_ratio": "auto",
+        "image_ratio": "original",
         "custom_image_ratio_width": 16,
         "custom_image_ratio_height": 9,
         "image_max_width": 100,
         "customize_mobile_image": false,
-        "image_ratio_mobile": "auto",
+        "image_ratio_mobile": "original",
         "custom_image_ratio_width_mobile": 16,
         "custom_image_ratio_height_mobile": 9,
         "image_max_width_mobile": 100,
