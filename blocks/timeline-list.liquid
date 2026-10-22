@@ -54,7 +54,7 @@
   endunless
   assign timeline_list_pagination_class = timeline_list_pagination_style | replace: '_', '-'
   assign timeline_list_navigation_position = block.settings.navigation_position | default: 'outside'
-  unless timeline_list_navigation_position == 'outside' or timeline_list_navigation_position == 'inside'
+  unless timeline_list_navigation_position == 'outside' or timeline_list_navigation_position == 'inside' or timeline_list_navigation_position == 'content_bottom'
     assign timeline_list_navigation_position = 'outside'
   endunless
   assign timeline_list_navigation_centered = false
@@ -106,6 +106,7 @@
   class="timeline-list"
   data-timeline-list
   data-timeline-position="{{ timeline_list_position }}"
+  data-timeline-navigation-position="{{ timeline_list_navigation_position }}"
   data-timeline-gap-desktop="{{ timeline_list_gap_desktop }}"
   data-timeline-gap-mobile="{{ timeline_list_gap_mobile }}"
   data-timeline-preview-desktop="{{ timeline_list_preview }}"
@@ -133,7 +134,7 @@
         next_label: timeline_list_next_label
       %}
     {% endcapture %}
-    {% if timeline_list_navigation_position == 'inside' %}<div class="timeline-list__media swiper-carousel__container">{% endif %}
+    {% if timeline_list_navigation_position != 'outside' %}<div class="timeline-list__media swiper-carousel__container">{% endif %}
     {% render 'swiper-carousel',
       id: timeline_list_carousel_id,
       content: timeline_list_slides,
@@ -143,7 +144,7 @@
       show_next_slide_preview: timeline_list_preview,
       show_next_slide_preview_on_mobile: timeline_list_preview
     %}
-    {% if timeline_list_navigation_position == 'inside' %}
+    {% if timeline_list_navigation_position != 'outside' %}
       {{ timeline_list_arrows }}
     </div>{% endif %}
 
@@ -542,6 +543,28 @@
     color: var(--body-color);
   }
 
+  .timeline-list[data-timeline-navigation-position='content_bottom']
+    .timeline-list__viewport.swiper-autoheight > .swiper-wrapper > .carousel-slide {
+    height: auto;
+    min-height: max-content;
+    align-self: flex-start;
+  }
+
+  /* Kinetra: place the shared arrows at the foot of the active story column. */
+  @media (min-width: 768px) {
+    .timeline-list[data-timeline-navigation-position='content_bottom'] .timeline-list__media > .timeline-list__arrows {
+      inset: auto 0 0 var(--timeline-list-story-start, 50%);
+      justify-content: flex-start;
+      padding-inline: 0;
+      transform: none;
+    }
+
+    .timeline-list[data-timeline-navigation-position='content_bottom'][data-timeline-navigation-desktop='true']:has(.timeline-list__arrows:not([hidden]))
+      .carousel-slide-layout > :last-child {
+      padding-block-end: calc(var(--group-padding-bottom, 0px) + var(--timeline-list-content-arrow-height, var(--button-height, 44px)) + var(--timeline-list-controls-spacing-desktop, 32px));
+    }
+  }
+
   @media (min-width: 768px) {
     .timeline-list:not([data-timeline-position='left'])
       .timeline-list__controls:has(> .timeline-list__arrows:not([hidden])):has(
@@ -668,7 +691,8 @@
       "label": "t:labels.position",
       "options": [
         { "value": "outside", "label": "t:options.collection_navigation_position.outside" },
-        { "value": "inside", "label": "t:options.collection_navigation_position.inside" }
+        { "value": "inside", "label": "t:options.collection_navigation_position.inside" },
+        { "value": "content_bottom", "label": "t:options.timeline_navigation_position.content_bottom" }
       ],
       "default": "outside"
     },
@@ -921,9 +945,9 @@
             {
               "type": "image",
               "settings": {
-                "image_ratio_desktop": "wide",
+                "image_ratio_desktop": "ratio_16_9",
                 "width_desktop": "fill",
-                "image_ratio_mobile": "wide",
+                "image_ratio_mobile": "ratio_16_9",
                 "width_mobile": "fill"
               }
             }
@@ -1009,9 +1033,9 @@
             {
               "type": "image",
               "settings": {
-                "image_ratio_desktop": "wide",
+                "image_ratio_desktop": "ratio_16_9",
                 "width_desktop": "fill",
-                "image_ratio_mobile": "wide",
+                "image_ratio_mobile": "ratio_16_9",
                 "width_mobile": "fill"
               }
             }
@@ -1097,9 +1121,9 @@
             {
               "type": "image",
               "settings": {
-                "image_ratio_desktop": "wide",
+                "image_ratio_desktop": "ratio_16_9",
                 "width_desktop": "fill",
-                "image_ratio_mobile": "wide",
+                "image_ratio_mobile": "ratio_16_9",
                 "width_mobile": "fill"
               }
             }
@@ -1185,9 +1209,9 @@
             {
               "type": "image",
               "settings": {
-                "image_ratio_desktop": "wide",
+                "image_ratio_desktop": "ratio_16_9",
                 "width_desktop": "fill",
-                "image_ratio_mobile": "wide",
+                "image_ratio_mobile": "ratio_16_9",
                 "width_mobile": "fill"
               }
             }
@@ -1273,9 +1297,9 @@
             {
               "type": "image",
               "settings": {
-                "image_ratio_desktop": "wide",
+                "image_ratio_desktop": "ratio_16_9",
                 "width_desktop": "fill",
-                "image_ratio_mobile": "wide",
+                "image_ratio_mobile": "ratio_16_9",
                 "width_mobile": "fill"
               }
             }

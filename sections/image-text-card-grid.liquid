@@ -74,10 +74,18 @@
   "name": "Image text card grid",
   "class": "section-image-text-card-grid",
   "tag": "section",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "group" },
-    { "type": "carousel" }
+    {
+      "type": "group"
+    },
+    {
+      "type": "carousel"
+    }
   ],
   "settings": [
     {
@@ -85,34 +93,151 @@
       "id": "section_width",
       "label": "Section width",
       "options": [
-        { "value": "page_width", "label": "Page width" },
-        { "value": "full_width", "label": "Full width" },
-        { "value": "full_width_no_padding", "label": "Full width, no padding" }
+        {
+          "value": "page_width",
+          "label": "Page width"
+        },
+        {
+          "value": "full_width",
+          "label": "Full width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "Full width, no padding"
+        }
       ],
       "default": "page_width"
     },
-    { "type": "text_alignment", "id": "alignment", "label": "Alignment", "default": "center" },
-    { "type": "range", "id": "content_gap_desktop", "label": "Content gap (desktop)", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 40 },
-    { "type": "range", "id": "content_gap_mobile", "label": "Content gap (mobile)", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 32 },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Alignment",
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "content_gap_desktop",
+      "label": "Content gap (desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "content_gap_mobile",
+      "label": "Content gap (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
     {
       "type": "header",
       "content": "Color"
     },
-    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
-    ,
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
     {
       "type": "header",
       "content": "Padding"
     },
-    { "type": "range", "id": "padding_top", "label": "t:labels.top_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 64 },
-    { "type": "range", "id": "padding_right", "label": "t:labels.right_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "padding_bottom", "label": "t:labels.bottom_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 64 },
-    { "type": "range", "id": "padding_left", "label": "t:labels.left_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "checkbox", "id": "customize_mobile_padding", "label": "t:labels.customize_mobile_padding", "default": true },
-    { "type": "range", "id": "padding_top_mobile", "label": "t:labels.mobile_top_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 40, "visible_if": "{{ section.settings.customize_mobile_padding }}" },
-    { "type": "range", "id": "padding_right_mobile", "label": "t:labels.mobile_right_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.customize_mobile_padding }}" },
-    { "type": "range", "id": "padding_bottom_mobile", "label": "t:labels.mobile_bottom_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 40, "visible_if": "{{ section.settings.customize_mobile_padding }}" },
-    { "type": "range", "id": "padding_left_mobile", "label": "t:labels.mobile_left_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.customize_mobile_padding }}" }
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:labels.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "t:labels.right_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:labels.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "t:labels.left_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.customize_mobile_padding",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_right_mobile",
+      "label": "t:labels.mobile_right_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_left_mobile",
+      "label": "t:labels.mobile_left_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    }
   ],
   "presets": [
     {
@@ -122,37 +247,196 @@
         {
           "type": "group",
           "settings": {
-            "direction": "vertical",
-            "alignment": "center",
-            "width": "fit",
+            "direction": "horizontal",
+            "width": "fill",
+            "width_mobile": "fill",
             "height": "fit",
-            "gap_desktop": 8,
+            "gap_desktop": 20,
             "gap_mobile": 8,
-            "appearance_type": "inherit",
-            "border_type": "none",
-            "corner_radius": "square",
-            "shadow": "none"
+            "position_horizontal": "top"
           },
           "blocks": [
-            { "type": "eyebrow", "settings": {
-  "animation_delay": 0,
-  "animation_type": "fade", "text": "<p>Section tags</p>" } },
-            { "type": "heading", "settings": {
-  "animation_delay": 50,
-  "animation_type": "slide-bottom", "text": "<p>Main Heading Text Placeholder</p>", "heading_size": "display", "html_tag": "h2" } }
-          ]
-        },
-        {
-          "type": "carousel",
-          "settings": { "columns_desktop": "4", "columns_mobile": "1", "gap_desktop": 32, "gap_mobile": 24, "show_navigation_on_desktop": true, "show_pagination_on_desktop": false, "show_pagination_on_mobile": false },
-          "blocks": [
-            { "type": "slide", "settings": { "gap_desktop": 0, "gap_mobile": 0 }, "blocks": [ { "type": "image-text-card-grid-item", "settings": { "heading": "<p>Main Category</p>", "content": "<p>This is a placeholder description for a card. Add supporting content here.</p>" } } ] },
-            { "type": "slide", "settings": { "gap_desktop": 0, "gap_mobile": 0 }, "blocks": [ { "type": "image-text-card-grid-item", "settings": { "heading": "<p>Main Category</p>", "content": "<p>This is a placeholder description for a card. Add supporting content here.</p>" } } ] },
-            { "type": "slide", "settings": { "gap_desktop": 0, "gap_mobile": 0 }, "blocks": [ { "type": "image-text-card-grid-item", "settings": { "heading": "<p>Main Category</p>", "content": "<p>This is a placeholder description for a card. Add supporting content here.</p>" } } ] },
-            { "type": "slide", "settings": { "gap_desktop": 0, "gap_mobile": 0 }, "blocks": [ { "type": "image-text-card-grid-item", "settings": { "heading": "<p>Main Category</p>", "content": "<p>This is a placeholder description for a card. Add supporting content here.</p>" } } ] }
+            {
+              "type": "video",
+              "settings": {
+                "video_source": "uploaded",
+                "video": "shopify://files/videos/kinetra-collage-confidence.mp4",
+                "autoplay": true,
+                "loop_video": true,
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "aspect_ratio_desktop": "fill_height",
+                "aspect_ratio_mobile": "ratio_3_4",
+                "corner_radius": "none"
+              }
+            },
+            {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 20,
+                "gap_mobile": 8
+              },
+              "blocks": [
+                {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "gap_desktop": 32,
+                    "gap_mobile": 16,
+                    "appearance_type": "scheme",
+                    "color_scheme": "scheme-2",
+                    "alignment": "center",
+                    "alignment_mobile": "center",
+                    "padding_top": 64,
+                    "padding_bottom": 64,
+                    "padding_left": 40,
+                    "padding_right": 40,
+                    "customize_mobile_padding": true,
+                    "padding_top_mobile": 32,
+                    "padding_bottom_mobile": 32,
+                    "padding_left_mobile": 20,
+                    "padding_right_mobile": 20
+                  },
+                  "blocks": [
+                    {
+                      "type": "group",
+                      "settings": {
+                        "direction": "vertical",
+                        "width": "fill",
+                        "width_mobile": "fill",
+                        "height": "fit",
+                        "alignment": "center",
+                        "alignment_mobile": "center",
+                        "gap_desktop": 16,
+                        "gap_mobile": 12
+                      },
+                      "blocks": [
+                        {
+                          "type": "eyebrow",
+                          "settings": {
+                            "text": "<p>Stay secure</p>",
+                            "show_icon": true,
+                            "icon": "square"
+                          ,
+                            "animation_type": "fade",
+                            "animation_delay": 0}
+
+                            },
+                        {
+                          "type": "heading",
+                          "settings": {
+                            "text": "<p>Confidence in every move</p>",
+                            "heading_size": "xl",
+                            "html_tag": "h2",
+                            "width": "fill"
+                          ,
+                            "animation_type": "slide-bottom",
+                            "animation_delay": 50}
+                        },
+                        {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>From buttery-soft studio sets to high-compression training gear, every piece is tested to stay up and stay opaque</p>",
+                            "text_size": "md",
+                            "width": "fill"
+                          ,
+                            "animation_type": "fade",
+                            "animation_delay": 100}
+                        }
+                      ]
+                    },
+                    {
+                      "type": "button",
+                      "settings": {
+                        "button_label": "Discover more",
+                        "button_link": "shopify://collections/all",
+                        "button_style": "tertiary",
+                        "show_icon": true,
+                        "icon": "arrow_up_right"
+                      ,
+                        "animation_type": "fade",
+                        "animation_delay": 150}
+                    }
+                  ]
+                },
+                {
+                  "type": "image",
+                  "settings": {
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "image_ratio_desktop": "ratio_5_4",
+                    "image_ratio_mobile": "ratio_5_4",
+                    "corner_radius": "square",
+                    "image": "shopify://shop_images/kinetra-collage-shorts.avif",
+                    "alt_text": "Tan activewear shorts in the dunes"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fill",
+                "gap_desktop": 20,
+                "gap_mobile": 8,
+                "position": "top"
+              },
+              "blocks": [
+                {
+                  "type": "image",
+                  "settings": {
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "image_ratio_desktop": "fill_height",
+                    "image_ratio_mobile": "ratio_5_4",
+                    "corner_radius": "square",
+                    "image": "shopify://shop_images/kinetra-collage-back.avif",
+                    "alt_text": "Back detail of a tan sports bra"
+                  }
+                },
+                {
+                  "type": "image",
+                  "settings": {
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "image_ratio_desktop": "ratio_5_4",
+                    "image_ratio_mobile": "ratio_5_4",
+                    "corner_radius": "square",
+                    "image": "shopify://shop_images/kinetra-collage-together.avif",
+                    "alt_text": "Two athletes wearing tan activewear in the dunes"
+                  }
+                }
+              ]
+            }
           ]
         }
-      ]
+      ],
+      "settings": {
+        "section_width": "page_width",
+        "alignment": "center",
+        "content_gap_desktop": 20,
+        "content_gap_mobile": 20,
+        "color_scheme": "scheme-1",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "padding_left": 0,
+        "padding_right": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48,
+        "padding_left_mobile": 0,
+        "padding_right_mobile": 0
+      }
     }
   ]
 }

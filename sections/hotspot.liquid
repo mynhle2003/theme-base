@@ -137,17 +137,42 @@
       --page-margin-current: var(--page-margin-mobile);
     }
   }
+  /* Kinetra media-height calibration: Figma 48205:19414 / 48249:14582.
+     Keep the shared callout scale for carousel and gallery sections. */
+  @media (min-width: 768px) {
+    .section-hotspot .product-callout--desktop-extra_small .product-callout__media { min-height: 45.5rem; aspect-ratio: auto; }
+    .section-hotspot .product-callout--desktop-small .product-callout__media { min-height: 60.7rem; aspect-ratio: auto; }
+    .section-hotspot .product-callout--desktop-medium .product-callout__media { min-height: 78rem; aspect-ratio: auto; }
+    .section-hotspot .product-callout--desktop-large .product-callout__media { min-height: 97.5rem; aspect-ratio: auto; }
+    .section-hotspot .product-callout--desktop-extra_large .product-callout__media { min-height: 117rem; aspect-ratio: auto; }
+  }
+
+  @media (max-width: 767.98px) {
+    .section-hotspot .product-callout--mobile-extra_small .product-callout__media { min-height: 16.6rem; aspect-ratio: auto; }
+    .section-hotspot .product-callout--mobile-small .product-callout__media { min-height: 19.9rem; aspect-ratio: auto; }
+    .section-hotspot .product-callout--mobile-medium .product-callout__media { min-height: 25.725rem; aspect-ratio: auto; }
+    .section-hotspot .product-callout--mobile-large .product-callout__media { min-height: 31.5rem; aspect-ratio: auto; }
+    .section-hotspot .product-callout--mobile-extra_large .product-callout__media { min-height: 37.3rem; aspect-ratio: auto; }
+  }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.hotspot_product_callout",
   "class": "section-hotspot",
-  "enabled_on": { "templates": ["index"] },
+  "enabled_on": {
+    "templates": [
+      "index"
+    ]
+  },
   "max_blocks": 1,
   "blocks": [
-    { "type": "header" },
-    { "type": "product-callout" }
+    {
+      "type": "header"
+    },
+    {
+      "type": "product-callout"
+    }
   ],
   "settings": [
     {
@@ -159,9 +184,18 @@
       "id": "section_width",
       "label": "t:labels.section_width",
       "options": [
-        { "value": "page_width", "label": "t:options.section_width.page_width" },
-        { "value": "full_width", "label": "t:options.section_width.full_width" },
-        { "value": "full_width_no_padding", "label": "t:options.section_width.full_width_no_padding" }
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "t:options.section_width.full_width_no_padding"
+        }
       ],
       "default": "full_width"
     },
@@ -203,9 +237,18 @@
       "id": "background_media",
       "label": "t:general.media",
       "options": [
-        { "value": "none", "label": "t:options.background_media.none" },
-        { "value": "image", "label": "t:general.image" },
-        { "value": "video", "label": "t:general.video" }
+        {
+          "value": "none",
+          "label": "t:options.background_media.none"
+        },
+        {
+          "value": "image",
+          "label": "t:general.image"
+        },
+        {
+          "value": "video",
+          "label": "t:general.video"
+        }
       ],
       "default": "none",
       "visible_if": "{{ section.settings.section_width != 'full_width_no_padding' }}"
@@ -294,104 +337,102 @@
       "name": "t:general.hotspot_product_callout",
       "category": "t:general.banners",
       "settings": {
-        "section_width": "full_width",
-        "show_product_type": true,
-        "show_product_image": true,
-        "show_price": true,
-        "product_link_label": "View product",
         "color_scheme": "scheme-1",
-        "padding_top": 40,
-        "padding_bottom": 40,
-        "customize_mobile_padding": false,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_top": 64,
+        "padding_bottom": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 0,
+        "section_width": "full_width"
       },
       "blocks": [
         {
           "type": "header",
-          "id": "header",
-          "static": true,
           "settings": {
-            "width": "fit",
+            "width": "fill",
+            "inherit_alignment": false,
             "alignment": "center",
-            "gap_desktop": 8,
-            "gap_mobile": 8,
-            "padding_bottom": 40,
-            "padding_bottom_mobile": 40
+            "customize_mobile_alignment": true,
+            "alignment_mobile": "center",
+            "gap_desktop": 16,
+            "gap_mobile": 12,
+            "padding_bottom": 48,
+            "customize_mobile_padding": true,
+            "padding_bottom_mobile": 32
           },
+          "static": true,
+          "id": "header",
           "blocks": [
             {
-              "type": "eyebrow",
-              "settings": {
-                "animation_delay": 0,
-                "animation_type": "fade",
-                "text": "<p>SUBHEADING</p>"
-              }
+              "type":  "eyebrow",
+                  "settings": {
+                    "animation_delay": 0,
+                    "animation_type": "fade",
+                    "text": "<p>Attention to detail</p>",
+                    "show_icon": true,
+                    "icon": "square",
+                    "show_background": false
+                  }
+
             },
             {
               "type": "heading",
               "settings": {
-                "animation_delay": 50,
+                "text": "<p>Crafted with care</p>",
+                "heading_size": "xl",
+                "html_tag": "h2",
+                "width": "fill"
+              ,
                 "animation_type": "slide-bottom",
-                "text": "<p>Main Heading Text Placeholder</p>",
-                "heading_size": "display",
-                "html_tag": "h2"
-              }
+                "animation_delay": 50}
             }
           ]
         },
         {
           "type": "product-callout",
-          "id": "product-callout",
-          "static": true,
           "settings": {
-            "overlay": "#00000033",
-            "desktop_height": "adapt",
-            "mobile_height": "adapt",
-            "content_color_scheme": "scheme-3",
+            "image": "shopify://shop_images/kinetra-crafted-desktop-crop.avif",
+            "show_overlay": false,
+            "desktop_height": "medium",
+            "mobile_height": "medium",
+            "heading": "",
+            "text": "",
+            "button_label": "",
+            "hotspot_icon_style": "dot",
+            "hotspot_behavior": "click",
             "hotspot_color_scheme": "scheme-1",
-            "heading": "Heading",
-            "heading_size": "xl",
-            "html_tag": "h2",
-            "text": "<p>Add text here.</p>",
-            "text_size": "lg",
-            "button_label": "Button label",
-            "button_style": "primary",
-            "text_alignment": "left",
-            "text_position": "bottom_left",
-            "gap_desktop": 12,
-            "gap_mobile": 8,
-            "hotspot_icon_style": "plus"
+            "content_padding_desktop": 0,
+            "content_padding_mobile": 0,
+            "content_color_scheme": "scheme-1",
+            "mobile_image": "shopify://shop_images/kinetra-crafted-mobile-crop.avif"
           },
+          "static": true,
+          "id": "product-callout",
           "blocks": [
             {
               "type": "hotspot",
               "settings": {
-                "vertical_position": 50,
-                "horizontal_position": 22,
-                "customize_mobile_position": false,
-                "mobile_vertical_position": 50,
-                "mobile_horizontal_position": 22
+                "use_content": true,
+                "content_heading": "FLEXFIT TECHNOLOGY",
+                "content_text": "<p>The sports bra comes with easily removable padding, allowing you to tailor the fit according to your comfort and activity level</p>",
+                "horizontal_position": 54,
+                "vertical_position": 40,
+                "customize_mobile_position": true,
+                "mobile_horizontal_position": 56,
+                "mobile_vertical_position": 34
               }
             },
             {
               "type": "hotspot",
               "settings": {
-                "vertical_position": 56,
-                "horizontal_position": 57,
-                "customize_mobile_position": false,
-                "mobile_vertical_position": 56,
-                "mobile_horizontal_position": 57
-              }
-            },
-            {
-              "type": "hotspot",
-              "settings": {
-                "vertical_position": 73,
-                "horizontal_position": 77,
-                "customize_mobile_position": false,
-                "mobile_vertical_position": 73,
-                "mobile_horizontal_position": 77
+                "use_content": true,
+                "content_heading": "STAY-PUT SUPPORT",
+                "content_text": "<p>The high-rise waistband offers a secure, comfortable fit, helping you move freely through every stretch and workout.</p>",
+                "horizontal_position": 47,
+                "vertical_position": 82,
+                "customize_mobile_position": true,
+                "mobile_horizontal_position": 44,
+                "mobile_vertical_position": 72
               }
             }
           ]

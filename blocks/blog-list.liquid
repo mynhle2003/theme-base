@@ -102,11 +102,11 @@
   endif
 
   assign blog_list_pagination_type = block.settings.pagination_type | default: 'progress_bar'
-  unless blog_list_pagination_type == 'progress_bar' or blog_list_pagination_type == 'bullets'
+  unless blog_list_pagination_type == 'progress_bar' or blog_list_pagination_type == 'bullets' or blog_list_pagination_type == 'dot'
     assign blog_list_pagination_type = 'progress_bar'
   endunless
   assign blog_list_pagination_size = 'var(--swiper-pagination-progressbar-size, 4px)'
-  if blog_list_pagination_type == 'bullets'
+  if blog_list_pagination_type == 'bullets' or blog_list_pagination_type == 'dot'
     assign blog_list_pagination_size = 'var(--swiper-pagination-bullet-size, 0.5rem)'
   endif
 
@@ -231,6 +231,8 @@
   {% endif %}
 {% endcapture %}
 {% assign blog_list_navigation = blog_list_navigation | strip %}
+
+<!--blog-list-source:{{ blog_list_source.handle }}:{{ blog_list_max_posts }}:end-blog-list-source-->
 
 {% capture blog_list_items_content %}
   {% if blog_list_items != blank %}
@@ -572,7 +574,7 @@
       "label": "t:labels.type",
       "options": [
         { "value": "progress_bar", "label": "t:options.collection_pagination.progress_bar" },
-        { "value": "bullets", "label": "t:options.collection_pagination.bullets" }
+        { "value": "bullets", "label": "t:options.collection_pagination.bullets" }, { "value": "dot", "label": "Dot" }
       ],
       "default": "progress_bar",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop }}"

@@ -326,6 +326,7 @@
     --group-align-mobile: var(--group-align);
     --flex-align: var(--group-align);
     --flex-align-mobile: var(--group-align-mobile);
+    --text-align-default: var(--group-align);
     height: var(--group-height, fit-content);
     min-width: 0;
     padding-top: var(--group-padding-top, 0px);
@@ -376,6 +377,17 @@
   .group--height-fill {
     --group-height: 100%;
   }
+
+  @media (min-width: 768px) {
+    /* In a content-sized row, stretch against siblings instead of resolving
+       a percentage height against an indefinite parent. */
+    .group--horizontal > .group--height-fill {
+      --group-height: auto;
+      align-self: stretch;
+      min-height: 0;
+    }
+  }
+
 
   .group--radius-square {
     --group-radius: var(--radius-square);
@@ -442,15 +454,18 @@
     }
 
     .group--vertical {
-      text-align: var(--group-align-mobile, var(--group-align));
+      --text-align-default: var(--group-align-mobile, var(--group-align));
+      text-align: var(--text-align-default);
     }
 
     .group--horizontal {
-      text-align: var(--group-align-mobile, var(--group-align));
+      --text-align-default: var(--group-align-mobile, var(--group-align));
+      text-align: var(--text-align-default);
     }
 
     .group--horizontal.group--mobile-vertical {
-      text-align: var(--group-align-mobile, var(--group-align));
+      --text-align-default: var(--group-align-mobile, var(--group-align));
+      text-align: var(--text-align-default);
     }
   }
 {% endstylesheet %}

@@ -78,12 +78,12 @@
   endif
 
   assign collection_list_pagination_type = block.settings.pagination_type | default: 'progress_bar'
-  unless collection_list_pagination_type == 'progress_bar' or collection_list_pagination_type == 'bullets'
+  unless collection_list_pagination_type == 'progress_bar' or collection_list_pagination_type == 'bullets' or collection_list_pagination_type == 'dot'
     assign collection_list_pagination_type = 'progress_bar'
   endunless
 
   assign collection_list_pagination_size = 'var(--swiper-pagination-progressbar-size, 4px)'
-  if collection_list_pagination_type == 'bullets'
+  if collection_list_pagination_type == 'bullets' or collection_list_pagination_type == 'dot'
     assign collection_list_pagination_size = 'var(--swiper-pagination-bullet-size, 0.5rem)'
   endif
 
@@ -535,7 +535,7 @@
       "label": "t:labels.type",
       "options": [
         { "value": "progress_bar", "label": "t:options.collection_pagination.progress_bar" },
-        { "value": "bullets", "label": "t:options.collection_pagination.bullets" }
+        { "value": "bullets", "label": "t:options.collection_pagination.bullets" }, { "value": "dot", "label": "Dot" }
       ],
       "default": "progress_bar",
       "visible_if": "{{ block.settings.layout == 'carousel' and block.settings.show_pagination_on_desktop }}"

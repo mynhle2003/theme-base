@@ -63,7 +63,7 @@
   endif
 
   assign product_collection_grid_pagination_type = pagination_type | default: 'bullets'
-  unless product_collection_grid_pagination_type == 'progress_bar' or product_collection_grid_pagination_type == 'bullets'
+  unless product_collection_grid_pagination_type == 'progress_bar' or product_collection_grid_pagination_type == 'bullets' or product_collection_grid_pagination_type == 'dot'
     assign product_collection_grid_pagination_type = 'bullets'
   endunless
 

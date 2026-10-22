@@ -282,7 +282,7 @@ const createLoopPagination = (root, swiper, loop, slideCount) => {
     });
   };
 
-  if (type === 'bullets') {
+  if (type === 'bullets' || type === 'dot') {
     element.innerHTML = Array.from({ length: slideCount }, (_, index) => `<button class="swiper-pagination-bullet" type="button" data-slideshow-pagination-index="${index}" aria-label="Go to slide ${index + 1}"></button>`).join('');
     element.addEventListener('click', (event) => {
       const bullet = event.target.closest('[data-slideshow-pagination-index]');

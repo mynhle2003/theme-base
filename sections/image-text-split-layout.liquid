@@ -148,20 +148,37 @@
 {
   "name": "t:general.image_text_split_layout",
   "class": "section-image-text-split-layout",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "header" },
-    { "type": "group" }
+    {
+      "type": "header"
+    },
+    {
+      "type": "group"
+    }
   ],
   "settings": [
-    { "type": "header", "content": "t:general.layout" },
+    {
+      "type": "header",
+      "content": "t:general.layout"
+    },
     {
       "type": "select",
       "id": "section_width",
       "label": "t:labels.section_width",
       "options": [
-        { "value": "page_width", "label": "t:options.section_width.page_width" },
-        { "value": "full_width", "label": "t:options.section_width.full_width" }
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        }
       ],
       "default": "page_width"
     },
@@ -170,27 +187,64 @@
       "id": "position",
       "label": "t:labels.position",
       "options": [
-        { "value": "top", "label": "t:options.position.top" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "bottom", "label": "t:options.position.bottom" }
+        {
+          "value": "top",
+          "label": "t:options.position.top"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "bottom",
+          "label": "t:options.position.bottom"
+        }
       ],
       "default": "center"
     },
-    { "type": "checkbox", "id": "customize_mobile_position", "label": "t:labels.customize_mobile_layout", "default": false },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_position",
+      "label": "t:labels.customize_mobile_layout",
+      "default": false
+    },
     {
       "type": "select",
       "id": "position_mobile",
       "label": "t:labels.mobile_position",
       "options": [
-        { "value": "top", "label": "t:options.position.top" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "bottom", "label": "t:options.position.bottom" }
+        {
+          "value": "top",
+          "label": "t:options.position.top"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "bottom",
+          "label": "t:options.position.bottom"
+        }
       ],
       "default": "center",
       "visible_if": "{{ section.settings.customize_mobile_position }}"
     },
-    { "type": "range", "id": "content_gap", "label": "t:labels.content_gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 64 },
-    { "type": "checkbox", "id": "customize_mobile_gap", "label": "t:labels.customize_mobile_layout", "default": true },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "t:labels.content_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_gap",
+      "label": "t:labels.customize_mobile_layout",
+      "default": true
+    },
     {
       "type": "range",
       "id": "content_gap_mobile",
@@ -202,78 +256,125 @@
       "default": 32,
       "visible_if": "{{ section.settings.customize_mobile_gap }}"
     },
-    { "type": "header", "content": "t:general.appearance" },
-    { "type": "color_scheme", "id": "color_scheme", "label": "t:labels.color_scheme", "default": "scheme-1" },
-    { "type": "color", "alpha": true, "id": "background_color", "label": "t:labels.background" },
-    { "type": "image_picker", "id": "background_image", "label": "t:labels.background_image" },
-    { "type": "header", "content": "t:general.padding" },
-    { "type": "range", "id": "padding_top", "label": "t:labels.top_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "padding_bottom", "label": "t:labels.bottom_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "checkbox", "id": "customize_mobile_padding", "label": "t:labels.customize_mobile_padding", "default": false },
-    { "type": "range", "id": "padding_top_mobile", "label": "t:labels.mobile_top_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.customize_mobile_padding }}" },
-    { "type": "range", "id": "padding_bottom_mobile", "label": "t:labels.mobile_bottom_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.customize_mobile_padding }}" }
+    {
+      "type": "header",
+      "content": "t:general.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "background_color",
+      "label": "t:labels.background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:labels.background_image"
+    },
+    {
+      "type": "header",
+      "content": "t:general.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:labels.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:labels.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.customize_mobile_padding",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    }
   ],
   "presets": [
     {
       "name": "t:general.image_text_split_layout",
       "category": "t:general.text",
       "settings": {
+        "color_scheme": "scheme-3",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48,
         "section_width": "page_width",
-        "position": "center",
-        "customize_mobile_position": false,
-        "position_mobile": "center",
-        "content_gap": 64,
+        "position": "bottom",
+        "customize_mobile_position": true,
+        "position_mobile": "top",
+        "content_gap": 40,
         "customize_mobile_gap": true,
-        "content_gap_mobile": 32,
-        "color_scheme": "scheme-1",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "customize_mobile_padding": false
+        "content_gap_mobile": 32
       },
       "blocks": [
         {
-          "type": "header",
+          "type": "group",
           "settings": {
+            "direction": "vertical",
             "width": "fill",
-            "alignment": "left",
-            "gap_desktop": 12,
-            "gap_mobile": 8
+            "width_mobile": "fill",
+            "height": "fit",
+            "gap_desktop": 24,
+            "gap_mobile": 24
           },
           "blocks": [
             {
-              "type": "eyebrow",
+              "type": "image",
               "settings": {
-                "animation_delay": 0,
-                "animation_type": "fade",
-                "text": "<p>New arrivals</p>"
-              }
-            },
-            {
-              "type": "heading",
-              "settings": {
-                "animation_delay": 50,
-                "animation_type": "slide-bottom",
-                "text": "<p>Build your base</p>",
-                "heading_size": "display",
-                "html_tag": "h2"
-              }
-            },
-            {
-              "type": "text",
-              "settings": {
-                "animation_delay": 100,
-                "animation_type": "fade",
-                "text": "<p>A flexible header composition for editorial content and product stories.</p>"
-              }
-            },
-            {
-              "type": "button",
-              "settings": {
-                "animation_delay": 150,
-                "animation_type": "fade",
-                "button_label": "Discover more",
-                "button_style": "primary",
-                "width": "fit"
+                "image": "shopify://shop_images/kinetra-empower.avif",
+                "alt_text": "Athlete in black activewear seated in the dunes",
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "image_ratio_desktop": "custom",
+                "image_ratio_custom_width_desktop": 7,
+                "image_ratio_custom_height_desktop": 6,
+                "image_ratio_mobile": "custom",
+                "image_ratio_custom_width_mobile": 7,
+                "image_ratio_custom_height_mobile": 6,
+                "corner_radius": "square"
               }
             }
           ]
@@ -282,27 +383,62 @@
           "type": "group",
           "settings": {
             "direction": "vertical",
-            "alignment": "left",
-            "gap_desktop": 0,
-            "gap_mobile": 0,
             "width": "fill",
-            "height": "fit",
-            "appearance_type": "inherit",
-            "padding_top": 0,
-            "padding_bottom": 0,
-            "padding_left": 0,
-            "padding_right": 0,
-            "customize_mobile_padding": false
+            "width_mobile": "fill",
+            "height": "fill",
+            "gap_desktop": 40,
+            "gap_mobile": 24,
+            "position": "space-between",
+            "padding_left": 24,
+            "customize_mobile_padding": true,
+            "padding_left_mobile": 0
           },
           "blocks": [
             {
-              "type": "image",
+              "type": "header",
               "settings": {
-                "width_desktop": "fill",
-                "width_mobile": "fill",
-                "image_ratio_desktop": "auto",
-                "corner_radius": "square"
-              }
+                "width": "fill",
+                "inherit_alignment": false,
+                "alignment": "left",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "left",
+                "gap_desktop": 16,
+                "gap_mobile": 12
+              },
+              "blocks": [
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>Together</p>",
+                    "show_icon": true,
+                    "icon": "square"
+                  ,
+                    "animation_type": "fade",
+                    "animation_delay": 0}
+
+                    },
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Empower. Inspire. Belong.</p>",
+                    "heading_size": "xl",
+                    "html_tag": "h2",
+                    "width": "fill"
+                  ,
+                    "animation_type": "slide-left",
+                    "animation_delay": 50}
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>At the heart of our activewear collection is the belief that every woman deserves to feel empowered. Our designs are crafted to enhance your natural strength and confidence, allowing you to tackle any challenge that comes your way.</p>",
+                "text_size": "md",
+                "width": "fill"
+              ,
+                "animation_type": "fade",
+                "animation_delay": 100}
             }
           ]
         }

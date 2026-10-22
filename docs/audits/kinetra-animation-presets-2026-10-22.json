@@ -1,0 +1,2817 @@
+{
+  "date": "2026-10-22",
+  "theme": "Kinetra",
+  "scope": "Animation values in existing block/section presets and JSON templates only",
+  "industry": "Activewear / clothing",
+  "research_basis": "Official clothing listings, relevance, exposed positive ratings and review volumes; no claim of official top ranking. Listing claims only, no live motion observed. Timings are design choices.",
+  "references": [
+    {
+      "name": "Motion",
+      "url": "https://themes.shopify.com/themes/motion/presets/motion",
+      "positive_percent": 97,
+      "reviews": 557,
+      "observation": "Official listing promotes animation/video and mobile-first storytelling."
+    },
+    {
+      "name": "Impulse",
+      "url": "https://themes.shopify.com/themes/impulse/presets/impulse",
+      "positive_percent": 94,
+      "reviews": 1304,
+      "observation": "Apparel/promotional composition; lists Animation."
+    },
+    {
+      "name": "Streamline",
+      "url": "https://themes.shopify.com/themes/streamline/presets/streamline",
+      "positive_percent": 95,
+      "reviews": 335,
+      "observation": "Mobile-first; listing describes animation including cycling product images on hover."
+    },
+    {
+      "name": "Prestige",
+      "url": "https://themes.shopify.com/themes/prestige/presets/prestige",
+      "positive_percent": 91,
+      "reviews": 873,
+      "observation": "Premium editorial composition; lists Animation."
+    },
+    {
+      "name": "Symmetry",
+      "url": "https://themes.shopify.com/themes/symmetry/presets/symmetry",
+      "positive_percent": 94,
+      "reviews": 392,
+      "observation": "Fashion-focused flexible layouts; lists Animation."
+    },
+    {
+      "name": "Stiletto",
+      "url": "https://themes.shopify.com/themes/stiletto/presets/stiletto",
+      "positive_percent": 92,
+      "reviews": 154,
+      "observation": "Fashion merchandising and hotspots; lists Animation."
+    }
+  ],
+  "demo_access": "Motion official preview and Archetype demo pages inaccessible via research tool; browser disabled in session. Desktop/mobile and Theme Editor motion not visually verified.",
+  "eligible_types": {
+    "button": {
+      "effect_setting": "animation_type",
+      "supported_values": [
+        "none",
+        "fade",
+        "scale",
+        "slide-left",
+        "slide-right",
+        "slide-bottom"
+      ],
+      "delay": {
+        "min": 0,
+        "max": 2000,
+        "step": 50
+      }
+    },
+    "heading": {
+      "effect_setting": "animation_type",
+      "supported_values": [
+        "none",
+        "fade",
+        "scale",
+        "slide-left",
+        "slide-right",
+        "slide-bottom",
+        "rotate-words"
+      ],
+      "delay": {
+        "min": 0,
+        "max": 2000,
+        "step": 50
+      }
+    },
+    "eyebrow": {
+      "effect_setting": "animation_type",
+      "supported_values": [
+        "none",
+        "fade",
+        "scale",
+        "slide-left",
+        "slide-right",
+        "slide-bottom"
+      ],
+      "delay": {
+        "min": 0,
+        "max": 2000,
+        "step": 50
+      }
+    },
+    "editorial-text": {
+      "effect_setting": "animation_type",
+      "supported_values": [
+        "none",
+        "fade",
+        "scale",
+        "slide-left",
+        "slide-right",
+        "slide-bottom"
+      ],
+      "delay": {
+        "min": 0,
+        "max": 2000,
+        "step": 50
+      }
+    },
+    "icon": {
+      "effect_setting": "animation_type",
+      "supported_values": [
+        "none",
+        "fade",
+        "scale",
+        "slide-left",
+        "slide-right",
+        "slide-bottom"
+      ],
+      "delay": {
+        "min": 0,
+        "max": 2000,
+        "step": 50
+      }
+    },
+    "_marquee-countdown-timer": {
+      "effect_setting": "animation",
+      "supported_values": [
+        "none",
+        "fade",
+        "scale",
+        "slide_left",
+        "slide_right",
+        "slide_bottom"
+      ],
+      "delay": {
+        "min": 0,
+        "max": 2000,
+        "step": 50
+      }
+    },
+    "text": {
+      "effect_setting": "animation_type",
+      "supported_values": [
+        "none",
+        "fade",
+        "scale",
+        "slide-left",
+        "slide-right",
+        "slide-bottom"
+      ],
+      "delay": {
+        "min": 0,
+        "max": 2000,
+        "step": 50
+      }
+    },
+    "_marquee-icon": {
+      "effect_setting": "animation",
+      "supported_values": [
+        "none",
+        "fade",
+        "scale",
+        "slide_left",
+        "slide_right",
+        "slide_bottom"
+      ],
+      "delay": {
+        "min": 0,
+        "max": 2000,
+        "step": 50
+      }
+    }
+  },
+  "coverage": {
+    "text": 151,
+    "eyebrow": 88,
+    "heading": 214,
+    "button": 51,
+    "editorial-text": 5,
+    "icon": 47,
+    "_marquee-countdown-timer": 1,
+    "_marquee-icon": 25
+  },
+  "effects": {
+    "fade": 248,
+    "slide-bottom": 186,
+    "none": 102,
+    "scale": 45,
+    "slide-left": 1
+  },
+  "total_instances": 582,
+  "changed_instances": 183,
+  "changed_files": [
+    "blocks/_marquee-countdown-timer.liquid",
+    "blocks/faq_accordion.liquid",
+    "blocks/faq_item.liquid",
+    "blocks/image-card.liquid",
+    "blocks/marquee-item.liquid",
+    "blocks/testimonial-item.liquid",
+    "sections/collection-marquee.liquid",
+    "sections/countdown-with-marquee.liquid",
+    "sections/custom-section.liquid",
+    "sections/faq-accordion.liquid",
+    "sections/faq-image-accordion.liquid",
+    "sections/featured-collection-banner.liquid",
+    "sections/footer.liquid",
+    "sections/gallery-carousel.liquid",
+    "sections/hero.liquid",
+    "sections/hotspot-gallery.liquid",
+    "sections/hotspot.liquid",
+    "sections/image-cards.liquid",
+    "sections/image-text-card-grid.liquid",
+    "sections/image-text-split-layout.liquid",
+    "sections/location-map.liquid",
+    "sections/parallax.liquid",
+    "sections/scrolling-cards.liquid",
+    "sections/shop-the-look-section.liquid",
+    "sections/testimonial-carousel.liquid",
+    "sections/timeline.liquid",
+    "templates/collection.json",
+    "templates/index.json",
+    "templates/index.spinel-sync.json",
+    "templates/page.about-us.json",
+    "templates/page.contact.json",
+    "templates/page.faqs.json"
+  ],
+  "exceptions": [
+    {
+      "path": "blocks/faq_accordion.liquid/presets/0/blocks/0/blocks/0",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "blocks/faq_accordion.liquid/presets/0/blocks/1/blocks/0",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "blocks/faq_accordion.liquid/presets/0/blocks/2/blocks/0",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "blocks/faq_accordion.liquid/presets/0/blocks/3/blocks/0",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "blocks/editorial-text.liquid/presets/0",
+      "type": "editorial-text",
+      "reason": "Editorial scroll reveal takes precedence"
+    },
+    {
+      "path": "blocks/image-card.liquid/presets/0/blocks/0",
+      "type": "eyebrow",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "blocks/image-card.liquid/presets/0/blocks/1",
+      "type": "heading",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "blocks/image-card.liquid/presets/0/blocks/2",
+      "type": "button",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "blocks/faq_item.liquid/presets/0/blocks/0",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "blocks/marquee-item.liquid/presets/0/blocks/0",
+      "type": "heading",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "blocks/testimonial-item.liquid/presets/0/blocks/1/blocks/0",
+      "type": "eyebrow",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "blocks/testimonial-item.liquid/presets/0/blocks/1/blocks/1",
+      "type": "icon",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "blocks/testimonial-item.liquid/presets/0/blocks/1/blocks/2",
+      "type": "text",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "blocks/testimonial-item.liquid/presets/0/blocks/1/blocks/3",
+      "type": "heading",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "sections/faq-image-accordion.liquid/presets/0/blocks/0/blocks/0",
+      "type": "heading",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "sections/faq-image-accordion.liquid/presets/0/blocks/0/blocks/1",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "sections/faq-image-accordion.liquid/presets/0/blocks/2/blocks/0/blocks/0",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "sections/faq-image-accordion.liquid/presets/0/blocks/2/blocks/1/blocks/0",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "sections/faq-image-accordion.liquid/presets/0/blocks/2/blocks/2/blocks/0",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "sections/faq-image-accordion.liquid/presets/0/blocks/2/blocks/3/blocks/0",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "sections/custom-section.liquid/presets/1/blocks/0/blocks/1",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/custom-section.liquid/presets/1/blocks/0/blocks/3",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/custom-section.liquid/presets/1/blocks/0/blocks/5",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/custom-section.liquid/presets/1/blocks/0/blocks/7",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/custom-section.liquid/presets/1/blocks/1/blocks/1",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/custom-section.liquid/presets/1/blocks/1/blocks/3",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/custom-section.liquid/presets/1/blocks/1/blocks/5",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/custom-section.liquid/presets/1/blocks/1/blocks/7",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/image-cards.liquid/presets/0/blocks/0/blocks/0",
+      "type": "eyebrow",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "sections/image-cards.liquid/presets/0/blocks/0/blocks/1",
+      "type": "heading",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "sections/image-cards.liquid/presets/0/blocks/0/blocks/2",
+      "type": "button",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "sections/image-cards.liquid/presets/0/blocks/1/blocks/0",
+      "type": "eyebrow",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "sections/image-cards.liquid/presets/0/blocks/1/blocks/1",
+      "type": "heading",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "sections/image-cards.liquid/presets/0/blocks/1/blocks/2",
+      "type": "button",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "sections/parallax.liquid/presets/0/blocks/header/blocks/text",
+      "type": "editorial-text",
+      "reason": "Editorial scroll reveal takes precedence"
+    },
+    {
+      "path": "sections/faq-accordion.liquid/presets/0/blocks/0/blocks/0",
+      "type": "heading",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "sections/faq-accordion.liquid/presets/0/blocks/0/blocks/1",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "sections/faq-accordion.liquid/presets/0/blocks/1/blocks/0/blocks/0",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "sections/faq-accordion.liquid/presets/0/blocks/1/blocks/1/blocks/0",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "sections/faq-accordion.liquid/presets/0/blocks/1/blocks/2/blocks/0",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "sections/faq-accordion.liquid/presets/0/blocks/1/blocks/3/blocks/0",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "sections/countdown-with-marquee.liquid/presets/0/blocks/1/blocks/0/blocks/0/blocks/0",
+      "type": "eyebrow",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/countdown-with-marquee.liquid/presets/0/blocks/1/blocks/0/blocks/0/blocks/1",
+      "type": "heading",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/countdown-with-marquee.liquid/presets/0/blocks/1/blocks/0/blocks/1",
+      "type": "text",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/countdown-with-marquee.liquid/presets/0/blocks/1/blocks/2",
+      "type": "button",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/scroll-reading-text.liquid/presets/0/blocks/1",
+      "type": "editorial-text",
+      "reason": "Editorial scroll reveal takes precedence"
+    },
+    {
+      "path": "sections/collection-marquee.liquid/presets/0/blocks/0/blocks/0",
+      "type": "eyebrow",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/footer.liquid/presets/0/blocks/0/blocks/0/blocks/1/blocks/0",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "sections/footer.liquid/presets/0/blocks/0/blocks/0/blocks/1/blocks/1/blocks/1",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "sections/footer.liquid/presets/0/blocks/1/blocks/1/blocks/0/blocks/0",
+      "type": "text",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "sections/hero.liquid/presets/0/blocks/0/blocks/1",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/hero.liquid/presets/0/blocks/0/blocks/3",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/hero.liquid/presets/0/blocks/0/blocks/5",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "sections/hero.liquid/presets/0/blocks/0/blocks/7",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/page.about-us.json/sections/commitments/blocks/marquee/blocks/ethical/blocks/title",
+      "type": "heading",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/page.about-us.json/sections/commitments/blocks/marquee/blocks/ethical/blocks/separator",
+      "type": "icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/page.about-us.json/sections/commitments/blocks/marquee/blocks/warranty/blocks/title",
+      "type": "heading",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/page.about-us.json/sections/commitments/blocks/marquee/blocks/warranty/blocks/separator",
+      "type": "icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/page.contact.json/sections/instagram/blocks/marquee/blocks/item_1/blocks/text",
+      "type": "heading",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/page.contact.json/sections/instagram/blocks/marquee/blocks/item_2/blocks/text",
+      "type": "heading",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/page.contact.json/sections/instagram/blocks/marquee/blocks/item_3/blocks/text",
+      "type": "heading",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/page.contact.json/sections/instagram/blocks/marquee/blocks/item_4/blocks/text",
+      "type": "heading",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/page.contact.json/sections/instagram/blocks/marquee/blocks/item_5/blocks/text",
+      "type": "heading",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/page.contact.json/sections/instagram/blocks/marquee/blocks/item_6/blocks/text",
+      "type": "heading",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/page.faqs.json/sections/faq/blocks/category_1/blocks/heading",
+      "type": "heading",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "templates/page.faqs.json/sections/faq/blocks/category_2/blocks/heading",
+      "type": "heading",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "templates/page.faqs.json/sections/faq/blocks/category_3/blocks/heading",
+      "type": "heading",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "templates/page.faqs.json/sections/faq/blocks/category_4/blocks/heading",
+      "type": "heading",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "templates/page.faqs.json/sections/faq/blocks/category_5/blocks/heading",
+      "type": "heading",
+      "reason": "excluded navigation/footer/announcement/FAQ/dialog surface"
+    },
+    {
+      "path": "templates/collection.json/sections/image_cards/blocks/item_1/blocks/item_1",
+      "type": "eyebrow",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "templates/collection.json/sections/image_cards/blocks/item_1/blocks/item_2",
+      "type": "heading",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "templates/collection.json/sections/image_cards/blocks/item_1/blocks/item_3",
+      "type": "button",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "templates/collection.json/sections/image_cards/blocks/item_2/blocks/item_1",
+      "type": "eyebrow",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "templates/collection.json/sections/image_cards/blocks/item_2/blocks/item_2",
+      "type": "heading",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "templates/collection.json/sections/image_cards/blocks/item_2/blocks/item_3",
+      "type": "button",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "templates/index.spinel-sync.json/sections/scroll_reading_text_gX4J8Y/blocks/editorial-text",
+      "type": "editorial-text",
+      "reason": "Editorial scroll reveal takes precedence"
+    },
+    {
+      "path": "templates/index.spinel-sync.json/sections/image_cards_XhxqHQ/blocks/image_card_dAzUwB/blocks/eyebrow_Yy37Hf",
+      "type": "eyebrow",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "templates/index.spinel-sync.json/sections/image_cards_XhxqHQ/blocks/image_card_dAzUwB/blocks/heading_YeyXgn",
+      "type": "heading",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "templates/index.spinel-sync.json/sections/image_cards_XhxqHQ/blocks/image_card_dAzUwB/blocks/button_QJVYhg",
+      "type": "button",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "templates/index.spinel-sync.json/sections/image_cards_XhxqHQ/blocks/image_card_FRFrPa/blocks/eyebrow_BW7DzG",
+      "type": "eyebrow",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "templates/index.spinel-sync.json/sections/image_cards_XhxqHQ/blocks/image_card_FRFrPa/blocks/heading_bLpx97",
+      "type": "heading",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "templates/index.spinel-sync.json/sections/image_cards_XhxqHQ/blocks/image_card_FRFrPa/blocks/button_LFPpJR",
+      "type": "button",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "templates/index.spinel-sync.json/sections/image_cards_XhxqHQ/blocks/image_card_rAtH4A/blocks/eyebrow_UMDP3t",
+      "type": "eyebrow",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "templates/index.spinel-sync.json/sections/image_cards_XhxqHQ/blocks/image_card_rAtH4A/blocks/heading_tzKfhC",
+      "type": "heading",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "templates/index.spinel-sync.json/sections/image_cards_XhxqHQ/blocks/image_card_rAtH4A/blocks/button_RirfER",
+      "type": "button",
+      "reason": "component card reveal/stagger owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/slideshow/blocks/hero_marquee_1/blocks/hero_marquee_icon_2",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/slideshow/blocks/hero_marquee_1/blocks/hero_marquee_icon_4",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/slideshow/blocks/hero_marquee_1/blocks/hero_marquee_icon_6",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/slideshow/blocks/hero_marquee_1/blocks/hero_marquee_icon_8",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/virelle_flash_sale/blocks/content/blocks/intro/blocks/title/blocks/eyebrow",
+      "type": "eyebrow",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/virelle_flash_sale/blocks/content/blocks/intro/blocks/title/blocks/heading",
+      "type": "heading",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/virelle_flash_sale/blocks/content/blocks/intro/blocks/description",
+      "type": "text",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/virelle_flash_sale/blocks/content/blocks/button",
+      "type": "button",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/virelle_marquee/blocks/marquee/blocks/marquee_2",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/virelle_marquee/blocks/marquee/blocks/marquee_4",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/virelle_marquee/blocks/marquee/blocks/marquee_6",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/virelle_marquee/blocks/marquee/blocks/marquee_8",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/virelle_marquee/blocks/marquee_mobile/blocks/marquee_2",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/virelle_marquee/blocks/marquee_mobile/blocks/marquee_4",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/virelle_marquee/blocks/marquee_mobile/blocks/marquee_6",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/virelle_marquee/blocks/marquee_mobile/blocks/marquee_8",
+      "type": "_marquee-icon",
+      "reason": "continuous marquee motion owns this content"
+    },
+    {
+      "path": "templates/index.json/sections/kinetra_collection_marquee/blocks/header/blocks/item-1",
+      "type": "eyebrow",
+      "reason": "continuous marquee motion owns this content"
+    }
+  ],
+  "changes": [
+    {
+      "file": "blocks/faq_accordion.liquid",
+      "path": "presets/0/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "blocks/faq_accordion.liquid",
+      "path": "presets/0/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "blocks/faq_accordion.liquid",
+      "path": "presets/0/blocks/1/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "blocks/faq_accordion.liquid",
+      "path": "presets/0/blocks/1/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "blocks/faq_accordion.liquid",
+      "path": "presets/0/blocks/2/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "blocks/faq_accordion.liquid",
+      "path": "presets/0/blocks/2/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "blocks/faq_accordion.liquid",
+      "path": "presets/0/blocks/3/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "blocks/faq_accordion.liquid",
+      "path": "presets/0/blocks/3/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "blocks/image-card.liquid",
+      "path": "presets/0/blocks/0/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "blocks/image-card.liquid",
+      "path": "presets/0/blocks/1/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "blocks/image-card.liquid",
+      "path": "presets/0/blocks/1/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "blocks/image-card.liquid",
+      "path": "presets/0/blocks/2/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "blocks/image-card.liquid",
+      "path": "presets/0/blocks/2/settings/animation_delay",
+      "before": 150,
+      "after": 0
+    },
+    {
+      "file": "blocks/_marquee-countdown-timer.liquid",
+      "path": "presets/0/settings/animation",
+      "before": "slide_bottom",
+      "after": "fade"
+    },
+    {
+      "file": "blocks/_marquee-countdown-timer.liquid",
+      "path": "presets/0/settings/animation_delay",
+      "before": 100,
+      "after": 0
+    },
+    {
+      "file": "blocks/faq_item.liquid",
+      "path": "presets/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "blocks/faq_item.liquid",
+      "path": "presets/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "blocks/marquee-item.liquid",
+      "path": "presets/0/blocks/0/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "blocks/marquee-item.liquid",
+      "path": "presets/0/blocks/0/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "blocks/testimonial-item.liquid",
+      "path": "presets/0/blocks/1/blocks/0/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "blocks/testimonial-item.liquid",
+      "path": "presets/0/blocks/1/blocks/1/settings/animation_type",
+      "before": "scale",
+      "after": "none"
+    },
+    {
+      "file": "blocks/testimonial-item.liquid",
+      "path": "presets/0/blocks/1/blocks/1/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "blocks/testimonial-item.liquid",
+      "path": "presets/0/blocks/1/blocks/2/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "blocks/testimonial-item.liquid",
+      "path": "presets/0/blocks/1/blocks/2/settings/animation_delay",
+      "before": 100,
+      "after": 0
+    },
+    {
+      "file": "blocks/testimonial-item.liquid",
+      "path": "presets/0/blocks/1/blocks/3/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "blocks/testimonial-item.liquid",
+      "path": "presets/0/blocks/1/blocks/3/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "sections/shop-the-look-section.liquid",
+      "path": "presets/0/blocks/1/blocks/1/settings/animation_type",
+      "before": "fade",
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/shop-the-look-section.liquid",
+      "path": "presets/0/blocks/1/blocks/1/settings/animation_delay",
+      "before": 100,
+      "after": 50
+    },
+    {
+      "file": "sections/faq-image-accordion.liquid",
+      "path": "presets/0/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/faq-image-accordion.liquid",
+      "path": "presets/0/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/faq-image-accordion.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/faq-image-accordion.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/faq-image-accordion.liquid",
+      "path": "presets/0/blocks/2/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/faq-image-accordion.liquid",
+      "path": "presets/0/blocks/2/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/faq-image-accordion.liquid",
+      "path": "presets/0/blocks/2/blocks/1/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/faq-image-accordion.liquid",
+      "path": "presets/0/blocks/2/blocks/1/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/faq-image-accordion.liquid",
+      "path": "presets/0/blocks/2/blocks/2/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/faq-image-accordion.liquid",
+      "path": "presets/0/blocks/2/blocks/2/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/faq-image-accordion.liquid",
+      "path": "presets/0/blocks/2/blocks/3/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/faq-image-accordion.liquid",
+      "path": "presets/0/blocks/2/blocks/3/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/scrolling-cards.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/scrolling-cards.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/scrolling-cards.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/scrolling-cards.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/scrolling-cards.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/scrolling-cards.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "sections/scrolling-cards.liquid",
+      "path": "presets/0/blocks/2/blocks/1/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/scrolling-cards.liquid",
+      "path": "presets/0/blocks/2/blocks/1/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "sections/scrolling-cards.liquid",
+      "path": "presets/0/blocks/3/blocks/1/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/scrolling-cards.liquid",
+      "path": "presets/0/blocks/3/blocks/1/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/0/blocks/2/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/0/blocks/2/settings/animation_delay",
+      "before": null,
+      "after": 150
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/1/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/1/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/1/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/1/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/1/blocks/2/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/1/blocks/2/settings/animation_delay",
+      "before": null,
+      "after": 150
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/2/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/2/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/2/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/2/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/2/blocks/2/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/custom-section.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/2/blocks/2/settings/animation_delay",
+      "before": null,
+      "after": 150
+    },
+    {
+      "file": "sections/image-cards.liquid",
+      "path": "presets/0/blocks/0/blocks/0/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "sections/image-cards.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "sections/image-cards.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "sections/image-cards.liquid",
+      "path": "presets/0/blocks/0/blocks/2/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "sections/image-cards.liquid",
+      "path": "presets/0/blocks/0/blocks/2/settings/animation_delay",
+      "before": 150,
+      "after": 0
+    },
+    {
+      "file": "sections/image-cards.liquid",
+      "path": "presets/0/blocks/1/blocks/0/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "sections/image-cards.liquid",
+      "path": "presets/0/blocks/1/blocks/1/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "sections/image-cards.liquid",
+      "path": "presets/0/blocks/1/blocks/1/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "sections/image-cards.liquid",
+      "path": "presets/0/blocks/1/blocks/2/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "sections/image-cards.liquid",
+      "path": "presets/0/blocks/1/blocks/2/settings/animation_delay",
+      "before": 150,
+      "after": 0
+    },
+    {
+      "file": "sections/parallax.liquid",
+      "path": "presets/0/blocks/header/blocks/text/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/parallax.liquid",
+      "path": "presets/0/blocks/header/blocks/text/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/image-text-card-grid.liquid",
+      "path": "presets/0/blocks/0/blocks/1/blocks/0/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/image-text-card-grid.liquid",
+      "path": "presets/0/blocks/0/blocks/1/blocks/0/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/image-text-card-grid.liquid",
+      "path": "presets/0/blocks/0/blocks/1/blocks/0/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/image-text-card-grid.liquid",
+      "path": "presets/0/blocks/0/blocks/1/blocks/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/image-text-card-grid.liquid",
+      "path": "presets/0/blocks/0/blocks/1/blocks/0/blocks/0/blocks/2/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/image-text-card-grid.liquid",
+      "path": "presets/0/blocks/0/blocks/1/blocks/0/blocks/0/blocks/2/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "sections/image-text-card-grid.liquid",
+      "path": "presets/0/blocks/0/blocks/1/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/image-text-card-grid.liquid",
+      "path": "presets/0/blocks/0/blocks/1/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 150
+    },
+    {
+      "file": "sections/faq-accordion.liquid",
+      "path": "presets/0/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/faq-accordion.liquid",
+      "path": "presets/0/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/faq-accordion.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/faq-accordion.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/faq-accordion.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/faq-accordion.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/faq-accordion.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/faq-accordion.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/faq-accordion.liquid",
+      "path": "presets/0/blocks/1/blocks/2/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/faq-accordion.liquid",
+      "path": "presets/0/blocks/1/blocks/2/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/faq-accordion.liquid",
+      "path": "presets/0/blocks/1/blocks/3/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/faq-accordion.liquid",
+      "path": "presets/0/blocks/1/blocks/3/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/featured-collection-banner.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_type",
+      "before": "slide-left",
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/featured-collection-banner.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": 100,
+      "after": 50
+    },
+    {
+      "file": "sections/featured-collection-banner.liquid",
+      "path": "presets/0/blocks/1/blocks/0/settings/animation_type",
+      "before": "slide-left",
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/featured-collection-banner.liquid",
+      "path": "presets/0/blocks/1/blocks/0/settings/animation_delay",
+      "before": 100,
+      "after": 50
+    },
+    {
+      "file": "sections/image-text-split-layout.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/image-text-split-layout.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/image-text-split-layout.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "slide-left"
+    },
+    {
+      "file": "sections/image-text-split-layout.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/image-text-split-layout.liquid",
+      "path": "presets/0/blocks/1/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/image-text-split-layout.liquid",
+      "path": "presets/0/blocks/1/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/1/blocks/2/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/1/blocks/2/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/1/blocks/2/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/location-map.liquid",
+      "path": "presets/0/blocks/1/blocks/2/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "sections/countdown-with-marquee.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/0/blocks/0/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "sections/countdown-with-marquee.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "sections/countdown-with-marquee.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/1/settings/animation_delay",
+      "before": 100,
+      "after": 0
+    },
+    {
+      "file": "sections/countdown-with-marquee.liquid",
+      "path": "presets/0/blocks/1/blocks/2/settings/animation_delay",
+      "before": 150,
+      "after": 0
+    },
+    {
+      "file": "sections/hotspot.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/hotspot.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/collection-marquee.liquid",
+      "path": "presets/0/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/footer.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/footer.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/footer.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/1/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/footer.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/blocks/1/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/footer.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "sections/footer.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/1/blocks/0/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/1/blocks/0/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/1/blocks/0/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/1/blocks/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/1/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/1/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/2/blocks/1/blocks/0/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/2/blocks/1/blocks/0/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/2/blocks/1/blocks/0/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/2/blocks/1/blocks/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/2/blocks/1/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/2/blocks/1/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/3/blocks/1/blocks/0/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/3/blocks/1/blocks/0/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/3/blocks/1/blocks/0/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/3/blocks/1/blocks/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/3/blocks/1/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/timeline.liquid",
+      "path": "presets/0/blocks/1/blocks/3/blocks/1/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "sections/testimonial-carousel.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_type",
+      "before": "fade",
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/testimonial-carousel.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": 100,
+      "after": 50
+    },
+    {
+      "file": "sections/testimonial-carousel.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/1/blocks/0/blocks/1/blocks/1/settings/animation_type",
+      "before": "fade",
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/testimonial-carousel.liquid",
+      "path": "presets/0/blocks/1/blocks/0/blocks/1/blocks/0/blocks/1/blocks/1/settings/animation_delay",
+      "before": 100,
+      "after": 50
+    },
+    {
+      "file": "sections/testimonial-carousel.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/blocks/1/blocks/1/settings/animation_type",
+      "before": "fade",
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/testimonial-carousel.liquid",
+      "path": "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/blocks/1/blocks/1/settings/animation_delay",
+      "before": 100,
+      "after": 50
+    },
+    {
+      "file": "sections/testimonial-carousel.liquid",
+      "path": "presets/0/blocks/1/blocks/2/blocks/1/blocks/0/blocks/1/blocks/1/settings/animation_type",
+      "before": "fade",
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/testimonial-carousel.liquid",
+      "path": "presets/0/blocks/1/blocks/2/blocks/1/blocks/0/blocks/1/blocks/1/settings/animation_delay",
+      "before": 100,
+      "after": 50
+    },
+    {
+      "file": "sections/hero.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/hero.liquid",
+      "path": "presets/0/blocks/0/blocks/3/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/hero.liquid",
+      "path": "presets/0/blocks/0/blocks/5/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/hero.liquid",
+      "path": "presets/0/blocks/0/blocks/7/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/hero.liquid",
+      "path": "presets/0/blocks/2/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "fade"
+    },
+    {
+      "file": "sections/hero.liquid",
+      "path": "presets/0/blocks/2/settings/animation_delay",
+      "before": 200,
+      "after": 150
+    },
+    {
+      "file": "sections/gallery-carousel.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/0/blocks/0/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/gallery-carousel.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/0/blocks/0/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "sections/gallery-carousel.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/gallery-carousel.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/gallery-carousel.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/gallery-carousel.liquid",
+      "path": "presets/0/blocks/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 150
+    },
+    {
+      "file": "sections/hotspot-gallery.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "sections/hotspot-gallery.liquid",
+      "path": "presets/0/blocks/0/blocks/1/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "sections/hotspot-gallery.liquid",
+      "path": "presets/0/blocks/0/blocks/2/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "sections/hotspot-gallery.liquid",
+      "path": "presets/0/blocks/0/blocks/2/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "templates/page.about-us.json",
+      "path": "sections/commitments/blocks/marquee/blocks/warranty/blocks/title/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "templates/page.about-us.json",
+      "path": "sections/commitments/blocks/marquee/blocks/warranty/blocks/title/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/page.about-us.json",
+      "path": "sections/commitments/blocks/marquee/blocks/warranty/blocks/separator/settings/animation_type",
+      "before": "scale",
+      "after": "none"
+    },
+    {
+      "file": "templates/page.about-us.json",
+      "path": "sections/commitments/blocks/marquee/blocks/warranty/blocks/separator/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/page.about-us.json",
+      "path": "sections/commitments/blocks/marquee/blocks/ethical/blocks/title/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "templates/page.about-us.json",
+      "path": "sections/commitments/blocks/marquee/blocks/ethical/blocks/title/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/page.about-us.json",
+      "path": "sections/commitments/blocks/marquee/blocks/ethical/blocks/separator/settings/animation_type",
+      "before": "scale",
+      "after": "none"
+    },
+    {
+      "file": "templates/page.about-us.json",
+      "path": "sections/commitments/blocks/marquee/blocks/ethical/blocks/separator/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/page.contact.json",
+      "path": "sections/instagram/blocks/marquee/blocks/item_3/blocks/text/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "templates/page.contact.json",
+      "path": "sections/instagram/blocks/marquee/blocks/item_3/blocks/text/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/page.contact.json",
+      "path": "sections/instagram/blocks/marquee/blocks/item_4/blocks/text/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "templates/page.contact.json",
+      "path": "sections/instagram/blocks/marquee/blocks/item_4/blocks/text/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/page.contact.json",
+      "path": "sections/instagram/blocks/marquee/blocks/item_2/blocks/text/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "templates/page.contact.json",
+      "path": "sections/instagram/blocks/marquee/blocks/item_2/blocks/text/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/page.contact.json",
+      "path": "sections/instagram/blocks/marquee/blocks/item_5/blocks/text/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "templates/page.contact.json",
+      "path": "sections/instagram/blocks/marquee/blocks/item_5/blocks/text/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/page.contact.json",
+      "path": "sections/instagram/blocks/marquee/blocks/item_1/blocks/text/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "templates/page.contact.json",
+      "path": "sections/instagram/blocks/marquee/blocks/item_1/blocks/text/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/page.contact.json",
+      "path": "sections/instagram/blocks/marquee/blocks/item_6/blocks/text/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "templates/page.contact.json",
+      "path": "sections/instagram/blocks/marquee/blocks/item_6/blocks/text/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/page.faqs.json",
+      "path": "sections/faq/blocks/category_5/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "templates/page.faqs.json",
+      "path": "sections/faq/blocks/category_5/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/page.faqs.json",
+      "path": "sections/faq/blocks/category_3/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "templates/page.faqs.json",
+      "path": "sections/faq/blocks/category_3/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/page.faqs.json",
+      "path": "sections/faq/blocks/category_2/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "templates/page.faqs.json",
+      "path": "sections/faq/blocks/category_2/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/page.faqs.json",
+      "path": "sections/faq/blocks/category_1/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "templates/page.faqs.json",
+      "path": "sections/faq/blocks/category_1/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/page.faqs.json",
+      "path": "sections/faq/blocks/category_4/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "none"
+    },
+    {
+      "file": "templates/page.faqs.json",
+      "path": "sections/faq/blocks/category_4/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/collection.json",
+      "path": "sections/image_cards/blocks/item_2/blocks/item_2/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "templates/collection.json",
+      "path": "sections/image_cards/blocks/item_2/blocks/item_2/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/collection.json",
+      "path": "sections/image_cards/blocks/item_2/blocks/item_1/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "templates/collection.json",
+      "path": "sections/image_cards/blocks/item_2/blocks/item_3/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "templates/collection.json",
+      "path": "sections/image_cards/blocks/item_2/blocks/item_3/settings/animation_delay",
+      "before": 150,
+      "after": 0
+    },
+    {
+      "file": "templates/collection.json",
+      "path": "sections/image_cards/blocks/item_1/blocks/item_2/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "templates/collection.json",
+      "path": "sections/image_cards/blocks/item_1/blocks/item_2/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/collection.json",
+      "path": "sections/image_cards/blocks/item_1/blocks/item_1/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "templates/collection.json",
+      "path": "sections/image_cards/blocks/item_1/blocks/item_3/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "templates/collection.json",
+      "path": "sections/image_cards/blocks/item_1/blocks/item_3/settings/animation_delay",
+      "before": 150,
+      "after": 0
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/shop_the_look_section_mhb9aq/blocks/header/blocks/heading_Fwyq4N/settings/animation_type",
+      "before": "fade",
+      "after": "slide-bottom"
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/shop_the_look_section_mhb9aq/blocks/header/blocks/heading_Fwyq4N/settings/animation_delay",
+      "before": 100,
+      "after": 50
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/image_cards_XhxqHQ/blocks/image_card_rAtH4A/blocks/heading_tzKfhC/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/image_cards_XhxqHQ/blocks/image_card_rAtH4A/blocks/heading_tzKfhC/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/image_cards_XhxqHQ/blocks/image_card_rAtH4A/blocks/eyebrow_UMDP3t/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/image_cards_XhxqHQ/blocks/image_card_rAtH4A/blocks/button_RirfER/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/image_cards_XhxqHQ/blocks/image_card_rAtH4A/blocks/button_RirfER/settings/animation_delay",
+      "before": 150,
+      "after": 0
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/image_cards_XhxqHQ/blocks/image_card_dAzUwB/blocks/eyebrow_Yy37Hf/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/image_cards_XhxqHQ/blocks/image_card_dAzUwB/blocks/heading_YeyXgn/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/image_cards_XhxqHQ/blocks/image_card_dAzUwB/blocks/heading_YeyXgn/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/image_cards_XhxqHQ/blocks/image_card_dAzUwB/blocks/button_QJVYhg/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/image_cards_XhxqHQ/blocks/image_card_dAzUwB/blocks/button_QJVYhg/settings/animation_delay",
+      "before": 150,
+      "after": 0
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/image_cards_XhxqHQ/blocks/image_card_FRFrPa/blocks/button_LFPpJR/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/image_cards_XhxqHQ/blocks/image_card_FRFrPa/blocks/button_LFPpJR/settings/animation_delay",
+      "before": 150,
+      "after": 0
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/image_cards_XhxqHQ/blocks/image_card_FRFrPa/blocks/heading_bLpx97/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "none"
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/image_cards_XhxqHQ/blocks/image_card_FRFrPa/blocks/heading_bLpx97/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/index.spinel-sync.json",
+      "path": "sections/image_cards_XhxqHQ/blocks/image_card_FRFrPa/blocks/eyebrow_BW7DzG/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/virelle_flash_sale/blocks/content/blocks/intro/blocks/description/settings/animation_delay",
+      "before": 100,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/virelle_flash_sale/blocks/content/blocks/intro/blocks/title/blocks/heading/settings/animation_delay",
+      "before": 50,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/virelle_flash_sale/blocks/content/blocks/intro/blocks/title/blocks/eyebrow/settings/animation_type",
+      "before": "fade",
+      "after": "none"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/virelle_flash_sale/blocks/content/blocks/button/settings/animation_delay",
+      "before": 150,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/slideshow/blocks/hero_marquee_1/blocks/hero_marquee_icon_4/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/slideshow/blocks/hero_marquee_1/blocks/hero_marquee_icon_6/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/slideshow/blocks/hero_marquee_1/blocks/hero_marquee_icon_2/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/slideshow/blocks/hero_marquee_1/blocks/hero_marquee_icon_8/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/slideshow/blocks/block-2/settings/animation_type",
+      "before": "slide-bottom",
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/slideshow/blocks/block-2/settings/animation_delay",
+      "before": 200,
+      "after": 150
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/shop_the_look_section_mhb9aq/blocks/header/blocks/heading/settings/animation_type",
+      "before": "fade",
+      "after": "slide-bottom"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/shop_the_look_section_mhb9aq/blocks/header/blocks/heading/settings/animation_delay",
+      "before": 100,
+      "after": 50
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_collage/blocks/layout/blocks/middle-column/blocks/copy/blocks/button/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_collage/blocks/layout/blocks/middle-column/blocks/copy/blocks/button/settings/animation_delay",
+      "before": null,
+      "after": 150
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_collage/blocks/layout/blocks/middle-column/blocks/copy/blocks/header/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_collage/blocks/layout/blocks/middle-column/blocks/copy/blocks/header/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_collage/blocks/layout/blocks/middle-column/blocks/copy/blocks/header/blocks/text/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_collage/blocks/layout/blocks/middle-column/blocks/copy/blocks/header/blocks/text/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_collage/blocks/layout/blocks/middle-column/blocks/copy/blocks/header/blocks/eyebrow/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_collage/blocks/layout/blocks/middle-column/blocks/copy/blocks/header/blocks/eyebrow/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/header/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/header/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/header/blocks/eyebrow/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/header/blocks/eyebrow/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/sydney/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/sydney/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/sydney/blocks/directions/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/sydney/blocks/directions/settings/animation_delay",
+      "before": null,
+      "after": 150
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/sydney/blocks/address/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/sydney/blocks/address/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/ho_chi_minh/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/ho_chi_minh/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/ho_chi_minh/blocks/directions/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/ho_chi_minh/blocks/directions/settings/animation_delay",
+      "before": null,
+      "after": 150
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/ho_chi_minh/blocks/address/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/ho_chi_minh/blocks/address/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/london/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/london/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/london/blocks/directions/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/london/blocks/directions/settings/animation_delay",
+      "before": null,
+      "after": 150
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/london/blocks/address/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_locations/blocks/row/blocks/content/blocks/locations/blocks/london/blocks/address/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_gallery/blocks/header/blocks/layout/blocks/button/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_gallery/blocks/header/blocks/layout/blocks/button/settings/animation_delay",
+      "before": null,
+      "after": 150
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_gallery/blocks/header/blocks/layout/blocks/header/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_gallery/blocks/header/blocks/layout/blocks/header/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_gallery/blocks/header/blocks/layout/blocks/header/blocks/eyebrow/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_gallery/blocks/header/blocks/layout/blocks/header/blocks/eyebrow/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_crafted/blocks/header/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_crafted/blocks/header/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_crafted/blocks/header/blocks/eyebrow-group/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_crafted/blocks/header/blocks/eyebrow-group/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_scrolling_cards/blocks/inspire/blocks/content/blocks/story/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_scrolling_cards/blocks/inspire/blocks/content/blocks/story/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_scrolling_cards/blocks/belong/blocks/content/blocks/story/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_scrolling_cards/blocks/belong/blocks/content/blocks/story/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_scrolling_cards/blocks/empower/blocks/content/blocks/story/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_scrolling_cards/blocks/empower/blocks/content/blocks/story/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_scrolling_cards/blocks/empower/blocks/content/blocks/header/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_scrolling_cards/blocks/empower/blocks/content/blocks/header/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_scrolling_cards/blocks/empower/blocks/content/blocks/header/blocks/eyebrow/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_scrolling_cards/blocks/empower/blocks/content/blocks/header/blocks/eyebrow/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2025/blocks/content/blocks/story/blocks/title/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2025/blocks/content/blocks/story/blocks/title/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2025/blocks/content/blocks/story/blocks/title/blocks/eyebrow/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2025/blocks/content/blocks/story/blocks/title/blocks/eyebrow/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2025/blocks/content/blocks/story/blocks/text/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2025/blocks/content/blocks/story/blocks/text/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2010/blocks/content/blocks/story/blocks/title/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2010/blocks/content/blocks/story/blocks/title/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2010/blocks/content/blocks/story/blocks/title/blocks/eyebrow/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2010/blocks/content/blocks/story/blocks/title/blocks/eyebrow/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2010/blocks/content/blocks/story/blocks/text/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2010/blocks/content/blocks/story/blocks/text/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2015/blocks/content/blocks/story/blocks/title/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2015/blocks/content/blocks/story/blocks/title/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2015/blocks/content/blocks/story/blocks/title/blocks/eyebrow/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2015/blocks/content/blocks/story/blocks/title/blocks/eyebrow/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2015/blocks/content/blocks/story/blocks/text/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2015/blocks/content/blocks/story/blocks/text/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2020/blocks/content/blocks/story/blocks/title/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2020/blocks/content/blocks/story/blocks/title/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2020/blocks/content/blocks/story/blocks/title/blocks/eyebrow/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2020/blocks/content/blocks/story/blocks/title/blocks/eyebrow/settings/animation_delay",
+      "before": null,
+      "after": 0
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2020/blocks/content/blocks/story/blocks/text/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_timeline/blocks/timeline-list/blocks/year-2020/blocks/content/blocks/story/blocks/text/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_highlights/blocks/header/blocks/heading/settings/animation_type",
+      "before": null,
+      "after": "slide-bottom"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_highlights/blocks/header/blocks/heading/settings/animation_delay",
+      "before": null,
+      "after": 50
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_highlights/blocks/header/blocks/text/settings/animation_type",
+      "before": null,
+      "after": "fade"
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_highlights/blocks/header/blocks/text/settings/animation_delay",
+      "before": null,
+      "after": 100
+    },
+    {
+      "file": "templates/index.json",
+      "path": "sections/kinetra_collection_marquee/blocks/header/blocks/item-1/settings/animation_delay",
+      "before": null,
+      "after": 0
+    }
+  ],
+  "verification": {
+    "semantic_diff": "Only animation/animation_type/animation_delay values in instance settings changed; schema definitions and all non-preset schema fields unchanged.",
+    "all_instances_supported": true,
+    "all_delays_valid": true,
+    "unexplained_none_or_missing": 0,
+    "existing_animation_tests": {
+      "passed": 23,
+      "failed": 0
+    },
+    "git_diff_check": "passed",
+    "theme_check": {
+      "command": "shopify theme check --fail-level error --output json",
+      "errors": 0,
+      "warnings": 9,
+      "exit_code": 0
+    }
+  },
+  "concurrent_changes_preserved": [
+    {
+      "file": "sections/footer.liquid",
+      "paths": [
+        "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/type",
+        "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/settings/menu",
+        "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/settings/heading",
+        "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/settings/collapse_menu_on_mobile",
+        "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/settings/menu_size",
+        "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/settings/menu_gap",
+        "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/settings/text_size",
+        "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/settings/gap_mobile",
+        "presets/0/blocks/1/blocks/1/blocks/1/blocks/0/settings/gap_desktop"
+      ]
+    }
+  ]
+}

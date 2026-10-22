@@ -33,13 +33,84 @@
     class="shop-the-look-product product-card-layout__item swiper-slide"
     {% if shop_the_look_has_product %}data-shop-the-look-product="{{ shop_the_look_product_id }}"{% else %}data-shop-the-look-product{% endif %}
     data-shop-the-look-block-id="{{ block.id }}"
+    data-look-variant-id="{{ shop_the_look_product.selected_or_first_available_variant.id }}"
+    data-look-product-title="{{ shop_the_look_product.title | escape }}"
     {{ block.shopify_attributes }}
   >
+    <script type="application/json" data-look-variants>
+      [{% for variant in shop_the_look_product.variants %}{"id":{{ variant.id | json }},"available":{{ variant.available | json }},"options":{{ variant.options | json | replace: '<', '\u003c' }},"inventory_quantity":{{ variant.inventory_quantity | json }},"inventory_management":{{ variant.inventory_management | json }},"inventory_policy":{{ variant.inventory_policy | json }},"requires_selling_plan":{{ shop_the_look_product.requires_selling_plan | json }},"min":{{ variant.quantity_rule.min | default: 1 | json }},"increment":{{ variant.quantity_rule.increment | default: 1 | json }}}{% unless forloop.last %},{% endunless %}{% endfor %}]
+    </script>
     {% render 'product-card',
       product: shop_the_look_product,
       placeholder: shop_the_look_product_placeholder,
       class: 'shop-the-look-product__card'
     %}
+
+    {% unless shop_the_look_product.has_only_default_variant %}
+      {% if shop_the_look_has_product %}
+        <script data-theme-module="{{ 'shop-the-look-variants.js' | asset_url }}"></script>
+        <shop-the-look-variants class="look-variants" data-unavailable="{{ 'products.unavailable' | t | escape }}">
+          {% assign look_swatch_style = settings.product_card_swatch_type | default: settings.swatch_style | default: 'color' %}
+          {% assign look_selected_style = settings.product_card_swatch_selected_style | default: 'border' %}
+          {% for option in shop_the_look_product.options_with_values %}
+            {% assign look_option_index = forloop.index0 %}
+            {% assign look_color_option = false %}
+            {% assign look_option_name = option.name | downcase %}
+            {% if look_option_name == 'color' or look_option_name == 'colour' %}{% assign look_color_option = true %}{% endif %}
+            {% for value in option.values %}{% if value.swatch != blank %}{% assign look_color_option = true %}{% endif %}{% endfor %}
+            <label class="look-variants__option">
+              <span class="look-variants__name">{{ option.name | escape }}:</span>
+              {% if look_color_option %}<span class="look-variants__selected-swatch" data-look-selected-swatch aria-hidden="true"></span>{% endif %}
+              <select data-look-option data-option-name="{{ option.name | escape }}" data-option-index="{{ look_option_index }}" aria-label="{{ shop_the_look_product.title | escape }} — {{ option.name | escape }}">
+                {% for value in option.values %}
+                  <option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>{{ value | escape }}</option>
+                {% endfor %}
+              </select>
+              <span class="look-variants__chevron" aria-hidden="true">{% render 'icon', icon: 'chevron-down', bare: true %}</span>
+            </label>
+            <fieldset class="look-variants__buttons">
+              <legend>{{ option.name | escape }}</legend>
+              <div class="product-card__swatches product-card__swatches--selected-{{ look_selected_style }}">
+                {% for value in option.values %}
+                  {% capture look_variant_radio %}
+                    <input class="product-card__swatch-input" type="radio" name="look-{{ section.id }}-{{ block.id }}-{{ look_option_index }}" value="{{ value | escape }}" data-look-radio data-option-index="{{ look_option_index }}"{% if option.selected_value == value %} checked{% endif %} aria-label="{{ value | escape }}">
+                  {% endcapture %}
+                  <span class="look-variants__choice{% if look_color_option %} look-variants__choice--color{% endif %}">
+                    {% if look_color_option %}
+                      {% render 'swatch-option', input_markup: look_variant_radio, value: value.name, swatch: value.swatch, image: value.variant.featured_image, style: look_swatch_style, selected_style: look_selected_style, class: 'look-variants__swatch-choice', visual_class: 'product-card__swatch-box' %}
+                    {% endif %}
+                    <span class="look-variants__text-choice product-variant-picker">
+                      {% capture look_text_input_id %}LookVariant-{{ section.id }}-{{ block.id }}-{{ look_option_index }}-{{ forloop.index }}{% endcapture %}
+                      {{ look_variant_radio | replace: 'name="look-', 'name="look-text-' | replace: 'class="product-card__swatch-input"', 'class="variant-picker__control variant-picker__control--radio"' | replace: 'type="radio"', 'type="radio" id="LOOK_INPUT_ID"' | replace: 'LOOK_INPUT_ID', look_text_input_id }}
+                      <label class="variant-picker__button" for="{{ look_text_input_id }}">
+                        <span class="variant-picker__label">{{ value | escape }}</span>
+                      </label>
+                    </span>
+                  </span>
+                {% endfor %}
+              </div>
+            </fieldset>
+            {% if look_color_option %}
+              {% for value in option.values %}
+                <template data-look-swatch data-option-index="{{ look_option_index }}" data-option-value="{{ value | escape }}">
+                  {% render 'swatch', value: value.name, swatch: value.swatch, image: value.variant.featured_image, style: look_swatch_style, class: 'product-card__swatch-box', decorative: true %}
+                </template>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+          <span class="form__error" data-look-variant-error role="status" hidden></span>
+          {% for variant in shop_the_look_product.variants %}
+            <template data-look-variant-presentation="{{ variant.id }}">
+              {% render 'price', item: variant, context: 'product-card', class: 'product-card__price' %}
+              {% assign look_variant_image = variant.featured_image | default: shop_the_look_product.featured_image %}
+              {% if look_variant_image != blank %}
+                {% render 'image', image: look_variant_image, class: 'product-card__image', width: 900, alt: shop_the_look_product.title %}
+              {% endif %}
+            </template>
+          {% endfor %}
+        </shop-the-look-variants>
+      {% endif %}
+    {% endunless %}
 
     <div class="shop-the-look-product__hotspot-source" data-shop-the-look-hotspot-source hidden aria-hidden="true">
       {% assign shop_the_look_hotspot_placeholder = false %}
@@ -62,7 +133,7 @@
           {% assign shop_the_look_hotspot_y_mobile = block.settings.hotspot_vertical_mobile | default: shop_the_look_hotspot_y | plus: 0 %}
         {% endif %}
 
-        {% render 'product-hotspot',
+        {% render 'shop-the-look-hotspot',
           product: shop_the_look_product,
           placeholder: shop_the_look_hotspot_placeholder,
           block_id: block.id,
@@ -76,13 +147,101 @@
   </div>
 
 {% stylesheet %}
+  .look-variants { display: none; }
+  [data-look-variants-enabled='true'] .look-variants {
+    display: flex;
+    flex: 0 0 auto;
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  [data-look-variants-enabled='true'] .product-card__swatches-variant-picker { display: none; }
+  .look-variants__option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    min-height: var(--input-height);
+    padding-inline: 12px;
+    border: var(--input-border-width) solid var(--input-border-color);
+    border-radius: var(--input-radius);
+    background: var(--input-background-color);
+    color: var(--input-text-color);
+    font-family: var(--font-body-family);
+    font-size: var(--form-input-font-size);
+    font-weight: var(--font-body-weight);
+    line-height: var(--font-body-line-height);
+    cursor: pointer;
+  }
+  .look-variants__option select {
+    min-width: 0;
+    width: 0;
+    min-height: 0;
+    flex: 1;
+    align-self: stretch;
+    appearance: none;
+    padding: 0 20px 0 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+  [data-shop-the-look-products] .look-variants__option select:is(:focus, :focus-visible) {
+    outline: none;
+    box-shadow: none;
+  }
+  .look-variants__chevron {
+    position: absolute;
+    inset-inline-end: 12px;
+    top: 50%;
+    display: flex;
+    width: 12px;
+    height: 12px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  .look-variants__chevron svg { width: 100%; height: 100%; }
+  .look-variants__name { white-space: nowrap; }
+  .look-variants__selected-swatch .swatch {
+    width: var(--product-card-swatch-width);
+    aspect-ratio: var(--product-card-swatch-ratio);
+  }
+  .look-variants__buttons { display: none; border: 0; padding: 0; margin: 0; min-width: 0; }
+  .look-variants__buttons legend { margin-bottom: 8px; }
+  .look-variants__buttons .product-card__swatches { flex-wrap: wrap; }
+  [data-look-variant-type='button'] .look-variants__option { display: none; }
+  [data-look-variant-type='button'] .look-variants__buttons { display: block; }
+  .look-variants__swatch-choice { display: none; }
+  [data-look-show-swatch='true'] .look-variants__swatch-choice { display: inline-flex; }
+  [data-look-show-swatch='true'] .look-variants__choice--color .look-variants__text-choice { display: none; }
+  [data-look-show-swatch='false'] .look-variants__selected-swatch { display: none; }
+  .look-variants__text-choice { position: relative; display: inline-flex; }
+  [data-look-show-swatch='false'] .look-variants__buttons .product-card__swatches {
+    gap: var(--variant-item-gap);
+  }
+  @media (max-width: 767.98px) {
+    .look-variants__selected-swatch .swatch { width: var(--product-card-swatch-width-mobile); }
+    .look-variants__option { min-height: var(--input-height-mobile, var(--input-height)); }
+  }
+  [data-shop-the-look-products] .shop-the-look-product {
+    display: flex;
+    flex-direction: column;
+  }
+
   .shop-the-look-product {
     width: 100%;
     min-width: 0;
   }
 
-  .shop-the-look-product__card {
+  [data-shop-the-look-products] .shop-the-look-product > .product-card {
     width: 100%;
+    height: auto;
+    min-height: 0;
+    flex: 1 1 auto;
   }
 
   .shop-the-look-product__hotspot-source {

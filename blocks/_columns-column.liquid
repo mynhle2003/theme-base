@@ -257,6 +257,7 @@
     --group-position: flex-start;
     --flex-align: var(--group-align);
     --flex-align-mobile: var(--group-align-mobile);
+    --text-align-default: var(--group-align);
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -359,13 +360,15 @@
     .columns-column--vertical {
       align-items: var(--group-align-mobile, var(--group-align));
       justify-content: var(--group-position, flex-start);
-      text-align: var(--group-align-mobile, var(--group-align));
+      --text-align-default: var(--group-align-mobile, var(--group-align));
+      text-align: var(--text-align-default);
     }
 
     .columns-column--horizontal {
       align-items: var(--group-position, flex-start);
       justify-content: var(--group-justify-mobile, var(--group-justify));
-      text-align: var(--group-align-mobile, var(--group-align));
+      --text-align-default: var(--group-align-mobile, var(--group-align));
+      text-align: var(--text-align-default);
     }
 
     .columns-column--horizontal.columns-column--mobile-vertical {
@@ -373,7 +376,8 @@
       flex-wrap: nowrap;
       align-items: var(--group-align-mobile, var(--group-align));
       justify-content: var(--group-position, flex-start);
-      text-align: var(--group-align-mobile, var(--group-align));
+      --text-align-default: var(--group-align-mobile, var(--group-align));
+      text-align: var(--text-align-default);
     }
   }
   .columns-column[data-columns-column] { --column-border-thickness: 0px; --column-custom-radius: 0px; --column-backdrop-blur: 0px; overflow: clip; }
@@ -937,8 +941,8 @@
         {
           "type": "image",
           "settings": {
-            "image_ratio_desktop": "square",
-            "image_ratio_mobile": "square",
+            "image_ratio_desktop": "ratio_1_1",
+            "image_ratio_mobile": "ratio_1_1",
             "width_desktop": "fill",
             "width_mobile": "fill"
           }

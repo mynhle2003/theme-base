@@ -18,7 +18,7 @@
   endif
 
   assign blog_card_ratio_setting = block.settings.ratio | default: 'original'
-  unless blog_card_ratio_setting == 'original' or blog_card_ratio_setting == 'square' or blog_card_ratio_setting == 'portrait' or blog_card_ratio_setting == 'landscape' or blog_card_ratio_setting == 'wide'
+  unless blog_card_ratio_setting == 'custom' or blog_card_ratio_setting == 'original' or blog_card_ratio_setting == 'square' or blog_card_ratio_setting == 'portrait' or blog_card_ratio_setting == 'landscape' or blog_card_ratio_setting == 'wide' or blog_card_ratio_setting == 'ratio_1_1' or blog_card_ratio_setting == 'ratio_4_5' or blog_card_ratio_setting == 'ratio_5_4' or blog_card_ratio_setting == 'ratio_6_7' or blog_card_ratio_setting == 'ratio_7_6' or blog_card_ratio_setting == 'ratio_5_7' or blog_card_ratio_setting == 'ratio_7_5' or blog_card_ratio_setting == 'ratio_2_3' or blog_card_ratio_setting == 'ratio_3_2' or blog_card_ratio_setting == 'ratio_4_3' or blog_card_ratio_setting == 'ratio_3_4' or blog_card_ratio_setting == 'ratio_2_1' or blog_card_ratio_setting == 'ratio_1_2' or blog_card_ratio_setting == 'ratio_16_9' or blog_card_ratio_setting == 'ratio_9_16' or blog_card_ratio_setting == 'ratio_12_5' or blog_card_ratio_setting == 'ratio_5_12' or blog_card_ratio_setting == 'ratio_48_17' or blog_card_ratio_setting == 'ratio_17_48' or blog_card_ratio_setting == 'ratio_5_8' or blog_card_ratio_setting == 'ratio_8_5'
     assign blog_card_ratio_setting = 'original'
   endunless
   assign blog_card_media_layout = block.settings.media_layout | default: 'stacked'
@@ -26,16 +26,10 @@
     assign blog_card_media_layout = 'stacked'
   endunless
   assign blog_card_ratio = 'auto'
-  case blog_card_ratio_setting
-    when 'square'
-      assign blog_card_ratio = '1'
-    when 'portrait'
-      assign blog_card_ratio = '0.8'
-    when 'landscape'
-      assign blog_card_ratio = '1.3333'
-    when 'wide'
-      assign blog_card_ratio = '1.7778'
-  endcase
+  capture blog_card_ratio
+    render 'image-ratio-value', setting: blog_card_ratio_setting, fallback_ratio: 'auto', custom_width: block.settings.ratio_custom_width, custom_height: block.settings.ratio_custom_height
+  endcapture
+  assign blog_card_ratio = blog_card_ratio | strip
 
   assign blog_card_alignment = block.settings.alignment | default: 'left'
   unless blog_card_alignment == 'left' or blog_card_alignment == 'center' or blog_card_alignment == 'right'
@@ -433,27 +427,64 @@
       "options": [
         {
           "value": "original",
-          "label": "Auto"
+          "label": "Original"
         },
         {
-          "value": "square",
-          "label": "Square"
+          "value": "ratio_1_1",
+          "label": "Square (1:1)"
         },
         {
-          "value": "portrait",
-          "label": "Portrait"
+          "value": "ratio_4_5",
+          "label": "Portrait (4:5)"
         },
         {
-          "value": "landscape",
-          "label": "Landscape"
+          "value": "ratio_3_4",
+          "label": "Portrait (3:4)"
         },
         {
-          "value": "wide",
-          "label": "Wide"
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.image_ratio.custom"
         }
       ],
       "default": "original"
     },
+    {
+      "type": "number",
+      "id": "ratio_custom_width",
+      "label": "W",
+      "default": 16,
+      "visible_if": "{{ block.settings.ratio == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "ratio_custom_height",
+      "label": "H",
+      "default": 9,
+      "visible_if": "{{ block.settings.ratio == 'custom' }}"},
     {
       "type": "select",
       "id": "media_layout",

@@ -1,0 +1,341 @@
+<div class="section-spacing countdown-with-marquee" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="container full-width">
+    <countdown-marquee-layout class="countdown-with-marquee__layout color-scheme section-color-scope {{ section.settings.color_scheme }}">
+      <div class="countdown-with-marquee__rail countdown-with-marquee__rail--left">
+        {% content_for 'block', type: '_countdown-marquee', id: 'marquee-left' %}
+      </div>
+      <div class="countdown-with-marquee__content">
+        {% content_for 'block', type: 'group', id: 'content' %}
+      </div>
+      <div class="countdown-with-marquee__rail countdown-with-marquee__rail--right">
+        {% content_for 'block', type: '_countdown-marquee', id: 'marquee-right' %}
+      </div>
+    </countdown-marquee-layout>
+  </div>
+</div>
+{% stylesheet %}
+  .countdown-with-marquee__layout { display: grid; grid-template-columns: 146px minmax(0, 1fr) 146px; column-gap: 80px; }
+  .countdown-with-marquee__rail { position: relative; min-width: 0; overflow: hidden; }
+  .countdown-with-marquee__content { min-width: 0; container-type: inline-size; }
+  @media (min-width: 768px) {
+    .countdown-with-marquee__content > .group { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--countdown-content-gap, var(--layout-flow-gap)); row-gap: 32px; }
+    .countdown-with-marquee__content > .group > :first-child { grid-column: 1; grid-row: 1; }
+    .countdown-with-marquee__content > .group > .countdown-timer { grid-column: 2; grid-row: 1 / span 2; justify-self: center; align-self: center; }
+    .countdown-with-marquee__content > .group > :last-child { grid-column: 1; grid-row: 2; }
+  }
+  @media (min-width: 768px) and (max-width: 1199.98px) {
+    .countdown-with-marquee__layout { grid-template-columns: 100px minmax(0, 1fr) 100px; column-gap: 24px; }
+    .countdown-with-marquee__layout:not([data-countdown-layout-ready]) .countdown-with-marquee__content > .group { display: flex; flex-direction: column; align-items: flex-start; gap: var(--layout-flow-gap-mobile, 24px); }
+  }
+  @media (max-width: 767.98px) {
+    .countdown-with-marquee__layout { grid-template-columns: minmax(0, 1fr) 68px; column-gap: 8px; }
+    .countdown-with-marquee__rail--left { display: none; }
+
+  }
+  .countdown-with-marquee__layout[data-countdown-stacked] .countdown-with-marquee__content > .group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--layout-flow-gap-mobile, 24px);
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    if (customElements.get('countdown-marquee-layout')) return;
+
+    // Timer gaps collapse inside each half-column before the parent gap changes.
+    function countdownGroupFit(available, timerMinimum, desiredGap) {
+      return {
+        gap: Math.max(0, Math.min(desiredGap, available - 2 * timerMinimum)),
+        stacked: available < 2 * timerMinimum
+      };
+    }
+
+    class CountdownMarqueeLayout extends HTMLElement {
+      connectedCallback() {
+        if (this.resizeObserver) return;
+        this.group = this.querySelector('.countdown-with-marquee__content > .group');
+        this.timer = this.group?.querySelector(':scope > .countdown-timer--style-with-labels-compact');
+        if (!this.timer) return;
+        this.schedule = () => {
+          if (this.frame) return;
+          this.frame = requestAnimationFrame(() => {
+            this.frame = 0;
+            if (!this.isConnected) return;
+            const style = getComputedStyle(this.group);
+            const available = this.group.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+            const units = [...this.timer.querySelectorAll('[data-countdown-unit]')];
+            const minimum = units.reduce((sum, unit) => sum + unit.getBoundingClientRect().width, 0);
+            if (!minimum || !available) return;
+            const desiredGap = parseFloat(style.getPropertyValue('--layout-flow-gap')) || 0;
+            const fit = countdownGroupFit(available, minimum, desiredGap);
+            this.group.style.setProperty('--countdown-content-gap', `${fit.gap}px`);
+            this.toggleAttribute('data-countdown-stacked', fit.stacked);
+            this.setAttribute('data-countdown-layout-ready', '');
+          });
+        };
+        this.resizeObserver = new ResizeObserver(this.schedule);
+        this.resizeObserver.observe(this.group);
+        this.timer.querySelectorAll('[data-countdown-unit]').forEach(unit => this.resizeObserver.observe(unit));
+        this.schedule();
+      }
+      disconnectedCallback() {
+        this.resizeObserver?.disconnect();
+        this.resizeObserver = null;
+        cancelAnimationFrame(this.frame);
+        this.frame = 0;
+        this.group?.style.removeProperty('--countdown-content-gap');
+        this.removeAttribute('data-countdown-layout-ready');
+        this.removeAttribute('data-countdown-stacked');
+      }
+    }
+    customElements.define('countdown-marquee-layout', CountdownMarqueeLayout);
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Countdown with marquee",
+  "class": "section-countdown-with-marquee",
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-3"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Countdown with marquee",
+      "category": "t:general.content",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0
+      },
+      "blocks": [
+        {
+          "type": "_countdown-marquee",
+          "id": "marquee-left",
+          "static": true,
+          "settings": {
+            "animation_speed": 0.6,
+            "animation_direction": "backward",
+            "enable_parallax": false,
+            "gap_desktop": 12,
+            "gap_mobile": 12,
+            "padding_top": 32,
+            "padding_bottom": 32,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 8,
+            "padding_bottom_mobile": 8
+          },
+          "blocks": [
+            {
+              "type": "_marquee-heading",
+              "settings": {
+                "text": "FLASH SALE",
+                "heading_size": "display",
+                "outline": true,
+                "opacity": 40
+              }
+            },
+            {
+              "type": "_marquee-heading",
+              "settings": {
+                "text": "40% OFF",
+                "heading_size": "display",
+                "outline": true,
+                "opacity": 40
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "id": "content",
+          "static": true,
+          "settings": {
+            "direction": "horizontal",
+            "position_horizontal": "center",
+            "horizontal_alignment": "left",
+            "customize_mobile_alignment": true,
+            "alignment_mobile": "left",
+            "gap_desktop": 80,
+            "gap_mobile": 24,
+            "width": "fill",
+            "width_mobile": "fill",
+            "height": "fit",
+            "padding_top": 64,
+            "padding_bottom": 64,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 40,
+            "padding_bottom_mobile": 40,
+            "padding_left_mobile": 24
+          },
+          "blocks": [
+            {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "left",
+                "alignment_mobile": "left",
+                "gap_desktop": 12,
+                "gap_mobile": 12,
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit"
+              },
+              "blocks": [
+                {
+                  "type": "group",
+                  "settings": {
+                    "direction": "vertical",
+                    "alignment": "left",
+                    "alignment_mobile": "left",
+                    "gap_desktop": 8,
+                    "gap_mobile": 8,
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit"
+                  },
+                  "blocks": [
+                    {
+                      "type":  "eyebrow",
+                          "settings": {
+                            "animation_delay": 0,
+                            "animation_type": "none",
+                            "text": "<p>Ends Tonight</p>",
+                            "show_icon": true,
+                            "icon": "square",
+                            "show_background": false
+                          }
+
+                    },
+                    {
+                      "type": "heading",
+                      "settings": {
+                        "animation_delay": 0,
+                        "animation_type": "none",
+                        "text": "<p>Flash Sale</p>",
+                        "html_tag": "h2",
+                        "heading_size": "xl",
+                        "width": "fill"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "animation_delay": 0,
+                    "animation_type": "none",
+                    "text": "<p>Massive discounts on your favorite fits. Go ahead score big savings on our best-selling collection of activewear.</p>",
+                    "text_size": "md",
+                    "width": "fill"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "countdown-timer",
+              "settings": {
+                "style": "with_labels_compact",
+                "show_background": false,
+                "corner_radius": "square",
+                "type": "recurring",
+                "duration_hours": 12,
+                "duration_minutes": 18,
+                "number_size": "display",
+                "label_size": "sm",
+                "color_type": "inherit",
+                "outline_text": false
+              }
+            },
+            {
+              "type": "button",
+              "settings": {
+                "animation_delay": 0,
+                "animation_type": "none",
+                "button_label": "SHOP SALE",
+                "button_style": "primary",
+                "show_icon": false,
+                "width": "fit",
+                "width_mobile": "fit"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_countdown-marquee",
+          "id": "marquee-right",
+          "static": true,
+          "settings": {
+            "animation_speed": 0.6,
+            "animation_direction": "backward",
+            "enable_parallax": false,
+            "gap_desktop": 12,
+            "gap_mobile": 12,
+            "padding_top": 32,
+            "padding_bottom": 32,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 8,
+            "padding_bottom_mobile": 8
+          },
+          "blocks": [
+            {
+              "type": "_marquee-heading",
+              "settings": {
+                "text": "FLASH SALE",
+                "heading_size": "display",
+                "outline": true,
+                "opacity": 40
+              }
+            },
+            {
+              "type": "_marquee-heading",
+              "settings": {
+                "text": "40% OFF",
+                "heading_size": "display",
+                "outline": true,
+                "opacity": 40
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

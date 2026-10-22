@@ -61,7 +61,7 @@
   endunless
 
   assign carousel_pagination_type = block.settings.pagination_type | default: 'bullets'
-  unless carousel_pagination_type == 'progress_bar' or carousel_pagination_type == 'bullets'
+  unless carousel_pagination_type == 'progress_bar' or carousel_pagination_type == 'bullets' or carousel_pagination_type == 'dot'
     assign carousel_pagination_type = 'bullets'
   endunless
   assign carousel_pagination_desktop = true
@@ -152,7 +152,7 @@
       {% capture carousel_navigation_center_style %}
         {% if carousel_pagination_desktop %}
           {% assign carousel_pagination_size = 'var(--swiper-pagination-progressbar-size, 4px)' %}
-          {% if carousel_pagination_type == 'bullets' %}{% assign carousel_pagination_size = 'var(--swiper-pagination-bullet-size, 0.5rem)' %}{% endif %}
+          {% if carousel_pagination_type == 'bullets' or carousel_pagination_type == 'dot' %}{% assign carousel_pagination_size = 'var(--swiper-pagination-bullet-size, 0.5rem)' %}{% endif %}
           --swiper-navigation-center-offset: calc(({{ carousel_pagination_padding_desktop }}px + {{ carousel_pagination_size }}) / 2);
         {% endif %}
       {% endcapture %}
@@ -456,7 +456,7 @@
         {
           "value": "bullets",
           "label": "t:options.collection_pagination.bullets"
-        }
+        }, { "value": "dot", "label": "Dot" }
       ],
       "default": "bullets"
     },

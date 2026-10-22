@@ -1,0 +1,384 @@
+{% doc %}
+  Fixed Kinetra Shop the look action. Adds current variants from the sibling product list.
+  @example
+  {% content_for 'block', type: 'shop-the-look-add-all', id: 'add-all' %}
+{% enddoc %}
+{% liquid
+  assign look_action_width = block.settings.width | default: 'fit'
+  unless look_action_width == 'fit' or look_action_width == 'fill'
+    assign look_action_width = 'fit'
+  endunless
+  assign look_action_width_mobile = block.settings.width_mobile | default: 'fit'
+  unless look_action_width_mobile == 'fit' or look_action_width_mobile == 'fill'
+    assign look_action_width_mobile = 'fit'
+  endunless
+  assign look_action_size_width = 'fit-content'
+  if look_action_width == 'fill'
+    assign look_action_size_width = '100%'
+  endif
+  assign look_action_size_width_mobile = 'fit-content'
+  if look_action_width_mobile == 'fill'
+    assign look_action_size_width_mobile = '100%'
+  endif
+
+  assign look_action_padding_top = block.settings.padding_top | default: 0 | plus: 0
+  assign look_action_padding_bottom = block.settings.padding_bottom | default: 0 | plus: 0
+  assign look_action_padding_left = block.settings.padding_left | default: 0 | plus: 0
+  assign look_action_padding_right = block.settings.padding_right | default: 0 | plus: 0
+  assign look_action_padding_top_mobile = block.settings.padding_top_mobile | default: 0 | plus: 0
+  assign look_action_padding_bottom_mobile = block.settings.padding_bottom_mobile | default: 0 | plus: 0
+  assign look_action_padding_left_mobile = block.settings.padding_left_mobile | default: 0 | plus: 0
+  assign look_action_padding_right_mobile = block.settings.padding_right_mobile | default: 0 | plus: 0
+
+  assign look_action_label = block.settings.button_label | strip
+  if look_action_label == blank
+    assign look_action_label = 'accessibility.shop_the_look_add_all' | t
+  endif
+  assign look_action_icon = blank
+  if block.settings.show_icon
+    assign look_action_icon = block.settings.icon | default: 'arrow_right'
+  endif
+%}
+{% capture look_action_style_attribute %}
+  {% render 'size-style',
+    width: look_action_size_width,
+    width_mobile: look_action_size_width_mobile
+  %}
+  {% if look_action_padding_top != 0 %}--look-action-padding-top: {{ look_action_padding_top }}px;{% endif %}
+  {% if look_action_padding_bottom != 0 %}--look-action-padding-bottom: {{ look_action_padding_bottom }}px;{% endif %}
+  {% if look_action_padding_left != 0 %}--look-action-padding-left: {{ look_action_padding_left }}px;{% endif %}
+  {% if look_action_padding_right != 0 %}--look-action-padding-right: {{ look_action_padding_right }}px;{% endif %}
+  {% if block.settings.customize_mobile_padding %}
+    {% if look_action_padding_top_mobile != look_action_padding_top %}--look-action-padding-top-mobile: {{ look_action_padding_top_mobile }}px;{% endif %}
+    {% if look_action_padding_bottom_mobile != look_action_padding_bottom %}--look-action-padding-bottom-mobile: {{ look_action_padding_bottom_mobile }}px;{% endif %}
+    {% if look_action_padding_left_mobile != look_action_padding_left %}--look-action-padding-left-mobile: {{ look_action_padding_left_mobile }}px;{% endif %}
+    {% if look_action_padding_right_mobile != look_action_padding_right %}--look-action-padding-right-mobile: {{ look_action_padding_right_mobile }}px;{% endif %}
+  {% endif %}
+{% endcapture %}
+{% assign look_action_style_attribute = look_action_style_attribute | strip %}
+
+
+<script data-theme-module="{{ 'shop-the-look-cart.js' | asset_url }}"></script>
+<shop-the-look-cart
+  class="shop-the-look-products__buy-all size-style look-action--width-{{ look_action_width }} look-action--width-mobile-{{ look_action_width_mobile }}"
+  data-section-id="{{ section.id }}"
+  data-block-id="{{ block.id }}"
+  data-error="{{ 'accessibility.shop_the_look_add_error' | t | escape }}"
+  data-unavailable="{{ 'accessibility.shop_the_look_unavailable' | t | escape }}"
+  {% if look_action_style_attribute != blank %}style="{{ look_action_style_attribute }}"{% endif %}
+  {{ block.shopify_attributes }}
+>
+  {% render 'theme-button',
+    label: look_action_label,
+    type: 'button',
+    variant: block.settings.button_style,
+    icon: look_action_icon,
+    icon_position: block.settings.icon_position,
+    icon_size: block.settings.icon_size,
+    icon_width: block.settings.icon_width,
+    loading_dots: true,
+    class: 'shop-the-look-products__add-all',
+    attributes: 'data-look-add-all'
+  %}
+  <p class="form__error" data-look-add-error role="alert" hidden></p>
+</shop-the-look-cart>
+
+{% stylesheet %}
+  .shop-the-look-products__buy-all {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    min-width: 0;
+    gap: 12px;
+    margin-top: 32px;
+    padding-top: var(--look-action-padding-top, 0px);
+    padding-right: var(--look-action-padding-right, 0px);
+    padding-bottom: var(--look-action-padding-bottom, 0px);
+    padding-left: var(--look-action-padding-left, 0px);
+  }
+  .shop-the-look-products__add-all { max-width: 100%; }
+  .look-action--width-fill .shop-the-look-products__add-all { width: 100%; }
+  .shop-the-look-products__buy-all .form__error { margin: 0; }
+  @media (max-width: 767.98px) {
+    .shop-the-look-products__buy-all {
+      padding-top: var(--look-action-padding-top-mobile, var(--look-action-padding-top, 0px));
+      padding-right: var(--look-action-padding-right-mobile, var(--look-action-padding-right, 0px));
+      padding-bottom: var(--look-action-padding-bottom-mobile, var(--look-action-padding-bottom, 0px));
+      padding-left: var(--look-action-padding-left-mobile, var(--look-action-padding-left, 0px));
+    }
+    .look-action--width-mobile-fit .shop-the-look-products__add-all { width: auto; }
+    .look-action--width-mobile-fill .shop-the-look-products__add-all { width: 100%; }
+  }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "Add all to cart",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:general.content"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:labels.button_label"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "t:labels.style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:options.button_variant.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.button_variant.secondary"
+        },
+        {
+          "value": "tertiary",
+          "label": "t:options.button_variant.tertiary"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "t:labels.show_icon",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "t:labels.icon",
+      "options": [
+        {
+          "value": "arrow_right",
+          "label": "Arrow right"
+        },
+        {
+          "value": "long_arrow_right",
+          "label": "Long arrow right"
+        },
+        {
+          "value": "chevron_right",
+          "label": "Chevron"
+        },
+        {
+          "value": "arrow_up_right",
+          "label": "Arrow up right"
+        },
+        {
+          "value": "circle_arrow",
+          "label": "Circle arrow"
+        },
+        {
+          "value": "circle_chevron",
+          "label": "Circle chevron"
+        },
+        {
+          "value": "long_arrow_up",
+          "label": "Long arrow up"
+        },
+        {
+          "value": "double_chevron",
+          "label": "Double chevron"
+        },
+        {
+          "value": "arrow_outline",
+          "label": "Arrow outline"
+        },
+        {
+          "value": "square_chevron",
+          "label": "Square chevron"
+        },
+        {
+          "value": "plus",
+          "label": "Plus"
+        }
+      ],
+      "default": "arrow_right",
+      "visible_if": "{{ block.settings.show_icon }}"
+    },
+    {
+      "type": "select",
+      "id": "icon_position",
+      "label": "t:labels.icon_position",
+      "options": [
+        {
+          "value": "before",
+          "label": "Left"
+        },
+        {
+          "value": "after",
+          "label": "Right"
+        }
+      ],
+      "default": "after",
+      "visible_if": "{{ block.settings.show_icon }}"
+    },
+    {
+      "type": "select",
+      "id": "icon_size",
+      "label": "t:labels.icon_size",
+      "options": [
+        {
+          "value": "inherit",
+          "label": "t:options.icon_size.inherit"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.icon_size.custom"
+        }
+      ],
+      "default": "inherit",
+      "visible_if": "{{ block.settings.show_icon }}"
+    },
+    {
+      "type": "range",
+      "id": "icon_width",
+      "label": "t:labels.icon_width",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20,
+      "visible_if": "{{ block.settings.show_icon and block.settings.icon_size == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.size"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:labels.width",
+      "options": [
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        }
+      ],
+      "default": "fit"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:labels.mobile_width",
+      "options": [
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        }
+      ],
+      "default": "fit"
+    },
+    {
+      "type": "header",
+      "content": "t:general.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:labels.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:labels.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "t:labels.left_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "t:labels.right_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.customize_mobile_padding",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_left_mobile",
+      "label": "t:labels.mobile_left_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_right_mobile",
+      "label": "t:labels.mobile_right_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.customize_mobile_padding }}"
+    }
+  ]
+}
+{% endschema %}

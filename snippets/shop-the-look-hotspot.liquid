@@ -1,0 +1,89 @@
+{% doc %}
+  Kinetra Shop the look hotspot with optional compact product information.
+  @param {product} product - Configured product
+  @param {string} block_id - Product block identity
+  @param {boolean} [placeholder] - Editor placeholder
+  @param {number} x - Desktop horizontal percentage
+  @param {number} y - Desktop vertical percentage
+  @param {number} mobile_x - Mobile horizontal percentage
+  @param {number} mobile_y - Mobile vertical percentage
+{% enddoc %}
+<div class="look-hotspot" data-look-hotspot style="--product-hotspot-x: {{ x }}%; --product-hotspot-y: {{ y }}%; --product-hotspot-x-mobile: {{ mobile_x }}%; --product-hotspot-y-mobile: {{ mobile_y }}%;">
+  {% if product != blank or placeholder %}
+    {% assign hotspot_label = 'accessibility.shop_the_look_product' | t: product: product.title %}
+    {% if product == blank %}{% assign hotspot_label = 'accessibility.shop_the_look_product_placeholder' | t %}{% endif %}
+    <button
+      class="product-callout__hotspot{% if placeholder %} product-callout__hotspot--placeholder{% endif %}"
+      type="button"
+      aria-label="{{ hotspot_label | escape }}"
+      data-product-hotspot
+      data-product-id="{{ product.id }}"
+      data-product-url="{{ product.url | escape }}"
+      data-shop-the-look-block-id="{{ block_id | escape }}"
+    >
+      {% render 'product-callout-hotspot-indicator' %}
+    </button>
+  {% endif %}
+  {% if product != blank %}
+    <a class="look-hotspot__information" href="{{ product.url }}" data-look-hotspot-information hidden>
+      {% if product.featured_image != blank %}
+        {{ product.featured_image | image_url: width: 160 | image_tag: widths: '80, 160', sizes: '64px', loading: 'lazy', class: 'look-hotspot__image', alt: '' }}
+      {% endif %}
+      <span class="look-hotspot__details">
+        <span class="look-hotspot__title">{{ product.title | escape }}</span>
+        {% render 'price', item: product, context: 'product-card', class: 'look-hotspot__price' %}
+      </span>
+    </a>
+  {% endif %}
+</div>
+{% stylesheet %}
+  [data-shop-the-look-hotspots] .look-hotspot {
+    position: absolute;
+    inset-inline-start: var(--product-hotspot-x, 50%);
+    inset-block-start: var(--product-hotspot-y, 50%);
+    width: max-content;
+    height: auto;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+    z-index: 1;
+  }
+  [data-shop-the-look-hotspots] .look-hotspot:has([aria-expanded='true']) { z-index: 5; }
+  .look-hotspot__information {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(calc(-50% + var(--look-info-shift, 0px)));
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: min(288px, calc(100vw - 64px));
+    max-width: var(--look-info-max-width, 288px);
+    padding: 12px;
+    background: var(--background-color);
+    color: var(--body-color);
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
+    pointer-events: auto;
+  }
+  .look-hotspot__information::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: -8px;
+    height: 8px;
+  }
+  .look-hotspot__information[data-above='true']::before { top: auto; bottom: -8px; }
+  .look-hotspot__information[hidden] { display: none; }
+  .look-hotspot__information[data-above='true'] { top: auto; bottom: calc(100% + 8px); }
+  .look-hotspot__image { flex: 0 0 64px; width: 64px; height: 80px; object-fit: cover; }
+  .look-hotspot__details { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .look-hotspot__title { font-family: var(--font-heading-family); font-weight: var(--font-heading-weight); overflow-wrap: anywhere; }
+  .look-hotspot__price { font-size: var(--body-sm-font-size, 1.2rem); }
+  @media (max-width: 767.98px) {
+    [data-shop-the-look-hotspots] .look-hotspot {
+      inset-inline-start: var(--product-hotspot-x-mobile, var(--product-hotspot-x));
+      inset-block-start: var(--product-hotspot-y-mobile, var(--product-hotspot-y));
+    }
+    [data-look-information-mobile='false'] .look-hotspot__information { display: none; }
+  }
+{% endstylesheet %}

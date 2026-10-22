@@ -12,7 +12,7 @@
 
 {% liquid
   assign countdown_style = block.settings.style | default: 'with_labels'
-  unless countdown_style == 'with_labels' or countdown_style == 'inline' or countdown_style == 'inline_superscript' or countdown_style == 'numbers_only' or countdown_style == 'with_labels_colon'
+  unless countdown_style == 'with_labels' or countdown_style == 'inline' or countdown_style == 'inline_superscript' or countdown_style == 'numbers_only' or countdown_style == 'with_labels_colon' or countdown_style == 'with_labels_compact'
     assign countdown_style = 'with_labels'
   endunless
 
@@ -281,7 +281,7 @@
   endcase
 
   assign countdown_outline_allowed = false
-  if countdown_style == 'with_labels' or countdown_style == 'numbers_only' or countdown_style == 'with_labels_colon'
+  if countdown_style == 'with_labels' or countdown_style == 'numbers_only' or countdown_style == 'with_labels_colon' or countdown_style == 'with_labels_compact'
     assign countdown_outline_allowed = true
   endif
 
@@ -338,7 +338,7 @@
       <div class="countdown-timer__unit" data-countdown-unit="hours" data-countdown-unit-label="{{ 'countdown.hours' | t | escape }}">
         <span class="countdown-timer__value{% if countdown_outline_enabled %} virelle-text-outline{% endif %}" data-countdown-value="hours">{{ countdown_hours_display }}</span>
         {% if countdown_style != 'numbers_only' %}
-          <span class="countdown-timer__label" data-countdown-label>{% if countdown_style == 'with_labels_colon' %}{{ 'countdown.hours_short' | t }}{% else %}{{ 'countdown.hours' | t }}{% endif %}</span>
+          <span class="countdown-timer__label" data-countdown-label>{% if countdown_style == 'with_labels_colon' or countdown_style == 'with_labels_compact' %}{{ 'countdown.hours_short' | t }}{% else %}{{ 'countdown.hours' | t }}{% endif %}</span>
         {% endif %}
       </div>
       {% if countdown_style == 'with_labels_colon' %}
@@ -347,7 +347,7 @@
       <div class="countdown-timer__unit" data-countdown-unit="minutes" data-countdown-unit-label="{{ 'countdown.minutes' | t | escape }}">
         <span class="countdown-timer__value{% if countdown_outline_enabled %} virelle-text-outline{% endif %}" data-countdown-value="minutes">{{ countdown_minutes_display }}</span>
         {% if countdown_style != 'numbers_only' %}
-          <span class="countdown-timer__label" data-countdown-label>{% if countdown_style == 'with_labels_colon' %}{{ 'countdown.minutes_short' | t }}{% else %}{{ 'countdown.minutes' | t }}{% endif %}</span>
+          <span class="countdown-timer__label" data-countdown-label>{% if countdown_style == 'with_labels_colon' or countdown_style == 'with_labels_compact' %}{{ 'countdown.minutes_short' | t }}{% else %}{{ 'countdown.minutes' | t }}{% endif %}</span>
         {% endif %}
       </div>
       {% if countdown_style == 'with_labels_colon' %}
@@ -356,7 +356,7 @@
       <div class="countdown-timer__unit" data-countdown-unit="seconds" data-countdown-unit-label="{{ 'countdown.seconds' | t | escape }}">
         <span class="countdown-timer__value{% if countdown_outline_enabled %} virelle-text-outline{% endif %}" data-countdown-value="seconds">{{ countdown_seconds_display }}</span>
         {% if countdown_style != 'numbers_only' %}
-          <span class="countdown-timer__label" data-countdown-label>{% if countdown_style == 'with_labels_colon' %}{{ 'countdown.seconds_short' | t }}{% else %}{{ 'countdown.seconds' | t }}{% endif %}</span>
+          <span class="countdown-timer__label" data-countdown-label>{% if countdown_style == 'with_labels_colon' or countdown_style == 'with_labels_compact' %}{{ 'countdown.seconds_short' | t }}{% else %}{{ 'countdown.seconds' | t }}{% endif %}</span>
         {% endif %}
       </div>
     </div>
@@ -593,6 +593,20 @@
       transition: none;
     }
   }
+  /* Compact labels keep the unboxed campaign timer within narrow content slots. */
+  .countdown-timer--style-with-labels-compact {
+    --countdown-compact-gap: 16px;
+    container-type: inline-size;
+    width: calc(4 * var(--countdown-unit-width, 2ch) + 3 * var(--countdown-compact-gap));
+  }
+  .countdown-timer--style-with-labels-compact .countdown-timer__units {
+    gap: clamp(0px, calc((100cqw - 4 * var(--countdown-unit-width, 2ch)) / 3), var(--countdown-compact-gap));
+  }
+  .countdown-timer--style-with-labels-compact .countdown-timer__unit { min-width: 0; min-height: 0; padding: 0; }
+  .countdown-timer--style-with-labels-compact .countdown-timer__label { margin-top: 0; color: currentColor; letter-spacing: normal; text-transform: none; }
+  @media (min-width: 768px) {
+    .countdown-timer--style-with-labels-compact { --countdown-compact-gap: 64px; }
+  }
 {% endstylesheet %}
 
 {% javascript %}
@@ -779,7 +793,8 @@
         { "value": "numbers_only", "label": "t:options.countdown_style.numbers_only" },
         { "value": "inline", "label": "t:options.countdown_style.inline" },
         { "value": "inline_superscript", "label": "t:options.countdown_style.inline_superscript" },
-        { "value": "with_labels_colon", "label": "t:options.countdown_style.with_labels_colon" }
+        { "value": "with_labels_colon", "label": "t:options.countdown_style.with_labels_colon" },
+        { "value": "with_labels_compact", "label": "Compact labels" }
       ],
       "default": "with_labels"
     },

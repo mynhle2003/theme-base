@@ -300,4 +300,17 @@
   @media (prefers-reduced-motion: reduce) {
     .hero .media__inner { transform: none !important; will-change: auto; }
   }
+
+  .hero--stack .hero__content > .marquee {
+    position: absolute;
+    inset-block-start: 48px;
+    inset-inline: 0;
+    width: 100%;
+    opacity: 0.4;
+  }
+
+  .hero--stack .hero__content > .marquee .marquee-heading-block {
+    letter-spacing: -1.2px;
+  }
+
 {% endstylesheet %}

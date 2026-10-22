@@ -49,6 +49,8 @@
 %}
 
 {% capture scrolling_cards_style %}
+  --scrolling-cards-stack-gap: {{ section.settings.card_gap_desktop | default: 150 }}px;
+  --scrolling-cards-stack-gap-mobile: {{ section.settings.card_gap_mobile | default: 120 }}px;
   --scrolling-cards-header-gap: {{ scrolling_cards_gap_desktop }}px;
   --scrolling-cards-header-gap-mobile: {{ scrolling_cards_gap_mobile }}px;
   --section-padding-top: {{ scrolling_cards_padding_top }}px;
@@ -60,7 +62,11 @@
   {% endif %}
 {% endcapture %}
 
-<script type="module" src="{{ 'scrolling-cards.js' | asset_url }}"></script>
+{% if request.design_mode or section.index <= 2 %}
+  <script type="module" src="{{ 'scrolling-cards.js' | asset_url }}"></script>
+{% else %}
+  <script data-theme-module="{{ 'scrolling-cards.js' | asset_url }}"></script>
+{% endif %}
 
 <div class="section-content-scope scrolling-cards-section scrolling-cards-section--{{ scrolling_cards_section_width }}">
   <div
@@ -71,6 +77,7 @@
       <div
         class="scrolling-cards align-content"
         data-scrolling-cards
+        data-stack-effect="{{ section.settings.stack_effect | default: 'scale' }}"
         data-sticky-mobile="{{ section.settings.enable_sticky_mobile }}"
       >
         {% capture scrolling_cards_header_content %}{% content_for 'block', type: 'header', id: 'header' %}{% endcapture %}
@@ -146,11 +153,19 @@
 {
   "name": "Scrolling cards",
   "class": "section-scrolling-cards",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "max_blocks": 7,
   "blocks": [
-    { "type": "header" },
-    { "type": "scrolling-card" }
+    {
+      "type": "header"
+    },
+    {
+      "type": "scrolling-card"
+    }
   ],
   "settings": [
     {
@@ -162,9 +177,18 @@
       "id": "section_width",
       "label": "Width",
       "options": [
-        { "value": "page_width", "label": "Page" },
-        { "value": "full_width", "label": "Full" },
-        { "value": "custom", "label": "Custom" }
+        {
+          "value": "page_width",
+          "label": "Page"
+        },
+        {
+          "value": "full_width",
+          "label": "Full"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
       ],
       "default": "page_width"
     },
@@ -180,10 +204,50 @@
       "visible_if": "{{ section.settings.section_width == 'custom' }}"
     },
     {
+      "type": "select",
+      "id": "stack_effect",
+      "label": "Stack transition",
+      "options": [
+        {
+          "value": "scale",
+          "label": "Scale"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        }
+      ],
+      "default": "scale"
+    },
+    {
       "type": "checkbox",
       "id": "enable_sticky_mobile",
       "label": "Enable sticky on mobile",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Card spacing"
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "label": "Desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "label": "Mobile",
+      "min": 0,
+      "max": 400,
+      "step": 4,
+      "unit": "px",
+      "default": 120
     },
     {
       "type": "header",
@@ -277,41 +341,142 @@
       "name": "Scrolling cards",
       "category": "Media",
       "settings": {
-        "section_width": "page_width",
-        "enable_sticky_mobile": true,
-        "gap_desktop": 60,
-        "gap_mobile": 40,
-        "color_scheme": "scheme-1",
-        "padding_top": 80,
-        "padding_bottom": 90,
+        "section_width": "custom",
+        "custom_width": 1700,
+        "stack_effect": "fade",
+        "enable_sticky_mobile": false,
+        "gap_desktop": 0,
+        "gap_mobile": 0,
+        "card_gap_desktop": 192,
+        "card_gap_mobile": 48,
+        "color_scheme": "scheme-3",
+        "padding_top": 96,
+        "padding_bottom": 96,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 50,
-        "padding_bottom_mobile": 50
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
       },
       "blocks": [
         {
           "type": "header",
-          "id": "header",
           "static": true,
           "settings": {
-            "width": "fit",
-            "alignment": "center",
-            "customize_mobile_alignment": true,
-            "alignment_mobile": "center",
-            "gap_desktop": 12,
-            "gap_mobile": 8
+            "width": "fill",
+            "gap_desktop": 0,
+            "gap_mobile": 0
+          },
+          "id": "header",
+          "blocks": []
+        },
+        {
+          "type": "scrolling-card",
+          "settings": {
+            "direction": "horizontal",
+            "position": "stretch",
+            "alignment": "left",
+            "vertical_on_mobile": true,
+            "reverse_on_mobile": true,
+            "alignment_mobile": "left",
+            "gap_desktop": 40,
+            "gap_mobile": 24,
+            "corner_radius": "square",
+            "color_scheme": "scheme-3",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
           },
           "blocks": [
             {
-              "type": "heading",
+              "type": "image",
               "settings": {
-                "animation_delay": 50,
-                "animation_type": "slide-bottom",
-                "text": "<p>Scrolling cards</p>",
-                "heading_size": "display",
-                "html_tag": "h2",
-                "width": "fit"
+                "image": "shopify://shop_images/kinetra-empower.avif",
+                "alt_text": "Athlete in black activewear seated in the dunes",
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "image_ratio_desktop": "custom",
+                "image_ratio_custom_width_desktop": 7,
+                "image_ratio_custom_height_desktop": 6,
+                "image_ratio_mobile": "custom",
+                "image_ratio_custom_width_mobile": 7,
+                "image_ratio_custom_height_mobile": 6,
+                "corner_radius": "square"
               }
+            },
+            {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fill",
+                "gap_desktop": 40,
+                "gap_mobile": 16,
+                "position": "space-between",
+                "padding_left": 64,
+                "customize_mobile_padding": true,
+                "padding_left_mobile": 0,
+                "padding_top": 40,
+                "padding_bottom": 40,
+                "padding_right": 0,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_right_mobile": 0,
+                "appearance_type": "inherit"
+              },
+              "blocks": [
+                {
+                  "type": "header",
+                  "settings": {
+                    "width": "fill",
+                    "inherit_alignment": false,
+                    "alignment": "left",
+                    "customize_mobile_alignment": true,
+                    "alignment_mobile": "left",
+                    "gap_desktop": 16,
+                    "gap_mobile": 4
+                  },
+                  "blocks": [
+                    {
+                      "type":  "eyebrow",
+                          "settings": {
+                            "text": "<p>Together</p>",
+                            "show_icon": true,
+                            "icon": "square"
+                          ,
+                        "animation_type": "fade",
+                        "animation_delay": 0}
+
+                    },
+                    {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>Empower. Inspire. Belong</p>",
+                        "heading_size": "xl",
+                        "html_tag": "h2",
+                        "width": "fill"
+                      ,
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50}
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>At the heart of our activewear collection is the belief that every woman deserves to feel empowered. Our designs are crafted to enhance your natural strength and confidence, allowing you to tackle any challenge that comes your way.</p>",
+                    "text_size": "md",
+                    "width": "fill"
+                  ,
+                    "animation_type": "fade",
+                    "animation_delay": 100}
+                }
+              ]
             }
           ]
         },
@@ -319,67 +484,75 @@
           "type": "scrolling-card",
           "settings": {
             "direction": "horizontal",
-            "position": "top",
+            "position": "stretch",
             "alignment": "left",
             "vertical_on_mobile": true,
+            "reverse_on_mobile": true,
             "alignment_mobile": "left",
-            "gap_desktop": 50,
-            "gap_mobile": 40,
-            "border_thickness": 0,
-            "corner_radius": "inherit",
-            "shadow": "none",
-            "background_media": "image",
-            "show_overlay": true,
-            "overlay_color": "#16070080",
-            "backdrop_blur": 30,
+            "gap_desktop": 40,
+            "gap_mobile": 24,
+            "corner_radius": "square",
             "color_scheme": "scheme-3",
-            "padding_top": 70,
-            "padding_bottom": 70,
-            "padding_left": 50,
-            "padding_right": 50,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
             "customize_mobile_padding": true,
-            "padding_top_mobile": 40,
-            "padding_bottom_mobile": 30,
-            "padding_left_mobile": 16,
-            "padding_right_mobile": 16
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
           },
           "blocks": [
+            {
+              "type": "image",
+              "settings": {
+                "image": "shopify://shop_images/kinetra-inspire.avif",
+                "alt_text": "Athlete in pale pink activewear on the beach",
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "image_ratio_desktop": "custom",
+                "image_ratio_custom_width_desktop": 7,
+                "image_ratio_custom_height_desktop": 6,
+                "image_ratio_mobile": "custom",
+                "image_ratio_custom_width_mobile": 7,
+                "image_ratio_custom_height_mobile": 6,
+                "corner_radius": "square"
+              }
+            },
             {
               "type": "group",
               "settings": {
                 "direction": "vertical",
-                "alignment": "left",
                 "width": "fill",
+                "width_mobile": "fill",
                 "height": "fill",
-                "gap_desktop": 16,
-                "gap_mobile": 12,
-                "appearance_type": "inherit",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none"
+                "gap_desktop": 40,
+                "gap_mobile": 16,
+                "position": "bottom",
+                "padding_left": 64,
+                "customize_mobile_padding": true,
+                "padding_left_mobile": 0,
+                "padding_top": 40,
+                "padding_bottom": 40,
+                "padding_right": 0,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_right_mobile": 0,
+                "appearance_type": "inherit"
               },
               "blocks": [
-                { "type": "eyebrow", "settings": {
-  "animation_delay": 0,
-  "animation_type": "fade", "text": "<p>Eyebrow</p>", "show_background": true, "corner_radius": "pill" } },
-                { "type": "spacer", "settings": { "unit_desktop": "pixel", "size_desktop_px": 80, "show_on_mobile": true, "unit_mobile": "pixel", "size_mobile_px": 40 } },
-                { "type": "heading", "settings": {
-  "animation_delay": 50,
-  "animation_type": "slide-bottom", "text": "<p>Heading</p>", "heading_size": "display", "html_tag": "h3", "width": "fit" } },
-                { "type": "text", "settings": {
-  "animation_delay": 100,
-  "animation_type": "fade", "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>", "text_size": "sm", "width": "custom", "max_width": 500 } }
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>We believe that inspiration can be found in every moment. Our activewear is not just about style; it’s about motivating you to pursue your passions and dreams. Each piece is designed to ignite your spirit and encourage you to push beyond your limits.</p>",
+                    "text_size": "md",
+                    "width": "fill"
+                  ,
+                    "animation_type": "fade",
+                    "animation_delay": 100}
+                }
               ]
-            },
-            {
-              "type": "image",
-              "settings": {
-                "image_ratio_desktop": "landscape",
-                "image_ratio_mobile": "landscape",
-                "width_desktop": "fill",
-                "width_mobile": "fill",
-                "corner_radius": "square"
-              }
             }
           ]
         },
@@ -387,135 +560,75 @@
           "type": "scrolling-card",
           "settings": {
             "direction": "horizontal",
-            "position": "top",
+            "position": "stretch",
             "alignment": "left",
             "vertical_on_mobile": true,
+            "reverse_on_mobile": true,
             "alignment_mobile": "left",
-            "gap_desktop": 50,
-            "gap_mobile": 40,
-            "border_thickness": 0,
-            "corner_radius": "inherit",
-            "shadow": "none",
-            "background_media": "image",
-            "show_overlay": true,
-            "overlay_color": "#16070080",
-            "backdrop_blur": 30,
+            "gap_desktop": 40,
+            "gap_mobile": 24,
+            "corner_radius": "square",
             "color_scheme": "scheme-3",
-            "padding_top": 70,
-            "padding_bottom": 70,
-            "padding_left": 50,
-            "padding_right": 50,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
             "customize_mobile_padding": true,
-            "padding_top_mobile": 40,
-            "padding_bottom_mobile": 30,
-            "padding_left_mobile": 16,
-            "padding_right_mobile": 16
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
           },
           "blocks": [
+            {
+              "type": "image",
+              "settings": {
+                "image": "shopify://shop_images/kinetra-belong.avif",
+                "alt_text": "Athlete in black activewear seated in shallow water",
+                "width_desktop": "fill",
+                "width_mobile": "fill",
+                "image_ratio_desktop": "custom",
+                "image_ratio_custom_width_desktop": 7,
+                "image_ratio_custom_height_desktop": 6,
+                "image_ratio_mobile": "custom",
+                "image_ratio_custom_width_mobile": 7,
+                "image_ratio_custom_height_mobile": 6,
+                "corner_radius": "square"
+              }
+            },
             {
               "type": "group",
               "settings": {
                 "direction": "vertical",
-                "alignment": "left",
                 "width": "fill",
+                "width_mobile": "fill",
                 "height": "fill",
-                "gap_desktop": 16,
-                "gap_mobile": 12,
-                "appearance_type": "inherit",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none"
+                "gap_desktop": 40,
+                "gap_mobile": 16,
+                "position": "bottom",
+                "padding_left": 64,
+                "customize_mobile_padding": true,
+                "padding_left_mobile": 0,
+                "padding_top": 40,
+                "padding_bottom": 40,
+                "padding_right": 0,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_right_mobile": 0,
+                "appearance_type": "inherit"
               },
               "blocks": [
-                { "type": "eyebrow", "settings": {
-  "animation_delay": 0,
-  "animation_type": "fade", "text": "<p>Eyebrow</p>", "show_background": true, "corner_radius": "pill" } },
-                { "type": "spacer", "settings": { "unit_desktop": "pixel", "size_desktop_px": 80, "show_on_mobile": true, "unit_mobile": "pixel", "size_mobile_px": 40 } },
-                { "type": "heading", "settings": {
-  "animation_delay": 50,
-  "animation_type": "slide-bottom", "text": "<p>Heading</p>", "heading_size": "display", "html_tag": "h3", "width": "fit" } },
-                { "type": "text", "settings": {
-  "animation_delay": 100,
-  "animation_type": "fade", "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>", "text_size": "sm", "width": "custom", "max_width": 500 } }
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Every movement counts, and our activewear is designed to move with you. Whether you're practicing yoga, lifting weights, or enjoying a leisurely walk, our clothing provides the comfort and flexibility you need.</p>",
+                    "text_size": "md",
+                    "width": "fill"
+                  ,
+                    "animation_type": "fade",
+                    "animation_delay": 100}
+                }
               ]
-            },
-            {
-              "type": "image",
-              "settings": {
-                "image_ratio_desktop": "landscape",
-                "image_ratio_mobile": "landscape",
-                "width_desktop": "fill",
-                "width_mobile": "fill",
-                "corner_radius": "square"
-              }
-            }
-          ]
-        },
-        {
-          "type": "scrolling-card",
-          "settings": {
-            "direction": "horizontal",
-            "position": "top",
-            "alignment": "left",
-            "vertical_on_mobile": true,
-            "alignment_mobile": "left",
-            "gap_desktop": 50,
-            "gap_mobile": 40,
-            "border_thickness": 0,
-            "corner_radius": "inherit",
-            "shadow": "none",
-            "background_media": "image",
-            "show_overlay": true,
-            "overlay_color": "#16070080",
-            "backdrop_blur": 30,
-            "color_scheme": "scheme-3",
-            "padding_top": 70,
-            "padding_bottom": 70,
-            "padding_left": 50,
-            "padding_right": 50,
-            "customize_mobile_padding": true,
-            "padding_top_mobile": 40,
-            "padding_bottom_mobile": 30,
-            "padding_left_mobile": 16,
-            "padding_right_mobile": 16
-          },
-          "blocks": [
-            {
-              "type": "group",
-              "settings": {
-                "direction": "vertical",
-                "alignment": "left",
-                "width": "fill",
-                "height": "fill",
-                "gap_desktop": 16,
-                "gap_mobile": 12,
-                "appearance_type": "inherit",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none"
-              },
-              "blocks": [
-                { "type": "eyebrow", "settings": {
-  "animation_delay": 0,
-  "animation_type": "fade", "text": "<p>Eyebrow</p>", "show_background": true, "corner_radius": "pill" } },
-                { "type": "spacer", "settings": { "unit_desktop": "pixel", "size_desktop_px": 80, "show_on_mobile": true, "unit_mobile": "pixel", "size_mobile_px": 40 } },
-                { "type": "heading", "settings": {
-  "animation_delay": 50,
-  "animation_type": "slide-bottom", "text": "<p>Heading</p>", "heading_size": "display", "html_tag": "h3", "width": "fit" } },
-                { "type": "text", "settings": {
-  "animation_delay": 100,
-  "animation_type": "fade", "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>", "text_size": "sm", "width": "custom", "max_width": 500 } }
-              ]
-            },
-            {
-              "type": "image",
-              "settings": {
-                "image_ratio_desktop": "landscape",
-                "image_ratio_mobile": "landscape",
-                "width_desktop": "fill",
-                "width_mobile": "fill",
-                "corner_radius": "square"
-              }
             }
           ]
         }

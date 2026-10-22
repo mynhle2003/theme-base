@@ -350,13 +350,13 @@
 }
 
 
-.swiper > .swiper-pagination[data-autoplay-clock]:is([data-pagination-type='bullets'], .swiper-pagination-bullets) .swiper-pagination-bullet-active::after {
+.swiper > .swiper-pagination[data-autoplay-clock]:not([data-pagination-type='dot']):is([data-pagination-type='bullets'], .swiper-pagination-bullets) .swiper-pagination-bullet-active::after {
   animation: none;
   transform: translate(-50%, -50%);
   clip-path: inset(0 var(--carousel-autoplay-remaining, 100%) 0 0 round var(--swiper-pagination-bullet-border-radius, 1000px));
 }
 
-.swiper.swiper-rtl > .swiper-pagination[data-autoplay-clock]:is([data-pagination-type='bullets'], .swiper-pagination-bullets) .swiper-pagination-bullet-active::after {
+.swiper.swiper-rtl > .swiper-pagination[data-autoplay-clock]:not([data-pagination-type='dot']):is([data-pagination-type='bullets'], .swiper-pagination-bullets) .swiper-pagination-bullet-active::after {
   clip-path: inset(0 0 0 var(--carousel-autoplay-remaining, 100%) round var(--swiper-pagination-bullet-border-radius, 1000px));
 }
 
@@ -369,4 +369,25 @@
 
 .swiper.swiper-rtl > .swiper-pagination-progressbar[data-autoplay-clock] .swiper-pagination-progressbar-fill {
   clip-path: inset(0 0 0 var(--carousel-autoplay-remaining, 100%) round var(--swiper-pagination-progressbar-border-radius, 0px));
+}
+
+.swiper > .swiper-pagination[data-pagination-type='dot'] {
+  --swiper-pagination-bullet-gap: 0px;
+  --swiper-pagination-bullet-width: 8px;
+  --swiper-pagination-bullet-height: 8px;
+  --swiper-pagination-bullet-active-width: 8px;
+  --swiper-pagination-bullet-active-height: 8px;
+  --swiper-pagination-bullet-hit-width: 24px;
+  --swiper-pagination-bullet-active-hit-width: 24px;
+  --swiper-pagination-bullet-border-radius: 50%;
+}
+
+.swiper > .swiper-pagination[data-pagination-type='dot'] .swiper-pagination-bullet-active::after {
+  clip-path: none;
+  transform: translate(-50%, -50%);
+}
+
+.swiper > .swiper-pagination[data-pagination-type='dot'] .swiper-pagination-bullet:focus-visible {
+  outline: 2px solid var(--swiper-pagination-color, var(--body-color));
+  outline-offset: 2px;
 }

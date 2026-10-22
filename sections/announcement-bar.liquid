@@ -72,17 +72,21 @@
     </div>
   {% endif %}
   <div class="announcement-bar__inner">
+    {% if announcement_type == 'slider' %}
     <button class="announcement-bar__control announcement-bar__control--previous" type="button" data-announcement-previous aria-label="Previous announcement">
       {% render 'carousel-navigation-icon', icon: announcement_navigation_icon, direction: 'previous' %}
     </button>
+    {% endif %}
     <div class="announcement-bar__viewport" data-announcement-viewport>
       <div class="announcement-bar__slides" data-announcement-track>
         {% content_for 'blocks' %}
       </div>
     </div>
+    {% if announcement_type == 'slider' %}
     <button class="announcement-bar__control announcement-bar__control--next" type="button" data-announcement-next aria-label="Next announcement">
       {% render 'carousel-navigation-icon', icon: announcement_navigation_icon, direction: 'next' %}
     </button>
+    {% endif %}
   </div>
 </div>
 

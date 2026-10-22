@@ -337,330 +337,270 @@
       "name": "t:general.timeline",
       "category": "Text",
       "settings": {
-        "section_width": "page_width",
-        "desktop_alignment": "left",
-        "mobile_alignment": "left",
-        "gap_desktop": 32,
-        "gap_mobile": 24,
-        "color_scheme": "scheme-1",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "customize_mobile_padding": false
+        "color_scheme": "scheme-2",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48,
+        "section_width": "page_width"
       },
       "blocks": [
         {
           "type": "header",
-          "id": "header",
+          "settings": {},
           "static": true,
-          "settings": {
-            "width": "fill",
-            "alignment": "center",
-            "gap_desktop": 12,
-            "gap_mobile": 8
-          },
-          "blocks": [
-            {
-              "type": "eyebrow",
-              "settings": {
-                "animation_delay": 0,
-                "animation_type": "fade",
-                "text": "<p>SECTION TAG</p>"
-              }
-            },
-            {
-              "type": "heading",
-              "settings": {
-                "animation_delay": 50,
-                "animation_type": "slide-bottom",
-                "text": "<p>Main Heading Text Placeholder</p>",
-                "heading_size": "display",
-                "html_tag": "h2"
-              }
-            }
-          ]
+          "id": "header",
+          "blocks": []
         },
         {
           "type": "timeline-list",
-          "id": "timeline-list",
-          "static": true,
           "settings": {
-            "transition_style": "slide",
-            "show_next_slide_preview": false,
-            "gap_desktop": 16,
-            "gap_mobile": 12,
-            "show_navigation_on_desktop": true,
-            "navigation_position": "inside",
-            "navigation_behavior": "show_on_hover",
-            "navigation_style": "secondary",
-            "navigation_icon": "chevron",
             "pagination_style": "dots_with_progress",
-            "position": "bottom"
+            "position": "bottom",
+            "show_navigation_on_desktop": true,
+            "navigation_icon": "chevron",
+            "navigation_style": "primary",
+            "controls_spacing_desktop": 56,
+            "controls_spacing_mobile": 40,
+            "show_next_slide_preview": false,
+            "transition_style": "slide",
+            "navigation_position": "content_bottom",
+            "active_color": "#181818",
+            "inactive_color": "#CCCCCC"
           },
+          "static": true,
+          "id": "timeline-list",
           "blocks": [
             {
               "type": "timeline-slide",
               "settings": {
-                "timeline_label": "2014",
+                "timeline_label": "2010",
                 "direction": "horizontal",
-                "position_horizontal": "center",
-                "horizontal_alignment": "left",
-                "customize_mobile_alignment": true,
-                "alignment_mobile": "left",
                 "alignment": "left",
-                "gap_desktop": 24,
-                "gap_mobile": 16,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "color_scheme": "scheme-1",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none",
-                "customize_mobile_padding": false
+                "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 32,
+                "customize_mobile_alignment": true,
+                "position_horizontal": "top",
+                "height": "fit"
               },
               "blocks": [
+                {
+                  "type": "image",
+                  "settings": {
+                    "image": "shopify://shop_images/kinetra-timeline-2010.avif",
+                    "alt_text": "Sewing patterns, fabric and spools of thread",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_custom_width_desktop": 3,
+                    "image_ratio_custom_height_desktop": 2,
+                    "image_ratio_mobile": "custom",
+                    "image_ratio_custom_width_mobile": 3,
+                    "image_ratio_custom_height_mobile": 2,
+                    "corner_radius": "square"
+                  }
+                },
                 {
                   "type": "group",
                   "settings": {
                     "direction": "vertical",
-                    "alignment": "left",
                     "width": "fill",
+                    "width_mobile": "fill",
                     "height": "fit",
-                    "gap_desktop": 16,
-                    "gap_mobile": 12,
-                    "appearance_type": "inherit",
-                    "border_type": "none",
-                    "corner_radius": "square",
-                    "shadow": "none"
+                    "gap_desktop": 0,
+                    "gap_mobile": 0,
+                    "position": "top",
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "customize_mobile_padding": true,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
                   },
                   "blocks": [
                     {
-                      "type": "eyebrow",
+                      "type": "group",
                       "settings": {
-                        "animation_delay": 0,
-                        "animation_type": "fade",
-                        "text": "<p>SECTION TAG</p>"
-                      }
-                    },
-                    {
-                      "type": "heading",
-                      "settings": {
-                        "animation_delay": 50,
-                        "animation_type": "slide-bottom",
-                        "text": "<p>The beginning</p>",
-                        "heading_size": "display",
-                        "html_tag": "h3"
-                      }
-                    },
-                    {
-                      "type": "text",
-                      "settings": {
-                        "animation_delay": 100,
-                        "animation_type": "fade",
-                        "text": "<p>Share the moment that made this year important. Add a short story to support the heading above.</p>",
-                        "text_size": "md"
-                      }
-                    },
-                    {
-                      "type": "buttons",
-                      "settings": {
-                        "button_1_label": "Button label",
-                        "button_1_link": "/",
-                        "button_1_style": "primary",
-                        "direction": "row",
-                        "width": "fit",
-                        "gap": 12,
-                        "gap_mobile": 12
-                      }
+                        "direction": "vertical",
+                        "width": "fill",
+                        "width_mobile": "fill",
+                        "height": "fit",
+                        "gap_desktop": 16,
+                        "gap_mobile": 12,
+                        "position": "top",
+                        "padding_left": 64,
+                        "padding_right": 64,
+                        "customize_mobile_padding": true,
+                        "padding_left_mobile": 0,
+                        "padding_right_mobile": 0
+                      },
+                      "blocks": [
+                        {
+                          "type": "group",
+                          "settings": {
+                            "direction": "vertical",
+                            "width": "fill",
+                            "width_mobile": "fill",
+                            "height": "fit",
+                            "position": "top",
+                            "gap_desktop": 8,
+                            "gap_mobile": 8
+                          },
+                          "blocks": [
+                            {
+                              "type":  "eyebrow",
+                                  "settings": {
+                                    "text": "<p>The Beginning of a Vision</p>",
+                                    "show_icon": true,
+                                    "icon": "square"
+                                  ,
+                                "animation_type": "fade",
+                                "animation_delay": 0}
+
+                            },
+                            {
+                              "type": "heading",
+                              "settings": {
+                                "text": "<p>2010</p>",
+                                "heading_size": "xl",
+                                "html_tag": "h2",
+                                "width": "fill"
+                              ,
+                                "animation_type": "slide-bottom",
+                                "animation_delay": 50}
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>In 2010, our journey began with a vision to create activewear that empowers women. We launched our first collection, focusing on stylish and functional designs that cater to women's unique needs.</p>",
+                            "text_size": "md",
+                            "width": "fill"
+                          ,
+                            "animation_type": "fade",
+                            "animation_delay": 100}
+                        }
+                      ]
                     }
                   ]
-                },
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "width_desktop": "fill",
-                    "show_image_first_mobile": true,
-                    "image_ratio_mobile": "square",
-                    "width_mobile": "fill"
-                  }
                 }
               ]
             },
             {
               "type": "timeline-slide",
               "settings": {
-                "timeline_label": "2016",
+                "timeline_label": "2015",
                 "direction": "horizontal",
-                "position_horizontal": "center",
-                "horizontal_alignment": "left",
-                "customize_mobile_alignment": true,
-                "alignment_mobile": "left",
                 "alignment": "left",
-                "gap_desktop": 24,
-                "gap_mobile": 16,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "color_scheme": "scheme-1",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none",
-                "customize_mobile_padding": false
+                "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 32,
+                "customize_mobile_alignment": true,
+                "position_horizontal": "top",
+                "height": "fit"
               },
               "blocks": [
+                {
+                  "type": "image",
+                  "settings": {
+                    "image": "shopify://shop_images/kinetra-timeline-2015.avif",
+                    "alt_text": "Hands stitching ochre activewear fabric in a sunlit atelier",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_custom_width_desktop": 3,
+                    "image_ratio_custom_height_desktop": 2,
+                    "image_ratio_mobile": "custom",
+                    "image_ratio_custom_width_mobile": 3,
+                    "image_ratio_custom_height_mobile": 2,
+                    "corner_radius": "square"
+                  }
+                },
                 {
                   "type": "group",
                   "settings": {
                     "direction": "vertical",
-                    "alignment": "left",
                     "width": "fill",
+                    "width_mobile": "fill",
                     "height": "fit",
-                    "gap_desktop": 16,
-                    "gap_mobile": 12,
-                    "appearance_type": "inherit",
-                    "border_type": "none",
-                    "corner_radius": "square",
-                    "shadow": "none"
+                    "gap_desktop": 0,
+                    "gap_mobile": 0,
+                    "position": "top",
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "customize_mobile_padding": true,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
                   },
                   "blocks": [
                     {
-                      "type": "eyebrow",
+                      "type": "group",
                       "settings": {
-                        "animation_delay": 0,
-                        "animation_type": "fade",
-                        "text": "<p>SECTION TAG</p>"
-                      }
-                    },
-                    {
-                      "type": "heading",
-                      "settings": {
-                        "animation_delay": 50,
-                        "animation_type": "slide-bottom",
-                        "text": "<p>Our first milestone</p>",
-                        "heading_size": "display",
-                        "html_tag": "h3"
-                      }
-                    },
-                    {
-                      "type": "text",
-                      "settings": {
-                        "animation_delay": 100,
-                        "animation_type": "fade",
-                        "text": "<p>Share the moment that made this year important. Add a short story to support the heading above.</p>",
-                        "text_size": "md"
-                      }
-                    },
-                    {
-                      "type": "buttons",
-                      "settings": {
-                        "button_1_label": "Button label",
-                        "button_1_link": "/",
-                        "button_1_style": "primary",
-                        "direction": "row",
-                        "width": "fit",
-                        "gap": 12,
-                        "gap_mobile": 12
-                      }
+                        "direction": "vertical",
+                        "width": "fill",
+                        "width_mobile": "fill",
+                        "height": "fit",
+                        "gap_desktop": 16,
+                        "gap_mobile": 12,
+                        "position": "top",
+                        "padding_left": 64,
+                        "padding_right": 64,
+                        "customize_mobile_padding": true,
+                        "padding_left_mobile": 0,
+                        "padding_right_mobile": 0
+                      },
+                      "blocks": [
+                        {
+                          "type": "group",
+                          "settings": {
+                            "direction": "vertical",
+                            "width": "fill",
+                            "width_mobile": "fill",
+                            "height": "fit",
+                            "position": "top",
+                            "gap_desktop": 8,
+                            "gap_mobile": 8
+                          },
+                          "blocks": [
+                            {
+                              "type":  "eyebrow",
+                                  "settings": {
+                                    "text": "<p>Crafted for Every Move</p>",
+                                    "show_icon": true,
+                                    "icon": "square"
+                                  ,
+                                "animation_type": "fade",
+                                "animation_delay": 0}
+
+                            },
+                            {
+                              "type": "heading",
+                              "settings": {
+                                "text": "<p>2015</p>",
+                                "heading_size": "xl",
+                                "html_tag": "h2",
+                                "width": "fill"
+                              ,
+                                "animation_type": "slide-bottom",
+                                "animation_delay": 50}
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>In 2015, we refined our collection with thoughtful details made for everyday movement. From supportive seams to soft, flexible fabrics, each piece brought comfort and confidence to women's active lives.</p>",
+                            "text_size": "md",
+                            "width": "fill"
+                          ,
+                            "animation_type": "fade",
+                            "animation_delay": 100}
+                        }
+                      ]
                     }
                   ]
-                },
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "width_desktop": "fill",
-                    "show_image_first_mobile": true,
-                    "image_ratio_mobile": "square",
-                    "width_mobile": "fill"
-                  }
-                }
-              ]
-            },
-            {
-              "type": "timeline-slide",
-              "settings": {
-                "timeline_label": "2018",
-                "direction": "horizontal",
-                "position_horizontal": "center",
-                "horizontal_alignment": "left",
-                "customize_mobile_alignment": true,
-                "alignment_mobile": "left",
-                "alignment": "left",
-                "gap_desktop": 24,
-                "gap_mobile": 16,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "color_scheme": "scheme-1",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none",
-                "customize_mobile_padding": false
-              },
-              "blocks": [
-                {
-                  "type": "group",
-                  "settings": {
-                    "direction": "vertical",
-                    "alignment": "left",
-                    "width": "fill",
-                    "height": "fit",
-                    "gap_desktop": 16,
-                    "gap_mobile": 12,
-                    "appearance_type": "inherit",
-                    "border_type": "none",
-                    "corner_radius": "square",
-                    "shadow": "none"
-                  },
-                  "blocks": [
-                    {
-                      "type": "eyebrow",
-                      "settings": {
-                        "animation_delay": 0,
-                        "animation_type": "fade",
-                        "text": "<p>SECTION TAG</p>"
-                      }
-                    },
-                    {
-                      "type": "heading",
-                      "settings": {
-                        "animation_delay": 50,
-                        "animation_type": "slide-bottom",
-                        "text": "<p>Growing together</p>",
-                        "heading_size": "display",
-                        "html_tag": "h3"
-                      }
-                    },
-                    {
-                      "type": "text",
-                      "settings": {
-                        "animation_delay": 100,
-                        "animation_type": "fade",
-                        "text": "<p>Share the moment that made this year important. Add a short story to support the heading above.</p>",
-                        "text_size": "md"
-                      }
-                    },
-                    {
-                      "type": "buttons",
-                      "settings": {
-                        "button_1_label": "Button label",
-                        "button_1_link": "/",
-                        "button_1_style": "primary",
-                        "direction": "row",
-                        "width": "fit",
-                        "gap": 12,
-                        "gap_mobile": 12
-                      }
-                    }
-                  ]
-                },
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "width_desktop": "fill",
-                    "show_image_first_mobile": true,
-                    "image_ratio_mobile": "square",
-                    "width_mobile": "fill"
-                  }
                 }
               ]
             },
@@ -669,176 +609,230 @@
               "settings": {
                 "timeline_label": "2020",
                 "direction": "horizontal",
-                "position_horizontal": "center",
-                "horizontal_alignment": "left",
-                "customize_mobile_alignment": true,
-                "alignment_mobile": "left",
                 "alignment": "left",
-                "gap_desktop": 24,
-                "gap_mobile": 16,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "color_scheme": "scheme-1",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none",
-                "customize_mobile_padding": false
+                "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 32,
+                "customize_mobile_alignment": true,
+                "position_horizontal": "top",
+                "height": "fit"
               },
               "blocks": [
+                {
+                  "type": "image",
+                  "settings": {
+                    "image": "shopify://shop_images/kinetra-timeline-2020.avif",
+                    "alt_text": "Ochre activewear samples with fabric swatches and sewing patterns",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_custom_width_desktop": 3,
+                    "image_ratio_custom_height_desktop": 2,
+                    "image_ratio_mobile": "custom",
+                    "image_ratio_custom_width_mobile": 3,
+                    "image_ratio_custom_height_mobile": 2,
+                    "corner_radius": "square"
+                  }
+                },
                 {
                   "type": "group",
                   "settings": {
                     "direction": "vertical",
-                    "alignment": "left",
                     "width": "fill",
+                    "width_mobile": "fill",
                     "height": "fit",
-                    "gap_desktop": 16,
-                    "gap_mobile": 12,
-                    "appearance_type": "inherit",
-                    "border_type": "none",
-                    "corner_radius": "square",
-                    "shadow": "none"
+                    "gap_desktop": 0,
+                    "gap_mobile": 0,
+                    "position": "top",
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "customize_mobile_padding": true,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
                   },
                   "blocks": [
                     {
-                      "type": "eyebrow",
+                      "type": "group",
                       "settings": {
-                        "animation_delay": 0,
-                        "animation_type": "fade",
-                        "text": "<p>SECTION TAG</p>"
-                      }
-                    },
-                    {
-                      "type": "heading",
-                      "settings": {
-                        "animation_delay": 50,
-                        "animation_type": "slide-bottom",
-                        "text": "<p>A new chapter</p>",
-                        "heading_size": "display",
-                        "html_tag": "h3"
-                      }
-                    },
-                    {
-                      "type": "text",
-                      "settings": {
-                        "animation_delay": 100,
-                        "animation_type": "fade",
-                        "text": "<p>Share the moment that made this year important. Add a short story to support the heading above.</p>",
-                        "text_size": "md"
-                      }
-                    },
-                    {
-                      "type": "buttons",
-                      "settings": {
-                        "button_1_label": "Button label",
-                        "button_1_link": "/",
-                        "button_1_style": "primary",
-                        "direction": "row",
-                        "width": "fit",
-                        "gap": 12,
-                        "gap_mobile": 12
-                      }
+                        "direction": "vertical",
+                        "width": "fill",
+                        "width_mobile": "fill",
+                        "height": "fit",
+                        "gap_desktop": 16,
+                        "gap_mobile": 12,
+                        "position": "top",
+                        "padding_left": 64,
+                        "padding_right": 64,
+                        "customize_mobile_padding": true,
+                        "padding_left_mobile": 0,
+                        "padding_right_mobile": 0
+                      },
+                      "blocks": [
+                        {
+                          "type": "group",
+                          "settings": {
+                            "direction": "vertical",
+                            "width": "fill",
+                            "width_mobile": "fill",
+                            "height": "fit",
+                            "position": "top",
+                            "gap_desktop": 8,
+                            "gap_mobile": 8
+                          },
+                          "blocks": [
+                            {
+                              "type":  "eyebrow",
+                                  "settings": {
+                                    "text": "<p>Designed to Move with You</p>",
+                                    "show_icon": true,
+                                    "icon": "square"
+                                  ,
+                                "animation_type": "fade",
+                                "animation_delay": 0}
+
+                            },
+                            {
+                              "type": "heading",
+                              "settings": {
+                                "text": "<p>2020</p>",
+                                "heading_size": "xl",
+                                "html_tag": "h2",
+                                "width": "fill"
+                              ,
+                                "animation_type": "slide-bottom",
+                                "animation_delay": 50}
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>In 2020, we explored new textures and versatile designs for changing routines. Our activewear balanced gentle support with freedom of movement, helping women feel comfortable from a morning stretch to the rest of their day.</p>",
+                            "text_size": "md",
+                            "width": "fill"
+                          ,
+                            "animation_type": "fade",
+                            "animation_delay": 100}
+                        }
+                      ]
                     }
                   ]
-                },
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "width_desktop": "fill",
-                    "show_image_first_mobile": true,
-                    "image_ratio_mobile": "square",
-                    "width_mobile": "fill"
-                  }
                 }
               ]
             },
             {
               "type": "timeline-slide",
               "settings": {
-                "timeline_label": "2022",
+                "timeline_label": "2025",
                 "direction": "horizontal",
-                "position_horizontal": "center",
-                "horizontal_alignment": "left",
-                "customize_mobile_alignment": true,
-                "alignment_mobile": "left",
                 "alignment": "left",
-                "gap_desktop": 24,
-                "gap_mobile": 16,
-                "height": "fill",
-                "appearance_type": "inherit",
-                "color_scheme": "scheme-1",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none",
-                "customize_mobile_padding": false
+                "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 32,
+                "customize_mobile_alignment": true,
+                "position_horizontal": "top",
+                "height": "fit"
               },
               "blocks": [
+                {
+                  "type": "image",
+                  "settings": {
+                    "image": "shopify://shop_images/kinetra-timeline-2025.avif",
+                    "alt_text": "Finished ochre activewear set with tailoring tools and paper patterns",
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_custom_width_desktop": 3,
+                    "image_ratio_custom_height_desktop": 2,
+                    "image_ratio_mobile": "custom",
+                    "image_ratio_custom_width_mobile": 3,
+                    "image_ratio_custom_height_mobile": 2,
+                    "corner_radius": "square"
+                  }
+                },
                 {
                   "type": "group",
                   "settings": {
                     "direction": "vertical",
-                    "alignment": "left",
                     "width": "fill",
+                    "width_mobile": "fill",
                     "height": "fit",
-                    "gap_desktop": 16,
-                    "gap_mobile": 12,
-                    "appearance_type": "inherit",
-                    "border_type": "none",
-                    "corner_radius": "square",
-                    "shadow": "none"
+                    "gap_desktop": 0,
+                    "gap_mobile": 0,
+                    "position": "top",
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "customize_mobile_padding": true,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
                   },
                   "blocks": [
                     {
-                      "type": "eyebrow",
+                      "type": "group",
                       "settings": {
-                        "animation_delay": 0,
-                        "animation_type": "fade",
-                        "text": "<p>SECTION TAG</p>"
-                      }
-                    },
-                    {
-                      "type": "heading",
-                      "settings": {
-                        "animation_delay": 50,
-                        "animation_type": "slide-bottom",
-                        "text": "<p>The journey continues</p>",
-                        "heading_size": "display",
-                        "html_tag": "h3"
-                      }
-                    },
-                    {
-                      "type": "text",
-                      "settings": {
-                        "animation_delay": 100,
-                        "animation_type": "fade",
-                        "text": "<p>Share the moment that made this year important. Add a short story to support the heading above.</p>",
-                        "text_size": "md"
-                      }
-                    },
-                    {
-                      "type": "buttons",
-                      "settings": {
-                        "button_1_label": "Button label",
-                        "button_1_link": "/",
-                        "button_1_style": "primary",
-                        "direction": "row",
-                        "width": "fit",
-                        "gap": 12,
-                        "gap_mobile": 12
-                      }
+                        "direction": "vertical",
+                        "width": "fill",
+                        "width_mobile": "fill",
+                        "height": "fit",
+                        "gap_desktop": 16,
+                        "gap_mobile": 12,
+                        "position": "top",
+                        "padding_left": 64,
+                        "padding_right": 64,
+                        "customize_mobile_padding": true,
+                        "padding_left_mobile": 0,
+                        "padding_right_mobile": 0
+                      },
+                      "blocks": [
+                        {
+                          "type": "group",
+                          "settings": {
+                            "direction": "vertical",
+                            "width": "fill",
+                            "width_mobile": "fill",
+                            "height": "fit",
+                            "position": "top",
+                            "gap_desktop": 8,
+                            "gap_mobile": 8
+                          },
+                          "blocks": [
+                            {
+                              "type":  "eyebrow",
+                                  "settings": {
+                                    "text": "<p>The Journey Continues</p>",
+                                    "show_icon": true,
+                                    "icon": "square"
+                                  ,
+                                "animation_type": "fade",
+                                "animation_delay": 0}
+
+                            },
+                            {
+                              "type": "heading",
+                              "settings": {
+                                "text": "<p>2025</p>",
+                                "heading_size": "xl",
+                                "html_tag": "h2",
+                                "width": "fill"
+                              ,
+                                "animation_type": "slide-bottom",
+                                "animation_delay": 50}
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>In 2025, our vision continued to grow through activewear made with care. Bringing together considered fabrics, effortless style and everyday comfort, our collection celebrated every woman's strength and her own way of moving.</p>",
+                            "text_size": "md",
+                            "width": "fill"
+                          ,
+                            "animation_type": "fade",
+                            "animation_delay": 100}
+                        }
+                      ]
                     }
                   ]
-                },
-                {
-                  "type": "image",
-                  "settings": {
-                    "image_ratio_desktop": "square",
-                    "width_desktop": "fill",
-                    "show_image_first_mobile": true,
-                    "image_ratio_mobile": "square",
-                    "width_mobile": "fill"
-                  }
                 }
               ]
             }

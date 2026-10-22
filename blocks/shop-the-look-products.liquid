@@ -80,12 +80,12 @@
   endunless
 
   assign shop_the_look_products_pagination_type = block.settings.pagination_type | default: 'progress_bar'
-  unless shop_the_look_products_pagination_type == 'progress_bar' or shop_the_look_products_pagination_type == 'bullets'
+  unless shop_the_look_products_pagination_type == 'progress_bar' or shop_the_look_products_pagination_type == 'bullets' or shop_the_look_products_pagination_type == 'dot'
     assign shop_the_look_products_pagination_type = 'progress_bar'
   endunless
 
   assign shop_the_look_products_pagination_size = 'var(--swiper-pagination-progressbar-size, 4px)'
-  if shop_the_look_products_pagination_type == 'bullets'
+  if shop_the_look_products_pagination_type == 'bullets' or shop_the_look_products_pagination_type == 'dot'
     assign shop_the_look_products_pagination_size = 'var(--swiper-pagination-bullet-size, 0.5rem)'
   endif
 
@@ -180,6 +180,15 @@
 <div
   class="shop-the-look-products shop-the-look-products--{{ shop_the_look_products_layout }}{% if shop_the_look_products_single_column %} shop-the-look-products--single-column{% endif %}"
   data-shop-the-look-products
+  data-look-instance="{{ section.id }}-{{ block.id }}"
+  data-look-variants-enabled="true"
+  data-look-variant-type="{{ block.settings.variant_type | default: 'dropdown' }}"
+  data-look-show-swatch="{{ block.settings.show_swatch }}"
+  data-look-icon="{{ block.settings.hotspot_icon_style | default: 'dot' }}"
+  data-look-behavior="{{ block.settings.hotspot_behavior | default: 'click' }}"
+  data-look-scheme="{{ block.settings.hotspot_color_scheme.id | default: block.settings.hotspot_color_scheme | default: 'scheme-1' }}"
+  data-look-information="{{ block.settings.show_hotspot_product_information }}"
+  data-look-information-mobile="{{ block.settings.show_hotspot_product_information_on_mobile }}"
   data-layout="{{ shop_the_look_products_layout }}"
   {{ block.shopify_attributes }}
 >
@@ -208,7 +217,9 @@
         pagination: shop_the_look_products_pagination,
         autoplay: shop_the_look_products_autoplay_enabled,
         pause_on_hover: shop_the_look_products_autoplay_pause_on_hover,
-        autoplay_delay: shop_the_look_products_autoplay_delay
+        autoplay_delay: shop_the_look_products_autoplay_delay,
+        show_next_slide_preview: block.settings.show_next_slide_preview_on_desktop,
+        show_next_slide_preview_on_mobile: block.settings.show_next_slide_preview_on_mobile
       %}
     {% else %}
       <div
@@ -246,6 +257,7 @@
       </div>
     {% endif %}
   </div>
+
 
 </div>
 
@@ -355,6 +367,40 @@
     return target ? Array.from(target.querySelectorAll('[data-product-hotspot]')) : [];
   };
 
+  const closeInformation = (state) => {
+    getHotspots(state.section).forEach((button) => {
+      button.setAttribute('aria-expanded', 'false');
+      const card = button.closest('[data-look-hotspot]')?.querySelector('[data-look-hotspot-information]');
+      if (card) card.hidden = true;
+    });
+  };
+
+  const positionInformation = (state, button) => {
+    const card = button.closest('[data-look-hotspot]')?.querySelector('[data-look-hotspot-information]');
+    if (!card || card.hidden) return;
+    const bounds = state.section.querySelector('[data-shop-the-look-hotspots]').getBoundingClientRect();
+    card.style.setProperty('--look-info-max-width', `${Math.max(0, bounds.width - 16)}px`);
+    card.style.setProperty('--look-info-shift', '0px');
+    const rect = card.getBoundingClientRect();
+    const left = Math.max(bounds.left + 8, Math.min(rect.left, bounds.right - rect.width - 8));
+    card.style.setProperty('--look-info-shift', `${left - rect.left}px`);
+    const trigger = button.getBoundingClientRect();
+    card.dataset.above = String(trigger.bottom + 8 + rect.height > bounds.bottom - 8
+      && trigger.top - rect.height - 8 >= bounds.top + 8);
+  };
+
+  const showInformation = (state, button) => {
+    closeInformation(state);
+    if (state.products.dataset.lookInformation !== 'true') return;
+    if (window.matchMedia('(max-width: 767.98px)').matches
+      && state.products.dataset.lookInformationMobile !== 'true') return;
+    const card = button?.closest('[data-look-hotspot]')?.querySelector('[data-look-hotspot-information]');
+    if (!card) return;
+    card.hidden = false;
+    button.setAttribute('aria-expanded', 'true');
+    positionInformation(state, button);
+  };
+
   const mountHotspots = (state) => {
     const target = state.section.querySelector('[data-shop-the-look-hotspots]');
     if (!target) return;
@@ -376,7 +422,20 @@
       const blockId = hotspot.dataset.shopTheLookBlockId?.trim();
       return (productId && productIds.has(productId)) || (blockId && blockIds.has(blockId));
     });
-    target.replaceChildren(...sourceHotspots.map((hotspot) => hotspot.cloneNode(true)));
+    target.dataset.lookIcon = state.products.dataset.lookIcon;
+    target.dataset.lookInformationMobile = state.products.dataset.lookInformationMobile;
+    target.replaceChildren(...sourceHotspots.map((hotspot, index) => {
+      const clone = (hotspot.closest('[data-look-hotspot]') || hotspot).cloneNode(true);
+      clone.classList.add('color-scheme', state.products.dataset.lookScheme || 'scheme-1', `product-callout--icon-${state.products.dataset.lookIcon || 'dot'}`);
+      const button = clone.querySelector('[data-product-hotspot]') || clone;
+      const card = clone.querySelector('[data-look-hotspot-information]');
+      if (card && state.products.dataset.lookInformation === 'true') {
+        card.id = `LookHotspot-${state.products.dataset.lookInstance}-${index}`;
+        button.setAttribute('aria-controls', card.id);
+        button.setAttribute('aria-expanded', 'false');
+      }
+      return clone;
+    }));
   };
 
   const syncCarousel = (state, selectedIndex) => {
@@ -432,6 +491,9 @@
     });
 
     state.products.dataset.shopTheLookActive = selectedId || selectedBlockId;
+    if (options.revealInformation !== false) {
+      showInformation(state, getHotspots(state.section).find((button) => button.dataset.shopTheLookBlockId === selectedBlockId));
+    }
   };
 
   const unbindCarousel = (state) => {
@@ -508,7 +570,45 @@
       if (productId && (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)) return;
 
       event.preventDefault();
+      const wasOpen = hotspot.getAttribute('aria-expanded') === 'true';
       setActive(state, activeKey, selectedItem);
+      if (wasOpen && products.dataset.lookBehavior !== 'hover') closeInformation(state);
+    }, { signal: controller.signal });
+
+    section.addEventListener('pointerover', (event) => {
+      if (products.dataset.lookBehavior !== 'hover' || event.pointerType === 'touch') return;
+      const hotspot = event.target.closest?.('[data-look-hotspot]')?.querySelector('[data-product-hotspot]');
+      if (!hotspot || hotspot.closest('[data-shop-the-look-hotspot-source]')) return;
+      setActive(state, hotspot.dataset.productId || hotspot.dataset.shopTheLookBlockId);
+    }, { signal: controller.signal });
+
+    section.addEventListener('pointerout', (event) => {
+      if (products.dataset.lookBehavior !== 'hover' || event.pointerType === 'touch') return;
+      const wrap = event.target.closest?.('[data-look-hotspot]');
+      if (wrap && !wrap.contains(event.relatedTarget)) closeInformation(state);
+    }, { signal: controller.signal });
+
+    section.addEventListener('focusin', (event) => {
+      const button = event.target.closest?.('[data-product-hotspot]');
+      if (button?.matches(':focus-visible')) showInformation(state, button);
+    }, { signal: controller.signal });
+
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest?.('[data-look-hotspot]')) closeInformation(state);
+    }, { signal: controller.signal });
+
+    section.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      const wrap = event.target.closest?.('[data-look-hotspot]');
+      closeInformation(state);
+      wrap?.querySelector('[data-product-hotspot]')?.focus();
+    }, { signal: controller.signal });
+
+    window.addEventListener('resize', () => {
+      const button = getHotspots(section).find((item) => item.getAttribute('aria-expanded') === 'true');
+      if (!button) return;
+      if (window.matchMedia('(max-width: 767.98px)').matches && products.dataset.lookInformationMobile !== 'true') closeInformation(state);
+      else positionInformation(state, button);
     }, { signal: controller.signal });
 
     section.addEventListener('click', (event) => {
@@ -633,6 +733,20 @@
       "default": "1"
     },
     {
+      "type": "checkbox",
+      "id": "show_next_slide_preview_on_desktop",
+      "label": "t:labels.show_next_slide_preview_on_desktop",
+      "default": false,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_next_slide_preview_on_mobile",
+      "label": "t:labels.show_next_slide_preview_on_mobile",
+      "default": false,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
       "type": "header",
       "content": "t:general.products_gap"
     },
@@ -655,6 +769,95 @@
       "step": 1,
       "unit": "px",
       "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Variant"
+    },
+    {
+      "type": "select",
+      "id": "variant_type",
+      "label": "Type",
+      "options": [
+        {
+          "value": "button",
+          "label": "Button"
+        },
+        {
+          "value": "dropdown",
+          "label": "Drop down"
+        }
+      ],
+      "default": "dropdown"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_swatch",
+      "label": "Show swatch",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:general.hotspots"
+    },
+    {
+      "type": "select",
+      "id": "hotspot_icon_style",
+      "label": "t:labels.icon",
+      "options": [
+        {
+          "value": "dot",
+          "label": "t:options.product_callout_icon_style.dot"
+        },
+        {
+          "value": "plus",
+          "label": "t:options.product_callout_icon_style.plus"
+        },
+        {
+          "value": "tag",
+          "label": "t:options.product_callout_icon_style.tag"
+        },
+        {
+          "value": "bag",
+          "label": "t:options.product_callout_icon_style.bag"
+        }
+      ],
+      "default": "dot"
+    },
+    {
+      "type": "select",
+      "id": "hotspot_behavior",
+      "label": "t:labels.behavior",
+      "options": [
+        {
+          "value": "click",
+          "label": "t:options.dropdown_trigger.click"
+        },
+        {
+          "value": "hover",
+          "label": "t:options.dropdown_trigger.hover"
+        }
+      ],
+      "default": "click"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hotspot_product_information",
+      "label": "t:labels.show_hotspot_product_information",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hotspot_product_information_on_mobile",
+      "label": "t:labels.show_hotspot_product_information_on_mobile",
+      "default": false,
+      "visible_if": "{{ block.settings.show_hotspot_product_information }}"
+    },
+    {
+      "type": "color_scheme",
+      "id": "hotspot_color_scheme",
+      "label": "t:labels.hotspot_color_scheme",
+      "default": "scheme-1"
     },
     {
       "type": "header",
@@ -733,7 +936,7 @@
       "label": "t:labels.type",
       "options": [
         { "value": "progress_bar", "label": "t:options.collection_pagination.progress_bar" },
-        { "value": "bullets", "label": "t:options.collection_pagination.bullets" }
+        { "value": "bullets", "label": "t:options.collection_pagination.bullets" }, { "value": "dot", "label": "Dot" }
       ],
       "default": "progress_bar",
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop }}"

@@ -111,9 +111,69 @@
     padding-inline: 0;
   }
 
-  @media (max-width: 767.98px) {
-    .hotspot-gallery__layout {
+  .hotspot-gallery__layout[data-header-position="beside"]:has(.product-callout-gallery__navigation--top) {
+    position: relative;
+    grid-template-columns: minmax(0, 23%) minmax(0, 1fr);
+  }
+
+  .hotspot-gallery__layout[data-header-position="beside"]:has(.product-callout-gallery__navigation--top) > .product-callout-gallery {
+    position: static;
+    min-width: 0;
+  }
+
+  .hotspot-gallery__layout[data-header-position="beside"]:has(.product-callout-gallery__navigation--top) .product-callout-gallery__carousel-wrap {
+    position: static;
+  }
+
+  .hotspot-gallery__layout[data-header-position="beside"] .product-callout-gallery__navigation--top {
+    --swiper-nav-size: 48px;
+    --swiper-nav-size-mobile: 48px;
+    gap: 12px;
+  }
+
+  @media (min-width: 768px) {
+    .hotspot-gallery__layout[data-header-position="beside"]:has(.product-callout-gallery__navigation--top) > .hotspot-gallery__header {
+      padding-block-end: calc(var(--swiper-nav-size, var(--button-height)) + 32px);
+    }
+
+    .hotspot-gallery__layout[data-header-position="beside"]:has(.product-callout-gallery__navigation--top) > .hotspot-gallery__header--top {
+      padding-block-start: 64px;
+    }
+
+    .hotspot-gallery__layout[data-header-position="beside"] .product-callout-gallery__navigation--top {
+      position: absolute;
+      inset: auto auto 0 var(--page-margin-current);
+      margin: 0;
+    }
+
+    .hotspot-gallery__layout--no-padding[data-header-position="beside"] .product-callout-gallery__navigation--top {
+      inset-inline-start: 0;
+    }
+
+    .hotspot-gallery__layout[data-header-position="beside"]:not(:has(.block-header:not([data-content-empty]))) {
       grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hotspot-gallery__layout[data-header-position="beside"]:not(:has(.block-header:not([data-content-empty]))) .product-callout-gallery__navigation--top {
+      position: relative;
+      inset: auto;
+      margin-block-end: 1rem;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .hotspot-gallery__layout,
+    .hotspot-gallery__layout[data-header-position="beside"]:has(.product-callout-gallery__navigation--top) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hotspot-gallery__layout[data-header-position="beside"]:has(.product-callout-gallery__navigation--top) {
+      row-gap: 24px;
+    }
+
+    .hotspot-gallery__layout[data-header-position="beside"] .product-callout-gallery__navigation--top {
+      display: flex;
+      margin-block-end: 32px;
     }
   }
 {% endstylesheet %}
@@ -351,81 +411,120 @@
       "name": "t:general.hotspot_gallery",
       "category": "t:general.banners",
       "settings": {
-        "section_width": "full_width",
         "color_scheme": "scheme-1",
-        "padding_top": 40,
-        "padding_bottom": 40
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48,
+        "section_width": "full_width",
+        "header_position": "beside",
+        "content_gap": 40,
+        "header_vertical_alignment": "top",
+        "show_product_type": false,
+        "show_product_image": true,
+        "show_price": true,
+        "product_link_label": "View product"
       },
       "blocks": [
         {
           "type": "header",
-          "id": "header",
-          "static": true,
           "settings": {
             "width": "custom",
-            "max_width": 320,
-            "customize_mobile_size": true,
-            "width_mobile": "fill",
+            "inherit_alignment": false,
             "alignment": "left",
-            "gap_desktop": 12,
+            "customize_mobile_alignment": true,
+            "alignment_mobile": "left",
+            "gap_desktop": 16,
             "gap_mobile": 12,
-            "padding_bottom": 0
+            "max_width": 360
           },
+          "static": true,
+          "id": "header",
           "blocks": [
             {
-              "type": "eyebrow",
-              "settings": {
-                "animation_delay": 0,
-                "animation_type": "fade",
-                "text": "<p>Subheading</p>"
-              }
+              "type":  "eyebrow",
+                  "settings": {
+                    "animation_delay": 0,
+                    "animation_type": "fade",
+                    "text": "<p>Discover</p>",
+                    "show_icon": true,
+                    "icon": "square",
+                    "show_background": false
+                  }
+
             },
             {
               "type": "heading",
               "settings": {
-                "animation_delay": 50,
+                "text": "<p>This week’s highlights</p>",
+                "heading_size": "xl",
+                "html_tag": "h2",
+                "width": "fill"
+              ,
                 "animation_type": "slide-bottom",
-                "text": "<p>Main Heading Text Placeholder</p>",
-                "heading_size": "display",
-                "html_tag": "h2"
-              }
+                "animation_delay": 50}
             },
             {
               "type": "text",
               "settings": {
-                "animation_delay": 100,
+                "text": "<p>Uncover the must-have items that are capturing the hearts of our shoppers this week, ensuring you stay comfortable during your workouts</p>",
+                "text_size": "md",
+                "width": "fill"
+              ,
                 "animation_type": "fade",
-                "text": "<p>This is placeholder text for a paragraph that provides a short and engaging description to support the heading above.</p>",
-                "text_size": "sm"
-              }
+                "animation_delay": 100}
             }
           ]
         },
         {
           "type": "product-callout-gallery",
-          "id": "product-callout",
-          "static": true,
           "settings": {
-            "image_ratio": "portrait",
+            "layout_type": "carousel",
+            "columns_desktop": "2",
+            "columns_mobile": "1",
+            "show_next_slide_preview_on_desktop": true,
+            "image_ratio": "custom",
+            "image_ratio_custom_width": 6,
+            "image_ratio_custom_height": 7,
             "gap_desktop": 20,
-            "gap_mobile": 24,
+            "gap_mobile": 20,
             "hotspot_icon_style": "dot",
             "hotspot_behavior": "click",
-            "hotspot_color_scheme": "scheme-1"
+            "show_navigation_on_desktop": true,
+            "navigation_position": "top",
+            "navigation_style": "primary",
+            "navigation_icon": "chevron",
+            "navigation_behavior": "always",
+            "show_pagination_on_desktop": false
           },
+          "static": true,
+          "id": "product-callout",
           "blocks": [
             {
               "type": "gallery-hotspot",
               "settings": {
-                "vertical_position": 67,
-                "horizontal_position": 50
+                "image": "shopify://shop_images/kinetra-highlight-pink.avif",
+                "product": "virelle-soft-motion-leggings",
+                "horizontal_position": 65,
+                "vertical_position": 63,
+                "customize_mobile_position": true,
+                "mobile_horizontal_position": 65,
+                "mobile_vertical_position": 63
               }
             },
             {
               "type": "gallery-hotspot",
               "settings": {
-                "vertical_position": 34,
-                "horizontal_position": 70
+                "image": "shopify://shop_images/kinetra-highlight-brown.avif",
+                "product": "kinetra-mocha-scoop-sports-bra"
+              }
+            },
+            {
+              "type": "gallery-hotspot",
+              "settings": {
+                "image": "shopify://shop_images/kinetra-highlight-black.avif",
+                "product": "kinetra-everyday-high-rise-leggings"
               }
             }
           ]

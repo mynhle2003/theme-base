@@ -322,7 +322,7 @@
           "settings": {
             "desktop_layout": "carousel_two_items",
             "bottom_thumbnail_width": 72,
-            "thumbnail_ratio": "auto",
+            "thumbnail_ratio": "original",
             "thumbnail_ratio_custom_width": 1,
             "thumbnail_ratio_custom_height": 1,
             "mobile_layout": "slider",
@@ -412,48 +412,16 @@
               },
               "blocks": [
                 {
-                  "type": "group",
-                  "settings": {
-                    "direction": "horizontal",
-                    "position_horizontal": "center",
-                    "horizontal_alignment": "left",
-                    "customize_mobile_alignment": false,
-                    "gap_desktop": 8,
-                    "gap_mobile": 8,
-                    "width": "fit",
-                    "width_mobile": "fit",
-                    "height": "fit",
-                    "appearance_type": "inherit",
-                    "backdrop_blur": 0,
-                    "show_overlay": false
-                  },
-                  "blocks": [
-                    {
-                      "type": "icon",
-                      "settings": {
-                        "animation_delay": 0,
-                        "animation_type": "fade",
-                        "source": "custom",
-                        "custom_icon": "<svg width=\"8\" height=\"8\" viewBox=\"0 0 8 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect width=\"8\" height=\"8\" fill=\"#181818\"/>\n</svg>",
-                        "icon_width": 8,
-                        "icon_padding": 0,
-                        "custom_mobile": false,
-                        "icon_width_mobile": 8,
-                        "icon_padding_mobile": 0
-                      }
-                    },
-                    {
-                      "type": "eyebrow",
+                  "type":  "eyebrow",
                       "settings": {
                         "animation_delay": 0,
                         "animation_type": "fade",
                         "text": "<p>Product of the week</p>",
-                        "show_icon": false,
+                        "show_icon": true,
                         "icon": "square",
                         "show_background": false
                       },
-                      "blocks": []
-                    }
+                      "blocks": [
                   ]
                 },
                 {

@@ -37,6 +37,21 @@ const updatePaginationProgress = (state, items) => {
   const arrowsHeight = state.arrows?.getBoundingClientRect().height || 0;
   if (arrowsHeight > 0) {
     state.controls?.style.setProperty('--timeline-list-arrow-height', `${arrowsHeight}px`);
+    if (state.root.dataset.timelineNavigationPosition === 'content_bottom') {
+      state.root.style.setProperty('--timeline-list-content-arrow-height', `${arrowsHeight}px`);
+    }
+  }
+
+  if (state.root.dataset.timelineNavigationPosition === 'content_bottom') {
+    const index = Number.isInteger(state.swiper.realIndex) ? state.swiper.realIndex : state.swiper.activeIndex;
+    const slide = items[index];
+    const story = slide?.querySelector('.carousel-slide-layout > :last-child');
+    const anchor = story?.querySelector('.heading-block') || story?.querySelector('.eyebrow-block, .text-block') || story;
+    if (slide && anchor) {
+      // Subtract the slide rect so slide-transition transforms cancel out.
+      const start = anchor.getBoundingClientRect().left - slide.getBoundingClientRect().left;
+      state.root.style.setProperty('--timeline-list-story-start', `${Math.max(0, start)}px`);
+    }
   }
 
   const controls = Array.from(list.querySelectorAll('[data-swiper-slide-index]'));
@@ -167,6 +182,14 @@ const refresh = (state) => {
   state.position = state.root.dataset.timelinePosition || 'bottom';
   const previousSlideId = state.activeSlideId;
   const items = getTimelineItems(state.viewport);
+  if (state.progressObserver) {
+    const layouts = new Set(items.map((item) => item.querySelector('.carousel-slide-layout')).filter(Boolean));
+    state.observedLayouts.forEach((layout) => {
+      if (!layouts.has(layout)) state.progressObserver.unobserve(layout);
+    });
+    layouts.forEach((layout) => state.progressObserver.observe(layout));
+    state.observedLayouts = layouts;
+  }
   renderNavigation(state, items);
   state.swiper.update();
 
@@ -233,6 +256,7 @@ const initialize = (root) => {
     arrows: root.querySelector('[data-timeline-arrows]'),
     arrowsCleanup: null,
     progressObserver: null,
+    observedLayouts: new Set(),
     progressFrame: 0,
     positionObserver: null,
     positionFrame: 0,
@@ -249,11 +273,13 @@ const initialize = (root) => {
           swiper.update();
         }
         updatePaginationProgress(state, getTimelineItems(viewport));
+        swiper.updateAutoHeight(0);
         scrollActiveControlIntoView(state, false);
       });
     });
     state.progressObserver.observe(viewport);
     if (state.controls) state.progressObserver.observe(state.controls);
+    if (state.arrows) state.progressObserver.observe(state.arrows);
   }
 
   if (typeof MutationObserver === 'function') {

@@ -1,0 +1,15 @@
+{% doc %}
+  Renders a filled decorative Eyebrow icon in the current text color.
+
+  @param {string} icon - circle, square, triangle, or diamond
+{% enddoc %}
+{% case icon %}
+  {% when 'square' %}
+    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true"><rect width="8" height="8" fill="currentColor"/></svg>
+  {% when 'triangle' %}
+    <svg viewBox="0 0 24 24" fill="currentColor" focusable="false" aria-hidden="true"><path d="m12 4 8 16H4L12 4Z"/></svg>
+  {% when 'diamond' %}
+    <svg viewBox="0 0 24 24" fill="currentColor" focusable="false" aria-hidden="true"><path d="m12 3 9 9-9 9-9-9 9-9Z"/></svg>
+  {% else %}
+    <svg viewBox="0 0 24 24" fill="currentColor" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg>
+{% endcase %}

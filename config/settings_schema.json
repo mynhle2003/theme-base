@@ -2450,23 +2450,65 @@
         "label": "t:labels.image_ratio",
         "options": [
           {
-            "value": "natural",
-            "label": "t:options.image_ratio.original"
+            "value": "original",
+            "label": "Original"
           },
           {
-            "value": "square",
-            "label": "t:options.image_ratio.square"
+            "value": "ratio_1_1",
+            "label": "Square (1:1)"
           },
           {
-            "value": "portrait",
-            "label": "t:options.image_ratio.portrait"
+            "value": "ratio_4_5",
+            "label": "Portrait (4:5)"
           },
           {
-            "value": "landscape",
-            "label": "t:options.image_ratio.landscape"
+            "value": "ratio_3_4",
+            "label": "Portrait (3:4)"
+          },
+          {
+            "value": "ratio_2_3",
+            "label": "Portrait (2:3)"
+          },
+          {
+            "value": "ratio_9_16",
+            "label": "Portrait (9:16)"
+          },
+          {
+            "value": "ratio_16_9",
+            "label": "Landscape (16:9)"
+          },
+          {
+            "value": "ratio_3_2",
+            "label": "Landscape (3:2)"
+          },
+          {
+            "value": "ratio_4_3",
+            "label": "Landscape (4:3)"
+          },
+          {
+            "value": "ratio_5_4",
+            "label": "Landscape (5:4)"
+          },
+          {
+            "value": "custom",
+            "label": "t:options.image_ratio.custom"
           }
         ],
-        "default": "portrait"
+        "default": "ratio_4_5"
+      },
+      {
+        "type": "number",
+        "id": "product_card_ratio_custom_width",
+        "label": "W",
+        "default": 16,
+        "visible_if": "{{ settings.product_card_ratio == 'custom' }}"
+      },
+      {
+        "type": "number",
+        "id": "product_card_ratio_custom_height",
+        "label": "H",
+        "default": 9,
+        "visible_if": "{{ settings.product_card_ratio == 'custom' }}"
       },
       {
         "type": "header",

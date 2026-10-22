@@ -319,47 +319,15 @@
           "id": "header",
           "blocks": [
             {
-              "type": "group",
-              "settings": {
-                "direction": "horizontal",
-                "position_horizontal": "center",
-                "horizontal_alignment": "left",
-                "customize_mobile_alignment": false,
-                "gap_desktop": 8,
-                "gap_mobile": 8,
-                "width": "fit",
-                "width_mobile": "fit",
-                "height": "fit",
-                "appearance_type": "inherit",
-                "backdrop_blur": 0,
-                "show_overlay": false
-              },
-              "blocks": [
-                {
-                  "type": "icon",
-                  "settings": {
-                    "animation_delay": 0,
-                    "animation_type": "fade",
-                    "source": "custom",
-                    "custom_icon": "<svg width=\"8\" height=\"8\" viewBox=\"0 0 8 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect width=\"8\" height=\"8\" fill=\"white\"/>\n</svg>",
-                    "icon_width": 8,
-                    "icon_padding": 0,
-                    "custom_mobile": false,
-                    "icon_width_mobile": 8,
-                    "icon_padding_mobile": 0
-                  }
-                },
-                {
-                  "type": "eyebrow",
+              "type":  "eyebrow",
                   "settings": {
                     "animation_delay": 0,
                     "animation_type": "fade",
                     "text": "<p>Collection list</p>",
-                    "show_icon": false,
+                    "show_icon": true,
                     "icon": "square"
                   }
-                }
-              ]
+
             },
             {
               "type": "heading",
@@ -416,7 +384,7 @@
                 "placement": "on_image",
                 "color_scheme": "scheme-3",
                 "media_corner_radius": "square",
-                "ratio_custom": 0.9,
+
                 "alignment": "center",
                 "corner_radius": "square",
                 "gap_desktop": 16,
@@ -430,7 +398,9 @@
                 "padding_bottom_mobile": 32,
                 "padding_left_mobile": 24,
                 "padding_right_mobile": 24
-              },
+              ,
+                "ratio_custom_width": 0.9,
+                "ratio_custom_height": 1},
               "id": "collection-card",
               "blocks": [
                 {

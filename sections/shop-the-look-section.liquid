@@ -34,7 +34,7 @@
   if shop_the_look_image_block != blank
     assign shop_the_look_image_ratio_desktop = shop_the_look_image_block.settings.image_ratio_desktop | default: 'auto'
   endif
-  unless shop_the_look_image_ratio_desktop == 'auto' or shop_the_look_image_ratio_desktop == 'square' or shop_the_look_image_ratio_desktop == 'portrait' or shop_the_look_image_ratio_desktop == 'landscape' or shop_the_look_image_ratio_desktop == 'wide' or shop_the_look_image_ratio_desktop == 'custom'
+  unless shop_the_look_image_ratio_desktop == 'fill_height' or shop_the_look_image_ratio_desktop == 'auto' or shop_the_look_image_ratio_desktop == 'square' or shop_the_look_image_ratio_desktop == 'portrait' or shop_the_look_image_ratio_desktop == 'landscape' or shop_the_look_image_ratio_desktop == 'wide' or shop_the_look_image_ratio_desktop == 'portrait_6_7' or shop_the_look_image_ratio_desktop == 'portrait_tall' or shop_the_look_image_ratio_desktop == 'portrait_2_3' or shop_the_look_image_ratio_desktop == 'landscape_5_4' or shop_the_look_image_ratio_desktop == 'wide_2_1' or shop_the_look_image_ratio_desktop == 'custom' or shop_the_look_image_ratio_desktop == 'ratio_1_1' or shop_the_look_image_ratio_desktop == 'ratio_4_5' or shop_the_look_image_ratio_desktop == 'ratio_5_4' or shop_the_look_image_ratio_desktop == 'ratio_6_7' or shop_the_look_image_ratio_desktop == 'ratio_7_6' or shop_the_look_image_ratio_desktop == 'ratio_5_7' or shop_the_look_image_ratio_desktop == 'ratio_7_5' or shop_the_look_image_ratio_desktop == 'ratio_2_3' or shop_the_look_image_ratio_desktop == 'ratio_3_2' or shop_the_look_image_ratio_desktop == 'ratio_4_3' or shop_the_look_image_ratio_desktop == 'ratio_3_4' or shop_the_look_image_ratio_desktop == 'ratio_2_1' or shop_the_look_image_ratio_desktop == 'ratio_1_2' or shop_the_look_image_ratio_desktop == 'ratio_16_9' or shop_the_look_image_ratio_desktop == 'ratio_9_16' or shop_the_look_image_ratio_desktop == 'ratio_12_5' or shop_the_look_image_ratio_desktop == 'ratio_5_12' or shop_the_look_image_ratio_desktop == 'ratio_48_17' or shop_the_look_image_ratio_desktop == 'ratio_17_48' or shop_the_look_image_ratio_desktop == 'ratio_5_8' or shop_the_look_image_ratio_desktop == 'ratio_8_5'
     assign shop_the_look_image_ratio_desktop = 'auto'
   endunless
 
@@ -84,12 +84,18 @@
       <div class="shop-the-look-section__content section-content-scope">
         {% content_for 'block', type: 'header', id: 'header' %}
         {% content_for 'block', type: 'shop-the-look-products', id: 'product-list' %}
+        {%- content_for 'block', type: 'shop-the-look-add-all', id: 'add-all' -%}
       </div>
     </div>
   </div>
 </div>
 
 {% stylesheet %}
+  .shop-the-look-section {
+    --motion-image-zoom: 1;
+    --product-card-image-zoom: 1;
+  }
+
   .shop-the-look-section {
     width: 100%;
     min-width: 0;
@@ -403,17 +409,17 @@
       "name": "t:general.shop_the_look",
       "category": "t:general.content",
       "settings": {
-        "section_width": "full_width_no_padding",
-        "media_position": "right",
+        "section_width": "full_width",
+        "media_position": "left",
         "mobile_media_position": "first",
-        "gap_desktop": 0,
-        "gap_mobile": 0,
-        "color_scheme": "scheme-3",
-        "padding_top": 0,
-        "padding_bottom": 0,
+        "gap_desktop": 50,
+        "gap_mobile": 32,
+        "color_scheme": "scheme-1",
+        "padding_top": 96,
+        "padding_bottom": 96,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 64
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
       },
       "blocks": [
         {
@@ -423,21 +429,20 @@
             "show_image_first_mobile": true,
             "image_link": "",
             "open_in_new_tab": false,
-            "alt_text": "Athlete wearing a black sports bra and leggings seated on a rock beside the water",
+            "alt_text": "Athlete wearing a black sports bra, shorts and jacket seated in sunlight",
             "device": "desktop",
-            "image_ratio_desktop": "square",
+            "image_ratio_desktop": "ratio_1_1",
             "image_ratio_custom_width_desktop": 16,
             "image_ratio_custom_height_desktop": 9,
-            "image_ratio_mobile": "square",
+            "image_ratio_mobile": "ratio_1_1",
             "image_ratio_custom_width_mobile": 16,
             "image_ratio_custom_height_mobile": 9,
             "corner_radius": "square",
             "custom_corner_radius": 0,
-            "image": "shopify://shop_images/virelle-shop-the-look.avif",
-            "mobile_image": "shopify://shop_images/virelle-shop-the-look.avif"
+            "image": "shopify://shop_images/kinetra-matching-sets.avif",
+            "mobile_image": "shopify://shop_images/kinetra-matching-sets.avif"
           },
-          "id": "image",
-          "blocks": []
+          "id": "image"
         },
         {
           "type": "header",
@@ -459,62 +464,30 @@
             "padding_left": 0,
             "padding_right": 0,
             "customize_mobile_padding": true,
-            "padding_top_mobile": 64,
-            "padding_bottom_mobile": 40,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 32,
             "padding_left_mobile": 0,
             "padding_right_mobile": 0
           },
           "id": "header",
           "blocks": [
             {
-              "type": "group",
+              "type": "eyebrow",
               "settings": {
-                "direction": "horizontal",
-                "position_horizontal": "center",
-                "horizontal_alignment": "left",
-                "customize_mobile_alignment": false,
-                "gap_desktop": 8,
-                "gap_mobile": 8,
-                "width": "fit",
-                "width_mobile": "fit",
-                "height": "fit",
-                "appearance_type": "inherit",
-                "backdrop_blur": 0,
-                "show_overlay": false
-              },
-              "blocks": [
-                {
-                  "type": "icon",
-                  "settings": {
-                    "animation_delay": 0,
-                    "animation_type": "fade",
-                    "source": "custom",
-                    "custom_icon": "<svg width=\"8\" height=\"8\" viewBox=\"0 0 8 8\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect width=\"8\" height=\"8\" fill=\"white\"/>\n</svg>",
-                    "icon_width": 8,
-                    "icon_padding": 0,
-                    "custom_mobile": false,
-                    "icon_width_mobile": 8,
-                    "icon_padding_mobile": 0
-                  }
+                "animation_delay": 0,
+                "animation_type": "fade",
+                "text": "<p>Inspiration</p>",
+                "show_icon": true,
+                "icon": "square"
+              }
+
                 },
-                {
-                  "type": "eyebrow",
-                  "settings": {
-                    "animation_delay": 0,
-                    "animation_type": "fade",
-                    "text": "<p>Inspiration</p>",
-                    "show_icon": false,
-                    "icon": "square"
-                  }
-                }
-              ]
-            },
             {
               "type": "heading",
               "settings": {
-                "animation_delay": 100,
-                "animation_type": "fade",
-                "text": "<p>Shop the look</p>",
+                "animation_delay": 50,
+                "animation_type": "slide-bottom",
+                "text": "<p>Matching sets</p>",
                 "html_tag": "h2",
                 "heading_size": "xl",
                 "width": "fill"
@@ -525,7 +498,7 @@
               "settings": {
                 "animation_delay": 100,
                 "animation_type": "fade",
-                "text": "<p>Tap the dots to shop every piece</p>",
+                "text": "<p>Buy 3 products &amp; get 25% off</p>",
                 "text_size": "md",
                 "width": "fill"
               }
@@ -533,20 +506,35 @@
           ]
         },
         {
+          "type": "shop-the-look-add-all",
+          "id": "add-all",
+          "static": true,
+          "settings": {}
+        },
+        {
           "type": "shop-the-look-products",
           "static": true,
           "settings": {
             "layout_type": "carousel",
-            "columns_desktop": "1",
+            "columns_desktop": "3",
             "columns_mobile": "1",
-            "product_gap_desktop": 4,
-            "product_gap_mobile": 4,
-            "show_navigation_on_desktop": true,
+            "show_swatch": true,
+            "variant_type": "dropdown",
+            "hotspot_icon_style": "dot",
+            "hotspot_behavior": "hover",
+            "hotspot_color_scheme": "scheme-1",
+            "show_hotspot_product_information": true,
+            "show_hotspot_product_information_on_mobile": false,
+            "show_next_slide_preview_on_desktop": false,
+            "show_next_slide_preview_on_mobile": true,
+            "product_gap_desktop": 20,
+            "product_gap_mobile": 12,
+            "show_navigation_on_desktop": false,
             "navigation_position": "inside",
             "navigation_style": "icon_only",
             "navigation_icon": "chevron",
             "navigation_behavior": "always",
-            "show_pagination_on_desktop": true,
+            "show_pagination_on_desktop": false,
             "pagination_type": "progress_bar",
             "pagination_top_padding_desktop": 40,
             "pagination_top_padding_mobile": 24,
@@ -563,26 +551,36 @@
               "settings": {
                 "product": "virelle-softmotion-sports-bra",
                 "show_hotspot": true,
-                "hotspot_horizontal": 69,
+                "hotspot_horizontal": 41,
                 "hotspot_vertical": 36,
                 "customize_mobile_position": true,
-                "hotspot_horizontal_mobile": 69,
-                "hotspot_vertical_mobile": 34
-              },
-              "blocks": []
+                "hotspot_horizontal_mobile": 41,
+                "hotspot_vertical_mobile": 36
+              }
             },
             {
               "type": "shop-the-look-product",
               "settings": {
-                "product": "virelle-effortless-seamless-leggings",
+                "product": "kinetra-unified-double-layer-shorts",
                 "show_hotspot": true,
-                "hotspot_horizontal": 40,
-                "hotspot_vertical": 70,
+                "hotspot_horizontal": 61,
+                "hotspot_vertical": 65,
                 "customize_mobile_position": true,
-                "hotspot_horizontal_mobile": 40,
-                "hotspot_vertical_mobile": 70
-              },
-              "blocks": []
+                "hotspot_horizontal_mobile": 62,
+                "hotspot_vertical_mobile": 67
+              }
+            },
+            {
+              "type": "shop-the-look-product",
+              "settings": {
+                "product": "kinetra-airmove-jacket",
+                "show_hotspot": true,
+                "hotspot_horizontal": 76,
+                "hotspot_vertical": 30,
+                "customize_mobile_position": true,
+                "hotspot_horizontal_mobile": 73,
+                "hotspot_vertical_mobile": 19
+              }
             }
           ]
         }

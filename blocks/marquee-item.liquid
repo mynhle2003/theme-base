@@ -292,6 +292,7 @@
     --group-position: flex-start;
     --flex-align: var(--group-align);
     --flex-align-mobile: var(--group-align-mobile);
+    --text-align-default: var(--group-align);
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -433,20 +434,23 @@
     .marquee-item-layout--vertical {
       align-items: var(--group-align-mobile, var(--group-align));
       justify-content: var(--group-position, flex-start);
-      text-align: var(--group-align-mobile, var(--group-align));
+      --text-align-default: var(--group-align-mobile, var(--group-align));
+      text-align: var(--text-align-default);
     }
 
     .marquee-item-layout--horizontal {
       align-items: var(--group-position, flex-start);
       justify-content: var(--group-justify-mobile, var(--group-justify));
-      text-align: var(--group-align-mobile, var(--group-align));
+      --text-align-default: var(--group-align-mobile, var(--group-align));
+      text-align: var(--text-align-default);
     }
 
     .marquee-item-layout--horizontal.marquee-item-layout--mobile-vertical {
       flex-direction: column;
       align-items: var(--group-align-mobile, var(--group-align));
       justify-content: var(--group-justify-mobile, flex-start);
-      text-align: var(--group-align-mobile, var(--group-align));
+      --text-align-default: var(--group-align-mobile, var(--group-align));
+      text-align: var(--text-align-default);
     }
   }
 {% endstylesheet %}
@@ -892,8 +896,8 @@
         {
           "type": "heading",
           "settings": {
-            "animation_delay": 50,
-            "animation_type": "slide-bottom",
+            "animation_delay": 0,
+            "animation_type": "none",
             "text": "<p>Diamond statement</p>",
             "heading_size": "display",
             "html_tag": "div"

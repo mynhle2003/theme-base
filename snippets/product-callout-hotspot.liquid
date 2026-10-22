@@ -141,16 +141,7 @@
         data-product-callout-hotspot
       >
     {% endif %}
-        <span class="product-callout__hotspot-icon product-callout__hotspot-icon--dot" aria-hidden="true"></span>
-        <span class="product-callout__hotspot-icon product-callout__hotspot-icon--plus" aria-hidden="true">
-          {% render 'icon', icon: 'plus', bare: true %}
-        </span>
-        <span class="product-callout__hotspot-icon product-callout__hotspot-icon--tag" aria-hidden="true">
-          {% render 'icon', icon: 'tag', bare: true %}
-        </span>
-        <span class="product-callout__hotspot-icon product-callout__hotspot-icon--bag" aria-hidden="true">
-          {% render 'icon', icon: 'shopping-bag', bare: true %}
-        </span>
+        {% render 'product-callout-hotspot-indicator' %}
     {% if hotspot_type == 'product' and hotspot_has_product %}
       </a>
     {% else %}

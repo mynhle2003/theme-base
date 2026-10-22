@@ -81,12 +81,12 @@
   endunless
 
   assign collection_tab_pagination_type = section.settings.pagination_type | default: 'progress_bar'
-  unless collection_tab_pagination_type == 'progress_bar' or collection_tab_pagination_type == 'bullets'
+  unless collection_tab_pagination_type == 'progress_bar' or collection_tab_pagination_type == 'bullets' or collection_tab_pagination_type == 'dot'
     assign collection_tab_pagination_type = 'progress_bar'
   endunless
 
   assign collection_tab_pagination_size = 'var(--swiper-pagination-progressbar-size, 4px)'
-  if collection_tab_pagination_type == 'bullets'
+  if collection_tab_pagination_type == 'bullets' or collection_tab_pagination_type == 'dot'
     assign collection_tab_pagination_size = 'var(--swiper-pagination-bullet-size, 0.5rem)'
   endif
 

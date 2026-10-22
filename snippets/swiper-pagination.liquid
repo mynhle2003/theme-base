@@ -4,7 +4,7 @@
   the markup, data contract, and spacing hook consistent across carousels.
 
   @param {boolean} [show] - Whether to render pagination
-  @param {string} [type] - progress_bar or bullets
+  @param {string} [type] - progress_bar, bullets or dot
   @param {string} [class] - Additional pagination classes
   @param {string} [style] - Inline custom properties for spacing/width
   @param {string} [attributes] - Additional attributes for the pagination root
@@ -17,7 +17,7 @@
   endif
 
   assign swiper_pagination_type = type | default: 'progress_bar'
-  unless swiper_pagination_type == 'progress_bar' or swiper_pagination_type == 'bullets'
+  unless swiper_pagination_type == 'progress_bar' or swiper_pagination_type == 'bullets' or swiper_pagination_type == 'dot'
     assign swiper_pagination_type = 'progress_bar'
   endunless
 

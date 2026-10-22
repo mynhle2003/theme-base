@@ -16,7 +16,7 @@
   endunless
 
   assign scrolling_card_position = block.settings.position | default: 'top'
-  unless scrolling_card_position == 'top' or scrolling_card_position == 'center' or scrolling_card_position == 'bottom'
+  unless scrolling_card_position == 'top' or scrolling_card_position == 'center' or scrolling_card_position == 'bottom' or scrolling_card_position == 'stretch'
     assign scrolling_card_position = 'top'
   endunless
 
@@ -33,6 +33,8 @@
   assign scrolling_card_position_value = 'center'
   if scrolling_card_position == 'top'
     assign scrolling_card_position_value = 'start'
+  elsif scrolling_card_position == 'stretch'
+    assign scrolling_card_position_value = 'stretch'
   elsif scrolling_card_position == 'bottom'
     assign scrolling_card_position_value = 'end'
   endif
@@ -172,7 +174,7 @@
 {% endcapture %}
 
 <article
-  class="scrolling-card scrolling-card--{{ scrolling_card_direction }} scrolling-card--position-{{ scrolling_card_position }} scrolling-card--align-{{ scrolling_card_alignment }} scrolling-card--radius-{{ scrolling_card_radius_setting }} scrolling-card--shadow-{{ scrolling_card_shadow }}{% if block.settings.vertical_on_mobile and scrolling_card_direction == 'horizontal' %} scrolling-card--vertical-mobile{% endif %}{% if scrolling_card_has_background_media %} scrolling-card--has-background-media{% endif %}{% if block.settings.show_overlay %} scrolling-card--has-overlay{% endif %} color-scheme section-color-scope {{ scrolling_card_scheme }}"
+  class="scrolling-card scrolling-card--{{ scrolling_card_direction }} scrolling-card--position-{{ scrolling_card_position }} scrolling-card--align-{{ scrolling_card_alignment }} scrolling-card--radius-{{ scrolling_card_radius_setting }} scrolling-card--shadow-{{ scrolling_card_shadow }}{% if block.settings.vertical_on_mobile and scrolling_card_direction == 'horizontal' %} scrolling-card--vertical-mobile{% endif %}{% if block.settings.reverse_on_mobile and block.settings.vertical_on_mobile and scrolling_card_direction == 'horizontal' %} scrolling-card--reverse-mobile{% endif %}{% if scrolling_card_has_background_media %} scrolling-card--has-background-media{% endif %}{% if block.settings.show_overlay %} scrolling-card--has-overlay{% endif %} color-scheme section-color-scope {{ scrolling_card_scheme }}"
   style="{{ scrolling_card_style | strip }}"
   {{ block.shopify_attributes }}
 >
@@ -199,8 +201,8 @@
 
 {% stylesheet %}
   .scrolling-card {
-    position: sticky;
-    top: calc(var(--header-sticky-height, 0px) + 1.6rem + var(--scrolling-card-offset-top, 0px));
+    position: relative;
+    top: auto;
     z-index: 1;
     display: flex;
     align-items: var(--scrolling-card-position, center);
@@ -217,7 +219,17 @@
     transform: translateZ(0) scale(1);
     transform-origin: top center;
     backface-visibility: hidden;
-    will-change: transform;
+  }
+
+  [data-scrolling-cards][data-sticky-active='true'] .scrolling-card {
+    position: sticky;
+    top: var(--scrolling-card-sticky-top, calc(var(--header-sticky-height, 0px) + 1.6rem));
+    will-change: transform, opacity;
+  }
+
+  .scrolling-card--position-stretch > .group--height-fill {
+    height: auto;
+    align-self: stretch;
   }
 
   .scrolling-card--vertical {
@@ -259,6 +271,11 @@
     min-width: 0;
   }
 
+  .scrolling-card--horizontal > .group,
+  .scrolling-card--horizontal > .image-block {
+    flex-basis: calc((100% - var(--scrolling-card-gap-desktop, 50px)) / 2);
+  }
+
   .scrolling-card > .group { align-self: var(--scrolling-card-position, center); }
   .scrolling-card > .image-block { align-self: var(--scrolling-card-position, center); }
   .scrolling-card > .image-block .image-block__media { border-radius: inherit; }
@@ -282,6 +299,10 @@
       justify-content: var(--scrolling-card-position, center);
     }
 
+    .scrolling-card--vertical-mobile.scrolling-card--reverse-mobile {
+      flex-direction: column-reverse;
+    }
+
     .scrolling-card--vertical-mobile > .group,
     .scrolling-card--vertical-mobile > .image-block {
       flex: 0 1 auto;
@@ -296,7 +317,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .scrolling-card { transform: none !important; }
+    [data-scrolling-cards] .scrolling-card { position: relative !important; top: auto !important; transform: none !important; opacity: 1 !important; will-change: auto; }
   }
 {% endstylesheet %}
 
@@ -349,6 +370,10 @@
         {
           "value": "bottom",
           "label": "Bottom"
+        },
+        {
+          "value": "stretch",
+          "label": "Stretch"
         }
       ],
       "default": "top"
@@ -379,6 +404,13 @@
       "label": "Vertical on mobile",
       "default": true,
       "visible_if": "{{ block.settings.direction == 'horizontal' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse_on_mobile",
+      "label": "Reverse order on mobile",
+      "default": false,
+      "visible_if": "{{ block.settings.direction == 'horizontal' and block.settings.vertical_on_mobile }}"
     },
     {
       "type": "select",
@@ -760,8 +792,8 @@
         {
           "type": "image",
           "settings": {
-            "image_ratio_desktop": "landscape",
-            "image_ratio_mobile": "landscape",
+            "image_ratio_desktop": "ratio_4_3",
+            "image_ratio_mobile": "ratio_4_3",
             "width_desktop": "fill",
             "width_mobile": "fill",
             "corner_radius": "square"

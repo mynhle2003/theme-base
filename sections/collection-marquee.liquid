@@ -1,0 +1,416 @@
+{% liquid
+  assign container_width = 'full-width full-width--no-padding'
+  if section.settings.section_width == 'page_width'
+    assign container_width = 'page-width'
+  elsif section.settings.section_width == 'full_width'
+    assign container_width = 'full-width'
+  endif
+  assign alignment = 'center'
+  case section.settings.alignment
+    when 'left'
+      assign alignment = 'flex-start'
+    when 'right'
+      assign alignment = 'flex-end'
+  endcase
+  assign alignment_mobile = alignment
+  if section.settings.customize_mobile_alignment
+    assign alignment_mobile = 'center'
+    case section.settings.alignment_mobile
+      when 'left'
+        assign alignment_mobile = 'flex-start'
+      when 'right'
+        assign alignment_mobile = 'flex-end'
+    endcase
+  endif
+%}
+<script type="module" src="{{ 'collection-marquee.js' | asset_url }}"></script>
+<div class="section-spacing collection-marquees color-scheme section-color-scope {{ section.settings.color_scheme }}" style="--cm-padding-top:{{ section.settings.padding_top }}px;--cm-padding-bottom:{{ section.settings.padding_bottom }}px;{% if section.settings.customize_mobile_padding %}--cm-padding-top-mobile:{{ section.settings.padding_top_mobile }}px;--cm-padding-bottom-mobile:{{ section.settings.padding_bottom_mobile }}px;{% endif %}--cm-header-gap:{{ section.settings.header_gap }}px;--cm-header-gap-mobile:{{ section.settings.header_gap_mobile }}px;--cm-row-gap:{{ section.settings.row_gap }}px;--cm-row-gap-mobile:{{ section.settings.row_gap_mobile }}px;">
+  <div class="container {{ container_width }} collection-marquees__container">
+    <div class="align-content collection-marquees__header" style="--flex-align:{{ alignment }};--flex-align-mobile:{{ alignment_mobile }};">{% content_for 'block', type: 'header', id: 'header' %}</div>
+    <div class="collection-marquees__rows">{% content_for 'blocks' %}</div>
+  </div>
+</div>
+{% stylesheet %}
+  .collection-marquees { padding-top: var(--cm-padding-top); padding-bottom: var(--cm-padding-bottom); background: var(--background-color); overflow: hidden; }
+  .collection-marquees__container { min-width: 0; }
+  .collection-marquees .container.full-width--no-padding { width: 100%; max-width: none; padding-inline: 0; }
+  .collection-marquees__header { margin-bottom: var(--cm-header-gap); padding-inline: var(--page-margin-current); }
+  .collection-marquees__rows { display: grid; gap: var(--cm-row-gap); min-width: 0; }
+  .collection-marquees__rows:empty { display: none; }
+  @media (min-width: 768px) and (max-width: 1149.98px) { .collection-marquees { padding-top: calc(var(--cm-padding-top) * .75); padding-bottom: calc(var(--cm-padding-bottom) * .75); } }
+  @media (max-width: 767.98px) {
+    .collection-marquees { padding-top: var(--cm-padding-top-mobile, calc(var(--cm-padding-top) * .5)); padding-bottom: var(--cm-padding-bottom-mobile, calc(var(--cm-padding-bottom) * .5)); }
+    .collection-marquees__header { margin-bottom: var(--cm-header-gap-mobile); }
+    .collection-marquees__rows { gap: var(--cm-row-gap-mobile); }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection marquee",
+  "tag": "div",
+  "class": "section-collection-marquee",
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
+  "blocks": [
+    {
+      "type": "_collection-marquee"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:custom_section.layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:labels.section_width",
+      "options": [
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "t:options.section_width.full_width_no_padding"
+        }
+      ],
+      "default": "full_width_no_padding"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:labels.alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:custom_section.left"
+        },
+        {
+          "value": "center",
+          "label": "t:custom_section.center"
+        },
+        {
+          "value": "right",
+          "label": "t:custom_section.right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_alignment",
+      "label": "t:labels.customize_mobile_alignment",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "alignment_mobile",
+      "label": "t:labels.alignment_mobile",
+      "default": "center",
+      "visible_if": "{{ section.settings.customize_mobile_alignment }}",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:custom_section.left"
+        },
+        {
+          "value": "center",
+          "label": "t:custom_section.center"
+        },
+        {
+          "value": "right",
+          "label": "t:custom_section.right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:general.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:labels.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:general.gap"
+    },
+    {
+      "type": "range",
+      "id": "header_gap",
+      "label": "Header gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "header_gap_mobile",
+      "label": "Header gap (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "label": "Row gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "label": "Row gap (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "t:general.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:labels.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:labels.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "checkbox",
+      "id": "customize_mobile_padding",
+      "label": "t:labels.customize_mobile_padding",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:labels.mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:labels.mobile_bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 12,
+      "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection marquee",
+      "category": "t:general.collections",
+      "blocks": [
+        {
+          "type": "header",
+          "id": "header",
+          "static": true,
+          "settings": {
+            "width": "fill",
+            "inherit_alignment": true,
+            "gap_desktop": 12,
+            "gap_mobile": 8
+          },
+          "blocks": [
+            {
+              "type": "eyebrow",
+              "settings": {
+                "text": "<p>Explore collections</p>",
+                "show_icon": true,
+                "icon": "square",
+                "animation_type": "none"
+              ,
+                "animation_delay": 0}
+            }
+          ]
+        },
+        {
+          "type": "_collection-marquee",
+          "settings": {
+            "heading": "T-shirts & Tops",
+            "heading_size": "display",
+            "animation_direction": "forward",
+            "collection": "virelle-t-shirts-tops",
+            "font": "heading",
+            "gap_desktop": 24,
+            "gap_mobile": 20
+          },
+          "blocks": [
+            {
+              "type": "_collection-marquee-image",
+              "settings": {
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
+                "width_custom_desktop": 200,
+                "width_custom_mobile": 120,
+                "corner_radius": "square",
+                "image": "shopify://shop_images/kinetra-collection-tshirts-black-crop.avif"
+              },
+              "id": "image-1",
+              "static": true
+            },
+            {
+              "type": "_collection-marquee-image",
+              "settings": {
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
+                "width_custom_desktop": 200,
+                "width_custom_mobile": 120,
+                "corner_radius": "square",
+                "image": "shopify://shop_images/kinetra-collection-tops-tan-crop.avif"
+              },
+              "id": "image-2",
+              "static": true
+            }
+          ]
+        },
+        {
+          "type": "_collection-marquee",
+          "settings": {
+            "heading": "Jogger & Bottoms",
+            "heading_size": "display",
+            "animation_direction": "backward",
+            "collection": "virelle-jogger-bottoms",
+            "font": "heading",
+            "gap_desktop": 24,
+            "gap_mobile": 20
+          },
+          "blocks": [
+            {
+              "type": "_collection-marquee-image",
+              "settings": {
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
+                "width_custom_desktop": 200,
+                "width_custom_mobile": 120,
+                "corner_radius": "square",
+                "image": "shopify://shop_images/kinetra-collection-jogger-white-crop.avif"
+              },
+              "id": "image-1",
+              "static": true
+            },
+            {
+              "type": "_collection-marquee-image",
+              "settings": {
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
+                "width_custom_desktop": 200,
+                "width_custom_mobile": 120,
+                "corner_radius": "square",
+                "image": "shopify://shop_images/kinetra-collection-jogger-red-crop.avif"
+              },
+              "id": "image-2",
+              "static": true
+            }
+          ]
+        },
+        {
+          "type": "_collection-marquee",
+          "settings": {
+            "heading": "Jackets & Hoodies",
+            "heading_size": "display",
+            "animation_direction": "forward",
+            "collection": "virelle-jackets-hoodies",
+            "font": "heading",
+            "gap_desktop": 24,
+            "gap_mobile": 20
+          },
+          "blocks": [
+            {
+              "type": "_collection-marquee-image",
+              "settings": {
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
+                "width_custom_desktop": 200,
+                "width_custom_mobile": 120,
+                "corner_radius": "square",
+                "image": "shopify://shop_images/kinetra-collection-jackets-first-crop.avif"
+              },
+              "id": "image-1",
+              "static": true
+            },
+            {
+              "type": "_collection-marquee-image",
+              "settings": {
+                "image_ratio": "custom",
+                "image_ratio_custom_width": 2,
+                "image_ratio_custom_height": 1,
+                "width_custom_desktop": 200,
+                "width_custom_mobile": 120,
+                "corner_radius": "square",
+                "image": "shopify://shop_images/kinetra-collection-jackets-second-crop.avif"
+              },
+              "id": "image-2",
+              "static": true
+            }
+          ]
+        }
+      ],
+      "settings": {
+        "section_width": "full_width_no_padding",
+        "color_scheme": "scheme-1",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 12,
+        "header_gap": 40,
+        "header_gap_mobile": 20,
+        "row_gap": 32,
+        "row_gap_mobile": 20,
+        "alignment": "center",
+        "customize_mobile_alignment": false,
+        "alignment_mobile": "center"
+      }
+    }
+  ]
+}
+{% endschema %}

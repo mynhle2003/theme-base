@@ -134,7 +134,7 @@
   endif
 
   assign hotspot_carousel_pagination_type = section.settings.pagination_type | default: 'bullets'
-  unless hotspot_carousel_pagination_type == 'bullets' or hotspot_carousel_pagination_type == 'progress_bar' or hotspot_carousel_pagination_type == 'numbers'
+  unless hotspot_carousel_pagination_type == 'bullets' or hotspot_carousel_pagination_type == 'progress_bar' or hotspot_carousel_pagination_type == 'numbers' or hotspot_carousel_pagination_type == 'dot'
     assign hotspot_carousel_pagination_type = 'bullets'
   endunless
   assign hotspot_carousel_use_fraction = false
@@ -717,7 +717,7 @@
       "label": "t:labels.type",
       "options": [
         { "value": "progress_bar", "label": "t:options.collection_pagination.progress_bar" },
-        { "value": "bullets", "label": "t:options.collection_pagination.bullets" },
+        { "value": "bullets", "label": "t:options.collection_pagination.bullets" }, { "value": "dot", "label": "Dot" },
         { "value": "numbers", "label": "Numbers" }
       ],
       "default": "bullets",

@@ -268,8 +268,16 @@
 {
   "name": "Location map",
   "class": "section-kernel",
-  "enabled_on": { "templates": ["*"] },
-  "blocks": [{ "type": "group" }],
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
+  "blocks": [
+    {
+      "type": "group"
+    }
+  ],
   "settings": [
     {
       "type": "header",
@@ -280,9 +288,18 @@
       "id": "section_width",
       "label": "Section width",
       "options": [
-        { "value": "page_width", "label": "Page width" },
-        { "value": "full_width", "label": "Full width" },
-        { "value": "full_width_no_padding", "label": "Full width (no padding)" }
+        {
+          "value": "page_width",
+          "label": "Page width"
+        },
+        {
+          "value": "full_width",
+          "label": "Full width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "Full width (no padding)"
+        }
       ],
       "default": "page_width"
     },
@@ -291,8 +308,14 @@
       "id": "layout_style",
       "label": "Card placement",
       "options": [
-        { "value": "beside", "label": "Beside the image" },
-        { "value": "overlay", "label": "Over the image" }
+        {
+          "value": "beside",
+          "label": "Beside the image"
+        },
+        {
+          "value": "overlay",
+          "label": "Over the image"
+        }
       ],
       "default": "beside"
     },
@@ -312,8 +335,14 @@
       "id": "direction",
       "label": "Direction",
       "options": [
-        { "value": "horizontal", "label": "Horizontal" },
-        { "value": "vertical", "label": "Vertical" }
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        }
       ],
       "default": "horizontal"
     },
@@ -322,9 +351,18 @@
       "id": "position",
       "label": "Position",
       "options": [
-        { "value": "top", "label": "Top" },
-        { "value": "center", "label": "Center" },
-        { "value": "bottom", "label": "Bottom" }
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
       ],
       "default": "center",
       "visible_if": "{{ section.settings.direction == 'horizontal' }}"
@@ -334,10 +372,22 @@
       "id": "horizontal_alignment",
       "label": "Horizontal alignment",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" },
-        { "value": "space-between", "label": "Space between" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "space-between",
+          "label": "Space between"
+        }
       ],
       "default": "space-between",
       "visible_if": "{{ section.settings.direction == 'horizontal' }}"
@@ -347,9 +397,18 @@
       "id": "alignment",
       "label": "Alignment",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
       ],
       "default": "left",
       "visible_if": "{{ section.settings.direction == 'vertical' }}"
@@ -359,9 +418,18 @@
       "id": "alignment_mobile",
       "label": "Mobile alignment",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
       ],
       "default": "left"
     },
@@ -505,111 +573,174 @@
       "name": "Location map",
       "category": "t:general.content",
       "settings": {
-        "section_width": "page_width",
+        "color_scheme": "scheme-3",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48,
+        "section_width": "full_width",
         "layout_style": "beside",
+        "map_image": "shopify://shop_images/kinetra-locations-mall.avif",
+        "map_image_alt": "Interior of a shopping mall",
         "direction": "horizontal",
-        "position": "center",
-        "horizontal_alignment": "space-between",
-        "alignment": "left",
-        "alignment_mobile": "left",
+        "position": "top",
         "gap_desktop": 64,
-        "gap_mobile": 40,
-        "color_scheme": "scheme-1",
-        "padding_top": 64,
-        "padding_right": 0,
-        "padding_bottom": 64,
-        "padding_left": 0,
-        "customize_mobile_padding": false,
-        "padding_top_mobile": 40,
-        "padding_right_mobile": 0,
-        "padding_bottom_mobile": 40,
-        "padding_left_mobile": 0
+        "gap_mobile": 40
       },
       "blocks": [
         {
           "type": "group",
-          "id": "header",
-          "static": true,
           "settings": {
             "direction": "vertical",
-            "alignment": "left",
             "width": "fill",
-            "gap_desktop": 8,
-            "gap_mobile": 8,
+            "width_mobile": "fill",
             "height": "fit",
-            "padding_top": 0,
-            "padding_bottom": 0,
-            "padding_left": 0,
-            "padding_right": 0
+            "gap_desktop": 16,
+            "gap_mobile": 12
           },
+          "static": true,
+          "id": "header",
           "blocks": [
-            { "type": "eyebrow", "settings": {
-  "animation_delay": 0,
-  "animation_type": "fade", "text": "<p>SUBHEADING</p>", "show_background": false, "show_icon": false } },
-            { "type": "heading", "settings": {
-  "animation_delay": 50,
-  "animation_type": "slide-bottom", "text": "<p>Main Heading Placeholder</p>", "heading_size": "display", "html_tag": "h2", "width": "fit" } },
-            { "type": "text", "settings": {
-  "animation_delay": 100,
-  "animation_type": "fade", "text": "<p>This is placeholder text for a paragraph that provides a short and engaging description to support the heading above and keep visual balance.</p>", "text_size": "sm", "width": "custom", "max_width": 640 } }
+            {
+              "type": "eyebrow",
+              "settings": {
+                "text": "<p>Visit us</p>",
+                "show_icon": true,
+                "icon": "square"
+              ,
+                "animation_type": "fade",
+                "animation_delay": 0}
+
+                },
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Store location</p>",
+                "heading_size": "xl",
+                "html_tag": "h2",
+                "width": "fill"
+              ,
+                "animation_type": "slide-bottom",
+                "animation_delay": 50}
+            }
           ]
         },
         {
           "type": "group",
-          "id": "content",
-          "static": true,
           "settings": {
             "direction": "vertical",
-            "horizontal_alignment": "space-between",
-            "alignment": "left",
-            "customize_mobile_alignment": true,
-            "alignment_mobile": "left",
             "width": "fill",
+            "width_mobile": "fill",
             "height": "fit",
             "gap_desktop": 32,
-            "gap_mobile": 24,
-            "padding_top": 0,
-            "padding_bottom": 0,
-            "padding_left": 0,
-            "padding_right": 0
+            "gap_mobile": 24
           },
+          "static": true,
+          "id": "content",
           "blocks": [
-                { "type": "group", "settings": { "direction": "vertical", "alignment": "left", "width": "fill", "height": "fit", "gap_desktop": 8, "gap_mobile": 8, "padding_top": 0, "padding_bottom": 0, "padding_left": 0, "padding_right": 0 }, "blocks": [
-                  { "type": "icon", "settings": {
-  "animation_delay": 50,
-  "animation_type": "scale", "icon": "document-text", "icon_width": 20 } },
-                  { "type": "heading", "settings": {
-  "animation_delay": 50,
-  "animation_type": "slide-bottom", "text": "<p>Email</p>", "heading_size": "display", "html_tag": "h3" } },
-                  { "type": "text", "settings": {
-  "animation_delay": 100,
-  "animation_type": "fade", "text": "<p>Lorem ipsum dolor sit amet.<br><a href=\"mailto:email@example.com\">email@example.com</a></p>", "text_size": "sm" } }
-                ] },
-                { "type": "group", "settings": { "direction": "vertical", "alignment": "left", "width": "fill", "height": "fit", "gap_desktop": 8, "gap_mobile": 8, "padding_top": 0, "padding_bottom": 0, "padding_left": 0, "padding_right": 0 }, "blocks": [
-                  { "type": "icon", "settings": {
-  "animation_delay": 50,
-  "animation_type": "scale", "icon": "user", "icon_width": 20 } },
-                  { "type": "heading", "settings": {
-  "animation_delay": 50,
-  "animation_type": "slide-bottom", "text": "<p>Phone</p>", "heading_size": "display", "html_tag": "h3" } },
-                  { "type": "text", "settings": {
-  "animation_delay": 100,
-  "animation_type": "fade", "text": "<p>Lorem ipsum dolor sit amet.<br><a href=\"tel:+15550000000\">+1 (555) 000-0000</a></p>", "text_size": "sm" } }
-                ] },
-                { "type": "group", "settings": { "direction": "vertical", "alignment": "left", "width": "fill", "height": "fit", "gap_desktop": 8, "gap_mobile": 8, "padding_top": 0, "padding_bottom": 0, "padding_left": 0, "padding_right": 0 }, "blocks": [
-                  { "type": "icon", "settings": {
-  "animation_delay": 50,
-  "animation_type": "scale", "icon": "circle", "icon_width": 20 } },
-                  { "type": "heading", "settings": {
-  "animation_delay": 50,
-  "animation_type": "slide-bottom", "text": "<p>Office</p>", "heading_size": "display", "html_tag": "h3" } },
-                  { "type": "text", "settings": {
-  "animation_delay": 100,
-  "animation_type": "fade", "text": "<p>123 Sample St, Sydney NSW 2000 AU</p>", "text_size": "sm" } },
-                  { "type": "button", "settings": {
-  "animation_delay": 150,
-  "animation_type": "fade", "button_label": "GET DIRECTIONS", "button_style": "tertiary", "button_link": "https://maps.google.com", "show_icon": true, "icon": "arrow", "icon_position": "after", "width": "fit" } }
-                ] }
+            {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 12,
+                "gap_mobile": 12
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Sydney</p>",
+                    "heading_size": "md",
+                    "html_tag": "h2",
+                    "width": "fill"
+                  ,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50}
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>123 Sample St, Sydney NSW 2000 AU</p>",
+                    "text_size": "md",
+                    "width": "fill"
+                  ,
+                    "animation_type": "fade",
+                    "animation_delay": 100}
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 12,
+                "gap_mobile": 12
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>Ho Chi Minh</p>",
+                    "heading_size": "md",
+                    "html_tag": "h2",
+                    "width": "fill"
+                  ,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50}
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>2 Hai Trieu, District 1, Ho Chi Minh City</p>",
+                    "text_size": "md",
+                    "width": "fill"
+                  ,
+                    "animation_type": "fade",
+                    "animation_delay": 100}
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 12,
+                "gap_mobile": 12
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>London</p>",
+                    "heading_size": "md",
+                    "html_tag": "h2",
+                    "width": "fill"
+                  ,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50}
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>123 Sample St, London W1C 1DE, United Kingdom</p>",
+                    "text_size": "md",
+                    "width": "fill"
+                  ,
+                    "animation_type": "fade",
+                    "animation_delay": 100}
+                }
+              ]
+            }
           ]
         }
       ]
