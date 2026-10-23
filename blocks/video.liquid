@@ -96,9 +96,9 @@
   endif
 
   assign video_height_desktop = 'auto'
-  unless aspect_ratio_desktop == 'auto'
+  if aspect_ratio_desktop_setting == 'fill_height' or aspect_ratio_desktop != 'auto'
     assign video_height_desktop = '100%'
-  endunless
+  endif
 
   assign aspect_ratio_mobile_setting = block.settings.aspect_ratio_mobile | default: aspect_ratio_desktop_setting | default: 'original'
   assign aspect_ratio_mobile = 'auto'
@@ -145,9 +145,9 @@
   endif
 
   assign video_height_mobile = 'auto'
-  unless aspect_ratio_mobile == 'auto'
+  if aspect_ratio_mobile_setting == 'fill_height' or aspect_ratio_mobile != 'auto'
     assign video_height_mobile = '100%'
-  endunless
+  endif
 
   assign width_desktop = block.settings.width_desktop | default: 'fit'
   unless width_desktop == 'fit' or width_desktop == 'fill' or width_desktop == 'custom'
@@ -236,6 +236,12 @@
   assign padding_right_mobile = block.settings.padding_right_mobile | default: 0 | plus: 0
 
   assign video_class = 'video-block size-style size-style--contain'
+  if aspect_ratio_desktop_setting == 'fill_height'
+    assign video_class = video_class | append: ' video-block--height-fill'
+  endif
+  if aspect_ratio_mobile_setting == 'fill_height'
+    assign video_class = video_class | append: ' video-block--height-fill-mobile'
+  endif
   if block.settings.show_video_first_mobile
     assign video_class = video_class | append: ' video-block--first-mobile'
   endif
@@ -342,6 +348,17 @@
     .video-block .video-block__media .video__placeholder {
       height: var(--video-block-height-mobile, var(--video-block-height, auto));
     }
+  }
+  /* A fill frame takes its height from its parent or content siblings. */
+  @media (min-width: 768px) {
+    .video-block--height-fill { display: flex; flex: 1 1 0; height: auto; min-height: 0; align-self: stretch; }
+    .video-block--height-fill > .video-block__media { flex: 1 1 auto; height: auto; min-height: 0; }
+    .video-block--height-fill .video-block__media > :is(video, iframe, .video__placeholder) { position: absolute; inset: 0; height: 100%; }
+  }
+  @media (max-width: 767.98px) {
+    .video-block--height-fill-mobile { display: flex; flex: 1 1 0; height: auto; min-height: 0; align-self: stretch; }
+    .video-block--height-fill-mobile > .video-block__media { flex: 1 1 auto; height: auto; min-height: 0; }
+    .video-block--height-fill-mobile .video-block__media > :is(video, iframe, .video__placeholder) { position: absolute; inset: 0; height: 100%; }
   }
 {% endstylesheet %}
 
@@ -510,6 +527,10 @@
           "label": "Landscape (5:4)"
         },
         {
+          "value": "fill_height",
+          "label": "Fill height"
+        },
+        {
           "value": "custom",
           "label": "t:options.image_ratio.custom"
         }
@@ -622,6 +643,10 @@
         {
           "value": "ratio_5_4",
           "label": "Landscape (5:4)"
+        },
+        {
+          "value": "fill_height",
+          "label": "Fill height"
         },
         {
           "value": "custom",
