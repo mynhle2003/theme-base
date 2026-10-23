@@ -10,7 +10,7 @@
   const excludedSurface = '.section-header, .section-footer, .section-announcement-bar, .announcement-bar, .section-faq, .section-faqs, .section-faq-accordion, .section-faq-image-accordion, dialog, [data-marquee-clone], [data-announcement-clone]';
   const cardSelector = 'article.testimonial-item, .product-card, .promo-card, .collection-card, .collection-card-kernel, .blog-card, .blog-first-card, article.image-card, .collection-thumbnail__link, .icon-text-cards__content > .group, .icon-text-cards__viewport > .swiper-wrapper > .swiper-slide > .group';
   const listSelector = '[data-product-list-mobile-promos], [data-product-carousel], .product-collection-grid, .collection-card-list__grid, .product-list__grid, [data-product-list], .image-cards-section__grid, [data-blog-list], .blog-grid, .collection-thumbnails__grid, .collection-thumbnails__carousel, .testimonial-carousel, .testimonials-cards__carousel, .icon-text-cards__content, .icon-text-cards__viewport > .swiper-wrapper';
-  const scopeSelector = '[role="tabpanel"], .slideshow__swiper .swiper-slide';
+  const scopeSelector = '[role="tabpanel"], .slideshow__swiper .swiper-slide, .press-item[data-carousel-slide]';
   // Shopify's CSS compiler can shorten 500ms to .5s. Web Animations
   // always expects milliseconds, regardless of the CSS serialization.
   const durationMilliseconds = (value, fallback) => {

@@ -14,29 +14,34 @@
       "settings": {
         "color_scheme": "scheme-3",
         "show_overlay": false,
-        "padding_top": 0,
+        "padding_top": 48,
         "padding_bottom": 0,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48,
         "media_type": "image",
         "desktop_height": "medium",
-        "mobile_height": "adapt",
-        "desktop_position": "bottom_left",
+        "mobile_height": "medium",
+        "desktop_position": "bottom_right",
         "mobile_position": "center_center",
         "content_color_scheme": "scheme-3",
         "width": "full",
         "layout": "stack",
-        "content_width": "fit",
-        "desktop_gap": 40,
-        "mobile_gap": 32,
+        "content_width": "custom",
+        "desktop_gap": 0,
+        "mobile_gap": 0,
         "overlay_style": "solid",
         "overlay": "#00000033",
         "banner_image": "shopify://shop_images/virelle-hero-stack-desktop-figma.avif",
         "mobile_banner_image": "shopify://shop_images/virelle-hero-stack-mobile-figma.avif",
         "desktop_content_position": "last",
-        "page_content_padding": 64,
-        "page_content_padding_mobile": 48
+        "page_content_padding": 0,
+        "page_content_padding_mobile": 0,
+        "content_max_width": 960,
+        "padding_right": 0,
+        "padding_left": 0,
+        "padding_right_mobile": 16,
+        "padding_left_mobile": 16
       },
       "blocks": {
         "hero_marquee_1": {
@@ -56,7 +61,10 @@
             "padding_top": 0,
             "padding_bottom": 0,
             "hide_on_mobile": true,
-            "hide_on_desktop": false
+            "hide_on_desktop": false,
+            "customize_mobile_padding": true,
+            "padding_bottom_mobile": 0,
+            "padding_top_mobile": 0
           },
           "blocks": {
             "hero_marquee_heading_1": {
@@ -67,8 +75,7 @@
                 "heading_size": "custom",
                 "font": "heading",
                 "custom_heading_size": 68,
-                "letter_spacing": "tight",
-                "text_case": "uppercase",
+
                 "color_role": "heading",
                 "opacity": 100
               }
@@ -80,9 +87,9 @@
                 "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"white\"/>\n</svg>",
                 "icon_width": 14,
                 "icon_padding": 0,
-                "animation": "none"
-              ,
-                "animation_delay": 0}
+                "animation": "none",
+                "animation_delay": 0
+              }
             },
             "hero_marquee_heading_3": {
               "type": "_marquee-heading",
@@ -92,8 +99,6 @@
                 "heading_size": "custom",
                 "font": "heading",
                 "custom_heading_size": 68,
-                "letter_spacing": "tight",
-                "text_case": "uppercase",
                 "color_role": "heading",
                 "opacity": 100
               }
@@ -105,9 +110,9 @@
                 "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"white\"/>\n</svg>",
                 "icon_width": 14,
                 "icon_padding": 0,
-                "animation": "none"
-              ,
-                "animation_delay": 0}
+                "animation": "none",
+                "animation_delay": 0
+              }
             },
             "hero_marquee_heading_5": {
               "type": "_marquee-heading",
@@ -117,8 +122,7 @@
                 "heading_size": "custom",
                 "font": "heading",
                 "custom_heading_size": 68,
-                "letter_spacing": "tight",
-                "text_case": "uppercase",
+
                 "color_role": "heading",
                 "opacity": 100
               }
@@ -130,9 +134,9 @@
                 "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"white\"/>\n</svg>",
                 "icon_width": 14,
                 "icon_padding": 0,
-                "animation": "none"
-              ,
-                "animation_delay": 0}
+                "animation": "none",
+                "animation_delay": 0
+              }
             },
             "hero_marquee_heading_7": {
               "type": "_marquee-heading",
@@ -142,8 +146,6 @@
                 "heading_size": "custom",
                 "font": "heading",
                 "custom_heading_size": 68,
-                "letter_spacing": "tight",
-                "text_case": "uppercase",
                 "color_role": "heading",
                 "opacity": 100
               }
@@ -155,9 +157,9 @@
                 "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"white\"/>\n</svg>",
                 "icon_width": 14,
                 "icon_padding": 0,
-                "animation": "none"
-              ,
-                "animation_delay": 0}
+                "animation": "none",
+                "animation_delay": 0
+              }
             }
           },
           "block_order": [
@@ -177,10 +179,19 @@
             "width": "fill",
             "inherit_alignment": false,
             "gap_desktop": 16,
-            "gap_mobile": 16,
-            "alignment": "left",
+            "gap_mobile": 12,
+            "alignment": "right",
             "customize_mobile_alignment": true,
-            "alignment_mobile": "center"
+            "alignment_mobile": "center",
+            "padding_bottom": 80,
+            "customize_mobile_padding": true,
+            "padding_bottom_mobile": 0,
+            "padding_left": 80,
+            "padding_right": 80,
+            "padding_top": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0,
+            "padding_top_mobile": 0
           },
           "blocks": {
             "block-1": {
@@ -204,31 +215,48 @@
                 "heading_size": "display",
                 "width": "fill"
               }
+            },
+            "hero_button": {
+              "type": "button",
+              "settings": {
+                "animation_delay": 150,
+                "animation_type": "fade",
+                "button_label": "Shop now",
+                "button_style": "primary",
+                "show_icon": false,
+                "button_link": "shopify://collections/all",
+                "width": "fit",
+                "width_mobile": "fit",
+                "padding_bottom": 0,
+                "customize_mobile_padding": true,
+                "padding_bottom_mobile": 0,
+                "padding_top": 24,
+                "padding_top_mobile": 12
+              }
             }
           },
           "block_order": [
             "block-1",
-            "block-2"
+            "block-2",
+            "hero_button"
           ]
         },
-        "block-2": {
-          "type": "button",
+        "hero_space": {
+          "type": "spacer",
           "settings": {
-            "animation_delay": 150,
-            "animation_type": "fade",
-            "button_label": "Shop now",
-            "button_style": "primary",
-            "show_icon": false,
-            "button_link": "shopify://collections/all",
-            "width": "fit",
-            "width_mobile": "fit"
+            "unit_desktop": "percent",
+            "size_desktop_px": 372,
+            "show_on_mobile": false,
+            "unit_mobile": "pixel",
+            "size_mobile_px": 56,
+            "size_desktop_percent": 100
           }
         }
       },
       "block_order": [
         "hero_marquee_1",
-        "block-1",
-        "block-2"
+        "hero_space",
+        "block-1"
       ]
     },
     "collection_tabs_ihC66t": {
@@ -417,7 +445,6 @@
         "padding_bottom_mobile": 48
       }
     },
-
     "shop_the_look_section_mhb9aq": {
       "type": "shop-the-look-section",
       "blocks": {
@@ -607,7 +634,6 @@
         "padding_top_mobile": 48,
         "padding_bottom_mobile": 48
       }
-
     },
     "blog_posts_cLyPkK": {
       "type": "blog-posts",
@@ -1297,7 +1323,6 @@
         }
       }
     },
-
     "virelle_marquee": {
       "type": "custom-section",
       "name": "Text marquee (custom)",
@@ -1338,7 +1363,7 @@
                 "outline": true,
                 "heading_size": "display",
                 "font": "heading",
-                "text_case": "uppercase",
+
                 "opacity": 100,
                 "color_role": "heading"
               }
@@ -1365,7 +1390,6 @@
                 "outline": true,
                 "heading_size": "display",
                 "font": "heading",
-                "text_case": "uppercase",
                 "opacity": 100,
                 "color_role": "heading"
               }
@@ -1392,7 +1416,7 @@
                 "outline": true,
                 "heading_size": "display",
                 "font": "heading",
-                "text_case": "uppercase",
+
                 "opacity": 100,
                 "color_role": "heading"
               }
@@ -1419,7 +1443,6 @@
                 "outline": true,
                 "heading_size": "display",
                 "font": "heading",
-                "text_case": "uppercase",
                 "opacity": 100,
                 "color_role": "heading"
               }
@@ -1476,7 +1499,7 @@
                 "outline": true,
                 "heading_size": "display",
                 "font": "heading",
-                "text_case": "uppercase",
+
                 "opacity": 100,
                 "color_role": "heading"
               }
@@ -1503,7 +1526,6 @@
                 "outline": true,
                 "heading_size": "display",
                 "font": "heading",
-                "text_case": "uppercase",
                 "opacity": 100,
                 "color_role": "heading"
               }
@@ -1530,7 +1552,7 @@
                 "outline": true,
                 "heading_size": "display",
                 "font": "heading",
-                "text_case": "uppercase",
+
                 "opacity": 100,
                 "color_role": "heading"
               }
@@ -1557,7 +1579,6 @@
                 "outline": true,
                 "heading_size": "display",
                 "font": "heading",
-                "text_case": "uppercase",
                 "opacity": 100,
                 "color_role": "heading"
               }
@@ -1594,7 +1615,6 @@
         "marquee",
         "marquee_mobile"
       ]
-
     },
     "kinetra_collage": {
       "type": "image-text-card-grid",
@@ -1694,10 +1714,10 @@
                           "settings": {
                             "text": "<p>Stay secure</p>",
                             "show_icon": true,
-                            "icon": "square"
-                          ,
+                            "icon": "square",
                             "animation_type": "fade",
-                            "animation_delay": 0}
+                            "animation_delay": 0
+                          }
                         },
                         "heading": {
                           "type": "heading",
@@ -1705,20 +1725,20 @@
                             "text": "<p>Confidence in every move</p>",
                             "heading_size": "xl",
                             "html_tag": "h2",
-                            "width": "fill"
-                          ,
+                            "width": "fill",
                             "animation_type": "slide-bottom",
-                            "animation_delay": 50}
+                            "animation_delay": 50
+                          }
                         },
                         "text": {
                           "type": "text",
                           "settings": {
                             "text": "<p>From buttery-soft studio sets to high-compression training gear, every piece is tested to stay up and stay opaque</p>",
                             "text_size": "md",
-                            "width": "fill"
-                          ,
+                            "width": "fill",
                             "animation_type": "fade",
-                            "animation_delay": 100}
+                            "animation_delay": 100
+                          }
                         }
                       },
                       "block_order": [
@@ -1734,10 +1754,10 @@
                         "button_link": "shopify://collections/all",
                         "button_style": "tertiary",
                         "show_icon": true,
-                        "icon": "arrow_up_right"
-                      ,
+                        "icon": "arrow_up_right",
                         "animation_type": "fade",
-                        "animation_delay": 150}
+                        "animation_delay": 150
+                      }
                     }
                   },
                   "block_order": [
@@ -1926,10 +1946,10 @@
                       "settings": {
                         "text": "<p>Together</p>",
                         "show_icon": true,
-                        "icon": "square"
-                      ,
+                        "icon": "square",
                         "animation_type": "fade",
-                        "animation_delay": 0}
+                        "animation_delay": 0
+                      }
                     },
                     "heading": {
                       "type": "heading",
@@ -1937,10 +1957,10 @@
                         "text": "<p>Empower. Inspire. Belong</p>",
                         "heading_size": "xl",
                         "html_tag": "h2",
-                        "width": "fill"
-                      ,
+                        "width": "fill",
                         "animation_type": "slide-bottom",
-                        "animation_delay": 50}
+                        "animation_delay": 50
+                      }
                     }
                   },
                   "block_order": [
@@ -1953,10 +1973,10 @@
                   "settings": {
                     "text": "<p>At the heart of our activewear collection is the belief that every woman deserves to feel empowered. Our designs are crafted to enhance your natural strength and confidence, allowing you to tackle any challenge that comes your way.</p>",
                     "text_size": "md",
-                    "width": "fill"
-                  ,
+                    "width": "fill",
                     "animation_type": "fade",
-                    "animation_delay": 100}
+                    "animation_delay": 100
+                  }
                 }
               },
               "block_order": [
@@ -2037,10 +2057,10 @@
                   "settings": {
                     "text": "<p>We believe that inspiration can be found in every moment. Our activewear is not just about style; it’s about motivating you to pursue your passions and dreams. Each piece is designed to ignite your spirit and encourage you to push beyond your limits.</p>",
                     "text_size": "md",
-                    "width": "fill"
-                  ,
+                    "width": "fill",
                     "animation_type": "fade",
-                    "animation_delay": 100}
+                    "animation_delay": 100
+                  }
                 }
               },
               "block_order": [
@@ -2120,10 +2140,10 @@
                   "settings": {
                     "text": "<p>Every movement counts, and our activewear is designed to move with you. Whether you're practicing yoga, lifting weights, or enjoying a leisurely walk, our clothing provides the comfort and flexibility you need.</p>",
                     "text_size": "md",
-                    "width": "fill"
-                  ,
+                    "width": "fill",
                     "animation_type": "fade",
-                    "animation_delay": 100}
+                    "animation_delay": 100
+                  }
                 }
               },
               "block_order": [
@@ -2176,10 +2196,10 @@
                 "text": "<p>Attention to detail</p>",
                 "show_icon": true,
                 "icon": "square",
-                "show_background": false
-              ,
+                "show_background": false,
                 "animation_type": "fade",
-                "animation_delay": 0}
+                "animation_delay": 0
+              }
             },
             "heading": {
               "type": "heading",
@@ -2187,10 +2207,10 @@
                 "text": "<p>Crafted with care</p>",
                 "heading_size": "xl",
                 "html_tag": "h2",
-                "width": "fill"
-              ,
+                "width": "fill",
                 "animation_type": "slide-bottom",
-                "animation_delay": 50}
+                "animation_delay": 50
+              }
             }
           },
           "block_order": [
@@ -2304,20 +2324,20 @@
                 "text": "<p>This week’s highlights</p>",
                 "heading_size": "xl",
                 "html_tag": "h2",
-                "width": "fill"
-              ,
+                "width": "fill",
                 "animation_type": "slide-bottom",
-                "animation_delay": 50}
+                "animation_delay": 50
+              }
             },
             "text": {
               "type": "text",
               "settings": {
                 "text": "<p>Uncover the must-have items that are capturing the hearts of our shoppers this week, ensuring you stay comfortable during your workouts</p>",
                 "text_size": "md",
-                "width": "fill"
-              ,
+                "width": "fill",
                 "animation_type": "fade",
-                "animation_delay": 100}
+                "animation_delay": 100
+              }
             }
           },
           "block_order": [
@@ -2417,9 +2437,7 @@
             "controls_spacing_mobile": 40,
             "show_next_slide_preview": false,
             "transition_style": "slide",
-            "navigation_position": "content_bottom",
-            "active_color": "#181818",
-            "inactive_color": "#CCCCCC"
+            "navigation_position": "content_bottom"
           },
           "blocks": {
             "year-2010": {
@@ -2503,10 +2521,10 @@
                               "settings": {
                                 "text": "<p>The Beginning of a Vision</p>",
                                 "show_icon": true,
-                                "icon": "square"
-                              ,
+                                "icon": "square",
                                 "animation_type": "fade",
-                                "animation_delay": 0}
+                                "animation_delay": 0
+                              }
                             },
                             "heading": {
                               "type": "heading",
@@ -2514,10 +2532,10 @@
                                 "text": "<p>2010</p>",
                                 "heading_size": "xl",
                                 "html_tag": "h2",
-                                "width": "fill"
-                              ,
+                                "width": "fill",
                                 "animation_type": "slide-bottom",
-                                "animation_delay": 50}
+                                "animation_delay": 50
+                              }
                             }
                           },
                           "block_order": [
@@ -2530,10 +2548,10 @@
                           "settings": {
                             "text": "<p>In 2010, our journey began with a vision to create activewear that empowers women. We launched our first collection, focusing on stylish and functional designs that cater to women's unique needs.</p>",
                             "text_size": "md",
-                            "width": "fill"
-                          ,
+                            "width": "fill",
                             "animation_type": "fade",
-                            "animation_delay": 100}
+                            "animation_delay": 100
+                          }
                         }
                       },
                       "block_order": [
@@ -2633,10 +2651,10 @@
                               "settings": {
                                 "text": "<p>Crafted for Every Move</p>",
                                 "show_icon": true,
-                                "icon": "square"
-                              ,
+                                "icon": "square",
                                 "animation_type": "fade",
-                                "animation_delay": 0}
+                                "animation_delay": 0
+                              }
                             },
                             "heading": {
                               "type": "heading",
@@ -2644,10 +2662,10 @@
                                 "text": "<p>2015</p>",
                                 "heading_size": "xl",
                                 "html_tag": "h2",
-                                "width": "fill"
-                              ,
+                                "width": "fill",
                                 "animation_type": "slide-bottom",
-                                "animation_delay": 50}
+                                "animation_delay": 50
+                              }
                             }
                           },
                           "block_order": [
@@ -2660,10 +2678,10 @@
                           "settings": {
                             "text": "<p>In 2015, we refined our collection with thoughtful details made for everyday movement. From supportive seams to soft, flexible fabrics, each piece brought comfort and confidence to women's active lives.</p>",
                             "text_size": "md",
-                            "width": "fill"
-                          ,
+                            "width": "fill",
                             "animation_type": "fade",
-                            "animation_delay": 100}
+                            "animation_delay": 100
+                          }
                         }
                       },
                       "block_order": [
@@ -2763,10 +2781,10 @@
                               "settings": {
                                 "text": "<p>Designed to Move with You</p>",
                                 "show_icon": true,
-                                "icon": "square"
-                              ,
+                                "icon": "square",
                                 "animation_type": "fade",
-                                "animation_delay": 0}
+                                "animation_delay": 0
+                              }
                             },
                             "heading": {
                               "type": "heading",
@@ -2774,10 +2792,10 @@
                                 "text": "<p>2020</p>",
                                 "heading_size": "xl",
                                 "html_tag": "h2",
-                                "width": "fill"
-                              ,
+                                "width": "fill",
                                 "animation_type": "slide-bottom",
-                                "animation_delay": 50}
+                                "animation_delay": 50
+                              }
                             }
                           },
                           "block_order": [
@@ -2790,10 +2808,10 @@
                           "settings": {
                             "text": "<p>In 2020, we explored new textures and versatile designs for changing routines. Our activewear balanced gentle support with freedom of movement, helping women feel comfortable from a morning stretch to the rest of their day.</p>",
                             "text_size": "md",
-                            "width": "fill"
-                          ,
+                            "width": "fill",
                             "animation_type": "fade",
-                            "animation_delay": 100}
+                            "animation_delay": 100
+                          }
                         }
                       },
                       "block_order": [
@@ -2893,10 +2911,10 @@
                               "settings": {
                                 "text": "<p>The Journey Continues</p>",
                                 "show_icon": true,
-                                "icon": "square"
-                              ,
+                                "icon": "square",
                                 "animation_type": "fade",
-                                "animation_delay": 0}
+                                "animation_delay": 0
+                              }
                             },
                             "heading": {
                               "type": "heading",
@@ -2904,10 +2922,10 @@
                                 "text": "<p>2025</p>",
                                 "heading_size": "xl",
                                 "html_tag": "h2",
-                                "width": "fill"
-                              ,
+                                "width": "fill",
                                 "animation_type": "slide-bottom",
-                                "animation_delay": 50}
+                                "animation_delay": 50
+                              }
                             }
                           },
                           "block_order": [
@@ -2920,10 +2938,10 @@
                           "settings": {
                             "text": "<p>In 2025, our vision continued to grow through activewear made with care. Bringing together considered fabrics, effortless style and everyday comfort, our collection celebrated every woman's strength and her own way of moving.</p>",
                             "text_size": "md",
-                            "width": "fill"
-                          ,
+                            "width": "fill",
                             "animation_type": "fade",
-                            "animation_delay": 100}
+                            "animation_delay": 100
+                          }
                         }
                       },
                       "block_order": [
@@ -3018,10 +3036,10 @@
                       "settings": {
                         "text": "<p>Our Instagram</p>",
                         "show_icon": true,
-                        "icon": "square"
-                      ,
+                        "icon": "square",
                         "animation_type": "fade",
-                        "animation_delay": 0}
+                        "animation_delay": 0
+                      }
                     },
                     "heading": {
                       "type": "heading",
@@ -3029,10 +3047,10 @@
                         "text": "<p>Be active. Be social.</p>",
                         "heading_size": "xl",
                         "html_tag": "h2",
-                        "width": "fill"
-                      ,
+                        "width": "fill",
                         "animation_type": "slide-bottom",
-                        "animation_delay": 50}
+                        "animation_delay": 50
+                      }
                     }
                   },
                   "block_order": [
@@ -3049,10 +3067,10 @@
                     "show_icon": true,
                     "icon": "arrow_up_right",
                     "icon_size": "custom",
-                    "icon_width": 16
-                  ,
+                    "icon_width": 16,
                     "animation_type": "fade",
-                    "animation_delay": 150}
+                    "animation_delay": 150
+                  }
                 }
               },
               "block_order": [
@@ -3229,10 +3247,10 @@
                       "settings": {
                         "text": "<p>Visit us</p>",
                         "show_icon": true,
-                        "icon": "square"
-                      ,
+                        "icon": "square",
                         "animation_type": "fade",
-                        "animation_delay": 0}
+                        "animation_delay": 0
+                      }
                     },
                     "heading": {
                       "type": "heading",
@@ -3240,10 +3258,10 @@
                         "text": "<p>Store location</p>",
                         "heading_size": "xl",
                         "html_tag": "h2",
-                        "width": "fill"
-                      ,
+                        "width": "fill",
                         "animation_type": "slide-bottom",
-                        "animation_delay": 50}
+                        "animation_delay": 50
+                      }
                     }
                   },
                   "block_order": [
@@ -3285,20 +3303,20 @@
                             "text": "<p>Sydney</p>",
                             "heading_size": "md",
                             "html_tag": "h3",
-                            "width": "fill"
-                          ,
+                            "width": "fill",
                             "animation_type": "slide-bottom",
-                            "animation_delay": 50}
+                            "animation_delay": 50
+                          }
                         },
                         "address": {
                           "type": "text",
                           "settings": {
                             "text": "<p>123 Sample St, Sydney NSW 2000 AU</p>",
                             "text_size": "md",
-                            "width": "fill"
-                          ,
+                            "width": "fill",
                             "animation_type": "fade",
-                            "animation_delay": 100}
+                            "animation_delay": 100
+                          }
                         },
                         "directions": {
                           "type": "button",
@@ -3310,10 +3328,10 @@
                             "show_icon": true,
                             "icon": "arrow_up_right",
                             "width": "fit",
-                            "width_mobile": "fit"
-                          ,
+                            "width_mobile": "fit",
                             "animation_type": "fade",
-                            "animation_delay": 150}
+                            "animation_delay": 150
+                          }
                         }
                       },
                       "block_order": [
@@ -3342,20 +3360,20 @@
                             "text": "<p>Ho Chi Minh City</p>",
                             "heading_size": "md",
                             "html_tag": "h3",
-                            "width": "fill"
-                          ,
+                            "width": "fill",
                             "animation_type": "slide-bottom",
-                            "animation_delay": 50}
+                            "animation_delay": 50
+                          }
                         },
                         "address": {
                           "type": "text",
                           "settings": {
                             "text": "<p>2 Hai Trieu, District 1, Ho Chi Minh City</p>",
                             "text_size": "md",
-                            "width": "fill"
-                          ,
+                            "width": "fill",
                             "animation_type": "fade",
-                            "animation_delay": 100}
+                            "animation_delay": 100
+                          }
                         },
                         "directions": {
                           "type": "button",
@@ -3367,10 +3385,10 @@
                             "show_icon": true,
                             "icon": "arrow_up_right",
                             "width": "fit",
-                            "width_mobile": "fit"
-                          ,
+                            "width_mobile": "fit",
                             "animation_type": "fade",
-                            "animation_delay": 150}
+                            "animation_delay": 150
+                          }
                         }
                       },
                       "block_order": [
@@ -3399,20 +3417,20 @@
                             "text": "<p>London</p>",
                             "heading_size": "md",
                             "html_tag": "h3",
-                            "width": "fill"
-                          ,
+                            "width": "fill",
                             "animation_type": "slide-bottom",
-                            "animation_delay": 50}
+                            "animation_delay": 50
+                          }
                         },
                         "address": {
                           "type": "text",
                           "settings": {
                             "text": "<p>123 Sample St, London W1C 1DE, United Kingdom</p>",
                             "text_size": "md",
-                            "width": "fill"
-                          ,
+                            "width": "fill",
                             "animation_type": "fade",
-                            "animation_delay": 100}
+                            "animation_delay": 100
+                          }
                         },
                         "directions": {
                           "type": "button",
@@ -3424,10 +3442,10 @@
                             "show_icon": true,
                             "icon": "arrow_up_right",
                             "width": "fit",
-                            "width_mobile": "fit"
-                          ,
+                            "width_mobile": "fit",
                             "animation_type": "fade",
-                            "animation_delay": 150}
+                            "animation_delay": 150
+                          }
                         }
                       },
                       "block_order": [
@@ -3509,9 +3527,9 @@
                 "text": "<p>Explore collections</p>",
                 "show_icon": true,
                 "icon": "square",
-                "animation_type": "none"
-              ,
-                "animation_delay": 0}
+                "animation_type": "none",
+                "animation_delay": 0
+              }
             }
           },
           "block_order": [
@@ -3649,7 +3667,6 @@
   "order": [
     "slideshow",
     "kinetra_collection_marquee",
-
     "kinetra_collage",
     "virelle_marquee",
     "kinetra_crafted",

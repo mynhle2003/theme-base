@@ -92,12 +92,6 @@
   </div>
 </div>
 
-<noscript>
-  <style>
-    .marquee--block .marquee__track { width: 100%; flex-wrap: wrap; will-change: auto; }
-  </style>
-</noscript>
-
 {% stylesheet %}
   @media (width >= 768px) {
     .marquee--block.marquee--hide-desktop { display: none; }
@@ -137,6 +131,12 @@
   .marquee--block .marquee__viewport {
     width: 100%;
     overflow: hidden;
+  }
+
+  /* Keep a scrollable static row without JavaScript. A style inside noscript
+     becomes active when editor HTML is parsed in a detached document. */
+  .marquee--block:not(.marquee--ready) .marquee__viewport {
+    overflow-x: auto;
   }
 
   .marquee--block .marquee__track {

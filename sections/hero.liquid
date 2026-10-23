@@ -94,6 +94,22 @@
     {% if hero_page_content_padding != 64 %}--hero-content-padding: {{ hero_page_content_padding }}px;{% endif %}
     {% if hero_page_content_padding_mobile != 40 %}--hero-content-padding-mobile: {{ hero_page_content_padding_mobile }}px;{% endif %}
   {% endif %}
+  {% if hero_layout == 'stack' %}
+    --section-padding-top: 0px;
+    --section-padding-bottom: 0px;
+    --section-padding-top-mobile: 0px;
+    --section-padding-bottom-mobile: 0px;
+    --hero-container-padding-top: {{ hero_padding_top }}px;
+    --hero-container-padding-bottom: {{ hero_padding_bottom }}px;
+    --hero-container-padding-left: {{ section.settings.padding_left | default: 0 | plus: 0 | at_least: 0 | at_most: 200 }}px;
+    --hero-container-padding-right: {{ section.settings.padding_right | default: 0 | plus: 0 | at_least: 0 | at_most: 200 }}px;
+    {% if section.settings.customize_mobile_padding %}
+      --hero-container-padding-top-mobile: {{ hero_padding_top_mobile }}px;
+      --hero-container-padding-bottom-mobile: {{ hero_padding_bottom_mobile }}px;
+      --hero-container-padding-left-mobile: {{ section.settings.padding_left_mobile | default: 0 | plus: 0 | at_least: 0 | at_most: 200 }}px;
+      --hero-container-padding-right-mobile: {{ section.settings.padding_right_mobile | default: 0 | plus: 0 | at_least: 0 | at_most: 200 }}px;
+    {% endif %}
+  {% endif %}
   --hero-overlay-background: {{ effective_overlay | default: 'transparent' | escape }};
 {% endcapture %}
 
@@ -614,7 +630,7 @@
       "step": 4,
       "unit": "px",
       "default": 64,
-      "visible_if": "{{ section.settings.width != 'full' or section.settings.layout != 'classic' }}"
+      "visible_if": "{{ section.settings.layout != 'stack' }}"
     },
     {
       "type": "range",
@@ -625,7 +641,7 @@
       "step": 4,
       "unit": "px",
       "default": 40,
-      "visible_if": "{{ section.settings.width != 'full' or section.settings.layout != 'classic' }}"
+      "visible_if": "{{ section.settings.layout != 'stack' }}"
     },
     {
       "type": "header",
@@ -669,6 +685,28 @@
       "default": 50
     },
     {
+      "type": "range",
+      "id": "padding_left",
+      "label": "t:labels.left_padding",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.layout == 'stack' }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "t:labels.right_padding",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.layout == 'stack' }}"
+    },
+    {
       "type": "checkbox",
       "id": "customize_mobile_padding",
       "label": "t:labels.customize_mobile_padding",
@@ -695,6 +733,28 @@
       "unit": "px",
       "default": 50,
       "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_left_mobile",
+      "label": "t:labels.mobile_left_padding",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.layout == 'stack' and section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_right_mobile",
+      "label": "t:labels.mobile_right_padding",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.layout == 'stack' and section.settings.customize_mobile_padding }}"
     }
   ],
   "presets": [
@@ -704,29 +764,34 @@
       "settings": {
         "color_scheme": "scheme-3",
         "show_overlay": false,
-        "padding_top": 0,
+        "padding_top": 48,
         "padding_bottom": 0,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48,
         "media_type": "image",
         "desktop_height": "medium",
-        "mobile_height": "adapt",
-        "desktop_position": "bottom_left",
+        "mobile_height": "medium",
+        "desktop_position": "bottom_right",
         "mobile_position": "center_center",
         "content_color_scheme": "scheme-3",
         "width": "full",
         "layout": "stack",
-        "content_width": "fit",
-        "desktop_gap": 40,
-        "mobile_gap": 32,
+        "content_width": "custom",
+        "desktop_gap": 0,
+        "mobile_gap": 0,
         "overlay_style": "solid",
         "overlay": "#00000033",
         "banner_image": "shopify://shop_images/virelle-hero-stack-desktop-figma.avif",
         "mobile_banner_image": "shopify://shop_images/virelle-hero-stack-mobile-figma.avif",
         "desktop_content_position": "last",
-        "page_content_padding": 64,
-        "page_content_padding_mobile": 48
+        "page_content_padding": 0,
+        "page_content_padding_mobile": 0,
+        "content_max_width": 960,
+        "padding_right": 0,
+        "padding_left": 0,
+        "padding_right_mobile": 16,
+        "padding_left_mobile": 16
       },
       "blocks": [
         {
@@ -746,7 +811,10 @@
             "padding_top": 0,
             "padding_bottom": 0,
             "hide_on_desktop": false,
-            "hide_on_mobile": true
+            "hide_on_mobile": true,
+            "customize_mobile_padding": true,
+            "padding_bottom_mobile": 0,
+            "padding_top_mobile": 0
           },
           "blocks": [
             {
@@ -757,8 +825,7 @@
                 "heading_size": "custom",
                 "font": "heading",
                 "custom_heading_size": 68,
-                "letter_spacing": "tight",
-                "text_case": "uppercase",
+
                 "color_role": "heading",
                 "opacity": 100
               }
@@ -770,9 +837,9 @@
                 "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"white\"/>\n</svg>",
                 "icon_width": 14,
                 "icon_padding": 0,
-                "animation": "none"
-              ,
-                "animation_delay": 0}
+                "animation": "none",
+                "animation_delay": 0
+              }
             },
             {
               "type": "_marquee-heading",
@@ -782,8 +849,6 @@
                 "heading_size": "custom",
                 "font": "heading",
                 "custom_heading_size": 68,
-                "letter_spacing": "tight",
-                "text_case": "uppercase",
                 "color_role": "heading",
                 "opacity": 100
               }
@@ -795,9 +860,9 @@
                 "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"white\"/>\n</svg>",
                 "icon_width": 14,
                 "icon_padding": 0,
-                "animation": "none"
-              ,
-                "animation_delay": 0}
+                "animation": "none",
+                "animation_delay": 0
+              }
             },
             {
               "type": "_marquee-heading",
@@ -807,8 +872,7 @@
                 "heading_size": "custom",
                 "font": "heading",
                 "custom_heading_size": 68,
-                "letter_spacing": "tight",
-                "text_case": "uppercase",
+
                 "color_role": "heading",
                 "opacity": 100
               }
@@ -820,9 +884,9 @@
                 "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"white\"/>\n</svg>",
                 "icon_width": 14,
                 "icon_padding": 0,
-                "animation": "none"
-              ,
-                "animation_delay": 0}
+                "animation": "none",
+                "animation_delay": 0
+              }
             },
             {
               "type": "_marquee-heading",
@@ -832,8 +896,6 @@
                 "heading_size": "custom",
                 "font": "heading",
                 "custom_heading_size": 68,
-                "letter_spacing": "tight",
-                "text_case": "uppercase",
                 "color_role": "heading",
                 "opacity": 100
               }
@@ -845,11 +907,22 @@
                 "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"white\"/>\n</svg>",
                 "icon_width": 14,
                 "icon_padding": 0,
-                "animation": "none"
-              ,
-                "animation_delay": 0}
+                "animation": "none",
+                "animation_delay": 0
+              }
             }
           ]
+        },
+        {
+          "type": "spacer",
+          "settings": {
+            "unit_desktop": "percent",
+            "size_desktop_px": 372,
+            "show_on_mobile": false,
+            "unit_mobile": "pixel",
+            "size_mobile_px": 56,
+            "size_desktop_percent": 100
+          }
         },
         {
           "type": "header",
@@ -857,23 +930,31 @@
             "width": "fill",
             "inherit_alignment": false,
             "gap_desktop": 16,
-            "gap_mobile": 16,
-            "alignment": "left",
+            "gap_mobile": 12,
+            "alignment": "right",
             "customize_mobile_alignment": true,
-            "alignment_mobile": "center"
+            "alignment_mobile": "center",
+            "padding_bottom": 80,
+            "customize_mobile_padding": true,
+            "padding_bottom_mobile": 0,
+            "padding_left": 80,
+            "padding_right": 80,
+            "padding_top": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0,
+            "padding_top_mobile": 0
           },
           "blocks": [
             {
-              "type":  "eyebrow",
-                  "settings": {
-                    "animation_delay": 0,
-                    "animation_type": "fade",
-                    "text": "<p>No Roll. No Show.</p>",
-                    "show_icon": true,
-                    "icon": "square",
-                    "show_background": false
-                  }
-
+              "type": "eyebrow",
+              "settings": {
+                "animation_delay": 0,
+                "animation_type": "fade",
+                "text": "<p>No Roll. No Show.</p>",
+                "show_icon": true,
+                "icon": "square",
+                "show_background": false
+              }
             },
             {
               "type": "heading",
@@ -885,21 +966,26 @@
                 "heading_size": "display",
                 "width": "fill"
               }
+            },
+            {
+              "type": "button",
+              "settings": {
+                "animation_delay": 150,
+                "animation_type": "fade",
+                "button_label": "Shop now",
+                "button_style": "primary",
+                "show_icon": false,
+                "button_link": "shopify://collections/all",
+                "width": "fit",
+                "width_mobile": "fit",
+                "padding_bottom": 0,
+                "customize_mobile_padding": true,
+                "padding_bottom_mobile": 0,
+                "padding_top": 24,
+                "padding_top_mobile": 12
+              }
             }
           ]
-        },
-        {
-          "type": "button",
-          "settings": {
-            "animation_delay": 150,
-            "animation_type": "fade",
-            "button_label": "Shop now",
-            "button_style": "primary",
-            "show_icon": false,
-            "button_link": "shopify://collections/all",
-            "width": "fit",
-            "width_mobile": "fit"
-          }
         }
       ]
     }

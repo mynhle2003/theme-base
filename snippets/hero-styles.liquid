@@ -2,6 +2,7 @@
   .hero__surface {
     position: relative;
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     grid-template-rows: minmax(var(--hero-min-height, 80rem), max-content);
     width: 100%;
     min-height: var(--hero-min-height, 80rem);
@@ -95,6 +96,7 @@
     position: relative;
     z-index: 3;
     display: flex;
+    min-width: 0;
     align-items: var(--hero-content-y, center);
     justify-content: var(--hero-content-x, center);
     min-height: inherit;
@@ -119,6 +121,8 @@
   .hero__content {
     gap: var(--hero-content-gap, 1.2rem);
     width: min(100%, 48rem);
+    max-width: 100%;
+    min-width: 0;
     padding: 0;
     color: var(--body-color);
     pointer-events: auto;
@@ -165,24 +169,21 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  @media (min-width: 768px) {
+    /* Give flexible spacers available space without letting their growth
+       define the parent. Keep the complete content aligned within this box. */
+    .hero:not(.hero--desktop-adapt) .hero__content {
+      block-size: 100%;
+      justify-content: safe var(--hero-content-y, center);
+    }
+
+    .hero:not(.hero--desktop-adapt) .hero__content > * {
+      flex-shrink: 0;
+    }
+  }
+
   .hero--width-full.hero--stack .hero__container {
     padding-inline: var(--hero-content-padding, 6.4rem);
-  }
-
-  .hero--stack.hero--content-fill .hero__surface {
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-  }
-
-  .hero--stack.hero--content-custom .hero__surface {
-    grid-template-columns: minmax(0, 1fr) minmax(0, min(70%, var(--hero-content-max-width, 64rem)));
-  }
-
-  .hero--stack.hero--content-fill.hero--content-position-first .hero__surface {
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-  }
-
-  .hero--stack.hero--content-custom.hero--content-position-first .hero__surface {
-    grid-template-columns: minmax(0, min(70%, var(--hero-content-max-width, 64rem))) minmax(0, 1fr);
   }
 
   .hero--stack .media {
@@ -265,6 +266,17 @@
       grid-template-rows: minmax(32rem, var(--hero-min-height, 50svh)) auto;
     }
 
+    /* Stack mobile height controls the media row; content keeps its natural height. */
+    .hero--stack.hero--mobile-extra_small { --hero-min-height: 242px; }
+    .hero--stack.hero--mobile-small { --hero-min-height: 290px; }
+    .hero--stack.hero--mobile-medium { --hero-min-height: 375px; }
+    .hero--stack.hero--mobile-large { --hero-min-height: 460px; }
+    .hero--stack.hero--mobile-extra_large { --hero-min-height: 544px; }
+
+    .hero--stack:is(.hero--mobile-extra_small, .hero--mobile-small, .hero--mobile-medium, .hero--mobile-large, .hero--mobile-extra_large) .hero__surface {
+      grid-template-rows: var(--hero-min-height) auto;
+    }
+
     .hero--stack.hero--content-fill .hero__surface,
     .hero--stack.hero--content-custom .hero__surface {
       grid-template-columns: 1fr;
@@ -301,11 +313,18 @@
     .hero .media__inner { transform: none !important; will-change: auto; }
   }
 
-  .hero--stack .hero__content > .marquee {
-    position: absolute;
-    inset-block-start: 48px;
-    inset-inline: 0;
+  .hero .hero__content > .marquee {
+    /* Keep the track in the positioned content stack. Its long, cloned row
+       must not determine the intrinsic width of a fit-content Hero. */
+    contain: inline-size;
+    align-self: stretch;
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    flex-shrink: 0;
+  }
+
+  .hero--stack .hero__content > .marquee {
     opacity: 0.4;
   }
 
@@ -313,4 +332,17 @@
     letter-spacing: -1.2px;
   }
 
+
+  .hero--stack.hero--width-page .hero__content {
+    padding: 0;
+  }
+
+  .hero.hero--stack .hero__container {
+    padding: var(--hero-container-padding-top) var(--hero-container-padding-right) var(--hero-container-padding-bottom) var(--hero-container-padding-left);
+  }
+  @media (max-width: 767.98px) {
+    .hero.hero--stack .hero__container {
+      padding: var(--hero-container-padding-top-mobile, var(--hero-container-padding-top)) var(--hero-container-padding-right-mobile, var(--hero-container-padding-right)) var(--hero-container-padding-bottom-mobile, var(--hero-container-padding-bottom)) var(--hero-container-padding-left-mobile, var(--hero-container-padding-left));
+    }
+  }
 {% endstylesheet %}

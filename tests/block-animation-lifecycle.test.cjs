@@ -3,20 +3,21 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 
-function fixture({delay = 150, type = 'slide-bottom', preserveOpacity = false, switching = false, rowDelay = 0, motionDuration = 500, motionDistance = 50} = {}) {
+function fixture({delay = 150, type = 'slide-bottom', preserveOpacity = false, switching = false, rowDelay = 0, motionDuration = 500, motionDistance = 50, press = false} = {}) {
   let changed;
   let motionChanged;
   const classes = new Set();
   const played = [];
   const slideClasses = new Set(['swiper-slide-active']);
-  const slide = { classList: { contains: c => slideClasses.has(c) }, matches: s => s.includes('.slideshow__swiper .swiper-slide'), contains: e => e === block,
-    isConnected: true, getClientRects: () => [{}], closest: s => s === '.slideshow__swiper .swiper-slide' ? slide : null };
+  let hidden = press;
+  const slide = { classList: { contains: c => slideClasses.has(c) }, matches: s => s.includes(press ? '.press-item[data-carousel-slide]' : '.slideshow__swiper .swiper-slide'), contains: e => e === block,
+    isConnected: true, getClientRects: () => [{}], closest: s => s === '[hidden], [aria-hidden="true"]' && hidden ? slide : s === '.slideshow__swiper .swiper-slide' && !press ? slide : null };
   const viewport = { getBoundingClientRect: () => ({ top: 100, bottom: 920, left: 0, right: 1920 }) };
   const block = {
     dataset: { blockAnimation: type, animationDelay: String(delay), animationPreserveOpacity: String(preserveOpacity), animationStagger:switching ? '150' : '0', animationRowDelay:String(rowDelay), animationTabDelay:String(rowDelay) }, isConnected: true,
     parentElement: { closest: () => null }, querySelectorAll: () => [],
     classList: { add: c => classes.add(c), remove: c => classes.delete(c) },
-    closest: s => s === '[data-collection-tab-panel]' && switching ? viewport : s === '.slideshow' ? viewport : s === '.slideshow__swiper .swiper-slide' ? slide : null,
+    closest: s => s === '[data-collection-tab-panel]' && switching ? viewport : s === '.slideshow' ? viewport : s === '[hidden], [aria-hidden="true"]' && hidden ? slide : s === '.slideshow__swiper .swiper-slide' && !press ? slide : null,
     matches: () => true,
     getClientRects: () => [{}], getBoundingClientRect: () => ({ top: 700, bottom: 750, left: 0, right: 300 }),
     animate: (frames, options) => { const animation = { finished: new Promise(() => {}), cancel: () => { animation.cancelled = true; } }; played.push({ frames, options, animation }); return animation; },
@@ -33,7 +34,7 @@ function fixture({delay = 150, type = 'slide-bottom', preserveOpacity = false, s
     MutationObserver: class { constructor(fn) { changed = fn; } observe() {} },
   };
   vm.runInNewContext(fs.readFileSync('assets/block-animations.js', 'utf8'), context);
-  return { block, slide, played, classes, slideClasses, changed: records => changed(records), motionChanged: () => motionChanged() };
+  return { block, slide, played, classes, slideClasses, changed: records => changed(records), motionChanged: () => motionChanged(), setHidden: value => { hidden = value; } };
 }
 
 test('changing reduced-motion preference cancels entrances and leaves content visible', () => {
@@ -129,4 +130,31 @@ test('Shopify-minified CSS seconds preserve the same card timing as local millis
     const h=fixture({delay:0,switching:true,motionDuration:duration});
     assert.equal(h.played[0].options.duration,expected,duration);
   }
+});
+
+test('block delay honors the full editor range and caps out-of-range values', () => {
+  for (const [delay, expected] of [[2000, 2000], [2500, 2000], [-50, 0]]) {
+    const h = fixture({ delay });
+    assert.equal(h.played[0].options.delay, expected);
+  }
+});
+
+// Hidden Press slides occupy the same grid cell, so intersection alone cannot
+// report activation. Accessibility mutations must release their pending content.
+test('Press activation reveals pending content and replays after returning', () => {
+  const h = fixture({press:true});
+  assert.equal(h.played.length, 0);
+  assert.equal(h.classes.has('reveal-pending'), true);
+  const change = () => h.changed([{type:'attributes', attributeName:'aria-hidden', target:h.slide}]);
+  h.setHidden(false);
+  change();
+  assert.equal(h.played.length, 1);
+  assert.equal(h.classes.has('reveal-pending'), false);
+  h.setHidden(true);
+  change();
+  assert.equal(h.played[0].animation.cancelled, true);
+  h.setHidden(false);
+  change();
+  assert.equal(h.played.length, 2);
+  assert.equal(h.classes.has('reveal-pending'), false);
 });

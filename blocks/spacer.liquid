@@ -1,9 +1,9 @@
 {% doc %}
   Renders an intentional spacing block for compositions.
 
-  Pixel is the default unit. Percent spacing uses an inherited
-  --spacer-reference-block-size when a parent provides a definite reference;
-  otherwise it falls back to a safe 100px reference.
+  Pixel is fixed spacing. Percent uses flex growth to distribute the available
+  space in the parent layout; 100 fills the remaining space without adding
+  another full parent height.
 
   @example
   {% content_for 'block', type: 'spacer', id: 'spacer' %}
@@ -61,7 +61,7 @@
     assign spacer_size_mobile_percent = 25
   endif
 
-  assign spacer_class = 'block-spacer'
+  assign spacer_class = 'block-spacer block-spacer--desktop-' | append: spacer_unit_desktop | append: ' block-spacer--mobile-' | append: spacer_unit_mobile
   if spacer_show_on_mobile == false
     assign spacer_class = spacer_class | append: ' block-spacer--hidden-mobile'
   endif
@@ -70,8 +70,8 @@
   assign spacer_mobile_pixel_value = spacer_size_mobile_px | append: 'px'
   assign spacer_desktop_percent_factor = spacer_size_desktop_percent | times: 0.01
   assign spacer_mobile_percent_factor = spacer_size_mobile_percent | times: 0.01
-  assign spacer_desktop_percent_value = 'calc(var(--spacer-reference-block-size, 100px) * ' | append: spacer_desktop_percent_factor | append: ')'
-  assign spacer_mobile_percent_value = 'calc(var(--spacer-reference-block-size, 100px) * ' | append: spacer_mobile_percent_factor | append: ')'
+  assign spacer_desktop_percent_value = spacer_desktop_percent_factor
+  assign spacer_mobile_percent_value = spacer_mobile_percent_factor
 %}
 
 {% capture spacer_style %}
@@ -100,19 +100,32 @@
 {% stylesheet %}
   .block-spacer {
     display: block;
-    flex: 0 0 auto;
     inline-size: 100%;
-    block-size: var(--spacer-size-desktop, 100px);
+    min-inline-size: 0;
     min-block-size: 0;
   }
 
-  .block-spacer--hidden-mobile {
-    display: block;
+  @media (min-width: 768px) {
+    .block-spacer--desktop-pixel {
+      flex: 0 0 var(--spacer-size-desktop, 100px);
+      block-size: var(--spacer-size-desktop, 100px);
+    }
+
+    .block-spacer--desktop-percent {
+      flex: var(--spacer-size-desktop, 0.25) 0 0px;
+      block-size: auto;
+    }
   }
 
   @media (max-width: 767.98px) {
-    .block-spacer {
+    .block-spacer--mobile-pixel {
+      flex: 0 0 var(--spacer-size-mobile, 52px);
       block-size: var(--spacer-size-mobile, 52px);
+    }
+
+    .block-spacer--mobile-percent {
+      flex: var(--spacer-size-mobile, 0.25) 0 0px;
+      block-size: auto;
     }
 
     .block-spacer--hidden-mobile {
