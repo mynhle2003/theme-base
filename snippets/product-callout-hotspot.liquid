@@ -27,6 +27,10 @@
 
   assign hotspot_content_heading = block.settings.content_heading
   assign hotspot_content_text = block.settings.content_text
+  assign hotspot_content_text_size = block.settings.content_text_size | default: 'sm'
+  unless hotspot_content_text_size == 'xs' or hotspot_content_text_size == 'sm' or hotspot_content_text_size == 'md' or hotspot_content_text_size == 'lg' or hotspot_content_text_size == 'xl' or hotspot_content_text_size == 'xxl'
+    assign hotspot_content_text_size = 'sm'
+  endunless
 
   assign hotspot_vertical = block.settings.vertical_position | default: 50 | plus: 0
   assign hotspot_horizontal = block.settings.horizontal_position | default: 50 | plus: 0
@@ -162,7 +166,7 @@
             <h3 class="product-callout__content-card-heading heading-block heading-text heading-md">{{ hotspot_content_heading | escape }}</h3>
           {% endif %}
           {% if hotspot_content_text != blank %}
-            <div class="product-callout__content-card-text text-block body-text body-sm rte">{{ hotspot_content_text }}</div>
+            <div class="product-callout__content-card-text text-block body-text body-{{ hotspot_content_text_size }} rte">{{ hotspot_content_text }}</div>
           {% else %}
             {% if hotspot_content_heading == blank %}
               <span class="product-callout__content-card-placeholder">{{ 'accessibility.product_callout_hotspot_content_fallback' | t }}</span>
