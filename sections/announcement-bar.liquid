@@ -39,10 +39,28 @@
   unless announcement_navigation_icon == 'chevron' or announcement_navigation_icon == 'arrow' or announcement_navigation_icon == 'long_arrow'
     assign announcement_navigation_icon = 'arrow'
   endunless
+  assign announcement_font = section.settings.font | default: 'body'
+  unless announcement_font == 'body' or announcement_font == 'heading' or announcement_font == 'accent'
+    assign announcement_font = 'body'
+  endunless
+  assign announcement_typography_class = 'body-text'
+  assign announcement_text_color = 'var(--body-color)'
+  case announcement_font
+    when 'heading'
+      assign announcement_typography_class = 'heading-text'
+      assign announcement_text_color = 'var(--heading-color)'
+    when 'accent'
+      assign announcement_typography_class = 'eyebrow-text'
+      assign announcement_text_color = 'var(--accent-color)'
+  endcase
   assign announcement_font_size = section.settings.font_size | default: 'sm'
-  unless announcement_font_size == 'xs' or announcement_font_size == 'sm' or announcement_font_size == 'md' or announcement_font_size == 'lg' or announcement_font_size == 'xl' or announcement_font_size == 'xxl'
+  unless announcement_font_size == 'xxs' or announcement_font_size == 'xs' or announcement_font_size == 'sm' or announcement_font_size == 'md' or announcement_font_size == 'lg' or announcement_font_size == 'xl' or announcement_font_size == 'xxl'
     assign announcement_font_size = 'sm'
   endunless
+  assign announcement_font_size_value = 'var(--font-body-' | append: announcement_font_size | append: ')'
+  if announcement_font_size == 'xxs'
+    assign announcement_font_size_value = '10px'
+  endif
   assign announcement_background_type = section.settings.background_type | default: 'none'
   unless announcement_background_type == 'none' or announcement_background_type == 'image'
     assign announcement_background_type = 'none'
@@ -56,14 +74,14 @@
 <script type="module" src="{{ 'announcement-bar.js' | asset_url }}"></script>
 
 <div
-  class="announcement-bar announcement-bar--{{ announcement_type }} announcement-bar--direction-{{ announcement_direction }} announcement-bar--navigation-{{ announcement_navigation_behavior }} color-scheme section-color-scope body-text body-{{ announcement_font_size }} {{ announcement_color_scheme }}{% if announcement_speed == 0 %} announcement-bar--static{% endif %}{% if section.settings.bottom_separator %} announcement-bar--bottom-separator{% endif %}"
+  class="announcement-bar announcement-bar--{{ announcement_type }} announcement-bar--direction-{{ announcement_direction }} announcement-bar--navigation-{{ announcement_navigation_behavior }} color-scheme section-color-scope {{ announcement_typography_class }} {{ announcement_color_scheme }}{% if announcement_speed == 0 %} announcement-bar--static{% endif %}{% if section.settings.bottom_separator %} announcement-bar--bottom-separator{% endif %}"
   data-announcement-bar
   data-announcement-type="{{ announcement_type }}"
   data-announcement-speed="{{ announcement_speed }}"
   data-announcement-direction="{{ announcement_direction }}"
   data-announcement-autoplay="{{ announcement_autoplay | times: 1000 }}"
   data-announcement-pause-on-hover="{{ announcement_pause_on_hover }}"
-  style="--announcement-bar-gap: {{ announcement_gap }}px; --announcement-bar-speed: {{ announcement_speed }}; --announcement-bar-padding-top: {{ announcement_padding_top }}px; --announcement-bar-padding-right: {{ announcement_padding_right }}px; --announcement-bar-padding-bottom: {{ announcement_padding_bottom }}px; --announcement-bar-padding-left: {{ announcement_padding_left }}px;{% if announcement_overlay and section.settings.overlay %} --announcement-bar-overlay-color: {{ effective_overlay | default: 'transparent' | escape }};{% endif %}"
+  style="--announcement-font-size: {{ announcement_font_size_value }}; font-size: var(--announcement-font-size); color: {{ announcement_text_color }}; --announcement-bar-gap: {{ announcement_gap }}px; --announcement-bar-speed: {{ announcement_speed }}; --announcement-bar-padding-top: {{ announcement_padding_top }}px; --announcement-bar-padding-right: {{ announcement_padding_right }}px; --announcement-bar-padding-bottom: {{ announcement_padding_bottom }}px; --announcement-bar-padding-left: {{ announcement_padding_left }}px;{% if announcement_overlay and section.settings.overlay %} --announcement-bar-overlay-color: {{ effective_overlay | default: 'transparent' | escape }};{% endif %}"
 >
   {% if announcement_background_type == 'image' and section.settings.background_image != blank %}
     <div class="announcement-bar__background" aria-hidden="true">
@@ -108,7 +126,6 @@
   @keyframes announcement-scroll-left { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(calc(-1 * var(--announcement-bar-loop-distance)), 0, 0); } }
   @keyframes announcement-scroll-right { from { transform: translate3d(calc(-1 * var(--announcement-bar-loop-distance)), 0, 0); } to { transform: translate3d(0, 0, 0); } }
   @media (prefers-reduced-motion: reduce) { .announcement-bar__slides, .announcement-bar__viewport, .announcement-bar__slides > .text-block { transition-duration: 0.01ms; } .announcement-bar--scrolling .announcement-bar__slides { animation: none; transform: none; } }
-  .announcement-bar--scrolling { font-size: 10px; line-height: 1.5; font-weight: 500; letter-spacing: 2px; color: var(--heading-color); }
   .announcement-bar--scrolling .announcement-bar__slides { gap: 144px; }
   @media (768px <= width < 992px) { .announcement-bar--scrolling .announcement-bar__slides { gap: 96px; } }
   @media (width < 768px) { .announcement-bar--scrolling .announcement-bar__slides { gap: 80px; } }
@@ -257,9 +274,33 @@
     },
     {
       "type": "select",
+      "id": "font",
+      "label": "t:labels.font",
+      "options": [
+        {
+          "value": "body",
+          "label": "t:options.menu_font.body"
+        },
+        {
+          "value": "heading",
+          "label": "t:options.menu_font.heading"
+        },
+        {
+          "value": "accent",
+          "label": "t:options.menu_font.accent"
+        }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "select",
       "id": "font_size",
       "label": "Font size",
       "options": [
+        {
+          "value": "xxs",
+          "label": "Tiny"
+        },
         {
           "value": "xs",
           "label": "t:options.text_size.xs"
@@ -439,7 +480,8 @@
         "pause_on_hover": true,
         "navigation_behavior": "show_on_hover",
         "navigation_icon": "arrow",
-        "font_size": "sm",
+        "font": "accent",
+        "font_size": "xxs",
         "background_type": "none",
         "overlay": false,
         "gap": 16,

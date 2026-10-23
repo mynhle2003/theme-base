@@ -317,6 +317,7 @@ const initializeReveal = (root) => {
     } catch {
       return false;
     } finally {
+      animation.cancel();
       if (state.slideAnimation === animation) state.slideAnimation = null;
     }
   };

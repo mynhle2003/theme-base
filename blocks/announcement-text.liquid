@@ -1,4 +1,14 @@
 {% liquid
+  assign announcement_typography_class = 'body-text'
+  assign announcement_text_color = 'var(--body-color)'
+  case section.settings.font
+    when 'heading'
+      assign announcement_typography_class = 'heading-text'
+      assign announcement_text_color = 'var(--heading-color)'
+    when 'accent'
+      assign announcement_typography_class = 'eyebrow-text'
+      assign announcement_text_color = 'var(--accent-color)'
+  endcase
   assign width = block.settings.width | default: 'fit'
   unless width == 'fit' or width == 'fill' or width == 'custom'
     assign width = 'fit'
@@ -15,11 +25,13 @@
 %}
 
 {% capture text_style %}
+  font-size: var(--announcement-font-size);
+  color: var(--text-block-color, {{ announcement_text_color }});
   {% render 'size-style', width: size_width, max_width: size_max_width %}
   {% if block.settings.text_color != blank %}--text-block-color: {{ block.settings.text_color | escape }};{% endif %}
 {% endcapture %}
 
-<div class="text-block size-style announcement-text-block motion-block body-text"{% if text_style != blank %} style="{{ text_style | strip }}"{% endif %} {{ block.shopify_attributes }}>
+<div class="text-block size-style announcement-text-block motion-block {{ announcement_typography_class }}"{% if text_style != blank %} style="{{ text_style | strip }}"{% endif %} {{ block.shopify_attributes }}>
   {{ block.settings.text | escape }}
 </div>
 

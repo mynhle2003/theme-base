@@ -338,3 +338,18 @@ Both checkout snippets are identical. Schema parsing and checkbox visibility/def
 Supersedes the earlier Group → Custom Icon + Eyebrow composition. Dedicated decorative marker groups in saved templates and section/block presets now use one Eyebrow block with `show_icon: true` and `icon: square`. Keep text, parent order, appearance, padding and animation settings when updating these presets.
 
 `blocks/eyebrow.liquid` renders `snippets/eyebrow-icon.liquid`: Circle, Triangle and Diamond use filled SVG geometry; Square uses the original Figma 8×8 rect/viewBox from the existing Hero marker. All shapes use `currentColor`, following the Eyebrow color setting or inherited heading color. Square remains 8×8px and the gap defaults to 8px on desktop/mobile (`--eyebrow-icon-gap` can override it in Custom CSS). Other shapes retain their existing em-based size. The shared Icon block/library is unchanged. Preserve the block CSS/render call and the new snippet together on base updates.
+
+
+## Header control minimum height — 2026-10-22
+
+Owner requested the same theme-specific Header control sizing in Kinetra and Virelle: 44px desktop / 40px mobile (below 768px). `sections/header.liquid` owns `--header-control-min-height` and scopes it to header columns, the pre-layout block slot, top-level menu links/summaries, localization trigger, search/cart/menu/account controls and the slotted Account avatar. Keep submenu/drawer buttons and global Button height tokens independent. A line separator uses an inset shadow so it does not add to the header box; existing top/bottom padding remains unchanged. With homepage padding 14/14px and 12/12px, the intended header boxes are 72px and 64px. Preserve this local override on base updates; do not add a duplicate merchant setting or change global Button height to compensate.
+
+
+## Header Full width container — 2026-10-22
+
+Owner requested a theme-specific Full width Header fix in Kinetra and Virelle. `sections/header.liquid` uses `width: 100%` on `.header__container.full-width` and `padding-inline: var(--page-margin-current)`, removing desktop/tablet/mobile width calculations that deducted the same margins a second time. The existing container breakpoint tokens read the page margins from Theme Settings (currently 50px desktop / 16px mobile); do not hard-code these values or change the shared container foundation. Page width keeps its native max-width contract.
+
+
+## Header typography and action spacing — 2026-10-22
+
+Menu presets and current Header use Accent and Tight (−0.2px). Localization exposes the existing Body/Heading/Accent font roles, defaults to Body for backward compatibility, and selects Accent in its preset and Header composition. The country flag/text gap is scoped to 8px. Header icon controls use 10px inline padding and 6px between adjacent icons on desktop, with a separate 24px boundary between Localization and icons; CSS sibling spacing keeps the existing layout runtime and block order. Mobile selects Header top Gap 8px, retains 24px icons, uses 8px control padding with no internal icon gap, and removes Menu/Cart edge margins. Global button settings and shared container primitives are unchanged.
