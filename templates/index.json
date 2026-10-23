@@ -11,60 +11,28 @@
   "sections": {
     "slideshow": {
       "type": "hero",
-      "settings": {
-        "color_scheme": "scheme-3",
-        "show_overlay": false,
-        "padding_top": 48,
-        "padding_bottom": 0,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48,
-        "media_type": "image",
-        "desktop_height": "medium",
-        "mobile_height": "medium",
-        "desktop_position": "bottom_right",
-        "mobile_position": "center_center",
-        "content_color_scheme": "scheme-3",
-        "width": "full",
-        "layout": "stack",
-        "content_width": "custom",
-        "desktop_gap": 0,
-        "mobile_gap": 0,
-        "overlay_style": "solid",
-        "overlay": "#00000033",
-        "banner_image": "shopify://shop_images/virelle-hero-stack-desktop-figma.avif",
-        "mobile_banner_image": "shopify://shop_images/virelle-hero-stack-mobile-figma.avif",
-        "desktop_content_position": "last",
-        "page_content_padding": 0,
-        "page_content_padding_mobile": 0,
-        "content_max_width": 960,
-        "padding_right": 0,
-        "padding_left": 0,
-        "padding_right_mobile": 16,
-        "padding_left_mobile": 16
-      },
       "blocks": {
         "hero_marquee_1": {
           "type": "marquee",
           "settings": {
-            "width": "fill",
-            "alignment": "center",
             "show_top_divider": false,
             "show_bottom_divider": false,
             "show_blurred_edges": false,
             "enable_parallax": false,
+            "alignment": "center",
             "animation_speed": 0.6,
             "animation_direction": "backward",
             "gap_desktop": 12,
             "gap_mobile": 12,
+            "width": "fill",
             "color_type": "inherit",
             "padding_top": 0,
             "padding_bottom": 0,
-            "hide_on_mobile": true,
-            "hide_on_desktop": false,
             "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
             "padding_bottom_mobile": 0,
-            "padding_top_mobile": 0
+            "hide_on_desktop": false,
+            "hide_on_mobile": true
           },
           "blocks": {
             "hero_marquee_heading_1": {
@@ -72,10 +40,9 @@
               "settings": {
                 "text": "Active Essentials",
                 "outline": true,
-                "heading_size": "custom",
                 "font": "heading",
+                "heading_size": "custom",
                 "custom_heading_size": 68,
-
                 "color_role": "heading",
                 "opacity": 100
               }
@@ -96,8 +63,8 @@
               "settings": {
                 "text": "Comfort Fit",
                 "outline": true,
-                "heading_size": "custom",
                 "font": "heading",
+                "heading_size": "custom",
                 "custom_heading_size": 68,
                 "color_role": "heading",
                 "opacity": 100
@@ -119,10 +86,9 @@
               "settings": {
                 "text": "Chic Athleisure",
                 "outline": true,
-                "heading_size": "custom",
                 "font": "heading",
+                "heading_size": "custom",
                 "custom_heading_size": 68,
-
                 "color_role": "heading",
                 "opacity": 100
               }
@@ -143,8 +109,8 @@
               "settings": {
                 "text": "Dynamic Style",
                 "outline": true,
-                "heading_size": "custom",
                 "font": "heading",
+                "heading_size": "custom",
                 "custom_heading_size": 68,
                 "color_role": "heading",
                 "opacity": 100
@@ -178,60 +144,60 @@
           "settings": {
             "width": "fill",
             "inherit_alignment": false,
-            "gap_desktop": 16,
-            "gap_mobile": 12,
             "alignment": "right",
             "customize_mobile_alignment": true,
             "alignment_mobile": "center",
+            "gap_desktop": 16,
+            "gap_mobile": 12,
+            "padding_top": 0,
             "padding_bottom": 80,
-            "customize_mobile_padding": true,
-            "padding_bottom_mobile": 0,
             "padding_left": 80,
             "padding_right": 80,
-            "padding_top": 0,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
             "padding_left_mobile": 0,
-            "padding_right_mobile": 0,
-            "padding_top_mobile": 0
+            "padding_right_mobile": 0
           },
           "blocks": {
             "block-1": {
               "type": "eyebrow",
               "settings": {
-                "animation_delay": 0,
-                "animation_type": "fade",
                 "text": "<p>No Roll. No Show.</p>",
+                "show_background": false,
                 "show_icon": true,
                 "icon": "square",
-                "show_background": false
+                "animation_type": "fade",
+                "animation_delay": 0
               }
             },
             "block-2": {
               "type": "heading",
               "settings": {
-                "animation_delay": 50,
-                "animation_type": "slide-bottom",
                 "text": "<p>Move freely. Live fully.</p>",
-                "html_tag": "h1",
                 "heading_size": "display",
-                "width": "fill"
+                "html_tag": "h1",
+                "width": "fill",
+                "animation_type": "slide-bottom",
+                "animation_delay": 50
               }
             },
             "hero_button": {
               "type": "button",
               "settings": {
-                "animation_delay": 150,
-                "animation_type": "fade",
                 "button_label": "Shop now",
+                "button_link": "shopify://collections/all",
                 "button_style": "primary",
                 "show_icon": false,
-                "button_link": "shopify://collections/all",
                 "width": "fit",
                 "width_mobile": "fit",
+                "animation_type": "fade",
+                "animation_delay": 150,
+                "padding_top": 24,
                 "padding_bottom": 0,
                 "customize_mobile_padding": true,
-                "padding_bottom_mobile": 0,
-                "padding_top": 24,
-                "padding_top_mobile": 12
+                "padding_top_mobile": 12,
+                "padding_bottom_mobile": 0
               }
             }
           },
@@ -246,10 +212,10 @@
           "settings": {
             "unit_desktop": "percent",
             "size_desktop_px": 372,
+            "size_desktop_percent": 100,
             "show_on_mobile": false,
             "unit_mobile": "pixel",
-            "size_mobile_px": 56,
-            "size_desktop_percent": 100
+            "size_mobile_px": 56
           }
         }
       },
@@ -257,7 +223,39 @@
         "hero_marquee_1",
         "hero_space",
         "block-1"
-      ]
+      ],
+      "settings": {
+        "width": "full",
+        "layout": "stack",
+        "desktop_content_position": "last",
+        "media_type": "image",
+        "banner_image": "shopify://shop_images/virelle-hero-stack-desktop-figma.avif",
+        "mobile_banner_image": "shopify://shop_images/virelle-hero-stack-mobile-figma.avif",
+        "show_overlay": false,
+        "overlay_style": "solid",
+        "overlay": "#00000033",
+        "desktop_height": "medium",
+        "mobile_height": "medium",
+        "content_width": "custom",
+        "content_max_width": 960,
+        "desktop_position": "bottom_right",
+        "mobile_position": "center_center",
+        "desktop_gap": 0,
+        "mobile_gap": 0,
+        "page_content_padding": 0,
+        "page_content_padding_mobile": 0,
+        "color_scheme": "scheme-3",
+        "content_color_scheme": "scheme-3",
+        "padding_top": 48,
+        "padding_bottom": 0,
+        "padding_left": 0,
+        "padding_right": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48,
+        "padding_left_mobile": 16,
+        "padding_right_mobile": 16
+      }
     },
     "collection_tabs_ihC66t": {
       "type": "collection-tabs",
@@ -348,11 +346,11 @@
             "eyebrow": {
               "type": "eyebrow",
               "settings": {
-                "animation_delay": 0,
-                "animation_type": "fade",
                 "text": "<p>Community Favorites</p>",
                 "show_icon": true,
-                "icon": "square"
+                "icon": "square",
+                "animation_type": "fade",
+                "animation_delay": 0
               }
             }
           },
@@ -387,6 +385,7 @@
             "icon_size": "inherit",
             "icon_width": 20,
             "width": "fit",
+            "hide_view_all_mobile": false,
             "width_mobile": "fit",
             "padding_top": 0,
             "padding_bottom": 0,
@@ -396,8 +395,7 @@
             "padding_top_mobile": 0,
             "padding_bottom_mobile": 0,
             "padding_left_mobile": 0,
-            "padding_right_mobile": 0,
-            "hide_view_all_mobile": false
+            "padding_right_mobile": 0
           },
           "blocks": {}
         }
@@ -409,7 +407,6 @@
       ],
       "name": "t:general.collection_tabs",
       "settings": {
-        "show_next_slide_preview_on_mobile": true,
         "section_width": "full_width",
         "layout_direction": "vertical",
         "tab_position": "center",
@@ -421,6 +418,7 @@
         "columns_desktop": "4",
         "columns_mobile": "1",
         "show_next_slide_preview_on_desktop": false,
+        "show_next_slide_preview_on_mobile": true,
         "product_gap_desktop": 12,
         "product_gap_mobile": 8,
         "show_navigation_on_desktop": false,
@@ -452,6 +450,8 @@
           "type": "_shop-the-look-image",
           "static": true,
           "settings": {
+            "image": "shopify://shop_images/kinetra-matching-sets.avif",
+            "mobile_image": "shopify://shop_images/kinetra-matching-sets.avif",
             "show_image_first_mobile": true,
             "image_link": "",
             "open_in_new_tab": false,
@@ -464,9 +464,7 @@
             "image_ratio_custom_width_mobile": 16,
             "image_ratio_custom_height_mobile": 9,
             "corner_radius": "square",
-            "custom_corner_radius": 0,
-            "image": "shopify://shop_images/kinetra-matching-sets.avif",
-            "mobile_image": "shopify://shop_images/kinetra-matching-sets.avif"
+            "custom_corner_radius": 0
           },
           "blocks": {}
         },
@@ -499,32 +497,32 @@
             "eyebrow": {
               "type": "eyebrow",
               "settings": {
-                "animation_delay": 0,
-                "animation_type": "fade",
                 "text": "<p>Inspiration</p>",
                 "show_icon": true,
-                "icon": "square"
+                "icon": "square",
+                "animation_type": "fade",
+                "animation_delay": 0
               }
             },
             "heading": {
               "type": "heading",
               "settings": {
-                "animation_delay": 50,
-                "animation_type": "slide-bottom",
                 "text": "<p>Matching sets</p>",
-                "html_tag": "h2",
                 "heading_size": "xl",
-                "width": "fill"
+                "html_tag": "h2",
+                "width": "fill",
+                "animation_type": "slide-bottom",
+                "animation_delay": 50
               }
             },
             "text": {
               "type": "text",
               "settings": {
-                "animation_delay": 100,
-                "animation_type": "fade",
                 "text": "<p>Buy 3 products &amp; get 25% off</p>",
                 "text_size": "md",
-                "width": "fill"
+                "width": "fill",
+                "animation_type": "fade",
+                "animation_delay": 100
               }
             }
           },
@@ -546,17 +544,17 @@
             "layout_type": "carousel",
             "columns_desktop": "3",
             "columns_mobile": "1",
-            "variant_type": "dropdown",
-            "show_swatch": true,
-            "hotspot_icon_style": "dot",
-            "hotspot_behavior": "hover",
-            "hotspot_color_scheme": "scheme-1",
-            "show_hotspot_product_information": true,
-            "show_hotspot_product_information_on_mobile": false,
             "show_next_slide_preview_on_desktop": false,
             "show_next_slide_preview_on_mobile": true,
             "product_gap_desktop": 20,
             "product_gap_mobile": 12,
+            "variant_type": "dropdown",
+            "show_swatch": true,
+            "hotspot_icon_style": "dot",
+            "hotspot_behavior": "hover",
+            "show_hotspot_product_information": true,
+            "show_hotspot_product_information_on_mobile": false,
+            "hotspot_color_scheme": "scheme-1",
             "show_navigation_on_desktop": false,
             "navigation_position": "inside",
             "navigation_style": "icon_only",
@@ -667,22 +665,22 @@
             "heading": {
               "type": "heading",
               "settings": {
-                "animation_delay": 50,
-                "animation_type": "slide-bottom",
                 "text": "<p>Explore Training &amp; Style Guides</p>",
-                "html_tag": "h2",
                 "heading_size": "xl",
-                "width": "fill"
+                "html_tag": "h2",
+                "width": "fill",
+                "animation_type": "slide-bottom",
+                "animation_delay": 50
               }
             },
             "eyebrow": {
               "type": "eyebrow",
               "settings": {
-                "animation_delay": 0,
-                "animation_type": "fade",
                 "text": "<p>Our blogs</p>",
                 "show_icon": true,
-                "icon": "square"
+                "icon": "square",
+                "animation_type": "fade",
+                "animation_delay": 0
               }
             }
           },
@@ -745,6 +743,9 @@
               "settings": {
                 "ratio": "ratio_3_2",
                 "media_layout": "stacked",
+                "overlap_content": false,
+                "overlap_width": 80,
+                "media_bottom_offset": 40,
                 "alignment": "center",
                 "position": "flex-start",
                 "desktop_gap": 0,
@@ -762,10 +763,7 @@
                 "padding_top_mobile": 16,
                 "padding_bottom_mobile": 0,
                 "padding_left_mobile": 0,
-                "padding_right_mobile": 0,
-                "overlap_content": false,
-                "overlap_width": 80,
-                "media_bottom_offset": 40
+                "padding_right_mobile": 0
               },
               "blocks": {
                 "blog_card_title_LRMdNg": {
@@ -844,6 +842,7 @@
       },
       "name": "Blog posts",
       "settings": {
+        "blog": "kinetra",
         "section_width": "page_width",
         "desktop_alignment": "center",
         "mobile_alignment": "center",
@@ -854,8 +853,7 @@
         "padding_bottom": 96,
         "customize_mobile_padding": true,
         "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48,
-        "blog": "kinetra"
+        "padding_bottom_mobile": 48
       }
     },
     "icon_text_cards_qT6mLV": {
@@ -869,10 +867,10 @@
             "gap_desktop": 0,
             "gap_mobile": 0,
             "show_navigation_on_desktop": false,
-            "show_pagination_on_desktop": true,
-            "show_pagination_on_mobile": true,
             "pagination_type": "dot",
+            "show_pagination_on_desktop": true,
             "pagination_padding_desktop": 12,
+            "show_pagination_on_mobile": true,
             "pagination_padding_mobile": 12
           },
           "blocks": {
@@ -896,31 +894,31 @@
                     "gap_desktop": 12,
                     "gap_mobile": 12,
                     "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fit"
+                    "height": "fit",
+                    "width_mobile": "fill"
                   },
                   "blocks": {
                     "icon": {
                       "type": "icon",
                       "settings": {
-                        "animation_delay": 50,
-                        "animation_type": "scale",
                         "source": "custom",
                         "custom_icon": "<svg width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M23.9998 37.8457C22.2438 37.8457 20.5905 37.541 19.0398 36.9317C17.4892 36.3224 16.0938 35.485 14.8538 34.4197L10.7078 38.5177C10.5292 38.7044 10.3018 38.7977 10.0258 38.7977C9.74982 38.7977 9.51782 38.7044 9.32982 38.5177C9.14182 38.331 9.04849 38.099 9.04982 37.8217C9.05115 37.5444 9.14449 37.3177 9.32982 37.1417L13.4258 33.0437C12.3592 31.805 11.5218 30.4017 10.9138 28.8337C10.3058 27.2657 10.0012 25.603 9.99982 23.8457C9.99982 19.9377 11.3558 16.6277 14.0678 13.9157C16.7825 11.2024 20.0932 9.8457 23.9998 9.8457H37.9998V23.8457C37.9998 27.7537 36.6438 31.0644 33.9318 33.7777C31.2172 36.4897 27.9065 37.8457 23.9998 37.8457ZM23.9998 35.8457C27.3332 35.8457 30.1665 34.679 32.4998 32.3457C34.8332 30.0124 35.9998 27.179 35.9998 23.8457V11.8457H23.9998C20.6665 11.8457 17.8332 13.0124 15.4998 15.3457C13.1665 17.679 11.9998 20.5124 11.9998 23.8457C11.9998 25.3257 12.2512 26.7277 12.7538 28.0517C13.2565 29.3757 13.9605 30.5597 14.8658 31.6037L25.3318 21.1377C25.5092 20.951 25.7358 20.8577 26.0118 20.8577C26.2878 20.8577 26.5238 20.955 26.7198 21.1497C26.9332 21.363 27.0398 21.597 27.0398 21.8517C27.0398 22.1064 26.9292 22.3444 26.7078 22.5657L16.2398 32.9917C17.2838 33.897 18.4678 34.599 19.7918 35.0977C21.1158 35.5964 22.5178 35.8457 23.9978 35.8457\" fill=\"#181818\"/>\n</svg>",
                         "icon_width": 48,
-                        "icon_padding": 0
+                        "icon_padding": 0,
+                        "animation_type": "scale",
+                        "animation_delay": 50
                       }
                     },
                     "heading": {
                       "type": "heading",
                       "settings": {
-                        "animation_delay": 50,
-                        "animation_type": "slide-bottom",
                         "text": "<p>PFAS-FREE FINISHES</p>",
-                        "html_tag": "h4",
                         "heading_size": "custom",
                         "custom_heading_size": 18,
-                        "width": "fill"
+                        "html_tag": "h4",
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50
                       }
                     }
                   },
@@ -932,11 +930,11 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "animation_delay": 100,
-                    "animation_type": "fade",
                     "text": "<p>Enjoy peace of mind with our PFAS-free activewear, ensuring safety and sustainability</p>",
                     "text_size": "md",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "fade",
+                    "animation_delay": 100
                   }
                 }
               },
@@ -965,31 +963,31 @@
                     "gap_desktop": 12,
                     "gap_mobile": 12,
                     "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fit"
+                    "height": "fit",
+                    "width_mobile": "fill"
                   },
                   "blocks": {
                     "heading": {
                       "type": "heading",
                       "settings": {
-                        "animation_delay": 50,
-                        "animation_type": "slide-bottom",
                         "text": "<p>OPACITY TESTED IN DAYLIGHT</p>",
-                        "html_tag": "h4",
                         "heading_size": "custom",
                         "custom_heading_size": 18,
-                        "width": "fill"
+                        "html_tag": "h4",
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50
                       }
                     },
                     "icon": {
                       "type": "icon",
                       "settings": {
-                        "animation_delay": 50,
-                        "animation_type": "scale",
                         "source": "custom",
                         "custom_icon": "<svg preserveAspectRatio=\"none\" overflow=\"visible\" style=\"display: block;\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g id=\"material-symbols-light:partly-cloudy-day-outline\">\n<path id=\"Vector\" d=\"M23.0001 10.8461V4.07812H25.0001V10.8461H23.0001ZM33.9921 15.4241L32.5781 13.9701L37.3801 9.15413L38.7961 10.6201L33.9921 15.4241ZM37.1541 25.0001V23.0001H43.9241V25.0001H37.1541ZM37.3821 38.7961L32.5781 33.9921L34.0301 32.5381L38.8461 37.3321L37.3821 38.7961ZM14.0461 15.4621L9.16605 10.5821L10.6301 9.19213L15.4621 14.0461L14.0461 15.4621ZM13.1541 38.2321H21.3841C22.4747 38.2321 23.4141 37.8375 24.2021 37.0481C24.9901 36.2601 25.3841 35.3208 25.3841 34.2301C25.3841 33.1408 25.0047 32.2081 24.2461 31.4321C23.4874 30.6561 22.5634 30.2681 21.4741 30.2681H19.5381L18.8081 28.5221C18.2907 27.3195 17.4867 26.3681 16.3961 25.6681C15.3067 24.9668 14.0974 24.6161 12.7681 24.6161C10.9227 24.6161 9.35872 25.2568 8.07605 26.5381C6.79339 27.8195 6.15272 29.3835 6.15405 31.2301C6.15405 33.1795 6.83405 34.8335 8.19405 36.1921C9.55405 37.5508 11.2074 38.2308 13.1541 38.2321ZM13.1541 40.2321C10.6701 40.2321 8.54872 39.3528 6.79005 37.5941C5.03139 35.8355 4.15272 33.7141 4.15405 31.2301C4.15405 28.8221 4.98805 26.7848 6.65605 25.1181C8.32405 23.4515 10.3621 22.6175 12.7701 22.6161C14.5901 22.6161 16.2421 23.1321 17.7261 24.1641C19.2101 25.1961 20.2621 26.5641 20.8821 28.2681C22.5581 28.2681 24.0541 28.7735 25.3701 29.7841C26.6861 30.7948 27.3574 32.2875 27.3841 34.2621C27.3694 35.9048 26.7827 37.3101 25.6241 38.4781C24.4654 39.6461 23.0521 40.2301 21.3841 40.2301L13.1541 40.2321ZM27.3081 33.4921C27.2187 33.1588 27.1287 32.8355 27.0381 32.5221C26.9487 32.2101 26.8594 31.8875 26.7701 31.5541C28.3461 30.8955 29.6121 29.8928 30.5681 28.5461C31.5227 27.1995 32.0001 25.6841 32.0001 24.0001C32.0001 21.8001 31.2167 19.9168 29.6501 18.3501C28.0834 16.7835 26.2001 16.0001 24.0001 16.0001C21.9227 16.0001 20.1214 16.6948 18.5961 18.0841C17.0707 19.4735 16.2261 21.2068 16.0621 23.2841C15.7287 23.1948 15.3914 23.1088 15.0501 23.0261C14.7087 22.9435 14.3714 22.8575 14.0381 22.7681C14.3514 20.2455 15.4574 18.1535 17.3561 16.4921C19.2547 14.8308 21.4694 14.0001 24.0001 14.0001C26.7694 14.0001 29.1287 14.9748 31.0781 16.9241C33.0274 18.8735 34.0014 21.2321 34.0001 24.0001C34.0001 26.1308 33.3887 28.0548 32.1661 29.7721C30.9434 31.4895 29.3234 32.7295 27.3061 33.4921\" fill=\"#181818\"/>\n</g>\n</svg>\n",
                         "icon_width": 48,
-                        "icon_padding": 0
+                        "icon_padding": 0,
+                        "animation_type": "scale",
+                        "animation_delay": 50
                       }
                     }
                   },
@@ -1001,11 +999,11 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "animation_delay": 100,
-                    "animation_type": "fade",
                     "text": "<p>Our fabrics are rigorously tested for opacity, so you can move confidently</p>",
                     "text_size": "md",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "fade",
+                    "animation_delay": 100
                   }
                 }
               },
@@ -1034,31 +1032,31 @@
                     "gap_desktop": 12,
                     "gap_mobile": 12,
                     "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fit"
+                    "height": "fit",
+                    "width_mobile": "fill"
                   },
                   "blocks": {
                     "heading": {
                       "type": "heading",
                       "settings": {
-                        "animation_delay": 50,
-                        "animation_type": "slide-bottom",
                         "text": "<p>SWEAT-WICKING VERIFIED</p>",
-                        "html_tag": "h4",
                         "heading_size": "custom",
                         "custom_heading_size": 18,
-                        "width": "fill"
+                        "html_tag": "h4",
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50
                       }
                     },
                     "icon": {
                       "type": "icon",
                       "settings": {
-                        "animation_delay": 50,
-                        "animation_type": "scale",
                         "source": "custom",
                         "custom_icon": "<svg preserveAspectRatio=\"none\" overflow=\"visible\" style=\"display: block;\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g id=\"material-symbols-light:cool-to-dry-outline\">\n<path id=\"Vector\" d=\"M22 38.8595C18.6053 38.3862 15.7567 36.8715 13.454 34.3155C11.1513 31.7582 10 28.7322 10 25.2375C10 23.2682 10.37 21.4769 11.11 19.8635C11.85 18.2502 12.8413 16.7902 14.084 15.4835L24 5.76953L33.916 15.4835C34.8853 16.5049 35.71 17.6435 36.39 18.8995C37.07 20.1555 37.5433 21.5089 37.81 22.9595H35.8C35.5667 21.8262 35.1753 20.7582 34.626 19.7555C34.0753 18.7515 33.3667 17.8329 32.5 16.9995L24 8.59953L15.5 16.9995C14.3333 18.0995 13.4587 19.3475 12.876 20.7435C12.2933 22.1395 12.0013 23.6375 12 25.2375C12 28.1375 12.9587 30.6815 14.876 32.8695C16.792 35.0562 19.1667 36.3829 22 36.8495V38.8595ZM26.908 31.2735L26.208 29.6775C26.972 29.2869 27.7587 28.9735 28.568 28.7375C29.3773 28.5015 30.188 28.3835 31 28.3835C31.716 28.3835 32.4293 28.4689 33.14 28.6395C33.852 28.8102 34.5453 29.0289 35.22 29.2955C35.8707 29.5622 36.5173 29.8022 37.16 30.0155C37.8027 30.2289 38.4827 30.3355 39.2 30.3355C39.9413 30.3355 40.6527 30.2275 41.334 30.0115C42.0153 29.7955 42.6813 29.5302 43.332 29.2155L44.032 30.8495C43.2667 31.2389 42.4733 31.5455 41.652 31.7695C40.8307 31.9922 40.0133 32.1035 39.2 32.1035C38.4853 32.1035 37.772 32.0182 37.06 31.8475C36.348 31.6769 35.6547 31.4582 34.98 31.1915C34.3293 30.9249 33.6827 30.6849 33.04 30.4715C32.3987 30.2595 31.7187 30.1535 31 30.1535C30.2587 30.1535 29.5533 30.2615 28.884 30.4775C28.216 30.6922 27.5573 30.9575 26.908 31.2735ZM26.908 36.5035L26.208 34.9075C26.972 34.5182 27.7587 34.2049 28.568 33.9675C29.3773 33.7329 30.188 33.6155 31 33.6155C31.716 33.6155 32.4293 33.7009 33.14 33.8715C33.852 34.0422 34.5453 34.2609 35.22 34.5275C35.8707 34.7942 36.5173 35.0335 37.16 35.2455C37.8027 35.4589 38.4827 35.5655 39.2 35.5655C39.9413 35.5655 40.6527 35.4575 41.334 35.2415C42.0167 35.0269 42.6827 34.7615 43.332 34.4455L44.032 36.0815C43.2667 36.4709 42.4733 36.7769 41.652 36.9995C40.8307 37.2222 40.0133 37.3335 39.2 37.3335C38.4853 37.3335 37.772 37.2482 37.06 37.0775C36.348 36.9069 35.6547 36.6882 34.98 36.4215C34.3293 36.1549 33.6827 35.9155 33.04 35.7035C32.3987 35.4902 31.7187 35.3835 31 35.3835C30.2587 35.3835 29.5533 35.4915 28.884 35.7075C28.216 35.9235 27.5573 36.1889 26.908 36.5035ZM26.908 41.7335L26.208 40.1375C26.972 39.7482 27.7587 39.4355 28.568 39.1995C29.3773 38.9635 30.188 38.8455 31 38.8455C31.716 38.8455 32.4293 38.9309 33.14 39.1015C33.852 39.2722 34.5453 39.4909 35.22 39.7575C35.8707 40.0242 36.5173 40.2642 37.16 40.4775C37.8027 40.6909 38.4827 40.7969 39.2 40.7955C39.9413 40.7955 40.6527 40.6882 41.334 40.4735C42.0153 40.2589 42.6813 39.9935 43.332 39.6775L44.032 41.3115C43.2667 41.7009 42.4733 42.0075 41.652 42.2315C40.8307 42.4542 40.0133 42.5655 39.2 42.5655C38.4853 42.5655 37.772 42.4802 37.06 42.3095C36.348 42.1389 35.6547 41.9202 34.98 41.6535C34.3293 41.3869 33.6827 41.1469 33.04 40.9335C32.3987 40.7202 31.7187 40.6135 31 40.6135C30.2587 40.6135 29.5533 40.7215 28.884 40.9375C28.216 41.1535 27.5573 41.4189 26.908 41.7335Z\" fill=\"#181818\"/>\n</g>\n</svg>\n",
                         "icon_width": 48,
-                        "icon_padding": 0
+                        "icon_padding": 0,
+                        "animation_type": "scale",
+                        "animation_delay": 50
                       }
                     }
                   },
@@ -1070,11 +1068,11 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "animation_delay": 100,
-                    "animation_type": "fade",
                     "text": "<p>Stay dry and comfortable with our verified sweat-wicking technology during workouts</p>",
                     "text_size": "md",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "fade",
+                    "animation_delay": 100
                   }
                 }
               },
@@ -1109,19 +1107,14 @@
     },
     "virelle_flash_sale": {
       "type": "countdown-with-marquee",
-      "settings": {
-        "color_scheme": "scheme-3",
-        "padding_top": 0,
-        "padding_bottom": 0
-      },
       "blocks": {
         "marquee-left": {
           "type": "_countdown-marquee",
           "static": true,
           "settings": {
+            "enable_parallax": false,
             "animation_speed": 0.6,
             "animation_direction": "backward",
-            "enable_parallax": false,
             "gap_desktop": 12,
             "gap_mobile": 12,
             "padding_top": 32,
@@ -1135,8 +1128,8 @@
               "type": "_marquee-heading",
               "settings": {
                 "text": "FLASH SALE",
-                "heading_size": "display",
                 "outline": true,
+                "heading_size": "display",
                 "opacity": 40
               }
             },
@@ -1144,8 +1137,8 @@
               "type": "_marquee-heading",
               "settings": {
                 "text": "40% OFF",
-                "heading_size": "display",
                 "outline": true,
+                "heading_size": "display",
                 "opacity": 40
               }
             }
@@ -1167,8 +1160,8 @@
             "gap_desktop": 80,
             "gap_mobile": 24,
             "width": "fill",
-            "width_mobile": "fill",
             "height": "fit",
+            "width_mobile": "fill",
             "padding_top": 64,
             "padding_bottom": 64,
             "customize_mobile_padding": true,
@@ -1186,8 +1179,8 @@
                 "gap_desktop": 12,
                 "gap_mobile": 12,
                 "width": "fill",
-                "width_mobile": "fill",
-                "height": "fit"
+                "height": "fit",
+                "width_mobile": "fill"
               },
               "blocks": {
                 "title": {
@@ -1199,30 +1192,30 @@
                     "gap_desktop": 8,
                     "gap_mobile": 8,
                     "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fit"
+                    "height": "fit",
+                    "width_mobile": "fill"
                   },
                   "blocks": {
                     "eyebrow": {
                       "type": "eyebrow",
                       "settings": {
-                        "animation_delay": 0,
-                        "animation_type": "none",
                         "text": "<p>Ends Tonight</p>",
+                        "show_background": false,
                         "show_icon": true,
                         "icon": "square",
-                        "show_background": false
+                        "animation_type": "none",
+                        "animation_delay": 0
                       }
                     },
                     "heading": {
                       "type": "heading",
                       "settings": {
-                        "animation_delay": 0,
-                        "animation_type": "none",
                         "text": "<p>Flash Sale</p>",
-                        "html_tag": "h2",
                         "heading_size": "xl",
-                        "width": "fill"
+                        "html_tag": "h2",
+                        "width": "fill",
+                        "animation_type": "none",
+                        "animation_delay": 0
                       }
                     }
                   },
@@ -1234,11 +1227,11 @@
                 "description": {
                   "type": "text",
                   "settings": {
-                    "animation_delay": 0,
-                    "animation_type": "none",
                     "text": "<p>Massive discounts on your favorite fits. Go ahead score big savings on our best-selling collection of activewear.</p>",
                     "text_size": "md",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_type": "none",
+                    "animation_delay": 0
                   }
                 }
               },
@@ -1258,20 +1251,20 @@
                 "duration_minutes": 18,
                 "number_size": "display",
                 "label_size": "sm",
-                "color_type": "inherit",
-                "outline_text": false
+                "outline_text": false,
+                "color_type": "inherit"
               }
             },
             "button": {
               "type": "button",
               "settings": {
-                "animation_delay": 0,
-                "animation_type": "none",
                 "button_label": "SHOP SALE",
                 "button_style": "primary",
                 "show_icon": false,
                 "width": "fit",
-                "width_mobile": "fit"
+                "width_mobile": "fit",
+                "animation_type": "none",
+                "animation_delay": 0
               }
             }
           },
@@ -1285,9 +1278,9 @@
           "type": "_countdown-marquee",
           "static": true,
           "settings": {
+            "enable_parallax": false,
             "animation_speed": 0.6,
             "animation_direction": "backward",
-            "enable_parallax": false,
             "gap_desktop": 12,
             "gap_mobile": 12,
             "padding_top": 32,
@@ -1301,8 +1294,8 @@
               "type": "_marquee-heading",
               "settings": {
                 "text": "FLASH SALE",
-                "heading_size": "display",
                 "outline": true,
+                "heading_size": "display",
                 "opacity": 40
               }
             },
@@ -1310,8 +1303,8 @@
               "type": "_marquee-heading",
               "settings": {
                 "text": "40% OFF",
-                "heading_size": "display",
                 "outline": true,
+                "heading_size": "display",
                 "opacity": 40
               }
             }
@@ -1321,37 +1314,30 @@
             "offer"
           ]
         }
+      },
+      "settings": {
+        "color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "virelle_marquee": {
       "type": "custom-section",
-      "name": "Text marquee (custom)",
-      "settings": {
-        "section_width": "full_width_no_padding",
-        "alignment": "left",
-        "content_gap": 0,
-        "color_scheme": "scheme-1",
-        "padding_top": 24,
-        "padding_bottom": 24,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 12,
-        "padding_bottom_mobile": 12
-      },
       "blocks": {
         "marquee": {
           "type": "marquee",
           "settings": {
-            "width": "fill",
-            "color_type": "inherit",
-            "alignment": "center",
-            "animation_direction": "backward",
-            "animation_speed": 0.6,
-            "gap_desktop": 32,
-            "gap_mobile": 32,
-            "enable_parallax": false,
             "show_top_divider": false,
             "show_bottom_divider": false,
             "show_blurred_edges": false,
+            "enable_parallax": false,
+            "alignment": "center",
+            "animation_speed": 0.6,
+            "animation_direction": "backward",
+            "gap_desktop": 32,
+            "gap_mobile": 32,
+            "width": "fill",
+            "color_type": "inherit",
             "hide_on_desktop": false,
             "hide_on_mobile": true
           },
@@ -1361,26 +1347,25 @@
               "settings": {
                 "text": "Active Essentials",
                 "outline": true,
-                "heading_size": "display",
                 "font": "heading",
-
-                "opacity": 100,
-                "color_role": "heading"
+                "heading_size": "display",
+                "color_role": "heading",
+                "opacity": 100
               }
             },
             "marquee_2": {
               "type": "_marquee-icon",
               "settings": {
-                "animation_delay": 0,
                 "source": "custom",
                 "icon": "square",
+                "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>",
                 "icon_width": 14,
                 "icon_padding": 0,
                 "custom_mobile": true,
                 "icon_width_mobile": 14,
                 "icon_padding_mobile": 0,
                 "animation": "none",
-                "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>"
+                "animation_delay": 0
               }
             },
             "marquee_3": {
@@ -1388,25 +1373,25 @@
               "settings": {
                 "text": "Comfort Fit",
                 "outline": true,
-                "heading_size": "display",
                 "font": "heading",
-                "opacity": 100,
-                "color_role": "heading"
+                "heading_size": "display",
+                "color_role": "heading",
+                "opacity": 100
               }
             },
             "marquee_4": {
               "type": "_marquee-icon",
               "settings": {
-                "animation_delay": 0,
                 "source": "custom",
                 "icon": "square",
+                "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>",
                 "icon_width": 14,
                 "icon_padding": 0,
                 "custom_mobile": true,
                 "icon_width_mobile": 14,
                 "icon_padding_mobile": 0,
                 "animation": "none",
-                "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>"
+                "animation_delay": 0
               }
             },
             "marquee_5": {
@@ -1414,26 +1399,25 @@
               "settings": {
                 "text": "Chic Athleisure",
                 "outline": true,
-                "heading_size": "display",
                 "font": "heading",
-
-                "opacity": 100,
-                "color_role": "heading"
+                "heading_size": "display",
+                "color_role": "heading",
+                "opacity": 100
               }
             },
             "marquee_6": {
               "type": "_marquee-icon",
               "settings": {
-                "animation_delay": 0,
                 "source": "custom",
                 "icon": "square",
+                "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>",
                 "icon_width": 14,
                 "icon_padding": 0,
                 "custom_mobile": true,
                 "icon_width_mobile": 14,
                 "icon_padding_mobile": 0,
                 "animation": "none",
-                "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>"
+                "animation_delay": 0
               }
             },
             "marquee_7": {
@@ -1441,25 +1425,25 @@
               "settings": {
                 "text": "Dynamic Style",
                 "outline": true,
-                "heading_size": "display",
                 "font": "heading",
-                "opacity": 100,
-                "color_role": "heading"
+                "heading_size": "display",
+                "color_role": "heading",
+                "opacity": 100
               }
             },
             "marquee_8": {
               "type": "_marquee-icon",
               "settings": {
-                "animation_delay": 0,
                 "source": "custom",
                 "icon": "square",
+                "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>",
                 "icon_width": 14,
                 "icon_padding": 0,
                 "custom_mobile": true,
                 "icon_width_mobile": 14,
                 "icon_padding_mobile": 0,
                 "animation": "none",
-                "custom_icon": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H13.5V13.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>"
+                "animation_delay": 0
               }
             }
           },
@@ -1477,17 +1461,17 @@
         "marquee_mobile": {
           "type": "marquee",
           "settings": {
-            "width": "fill",
-            "color_type": "inherit",
-            "alignment": "center",
-            "animation_direction": "backward",
-            "animation_speed": 0.6,
-            "gap_desktop": 32,
-            "gap_mobile": 32,
-            "enable_parallax": false,
             "show_top_divider": false,
             "show_bottom_divider": false,
             "show_blurred_edges": false,
+            "enable_parallax": false,
+            "alignment": "center",
+            "animation_speed": 0.6,
+            "animation_direction": "backward",
+            "gap_desktop": 32,
+            "gap_mobile": 32,
+            "width": "fill",
+            "color_type": "inherit",
             "hide_on_desktop": true,
             "hide_on_mobile": false
           },
@@ -1497,26 +1481,25 @@
               "settings": {
                 "text": "Active Essentials",
                 "outline": true,
-                "heading_size": "display",
                 "font": "heading",
-
-                "opacity": 100,
-                "color_role": "heading"
+                "heading_size": "display",
+                "color_role": "heading",
+                "opacity": 100
               }
             },
             "marquee_2": {
               "type": "_marquee-icon",
               "settings": {
-                "animation_delay": 0,
                 "source": "custom",
                 "icon": "square",
+                "custom_icon": "<svg width=\"10\" height=\"10\" viewBox=\"0 0 10 10\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H9.5V9.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>",
                 "icon_width": 10,
                 "icon_padding": 0,
                 "custom_mobile": true,
                 "icon_width_mobile": 10,
                 "icon_padding_mobile": 0,
                 "animation": "none",
-                "custom_icon": "<svg width=\"10\" height=\"10\" viewBox=\"0 0 10 10\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H9.5V9.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>"
+                "animation_delay": 0
               }
             },
             "marquee_3": {
@@ -1524,25 +1507,25 @@
               "settings": {
                 "text": "Comfort Fit",
                 "outline": true,
-                "heading_size": "display",
                 "font": "heading",
-                "opacity": 100,
-                "color_role": "heading"
+                "heading_size": "display",
+                "color_role": "heading",
+                "opacity": 100
               }
             },
             "marquee_4": {
               "type": "_marquee-icon",
               "settings": {
-                "animation_delay": 0,
                 "source": "custom",
                 "icon": "square",
+                "custom_icon": "<svg width=\"10\" height=\"10\" viewBox=\"0 0 10 10\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H9.5V9.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>",
                 "icon_width": 10,
                 "icon_padding": 0,
                 "custom_mobile": true,
                 "icon_width_mobile": 10,
                 "icon_padding_mobile": 0,
                 "animation": "none",
-                "custom_icon": "<svg width=\"10\" height=\"10\" viewBox=\"0 0 10 10\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H9.5V9.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>"
+                "animation_delay": 0
               }
             },
             "marquee_5": {
@@ -1550,26 +1533,25 @@
               "settings": {
                 "text": "Chic Athleisure",
                 "outline": true,
-                "heading_size": "display",
                 "font": "heading",
-
-                "opacity": 100,
-                "color_role": "heading"
+                "heading_size": "display",
+                "color_role": "heading",
+                "opacity": 100
               }
             },
             "marquee_6": {
               "type": "_marquee-icon",
               "settings": {
-                "animation_delay": 0,
                 "source": "custom",
                 "icon": "square",
+                "custom_icon": "<svg width=\"10\" height=\"10\" viewBox=\"0 0 10 10\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H9.5V9.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>",
                 "icon_width": 10,
                 "icon_padding": 0,
                 "custom_mobile": true,
                 "icon_width_mobile": 10,
                 "icon_padding_mobile": 0,
                 "animation": "none",
-                "custom_icon": "<svg width=\"10\" height=\"10\" viewBox=\"0 0 10 10\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H9.5V9.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>"
+                "animation_delay": 0
               }
             },
             "marquee_7": {
@@ -1577,25 +1559,25 @@
               "settings": {
                 "text": "Dynamic Style",
                 "outline": true,
-                "heading_size": "display",
                 "font": "heading",
-                "opacity": 100,
-                "color_role": "heading"
+                "heading_size": "display",
+                "color_role": "heading",
+                "opacity": 100
               }
             },
             "marquee_8": {
               "type": "_marquee-icon",
               "settings": {
-                "animation_delay": 0,
                 "source": "custom",
                 "icon": "square",
+                "custom_icon": "<svg width=\"10\" height=\"10\" viewBox=\"0 0 10 10\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H9.5V9.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>",
                 "icon_width": 10,
                 "icon_padding": 0,
                 "custom_mobile": true,
                 "icon_width_mobile": 10,
                 "icon_padding_mobile": 0,
                 "animation": "none",
-                "custom_icon": "<svg width=\"10\" height=\"10\" viewBox=\"0 0 10 10\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M0.5 0.5H9.5V9.5H0.5V0.5Z\" stroke=\"#181818\"/>\n</svg>"
+                "animation_delay": 0
               }
             }
           },
@@ -1614,37 +1596,33 @@
       "block_order": [
         "marquee",
         "marquee_mobile"
-      ]
+      ],
+      "name": "Text marquee (custom)",
+      "settings": {
+        "section_width": "full_width_no_padding",
+        "alignment": "left",
+        "content_gap": 0,
+        "color_scheme": "scheme-1",
+        "padding_top": 24,
+        "padding_bottom": 24,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 12,
+        "padding_bottom_mobile": 12
+      }
     },
     "kinetra_collage": {
       "type": "image-text-card-grid",
-      "settings": {
-        "section_width": "page_width",
-        "alignment": "center",
-        "content_gap_desktop": 20,
-        "content_gap_mobile": 20,
-        "color_scheme": "scheme-1",
-        "padding_top": 96,
-        "padding_bottom": 96,
-        "padding_left": 0,
-        "padding_right": 0,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48,
-        "padding_left_mobile": 0,
-        "padding_right_mobile": 0
-      },
       "blocks": {
         "layout": {
           "type": "group",
           "settings": {
             "direction": "horizontal",
-            "width": "fill",
-            "width_mobile": "fill",
-            "height": "fit",
+            "position_horizontal": "top",
             "gap_desktop": 20,
             "gap_mobile": 8,
-            "position_horizontal": "top"
+            "width": "fill",
+            "height": "fit",
+            "width_mobile": "fill"
           },
           "blocks": {
             "video-column": {
@@ -1654,10 +1632,10 @@
                 "video": "shopify://files/videos/kinetra-collage-confidence.mp4",
                 "autoplay": true,
                 "loop_video": true,
-                "width_desktop": "fill",
-                "width_mobile": "fill",
                 "aspect_ratio_desktop": "fill_height",
+                "width_desktop": "fill",
                 "aspect_ratio_mobile": "ratio_3_4",
+                "width_mobile": "fill",
                 "corner_radius": "none"
               }
             },
@@ -1665,26 +1643,26 @@
               "type": "group",
               "settings": {
                 "direction": "vertical",
-                "width": "fill",
-                "width_mobile": "fill",
-                "height": "fit",
                 "gap_desktop": 20,
-                "gap_mobile": 8
+                "gap_mobile": 8,
+                "width": "fill",
+                "height": "fit",
+                "width_mobile": "fill"
               },
               "blocks": {
                 "copy": {
                   "type": "group",
                   "settings": {
                     "direction": "vertical",
-                    "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fit",
-                    "gap_desktop": 24,
-                    "gap_mobile": 16,
-                    "appearance_type": "scheme",
-                    "color_scheme": "scheme-2",
                     "alignment": "center",
                     "alignment_mobile": "center",
+                    "gap_desktop": 24,
+                    "gap_mobile": 16,
+                    "width": "fill",
+                    "height": "fit",
+                    "width_mobile": "fill",
+                    "appearance_type": "scheme",
+                    "color_scheme": "scheme-2",
                     "padding_top": 64,
                     "padding_bottom": 64,
                     "padding_left": 40,
@@ -1700,13 +1678,13 @@
                       "type": "group",
                       "settings": {
                         "direction": "vertical",
-                        "width": "fill",
-                        "width_mobile": "fill",
-                        "height": "fit",
                         "alignment": "center",
                         "alignment_mobile": "center",
                         "gap_desktop": 8,
-                        "gap_mobile": 8
+                        "gap_mobile": 8,
+                        "width": "fill",
+                        "height": "fit",
+                        "width_mobile": "fill"
                       },
                       "blocks": {
                         "eyebrow": {
@@ -1769,13 +1747,13 @@
                 "shorts": {
                   "type": "image",
                   "settings": {
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "image_ratio_desktop": "ratio_5_4",
-                    "image_ratio_mobile": "ratio_5_4",
-                    "corner_radius": "square",
                     "image": "shopify://shop_images/kinetra-collage-shorts.avif",
-                    "alt_text": "Tan activewear shorts in the dunes"
+                    "alt_text": "Tan activewear shorts in the dunes",
+                    "image_ratio_desktop": "ratio_5_4",
+                    "width_desktop": "fill",
+                    "image_ratio_mobile": "ratio_5_4",
+                    "width_mobile": "fill",
+                    "corner_radius": "square"
                   }
                 }
               },
@@ -1788,36 +1766,36 @@
               "type": "group",
               "settings": {
                 "direction": "vertical",
-                "width": "fill",
-                "width_mobile": "fill",
-                "height": "fill",
+                "position": "top",
                 "gap_desktop": 20,
                 "gap_mobile": 8,
-                "position": "top"
+                "width": "fill",
+                "height": "fill",
+                "width_mobile": "fill"
               },
               "blocks": {
                 "back": {
                   "type": "image",
                   "settings": {
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "image_ratio_desktop": "fill_height",
-                    "image_ratio_mobile": "ratio_5_4",
-                    "corner_radius": "square",
                     "image": "shopify://shop_images/kinetra-collage-back.avif",
-                    "alt_text": "Back detail of a tan sports bra"
+                    "alt_text": "Back detail of a tan sports bra",
+                    "image_ratio_desktop": "fill_height",
+                    "width_desktop": "fill",
+                    "image_ratio_mobile": "ratio_5_4",
+                    "width_mobile": "fill",
+                    "corner_radius": "square"
                   }
                 },
                 "together": {
                   "type": "image",
                   "settings": {
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "image_ratio_desktop": "ratio_5_4",
-                    "image_ratio_mobile": "ratio_5_4",
-                    "corner_radius": "square",
                     "image": "shopify://shop_images/kinetra-collage-together.avif",
-                    "alt_text": "Two athletes wearing tan activewear in the dunes"
+                    "alt_text": "Two athletes wearing tan activewear in the dunes",
+                    "image_ratio_desktop": "ratio_5_4",
+                    "width_desktop": "fill",
+                    "image_ratio_mobile": "ratio_5_4",
+                    "width_mobile": "fill",
+                    "corner_radius": "square"
                   }
                 }
               },
@@ -1836,26 +1814,26 @@
       },
       "block_order": [
         "layout"
-      ]
+      ],
+      "settings": {
+        "section_width": "page_width",
+        "alignment": "center",
+        "content_gap_desktop": 20,
+        "content_gap_mobile": 20,
+        "color_scheme": "scheme-1",
+        "padding_top": 96,
+        "padding_right": 0,
+        "padding_bottom": 96,
+        "padding_left": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_right_mobile": 0,
+        "padding_bottom_mobile": 48,
+        "padding_left_mobile": 0
+      }
     },
     "kinetra_scrolling_cards": {
       "type": "scrolling-cards",
-      "settings": {
-        "section_width": "custom",
-        "custom_width": 1700,
-        "stack_effect": "fade",
-        "enable_sticky_mobile": false,
-        "gap_desktop": 0,
-        "gap_mobile": 0,
-        "card_gap_desktop": 192,
-        "card_gap_mobile": 48,
-        "color_scheme": "scheme-3",
-        "padding_top": 96,
-        "padding_bottom": 96,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48
-      },
       "blocks": {
         "header": {
           "type": "header",
@@ -1865,8 +1843,7 @@
             "gap_desktop": 0,
             "gap_mobile": 0
           },
-          "blocks": {},
-          "block_order": []
+          "blocks": {}
         },
         "empower": {
           "type": "scrolling-card",
@@ -1897,14 +1874,14 @@
               "settings": {
                 "image": "shopify://shop_images/kinetra-empower.avif",
                 "alt_text": "Athlete in black activewear seated in the dunes",
-                "width_desktop": "fill",
-                "width_mobile": "fill",
                 "image_ratio_desktop": "custom",
                 "image_ratio_custom_width_desktop": 7,
                 "image_ratio_custom_height_desktop": 6,
+                "width_desktop": "fill",
                 "image_ratio_mobile": "custom",
                 "image_ratio_custom_width_mobile": 7,
                 "image_ratio_custom_height_mobile": 6,
+                "width_mobile": "fill",
                 "corner_radius": "square"
               }
             },
@@ -1912,22 +1889,22 @@
               "type": "group",
               "settings": {
                 "direction": "vertical",
-                "width": "fill",
-                "width_mobile": "fill",
-                "height": "fill",
+                "position": "space-between",
                 "gap_desktop": 40,
                 "gap_mobile": 16,
-                "position": "space-between",
-                "padding_left": 64,
-                "customize_mobile_padding": true,
-                "padding_left_mobile": 0,
+                "width": "fill",
+                "height": "fill",
+                "width_mobile": "fill",
+                "appearance_type": "inherit",
                 "padding_top": 40,
                 "padding_bottom": 40,
+                "padding_left": 64,
                 "padding_right": 0,
+                "customize_mobile_padding": true,
                 "padding_top_mobile": 0,
                 "padding_bottom_mobile": 0,
-                "padding_right_mobile": 0,
-                "appearance_type": "inherit"
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
               },
               "blocks": {
                 "header": {
@@ -2020,14 +1997,14 @@
               "settings": {
                 "image": "shopify://shop_images/kinetra-inspire.avif",
                 "alt_text": "Athlete in pale pink activewear on the beach",
-                "width_desktop": "fill",
-                "width_mobile": "fill",
                 "image_ratio_desktop": "custom",
                 "image_ratio_custom_width_desktop": 7,
                 "image_ratio_custom_height_desktop": 6,
+                "width_desktop": "fill",
                 "image_ratio_mobile": "custom",
                 "image_ratio_custom_width_mobile": 7,
                 "image_ratio_custom_height_mobile": 6,
+                "width_mobile": "fill",
                 "corner_radius": "square"
               }
             },
@@ -2035,22 +2012,22 @@
               "type": "group",
               "settings": {
                 "direction": "vertical",
-                "width": "fill",
-                "width_mobile": "fill",
-                "height": "fill",
+                "position": "bottom",
                 "gap_desktop": 40,
                 "gap_mobile": 16,
-                "position": "bottom",
-                "padding_left": 64,
-                "customize_mobile_padding": true,
-                "padding_left_mobile": 0,
+                "width": "fill",
+                "height": "fill",
+                "width_mobile": "fill",
+                "appearance_type": "inherit",
                 "padding_top": 40,
                 "padding_bottom": 40,
+                "padding_left": 64,
                 "padding_right": 0,
+                "customize_mobile_padding": true,
                 "padding_top_mobile": 0,
                 "padding_bottom_mobile": 0,
-                "padding_right_mobile": 0,
-                "appearance_type": "inherit"
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
               },
               "blocks": {
                 "story": {
@@ -2103,14 +2080,14 @@
               "settings": {
                 "image": "shopify://shop_images/kinetra-belong.avif",
                 "alt_text": "Athlete in black activewear seated in shallow water",
-                "width_desktop": "fill",
-                "width_mobile": "fill",
                 "image_ratio_desktop": "custom",
                 "image_ratio_custom_width_desktop": 7,
                 "image_ratio_custom_height_desktop": 6,
+                "width_desktop": "fill",
                 "image_ratio_mobile": "custom",
                 "image_ratio_custom_width_mobile": 7,
                 "image_ratio_custom_height_mobile": 6,
+                "width_mobile": "fill",
                 "corner_radius": "square"
               }
             },
@@ -2118,22 +2095,22 @@
               "type": "group",
               "settings": {
                 "direction": "vertical",
-                "width": "fill",
-                "width_mobile": "fill",
-                "height": "fill",
+                "position": "bottom",
                 "gap_desktop": 40,
                 "gap_mobile": 16,
-                "position": "bottom",
-                "padding_left": 64,
-                "customize_mobile_padding": true,
-                "padding_left_mobile": 0,
+                "width": "fill",
+                "height": "fill",
+                "width_mobile": "fill",
+                "appearance_type": "inherit",
                 "padding_top": 40,
                 "padding_bottom": 40,
+                "padding_left": 64,
                 "padding_right": 0,
+                "customize_mobile_padding": true,
                 "padding_top_mobile": 0,
                 "padding_bottom_mobile": 0,
-                "padding_right_mobile": 0,
-                "appearance_type": "inherit"
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
               },
               "blocks": {
                 "story": {
@@ -2162,22 +2139,30 @@
         "empower",
         "inspire",
         "belong"
-      ]
+      ],
+      "settings": {
+        "section_width": "custom",
+        "custom_width": 1700,
+        "stack_effect": "fade",
+        "enable_sticky_mobile": false,
+        "card_gap_desktop": 192,
+        "card_gap_mobile": 48,
+        "gap_desktop": 0,
+        "gap_mobile": 0,
+        "color_scheme": "scheme-3",
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
     },
     "kinetra_crafted": {
       "type": "hotspot",
-      "settings": {
-        "color_scheme": "scheme-1",
-        "padding_top": 64,
-        "padding_bottom": 0,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 0,
-        "section_width": "full_width"
-      },
       "blocks": {
         "header": {
           "type": "header",
+          "static": true,
           "settings": {
             "width": "fill",
             "inherit_alignment": false,
@@ -2195,9 +2180,9 @@
               "type": "eyebrow",
               "settings": {
                 "text": "<p>Attention to detail</p>",
+                "show_background": false,
                 "show_icon": true,
                 "icon": "square",
-                "show_background": false,
                 "animation_type": "fade",
                 "animation_delay": 0
               }
@@ -2217,26 +2202,26 @@
           "block_order": [
             "eyebrow-group",
             "heading"
-          ],
-          "static": true
+          ]
         },
         "product-callout": {
           "type": "product-callout",
+          "static": true,
           "settings": {
             "image": "shopify://shop_images/kinetra-crafted-desktop-crop.avif",
+            "mobile_image": "shopify://shop_images/kinetra-crafted-mobile-crop.avif",
             "show_overlay": false,
             "desktop_height": "medium",
             "mobile_height": "medium",
             "heading": "",
             "text": "",
+            "content_color_scheme": "scheme-1",
             "button_label": "",
-            "hotspot_icon_style": "dot",
-            "hotspot_behavior": "click",
-            "hotspot_color_scheme": "scheme-1",
             "content_padding_desktop": 0,
             "content_padding_mobile": 0,
-            "content_color_scheme": "scheme-1",
-            "mobile_image": "shopify://shop_images/kinetra-crafted-mobile-crop.avif"
+            "hotspot_icon_style": "dot",
+            "hotspot_behavior": "click",
+            "hotspot_color_scheme": "scheme-1"
           },
           "blocks": {
             "bra": {
@@ -2245,11 +2230,11 @@
                 "use_content": true,
                 "content_heading": "FLEXFIT TECHNOLOGY",
                 "content_text": "<p>The sports bra comes with easily removable padding, allowing you to tailor the fit according to your comfort and activity level</p>",
-                "horizontal_position": 54,
                 "vertical_position": 40,
+                "horizontal_position": 54,
                 "customize_mobile_position": true,
-                "mobile_horizontal_position": 56,
-                "mobile_vertical_position": 34
+                "mobile_vertical_position": 34,
+                "mobile_horizontal_position": 56
               }
             },
             "waistband": {
@@ -2258,65 +2243,56 @@
                 "use_content": true,
                 "content_heading": "STAY-PUT SUPPORT",
                 "content_text": "<p>The high-rise waistband offers a secure, comfortable fit, helping you move freely through every stretch and workout.</p>",
-                "horizontal_position": 47,
                 "vertical_position": 82,
+                "horizontal_position": 47,
                 "customize_mobile_position": true,
-                "mobile_horizontal_position": 44,
-                "mobile_vertical_position": 72
+                "mobile_vertical_position": 72,
+                "mobile_horizontal_position": 44
               }
             }
           },
           "block_order": [
             "bra",
             "waistband"
-          ],
-          "static": true
+          ]
         }
       },
-      "block_order": [],
-      "disabled": false
+      "settings": {
+        "section_width": "full_width",
+        "color_scheme": "scheme-1",
+        "padding_top": 64,
+        "padding_bottom": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 0
+      }
     },
     "kinetra_highlights": {
       "type": "hotspot-gallery",
-      "settings": {
-        "color_scheme": "scheme-1",
-        "padding_top": 96,
-        "padding_bottom": 96,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48,
-        "section_width": "full_width",
-        "header_position": "beside",
-        "content_gap": 40,
-        "header_vertical_alignment": "top",
-        "show_product_type": false,
-        "show_product_image": true,
-        "show_price": true,
-        "product_link_label": "View product"
-      },
       "blocks": {
         "header": {
           "type": "header",
+          "static": true,
           "settings": {
             "width": "custom",
+            "max_width": 360,
             "inherit_alignment": false,
             "alignment": "left",
             "customize_mobile_alignment": true,
             "alignment_mobile": "left",
             "gap_desktop": 16,
-            "gap_mobile": 12,
-            "max_width": 360
+            "gap_mobile": 12
           },
           "blocks": {
             "eyebrow-group": {
               "type": "eyebrow",
               "settings": {
-                "animation_delay": 0,
-                "animation_type": "fade",
                 "text": "<p>Discover</p>",
+                "show_background": false,
                 "show_icon": true,
                 "icon": "square",
-                "show_background": false
+                "animation_type": "fade",
+                "animation_delay": 0
               }
             },
             "heading": {
@@ -2345,11 +2321,11 @@
             "eyebrow-group",
             "heading",
             "text"
-          ],
-          "static": true
+          ]
         },
         "product-callout": {
           "type": "product-callout-gallery",
+          "static": true,
           "settings": {
             "layout_type": "carousel",
             "columns_desktop": "2",
@@ -2375,11 +2351,11 @@
               "settings": {
                 "image": "shopify://shop_images/kinetra-highlight-pink.avif",
                 "product": "virelle-soft-motion-leggings",
-                "horizontal_position": 65,
                 "vertical_position": 63,
+                "horizontal_position": 65,
                 "customize_mobile_position": true,
-                "mobile_horizontal_position": 65,
-                "mobile_vertical_position": 63
+                "mobile_vertical_position": 63,
+                "mobile_horizontal_position": 65
               }
             },
             "brown": {
@@ -2401,44 +2377,49 @@
             "pink",
             "brown",
             "black"
-          ],
-          "static": true
+          ]
         }
       },
-      "block_order": []
-    },
-    "kinetra_timeline": {
-      "type": "timeline",
       "settings": {
-        "color_scheme": "scheme-2",
+        "section_width": "full_width",
+        "header_position": "beside",
+        "content_gap": 40,
+        "header_vertical_alignment": "top",
+        "show_product_type": false,
+        "show_product_image": true,
+        "show_price": true,
+        "product_link_label": "View product",
+        "color_scheme": "scheme-1",
         "padding_top": 96,
         "padding_bottom": 96,
         "customize_mobile_padding": true,
         "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48,
-        "section_width": "page_width"
-      },
+        "padding_bottom_mobile": 48
+      }
+    },
+    "kinetra_timeline": {
+      "type": "timeline",
       "blocks": {
         "header": {
           "type": "header",
+          "static": true,
           "settings": {},
-          "blocks": {},
-          "block_order": [],
-          "static": true
+          "blocks": {}
         },
         "timeline-list": {
           "type": "timeline-list",
+          "static": true,
           "settings": {
-            "pagination_style": "dots_with_progress",
-            "position": "bottom",
-            "show_navigation_on_desktop": true,
-            "navigation_icon": "chevron",
-            "navigation_style": "primary",
-            "controls_spacing_desktop": 56,
-            "controls_spacing_mobile": 40,
-            "show_next_slide_preview": false,
             "transition_style": "slide",
-            "navigation_position": "content_bottom"
+            "show_next_slide_preview": false,
+            "show_navigation_on_desktop": true,
+            "navigation_position": "content_bottom",
+            "navigation_style": "primary",
+            "navigation_icon": "chevron",
+            "position": "bottom",
+            "pagination_style": "dots_with_progress",
+            "controls_spacing_desktop": 56,
+            "controls_spacing_mobile": 40
           },
           "blocks": {
             "year-2010": {
@@ -2446,12 +2427,12 @@
               "settings": {
                 "timeline_label": "2010",
                 "direction": "horizontal",
+                "position_horizontal": "top",
+                "customize_mobile_alignment": true,
                 "alignment": "left",
                 "alignment_mobile": "left",
                 "gap_desktop": 0,
                 "gap_mobile": 32,
-                "customize_mobile_alignment": true,
-                "position_horizontal": "top",
                 "height": "fit"
               },
               "blocks": {
@@ -2460,14 +2441,14 @@
                   "settings": {
                     "image": "shopify://shop_images/kinetra-timeline-2010.avif",
                     "alt_text": "Sewing patterns, fabric and spools of thread",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
                     "image_ratio_desktop": "custom",
                     "image_ratio_custom_width_desktop": 3,
                     "image_ratio_custom_height_desktop": 2,
+                    "width_desktop": "fill",
                     "image_ratio_mobile": "custom",
                     "image_ratio_custom_width_mobile": 3,
                     "image_ratio_custom_height_mobile": 2,
+                    "width_mobile": "fill",
                     "corner_radius": "square"
                   }
                 },
@@ -2475,12 +2456,12 @@
                   "type": "group",
                   "settings": {
                     "direction": "vertical",
-                    "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fit",
+                    "position": "top",
                     "gap_desktop": 0,
                     "gap_mobile": 0,
-                    "position": "top",
+                    "width": "fill",
+                    "height": "fit",
+                    "width_mobile": "fill",
                     "padding_left": 0,
                     "padding_right": 0,
                     "customize_mobile_padding": true,
@@ -2492,12 +2473,12 @@
                       "type": "group",
                       "settings": {
                         "direction": "vertical",
-                        "width": "fill",
-                        "width_mobile": "fill",
-                        "height": "fit",
+                        "position": "top",
                         "gap_desktop": 16,
                         "gap_mobile": 12,
-                        "position": "top",
+                        "width": "fill",
+                        "height": "fit",
+                        "width_mobile": "fill",
                         "padding_left": 64,
                         "padding_right": 64,
                         "customize_mobile_padding": true,
@@ -2509,12 +2490,12 @@
                           "type": "group",
                           "settings": {
                             "direction": "vertical",
-                            "width": "fill",
-                            "width_mobile": "fill",
-                            "height": "fit",
                             "position": "top",
                             "gap_desktop": 8,
-                            "gap_mobile": 8
+                            "gap_mobile": 8,
+                            "width": "fill",
+                            "height": "fit",
+                            "width_mobile": "fill"
                           },
                           "blocks": {
                             "eyebrow": {
@@ -2576,12 +2557,12 @@
               "settings": {
                 "timeline_label": "2015",
                 "direction": "horizontal",
+                "position_horizontal": "top",
+                "customize_mobile_alignment": true,
                 "alignment": "left",
                 "alignment_mobile": "left",
                 "gap_desktop": 0,
                 "gap_mobile": 32,
-                "customize_mobile_alignment": true,
-                "position_horizontal": "top",
                 "height": "fit"
               },
               "blocks": {
@@ -2590,14 +2571,14 @@
                   "settings": {
                     "image": "shopify://shop_images/kinetra-timeline-2015.avif",
                     "alt_text": "Hands stitching ochre activewear fabric in a sunlit atelier",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
                     "image_ratio_desktop": "custom",
                     "image_ratio_custom_width_desktop": 3,
                     "image_ratio_custom_height_desktop": 2,
+                    "width_desktop": "fill",
                     "image_ratio_mobile": "custom",
                     "image_ratio_custom_width_mobile": 3,
                     "image_ratio_custom_height_mobile": 2,
+                    "width_mobile": "fill",
                     "corner_radius": "square"
                   }
                 },
@@ -2605,12 +2586,12 @@
                   "type": "group",
                   "settings": {
                     "direction": "vertical",
-                    "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fit",
+                    "position": "top",
                     "gap_desktop": 0,
                     "gap_mobile": 0,
-                    "position": "top",
+                    "width": "fill",
+                    "height": "fit",
+                    "width_mobile": "fill",
                     "padding_left": 0,
                     "padding_right": 0,
                     "customize_mobile_padding": true,
@@ -2622,12 +2603,12 @@
                       "type": "group",
                       "settings": {
                         "direction": "vertical",
-                        "width": "fill",
-                        "width_mobile": "fill",
-                        "height": "fit",
+                        "position": "top",
                         "gap_desktop": 16,
                         "gap_mobile": 12,
-                        "position": "top",
+                        "width": "fill",
+                        "height": "fit",
+                        "width_mobile": "fill",
                         "padding_left": 64,
                         "padding_right": 64,
                         "customize_mobile_padding": true,
@@ -2639,12 +2620,12 @@
                           "type": "group",
                           "settings": {
                             "direction": "vertical",
-                            "width": "fill",
-                            "width_mobile": "fill",
-                            "height": "fit",
                             "position": "top",
                             "gap_desktop": 8,
-                            "gap_mobile": 8
+                            "gap_mobile": 8,
+                            "width": "fill",
+                            "height": "fit",
+                            "width_mobile": "fill"
                           },
                           "blocks": {
                             "eyebrow": {
@@ -2706,12 +2687,12 @@
               "settings": {
                 "timeline_label": "2020",
                 "direction": "horizontal",
+                "position_horizontal": "top",
+                "customize_mobile_alignment": true,
                 "alignment": "left",
                 "alignment_mobile": "left",
                 "gap_desktop": 0,
                 "gap_mobile": 32,
-                "customize_mobile_alignment": true,
-                "position_horizontal": "top",
                 "height": "fit"
               },
               "blocks": {
@@ -2720,14 +2701,14 @@
                   "settings": {
                     "image": "shopify://shop_images/kinetra-timeline-2020.avif",
                     "alt_text": "Ochre activewear samples with fabric swatches and sewing patterns",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
                     "image_ratio_desktop": "custom",
                     "image_ratio_custom_width_desktop": 3,
                     "image_ratio_custom_height_desktop": 2,
+                    "width_desktop": "fill",
                     "image_ratio_mobile": "custom",
                     "image_ratio_custom_width_mobile": 3,
                     "image_ratio_custom_height_mobile": 2,
+                    "width_mobile": "fill",
                     "corner_radius": "square"
                   }
                 },
@@ -2735,12 +2716,12 @@
                   "type": "group",
                   "settings": {
                     "direction": "vertical",
-                    "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fit",
+                    "position": "top",
                     "gap_desktop": 0,
                     "gap_mobile": 0,
-                    "position": "top",
+                    "width": "fill",
+                    "height": "fit",
+                    "width_mobile": "fill",
                     "padding_left": 0,
                     "padding_right": 0,
                     "customize_mobile_padding": true,
@@ -2752,12 +2733,12 @@
                       "type": "group",
                       "settings": {
                         "direction": "vertical",
-                        "width": "fill",
-                        "width_mobile": "fill",
-                        "height": "fit",
+                        "position": "top",
                         "gap_desktop": 16,
                         "gap_mobile": 12,
-                        "position": "top",
+                        "width": "fill",
+                        "height": "fit",
+                        "width_mobile": "fill",
                         "padding_left": 64,
                         "padding_right": 64,
                         "customize_mobile_padding": true,
@@ -2769,12 +2750,12 @@
                           "type": "group",
                           "settings": {
                             "direction": "vertical",
-                            "width": "fill",
-                            "width_mobile": "fill",
-                            "height": "fit",
                             "position": "top",
                             "gap_desktop": 8,
-                            "gap_mobile": 8
+                            "gap_mobile": 8,
+                            "width": "fill",
+                            "height": "fit",
+                            "width_mobile": "fill"
                           },
                           "blocks": {
                             "eyebrow": {
@@ -2836,12 +2817,12 @@
               "settings": {
                 "timeline_label": "2025",
                 "direction": "horizontal",
+                "position_horizontal": "top",
+                "customize_mobile_alignment": true,
                 "alignment": "left",
                 "alignment_mobile": "left",
                 "gap_desktop": 0,
                 "gap_mobile": 32,
-                "customize_mobile_alignment": true,
-                "position_horizontal": "top",
                 "height": "fit"
               },
               "blocks": {
@@ -2850,14 +2831,14 @@
                   "settings": {
                     "image": "shopify://shop_images/kinetra-timeline-2025.avif",
                     "alt_text": "Finished ochre activewear set with tailoring tools and paper patterns",
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
                     "image_ratio_desktop": "custom",
                     "image_ratio_custom_width_desktop": 3,
                     "image_ratio_custom_height_desktop": 2,
+                    "width_desktop": "fill",
                     "image_ratio_mobile": "custom",
                     "image_ratio_custom_width_mobile": 3,
                     "image_ratio_custom_height_mobile": 2,
+                    "width_mobile": "fill",
                     "corner_radius": "square"
                   }
                 },
@@ -2865,12 +2846,12 @@
                   "type": "group",
                   "settings": {
                     "direction": "vertical",
-                    "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fit",
+                    "position": "top",
                     "gap_desktop": 0,
                     "gap_mobile": 0,
-                    "position": "top",
+                    "width": "fill",
+                    "height": "fit",
+                    "width_mobile": "fill",
                     "padding_left": 0,
                     "padding_right": 0,
                     "customize_mobile_padding": true,
@@ -2882,12 +2863,12 @@
                       "type": "group",
                       "settings": {
                         "direction": "vertical",
-                        "width": "fill",
-                        "width_mobile": "fill",
-                        "height": "fit",
+                        "position": "top",
                         "gap_desktop": 16,
                         "gap_mobile": 12,
-                        "position": "top",
+                        "width": "fill",
+                        "height": "fit",
+                        "width_mobile": "fill",
                         "padding_left": 64,
                         "padding_right": 64,
                         "customize_mobile_padding": true,
@@ -2899,12 +2880,12 @@
                           "type": "group",
                           "settings": {
                             "direction": "vertical",
-                            "width": "fill",
-                            "width_mobile": "fill",
-                            "height": "fit",
                             "position": "top",
                             "gap_desktop": 8,
-                            "gap_mobile": 8
+                            "gap_mobile": 8,
+                            "width": "fill",
+                            "height": "fit",
+                            "width_mobile": "fill"
                           },
                           "blocks": {
                             "eyebrow": {
@@ -2967,29 +2948,21 @@
             "year-2015",
             "year-2020",
             "year-2025"
-          ],
-          "static": true
+          ]
         }
       },
-      "block_order": []
-    },
-    "kinetra_gallery": {
-      "type": "gallery-carousel",
       "settings": {
-        "color_scheme": "scheme-3",
+        "section_width": "page_width",
+        "color_scheme": "scheme-2",
         "padding_top": 96,
         "padding_bottom": 96,
         "customize_mobile_padding": true,
         "padding_top_mobile": 48,
-        "padding_bottom_mobile": 0,
-        "section_width": "full_width_no_padding",
-        "direction": "vertical",
-        "content_gap": 48,
-        "customize_mobile_gap": true,
-        "content_gap_mobile": 32,
-        "alignment": "center",
-        "alignment_mobile": "center"
-      },
+        "padding_bottom_mobile": 48
+      }
+    },
+    "kinetra_gallery": {
+      "type": "gallery-carousel",
       "blocks": {
         "header": {
           "type": "gallery-header-group",
@@ -3003,21 +2976,21 @@
               "type": "group",
               "settings": {
                 "direction": "horizontal",
-                "width": "custom",
-                "width_mobile": "fill",
-                "height": "fit",
+                "position_horizontal": "bottom",
+                "horizontal_alignment": "space-between",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "center",
                 "gap_desktop": 24,
                 "gap_mobile": 16,
-                "horizontal_alignment": "space-between",
+                "width": "custom",
+                "width_custom": 85,
+                "height": "fit",
+                "width_mobile": "fill",
                 "padding_left": 16,
                 "padding_right": 16,
                 "customize_mobile_padding": true,
                 "padding_left_mobile": 16,
-                "padding_right_mobile": 16,
-                "width_custom": 85,
-                "customize_mobile_alignment": true,
-                "alignment_mobile": "center",
-                "position_horizontal": "bottom"
+                "padding_right_mobile": 16
               },
               "blocks": {
                 "header": {
@@ -3087,16 +3060,16 @@
         "marquee": {
           "type": "marquee",
           "settings": {
+            "show_top_divider": false,
+            "show_bottom_divider": false,
+            "show_blurred_edges": false,
             "enable_parallax": false,
             "animation_speed": 0.6,
             "animation_direction": "backward",
             "gap_desktop": 4,
             "gap_mobile": 4,
             "width": "fill",
-            "color_type": "inherit",
-            "show_top_divider": false,
-            "show_bottom_divider": false,
-            "show_blurred_edges": false
+            "color_type": "inherit"
           },
           "blocks": {
             "photo_1": {
@@ -3184,24 +3157,25 @@
       "block_order": [
         "header",
         "marquee"
-      ]
-    },
-    "kinetra_locations": {
-      "type": "custom-section",
+      ],
       "settings": {
-        "section_width": "page_width",
+        "section_width": "full_width_no_padding",
         "direction": "vertical",
-        "alignment": "left",
+        "alignment": "center",
+        "alignment_mobile": "center",
+        "content_gap": 48,
+        "customize_mobile_gap": true,
+        "content_gap_mobile": 32,
         "color_scheme": "scheme-3",
-        "padding_top": 0,
+        "padding_top": 96,
         "padding_bottom": 96,
         "customize_mobile_padding": true,
         "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48,
-        "content_gap": 0,
-        "customize_mobile_gap": true,
-        "content_gap_mobile": 0
-      },
+        "padding_bottom_mobile": 0
+      }
+    },
+    "kinetra_locations": {
+      "type": "custom-section",
       "blocks": {
         "row": {
           "type": "group",
@@ -3211,25 +3185,25 @@
             "horizontal_alignment": "left",
             "customize_mobile_alignment": true,
             "alignment_mobile": "center",
-            "width": "fill",
-            "width_mobile": "fill",
-            "height": "fit",
             "gap_desktop": 56,
-            "gap_mobile": 40
+            "gap_mobile": 40,
+            "width": "fill",
+            "height": "fit",
+            "width_mobile": "fill"
           },
           "blocks": {
             "content": {
               "type": "group",
               "settings": {
                 "direction": "vertical",
-                "alignment": "left",
                 "customize_mobile_alignment": true,
+                "alignment": "left",
                 "alignment_mobile": "center",
-                "width": "fill",
-                "width_mobile": "fill",
-                "height": "fit",
                 "gap_desktop": 48,
-                "gap_mobile": 32
+                "gap_mobile": 32,
+                "width": "fill",
+                "height": "fit",
+                "width_mobile": "fill"
               },
               "blocks": {
                 "header": {
@@ -3274,28 +3248,28 @@
                   "type": "group",
                   "settings": {
                     "direction": "vertical",
-                    "alignment": "left",
                     "customize_mobile_alignment": true,
+                    "alignment": "left",
                     "alignment_mobile": "center",
-                    "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fit",
                     "gap_desktop": 36,
-                    "gap_mobile": 32
+                    "gap_mobile": 32,
+                    "width": "fill",
+                    "height": "fit",
+                    "width_mobile": "fill"
                   },
                   "blocks": {
                     "sydney": {
                       "type": "group",
                       "settings": {
                         "direction": "vertical",
-                        "alignment": "left",
                         "customize_mobile_alignment": true,
+                        "alignment": "left",
                         "alignment_mobile": "center",
-                        "width": "fill",
-                        "width_mobile": "fill",
-                        "height": "fit",
                         "gap_desktop": 16,
-                        "gap_mobile": 12
+                        "gap_mobile": 12,
+                        "width": "fill",
+                        "height": "fit",
+                        "width_mobile": "fill"
                       },
                       "blocks": {
                         "heading": {
@@ -3345,14 +3319,14 @@
                       "type": "group",
                       "settings": {
                         "direction": "vertical",
-                        "alignment": "left",
                         "customize_mobile_alignment": true,
+                        "alignment": "left",
                         "alignment_mobile": "center",
-                        "width": "fill",
-                        "width_mobile": "fill",
-                        "height": "fit",
                         "gap_desktop": 16,
-                        "gap_mobile": 12
+                        "gap_mobile": 12,
+                        "width": "fill",
+                        "height": "fit",
+                        "width_mobile": "fill"
                       },
                       "blocks": {
                         "heading": {
@@ -3402,14 +3376,14 @@
                       "type": "group",
                       "settings": {
                         "direction": "vertical",
-                        "alignment": "left",
                         "customize_mobile_alignment": true,
+                        "alignment": "left",
                         "alignment_mobile": "center",
-                        "width": "fill",
-                        "width_mobile": "fill",
-                        "height": "fit",
                         "gap_desktop": 16,
-                        "gap_mobile": 12
+                        "gap_mobile": 12,
+                        "width": "fill",
+                        "height": "fit",
+                        "width_mobile": "fill"
                       },
                       "blocks": {
                         "heading": {
@@ -3473,11 +3447,11 @@
               "settings": {
                 "image": "shopify://shop_images/kinetra-locations-mall.avif",
                 "alt_text": "Interior of a shopping mall",
+                "image_ratio_desktop": "ratio_1_1",
                 "width_desktop": "custom",
                 "width_custom_desktop": 58,
-                "width_mobile": "fill",
-                "image_ratio_desktop": "ratio_1_1",
                 "image_ratio_mobile": "ratio_4_3",
+                "width_mobile": "fill",
                 "corner_radius": "square"
               }
             }
@@ -3491,26 +3465,24 @@
       "block_order": [
         "row"
       ],
-      "name": "Location map (custom)"
-    },
-    "kinetra_collection_marquee": {
-      "type": "collection-marquee",
+      "name": "Location map (custom)",
       "settings": {
-        "section_width": "full_width_no_padding",
-        "color_scheme": "scheme-1",
-        "padding_top": 96,
+        "section_width": "page_width",
+        "direction": "vertical",
+        "alignment": "left",
+        "content_gap": 0,
+        "customize_mobile_gap": true,
+        "content_gap_mobile": 0,
+        "color_scheme": "scheme-3",
+        "padding_top": 0,
         "padding_bottom": 96,
         "customize_mobile_padding": true,
         "padding_top_mobile": 48,
-        "padding_bottom_mobile": 12,
-        "header_gap": 40,
-        "header_gap_mobile": 20,
-        "row_gap": 32,
-        "row_gap_mobile": 20,
-        "alignment": "center",
-        "customize_mobile_alignment": false,
-        "alignment_mobile": "center"
-      },
+        "padding_bottom_mobile": 48
+      }
+    },
+    "kinetra_collection_marquee": {
+      "type": "collection-marquee",
       "blocks": {
         "header": {
           "type": "header",
@@ -3540,120 +3512,120 @@
         "marquee-1": {
           "type": "_collection-marquee",
           "settings": {
+            "collection": "virelle-t-shirts-tops",
             "heading": "T-shirts & Tops",
+            "font": "heading",
             "heading_size": "display",
             "animation_direction": "forward",
-            "collection": "virelle-t-shirts-tops",
-            "font": "heading",
             "gap_desktop": 24,
             "gap_mobile": 20
           },
           "blocks": {
             "image-1": {
               "type": "_collection-marquee-image",
+              "static": true,
               "settings": {
+                "image": "shopify://shop_images/kinetra-collection-tshirts-black-crop.avif",
                 "image_ratio": "custom",
                 "image_ratio_custom_width": 2,
                 "image_ratio_custom_height": 1,
                 "width_custom_desktop": 200,
                 "width_custom_mobile": 120,
-                "corner_radius": "square",
-                "image": "shopify://shop_images/kinetra-collection-tshirts-black-crop.avif"
-              },
-              "static": true
+                "corner_radius": "square"
+              }
             },
             "image-2": {
               "type": "_collection-marquee-image",
+              "static": true,
               "settings": {
+                "image": "shopify://shop_images/kinetra-collection-tops-tan-crop.avif",
                 "image_ratio": "custom",
                 "image_ratio_custom_width": 2,
                 "image_ratio_custom_height": 1,
                 "width_custom_desktop": 200,
                 "width_custom_mobile": 120,
-                "corner_radius": "square",
-                "image": "shopify://shop_images/kinetra-collection-tops-tan-crop.avif"
-              },
-              "static": true
+                "corner_radius": "square"
+              }
             }
           }
         },
         "marquee-2": {
           "type": "_collection-marquee",
           "settings": {
+            "collection": "virelle-jogger-bottoms",
             "heading": "Jogger & Bottoms",
+            "font": "heading",
             "heading_size": "display",
             "animation_direction": "backward",
-            "collection": "virelle-jogger-bottoms",
-            "font": "heading",
             "gap_desktop": 24,
             "gap_mobile": 20
           },
           "blocks": {
             "image-1": {
               "type": "_collection-marquee-image",
+              "static": true,
               "settings": {
+                "image": "shopify://shop_images/kinetra-collection-jogger-white-crop.avif",
                 "image_ratio": "custom",
                 "image_ratio_custom_width": 2,
                 "image_ratio_custom_height": 1,
                 "width_custom_desktop": 200,
                 "width_custom_mobile": 120,
-                "corner_radius": "square",
-                "image": "shopify://shop_images/kinetra-collection-jogger-white-crop.avif"
-              },
-              "static": true
+                "corner_radius": "square"
+              }
             },
             "image-2": {
               "type": "_collection-marquee-image",
+              "static": true,
               "settings": {
+                "image": "shopify://shop_images/kinetra-collection-jogger-red-crop.avif",
                 "image_ratio": "custom",
                 "image_ratio_custom_width": 2,
                 "image_ratio_custom_height": 1,
                 "width_custom_desktop": 200,
                 "width_custom_mobile": 120,
-                "corner_radius": "square",
-                "image": "shopify://shop_images/kinetra-collection-jogger-red-crop.avif"
-              },
-              "static": true
+                "corner_radius": "square"
+              }
             }
           }
         },
         "marquee-3": {
           "type": "_collection-marquee",
           "settings": {
+            "collection": "virelle-jackets-hoodies",
             "heading": "Jackets & Hoodies",
+            "font": "heading",
             "heading_size": "display",
             "animation_direction": "forward",
-            "collection": "virelle-jackets-hoodies",
-            "font": "heading",
             "gap_desktop": 24,
             "gap_mobile": 20
           },
           "blocks": {
             "image-1": {
               "type": "_collection-marquee-image",
+              "static": true,
               "settings": {
+                "image": "shopify://shop_images/kinetra-collection-jackets-first-crop.avif",
                 "image_ratio": "custom",
                 "image_ratio_custom_width": 2,
                 "image_ratio_custom_height": 1,
                 "width_custom_desktop": 200,
                 "width_custom_mobile": 120,
-                "corner_radius": "square",
-                "image": "shopify://shop_images/kinetra-collection-jackets-first-crop.avif"
-              },
-              "static": true
+                "corner_radius": "square"
+              }
             },
             "image-2": {
               "type": "_collection-marquee-image",
+              "static": true,
               "settings": {
+                "image": "shopify://shop_images/kinetra-collection-jackets-second-crop.avif",
                 "image_ratio": "custom",
                 "image_ratio_custom_width": 2,
                 "image_ratio_custom_height": 1,
                 "width_custom_desktop": 200,
                 "width_custom_mobile": 120,
-                "corner_radius": "square",
-                "image": "shopify://shop_images/kinetra-collection-jackets-second-crop.avif"
-              },
-              "static": true
+                "corner_radius": "square"
+              }
             }
           }
         }
@@ -3662,7 +3634,23 @@
         "marquee-1",
         "marquee-2",
         "marquee-3"
-      ]
+      ],
+      "settings": {
+        "section_width": "full_width_no_padding",
+        "alignment": "center",
+        "customize_mobile_alignment": false,
+        "alignment_mobile": "center",
+        "color_scheme": "scheme-1",
+        "header_gap": 40,
+        "header_gap_mobile": 20,
+        "row_gap": 32,
+        "row_gap_mobile": 20,
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 12
+      }
     }
   },
   "order": [
