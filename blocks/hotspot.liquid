@@ -10,7 +10,7 @@
   {% content_for 'block', type: 'hotspot', id: 'hotspot-1' %}
 {% enddoc %}
 
-{% render 'product-callout-hotspot', block: block %}
+{% render 'product-callout-hotspot', block: block, content_text_size: 'md' %}
 
 {% schema %}
 {
@@ -40,21 +40,6 @@
       "id": "content_text",
       "label": "t:labels.text",
       "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>",
-      "visible_if": "{{ block.settings.use_content }}"
-    },
-    {
-      "type": "select",
-      "id": "content_text_size",
-      "label": "t:labels.text_size",
-      "options": [
-        { "value": "xs", "label": "t:options.text_size.xs" },
-        { "value": "sm", "label": "t:options.text_size.sm" },
-        { "value": "md", "label": "t:options.text_size.md" },
-        { "value": "lg", "label": "t:options.text_size.lg" },
-        { "value": "xl", "label": "t:options.text_size.xl" },
-        { "value": "xxl", "label": "t:options.text_size.xxl" }
-      ],
-      "default": "sm",
       "visible_if": "{{ block.settings.use_content }}"
     },
     {
