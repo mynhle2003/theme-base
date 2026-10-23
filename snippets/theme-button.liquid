@@ -100,7 +100,11 @@
       {% if button_icon_size == 'custom' %}style="--button-icon-width: {{ button_icon_width }}px;"{% endif %}
       aria-hidden="true"
     >
-      {% render 'icon', icon: button_icon_name, bare: true %}
+      {% if button_variant == 'tertiary' and button_icon_name == 'arrow_up_right' %}
+        {% render 'tertiary-arrow-up-right' %}
+      {% else %}
+        {% render 'icon', icon: button_icon_name, bare: true %}
+      {% endif %}
     </span>
     {% if icon_expanded != blank %}
       <span class="btn__icon btn__icon--expanded{% if button_icon_size == 'custom' %} btn__icon--custom{% endif %}"{% if button_icon_size == 'custom' %} style="--button-icon-width: {{ button_icon_width }}px;"{% endif %} aria-hidden="true">

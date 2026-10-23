@@ -75,13 +75,11 @@
   <button class="component-overlay__backdrop backdrop-blur search-overlay__backdrop" type="button" tabindex="-1" aria-label="{{ 'search.close' | t }}" data-component-overlay-backdrop data-search-overlay-backdrop></button>
   <div class="component-overlay__panel search-overlay__panel scrollbar scrollbar--vertical">
     <div class="container page-width search-overlay__container">
-      <form class="search-overlay__form body-text body-xl body-mobile-lg" action="{{ routes.search_url }}" method="get" role="search" data-search-overlay-form>
-        <span class="search-overlay__icon" aria-hidden="true">
-          {% render 'icon', icon: 'magnifying-glass', bare: true %}
-        </span>
+      <form class="search-overlay__form" action="{{ routes.search_url }}" method="get" role="search" data-search-overlay-form>
         <label class="visually-hidden" for="SearchOverlayInput">{{ 'search.title' | t }}</label>
-        <input id="SearchOverlayInput" class="search-overlay__input form__control form__control--input" name="q" type="search" autocomplete="off" placeholder="{{ search_overlay_placeholder | escape }}" role="combobox" aria-autocomplete="list" aria-controls="SearchOverlayResults" aria-expanded="false" data-search-overlay-input>
-        <button class="search-overlay__compact-submit" type="submit" aria-label="{{ 'search.submit' | t | escape }}">{% render 'icon', icon: 'magnifying-glass', bare: true %}</button>
+        <input id="SearchOverlayInput" class="search-overlay__input form__control" name="q" type="search" autocomplete="off" placeholder="{{ search_overlay_placeholder | escape }}" role="combobox" aria-autocomplete="list" aria-controls="SearchOverlayResults" aria-expanded="false" data-search-overlay-input>
+        {% assign search_submit_label = 'search.submit' | t %}
+        {% render 'theme-button', label: search_submit_label, type: 'submit', class: 'search-overlay__submit' %}
         <button class="overlay-close search-overlay__close" type="button" aria-label="{{ 'search.close' | t }}" data-overlay-close data-search-overlay-close>{% render 'icon', icon: 'x-mark', bare: true, class: 'overlay-close__icon' %}</button>
       </form>
 
@@ -142,19 +140,23 @@
     position: relative;
   }
 
-  .search-overlay__form { position: relative; display: flex; align-items: center; width: calc(100% - 3.5rem); padding-inline: 0; border: 0; border-radius: var(--input-radius); background: var(--overlay-background-color); color: var(--overlay-text-color); }
-  .search-overlay__icon { position: absolute; z-index: 2; top: 50%; inset-inline-start: 0.875rem; display: inline-flex; width: var(--icon-size-small); height: var(--icon-size-small); color: var(--input-text-color); pointer-events: none; transform: translateY(-50%); }
-  .search-overlay__icon svg { width: 100%; height: 100%; }
-  .search-overlay__form .form__control.form__control--input.search-overlay__input { width: auto; min-width: 0; flex: 1 1 auto; padding-inline-start: calc(0.875rem + var(--icon-size-small) + 0.75rem); padding-inline-end: 0.875rem; font: inherit; }
+  .search-overlay__form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  /* Shared form and theme-button primitives own all configurable appearance. */
+  .search-overlay__input { min-width: 0; font-size: var(--form-input-font-size); }
+  .search-overlay__submit { flex-shrink: 0; }
   .search-overlay__form input.search-overlay__input::-webkit-search-cancel-button,
   .search-overlay__form input.search-overlay__input::-webkit-search-decoration,
   .search-overlay__form input.search-overlay__input::-webkit-search-results-button,
   .search-overlay__form input.search-overlay__input::-webkit-search-results-decoration { display: none; appearance: none; -webkit-appearance: none; }
   .search-overlay__form input.search-overlay__input::-ms-clear { display: none; width: 0; height: 0; }
-  .search-overlay__form input.search-overlay__input::placeholder { color: currentColor; opacity: 0.58; font-size: var(--font-body-md); letter-spacing: var(--font-eyebrow-letter-spacing); text-transform: var(--font-eyebrow-text-transform); }
-  .search-overlay__form .search-overlay__input:focus { outline: 2px solid var(--input-focus-color); outline-offset: -2px; }
-  .search-overlay__close { position: absolute; top: 50%; left: calc(100% + 1rem); color: var(--overlay-text-color); transform: translateY(-50%); }
-  .search-overlay--scheme .search-overlay__close { color: var(--body-color); }
+  .search-overlay__close { position: relative; color: inherit; }
   .search-overlay__results { display: grid; grid-template-columns: minmax(12rem, 0.7fr) minmax(0, 4.3fr); gap: 2.5rem; padding: 1.75rem 0 3rem; }
   .search-overlay__results:not(.search-overlay__results--has-suggestions) { grid-template-columns: minmax(0, 1fr); }
   .search-overlay__suggestions { min-width: 0; }
