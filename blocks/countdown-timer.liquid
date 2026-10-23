@@ -321,7 +321,7 @@
     data-countdown-hide-when-expired="{{ countdown_hide_when_expired }}"
     data-countdown-design-mode="{{ request.design_mode }}"
     data-countdown-expired-label="{{ 'countdown.expired' | t | escape }}"
-    style="--countdown-number-size: {{ countdown_number_font_size }}; --countdown-number-line-height: {{ countdown_number_line_height }}; --countdown-number-letter-spacing: {{ countdown_number_letter_spacing }}; --countdown-number-text-transform: {{ countdown_number_text_transform }}; --countdown-label-size: {{ countdown_label_font_size }}; --countdown-inline-font-family: {{ countdown_inline_font_family }}; --countdown-inline-font-style: {{ countdown_inline_font_style }}; --countdown-inline-font-weight: {{ countdown_inline_font_weight }}; --countdown-inline-font-size: {{ countdown_inline_font_size_token }}; --countdown-inline-letter-spacing: {{ countdown_inline_letter_spacing_token }}; --countdown-inline-text-transform: {{ countdown_inline_text_transform_token }}; --countdown-number-color: {{ countdown_number_color }}; --countdown-background: {{ countdown_background_color }}; --countdown-radius: {{ countdown_radius }}; --countdown-padding-top: {{ countdown_padding_top }}px; --countdown-padding-bottom: {{ countdown_padding_bottom }}px; --countdown-padding-left: {{ countdown_padding_left }}px; --countdown-padding-right: {{ countdown_padding_right }}px;{% if countdown_customize_mobile_padding %} --countdown-padding-top-mobile: {{ countdown_padding_top_mobile }}px; --countdown-padding-bottom-mobile: {{ countdown_padding_bottom_mobile }}px; --countdown-padding-left-mobile: {{ countdown_padding_left_mobile }}px; --countdown-padding-right-mobile: {{ countdown_padding_right_mobile }}px;{% endif %}"
+    style="--countdown-gap-desktop: {{ block.settings.gap_desktop | default: 24 }}px; --countdown-gap-mobile: {{ block.settings.gap_mobile | default: 24 }}px; --countdown-number-size: {{ countdown_number_font_size }}; --countdown-number-line-height: {{ countdown_number_line_height }}; --countdown-number-letter-spacing: {{ countdown_number_letter_spacing }}; --countdown-number-text-transform: {{ countdown_number_text_transform }}; --countdown-label-size: {{ countdown_label_font_size }}; --countdown-inline-font-family: {{ countdown_inline_font_family }}; --countdown-inline-font-style: {{ countdown_inline_font_style }}; --countdown-inline-font-weight: {{ countdown_inline_font_weight }}; --countdown-inline-font-size: {{ countdown_inline_font_size_token }}; --countdown-inline-letter-spacing: {{ countdown_inline_letter_spacing_token }}; --countdown-inline-text-transform: {{ countdown_inline_text_transform_token }}; --countdown-number-color: {{ countdown_number_color }}; --countdown-background: {{ countdown_background_color }}; --countdown-radius: {{ countdown_radius }}; --countdown-padding-top: {{ countdown_padding_top }}px; --countdown-padding-bottom: {{ countdown_padding_bottom }}px; --countdown-padding-left: {{ countdown_padding_left }}px; --countdown-padding-right: {{ countdown_padding_right }}px;{% if countdown_customize_mobile_padding %} --countdown-padding-top-mobile: {{ countdown_padding_top_mobile }}px; --countdown-padding-bottom-mobile: {{ countdown_padding_bottom_mobile }}px; --countdown-padding-left-mobile: {{ countdown_padding_left_mobile }}px; --countdown-padding-right-mobile: {{ countdown_padding_right_mobile }}px;{% endif %}"
     role="timer"
     {{ block.shopify_attributes }}
   >
@@ -368,6 +368,7 @@
 
 {% stylesheet %}
   .countdown-timer {
+    --countdown-gap: var(--countdown-gap-desktop, 24px);
     display: block;
     width: fit-content;
     max-width: 100%;
@@ -514,6 +515,7 @@
 
   @media (max-width: 767.98px) {
     .countdown-timer {
+      --countdown-gap: var(--countdown-gap-mobile, var(--countdown-gap-desktop, 24px));
       padding-top: var(--countdown-padding-top-mobile, var(--countdown-padding-top, 0px));
       padding-right: var(--countdown-padding-right-mobile, var(--countdown-padding-right, 0px));
       padding-bottom: var(--countdown-padding-bottom-mobile, var(--countdown-padding-bottom, 0px));
@@ -543,9 +545,15 @@
   }
 
 
+  .countdown-timer--style-with-labels-colon {
+    container-type: inline-size;
+    width: calc(4 * var(--countdown-unit-width, var(--countdown-number-size)) + 3 * 8px + 6 * var(--countdown-gap));
+  }
+
   .countdown-timer--style-with-labels-colon .countdown-timer__units {
     align-items: flex-start;
-    gap: 24px;
+    /* Reserve all four numbers and three colons before distributing the six gaps. */
+    gap: clamp(0px, calc((100cqw - 4 * var(--countdown-unit-width, var(--countdown-number-size)) - 3 * 8px) / 6), var(--countdown-gap));
   }
 
   .countdown-timer--style-with-labels-colon .countdown-timer__unit {
@@ -562,6 +570,7 @@
   .countdown-timer__separator {
     display: flex;
     flex: 0 0 8px;
+    min-width: 0;
     align-items: center;
     justify-content: center;
     height: calc(var(--countdown-number-size) * var(--countdown-number-line-height));
@@ -595,7 +604,7 @@
   }
   /* Compact labels keep the unboxed campaign timer within narrow content slots. */
   .countdown-timer--style-with-labels-compact {
-    --countdown-compact-gap: 16px;
+    --countdown-compact-gap: var(--countdown-gap);
     container-type: inline-size;
     width: calc(4 * var(--countdown-unit-width, 2ch) + 3 * var(--countdown-compact-gap));
   }
@@ -604,9 +613,6 @@
   }
   .countdown-timer--style-with-labels-compact .countdown-timer__unit { min-width: 0; min-height: 0; padding: 0; }
   .countdown-timer--style-with-labels-compact .countdown-timer__label { margin-top: 0; color: currentColor; letter-spacing: normal; text-transform: none; }
-  @media (min-width: 768px) {
-    .countdown-timer--style-with-labels-compact { --countdown-compact-gap: 64px; }
-  }
 {% endstylesheet %}
 
 {% javascript %}
@@ -797,6 +803,28 @@
         { "value": "with_labels_compact", "label": "Compact labels" }
       ],
       "default": "with_labels"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "t:labels.desktop_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ block.settings.style == 'with_labels_colon' or block.settings.style == 'with_labels_compact' }}"
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "t:labels.mobile_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ block.settings.style == 'with_labels_colon' or block.settings.style == 'with_labels_compact' }}"
     },
     {
       "type": "checkbox",
