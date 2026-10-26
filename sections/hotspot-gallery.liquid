@@ -326,7 +326,8 @@
       "type": "text",
       "id": "product_link_label",
       "label": "t:labels.product_link_label",
-      "default": "View product"
+      "default": "View product",
+      "visible_if": "{{ section.settings.product_action != 'add_to_cart' }}"
     },
     {
       "type": "header",
@@ -451,7 +452,7 @@
         "show_product_type": false,
         "show_product_image": true,
         "show_price": true,
-        "product_link_label": "Add to cart",
+        "product_link_label": "View product",
         "header_max_width": 384,
         "product_action": "add_to_cart"
       },

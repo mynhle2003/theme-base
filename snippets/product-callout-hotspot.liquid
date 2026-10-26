@@ -198,6 +198,7 @@
                 {% render 'price', item: hotspot_product, context: 'product-card', class: 'product-callout__product-card-price' %}
               {% endif %}
               {% if section.settings.product_action == 'add_to_cart' %}
+                {% assign hotspot_product_link_label = 'products.add_to_cart' | t %}
                 {% assign hotspot_variant = hotspot_product.selected_or_first_available_variant %}
                 {% if hotspot_product.requires_selling_plan %}
                   <a class="product-callout__product-card-action" href="{{ hotspot_product.url | escape }}">{{ 'products.choose_options' | t }}</a>
