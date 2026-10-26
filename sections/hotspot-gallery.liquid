@@ -25,6 +25,7 @@
       --section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile | default: 40 }}px;
     {% endif %}
     --hotspot-gallery-content-gap: {{ section.settings.content_gap | default: 40 }}px;
+    {% if section.settings.header_max_width > 0 %}--hotspot-gallery-header-max-width: {{ section.settings.header_max_width }}px;{% endif %}
     {% if gallery_width != 'full_width_no_padding' and section.settings.background_color != blank %}
       --hotspot-gallery-background: {{ section.settings.background_color | escape }};
     {% endif %}
@@ -93,6 +94,9 @@
   }
 
   @media (min-width: 768px) {
+    .hotspot-gallery__header > .block-header {
+      max-width: min(var(--hotspot-gallery-header-max-width, var(--size-style-max-width, 100%)), 100%);
+    }
     .hotspot-gallery__header--sticky {
       position: sticky;
       top: calc(var(--header-height, 0px) + var(--layout-grid-gap, 1rem));
@@ -267,6 +271,13 @@
       "default": "middle"
     },
     {
+      "type": "number",
+      "id": "header_max_width",
+      "label": "Header maximum width (desktop)",
+      "info": "0 uses the Header block width.",
+      "default": 0
+    },
+    {
       "type": "checkbox",
       "id": "enable_header_sticky",
       "label": "t:labels.enable_sticky",
@@ -294,6 +305,22 @@
       "id": "show_price",
       "label": "t:labels.show_price",
       "default": true
+    },
+    {
+      "type": "select",
+      "id": "product_action",
+      "label": "Product action",
+      "options": [
+        {
+          "value": "view_product",
+          "label": "View product"
+        },
+        {
+          "value": "add_to_cart",
+          "label": "Add to cart"
+        }
+      ],
+      "default": "view_product"
     },
     {
       "type": "text",
@@ -424,7 +451,9 @@
         "show_product_type": false,
         "show_product_image": true,
         "show_price": true,
-        "product_link_label": "View product"
+        "product_link_label": "Add to cart",
+        "header_max_width": 384,
+        "product_action": "add_to_cart"
       },
       "blocks": [
         {

@@ -375,3 +375,31 @@
   text-transform: var(--button-tertiary-text-case);
   line-height: 1.5;
 }
+
+/* QA fix 2: local overrides for the Kinetra homepage compositions. */
+.hotspot-gallery .product-callout__product-card-price {
+  font-size: var(--font-body-sm);
+  line-height: 1.5;
+  color: var(--heading-color);
+}
+.hotspot-gallery .product-callout__cart-form { margin: 0; }
+.hotspot-gallery .product-callout__product-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  padding-inline: 0;
+  font-weight: 500;
+  color: var(--button-tertiary-text);
+  cursor: pointer;
+}
+.hotspot-gallery .product-callout__product-card-action svg { width: 12px; height: 12px; }
+.hotspot-gallery .product-callout__product-card-action:disabled { opacity: .55; cursor: default; }
+.countdown-with-marquee .countdown-timer__label { letter-spacing: .1px; }
+.shop-the-look-section .price__current--regular { color: var(--heading-color); }
+.section-timeline .timeline-list__control:not(.is-active)::before {
+  background-color: var(--timeline-list-inactive-color, var(--border-color));
+}
+.section-blog-posts .blog-card-tag.font-body { font-weight: 500; }
+.footer--virelle .footer__container { padding-inline: 0; }
