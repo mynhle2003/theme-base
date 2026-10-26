@@ -4,6 +4,7 @@
   belong to the containing Product callout.
 
   @param {block} block - Hotspot settings and stable identity
+  @param {string} [content_text_size] - Body typography size; sm by default
   @param {boolean} [omit_editor_attributes] - The gallery image already owns the block attributes
 {% enddoc %}
 
@@ -27,6 +28,10 @@
 
   assign hotspot_content_heading = block.settings.content_heading
   assign hotspot_content_text = block.settings.content_text
+  assign hotspot_content_text_size = 'sm'
+  if content_text_size == 'md'
+    assign hotspot_content_text_size = 'md'
+  endif
 
   assign hotspot_vertical = block.settings.vertical_position | default: 50 | plus: 0
   assign hotspot_horizontal = block.settings.horizontal_position | default: 50 | plus: 0
@@ -162,7 +167,7 @@
             <h3 class="product-callout__content-card-heading heading-block heading-text heading-md">{{ hotspot_content_heading | escape }}</h3>
           {% endif %}
           {% if hotspot_content_text != blank %}
-            <div class="product-callout__content-card-text text-block body-text body-sm rte">{{ hotspot_content_text }}</div>
+            <div class="product-callout__content-card-text text-block body-text body-{{ hotspot_content_text_size }} rte">{{ hotspot_content_text }}</div>
           {% else %}
             {% if hotspot_content_heading == blank %}
               <span class="product-callout__content-card-placeholder">{{ 'accessibility.product_callout_hotspot_content_fallback' | t }}</span>
@@ -192,7 +197,25 @@
               {% if hotspot_show_price %}
                 {% render 'price', item: hotspot_product, context: 'product-card', class: 'product-callout__product-card-price' %}
               {% endif %}
-              {% if hotspot_is_carousel %}
+              {% if section.settings.product_action == 'add_to_cart' %}
+                {% assign hotspot_product_link_label = 'products.add_to_cart' | t %}
+                {% assign hotspot_variant = hotspot_product.selected_or_first_available_variant %}
+                {% if hotspot_product.requires_selling_plan %}
+                  <a class="product-callout__product-card-action" href="{{ hotspot_product.url | escape }}">{{ 'products.choose_options' | t }}</a>
+                {% else %}
+                  <form class="product-callout__cart-form" action="{{ routes.cart_add_url }}" method="post" data-product-card-quick-add
+                    data-inventory-quantity="{{ hotspot_variant.inventory_quantity }}"
+                    data-inventory-management="{{ hotspot_variant.inventory_management | escape }}"
+                    data-inventory-policy="{{ hotspot_variant.inventory_policy | escape }}">
+                    <input type="hidden" name="id" value="{{ hotspot_variant.id }}">
+                    <input type="hidden" name="quantity" value="{{ hotspot_variant.quantity_rule.min | default: 1 }}">
+                    <button class="product-callout__product-card-action" type="submit"{% unless hotspot_variant.available %} disabled{% endunless %}>
+                      {% if hotspot_variant.available %}{{ hotspot_product_link_label | escape }}{% else %}{{ 'products.sold_out' | t }}{% endif %}
+                      <span aria-hidden="true">{% render 'icon', icon: 'arrow_up_right', bare: true %}</span>
+                    </button>
+                  </form>
+                {% endif %}
+              {% elsif hotspot_is_carousel %}
                 <a class="product-callout__product-card-action" href="{{ hotspot_product.url | escape }}">{{ hotspot_product_link_label | escape }}</a>
               {% else %}
                 <a

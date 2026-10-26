@@ -375,3 +375,58 @@
   text-transform: var(--button-tertiary-text-case);
   line-height: 1.5;
 }
+
+/* QA fix 2: local overrides for the Kinetra homepage compositions. */
+.hotspot-gallery .product-callout__product-card-price {
+  font-size: var(--font-body-sm);
+  line-height: 1.5;
+  color: var(--heading-color);
+}
+.hotspot-gallery .product-callout__cart-form { margin: 0; }
+.hotspot-gallery .product-callout__product-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  padding-inline: 0;
+  font-weight: 500;
+  color: var(--button-tertiary-text);
+  cursor: pointer;
+}
+.hotspot-gallery .product-callout__product-card-action svg { width: 12px; height: 12px; }
+.hotspot-gallery .product-callout__product-card-action:disabled { opacity: .55; cursor: default; }
+.countdown-with-marquee .countdown-timer .countdown-timer__label { letter-spacing: .1px; }
+.shop-the-look-section .product-card__price .price__current--regular { color: var(--heading-color); }
+.section-timeline .timeline-list__control:not(.is-active)::before {
+  background-color: var(--timeline-list-inactive-color, var(--border-color));
+  border-color: var(--timeline-list-inactive-color, var(--border-color));
+}
+/* Kinetra Timeline: shared label and active-line treatment, including Tabs. */
+.section-timeline .timeline-list__navigation:is(.timeline-list__navigation--dots-with-progress, .timeline-list__navigation--progress, .timeline-list__navigation--progress-slider, .timeline-list__navigation--tabs) .timeline-list__control > span {
+  font-size: var(--font-body-md);
+}
+.section-timeline .timeline-list__navigation-list::after {
+  background-color: var(--timeline-list-active-color, var(--heading-color));
+}
+.section-timeline .timeline-list__navigation--tabs .timeline-list__navigation-list::after {
+  height: 2px;
+}
+.section-timeline .timeline-list__navigation--dots-with-progress .timeline-list__control {
+  gap: 12px;
+}
+.section-timeline .timeline-list:not([data-timeline-position='left']) .timeline-list__navigation:is(.timeline-list__navigation--dots-with-progress, .timeline-list__navigation--progress, .timeline-list__navigation--progress-slider) .timeline-list__navigation-list::before,
+.section-timeline .timeline-list:not([data-timeline-position='left']) .timeline-list__navigation:is(.timeline-list__navigation--dots-with-progress, .timeline-list__navigation--progress, .timeline-list__navigation--progress-slider) .timeline-list__navigation-list::after {
+  height: 2px;
+}
+.section-timeline .timeline-list:not([data-timeline-position='left']) .timeline-list__navigation--dots-with-progress .timeline-list__navigation-list::before,
+.section-timeline .timeline-list:not([data-timeline-position='left']) .timeline-list__navigation--dots-with-progress .timeline-list__navigation-list::after {
+  top: 5px;
+}
+.section-timeline .timeline-list[data-timeline-position='left'] .timeline-list__navigation:is(.timeline-list__navigation--dots-with-progress, .timeline-list__navigation--progress, .timeline-list__navigation--progress-slider) .timeline-list__navigation-list::before,
+.section-timeline .timeline-list[data-timeline-position='left'] .timeline-list__navigation:is(.timeline-list__navigation--dots-with-progress, .timeline-list__navigation--progress, .timeline-list__navigation--progress-slider) .timeline-list__navigation-list::after {
+  left: 13px;
+  width: 2px;
+}
+.section-blog-posts .blog-card-tag.font-body { font-weight: 500; }
+.footer--virelle .footer__container { padding-inline: 0; }

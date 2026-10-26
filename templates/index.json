@@ -623,7 +623,7 @@
         "section_width": "full_width",
         "media_position": "left",
         "mobile_media_position": "first",
-        "gap_desktop": 50,
+        "gap_desktop": 48,
         "gap_mobile": 32,
         "color_scheme": "scheme-1",
         "padding_top": 96,
@@ -787,8 +787,8 @@
                     "max_tag": 1,
                     "style": "text",
                     "text_case": "uppercase",
-                    "font": "accent",
-                    "font_size": "sm",
+                    "font": "body",
+                    "font_size": "xs",
                     "letter_spacing": "relaxed",
                     "text_color": "#999999",
                     "padding_top": 0,
@@ -811,7 +811,7 @@
                     "author_icon": "user",
                     "show_date_icon": false,
                     "date_icon": "calendar",
-                    "date_format": "medium",
+                    "date_format": "day_first",
                     "show_comment_icon": true,
                     "comment_icon": "comment",
                     "separator_icon": "vertical-rule",
@@ -1282,7 +1282,7 @@
             "animation_speed": 0.6,
             "animation_direction": "backward",
             "gap_desktop": 12,
-            "gap_mobile": 12,
+            "gap_mobile": 32,
             "padding_top": 32,
             "padding_bottom": 32,
             "customize_mobile_padding": true,
@@ -1656,8 +1656,8 @@
                     "direction": "vertical",
                     "alignment": "center",
                     "alignment_mobile": "center",
-                    "gap_desktop": 24,
-                    "gap_mobile": 16,
+                    "gap_desktop": 20,
+                    "gap_mobile": 12,
                     "width": "fill",
                     "height": "fit",
                     "width_mobile": "fill",
@@ -1735,10 +1735,10 @@
                         "show_icon": true,
                         "icon": "arrow_up_right",
                         "animation_type": "fade",
-                        "animation_delay": 150
-                      ,
+                        "animation_delay": 150,
                         "icon_size": "custom",
-                        "icon_width": 16
+                        "icon_width": 16,
+                        "padding_top": 2
                       }
                     }
                   },
@@ -1750,7 +1750,8 @@
                 "shorts": {
                   "type": "image",
                   "settings": {
-                    "image": "shopify://shop_images/kinetra-collage-shorts.avif",
+                    "image": "shopify://shop_images/kinetra-collage-shorts-desktop.avif",
+                    "mobile_image": "shopify://shop_images/kinetra-collage-shorts-mobile.avif",
                     "alt_text": "Tan activewear shorts in the dunes",
                     "image_ratio_desktop": "ratio_5_4",
                     "width_desktop": "fill",
@@ -1894,7 +1895,7 @@
                 "direction": "vertical",
                 "position": "space-between",
                 "gap_desktop": 40,
-                "gap_mobile": 16,
+                "gap_mobile": 12,
                 "width": "fill",
                 "height": "fill",
                 "width_mobile": "fill",
@@ -1918,8 +1919,8 @@
                     "alignment": "left",
                     "customize_mobile_alignment": true,
                     "alignment_mobile": "left",
-                    "gap_desktop": 16,
-                    "gap_mobile": 4
+                    "gap_desktop": 8,
+                    "gap_mobile": 8
                   },
                   "blocks": {
                     "eyebrow": {
@@ -2172,8 +2173,8 @@
             "alignment": "center",
             "customize_mobile_alignment": true,
             "alignment_mobile": "center",
-            "gap_desktop": 16,
-            "gap_mobile": 4,
+            "gap_desktop": 8,
+            "gap_mobile": 8,
             "padding_bottom": 48,
             "customize_mobile_padding": true,
             "padding_bottom_mobile": 32
@@ -2283,36 +2284,56 @@
             "alignment": "left",
             "customize_mobile_alignment": true,
             "alignment_mobile": "left",
-            "gap_desktop": 16,
+            "gap_desktop": 12,
             "gap_mobile": 12
           },
           "blocks": {
-            "eyebrow-group": {
-              "type": "eyebrow",
+            "title-group": {
+              "type": "group",
               "settings": {
-                "text": "<p>Discover</p>",
-                "show_background": false,
-                "show_icon": true,
-                "icon": "square",
-                "animation_type": "fade",
-                "animation_delay": 0
-              }
-            },
-            "heading": {
-              "type": "heading",
-              "settings": {
-                "text": "<p>This week’s highlights</p>",
-                "heading_size": "xl",
-                "html_tag": "h2",
+                "direction": "vertical",
+                "alignment": "left",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "left",
+                "gap_desktop": 8,
+                "gap_mobile": 8,
                 "width": "fill",
-                "animation_type": "slide-bottom",
-                "animation_delay": 50
-              }
+                "height": "fit",
+                "width_mobile": "fill"
+              },
+              "blocks": {
+                "eyebrow-group": {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>Discover</p>",
+                    "show_background": false,
+                    "show_icon": true,
+                    "icon": "square",
+                    "animation_type": "fade",
+                    "animation_delay": 0
+                  }
+                },
+                "heading": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>This week’s highlights</p>",
+                    "heading_size": "xl",
+                    "html_tag": "h2",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
+                  }
+                }
+              },
+              "block_order": [
+                "eyebrow-group",
+                "heading"
+              ]
             },
             "text": {
               "type": "text",
               "settings": {
-                "text": "<p>Uncover the must-have items that are capturing the hearts of our shoppers this week, ensuring you stay comfortable during your workouts</p>",
+                "text": "<p>Uncover the must-have item that are capturing the hearts of our shoppers this week, ensuring you stay comfortable during your workouts</p>",
                 "text_size": "md",
                 "width": "fill",
                 "animation_type": "fade",
@@ -2321,8 +2342,7 @@
             }
           },
           "block_order": [
-            "eyebrow-group",
-            "heading",
+            "title-group",
             "text"
           ]
         },
@@ -2397,7 +2417,9 @@
         "padding_bottom": 96,
         "customize_mobile_padding": true,
         "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48
+        "padding_bottom_mobile": 48,
+        "header_max_width": 384,
+        "product_action": "add_to_cart"
       }
     },
     "kinetra_timeline": {
@@ -3275,26 +3297,46 @@
                         "width_mobile": "fill"
                       },
                       "blocks": {
-                        "heading": {
-                          "type": "heading",
+                        "address-group": {
+                          "type": "group",
                           "settings": {
-                            "text": "<p>Sydney</p>",
-                            "heading_size": "md",
-                            "html_tag": "h3",
+                            "direction": "vertical",
+                            "alignment": "left",
+                            "customize_mobile_alignment": true,
+                            "alignment_mobile": "center",
+                            "gap_desktop": 12,
+                            "gap_mobile": 8,
                             "width": "fill",
-                            "animation_type": "slide-bottom",
-                            "animation_delay": 50
-                          }
-                        },
-                        "address": {
-                          "type": "text",
-                          "settings": {
-                            "text": "<p>123 Sample St, Sydney NSW 2000 AU</p>",
-                            "text_size": "md",
-                            "width": "fill",
-                            "animation_type": "fade",
-                            "animation_delay": 100
-                          }
+                            "width_mobile": "fill",
+                            "height": "fit"
+                          },
+                          "blocks": {
+                            "heading": {
+                              "type": "heading",
+                              "settings": {
+                                "text": "<p>Sydney</p>",
+                                "heading_size": "md",
+                                "html_tag": "h3",
+                                "width": "fill",
+                                "animation_type": "slide-bottom",
+                                "animation_delay": 50
+                              }
+                            },
+                            "address": {
+                              "type": "text",
+                              "settings": {
+                                "text": "<p>123 Sample St, Sydney NSW 2000 AU</p>",
+                                "text_size": "md",
+                                "width": "fill",
+                                "animation_type": "fade",
+                                "animation_delay": 100
+                              }
+                            }
+                          },
+                          "block_order": [
+                            "heading",
+                            "address"
+                          ]
                         },
                         "directions": {
                           "type": "button",
@@ -3308,16 +3350,14 @@
                             "width": "fit",
                             "width_mobile": "fit",
                             "animation_type": "fade",
-                            "animation_delay": 150
-                          ,
+                            "animation_delay": 150,
                             "icon_size": "custom",
                             "icon_width": 16
                           }
                         }
                       },
                       "block_order": [
-                        "heading",
-                        "address",
+                        "address-group",
                         "directions"
                       ]
                     },
@@ -3335,26 +3375,46 @@
                         "width_mobile": "fill"
                       },
                       "blocks": {
-                        "heading": {
-                          "type": "heading",
+                        "address-group": {
+                          "type": "group",
                           "settings": {
-                            "text": "<p>Ho Chi Minh City</p>",
-                            "heading_size": "md",
-                            "html_tag": "h3",
+                            "direction": "vertical",
+                            "alignment": "left",
+                            "customize_mobile_alignment": true,
+                            "alignment_mobile": "center",
+                            "gap_desktop": 12,
+                            "gap_mobile": 8,
                             "width": "fill",
-                            "animation_type": "slide-bottom",
-                            "animation_delay": 50
-                          }
-                        },
-                        "address": {
-                          "type": "text",
-                          "settings": {
-                            "text": "<p>2 Hai Trieu, District 1, Ho Chi Minh City</p>",
-                            "text_size": "md",
-                            "width": "fill",
-                            "animation_type": "fade",
-                            "animation_delay": 100
-                          }
+                            "width_mobile": "fill",
+                            "height": "fit"
+                          },
+                          "blocks": {
+                            "heading": {
+                              "type": "heading",
+                              "settings": {
+                                "text": "<p>Ho Chi Minh City</p>",
+                                "heading_size": "md",
+                                "html_tag": "h3",
+                                "width": "fill",
+                                "animation_type": "slide-bottom",
+                                "animation_delay": 50
+                              }
+                            },
+                            "address": {
+                              "type": "text",
+                              "settings": {
+                                "text": "<p>2 Hai Trieu, District 1, Ho Chi Minh City</p>",
+                                "text_size": "md",
+                                "width": "fill",
+                                "animation_type": "fade",
+                                "animation_delay": 100
+                              }
+                            }
+                          },
+                          "block_order": [
+                            "heading",
+                            "address"
+                          ]
                         },
                         "directions": {
                           "type": "button",
@@ -3368,16 +3428,14 @@
                             "width": "fit",
                             "width_mobile": "fit",
                             "animation_type": "fade",
-                            "animation_delay": 150
-                          ,
+                            "animation_delay": 150,
                             "icon_size": "custom",
                             "icon_width": 16
                           }
                         }
                       },
                       "block_order": [
-                        "heading",
-                        "address",
+                        "address-group",
                         "directions"
                       ]
                     },
@@ -3395,26 +3453,46 @@
                         "width_mobile": "fill"
                       },
                       "blocks": {
-                        "heading": {
-                          "type": "heading",
+                        "address-group": {
+                          "type": "group",
                           "settings": {
-                            "text": "<p>London</p>",
-                            "heading_size": "md",
-                            "html_tag": "h3",
+                            "direction": "vertical",
+                            "alignment": "left",
+                            "customize_mobile_alignment": true,
+                            "alignment_mobile": "center",
+                            "gap_desktop": 12,
+                            "gap_mobile": 8,
                             "width": "fill",
-                            "animation_type": "slide-bottom",
-                            "animation_delay": 50
-                          }
-                        },
-                        "address": {
-                          "type": "text",
-                          "settings": {
-                            "text": "<p>123 Sample St, London W1C 1DE, United Kingdom</p>",
-                            "text_size": "md",
-                            "width": "fill",
-                            "animation_type": "fade",
-                            "animation_delay": 100
-                          }
+                            "width_mobile": "fill",
+                            "height": "fit"
+                          },
+                          "blocks": {
+                            "heading": {
+                              "type": "heading",
+                              "settings": {
+                                "text": "<p>London</p>",
+                                "heading_size": "md",
+                                "html_tag": "h3",
+                                "width": "fill",
+                                "animation_type": "slide-bottom",
+                                "animation_delay": 50
+                              }
+                            },
+                            "address": {
+                              "type": "text",
+                              "settings": {
+                                "text": "<p>123 Sample St, London W1C 1DE, United Kingdom</p>",
+                                "text_size": "md",
+                                "width": "fill",
+                                "animation_type": "fade",
+                                "animation_delay": 100
+                              }
+                            }
+                          },
+                          "block_order": [
+                            "heading",
+                            "address"
+                          ]
                         },
                         "directions": {
                           "type": "button",
@@ -3428,16 +3506,14 @@
                             "width": "fit",
                             "width_mobile": "fit",
                             "animation_type": "fade",
-                            "animation_delay": 150
-                          ,
+                            "animation_delay": 150,
                             "icon_size": "custom",
                             "icon_width": 16
                           }
                         }
                       },
                       "block_order": [
-                        "heading",
-                        "address",
+                        "address-group",
                         "directions"
                       ]
                     }

@@ -25,6 +25,7 @@
       --section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile | default: 40 }}px;
     {% endif %}
     --hotspot-gallery-content-gap: {{ section.settings.content_gap | default: 40 }}px;
+    {% if section.settings.header_max_width > 0 %}--hotspot-gallery-header-max-width: {{ section.settings.header_max_width }}px;{% endif %}
     {% if gallery_width != 'full_width_no_padding' and section.settings.background_color != blank %}
       --hotspot-gallery-background: {{ section.settings.background_color | escape }};
     {% endif %}
@@ -93,6 +94,9 @@
   }
 
   @media (min-width: 768px) {
+    .hotspot-gallery__header > .block-header {
+      max-width: min(var(--hotspot-gallery-header-max-width, var(--size-style-max-width, 100%)), 100%);
+    }
     .hotspot-gallery__header--sticky {
       position: sticky;
       top: calc(var(--header-height, 0px) + var(--layout-grid-gap, 1rem));
@@ -267,6 +271,13 @@
       "default": "middle"
     },
     {
+      "type": "number",
+      "id": "header_max_width",
+      "label": "Header maximum width (desktop)",
+      "info": "0 uses the Header block width.",
+      "default": 0
+    },
+    {
       "type": "checkbox",
       "id": "enable_header_sticky",
       "label": "t:labels.enable_sticky",
@@ -296,10 +307,27 @@
       "default": true
     },
     {
+      "type": "select",
+      "id": "product_action",
+      "label": "Product action",
+      "options": [
+        {
+          "value": "view_product",
+          "label": "View product"
+        },
+        {
+          "value": "add_to_cart",
+          "label": "Add to cart"
+        }
+      ],
+      "default": "view_product"
+    },
+    {
       "type": "text",
       "id": "product_link_label",
       "label": "t:labels.product_link_label",
-      "default": "View product"
+      "default": "View product",
+      "visible_if": "{{ section.settings.product_action != 'add_to_cart' }}"
     },
     {
       "type": "header",
@@ -424,7 +452,9 @@
         "show_product_type": false,
         "show_product_image": true,
         "show_price": true,
-        "product_link_label": "View product"
+        "product_link_label": "View product",
+        "header_max_width": 384,
+        "product_action": "add_to_cart"
       },
       "blocks": [
         {
@@ -435,7 +465,7 @@
             "alignment": "left",
             "customize_mobile_alignment": true,
             "alignment_mobile": "left",
-            "gap_desktop": 16,
+            "gap_desktop": 12,
             "gap_mobile": 12,
             "max_width": 360
           },
@@ -443,7 +473,21 @@
           "id": "header",
           "blocks": [
             {
-              "type":  "eyebrow",
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "left",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "left",
+                "gap_desktop": 8,
+                "gap_mobile": 8,
+                "width": "fill",
+                "height": "fit",
+                "width_mobile": "fill"
+              },
+              "blocks": [
+                {
+                  "type": "eyebrow",
                   "settings": {
                     "animation_delay": 0,
                     "animation_type": "fade",
@@ -452,28 +496,29 @@
                     "icon": "square",
                     "show_background": false
                   }
-
-            },
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>This week’s highlights</p>",
-                "heading_size": "xl",
-                "html_tag": "h2",
-                "width": "fill"
-              ,
-                "animation_type": "slide-bottom",
-                "animation_delay": 50}
+                },
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>This week’s highlights</p>",
+                    "heading_size": "xl",
+                    "html_tag": "h2",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
+                  }
+                }
+              ]
             },
             {
               "type": "text",
               "settings": {
-                "text": "<p>Uncover the must-have items that are capturing the hearts of our shoppers this week, ensuring you stay comfortable during your workouts</p>",
+                "text": "<p>Uncover the must-have item that are capturing the hearts of our shoppers this week, ensuring you stay comfortable during your workouts</p>",
                 "text_size": "md",
-                "width": "fill"
-              ,
+                "width": "fill",
                 "animation_type": "fade",
-                "animation_delay": 100}
+                "animation_delay": 100
+              }
             }
           ]
         },
