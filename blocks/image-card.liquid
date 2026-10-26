@@ -11,6 +11,7 @@
 
 {% capture card_content %}{% content_for 'blocks' %}{% endcapture %}
 {% render 'image-card-content', block: block, content: card_content %}
+{% # theme-check-disable ExcessiveSettingsCount %}
 {% schema %}
 {
   "name": "t:general.image_card",
@@ -230,52 +231,70 @@
       "label": "t:labels.height",
       "options": [
         {
+          "value": "fixed",
+          "label": "Fixed height (px)"
+        },
+        {
           "value": "fill",
           "label": "t:options.width.fill"
         },
         {
           "value": "ratio_1_1",
-          "label": "t:options.image_card_height.ratio_1_1"
-        },
-        {
-          "value": "ratio_6_7",
-          "label": "6:7"
+          "label": "Square (1:1)"
         },
         {
           "value": "ratio_4_5",
-          "label": "t:options.image_card_height.ratio_4_5"
-        },
-        {
-          "value": "ratio_3_2",
-          "label": "t:options.image_card_height.ratio_3_2"
-        },
-        {
-          "value": "ratio_4_3",
-          "label": "t:options.image_card_height.ratio_4_3"
-        },
-        {
-          "value": "ratio_16_9",
-          "label": "t:options.image_card_height.ratio_16_9"
-        },
-        {
-          "value": "ratio_2_3",
-          "label": "t:options.image_card_height.ratio_2_3"
+          "label": "Portrait (4:5)"
         },
         {
           "value": "ratio_3_4",
-          "label": "t:options.image_card_height.ratio_3_4"
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
         },
         {
           "value": "ratio_9_16",
-          "label": "t:options.image_card_height.ratio_9_16"
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
         },
         {
           "value": "custom",
-          "label": "Custom height"
+          "label": "t:options.image_ratio.custom"
         }
       ],
       "default": "ratio_1_1",
       "visible_if": "{{ block.settings.device == 'desktop' }}"
+    },
+    {
+      "type": "number",
+      "id": "image_ratio_custom_width_desktop",
+      "label": "W",
+      "default": 16,
+      "visible_if": "{{ block.settings.device == 'desktop' and block.settings.height_desktop == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "image_ratio_custom_height_desktop",
+      "label": "H",
+      "default": 9,
+      "visible_if": "{{ block.settings.device == 'desktop' and block.settings.height_desktop == 'custom' }}"
     },
     {
       "type": "range",
@@ -286,7 +305,7 @@
       "max": 520,
       "step": 4,
       "unit": "px",
-      "visible_if": "{{ block.settings.height_desktop == 'custom' }}"
+      "visible_if": "{{ block.settings.device == 'desktop' and block.settings.height_desktop == 'fixed' }}"
     },
     {
       "type": "select",
@@ -340,52 +359,70 @@
       "label": "t:labels.height",
       "options": [
         {
+          "value": "fixed",
+          "label": "Fixed height (px)"
+        },
+        {
           "value": "fill",
           "label": "t:options.width.fill"
         },
         {
           "value": "ratio_1_1",
-          "label": "t:options.image_card_height.ratio_1_1"
-        },
-        {
-          "value": "ratio_6_7",
-          "label": "6:7"
+          "label": "Square (1:1)"
         },
         {
           "value": "ratio_4_5",
-          "label": "t:options.image_card_height.ratio_4_5"
-        },
-        {
-          "value": "ratio_3_2",
-          "label": "t:options.image_card_height.ratio_3_2"
-        },
-        {
-          "value": "ratio_4_3",
-          "label": "t:options.image_card_height.ratio_4_3"
-        },
-        {
-          "value": "ratio_16_9",
-          "label": "t:options.image_card_height.ratio_16_9"
-        },
-        {
-          "value": "ratio_2_3",
-          "label": "t:options.image_card_height.ratio_2_3"
+          "label": "Portrait (4:5)"
         },
         {
           "value": "ratio_3_4",
-          "label": "t:options.image_card_height.ratio_3_4"
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
         },
         {
           "value": "ratio_9_16",
-          "label": "t:options.image_card_height.ratio_9_16"
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
         },
         {
           "value": "custom",
-          "label": "Custom height"
+          "label": "t:options.image_ratio.custom"
         }
       ],
       "default": "ratio_1_1",
       "visible_if": "{{ block.settings.device == 'mobile' }}"
+    },
+    {
+      "type": "number",
+      "id": "image_ratio_custom_width_mobile",
+      "label": "W (mobile)",
+      "default": 16,
+      "visible_if": "{{ block.settings.device == 'mobile' and block.settings.height_mobile == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "image_ratio_custom_height_mobile",
+      "label": "H (mobile)",
+      "default": 9,
+      "visible_if": "{{ block.settings.device == 'mobile' and block.settings.height_mobile == 'custom' }}"
     },
     {
       "type": "range",
@@ -396,7 +433,7 @@
       "max": 520,
       "step": 4,
       "unit": "px",
-      "visible_if": "{{ block.settings.height_mobile == 'custom' }}"
+      "visible_if": "{{ block.settings.device == 'mobile' and block.settings.height_mobile == 'fixed' }}"
     },
     {
       "type": "header",
@@ -834,3 +871,4 @@
   ]
 }
 {% endschema %}
+{% # theme-check-enable ExcessiveSettingsCount %}

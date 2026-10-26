@@ -26,7 +26,7 @@
   assign gallery_ratio_setting = block.settings.image_ratio | default: 'portrait'
   assign gallery_ratio = blank
   case gallery_ratio_setting
-    when 'auto'
+    when 'auto', 'original'
       assign gallery_ratio = blank
     when 'square', '1'
       assign gallery_ratio = '1'
@@ -54,6 +54,11 @@
     else
       assign gallery_ratio = '0.8'
   endcase
+  capture gallery_ratio
+    render 'image-ratio-number', setting: gallery_ratio_setting, fallback: gallery_ratio
+  endcapture
+  assign gallery_ratio = gallery_ratio | strip
+
   assign gallery_radius = 'var(--radius-square)'
   case block.settings.corner_radius
     when 'radius_2', 'radius_4', 'radius_6', 'radius_8', 'radius_12', 'radius_16', 'radius_24', 'radius_32'
@@ -305,35 +310,51 @@
       "label": "t:labels.image_ratio",
       "options": [
         {
-          "value": "auto",
-          "label": "t:options.image_ratio.auto"
+          "value": "original",
+          "label": "Original"
         },
         {
-          "value": "square",
-          "label": "t:options.image_ratio.square"
+          "value": "ratio_1_1",
+          "label": "Square (1:1)"
         },
         {
-          "value": "portrait",
-          "label": "t:options.image_ratio.portrait"
+          "value": "ratio_4_5",
+          "label": "Portrait (4:5)"
         },
         {
-          "value": "landscape",
-          "label": "t:options.image_ratio.landscape"
+          "value": "ratio_3_4",
+          "label": "Portrait (3:4)"
         },
         {
-          "value": "ratio_7_6",
-          "label": "t:options.image_ratio.ratio_7_6"
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
         },
         {
-          "value": "wide",
-          "label": "t:options.image_ratio.wide"
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
         },
         {
           "value": "custom",
           "label": "t:options.image_ratio.custom"
         }
       ],
-      "default": "portrait"
+      "default": "ratio_4_5"
     },
     {
       "type": "number",

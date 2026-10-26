@@ -315,38 +315,94 @@
     {
       "name": "t:general.collection_list",
       "category": "t:general.collections",
+      "settings": {
+        "section_width": "page_width",
+        "padding_top": 20,
+        "padding_bottom": 96,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 64,
+        "color_scheme": "scheme-1",
+        "gap_desktop": 0,
+        "gap_mobile": 0,
+        "desktop_alignment": "center",
+        "mobile_alignment": "center"
+      },
       "blocks": [
         {
           "type": "header",
-          "id": "header",
           "static": true,
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Collection list</p>",
-                "html_tag": "h2"
-              }
-            }
-          ]
+          "settings": {},
+          "id": "header",
+          "blocks": []
         },
         {
           "type": "view-all-button",
-          "id": "view-all",
-          "static": true
+          "static": true,
+          "settings": {
+            "hide_view_all_mobile": true
+          },
+          "id": "view-all"
         },
         {
           "type": "collection-list-items",
-          "id": "collection-list",
           "static": true,
+          "settings": {
+            "collections": [
+              "woven-lounge-chair-norden",
+              "leather-accent-bench-norden",
+              "bedroom-set-norden"
+            ],
+            "layout": "carousel",
+            "columns_desktop": "3",
+            "columns_tablet": "3",
+            "columns_mobile": "1",
+            "gap_desktop": 32,
+            "gap_mobile": 16,
+            "show_next_slide_preview_on_desktop": false,
+            "show_next_slide_preview_on_mobile": false,
+            "show_navigation_on_desktop": false,
+            "show_pagination_on_desktop": true,
+            "pagination_visibility": "tablet_mobile",
+            "pagination_type": "progress_bar",
+            "pagination_thickness": "thin",
+            "pagination_limit_width": false,
+            "pagination_top_padding_desktop": 32,
+            "pagination_top_padding_mobile": 32,
+            "autoplay": false
+          },
+          "id": "collection-list",
           "blocks": [
             {
               "type": "collection-card",
-              "id": "collection-card",
               "static": true,
+              "settings": {
+                "ratio": "custom",
+                "placement": "on_image",
+                "position": "center",
+                "alignment": "center",
+                "media_corner_radius": "radius_16",
+                "corner_radius": "radius_16",
+                "color_type": "color_scheme",
+                "color_scheme": "scheme-4",
+                "padding_top": 24,
+                "padding_bottom": 24,
+                "padding_left": 24,
+                "padding_right": 24,
+                "hover_zoom": false,
+                "ratio_custom_width": 6,
+                "ratio_custom_height": 7
+              },
+              "id": "collection-card",
               "blocks": [
                 {
-                  "type": "collection-card-title"
+                  "type": "collection-card-title",
+                  "settings": {
+                    "show_product_count": false,
+                    "omit_title_suffix": "Norden",
+                    "heading_size": "lg",
+                    "html_tag": "h3"
+                  }
                 }
               ]
             }

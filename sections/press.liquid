@@ -77,14 +77,30 @@
 {
   "name": "t:general.press",
   "class": "section-press",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "header" },
-    { "type": "heading" },
-    { "type": "icon" },
-    { "type": "eyebrow" },
-    { "type": "text" },
-    { "type": "press-quotes" }
+    {
+      "type": "header"
+    },
+    {
+      "type": "heading"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "eyebrow"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "press-quotes"
+    }
   ],
   "settings": [
     {
@@ -106,8 +122,14 @@
       "id": "alignment",
       "label": "t:labels.alignment",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        }
       ],
       "default": "left"
     },
@@ -205,36 +227,16 @@
       "settings": {
         "max_width": 1024,
         "alignment": "center",
-        "gap_desktop": 12,
-        "gap_mobile": 12,
-        "color_scheme": "scheme-1",
-        "padding_top": 40,
-        "padding_bottom": 32,
+        "gap_desktop": 20,
+        "gap_mobile": 20,
+        "color_scheme": "scheme-2",
+        "padding_top": 80,
+        "padding_bottom": 80,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
-        {
-          "type": "header",
-          "settings": {
-            "width": "fill",
-            "alignment": "center",
-            "gap_desktop": 8,
-            "gap_mobile": 8
-          },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Main Heading</p>",
-                "heading_size": "md",
-                "html_tag": "h2",
-                "width": "fit"
-              }
-            }
-          ]
-        },
         {
           "type": "press-quotes",
           "id": "quotes",
@@ -244,26 +246,39 @@
             "pause_on_hover": true,
             "autoplay_speed": 4,
             "image_spacing_desktop": 32,
-            "image_spacing_mobile": 20,
-            "image_gap_desktop": 20,
-            "image_gap_mobile": 16
+            "image_spacing_mobile": 32,
+            "image_gap_desktop": 64,
+            "image_gap_mobile": 64
           },
           "blocks": [
             {
               "type": "press-item",
               "settings": {
-                "image_ratio": "original",
+                "alt_text": "HGTV",
+                "image_ratio": "ratio_1_1",
                 "corner_radius": "square",
                 "custom_corner_radius": 0,
                 "image_width_desktop": 100,
-                "image_width_mobile": 70
+                "image_width_mobile": 80,
+                "image": "shopify://shop_images/norden-logo-1.avif"
               },
               "blocks": [
                 {
+                  "type": "icon",
+                  "settings": {
+                    "source": "library",
+                    "icon_library": "heroicons",
+                    "icon": "five-stars",
+                    "icon_width": 96,
+                    "icon_padding": 0,
+                    "accessible_label": "5 out of 5 stars"
+                  }
+                },
+                {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>Maecenas ut porta dui, eu consequat nunc. In hac habitasse platea dictumst. Sed sollicitudin orci at sapien dignissim, rhoncus facilisis libero pretium. Aenean id dapibus risus. Etiam non rhoncus nunc, eu commodo nunc. Aliquam sit amet condimentum nunc, rhoncus tincidunt libero. In mollis, nulla non hendrerit faucibus, sem massa auctor nibh.</p>",
-                    "heading_size": "xs",
+                    "text": "<p>“I love the contemporary design of their furniture. It's so sleek and fits perfectly with the modern aesthetic of my home. Definitely a high-quality product.”</p>",
+                    "heading_size": "lg",
                     "html_tag": "div",
                     "width": "fill"
                   }
@@ -273,18 +288,31 @@
             {
               "type": "press-item",
               "settings": {
-                "image_ratio": "original",
+                "alt_text": "InStyle",
+                "image_ratio": "ratio_1_1",
                 "corner_radius": "square",
                 "custom_corner_radius": 0,
                 "image_width_desktop": 100,
-                "image_width_mobile": 70
+                "image_width_mobile": 80,
+                "image": "shopify://shop_images/norden-logo-2.avif"
               },
               "blocks": [
                 {
+                  "type": "icon",
+                  "settings": {
+                    "source": "library",
+                    "icon_library": "heroicons",
+                    "icon": "five-stars",
+                    "icon_width": 96,
+                    "icon_padding": 0,
+                    "accessible_label": "5 out of 5 stars"
+                  }
+                },
+                {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>Maecenas ut porta dui, eu consequat nunc. In hac habitasse platea dictumst. Sed sollicitudin orci at sapien dignissim, rhoncus facilisis libero pretium. Aenean id dapibus risus. Etiam non rhoncus nunc, eu commodo nunc. Aliquam sit amet condimentum nunc, rhoncus tincidunt libero. In mollis, nulla non hendrerit faucibus, sem massa auctor nibh.</p>",
-                    "heading_size": "xs",
+                    "text": "<p>“I love the contemporary design of their furniture. It's so sleek and fits perfectly with the modern aesthetic of my home. Definitely a high-quality product.”</p>",
+                    "heading_size": "lg",
                     "html_tag": "div",
                     "width": "fill"
                   }
@@ -294,18 +322,65 @@
             {
               "type": "press-item",
               "settings": {
-                "image_ratio": "original",
+                "alt_text": "houzz",
+                "image_ratio": "ratio_1_1",
                 "corner_radius": "square",
                 "custom_corner_radius": 0,
                 "image_width_desktop": 100,
-                "image_width_mobile": 70
+                "image_width_mobile": 80,
+                "image": "shopify://shop_images/norden-logo-3.avif"
               },
               "blocks": [
                 {
+                  "type": "icon",
+                  "settings": {
+                    "source": "library",
+                    "icon_library": "heroicons",
+                    "icon": "five-stars",
+                    "icon_width": 96,
+                    "icon_padding": 0,
+                    "accessible_label": "5 out of 5 stars"
+                  }
+                },
+                {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>Maecenas ut porta dui, eu consequat nunc. In hac habitasse platea dictumst. Sed sollicitudin orci at sapien dignissim, rhoncus facilisis libero pretium. Aenean id dapibus risus. Etiam non rhoncus nunc, eu commodo nunc. Aliquam sit amet condimentum nunc, rhoncus tincidunt libero. In mollis, nulla non hendrerit faucibus, sem massa auctor nibh.</p>",
-                    "heading_size": "xs",
+                    "text": "<p>“I love the contemporary design of their furniture. It's so sleek and fits perfectly with the modern aesthetic of my home. Definitely a high-quality product.”</p>",
+                    "heading_size": "lg",
+                    "html_tag": "div",
+                    "width": "fill"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "press-item",
+              "settings": {
+                "alt_text": "goop",
+                "image_ratio": "ratio_1_1",
+                "corner_radius": "square",
+                "custom_corner_radius": 0,
+                "image_width_desktop": 100,
+                "image_width_mobile": 80,
+                "image": "shopify://shop_images/norden-goop.avif"
+              },
+              "blocks": [
+                {
+                  "type": "icon",
+                  "settings": {
+                    "source": "library",
+                    "icon_library": "heroicons",
+                    "icon": "five-stars",
+                    "icon_width": 96,
+                    "icon_padding": 0,
+                    "accessible_label": "5 out of 5 stars"
+                  }
+                },
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>“I love the contemporary design of their furniture. It's so sleek and fits perfectly with the modern aesthetic of my home. Definitely a high-quality product.”</p>",
+                    "heading_size": "lg",
                     "html_tag": "div",
                     "width": "fill"
                   }

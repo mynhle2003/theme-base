@@ -265,87 +265,86 @@
       "name": "t:general.featured_collection",
       "category": "t:general.collection",
       "settings": {
+        "gap_desktop": 40,
+        "gap_mobile": 32,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56,
         "section_width": "page_width",
         "desktop_alignment": "left",
-        "mobile_alignment": "left",
-        "gap_desktop": 32,
-        "gap_mobile": 24,
-        "color_scheme": "scheme-1",
-        "customize_mobile_padding": false
+        "mobile_alignment": "center"
       },
       "blocks": [
         {
           "type": "header",
+          "settings": {
+            "width": "fill",
+            "inherit_alignment": false,
+            "alignment": "left",
+            "customize_mobile_alignment": true,
+            "alignment_mobile": "left"
+          },
           "id": "header",
           "static": true,
-          "settings": {
-            "width": "fit",
-            "gap_desktop": 12,
-            "gap_mobile": 8
-          },
           "blocks": [
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Featured collection</p>",
+                "text": "<p>New Arrivals</p>",
                 "heading_size": "lg",
-                "html_tag": "h2"
+                "width": "fill",
+                "animation_type": "slide-bottom",
+                "animation_delay": 0
               }
             }
           ]
         },
         {
           "type": "view-all-button",
-          "id": "featured-collection-view-all",
-          "static": true,
           "settings": {
-            "button_label": "View all",
+            "hide_when_all_products_shown": false,
+            "button_label": "View All",
             "button_style": "tertiary",
-            "button_style_mobile": "secondary",
-            "button_height_mobile": "inherit",
-            "full_width_mobile": true,
             "show_icon": false,
-            "show_icon_mobile": false
-          }
+            "button_style_mobile": "tertiary",
+            "full_width_mobile": false
+          },
+          "id": "featured-collection-view-all",
+          "static": true
         },
         {
           "type": "product-list",
-          "id": "product-list",
-          "static": true,
           "settings": {
-            "collection": "",
-            "max_products": 6,
+            "collection": "new-arrivals-norden",
+            "max_products": 5,
             "layout_type": "carousel",
             "columns_desktop": "4",
+            "columns_tablet": "2",
             "columns_mobile": "1",
             "show_next_slide_preview_on_desktop": false,
-            "product_gap_desktop": 4,
-            "product_gap_mobile": 4,
-            "show_navigation_on_desktop": true,
-            "navigation_position": "top",
-            "navigation_style": "secondary",
+            "show_next_slide_preview_on_mobile": true,
+            "product_gap_desktop": 24,
+            "product_gap_mobile": 20,
+            "navigation_position": "bottom",
+            "navigation_button_size": 48,
+            "navigation_gap": 12,
+            "navigation_style": "outline",
             "navigation_icon": "chevron",
-            "show_pagination_on_desktop": true,
+            "navigation_behavior": "always",
             "pagination_type": "progress_bar",
-            "pagination_top_padding_desktop": 50,
-            "pagination_top_padding_mobile": 24,
-            "pagination_limit_width": true,
-            "pagination_max_width": 260,
-            "autoplay": false,
-            "autoplay_pause_on_hover": true,
-            "autoplay_speed": 4
+            "pagination_thickness": "thin",
+            "pagination_top_padding_desktop": 40,
+            "pagination_top_padding_mobile": 32,
+            "pagination_limit_width": false,
+            "card_width_mobile": 300,
+            "show_navigation_on_desktop": true,
+            "show_pagination_on_desktop": true
           },
-          "blocks": [
-            {
-              "type": "product-card",
-              "id": "product-card",
-              "static": true,
-              "settings": {
-                "color_type": "inherit",
-                "color_scheme": "scheme-1"
-              }
-            }
-          ]
+          "id": "product-list",
+          "static": true
         }
       ]
     }

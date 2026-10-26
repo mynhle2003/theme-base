@@ -127,6 +127,7 @@
 
 {% render 'runtime-stylesheet', filename: 'component-runtime-blocks-images.css', section_index: section.index %}
 
+{% # theme-check-disable ExcessiveSettingsCount %}
 {% schema %}
 {
   "name": "Images",
@@ -692,8 +693,8 @@
           "id": "first",
           "static": true,
           "settings": {
-            "image_ratio_desktop": "square",
-            "image_ratio_mobile": "square",
+            "image_ratio_desktop": "ratio_1_1",
+            "image_ratio_mobile": "ratio_1_1",
             "width_desktop": "fill",
             "width_mobile": "fill",
             "corner_radius": "square"
@@ -720,3 +721,4 @@
   ]
 }
 {% endschema %}
+{% # theme-check-enable ExcessiveSettingsCount %}

@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+"use strict";
+
+const path = require("node:path");
+const { spawnSync } = require("node:child_process");
+const [command, ...args] = process.argv.slice(2);
+if (command !== "preview") {
+  console.error("Usage: node theme-base preview <start|status|logs|stop|help>");
+  process.exitCode = 1;
+} else {
+  const result = spawnSync(process.execPath, [path.join(__dirname, "scripts", "theme-base-preview.cjs"), ...args], {
+    cwd: __dirname,
+    stdio: "inherit",
+  });
+  if (result.error) console.error(result.error.message);
+  process.exitCode = result.error ? 1 : (result.status ?? 1);
+}

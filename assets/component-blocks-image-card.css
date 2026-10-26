@@ -271,7 +271,7 @@
   min-height: 100%;
 }
 
-@media(min-width:768px){.image-card--height-desktop-custom{height:var(--image-card-custom-height);aspect-ratio:auto;}}
-@media(max-width:767.98px){.image-card--height-mobile-custom{height:var(--image-card-custom-height-mobile);aspect-ratio:auto;} .image-card[data-mobile-radius]{border-radius:var(--image-card-radius-mobile,var(--promo-card-mobile-radius,var(--image-card-radius)));}}
+@media(min-width:768px){.image-card.image-card--height-desktop-fixed{height:var(--image-card-custom-height);aspect-ratio:auto;}}
+@media(max-width:767.98px){.image-card.image-card--height-mobile-fixed{height:var(--image-card-custom-height-mobile);aspect-ratio:auto;} .image-card[data-mobile-radius]{border-radius:var(--image-card-radius-mobile,var(--promo-card-mobile-radius,var(--image-card-radius)));}}
 
 @media (prefers-reduced-motion: reduce) { .image-card__content--sticky { transition: none; } }

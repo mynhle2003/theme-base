@@ -1,51 +1,8 @@
 {% doc %}
-  Compact product recommendation for testimonial cards and editable Groups. Product picker
-  owns the resource; an empty picker uses the first product of closest.collection.
-  Image, title and market-aware price remain Shopify data.
+  Retired private Compact block. Saved compositions migrate to product-card-compact.
+  Keep this schema-only tombstone so existing theme watchers replace its old
+  stylesheet on draft themes instead of leaving conflicting Compact CSS behind.
 {% enddoc %}
-{% liquid
-  assign compact_product = block.settings.product
-  if compact_product.id == blank and closest.collection != blank
-    for collection_product in closest.collection.products limit: 1
-      assign compact_product = collection_product
-    endfor
-  endif
-%}
-<div class="product-card-compact" {{ block.shopify_attributes }}>
-  {% if compact_product.id != blank %}
-    <a class="product-card-compact__link" href="{{ compact_product.url }}">
-      <span class="product-card-compact__media{% if compact_product.featured_image == blank %} placeholder-image{% endif %}">
-        {% if compact_product.featured_image != blank %}
-          {{ compact_product.featured_image | image_url: width: 192 | image_tag: widths: '64,128,192', sizes: '64px', loading: 'lazy', alt: compact_product.title }}
-        {% else %}
-          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-        {% endif %}
-      </span>
-      <span class="product-card-compact__content">
-        <span class="product-card-compact__title">{{ compact_product.title | escape }}</span>
-        {% if block.settings.show_price %}{% render 'price', item: compact_product, context: 'product-card' %}{% endif %}
-      </span>
-    </a>
-  {% else %}
-    <div class="product-card-compact__link">
-      <span class="product-card-compact__media placeholder-image">{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span>
-      <span class="product-card-compact__content">
-        <span class="product-card-compact__title">{{ 'products.product_title' | t }}</span>
-        {% if block.settings.show_price %}{% render 'price', amount: 1900, context: 'product-card' %}{% endif %}
-      </span>
-    </div>
-  {% endif %}
-</div>
-{% stylesheet %}
-.product-card-compact { width: 100%; min-width: 0; }
-.product-card-compact__link { display: flex; align-items: center; gap: 16px; color: var(--heading-color); text-decoration: none; min-width: 0; }
-.product-card-compact__media { flex: 0 0 64px; width: 64px; height: 64px; overflow: hidden; border-radius: 4px; }
-.product-card-compact__media img, .product-card-compact__media svg { display: block; width: 100%; height: 100%; object-fit: cover; }
-.product-card-compact__content { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
-.product-card-compact__title { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--product-card-title-font-family, var(--font-body-family)); font-size: 16px; font-weight: 600; line-height: 1.5; }
-.product-card-compact .price { font-size: 16px; font-weight: 600; line-height: 1.5; }
-{% endstylesheet %}
-
 {% schema %}
 {
   "name": "Product card: Compact",
@@ -62,11 +19,22 @@
       "id": "show_price",
       "label": "t:labels.show_price",
       "default": true
-    }
-  ],
-  "presets": [
+    },
     {
-      "name": "Product card: Compact"
+      "type": "range",
+      "id": "thumbnail_size",
+      "label": "Thumbnail size",
+      "min": 40,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "Show quick add",
+      "default": false
     }
   ]
 }

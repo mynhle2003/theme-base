@@ -548,51 +548,56 @@
       "category": "t:general.header",
       "settings": {
         "type": "slider",
-        "speed": 1,
-        "direction": "left",
-        "autoplay": 5,
-        "pause_on_hover": true,
-        "navigation_behavior": "show_on_hover",
-        "navigation_icon": "arrow",
+        "speed": 0,
         "font_size": "sm",
-        "background_type": "none",
-        "overlay": false,
-        "gap": 16,
-        "color_scheme": "scheme-3",
-        "bottom_separator": false,
+        "font_weight": "400",
+        "text_style": "body",
+        "color_scheme": "scheme-4",
         "padding_top": 8,
-        "padding_right": 0,
         "padding_bottom": 8,
-        "padding_left": 0
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 8,
+        "padding_bottom_mobile": 8,
+        "show_localization": true,
+        "show_social_links": true
       },
       "blocks": [
         {
           "type": "announcement-text",
           "settings": {
-            "text": "Free shipping for all orders over $100.00",
-            "width": "fill"
+            "text": "Free shipping on orders over $100. Shop Now",
+            "width": "fit"
           }
         },
         {
-          "type": "discount-code",
+          "type": "localization",
+          "id": "localization",
+          "static": true,
           "settings": {
-            "message": "<p>50% off - use code:</p>",
-            "discount_code": "BIG50",
-            "button_label": "Shop now",
-            "button_style": "tertiary",
-            "show_icon": false
+            "compact_controls": true,
+            "show_country_selector": true,
+            "show_country_name": false,
+            "show_country_flag": true,
+            "show_language_selector": true,
+            "show_language_selector_mobile": false,
+            "font_size": "sm",
+            "dropdown_trigger": "click"
           }
         },
         {
-          "type": "announcement-countdown-timer",
+          "type": "social-links",
+          "id": "social-links",
+          "static": true,
           "settings": {
-            "message": "<p>Hurry up! Sale ends in:</p>",
-            "style": "inline",
-            "type": "fixed_time",
-            "end_time": "2026-12-25 12:00",
-            "button_label": "Shop now",
-            "button_style": "tertiary",
-            "show_icon": false,
+            "display_mode": "icon",
+            "direction": "horizontal",
+            "gap_desktop": 12,
+            "gap_mobile": 8,
+            "icon_width": 18,
+            "padding": 0,
+            "border_thickness": 0,
+            "corner_radius": "square",
+            "shadow": "none",
             "color_type": "inherit"
           }
         }

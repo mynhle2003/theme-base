@@ -1,3 +1,4 @@
+{% render 'runtime-stylesheet', filename: 'component-header-localization.css', section_index: section.index %}
 {% liquid
   assign search_type = block.settings.type | default: 'text'
   unless search_type == 'icon' or search_type == 'text' or search_type == 'icon_with_text' or search_type == 'search_bar'
@@ -32,7 +33,7 @@
 
 {% if search_type == 'search_bar' %}
   <form
-    class="{{ search_class }}{% if search_scheme != blank %} color-scheme section-color-scope {{ search_scheme }}{% endif %}{% if block.settings.width == 'fill' %} header-search--fill{% endif %}{% if block.settings.mobile_display == 'search_bar' %} header-search--persistent{% endif %}"
+    class="{{ search_class }}{% if search_scheme != blank %} color-scheme section-color-scope {{ search_scheme }}{% endif %}{% if block.settings.width == 'fill' %} header-search--fill{% elsif block.settings.width == 'centered' %} header-search--centered header-search--fill{% endif %}{% if block.settings.mobile_display == 'search_bar' %} header-search--persistent{% endif %}"
     data-mobile-category-label="{{ block.settings.category_label_mobile | default: 'All' | escape }}"
     data-desktop-category-label="{{ block.settings.category_label | default: 'All Categories' | escape }}"
     action="{{ routes.search_url }}"
@@ -55,7 +56,7 @@
     <input type="hidden" data-header-search-query>
     <input
       id="HeaderSearch-{{ section.id }}-{{ block.id }}"
-      class="header-search__input form__control form__control--input"
+      class="header-search__input"
       type="search"
       name="q"
       value="{{ search.terms | escape }}"
@@ -87,7 +88,7 @@
         {% for link in block.settings.category_menu.links %}<button type="button" class="header-localization__language-option" data-header-category-value="{{ link.title | escape }}" aria-pressed="false">{{ link.title | escape }}</button>{% endfor %}
       </div>
     {% endcapture %}
-    <div id="HeaderCategory-{{ section.id }}-{{ block.id }}" class="header-search__category-popover header-localization__overlay-body body-text body-sm font-body color-scheme section-color-scope {{ settings.overlay_color_scheme.id | default: settings.overlay_color_scheme | default: 'scheme-1' }}" popover="auto" role="dialog" aria-label="{{ block.settings.category_label | escape }}" data-header-category-dialog data-owner-section="{{ section.id }}">
+    <div id="HeaderCategory-{{ section.id }}-{{ block.id }}" class="header-search__category-popover scrollbar scrollbar--vertical header-localization__overlay-body body-text body-sm font-body color-scheme section-color-scope {{ settings.overlay_color_scheme.id | default: settings.overlay_color_scheme | default: 'scheme-1' }}" popover="auto" role="dialog" aria-label="{{ block.settings.category_label | escape }}" data-header-category-dialog data-owner-section="{{ section.id }}">
       {{ category_content }}
     </div>
   {% endif %}
@@ -186,8 +187,11 @@
     background: var(--input-background-color);
   }
 
-  .header-search--type-search_bar input.header-search__input.form__control--input {
+  .header-search--type-search_bar input.header-search__input {
+    appearance: none;
     border: 0;
+    border-radius: 0;
+    background: transparent;
     box-shadow: none;
     outline: 0;
   }
@@ -257,11 +261,11 @@
   }
 
   .header-search--fill { width: 100%; }
-  .header-search .header-search__category { min-height: 24px; padding: 0 20px 0 0; line-height: inherit; text-align: start; border: 0; background: transparent; color: inherit; position: relative; flex: 0 0 auto; padding-inline-end: 20px; font-weight: var(--font-accent-weight); }
+  .header-search .header-search__category { min-height: 24px; padding: 0 20px 0 0; font: inherit; text-align: start; border: 0; background: transparent; color: inherit; position: relative; flex: 0 0 auto; padding-inline-end: 20px; }
   .header-search__category-label { display: block; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .header-search__category-label--mobile { display: none; }
   @media (max-width: 767.98px) { .header-search__category-label--desktop { display: none; } .header-search__category-label--mobile { display: block; } }
-  .header-search__category:focus-within { outline: 2px solid currentColor; outline-offset: 4px; }
+  .header-search__category:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   .header-search__category-chevron { position: absolute; right: 0; top: 50%; transform: translateY(-50%); pointer-events: none; width: 16px; height: 16px; }
   .header-search__category-chevron img,
   .header-search__category-chevron svg { display: block; width: 16px; height: 16px; }
@@ -404,6 +408,10 @@
         {
           "value": "fill",
           "label": "Fill"
+        },
+        {
+          "value": "centered",
+          "label": "Centered (768px maximum)"
         }
       ],
       "default": "fit"

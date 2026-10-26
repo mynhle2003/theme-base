@@ -95,31 +95,81 @@
 {
   "name": "t:general.custom_section",
   "class": "section-kernel",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "carousel" },
-    { "type": "header" },
-    { "type": "heading" },
-    { "type": "editorial-text" },
-    { "type": "eyebrow" },
-    { "type": "text" },
-    { "type": "image" },
-    { "type": "image-comparison" },
-    { "type": "image-card" },
-    { "type": "video" },
-    { "type": "button" },
-    { "type": "buttons" },
-    { "type": "icon" },
-    { "type": "divider" },
-    { "type": "spacer" },
-    { "type": "group" },
-    { "type": "marquee" },
-    { "type": "row" },
-    { "type": "grid" },
-    { "type": "email-signup" },
-    { "type": "contact-form" },
-    { "type": "product-list" },
-    { "type": "countdown-timer" }
+    {
+      "type": "carousel"
+    },
+    {
+      "type": "header"
+    },
+    {
+      "type": "heading"
+    },
+    {
+      "type": "editorial-text"
+    },
+    {
+      "type": "eyebrow"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "image-comparison"
+    },
+    {
+      "type": "image-card"
+    },
+    {
+      "type": "video"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "buttons"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "spacer"
+    },
+    {
+      "type": "group"
+    },
+    {
+      "type": "marquee"
+    },
+    {
+      "type": "row"
+    },
+    {
+      "type": "columns"
+    },
+    {
+      "type": "email-signup"
+    },
+    {
+      "type": "contact-form"
+    },
+    {
+      "type": "product-list"
+    },
+    {
+      "type": "countdown-timer"
+    }
   ],
   "settings": [
     {
@@ -274,6 +324,1063 @@
         "color_scheme": "scheme-1",
         "customize_mobile_padding": false
       }
+    },
+    {
+      "name": "Text marquee (custom)",
+      "category": "t:general.content",
+      "settings": {
+        "section_width": "full_width",
+        "color_scheme": "scheme-1",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 4,
+        "padding_bottom_mobile": 4,
+        "content_gap": 0
+      },
+      "blocks": [
+        {
+          "type": "marquee",
+          "settings": {
+            "enable_parallax": false,
+            "animation_speed": 1,
+            "gap_desktop": 56,
+            "gap_mobile": 40,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "animation_direction": "backward",
+            "alignment": "center",
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0
+          },
+          "blocks": [
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/norden-category-sofas.avif",
+                "image_ratio": "ratio_1_1",
+                "size_desktop": "96",
+                "size_mobile": "96",
+                "image_fit": "cover",
+                "corner_radius": "full",
+                "image_link": "/collections/sofas-aike"
+              }
+            },
+            {
+              "type": "_marquee-heading",
+              "settings": {
+                "text": "Sofas",
+                "heading_size": "custom",
+                "font": "heading",
+                "custom_heading_size": 40,
+                "custom_mobile": true,
+                "custom_heading_size_mobile": 30,
+                "opacity": 100
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/norden-category-chairs.avif",
+                "image_ratio": "ratio_1_1",
+                "size_desktop": "96",
+                "size_mobile": "96",
+                "image_fit": "cover",
+                "corner_radius": "full",
+                "image_link": "/collections/chairs-aike"
+              }
+            },
+            {
+              "type": "_marquee-heading",
+              "settings": {
+                "text": "Chairs",
+                "heading_size": "custom",
+                "font": "heading",
+                "custom_heading_size": 40,
+                "custom_mobile": true,
+                "custom_heading_size_mobile": 30,
+                "opacity": 100
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/norden-category-tables.avif",
+                "image_ratio": "ratio_1_1",
+                "size_desktop": "96",
+                "size_mobile": "96",
+                "image_fit": "cover",
+                "corner_radius": "full",
+                "image_link": "/collections/tables-aike"
+              }
+            },
+            {
+              "type": "_marquee-heading",
+              "settings": {
+                "text": "Tables",
+                "heading_size": "custom",
+                "font": "heading",
+                "custom_heading_size": 40,
+                "custom_mobile": true,
+                "custom_heading_size_mobile": 30,
+                "opacity": 100
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/norden-category-storage.avif",
+                "image_ratio": "ratio_1_1",
+                "size_desktop": "96",
+                "size_mobile": "96",
+                "image_fit": "cover",
+                "corner_radius": "full",
+                "image_link": "/collections/storage-aike"
+              }
+            },
+            {
+              "type": "_marquee-heading",
+              "settings": {
+                "text": "Storage",
+                "heading_size": "custom",
+                "font": "heading",
+                "custom_heading_size": 40,
+                "custom_mobile": true,
+                "custom_heading_size_mobile": 30,
+                "opacity": 100
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/norden-category-lamps.avif",
+                "image_ratio": "ratio_1_1",
+                "size_desktop": "96",
+                "size_mobile": "96",
+                "image_fit": "cover",
+                "corner_radius": "full",
+                "image_link": "/collections/lamps-aike"
+              }
+            },
+            {
+              "type": "_marquee-heading",
+              "settings": {
+                "text": "Lamps",
+                "heading_size": "custom",
+                "font": "heading",
+                "custom_heading_size": 40,
+                "custom_mobile": true,
+                "custom_heading_size_mobile": 30,
+                "opacity": 100
+              }
+            },
+            {
+              "type": "_marquee-image",
+              "settings": {
+                "image": "shopify://shop_images/norden-category-rugs.avif",
+                "image_ratio": "ratio_1_1",
+                "size_desktop": "96",
+                "size_mobile": "96",
+                "image_fit": "cover",
+                "corner_radius": "full",
+                "image_link": "/collections/rugs-aike"
+              }
+            },
+            {
+              "type": "_marquee-heading",
+              "settings": {
+                "text": "Rugs",
+                "heading_size": "custom",
+                "font": "heading",
+                "custom_heading_size": 40,
+                "custom_mobile": true,
+                "custom_heading_size_mobile": 30,
+                "opacity": 100
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Our Favorites",
+      "category": "t:general.content",
+      "settings": {
+        "content_gap": 40,
+        "customize_mobile_gap": true,
+        "content_gap_mobile": 32,
+        "color_scheme": "scheme-1",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      },
+      "blocks": [
+        {
+          "type": "columns",
+          "settings": {
+            "columns_desktop": "4",
+            "columns_mobile": "1",
+            "gap_horizontal": 16,
+            "gap_vertical": 16,
+            "gap_horizontal_mobile": 24,
+            "gap_vertical_mobile": 24,
+            "enable_swipe_mobile": false,
+            "width": "fill"
+          },
+          "blocks": [
+            {
+              "type": "_columns-column",
+              "settings": {
+                "height": "fill",
+                "position": "top",
+                "gap_desktop": 0,
+                "gap_mobile": 0
+              },
+              "blocks": [
+                {
+                  "type": "image-card",
+                  "settings": {
+                    "image": "shopify://shop_images/norden-wishbone-lifestyle.avif",
+                    "height_desktop": "custom",
+                    "height_mobile": "custom",
+                    "corner_radius": "radius_12",
+                    "position_desktop": "bottom_center",
+                    "position_mobile": "bottom_center",
+                    "padding_top": 10,
+                    "padding_bottom": 10,
+                    "padding_left": 10,
+                    "padding_right": 10,
+                    "customize_mobile_padding": true,
+                    "padding_top_mobile": 10,
+                    "padding_bottom_mobile": 10,
+                    "padding_left_mobile": 10,
+                    "padding_right_mobile": 10,
+                    "show_overlay": false,
+                    "enable_sticky": false,
+                    "image_ratio_custom_width_desktop": 6,
+                    "image_ratio_custom_height_desktop": 7,
+                    "image_ratio_custom_width_mobile": 6,
+                    "image_ratio_custom_height_mobile": 7
+                  },
+                  "blocks": [
+                    {
+                      "type": "group",
+                      "settings": {
+                        "width": "fill",
+                        "width_mobile": "fill",
+                        "appearance_type": "scheme",
+                        "color_scheme": "scheme-1",
+                        "padding_top": 12,
+                        "padding_bottom": 12,
+                        "padding_left": 12,
+                        "padding_right": 12,
+                        "corner_radius": "radius_12",
+                        "height": "fit",
+                        "height_mobile": "fit"
+                      },
+                      "blocks": [
+                        {
+                          "type": "product-card-compact",
+                          "settings": {
+                            "product": "wishbone-recess-chair",
+                            "show_price": true,
+                            "thumbnail_width": 60,
+                            "thumbnail_width_mobile": 60,
+                            "image_ratio": "ratio_1_1",
+                            "show_add_to_cart": true,
+                            "enable_boxed_layout": false,
+                            "gap": 16,
+                            "gap_mobile": 16,
+                            "content_gap": 4,
+                            "content_gap_mobile": 4,
+                            "button_style": "primary"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "_columns-column",
+              "settings": {
+                "height": "fill",
+                "position": "top",
+                "gap_desktop": 0,
+                "gap_mobile": 0
+              },
+              "blocks": [
+                {
+                  "type": "image-card",
+                  "settings": {
+                    "image": "shopify://shop_images/norden-desk-lamp-lifestyle.avif",
+                    "height_desktop": "custom",
+                    "height_mobile": "custom",
+                    "corner_radius": "radius_12",
+                    "position_desktop": "bottom_center",
+                    "position_mobile": "bottom_center",
+                    "padding_top": 10,
+                    "padding_bottom": 10,
+                    "padding_left": 10,
+                    "padding_right": 10,
+                    "customize_mobile_padding": true,
+                    "padding_top_mobile": 10,
+                    "padding_bottom_mobile": 10,
+                    "padding_left_mobile": 10,
+                    "padding_right_mobile": 10,
+                    "show_overlay": false,
+                    "enable_sticky": false,
+                    "image_ratio_custom_width_desktop": 6,
+                    "image_ratio_custom_height_desktop": 7,
+                    "image_ratio_custom_width_mobile": 6,
+                    "image_ratio_custom_height_mobile": 7
+                  },
+                  "blocks": [
+                    {
+                      "type": "group",
+                      "settings": {
+                        "width": "fill",
+                        "width_mobile": "fill",
+                        "appearance_type": "scheme",
+                        "color_scheme": "scheme-1",
+                        "padding_top": 12,
+                        "padding_bottom": 12,
+                        "padding_left": 12,
+                        "padding_right": 12,
+                        "corner_radius": "radius_12",
+                        "height": "fit",
+                        "height_mobile": "fit"
+                      },
+                      "blocks": [
+                        {
+                          "type": "product-card-compact",
+                          "settings": {
+                            "product": "desk-lamp",
+                            "show_price": true,
+                            "thumbnail_width": 60,
+                            "thumbnail_width_mobile": 60,
+                            "image_ratio": "ratio_1_1",
+                            "show_add_to_cart": true,
+                            "enable_boxed_layout": false,
+                            "gap": 16,
+                            "gap_mobile": 16,
+                            "content_gap": 4,
+                            "content_gap_mobile": 4,
+                            "button_style": "primary"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "_columns-column",
+              "settings": {
+                "height": "fill",
+                "position": "top",
+                "gap_desktop": 0,
+                "gap_mobile": 0
+              },
+              "blocks": [
+                {
+                  "type": "image-card",
+                  "settings": {
+                    "image": "shopify://shop_images/norden-figma-console-scene.avif",
+                    "height_desktop": "custom",
+                    "height_mobile": "custom",
+                    "corner_radius": "radius_12",
+                    "position_desktop": "bottom_center",
+                    "position_mobile": "bottom_center",
+                    "padding_top": 10,
+                    "padding_bottom": 10,
+                    "padding_left": 10,
+                    "padding_right": 10,
+                    "customize_mobile_padding": true,
+                    "padding_top_mobile": 10,
+                    "padding_bottom_mobile": 10,
+                    "padding_left_mobile": 10,
+                    "padding_right_mobile": 10,
+                    "show_overlay": false,
+                    "enable_sticky": false,
+                    "image_ratio_custom_width_desktop": 6,
+                    "image_ratio_custom_height_desktop": 7,
+                    "image_ratio_custom_width_mobile": 6,
+                    "image_ratio_custom_height_mobile": 7
+                  },
+                  "blocks": [
+                    {
+                      "type": "group",
+                      "settings": {
+                        "width": "fill",
+                        "width_mobile": "fill",
+                        "appearance_type": "scheme",
+                        "color_scheme": "scheme-1",
+                        "padding_top": 12,
+                        "padding_bottom": 12,
+                        "padding_left": 12,
+                        "padding_right": 12,
+                        "corner_radius": "radius_12",
+                        "height": "fit",
+                        "height_mobile": "fit"
+                      },
+                      "blocks": [
+                        {
+                          "type": "product-card-compact",
+                          "settings": {
+                            "product": "norden-modern-desk",
+                            "show_price": true,
+                            "thumbnail_width": 60,
+                            "thumbnail_width_mobile": 60,
+                            "image_ratio": "ratio_1_1",
+                            "show_add_to_cart": true,
+                            "enable_boxed_layout": false,
+                            "gap": 16,
+                            "gap_mobile": 16,
+                            "content_gap": 4,
+                            "content_gap_mobile": 4,
+                            "button_style": "primary"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "_columns-column",
+              "settings": {
+                "height": "fill",
+                "position": "top",
+                "gap_desktop": 0,
+                "gap_mobile": 0
+              },
+              "blocks": [
+                {
+                  "type": "image-card",
+                  "settings": {
+                    "image": "shopify://shop_images/norden-seoul-chair-lifestyle.avif",
+                    "height_desktop": "custom",
+                    "height_mobile": "custom",
+                    "corner_radius": "radius_12",
+                    "position_desktop": "bottom_center",
+                    "position_mobile": "bottom_center",
+                    "padding_top": 10,
+                    "padding_bottom": 10,
+                    "padding_left": 10,
+                    "padding_right": 10,
+                    "customize_mobile_padding": true,
+                    "padding_top_mobile": 10,
+                    "padding_bottom_mobile": 10,
+                    "padding_left_mobile": 10,
+                    "padding_right_mobile": 10,
+                    "show_overlay": false,
+                    "enable_sticky": false,
+                    "image_ratio_custom_width_desktop": 6,
+                    "image_ratio_custom_height_desktop": 7,
+                    "image_ratio_custom_width_mobile": 6,
+                    "image_ratio_custom_height_mobile": 7
+                  },
+                  "blocks": [
+                    {
+                      "type": "group",
+                      "settings": {
+                        "width": "fill",
+                        "width_mobile": "fill",
+                        "appearance_type": "scheme",
+                        "color_scheme": "scheme-1",
+                        "padding_top": 12,
+                        "padding_bottom": 12,
+                        "padding_left": 12,
+                        "padding_right": 12,
+                        "corner_radius": "radius_12",
+                        "height": "fit",
+                        "height_mobile": "fit"
+                      },
+                      "blocks": [
+                        {
+                          "type": "product-card-compact",
+                          "settings": {
+                            "product": "seoul-dining-chair",
+                            "show_price": true,
+                            "thumbnail_width": 60,
+                            "thumbnail_width_mobile": 60,
+                            "image_ratio": "ratio_1_1",
+                            "show_add_to_cart": true,
+                            "enable_boxed_layout": false,
+                            "gap": 16,
+                            "gap_mobile": 16,
+                            "content_gap": 4,
+                            "content_gap_mobile": 4,
+                            "button_style": "primary"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Icon width text (custom)",
+      "category": "t:general.content",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 64,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48
+      },
+      "blocks": [
+        {
+          "type": "columns",
+          "settings": {
+            "columns_desktop": "4",
+            "columns_mobile": "1",
+            "gap_horizontal": 32,
+            "gap_vertical": 32,
+            "gap_horizontal_mobile": 32,
+            "gap_vertical_mobile": 32,
+            "enable_swipe_mobile": false,
+            "width": "fill"
+          },
+          "blocks": [
+            {
+              "type": "_columns-column",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "center",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "height": "fit"
+              },
+              "blocks": [
+                {
+                  "type": "group",
+                  "settings": {
+                    "direction": "horizontal",
+                    "position_horizontal": "top",
+                    "horizontal_alignment": "left",
+                    "customize_mobile_alignment": false,
+                    "alignment": "left",
+                    "gap_desktop": 16,
+                    "gap_mobile": 16,
+                    "width": "fit",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "animation_type": "none"
+                  },
+                  "blocks": [
+                    {
+                      "type": "image",
+                      "settings": {
+                        "image": "shopify://shop_images/aike-47046-7358-imgVuesaxOutlineBox.webp",
+                        "alt_text": "",
+                        "image_fit": "contain",
+                        "image_ratio_desktop": "ratio_1_1",
+                        "width_desktop": "fixed",
+                        "width_fixed_desktop": 28,
+                        "image_ratio_mobile": "ratio_1_1",
+                        "width_mobile": "fixed",
+                        "width_fixed_mobile": 28,
+                        "animation_type": "none",
+                        "animation_delay": 0
+                      }
+                    },
+                    {
+                      "type": "group",
+                      "settings": {
+                        "alignment": "left",
+                        "alignment_mobile": "left",
+                        "gap_desktop": 8,
+                        "gap_mobile": 8,
+                        "width": "fit",
+                        "height": "fit",
+                        "width_mobile": "fit",
+                        "animation_type": "none",
+                        "animation_delay": 0
+                      },
+                      "blocks": [
+                        {
+                          "type": "heading",
+                          "settings": {
+                            "text": "<p>Check your order status</p>",
+                            "heading_size": "xs",
+                            "width": "fill",
+                            "animation_type": "none",
+                            "animation_delay": 0
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Updates & tracking</p>",
+                            "text_size": "md",
+                            "width": "fill",
+                            "animation_type": "none",
+                            "animation_delay": 0
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "_columns-column",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "center",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "height": "fit"
+              },
+              "blocks": [
+                {
+                  "type": "group",
+                  "settings": {
+                    "direction": "horizontal",
+                    "position_horizontal": "top",
+                    "horizontal_alignment": "left",
+                    "customize_mobile_alignment": false,
+                    "alignment": "left",
+                    "gap_desktop": 16,
+                    "gap_mobile": 16,
+                    "width": "fit",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "animation_type": "none"
+                  },
+                  "blocks": [
+                    {
+                      "type": "image",
+                      "settings": {
+                        "image": "shopify://shop_images/aike-47046-7358-imgVuesaxOutlineMoneyChange.webp",
+                        "alt_text": "",
+                        "image_fit": "contain",
+                        "image_ratio_desktop": "ratio_1_1",
+                        "width_desktop": "fixed",
+                        "width_fixed_desktop": 28,
+                        "image_ratio_mobile": "ratio_1_1",
+                        "width_mobile": "fixed",
+                        "width_fixed_mobile": 28,
+                        "animation_type": "none",
+                        "animation_delay": 0
+                      }
+                    },
+                    {
+                      "type": "group",
+                      "settings": {
+                        "alignment": "left",
+                        "alignment_mobile": "left",
+                        "gap_desktop": 8,
+                        "gap_mobile": 8,
+                        "width": "fit",
+                        "height": "fit",
+                        "width_mobile": "fit",
+                        "animation_type": "none",
+                        "animation_delay": 0
+                      },
+                      "blocks": [
+                        {
+                          "type": "heading",
+                          "settings": {
+                            "text": "<p>Returns & exchanges</p>",
+                            "heading_size": "xs",
+                            "width": "fill",
+                            "animation_type": "none",
+                            "animation_delay": 0
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>All you need to know</p>",
+                            "text_size": "md",
+                            "width": "fill",
+                            "animation_type": "none",
+                            "animation_delay": 0
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "_columns-column",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "center",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "height": "fit"
+              },
+              "blocks": [
+                {
+                  "type": "group",
+                  "settings": {
+                    "direction": "horizontal",
+                    "position_horizontal": "top",
+                    "horizontal_alignment": "left",
+                    "customize_mobile_alignment": false,
+                    "alignment": "left",
+                    "gap_desktop": 16,
+                    "gap_mobile": 16,
+                    "width": "fit",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "animation_type": "none"
+                  },
+                  "blocks": [
+                    {
+                      "type": "image",
+                      "settings": {
+                        "image": "shopify://shop_images/aike-47046-7358-imgVuesaxOutlineFrame.webp",
+                        "alt_text": "",
+                        "image_fit": "contain",
+                        "image_ratio_desktop": "ratio_1_1",
+                        "width_desktop": "fixed",
+                        "width_fixed_desktop": 28,
+                        "image_ratio_mobile": "ratio_1_1",
+                        "width_mobile": "fixed",
+                        "width_fixed_mobile": 28,
+                        "animation_type": "none",
+                        "animation_delay": 0
+                      }
+                    },
+                    {
+                      "type": "group",
+                      "settings": {
+                        "alignment": "left",
+                        "alignment_mobile": "left",
+                        "gap_desktop": 8,
+                        "gap_mobile": 8,
+                        "width": "fit",
+                        "height": "fit",
+                        "width_mobile": "fit",
+                        "animation_type": "none",
+                        "animation_delay": 0
+                      },
+                      "blocks": [
+                        {
+                          "type": "heading",
+                          "settings": {
+                            "text": "<p>Secure payment</p>",
+                            "heading_size": "xs",
+                            "width": "fill",
+                            "animation_type": "none",
+                            "animation_delay": 0
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Your privacy is our priority</p>",
+                            "text_size": "md",
+                            "width": "fill",
+                            "animation_type": "none",
+                            "animation_delay": 0
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "_columns-column",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "center",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "height": "fit"
+              },
+              "blocks": [
+                {
+                  "type": "group",
+                  "settings": {
+                    "direction": "horizontal",
+                    "position_horizontal": "top",
+                    "horizontal_alignment": "left",
+                    "customize_mobile_alignment": false,
+                    "alignment": "left",
+                    "gap_desktop": 16,
+                    "gap_mobile": 16,
+                    "width": "fit",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "animation_type": "none"
+                  },
+                  "blocks": [
+                    {
+                      "type": "image",
+                      "settings": {
+                        "image": "shopify://shop_images/aike-47046-7358-imgVuesaxOutlineMessages.webp",
+                        "alt_text": "",
+                        "image_fit": "contain",
+                        "image_ratio_desktop": "ratio_1_1",
+                        "width_desktop": "fixed",
+                        "width_fixed_desktop": 28,
+                        "image_ratio_mobile": "ratio_1_1",
+                        "width_mobile": "fixed",
+                        "width_fixed_mobile": 28,
+                        "animation_type": "none",
+                        "animation_delay": 0
+                      }
+                    },
+                    {
+                      "type": "group",
+                      "settings": {
+                        "alignment": "left",
+                        "alignment_mobile": "left",
+                        "gap_desktop": 8,
+                        "gap_mobile": 8,
+                        "width": "fit",
+                        "height": "fit",
+                        "width_mobile": "fit",
+                        "animation_type": "none",
+                        "animation_delay": 0
+                      },
+                      "blocks": [
+                        {
+                          "type": "heading",
+                          "settings": {
+                            "text": "<p>Visit our support center</p>",
+                            "heading_size": "xs",
+                            "width": "fill",
+                            "animation_type": "none",
+                            "animation_delay": 0
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "settings": {
+                            "text": "<p>Expert help & advice</p>",
+                            "text_size": "md",
+                            "width": "fill",
+                            "animation_type": "none",
+                            "animation_delay": 0
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "blocks": {
+        "columns": {
+          "type": "columns",
+          "settings": {
+            "columns_desktop": "2",
+            "columns_mobile": "1",
+            "gap_horizontal": 24,
+            "gap_vertical": 20,
+            "gap_horizontal_mobile": 20,
+            "gap_vertical_mobile": 20,
+            "enable_swipe_mobile": false,
+            "width": "fill"
+          },
+          "blocks": {
+            "left": {
+              "type": "_columns-column",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "left",
+                "height": "fill",
+                "position": "center",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "background_media": "none",
+                "corner_radius": "square",
+                "shadow": "none"
+              },
+              "blocks": {
+                "card": {
+                  "type": "image-card",
+                  "settings": {
+                    "height_desktop": "fill",
+                    "height_mobile": "fixed",
+                    "corner_radius": "radius_8",
+                    "position_desktop": "center_left",
+                    "position_mobile": "center_left",
+                    "padding_left": 32,
+                    "padding_right": 32,
+                    "customize_mobile_padding": true,
+                    "padding_left_mobile": 32,
+                    "padding_right_mobile": 32,
+                    "color_scheme": "scheme-4",
+                    "show_overlay": true,
+                    "overlay_color": "#0000001A",
+                    "overlay_style": "solid",
+                    "enable_sticky": false,
+                    "height_custom_desktop": 288,
+                    "height_custom_mobile": 260,
+                    "padding_top": 32,
+                    "padding_bottom": 32,
+                    "padding_top_mobile": 32,
+                    "padding_bottom_mobile": 32,
+                    "gap_desktop": 24,
+                    "gap_mobile": 24
+                  },
+                  "blocks": {
+                    "header": {
+                      "type": "header",
+                      "settings": {
+                        "alignment": "left",
+                        "width": "fill",
+                        "gap_desktop": 12,
+                        "gap_mobile": 12
+                      },
+                      "blocks": {
+                        "eyebrow": {
+                          "type": "eyebrow",
+                          "settings": {
+                            "text": "<p>Instagram</p>"
+                          }
+                        },
+                        "heading": {
+                          "type": "heading",
+                          "settings": {
+                            "text": "<p>Follow Us</p>",
+                            "heading_size": "lg",
+                            "width": "fill"
+                          }
+                        }
+                      },
+                      "block_order": [
+                        "eyebrow",
+                        "heading"
+                      ]
+                    },
+                    "button": {
+                      "type": "button",
+                      "settings": {
+                        "button_label": "@Aike_store",
+                        "button_link": "https://www.instagram.com/",
+                        "button_style": "tertiary"
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "header",
+                    "button"
+                  ]
+                }
+              },
+              "block_order": [
+                "card"
+              ]
+            },
+            "right": {
+              "type": "_columns-column",
+              "settings": {
+                "direction": "horizontal",
+                "alignment": "left",
+                "height": "fit",
+                "position": "center",
+                "gap_desktop": 24,
+                "gap_mobile": 20,
+                "background_media": "none",
+                "corner_radius": "square",
+                "shadow": "none",
+                "position_horizontal": "top",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "left"
+              },
+              "blocks": {
+                "image0": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_custom_width_desktop": 6,
+                    "image_ratio_custom_height_desktop": 7,
+                    "width_desktop": "fill",
+                    "image_ratio_mobile": "custom",
+                    "image_ratio_custom_width_mobile": 6,
+                    "image_ratio_custom_height_mobile": 7,
+                    "width_mobile": "fill",
+                    "corner_radius": "radius_8"
+                  }
+                },
+                "image1": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_custom_width_desktop": 6,
+                    "image_ratio_custom_height_desktop": 7,
+                    "width_desktop": "fill",
+                    "image_ratio_mobile": "custom",
+                    "image_ratio_custom_width_mobile": 6,
+                    "image_ratio_custom_height_mobile": 7,
+                    "width_mobile": "fill",
+                    "corner_radius": "radius_8"
+                  }
+                },
+                "image2": {
+                  "type": "image",
+                  "settings": {
+                    "image_ratio_desktop": "custom",
+                    "image_ratio_custom_width_desktop": 6,
+                    "image_ratio_custom_height_desktop": 7,
+                    "width_desktop": "fill",
+                    "image_ratio_mobile": "custom",
+                    "image_ratio_custom_width_mobile": 6,
+                    "image_ratio_custom_height_mobile": 7,
+                    "width_mobile": "fill",
+                    "corner_radius": "radius_8"
+                  }
+                }
+              },
+              "block_order": [
+                "image0",
+                "image1",
+                "image2"
+              ]
+            }
+          },
+          "block_order": [
+            "left",
+            "right"
+          ]
+        }
+      },
+      "block_order": [
+        "columns"
+      ],
+      "name": "Newsletter",
+      "settings": {
+        "section_width": "page_width",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 64,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56
+      },
+      "category": "t:general.content"
     }
   ]
 }

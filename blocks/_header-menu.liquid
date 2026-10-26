@@ -1,3 +1,4 @@
+{% render 'runtime-stylesheet', filename: 'component-header-localization.css', section_index: section.index %}
 {% liquid
   assign country_selector_label = 'localization.country_label' | t
   assign language_selector_label = 'localization.language_label' | t
@@ -661,7 +662,7 @@
       inset-block-start: 100%;
       inset-inline-start: 50%;
       display: block;
-      width: 100vw;
+      width: 100%;
       height: 100vh;
       padding: 0;
       border: 0;

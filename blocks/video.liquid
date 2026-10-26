@@ -71,6 +71,18 @@
     else
       assign aspect_ratio_desktop = 'auto'
   endcase
+  capture aspect_ratio_desktop
+    render 'image-ratio-number', setting: aspect_ratio_desktop_setting, fallback: aspect_ratio_desktop
+  endcapture
+  assign aspect_ratio_desktop = aspect_ratio_desktop | strip
+  if aspect_ratio_desktop_setting == 'custom'
+    assign ratio_width = block.settings.custom_aspect_ratio_width_desktop | plus: 0
+    assign ratio_height = block.settings.custom_aspect_ratio_height_desktop | plus: 0
+    if ratio_width > 0 and ratio_height > 0
+      assign aspect_ratio_desktop = ratio_width | times: 1.0 | divided_by: ratio_height
+    endif
+  endif
+
 
   if aspect_ratio_desktop_setting == 'original'
     if uploaded_video != blank
@@ -105,6 +117,18 @@
     else
       assign aspect_ratio_mobile = 'auto'
   endcase
+  capture aspect_ratio_mobile
+    render 'image-ratio-number', setting: aspect_ratio_mobile_setting, fallback: aspect_ratio_mobile
+  endcapture
+  assign aspect_ratio_mobile = aspect_ratio_mobile | strip
+  if aspect_ratio_mobile_setting == 'custom'
+    assign ratio_width = block.settings.custom_aspect_ratio_width_mobile | plus: 0
+    assign ratio_height = block.settings.custom_aspect_ratio_height_mobile | plus: 0
+    if ratio_width > 0 and ratio_height > 0
+      assign aspect_ratio_mobile = ratio_width | times: 1.0 | divided_by: ratio_height
+    endif
+  endif
+
 
   if aspect_ratio_mobile_setting == 'original'
     if uploaded_video != blank
@@ -262,6 +286,7 @@
 
 {% render 'runtime-stylesheet', filename: 'component-runtime-blocks-video.css', section_index: section.index %}
 
+{% # theme-check-disable ExcessiveSettingsCount %}
 {% schema %}
 {
   "name": "t:general.video",
@@ -276,8 +301,14 @@
       "id": "video_source",
       "label": "t:labels.source",
       "options": [
-        { "value": "uploaded", "label": "t:options.video_source.uploaded" },
-        { "value": "external_url", "label": "t:options.video_source.external_url" }
+        {
+          "value": "uploaded",
+          "label": "t:options.video_source.uploaded"
+        },
+        {
+          "value": "external_url",
+          "label": "t:options.video_source.external_url"
+        }
       ],
       "default": "uploaded"
     },
@@ -291,7 +322,10 @@
       "type": "video_url",
       "id": "external_video_url",
       "label": "t:labels.external_video_url",
-      "accept": ["youtube", "vimeo"],
+      "accept": [
+        "youtube",
+        "vimeo"
+      ],
       "visible_if": "{{ block.settings.video_source == 'external_url' }}"
     },
     {
@@ -369,22 +403,64 @@
       "id": "aspect_ratio_desktop",
       "label": "t:labels.desktop_aspect_ratio",
       "options": [
-        { "value": "original", "label": "t:options.aspect_ratio.original" },
-        { "value": "square", "label": "t:options.aspect_ratio.square" },
-        { "value": "portrait", "label": "t:options.aspect_ratio.portrait" },
-        { "value": "landscape", "label": "t:options.aspect_ratio.landscape" },
-        { "value": "wide", "label": "t:options.aspect_ratio.wide" },
-        { "value": "custom", "label": "t:options.aspect_ratio.custom" }
+        {
+          "value": "original",
+          "label": "Original"
+        },
+        {
+          "value": "ratio_1_1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "ratio_4_5",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "ratio_3_4",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.image_ratio.custom"
+        }
       ],
       "default": "original"
     },
     {
-      "type": "range",
-      "id": "custom_aspect_ratio_desktop",
-      "label": "t:labels.desktop_custom_aspect_ratio",
-      "min": 0.3,
-      "max": 3,
-      "step": 0.1,
+      "type": "number",
+      "id": "custom_aspect_ratio_width_desktop",
+      "label": "W",
+      "default": 1,
+      "visible_if": "{{ block.settings.aspect_ratio_desktop == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "custom_aspect_ratio_height_desktop",
+      "label": "H",
       "default": 1,
       "visible_if": "{{ block.settings.aspect_ratio_desktop == 'custom' }}"
     },
@@ -393,9 +469,18 @@
       "id": "width_desktop",
       "label": "t:labels.desktop_width",
       "options": [
-        { "value": "fit", "label": "t:options.width.fit" },
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "custom", "label": "t:options.width.custom" }
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
       ],
       "default": "fit"
     },
@@ -432,22 +517,64 @@
       "id": "aspect_ratio_mobile",
       "label": "t:labels.mobile_aspect_ratio",
       "options": [
-        { "value": "original", "label": "t:options.aspect_ratio.original" },
-        { "value": "square", "label": "t:options.aspect_ratio.square" },
-        { "value": "portrait", "label": "t:options.aspect_ratio.portrait" },
-        { "value": "landscape", "label": "t:options.aspect_ratio.landscape" },
-        { "value": "wide", "label": "t:options.aspect_ratio.wide" },
-        { "value": "custom", "label": "t:options.aspect_ratio.custom" }
+        {
+          "value": "original",
+          "label": "Original"
+        },
+        {
+          "value": "ratio_1_1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "ratio_4_5",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "ratio_3_4",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.image_ratio.custom"
+        }
       ],
       "default": "original"
     },
     {
-      "type": "range",
-      "id": "custom_aspect_ratio_mobile",
-      "label": "t:labels.mobile_custom_aspect_ratio",
-      "min": 0.3,
-      "max": 3,
-      "step": 0.1,
+      "type": "number",
+      "id": "custom_aspect_ratio_width_mobile",
+      "label": "W (mobile)",
+      "default": 1,
+      "visible_if": "{{ block.settings.aspect_ratio_mobile == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "custom_aspect_ratio_height_mobile",
+      "label": "H (mobile)",
       "default": 1,
       "visible_if": "{{ block.settings.aspect_ratio_mobile == 'custom' }}"
     },
@@ -456,9 +583,18 @@
       "id": "width_mobile",
       "label": "t:labels.mobile_width",
       "options": [
-        { "value": "fit", "label": "t:options.width.fit" },
-        { "value": "fill", "label": "t:options.width.fill" },
-        { "value": "custom", "label": "t:options.width.custom" }
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.width.custom"
+        }
       ],
       "default": "fit"
     },
@@ -498,7 +634,64 @@
       "type": "select",
       "id": "corner_radius",
       "label": "t:labels.corner_radius",
-      "options": [{"value": "inherit", "label": "t:options.radius_video.inherit"}, {"value": "none", "label": "t:options.radius_video.none"}, {"value": "radius_2", "label": "t:options.radius_preset.size_2"}, {"value": "small", "label": "t:options.radius_video.small"}, {"value": "radius_4", "label": "t:options.radius_preset.size_4"}, {"value": "radius_6", "label": "t:options.radius_preset.size_6"}, {"value": "medium", "label": "t:options.radius_video.medium"}, {"value": "radius_8", "label": "t:options.radius_preset.size_8"}, {"value": "radius_12", "label": "t:options.radius_preset.size_12"}, {"value": "large", "label": "t:options.radius_video.large"}, {"value": "radius_16", "label": "t:options.radius_preset.size_16"}, {"value": "radius_24", "label": "t:options.radius_preset.size_24"}, {"value": "radius_32", "label": "t:options.radius_preset.size_32"}, {"value": "full", "label": "t:options.radius_video.full"}],
+      "options": [
+        {
+          "value": "inherit",
+          "label": "t:options.radius_video.inherit"
+        },
+        {
+          "value": "none",
+          "label": "t:options.radius_video.none"
+        },
+        {
+          "value": "radius_2",
+          "label": "t:options.radius_preset.size_2"
+        },
+        {
+          "value": "small",
+          "label": "t:options.radius_video.small"
+        },
+        {
+          "value": "radius_4",
+          "label": "t:options.radius_preset.size_4"
+        },
+        {
+          "value": "radius_6",
+          "label": "t:options.radius_preset.size_6"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.radius_video.medium"
+        },
+        {
+          "value": "radius_8",
+          "label": "t:options.radius_preset.size_8"
+        },
+        {
+          "value": "radius_12",
+          "label": "t:options.radius_preset.size_12"
+        },
+        {
+          "value": "large",
+          "label": "t:options.radius_video.large"
+        },
+        {
+          "value": "radius_16",
+          "label": "t:options.radius_preset.size_16"
+        },
+        {
+          "value": "radius_24",
+          "label": "t:options.radius_preset.size_24"
+        },
+        {
+          "value": "radius_32",
+          "label": "t:options.radius_preset.size_32"
+        },
+        {
+          "value": "full",
+          "label": "t:options.radius_video.full"
+        }
+      ],
       "default": "inherit"
     },
     {
@@ -635,6 +828,26 @@
       "unit": "px",
       "default": 0,
       "visible_if": "{{ block.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "custom_aspect_ratio_desktop",
+      "label": "t:labels.desktop_custom_aspect_ratio",
+      "min": 0.3,
+      "max": 3,
+      "step": 0.1,
+      "default": 1,
+      "visible_if": "{{ false }}"
+    },
+    {
+      "type": "range",
+      "id": "custom_aspect_ratio_mobile",
+      "label": "t:labels.mobile_custom_aspect_ratio",
+      "min": 0.3,
+      "max": 3,
+      "step": 0.1,
+      "default": 1,
+      "visible_if": "{{ false }}"
     }
   ],
   "presets": [
@@ -663,3 +876,4 @@
   ]
 }
 {% endschema %}
+{% # theme-check-enable ExcessiveSettingsCount %}

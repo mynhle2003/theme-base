@@ -177,8 +177,10 @@
 %}
 
 {% capture image_card_style %}
-  {% if image_card_height_desktop == 'custom' %}--image-card-custom-height:{{ block.settings.height_custom_desktop | default: 260 | at_least: 120 | at_most: 520 }}px;{% endif %}
-  {% if image_card_height_mobile == 'custom' %}--image-card-custom-height-mobile:{{ block.settings.height_custom_mobile | default: 200 | at_least: 120 | at_most: 520 }}px;{% endif %}
+  {% if image_card_height_desktop contains 'ratio_' or image_card_height_desktop == 'custom' %}--image-card-ratio:{% render 'image-ratio-value', setting: image_card_height_desktop, custom_width: block.settings.image_ratio_custom_width_desktop, custom_height: block.settings.image_ratio_custom_height_desktop %};{% endif %}
+  {% if image_card_height_mobile contains 'ratio_' or image_card_height_mobile == 'custom' %}--image-card-ratio-mobile:{% render 'image-ratio-value', setting: image_card_height_mobile, custom_width: block.settings.image_ratio_custom_width_mobile, custom_height: block.settings.image_ratio_custom_height_mobile %};{% endif %}
+  {% if image_card_height_desktop == 'fixed' %}--image-card-custom-height:{{ block.settings.height_custom_desktop | default: 260 | at_least: 120 | at_most: 520 }}px;{% endif %}
+  {% if image_card_height_mobile == 'fixed' %}--image-card-custom-height-mobile:{{ block.settings.height_custom_mobile | default: 200 | at_least: 120 | at_most: 520 }}px;{% endif %}
   {% if block.settings.corner_radius_mobile != blank and block.settings.corner_radius_mobile != 'inherit' %}--promo-card-mobile-radius:var(--radius-{{ block.settings.corner_radius_mobile | replace: 'radius_', '' | replace: 'slightly_rounded', 'slight' }});{% endif %}
   {% if promo_card %}
     {% if block.settings.aspect_ratio_mobile != blank and block.settings.aspect_ratio_mobile != 'inherit' %}--promo-card-mobile-ratio:{{ block.settings.aspect_ratio_mobile }};{% endif %}
@@ -230,7 +232,6 @@
     assign tablet_columns = section.settings.columns_tablet | plus: 0 | at_least: 1
     assign mobile_columns = section.settings.columns_mobile | plus: 0 | at_least: 1
     assign desktop_fraction = span | at_most: desktop_columns | times: 100.0 | divided_by: desktop_columns
-    assign tablet_fraction = span | at_most: tablet_columns | times: 100.0 | divided_by: tablet_columns
     assign mobile_fraction = 100.0 | divided_by: mobile_columns
     assign image_card_size_desktop = desktop_fraction | append: 'vw'
     assign image_card_size_mobile = mobile_fraction | append: 'vw'

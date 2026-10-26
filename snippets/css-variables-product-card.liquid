@@ -1,0 +1,230 @@
+{% doc %}
+  Computes product card CSS tokens from global settings.
+  @param {string} [breakpoint] - Base, tablet or mobile token scope
+  @param {string} [media_container_radius] - Inherited foundation value
+{% enddoc %}
+{% liquid
+  assign product_card_style = 'standard'
+  if settings.product_card_style == 'card'
+    assign product_card_style = 'card'
+  endif
+  assign product_card_border_width = 0
+  assign product_card_shadow = 'none'
+  if product_card_style == 'card'
+    assign product_card_border_width = settings.product_card_border_width | default: 0
+    if product_card_border_width < 0 or product_card_border_width > 3
+      assign product_card_border_width = 0
+    endif
+    case settings.product_card_shadow
+      when 'soft'
+        assign product_card_shadow = '0 0.75rem 1.5rem color-mix(in srgb, var(--shadow-color) 14%, transparent)'
+      when 'strong'
+        assign product_card_shadow = '0 1rem 2rem color-mix(in srgb, var(--shadow-color) 22%, transparent)'
+    endcase
+  endif
+  assign product_card_title_font_family = 'var(--font-heading-family)'
+  assign product_card_title_font_weight = 'var(--font-heading-weight)'
+  assign product_card_title_font_style = 'var(--font-heading-style)'
+  case settings.product_card_title_font
+    when 'body'
+      assign product_card_title_font_family = 'var(--font-body-family)'
+      assign product_card_title_font_weight = 'var(--font-body-weight)'
+      assign product_card_title_font_style = 'var(--font-body-style)'
+    when 'accent'
+      assign product_card_title_font_family = 'var(--font-accent-family)'
+      assign product_card_title_font_weight = 'var(--font-accent-weight)'
+      assign product_card_title_font_style = 'var(--font-accent-style)'
+  endcase
+  assign product_card_title_size_desktop = settings.product_card_title_size_desktop | default: 20
+  assign product_card_title_size_mobile = settings.product_card_title_size_mobile | default: 18
+  assign product_card_ratio = settings.product_card_ratio | default: 'natural'
+  assign product_card_image_ratio = 'auto'
+  case product_card_ratio
+    when 'square'
+      assign product_card_image_ratio = '1 / 1'
+    when 'portrait'
+      assign product_card_image_ratio = '4 / 5'
+    when 'landscape'
+      assign product_card_image_ratio = '4 / 3'
+    when 'ratio_7_6'
+      assign product_card_image_ratio = '1.1666666667'
+  endcase
+  capture product_card_image_ratio
+    render 'image-ratio-value', setting: product_card_ratio, fallback_ratio: product_card_image_ratio, custom_width: settings.product_card_ratio_custom_width, custom_height: settings.product_card_ratio_custom_height
+  endcapture
+  assign product_card_image_ratio = product_card_image_ratio | strip
+
+  assign product_card_alignment = 'left'
+  case settings.product_card_alignment
+    when 'center'
+      assign product_card_alignment = 'center'
+    when 'right'
+      assign product_card_alignment = 'right'
+  endcase
+  assign product_card_content_alignment = 'flex-start'
+  case product_card_alignment
+    when 'center'
+      assign product_card_content_alignment = 'center'
+    when 'right'
+      assign product_card_content_alignment = 'flex-end'
+  endcase
+  assign product_card_title_line_limit = 'none'
+  case settings.product_card_title_line_limit
+    when '1', '2', '3'
+      assign product_card_title_line_limit = settings.product_card_title_line_limit
+  endcase
+
+  assign product_card_media_inset = settings.product_card_media_inset | default: 0 | at_least: 0 | at_most: 32
+  assign product_card_media_radius = media_container_radius
+  case settings.product_card_media_corner_radius
+    when 'radius_2', 'radius_4', 'radius_6', 'radius_8', 'radius_12', 'radius_16', 'radius_24', 'radius_32'
+      assign product_card_media_radius = settings.product_card_media_corner_radius | replace: 'radius_', 'var(--radius-' | append: ')'
+    when 'square'
+      assign product_card_media_radius = 'var(--radius-square)'
+    when 'rounded'
+      assign product_card_media_radius = 'var(--radius-rounded)'
+    when 'full'
+      assign product_card_media_radius = 'var(--radius-pill)'
+  endcase
+  assign product_card_content_spacing_desktop = settings.product_card_content_spacing_desktop
+  if product_card_content_spacing_desktop == blank
+    assign product_card_content_spacing_desktop = 20
+    case settings.product_card_gap
+      when 'compact'
+        assign product_card_content_spacing_desktop = 12
+      when 'standard'
+        assign product_card_content_spacing_desktop = 16
+      when 'roomy'
+        assign product_card_content_spacing_desktop = 24
+    endcase
+  endif
+  assign product_card_content_gap_desktop = settings.product_card_content_gap_desktop | default: 14
+  assign product_card_info_gap_desktop = settings.product_card_info_gap_desktop | default: 4
+  assign product_card_content_spacing_mobile = settings.product_card_content_spacing_mobile | default: 16
+  assign product_card_content_gap_mobile = settings.product_card_content_gap_mobile | default: 12
+  assign product_card_info_gap_mobile = settings.product_card_info_gap_mobile | default: 4
+
+  assign product_card_quick_add_enabled = 1
+  if settings.product_card_quick_add_enabled == false
+    assign product_card_quick_add_enabled = 0
+  endif
+  assign product_card_quick_add_mobile = 1
+  if settings.product_card_quick_add_mobile == false
+    assign product_card_quick_add_mobile = 0
+  endif
+  assign product_card_quick_add_style = 'text'
+  if settings.product_card_quick_add_style == 'icon'
+    assign product_card_quick_add_style = 'icon'
+  endif
+  assign product_card_quick_add_full_width = 1
+  if settings.product_card_quick_add_full_width == false
+    assign product_card_quick_add_full_width = 0
+  endif
+  assign product_card_quick_view_enabled = 1
+  if settings.product_card_quick_view_enabled == false
+    assign product_card_quick_view_enabled = 0
+  endif
+  assign product_card_quick_view_mobile = 0
+  if settings.product_card_quick_view_mobile
+    assign product_card_quick_view_mobile = 1
+  endif
+
+  assign product_card_secondary = 1
+  if settings.product_card_secondary == false
+    assign product_card_secondary = 0
+  endif
+  assign product_card_show_sale_badge = 1
+  if settings.product_card_show_sale_badge == false
+    assign product_card_show_sale_badge = 0
+  endif
+  assign product_card_show_sold_out_badge = 1
+  if settings.product_card_show_sold_out_badge == false
+    assign product_card_show_sold_out_badge = 0
+  endif
+  assign product_card_vendor = 0
+  if settings.product_card_vendor
+    assign product_card_vendor = 1
+  endif
+  assign product_card_type = 0
+  if settings.product_card_type
+    assign product_card_type = 1
+  endif
+
+  assign product_card_swatches_enabled = 1
+  if settings.product_card_swatches_enabled == false
+    assign product_card_swatches_enabled = 0
+  endif
+  assign product_card_swatch_position = 'bottom'
+  if settings.product_card_swatch_position == 'top'
+    assign product_card_swatch_position = 'top'
+  endif
+  assign product_card_swatch_type = 'color'
+  if settings.product_card_swatch_type == 'variant_image'
+    assign product_card_swatch_type = 'variant_image'
+  endif
+  assign product_card_swatch_limit = settings.product_card_swatch_limit | default: 4 | plus: 0
+  assign product_card_swatch_gap = settings.product_card_swatch_gap | default: 8
+  assign product_card_swatch_width_desktop = settings.product_card_swatch_width_desktop | default: 30
+  assign product_card_swatch_width_mobile = settings.product_card_swatch_width_mobile | default: 30
+  assign product_card_swatch_ratio = '3 / 1'
+  case settings.product_card_swatch_ratio
+    when '1_1'
+      assign product_card_swatch_ratio = '1 / 1'
+    when '3_2'
+      assign product_card_swatch_ratio = '3 / 2'
+    when '2_1'
+      assign product_card_swatch_ratio = '2 / 1'
+    when '3_1'
+      assign product_card_swatch_ratio = '3 / 1'
+  endcase
+  assign product_card_swatch_selected_style = 'border'
+  if settings.product_card_swatch_selected_style == 'underline'
+    assign product_card_swatch_selected_style = 'underline'
+  endif
+%}
+{% case breakpoint %}
+  {% when 'tablet' %}
+  {% when 'mobile' %}
+  {% else %}
+    --product-card-style: {{ product_card_style }};
+    --product-card-border-width: {{ product_card_border_width }}px;
+    --product-card-shadow: {{ product_card_shadow }};
+    --product-card-title-font-family: {{ product_card_title_font_family }};
+    --product-card-title-font-weight: {{ product_card_title_font_weight }};
+    --product-card-title-font-style: {{ product_card_title_font_style }};
+    --product-card-title-size: {{ product_card_title_size_desktop }}px;
+    --product-card-title-size-mobile: {{ product_card_title_size_mobile }}px;
+    --product-card-image-ratio: {{ product_card_image_ratio }};
+    --product-card-alignment: {{ product_card_alignment }};
+    --product-card-content-alignment: {{ product_card_content_alignment }};
+    --product-card-title-line-limit: {{ product_card_title_line_limit }};
+    --product-card-media-inset: {{ product_card_media_inset }}px;
+    --product-card-media-radius: {{ product_card_media_radius }};
+    --product-card-content-spacing: {{ product_card_content_spacing_desktop }}px;
+    --product-card-content-spacing-mobile: {{ product_card_content_spacing_mobile }}px;
+    --product-card-content-gap: {{ product_card_content_gap_desktop }}px;
+    --product-card-content-gap-mobile: {{ product_card_content_gap_mobile }}px;
+    --product-card-info-gap: {{ product_card_info_gap_desktop }}px;
+    --product-card-info-gap-mobile: {{ product_card_info_gap_mobile }}px;
+    --product-card-quick-add-enabled: {{ product_card_quick_add_enabled }};
+    --product-card-quick-add-mobile: {{ product_card_quick_add_mobile }};
+    --product-card-quick-add-style: {{ product_card_quick_add_style }};
+    --product-card-quick-add-full-width: {{ product_card_quick_add_full_width }};
+    --product-card-quick-view-enabled: {{ product_card_quick_view_enabled }};
+    --product-card-quick-view-mobile: {{ product_card_quick_view_mobile }};
+    --product-card-show-secondary-image: {{ product_card_secondary }};
+    --product-card-show-sale-badge: {{ product_card_show_sale_badge }};
+    --product-card-show-sold-out-badge: {{ product_card_show_sold_out_badge }};
+    --product-card-show-vendor: {{ product_card_vendor }};
+    --product-card-show-type: {{ product_card_type }};
+    --product-card-swatch-enabled: {{ product_card_swatches_enabled }};
+    --product-card-swatch-position: {{ product_card_swatch_position }};
+    --product-card-swatch-type: {{ product_card_swatch_type }};
+    --product-card-swatch-limit: {{ product_card_swatch_limit }};
+    --product-card-swatch-gap: {{ product_card_swatch_gap }}px;
+    --product-card-swatch-width: {{ product_card_swatch_width_desktop }}px;
+    --product-card-swatch-width-mobile: {{ product_card_swatch_width_mobile }}px;
+    --product-card-swatch-ratio: {{ product_card_swatch_ratio }};
+    --product-card-swatch-selected-style: {{ product_card_swatch_selected_style }};
+    --product-card-ratio: {{ product_card_ratio }};
+{% endcase %}

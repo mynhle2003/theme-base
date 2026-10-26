@@ -110,7 +110,9 @@
         '--product-callout-popover-anchor-left',
         '--product-callout-popover-anchor-width',
         '--product-callout-popover-anchor-height',
+        '--product-callout-popover-arrow-x',
       ].forEach((property) => popover.style.removeProperty(property));
+      popover.removeAttribute('data-popover-side');
     };
 
     const getVerticalCandidate = (vertical, triggerRect, width, height, gap) => ({
@@ -168,6 +170,9 @@
       candidate.left = clamp(candidate.left, bounds.left, bounds.right - width);
 
       candidate.top = clamp(candidate.top, bounds.top, bounds.bottom - height);
+
+      popover.style.setProperty('--product-callout-popover-arrow-x', `${clamp(triggerRect.left + triggerRect.width / 2 - candidate.left, 20, width - 20)}px`);
+      popover.dataset.popoverSide = candidate.top + height <= triggerRect.top ? 'top' : 'bottom';
 
       popover.style.setProperty('inset', 'auto');
       popover.style.setProperty('left', `${candidate.left - wrapperRect.left}px`);

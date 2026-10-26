@@ -371,7 +371,9 @@ svg {
  * scheme color. Use --horizontal, --vertical, or --both for the scroll axis;
  * use --horizontal-mobile or --vertical-until-desktop for responsive axes.
  * Add --hidden only when a swipe rail or tab strip intentionally hides its
- * thumb. Keep axes tied to an interaction state in the component stylesheet. */
+ * thumb. Keep axes tied to an interaction state in the component stylesheet.
+ * Page content must chain scrolling when it fits or reaches an edge. Dialogs
+ * and drawers opt into containment in their own component styles. */
 .scrollbar {
   --scrollbar-size: 0.8rem;
   --scrollbar-thumb-color: color-mix(in srgb, currentColor 28%, transparent);
@@ -409,12 +411,12 @@ svg {
 .scrollbar--vertical {
   overflow-x: hidden;
   overflow-y: auto;
-  overscroll-behavior-block: contain;
+  overscroll-behavior-block: auto;
 }
 
 .scrollbar--both {
   overflow: auto;
-  overscroll-behavior: contain;
+  overscroll-behavior: auto;
 }
 
 .scrollbar--hidden {
@@ -3530,3 +3532,12 @@ body[data-block-animations] .motion-block {animation:none;}
 .btn.link-underline[data-underline='hover'][data-underline-target='text'] .btn__text::after{content:'';position:absolute;inset-inline:0;inset-block-end:calc(var(--button-tertiary-underline-offset) * -1);height:var(--link-underline-thickness,1px);background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform var(--link-underline-duration,var(--motion-duration-fast)) var(--link-underline-ease,var(--motion-ease-standard));}
 .btn.link-underline[data-underline='hover'][data-underline-target='text']:is(:hover,:focus-visible) .btn__text::after{transform:scaleX(1);}
 .btn.link-underline[data-underline='hover']:is(:disabled,[aria-disabled='true']) .btn__text::after{display:none;}
+
+@media (max-width: 767.98px) {
+  .product-collection-grid[data-swiper-card-width-mobile] > .swiper-wrapper > .product-collection-grid__item {
+    width: min(100%, var(--product-collection-card-width-mobile));
+  }
+}
+
+@media (max-width: 767.98px) { .responsive-visibility--desktop { display: none !important; } }
+@media (min-width: 768px) { .responsive-visibility--mobile { display: none !important; } }

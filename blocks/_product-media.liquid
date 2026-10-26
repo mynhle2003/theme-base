@@ -112,6 +112,11 @@
         assign media_thumbnail_ratio = '1'
       endif
   endcase
+  capture media_thumbnail_ratio
+    render 'image-ratio-number', setting: media_thumbnail_ratio_setting, fallback: media_thumbnail_ratio
+  endcapture
+  assign media_thumbnail_ratio = media_thumbnail_ratio | strip
+
 
   if settings.variant_picker_only_selected_media and current_variant != blank
     for image in media_product.images
@@ -309,13 +314,34 @@
       "id": "desktop_layout",
       "label": "t:labels.desktop_layout",
       "options": [
-        { "value": "left_thumbnails", "label": "t:options.product_media_layout.left_thumbnails" },
-        { "value": "bottom_thumbnails", "label": "t:options.product_media_layout.bottom_thumbnails" },
-        { "value": "carousel_thumbnails", "label": "t:options.product_media_layout.carousel_thumbnails" },
-        { "value": "grid", "label": "t:options.product_media_layout.grid" },
-        { "value": "stacked", "label": "t:options.product_media_layout.stacked" },
-        { "value": "stacked_thumbnails", "label": "t:options.product_media_layout.stacked_thumbnails" },
-        { "value": "two_column_grid", "label": "t:options.product_media_layout.two_column_grid" }
+        {
+          "value": "left_thumbnails",
+          "label": "t:options.product_media_layout.left_thumbnails"
+        },
+        {
+          "value": "bottom_thumbnails",
+          "label": "t:options.product_media_layout.bottom_thumbnails"
+        },
+        {
+          "value": "carousel_thumbnails",
+          "label": "t:options.product_media_layout.carousel_thumbnails"
+        },
+        {
+          "value": "grid",
+          "label": "t:options.product_media_layout.grid"
+        },
+        {
+          "value": "stacked",
+          "label": "t:options.product_media_layout.stacked"
+        },
+        {
+          "value": "stacked_thumbnails",
+          "label": "t:options.product_media_layout.stacked_thumbnails"
+        },
+        {
+          "value": "two_column_grid",
+          "label": "t:options.product_media_layout.two_column_grid"
+        }
       ],
       "default": "left_thumbnails"
     },
@@ -324,8 +350,14 @@
       "id": "media_ratio",
       "label": "Main image aspect ratio",
       "options": [
-        { "value": "auto", "label": "t:options.aspect_ratio.original" },
-        { "value": "square", "label": "t:options.aspect_ratio.square" }
+        {
+          "value": "auto",
+          "label": "t:options.aspect_ratio.original"
+        },
+        {
+          "value": "square",
+          "label": "t:options.aspect_ratio.square"
+        }
       ],
       "default": "auto"
     },
@@ -344,15 +376,52 @@
       "id": "thumbnail_ratio",
       "label": "t:labels.thumbnail_aspect_ratio",
       "options": [
-        { "value": "auto", "label": "t:options.image_ratio.auto" },
-        { "value": "square", "label": "t:options.image_ratio.square" },
-        { "value": "portrait", "label": "t:options.image_ratio.portrait" },
-        { "value": "landscape", "label": "t:options.image_ratio.landscape" },
-        { "value": "ratio_7_6", "label": "t:options.image_ratio.ratio_7_6" },
-        { "value": "wide", "label": "t:options.image_ratio.wide" },
-        { "value": "custom", "label": "t:options.image_ratio.custom" }
+        {
+          "value": "original",
+          "label": "Original"
+        },
+        {
+          "value": "ratio_1_1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "ratio_4_5",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "ratio_3_4",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.image_ratio.custom"
+        }
       ],
-      "default": "auto"
+      "default": "original"
     },
     {
       "type": "number",
@@ -377,8 +446,14 @@
       "id": "mobile_layout",
       "label": "t:labels.layout_style",
       "options": [
-        { "value": "thumbnails", "label": "t:options.product_media_mobile_layout.thumbnails" },
-        { "value": "slider", "label": "t:options.product_media_mobile_layout.slider" }
+        {
+          "value": "thumbnails",
+          "label": "t:options.product_media_mobile_layout.thumbnails"
+        },
+        {
+          "value": "slider",
+          "label": "t:options.product_media_mobile_layout.slider"
+        }
       ],
       "default": "slider"
     },
@@ -421,8 +496,14 @@
       "id": "appearance_type",
       "label": "t:labels.type",
       "options": [
-        { "value": "inherit", "label": "t:options.appearance_type.inherit" },
-        { "value": "scheme", "label": "t:options.appearance_type.scheme" }
+        {
+          "value": "inherit",
+          "label": "t:options.appearance_type.inherit"
+        },
+        {
+          "value": "scheme",
+          "label": "t:options.appearance_type.scheme"
+        }
       ],
       "default": "inherit"
     },
@@ -442,9 +523,18 @@
       "id": "zoom",
       "label": "t:labels.zoom_behavior",
       "options": [
-        { "value": "open_lightbox", "label": "t:options.product_media_zoom.open_lightbox" },
-        { "value": "click_hover", "label": "t:options.product_media_zoom.click_hover" },
-        { "value": "none", "label": "t:options.product_media_zoom.none" }
+        {
+          "value": "open_lightbox",
+          "label": "t:options.product_media_zoom.open_lightbox"
+        },
+        {
+          "value": "click_hover",
+          "label": "t:options.product_media_zoom.click_hover"
+        },
+        {
+          "value": "none",
+          "label": "t:options.product_media_zoom.none"
+        }
       ],
       "default": "open_lightbox"
     },

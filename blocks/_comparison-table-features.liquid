@@ -1,3 +1,8 @@
+{% doc %}
+  Renders the comparison table feature column using context from its static parent.
+  @param {number} [comparison_table_column_count] - Number of sibling product columns
+  @param {string} [comparison_table_dom_id] - Parent table ID for scoped column sizing
+{% enddoc %}
 {% liquid
   assign comparison_feature_min_width = block.settings.min_width | default: 160 | plus: 0
   if comparison_feature_min_width < 100 or comparison_feature_min_width > 200

@@ -17,7 +17,8 @@
 
 {% liquid
   assign group_direction = block.settings.direction | default: block.settings.layout_direction | default: 'vertical'
-  unless group_direction == 'horizontal' or group_direction == 'vertical' or group_direction == 'group--horizontal' or group_direction == 'group--vertical'
+  assign allowed_group_direction = 'horizontal|vertical|group--horizontal|group--vertical' | split: '|'
+  unless allowed_group_direction contains group_direction
     assign group_direction = 'vertical'
   endunless
   if group_direction == 'group--horizontal'
@@ -47,7 +48,8 @@
   endcase
 
   assign group_height_mode = block.settings.height | default: 'fit'
-  unless group_height_mode == 'fit' or group_height_mode == 'fill'
+  assign allowed_group_height_mode = 'fit|fill' | split: '|'
+  unless allowed_group_height_mode contains group_height_mode
     assign group_height_mode = 'fit'
   endunless
 
@@ -81,7 +83,8 @@
     assign group_mobile_alignment_enabled = true
   endif
   assign group_alignment_mobile_source = block.settings.alignment_mobile | default: 'left'
-  unless group_alignment_mobile_source == 'left' or group_alignment_mobile_source == 'center' or group_alignment_mobile_source == 'right'
+  assign allowed_group_alignment_mobile_source = 'left|center|right' | split: '|'
+  unless allowed_group_alignment_mobile_source contains group_alignment_mobile_source
     assign group_alignment_mobile_source = 'left'
   endunless
   if group_mobile_alignment_enabled
@@ -104,7 +107,8 @@
   endif
 
   assign group_width_mode = block.settings.width | default: 'fit'
-  unless group_width_mode == 'fit' or group_width_mode == 'fill' or group_width_mode == 'custom'
+  assign allowed_group_width_mode = 'fit|fill|custom' | split: '|'
+  unless allowed_group_width_mode contains group_width_mode
     assign group_width_mode = 'fit'
   endunless
   assign group_width_custom = block.settings.width_custom | default: 100 | plus: 0
@@ -131,7 +135,8 @@
   endif
 
   assign group_width_mobile_mode = block.settings.width_mobile | default: 'fill'
-  unless group_width_mobile_mode == 'fit' or group_width_mobile_mode == 'fill' or group_width_mobile_mode == 'custom'
+  assign allowed_group_width_mobile_mode = 'fit|fill|custom' | split: '|'
+  unless allowed_group_width_mobile_mode contains group_width_mobile_mode
     assign group_width_mobile_mode = group_width_mode
   endunless
   assign group_width_custom_mobile = block.settings.width_custom_mobile | default: 100 | plus: 0
@@ -169,17 +174,20 @@
   endif
 
   assign group_border_type = block.settings.border_type | default: 'none'
-  unless group_border_type == 'none' or group_border_type == 'solid' or group_border_type == 'dashed' or group_border_type == 'dotted' or group_border_type == 'double'
+  assign allowed_group_border_type = 'none|solid|dashed|dotted|double' | split: '|'
+  unless allowed_group_border_type contains group_border_type
     assign group_border_type = 'none'
   endunless
 
   assign group_radius = block.settings.corner_radius | default: 'square'
-  unless group_radius == 'square' or group_radius == 'slightly_rounded' or group_radius == 'rounded' or group_radius == 'pill' or group_radius == 'radius_2' or group_radius == 'radius_4' or group_radius == 'radius_6' or group_radius == 'radius_8' or group_radius == 'radius_12' or group_radius == 'radius_16' or group_radius == 'radius_24' or group_radius == 'radius_32'
+  assign allowed_group_radius = 'square|slightly_rounded|rounded|pill|radius_2|radius_4|radius_6|radius_8|radius_12|radius_16|radius_24|radius_32' | split: '|'
+  unless allowed_group_radius contains group_radius
     assign group_radius = 'square'
   endunless
 
   assign group_shadow = block.settings.shadow | default: 'none'
-  unless group_shadow == 'none' or group_shadow == 'small' or group_shadow == 'medium' or group_shadow == 'large'
+  assign allowed_group_shadow = 'none|small|medium|large' | split: '|'
+  unless allowed_group_shadow contains group_shadow
     assign group_shadow = 'none'
   endunless
 
@@ -223,7 +231,8 @@
   endif
 
   assign group_appearance_type = block.settings.appearance_type | default: 'inherit'
-  unless group_appearance_type == 'inherit' or group_appearance_type == 'scheme'
+  assign allowed_group_appearance_type = 'inherit|scheme' | split: '|'
+  unless allowed_group_appearance_type contains group_appearance_type
     assign group_appearance_type = 'inherit'
   endunless
   assign group_scheme = blank
@@ -239,7 +248,8 @@
   assign group_class = group_class | append: ' group--align-' | append: group_alignment
   assign group_class = group_class | append: ' group--width-' | append: group_width_mode
   assign group_class = group_class | append: ' group--height-' | append: group_height_mode
-  if block.settings.height_mobile == 'fit' or block.settings.height_mobile == 'fill'
+  assign allowed_block_settings_height_mobile = 'fit|fill' | split: '|'
+  if allowed_block_settings_height_mobile contains block.settings.height_mobile
     assign group_class = group_class | append: ' group--height-mobile-' | append: block.settings.height_mobile
   endif
   assign group_class = group_class | append: ' group--radius-' | append: group_radius
@@ -302,7 +312,7 @@
 {% assign group_style = group_style | strip %}
 
 <div
-  class="{{ group_class }}"
+  class="{{ group_class }} responsive-visibility--{{ block.settings.visibility | default: 'all' }}"
   {% if group_style != blank %}style="{{ group_style }}"{% endif %}
   {% render 'block-animation-attributes', settings: block.settings %}
     {{ block.shopify_attributes }}
@@ -477,6 +487,7 @@
 }
 {% endstylesheet %}
 
+{% # theme-check-disable ExcessiveSettingsCount %}
 {% schema %}
 {
   "name": "t:general.group",
@@ -513,13 +524,33 @@
       "type": "product-accordion"
     },
     {
-      "type": "_product-card-compact"
+      "type": "product-card-compact"
     },
     {
       "type": "collection-card-button"
     }
   ],
   "settings": [
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Show on",
+      "options": [
+        {
+          "value": "all",
+          "label": "All devices"
+        },
+        {
+          "value": "desktop",
+          "label": "Desktop and tablet"
+        },
+        {
+          "value": "mobile",
+          "label": "Mobile"
+        }
+      ],
+      "default": "all"
+    },
     {
       "type": "range",
       "id": "mobile_order",
@@ -1235,3 +1266,4 @@
   ]
 }
 {% endschema %}
+{% # theme-check-enable ExcessiveSettingsCount %}

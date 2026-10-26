@@ -77,6 +77,15 @@
 
   }
 
+  .collection-card-kernel--on_image[data-content-position='top'] .collection-card-kernel__content {
+    inset: 0 0 auto;
+  }
+
+  .collection-card-kernel--on_image[data-content-position='center'] .collection-card-kernel__content {
+    inset: 0;
+    justify-content: center;
+  }
+
   @media (max-width: 767.98px) {
     .collection-card-kernel__media {
       margin: var(--collection-card-media-padding-mobile, var(--collection-card-media-padding, 0px)) var(--collection-card-media-padding-mobile, var(--collection-card-media-padding, 0px)) 0;

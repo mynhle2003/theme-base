@@ -29,3 +29,54 @@
   @keyframes announcement-scroll-right { from { transform: translate3d(calc(-1 * var(--announcement-bar-loop-distance)), 0, 0); } to { transform: translate3d(0, 0, 0); } }
   @media (prefers-reduced-motion: reduce) { .announcement-bar__slides, .announcement-bar__viewport, .announcement-bar__slides > .text-block { transition-duration: 0.01ms; } .announcement-bar--scrolling .announcement-bar__slides { animation: none; transform: none; } }
   @media (max-width: 767.98px) { .announcement-bar { padding-top: var(--announcement-bar-padding-top-mobile, var(--announcement-bar-padding-top, 8px)); padding-bottom: var(--announcement-bar-padding-bottom-mobile, var(--announcement-bar-padding-bottom, 8px)); } }
+
+/* Norden: a single message follows the Figma content row; its existing
+   typography, scheme, padding and social gap settings remain authoritative. */
+.announcement-bar--single .announcement-bar__inner { min-height: 0; }
+.announcement-bar--single .announcement-bar__control { display: none; }
+.announcement-bar__social .social-links .social-links__link {
+  min-width: 0;
+  min-height: 0;
+}
+@media (min-width: 768px) {
+  .announcement-bar--single.announcement-bar--social.announcement-bar--localization .announcement-bar__inner {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: 4px;
+    padding-inline: var(--page-margin-current);
+  }
+  .announcement-bar--single.announcement-bar--social.announcement-bar--localization .announcement-bar__viewport {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    max-width: none;
+  }
+  .announcement-bar--single.announcement-bar--social.announcement-bar--localization .announcement-bar__social {
+    position: static;
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .announcement-bar--single.announcement-bar--social.announcement-bar--localization .announcement-bar__localization {
+    position: static;
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .announcement-bar__localization .localization-block { gap: 4px; }
+  .announcement-bar__localization .header-localization__details {
+    display: flex;
+    align-items: center;
+  }
+  .announcement-bar__localization .localization-block--compact .header-localization__summary {
+    min-height: 0;
+    min-inline-size: 107px;
+    gap: 4px;
+    padding-inline: 10px;
+    line-height: inherit;
+  }
+  .announcement-bar__localization .localization-block--compact .header-localization__details--language > .header-localization__summary {
+    min-inline-size: 88px;
+  }
+  .announcement-bar__localization .header-localization__country { gap: 8px; }
+  .announcement-bar__localization .header-localization__flag { width: 18px; height: 18px; }
+  .announcement-bar__localization .header-localization__icon { --icon-width: 16px; }
+}

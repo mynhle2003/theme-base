@@ -1,0 +1,238 @@
+{% doc %}
+  Computes controls CSS tokens from global settings.
+  @param {string} [breakpoint] - Base, tablet or mobile token scope
+{% enddoc %}
+{% liquid
+  assign button_radius = 'var(--radius-square)'
+  case settings.button_radius_style
+    when 'radius_2', 'radius_4', 'radius_6', 'radius_8', 'radius_12', 'radius_16', 'radius_24', 'radius_32'
+      assign button_radius = settings.button_radius_style | replace: 'radius_', 'var(--radius-' | append: ')'
+    when 'slightly_rounded'
+      assign button_radius = 'var(--radius-slight)'
+    when 'rounded'
+      assign button_radius = 'var(--radius-rounded)'
+    when 'pill'
+      assign button_radius = 'var(--radius-pill)'
+  endcase
+
+  assign icon_button_radius = 'var(--radius-square)'
+  if settings.button_radius_style contains 'radius_'
+    assign icon_button_radius = button_radius
+  elsif settings.button_radius_style == 'slightly_rounded' or settings.button_radius_style == 'rounded' or settings.button_radius_style == 'pill'
+    assign icon_button_radius = 'var(--radius-pill)'
+  endif
+
+  assign button_height_desktop = settings.button_height_desktop | default: 45
+  assign button_height_mobile = settings.button_height_mobile | default: 45
+  assign button_padding_inline_desktop = settings.button_padding_inline_desktop | default: 30
+  assign button_padding_inline_tablet = settings.button_padding_inline_tablet | default: button_padding_inline_desktop
+  assign button_padding_inline_mobile = settings.button_padding_inline_mobile | default: 16
+  assign button_disabled_opacity = settings.button_disabled_opacity | default: 60 | divided_by: 100.0
+  assign button_font_size = '13px'
+  case settings.button_font_size
+    when '10px', '12px', '13px', '14px', '15px', '16px'
+      assign button_font_size = settings.button_font_size
+  endcase
+  assign button_font_size_mobile = '15px'
+  case settings.button_font_size_mobile
+    when '12px', '13px', '14px', '15px', '16px'
+      assign button_font_size_mobile = settings.button_font_size_mobile
+  endcase
+  assign button_letter_spacing = '0em'
+  case settings.button_letter_spacing
+    when 'relaxed'
+      assign button_letter_spacing = '0.02em'
+    when 'loose'
+      assign button_letter_spacing = '0.08em'
+    when 'reference'
+      assign button_letter_spacing = '1.2px'
+    when 'extra_loose'
+      assign button_letter_spacing = '0.14em'
+  endcase
+
+  assign button_primary_font_family = 'var(--font-body-family)'
+  if settings.button_primary_font == 'heading'
+    assign button_primary_font_family = 'var(--font-heading-family)'
+  endif
+  assign button_secondary_font_family = 'var(--font-body-family)'
+  if settings.button_secondary_font == 'heading'
+    assign button_secondary_font_family = 'var(--font-heading-family)'
+  endif
+  assign button_tertiary_font_family = 'var(--font-body-family)'
+  if settings.button_tertiary_font == 'heading'
+    assign button_tertiary_font_family = 'var(--font-heading-family)'
+  endif
+
+  assign button_primary_text_case = 'uppercase'
+  if settings.button_primary_text_case == 'original'
+    assign button_primary_text_case = 'none'
+  elsif settings.button_primary_text_case == 'capitalize'
+    assign button_primary_text_case = 'capitalize'
+  endif
+  assign button_secondary_text_case = 'uppercase'
+  if settings.button_secondary_text_case == 'original'
+    assign button_secondary_text_case = 'none'
+  elsif settings.button_secondary_text_case == 'capitalize'
+    assign button_secondary_text_case = 'capitalize'
+  endif
+  assign button_tertiary_text_case = 'uppercase'
+  if settings.button_tertiary_text_case == 'original'
+    assign button_tertiary_text_case = 'none'
+  elsif settings.button_tertiary_text_case == 'capitalize'
+    assign button_tertiary_text_case = 'capitalize'
+  endif
+
+  assign button_primary_border_width = settings.button_primary_border_width | default: 1
+  assign button_secondary_border_width = settings.button_secondary_border_width | default: 1
+  assign button_tertiary_underline = 'underline'
+  assign button_tertiary_underline_display = 'block'
+  assign button_tertiary_underline_space = 0
+  if settings.button_tertiary_show_underline == false
+    assign button_tertiary_underline = 'none'
+    assign button_tertiary_underline_display = 'none'
+  else
+    assign button_tertiary_underline_space = settings.button_tertiary_underline_offset | default: 3 | plus: 1
+  endif
+  assign button_tertiary_underline_offset = settings.button_tertiary_underline_offset | default: 3
+  assign button_default_variant = 'primary'
+
+  assign input_height_desktop = settings.input_height_desktop
+  if input_height_desktop == blank
+    assign input_height_desktop = 48
+    case settings.input_height
+      when 'compact'
+        assign input_height_desktop = 40
+      when 'large'
+        assign input_height_desktop = 56
+    endcase
+  endif
+  assign input_height_mobile = settings.input_height_mobile | default: 44
+  assign input_border_width = settings.input_border_width
+  if input_border_width == blank
+    assign input_border_width = 1
+  endif
+  assign input_radius = 'var(--radius-rounded)'
+  case settings.input_radius_style
+    when 'radius_2', 'radius_4', 'radius_6', 'radius_8', 'radius_12', 'radius_16', 'radius_24', 'radius_32'
+      assign input_radius = settings.input_radius_style | replace: 'radius_', 'var(--radius-' | append: ')'
+    when 'square'
+      assign input_radius = 'var(--radius-square)'
+    when 'slightly_rounded'
+      assign input_radius = 'var(--radius-slight)'
+    when 'pill'
+      assign input_radius = 'var(--radius-pill)'
+  endcase
+
+  assign form_label_font_size = 'var(--font-body-md)'
+  case settings.form_label_typography
+    when 'xs'
+      assign form_label_font_size = 'var(--font-body-xs)'
+    when 'sm', 'body-sm'
+      assign form_label_font_size = 'var(--font-body-sm)'
+    when 'md', 'body-md'
+      assign form_label_font_size = 'var(--font-body-md)'
+    when 'lg', 'body-lg'
+      assign form_label_font_size = 'var(--font-body-lg)'
+    when 'xl'
+      assign form_label_font_size = 'var(--font-body-xl)'
+    when 'xxl'
+      assign form_label_font_size = 'var(--font-body-xxl)'
+  endcase
+  assign form_input_font_size = 'var(--font-body-md)'
+  case settings.form_input_typography
+    when 'xs'
+      assign form_input_font_size = 'var(--font-body-xs)'
+    when 'sm', 'body-sm'
+      assign form_input_font_size = 'var(--font-body-sm)'
+    when 'md', 'body-md'
+      assign form_input_font_size = 'var(--font-body-md)'
+    when 'lg', 'body-lg'
+      assign form_input_font_size = 'var(--font-body-lg)'
+    when 'xl'
+      assign form_input_font_size = 'var(--font-body-xl)'
+    when 'xxl'
+      assign form_input_font_size = 'var(--font-body-xxl)'
+  endcase
+  assign form_helper_font_size = 'var(--font-body-md)'
+  case settings.form_helper_typography
+    when 'xs'
+      assign form_helper_font_size = 'var(--font-body-xs)'
+    when 'sm', 'body-sm'
+      assign form_helper_font_size = 'var(--font-body-sm)'
+    when 'md', 'body-md'
+      assign form_helper_font_size = 'var(--font-body-md)'
+    when 'lg', 'body-lg'
+      assign form_helper_font_size = 'var(--font-body-lg)'
+    when 'xl'
+      assign form_helper_font_size = 'var(--font-body-xl)'
+    when 'xxl'
+      assign form_helper_font_size = 'var(--font-body-xxl)'
+  endcase
+  assign form_error_font_size = 'var(--font-body-md)'
+  case settings.form_error_typography
+    when 'xs'
+      assign form_error_font_size = 'var(--font-body-xs)'
+    when 'sm', 'body-sm'
+      assign form_error_font_size = 'var(--font-body-sm)'
+    when 'md', 'body-md'
+      assign form_error_font_size = 'var(--font-body-md)'
+    when 'lg', 'body-lg'
+      assign form_error_font_size = 'var(--font-body-lg)'
+    when 'xl'
+      assign form_error_font_size = 'var(--font-body-xl)'
+    when 'xxl'
+      assign form_error_font_size = 'var(--font-body-xxl)'
+  endcase
+%}
+{% case breakpoint %}
+  {% when 'tablet' %}
+      --button-padding-inline-desktop: {{ button_padding_inline_tablet }}px;
+  {% when 'mobile' %}
+      --button-background: var(--button-{{ button_default_variant }}-background);
+      --button-foreground: var(--button-{{ button_default_variant }}-text);
+      --button-border: var(--button-{{ button_default_variant }}-border);
+      --button-hover-background: var(--button-{{ button_default_variant }}-hover-background);
+      --button-hover-foreground: var(--button-{{ button_default_variant }}-hover-text);
+      --button-hover-border: var(--button-{{ button_default_variant }}-hover-border);
+  {% else %}
+    --button-style: {{ button_default_variant }};
+    --button-background: var(--button-{{ button_default_variant }}-background);
+    --button-foreground: var(--button-{{ button_default_variant }}-text);
+    --button-border: var(--button-{{ button_default_variant }}-border);
+    --button-hover-background: var(--button-{{ button_default_variant }}-hover-background);
+    --button-hover-foreground: var(--button-{{ button_default_variant }}-hover-text);
+    --button-hover-border: var(--button-{{ button_default_variant }}-hover-border);
+    --button-radius: {{ button_radius }};
+    --icon-button-radius: {{ icon_button_radius }};
+    --button-height: {{ button_height_desktop }}px;
+    --button-height-mobile: {{ button_height_mobile }}px;
+    --button-padding-inline-desktop: {{ button_padding_inline_desktop }}px;
+    --button-padding-inline-mobile: {{ button_padding_inline_mobile }}px;
+    --button-disabled-opacity: {{ button_disabled_opacity }};
+    --button-font-size: {{ button_font_size }};
+    --button-font-size-mobile: {{ button_font_size_mobile }};
+    --button-letter-spacing: {{ button_letter_spacing }};
+    --button-font-family: {{ button_primary_font_family }};
+    --button-text-case: {{ button_primary_text_case }};
+    --button-border-width: {{ button_primary_border_width }}px;
+    --button-tertiary-underline-offset: {{ button_tertiary_underline_offset }}px;
+    --button-tertiary-underline-space: {{ button_tertiary_underline_space }}px;
+    --button-primary-font-family: {{ button_primary_font_family }};
+    --button-primary-text-case: {{ button_primary_text_case }};
+    --button-primary-border-width: {{ button_primary_border_width }}px;
+    --button-secondary-font-family: {{ button_secondary_font_family }};
+    --button-secondary-text-case: {{ button_secondary_text_case }};
+    --button-secondary-border-width: {{ button_secondary_border_width }}px;
+    --button-tertiary-font-family: {{ button_tertiary_font_family }};
+    --button-tertiary-text-case: {{ button_tertiary_text_case }};
+    --button-tertiary-text-decoration: {{ button_tertiary_underline }};
+    --button-tertiary-underline-display: {{ button_tertiary_underline_display }};
+    --input-height: {{ input_height_desktop }}px;
+    --input-height-mobile: {{ input_height_mobile }}px;
+    --input-radius: {{ input_radius }};
+    --input-border-width-outline: {{ input_border_width }}px;
+    --form-label-font-size: {{ form_label_font_size }};
+    --form-input-font-size: {{ form_input_font_size }};
+    --form-helper-font-size: {{ form_helper_font_size }};
+    --form-error-font-size: {{ form_error_font_size }};
+{% endcase %}

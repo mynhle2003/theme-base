@@ -85,6 +85,10 @@
   endunless
 %}
 
+{% capture localization_chevron_svg %}<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6L8 10L12 6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/>
+</svg>{% endcapture %}
+
 {% if has_localization or request.design_mode %}
   <div class="{{ localization_class }}" {{ block.shopify_attributes }}>
     {% if has_localization %}
@@ -101,7 +105,7 @@
                 <span>{{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}</span>
               {% endif %}
             </span>
-            {% render 'icon', icon: 'chevron-down', class: 'header-localization__icon' %}
+            {% render 'icon', source: 'custom', custom_icon: localization_chevron_svg, class: 'header-localization__icon' %}
           </summary>
 
           <div class="header-localization__panel header-localization__desktop-panel color-scheme section-color-scope scheme-1">
@@ -133,7 +137,7 @@
         <details class="header-localization__details header-localization__details--language" data-header-submenu-trigger="{{ localization_trigger }}" data-localization-dialog-id="{{ language_dialog_id }}">
           <summary class="header-localization__summary" aria-controls="{{ language_dialog_id }}" aria-expanded="false">
             <span class="header-localization__language">{{ localization.language.endonym_name }}</span>
-            {% render 'icon', icon: 'chevron-down', class: 'header-localization__icon' %}
+            {% render 'icon', source: 'custom', custom_icon: localization_chevron_svg, class: 'header-localization__icon' %}
           </summary>
           <div class="header-localization__panel header-localization__desktop-panel color-scheme section-color-scope scheme-1">
             {% form 'localization', class: 'header-localization__form' %}

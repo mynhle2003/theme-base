@@ -211,7 +211,7 @@
       "type": "row"
     },
     {
-      "type": "grid"
+      "type": "columns"
     },
     {
       "type": "countdown-timer"
@@ -845,72 +845,151 @@
       "name": "Hero",
       "category": "t:general.banners",
       "settings": {
+        "width": "full",
+        "layout": "classic",
+        "media_type": "video",
+        "media_corner_radius": "square",
+        "video": "shopify://files/videos/aike-outdoor-collection.mp4",
+        "show_overlay": true,
+        "parallax_effect": "none",
+        "desktop_height": "custom",
+        "desktop_height_custom": 700,
+        "mobile_height": "custom",
+        "mobile_height_custom": 470,
+        "desktop_position": "center_left",
+        "mobile_position": "center_center",
         "color_scheme": "scheme-1",
-        "show_overlay": true
+        "content_color_scheme": "scheme-4",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "overlay_style": "solid",
+        "overlay": "#00000033",
+        "content_width": "fill",
+        "desktop_gap": 0,
+        "mobile_gap": 0
       },
       "blocks": [
         {
-          "type": "eyebrow",
+          "type": "group",
           "settings": {
-            "text": "<p>The new chapter</p>"
-          }
-        },
-        {
-          "type": "heading",
-          "settings": {
-            "text": "<p>A world of light.<br>A jewel of your own.</p>",
-            "heading_size": "display",
-            "html_tag": "h1",
-            "width": "custom",
-            "max_width": 800
-          }
-        },
-        {
-          "type": "text",
-          "settings": {
-            "text": "<p>Meet Octavia. Colour held in a precise geometry, made to become part of your story.</p>",
-            "text_size": "sm",
-            "width": "custom",
-            "max_width": 480
-          }
-        },
-        {
-          "type": "button",
-          "settings": {
-            "button_label": "Discover Octavia",
-            "button_style": "primary"
-          }
-        },
-        {
-          "type": "spacer",
-          "settings": {
-            "unit_desktop": "pixel",
-            "size_desktop_px": 56,
-            "show_on_mobile": true,
-            "unit_mobile": "pixel",
-            "size_mobile_px": 40
-          }
-        },
-        {
-          "type": "eyebrow",
-          "settings": {
-            "text": "<p>Octavia three-stone ring / Two-hand gesture / Copy center</p>"
-          }
-        },
-        {
-          "type": "text",
-          "settings": {
-            "text": "<p>Focus 216.5 / 165 + 181.2 carat / Octavia / Enamel / Gold / Solid 925</p>",
-            "text_size": "xs"
-          }
-        },
-        {
-          "type": "scroll-to",
-          "settings": {
-            "button_label": "Scroll to discover",
-            "target_section_number": 2,
-            "button_style": "tertiary"
-          }
+            "direction": "horizontal",
+            "horizontal_alignment": "space-between",
+            "position_horizontal": "center",
+            "width": "fill",
+            "width_mobile": "fill",
+            "gap_desktop": 32,
+            "gap_mobile": 32,
+            "height": "fit",
+            "height_mobile": "fit",
+            "padding_left": 120,
+            "padding_right": 120,
+            "customize_mobile_padding": true,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
+          },
+          "blocks": [
+            {
+              "type": "group",
+              "settings": {
+                "width": "fill",
+                "limit_width": true,
+                "max_width": 520,
+                "width_mobile": "fill",
+                "alignment": "left",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "center",
+                "gap_desktop": 36,
+                "gap_mobile": 36,
+                "height": "fit",
+                "height_mobile": "fit"
+              },
+              "blocks": [
+                {
+                  "type": "header",
+                  "settings": {
+                    "alignment": "left",
+                    "alignment_mobile": "center",
+                    "gap_desktop": 12,
+                    "gap_mobile": 12,
+                    "customize_mobile_alignment": true
+                  },
+                  "blocks": [
+                    {
+                      "type": "eyebrow",
+                      "settings": {
+                        "text": "<p>Outdoor Collection</p>"
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>Outdoor Furniture</p>",
+                        "heading_size": "xl",
+                        "width": "fill"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "Go to collection",
+                    "button_link": "/collections/outdoor-norden",
+                    "button_style": "primary"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "settings": {
+                "width": "custom",
+                "width_custom": 32,
+                "width_mobile": "fill",
+                "gap_desktop": 20,
+                "gap_mobile": 20,
+                "height": "fit",
+                "height_mobile": "fit",
+                "visibility": "desktop"
+              },
+              "blocks": [
+                {
+                  "type": "product-list",
+                  "settings": {
+                    "collection": "aike-outdoor-furniture",
+                    "max_products": 2,
+                    "layout_type": "grid",
+                    "columns_desktop": "2",
+                    "columns_tablet": "2",
+                    "columns_mobile": "2",
+                    "product_gap_desktop": 24,
+                    "product_gap_mobile": 12,
+                    "show_next_slide_preview_on_desktop": false,
+                    "show_next_slide_preview_on_mobile": false,
+                    "show_navigation_on_desktop": false,
+                    "show_pagination_on_desktop": false
+                  },
+                  "blocks": [
+                    {
+                      "type": "product-card",
+                      "settings": {
+                        "card_style": "card",
+                        "color_type": "color_scheme",
+                        "color_scheme": "scheme-1",
+                        "card_corner_radius": "radius_16",
+                        "card_content_padding": 8
+                      },
+                      "id": "product-card",
+                      "static": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -1043,6 +1122,160 @@
                     "button_style": "primary",
                     "show_icon": false
                   }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Outdoor Collection Video",
+      "category": "t:general.banners",
+      "settings": {
+        "width": "full",
+        "layout": "classic",
+        "media_type": "video",
+        "media_corner_radius": "square",
+        "video": "shopify://files/videos/aike-outdoor-collection.mp4",
+        "show_overlay": true,
+        "parallax_effect": "none",
+        "desktop_height": "custom",
+        "desktop_height_custom": 700,
+        "mobile_height": "custom",
+        "mobile_height_custom": 470,
+        "desktop_position": "center_left",
+        "mobile_position": "center_center",
+        "color_scheme": "scheme-1",
+        "content_color_scheme": "scheme-4",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "overlay_style": "solid",
+        "overlay": "#00000033",
+        "content_width": "fill",
+        "desktop_gap": 0,
+        "mobile_gap": 0
+      },
+      "blocks": [
+        {
+          "type": "group",
+          "settings": {
+            "direction": "horizontal",
+            "horizontal_alignment": "space-between",
+            "position_horizontal": "center",
+            "width": "fill",
+            "width_mobile": "fill",
+            "gap_desktop": 32,
+            "gap_mobile": 32,
+            "height": "fit",
+            "height_mobile": "fit",
+            "padding_left": 120,
+            "padding_right": 120,
+            "customize_mobile_padding": true,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
+          },
+          "blocks": [
+            {
+              "type": "group",
+              "settings": {
+                "width": "fill",
+                "limit_width": true,
+                "max_width": 510,
+                "width_mobile": "fill",
+                "alignment": "left",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "center",
+                "gap_desktop": 36,
+                "gap_mobile": 36,
+                "height": "fit",
+                "height_mobile": "fit"
+              },
+              "blocks": [
+                {
+                  "type": "header",
+                  "settings": {
+                    "alignment": "left",
+                    "alignment_mobile": "center",
+                    "gap_desktop": 12,
+                    "gap_mobile": 12,
+                    "customize_mobile_alignment": true
+                  },
+                  "blocks": [
+                    {
+                      "type": "eyebrow",
+                      "settings": {
+                        "text": "<p>Outdoor Collection</p>"
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>Outdoor Furniture</p>",
+                        "heading_size": "xl",
+                        "width": "fill"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "Go To Collection",
+                    "button_link": "/collections/outdoor-norden",
+                    "button_style": "primary"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "settings": {
+                "width": "custom",
+                "width_custom": 34,
+                "width_mobile": "fill",
+                "gap_desktop": 20,
+                "gap_mobile": 20,
+                "height": "fit",
+                "height_mobile": "fit",
+                "visibility": "desktop",
+                "limit_width": true,
+                "max_width": 540
+              },
+              "blocks": [
+                {
+                  "type": "product-list",
+                  "settings": {
+                    "collection": "aike-outdoor-furniture",
+                    "max_products": 2,
+                    "layout_type": "grid",
+                    "columns_desktop": "2",
+                    "columns_tablet": "2",
+                    "columns_mobile": "2",
+                    "product_gap_desktop": 24,
+                    "product_gap_mobile": 12,
+                    "show_next_slide_preview_on_desktop": false,
+                    "show_next_slide_preview_on_mobile": false,
+                    "show_navigation_on_desktop": false,
+                    "show_pagination_on_desktop": false
+                  },
+                  "blocks": [
+                    {
+                      "type": "product-card",
+                      "static": true,
+                      "settings": {
+                        "card_style": "card",
+                        "color_type": "color_scheme",
+                        "color_scheme": "scheme-1",
+                        "card_corner_radius": "radius_16",
+                        "card_content_padding": 8
+                      },
+                      "id": "product-card"
+                    }
+                  ]
                 }
               ]
             }

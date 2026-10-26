@@ -9,6 +9,7 @@
 {% else %}{% content_for 'block', type: '_header-top', id: 'header-top' %}{% endif %}
 
 {% stylesheet %}
+  .header-top.header-top--two-rows { padding: 0; border-bottom: 0; box-shadow: none; }
   .header--overlap-first-section {
     z-index: var(--z-drawer);
     margin-block-end: calc(var(--header-layout-height, 0px) * -1);
@@ -247,87 +248,232 @@
       "category": "t:general.header",
       "settings": {
         "section_width": "page_width",
-        "icon_size": 20,
-        "sticky_type": "none",
+        "icon_size": 24,
+        "sticky_type": "scroll_up",
         "color_scheme": "scheme-1",
         "header_overlay": false,
-        "transparent_color_scheme": "scheme-1"
+        "transparent_color_scheme": "scheme-1",
+        "layout": "two_rows",
+        "icon_style": "default",
+        "icon_size_mobile": 24,
+        "sticky_type_two_rows": "scroll_up"
       },
       "blocks": [
         {
-          "type": "_header-top",
-          "id": "header-top",
+          "type": "_header-two-row",
+          "settings": {
+            "gap": 40,
+            "actions_gap": 4,
+            "row_gap": 20,
+            "padding_top": 20,
+            "padding_bottom": 0,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 16,
+            "padding_bottom_mobile": 16,
+            "row_gap_mobile": 12,
+            "actions_gap_mobile": 4,
+            "bottom_separator": "none",
+            "show_account_mobile": true
+          },
+          "id": "header-two-row",
           "static": true,
+          "blocks": [
+            {
+              "type": "_header-logo",
+              "settings": {
+                "position": "left"
+              },
+              "id": "header-logo",
+              "static": true
+            },
+            {
+              "type": "_header-menu-toggle",
+              "settings": {
+                "position": "left"
+              },
+              "id": "header-menu-toggle",
+              "static": true
+            },
+            {
+              "type": "_header-search",
+              "settings": {
+                "type": "search_bar",
+                "label": "Search",
+                "font": "body",
+                "font_size": "md",
+                "letter_spacing": "normal",
+                "placeholder": "What can we help you find?",
+                "width": "centered",
+                "mobile_display": "search_bar",
+                "show_category_selector": true,
+                "category_menu": "aike-main-menu",
+                "category_label": "All",
+                "category_label_mobile": "All",
+                "color_scheme": "scheme-2"
+              },
+              "id": "header-search",
+              "static": true
+            },
+            {
+              "type": "_header-account",
+              "settings": {
+                "type": "icon",
+                "label": "Account",
+                "font": "accent",
+                "font_size": "md",
+                "letter_spacing": "normal"
+              },
+              "id": "header-account",
+              "static": true
+            },
+            {
+              "type": "_header-cart",
+              "settings": {
+                "type": "icon",
+                "label": "Cart",
+                "badge_type": "primary"
+              },
+              "id": "header-cart",
+              "static": true
+            },
+            {
+              "type": "_header-link",
+              "settings": {
+                "label": "Store Locator",
+                "link": "/pages/store-locator",
+                "open_in_new_tab": false,
+                "type": "icon_with_text",
+                "font": "body",
+                "font_size": "md"
+              },
+              "id": "header-location",
+              "static": true
+            }
+          ]
+        },
+        {
+          "type": "_header-top",
           "settings": {
             "bottom_separator": "line",
             "gap": 16,
-            "padding_top": 12,
-            "padding_bottom": 12,
+            "padding_top": 16,
+            "padding_bottom": 16,
             "customize_mobile_padding": true,
             "padding_top_mobile": 12,
             "padding_bottom_mobile": 12
           },
+          "id": "header-top",
+          "static": true,
           "blocks": [
             {
               "type": "_header-menu",
               "settings": {
-                "menu": "main-menu",
-                "gap": 24,
+                "menu": "torvex-main-menu",
+                "gap": 32,
                 "show_dropdown_icon": true,
                 "dropdown_trigger": "hover",
                 "font": "accent",
                 "font_size": "md",
                 "letter_spacing": "normal",
-                "text_case": "original"
-              },
-              "blocks": [
-                {
-                  "type": "_mega-menu-banners",
-                  "settings": {
-                    "menu_item": "Collections",
-                    "banner_width": 40,
-                    "gap": 12,
-                    "layout": "horizontal",
-                    "submenu_columns": "4",
-                    "limit_width": true,
-                    "max_width": 850
-                  },
-                  "blocks": [
-                    {
-                      "type": "_mega-menu-banner",
-                      "settings": {}
-                    },
-                    {
-                      "type": "_mega-menu-banner",
-                      "settings": {}
-                    }
-                  ]
-                }
-              ]
+                "text_case": "original",
+                "text_color": "",
+                "submenu_font": "body",
+                "submenu_font_size": "md",
+                "submenu_text_case": "original",
+                "submenu_text_color": ""
+              }
+            },
+            {
+              "type": "_header-menu-toggle",
+              "settings": {
+                "position": "left"
+              }
             },
             {
               "type": "_header-logo",
               "settings": {
-                "position": "center"
+                "position": "left"
               }
             },
             {
-              "type": "_header-menu-toggle"
+              "type": "_header-localization",
+              "settings": {
+                "dropdown_trigger": "click",
+                "show_country_selector": true,
+                "show_country_name": false,
+                "show_country_flag": true,
+                "show_language_selector": false,
+                "font_size": "md"
+              }
             },
             {
-              "type": "_header-localization"
+              "type": "_header-divider",
+              "settings": {
+                "full_height": false,
+                "height": 12,
+                "color_type": "inherit",
+                "border_color": "#dbd9d9"
+              }
             },
             {
-              "type": "_header-divider"
+              "type": "_header-search",
+              "settings": {
+                "type": "icon",
+                "label": "Search",
+                "font": "accent",
+                "font_size": "md",
+                "letter_spacing": "relaxed"
+              }
             },
             {
-              "type": "_header-search"
+              "type": "_header-account",
+              "settings": {
+                "type": "icon",
+                "label": "Account",
+                "font": "accent",
+                "font_size": "md",
+                "letter_spacing": "normal"
+              }
             },
             {
-              "type": "_header-account"
-            },
+              "type": "_header-cart",
+              "settings": {
+                "type": "icon",
+                "label": "Cart",
+                "badge_type": "primary"
+              }
+            }
+          ]
+        },
+        {
+          "type": "_header-bottom",
+          "settings": {
+            "gap": 32,
+            "padding_top": 20,
+            "padding_bottom": 19,
+            "separator": "line"
+          },
+          "id": "header-bottom",
+          "static": true,
+          "blocks": [
             {
-              "type": "_header-cart"
+              "type": "_header-menu",
+              "settings": {
+                "menu": "aike-main-menu",
+                "gap": 32,
+                "show_dropdown_icon": false,
+                "dropdown_trigger": "hover",
+                "font": "accent",
+                "font_size": "md",
+                "letter_spacing": "normal",
+                "text_case": "original",
+                "text_color": "#1A1A1A",
+                "submenu_font": "body",
+                "submenu_font_size": "md",
+                "submenu_text_case": "original",
+                "submenu_text_color": "",
+                "menu_scroll_step": "1"
+              }
             }
           ]
         }

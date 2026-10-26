@@ -181,6 +181,7 @@
 
   const resetSearchState = () => {
     stopPlaceholderRotation();
+    state.opener?.setAttribute('aria-expanded', 'false');
     if (state.input) state.input.value = '';
     resetPlaceholder(state.input);
     if (state.results) {
@@ -216,6 +217,10 @@
     if (!overlay || !input) return;
     const presentation = state.presentation || (window.ThemeOverlay ? window.ThemeOverlay.get(overlay) : null);
     state.presentation = presentation;
+    const inlineHeader = state.opener?.matches?.('[data-header-search-form] input[type="search"]');
+    overlay.classList.toggle('search-overlay--inline-header', Boolean(inlineHeader));
+    overlay.setAttribute('aria-modal', inlineHeader ? 'false' : 'true');
+    input.hidden = Boolean(inlineHeader);
     const header = document.querySelector('.shopify-section.header');
     overlay.style.setProperty('--search-overlay-top', `${Math.max(0, header?.getBoundingClientRect().bottom || 0)}px`);
     synchronizePanelPadding(header, overlay);
@@ -284,14 +289,18 @@
     const hasSuggestions = queries.length > 0;
     const suggestions = hasSuggestions ? `<aside class="search-overlay__suggestions"><p class="search-overlay__eyebrow eyebrow-text">${escapeHtml(labels.suggestionsLabel)}</p><ul class="search-overlay__suggestion-list body-text body-sm">${queries.map((item) => `<li><button class="link-underline" type="button" data-search-suggestion="${escapeHtml(item.text || item.styled_text || '')}">${escapeHtml(item.text || item.styled_text || '')}</button></li>`).join('')}</ul></aside>` : '';
     targetResults.classList.toggle('search-overlay__results--has-suggestions', hasSuggestions);
-    targetResults.innerHTML = `${suggestions}<div class="search-overlay__content"><div class="search-overlay__tabs scrollbar scrollbar--horizontal-mobile" role="tablist">${panels.map(([key, label], index) => `<button class="search-overlay__tab eyebrow-text" type="button" role="tab" aria-selected="${index === 0}" data-search-tab="${key}">${escapeHtml(label)}</button>`).join('')}</div>${panels.map(([key, , content], index) => `<div class="search-overlay__result-panel" role="tabpanel" data-search-panel="${key}"${index ? ' hidden' : ''}>${content}</div>`).join('')}</div>`;
+    targetResults.innerHTML = `${suggestions}<div class="search-overlay__content"><div class="search-overlay__tabs scrollbar scrollbar--horizontal" role="tablist">${panels.map(([key, label], index) => `<button class="search-overlay__tab eyebrow-text" type="button" role="tab" aria-selected="${index === 0}" data-search-tab="${key}">${escapeHtml(label)}</button>`).join('')}</div>${panels.map(([key, , content], index) => `<div class="search-overlay__result-panel" role="tabpanel" data-search-panel="${key}"${index ? ' hidden' : ''}>${content}</div>`).join('')}</div>`;
     targetResults.hidden = false;
     targetOverlay.classList.add('search-overlay--has-results');
     targetResults.querySelectorAll('[data-search-tab]').forEach((tab) => tab.addEventListener('click', () => {
       targetResults.querySelectorAll('[data-search-tab]').forEach((item) => item.setAttribute('aria-selected', String(item === tab)));
       targetResults.querySelectorAll('[data-search-panel]').forEach((panel) => { panel.hidden = panel.dataset.searchPanel !== tab.dataset.searchTab; });
     }));
-    targetResults.querySelectorAll('[data-search-suggestion]').forEach((button) => button.addEventListener('click', () => { targetInput.value = button.dataset.searchSuggestion; targetInput.dispatchEvent(new Event('input')); }));
+    targetResults.querySelectorAll('[data-search-suggestion]').forEach((button) => button.addEventListener('click', () => {
+      targetInput.value = button.dataset.searchSuggestion;
+      targetInput.dispatchEvent(new Event('input'));
+      if (state.opener?.matches?.('[data-header-search-form] input[type="search"]')) state.opener.focus({ preventScroll: true });
+    }));
   };
 
   const initializeOverlay = (nextOverlay) => {
@@ -317,6 +326,16 @@
     nextOverlay.dataset.searchOverlayReady = 'true';
 
     nextOverlay.addEventListener('close', resetSearchState);
+    nextOverlay.addEventListener('keydown', (event) => {
+      if (event.key !== 'Tab' || !nextOverlay.classList.contains('search-overlay--inline-header')) return;
+      const controls = [...nextOverlay.querySelectorAll('button, a[href], [tabindex]')]
+        .filter(control => control.tabIndex >= 0 && !control.disabled && control.getClientRects().length);
+      if ((event.shiftKey && event.target === controls[0]) || (!event.shiftKey && event.target === controls[controls.length - 1])) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        state.opener?.focus({ preventScroll: true });
+      }
+    }, true);
 
     nextInput.addEventListener('input', () => {
       const query = nextInput.value.trim();
@@ -349,6 +368,7 @@
           if (state.overlay !== nextOverlay || state.input !== nextInput || query !== nextInput.value.trim()) return;
           render(data.resources?.results || {}, qualifiedQuery(query), nextOverlay, nextResults, nextInput);
           nextInput.setAttribute('aria-expanded', 'true');
+          state.opener?.setAttribute('aria-expanded', 'true');
         } catch (error) {
           if (error.name !== 'AbortError' && state.overlay === nextOverlay) {
             nextResults.innerHTML = `<p class="search-overlay__empty body-text body-sm">${escapeHtml(nextOverlay.dataset.noResultsLabel)}</p>`;
@@ -379,17 +399,26 @@
     open({ focus: true });
   });
 
-  // Inline header typing uses this same predictive controller and results UI.
-  document.addEventListener('input', event => {
+  // Keep the Header as the visible editor; reuse the overlay's predictive
+  // controller without moving focus into a second search field.
+  document.addEventListener('input', (event) => {
     const source = event.target.closest?.('[data-header-search-form] input[type="search"]');
-    if (!source || !source.value.trim()) return;
+    if (!source) return;
     initializeOverlay(getOverlay());
     if (!state.input) return;
     state.opener = source;
     state.category = source.form?.querySelector('[data-header-search-category]')?.value || '';
     state.input.value = source.value;
-    open({ focus: true });
+    if (!source.value.trim()) { source.setAttribute('aria-expanded', 'false'); close(); return; }
+    source.setAttribute('aria-controls', 'SearchOverlayResults');
+    open({ focus: false });
     state.input.dispatchEvent(new Event('input'));
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'ArrowDown' || event.target !== state.opener || !state.presentation?.isOpen()) return;
+    const first = state.results?.querySelector('button, a[href]');
+    if (first) { event.preventDefault(); first.focus({ preventScroll: true }); }
   });
 
   document.addEventListener('keydown', (event) => {

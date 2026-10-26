@@ -34,7 +34,11 @@
   endunless
 
   assign card_ratio = settings.product_card_ratio | default: 'natural'
-  unless card_ratio == 'natural' or card_ratio == 'square' or card_ratio == 'portrait' or card_ratio == 'landscape' or card_ratio == 'ratio_7_6'
+  if card_ratio == 'original'
+    assign card_ratio = 'natural'
+  endif
+  assign card_ratio_options = 'natural,square,portrait,landscape,custom,ratio_1_1,ratio_4_5,ratio_3_4,ratio_2_3,ratio_9_16,ratio_16_9,ratio_3_2,ratio_4_3,ratio_5_4,ratio_7_6' | split: ','
+  unless card_ratio_options contains card_ratio
     assign card_ratio = 'natural'
   endunless
 
@@ -148,6 +152,23 @@
     when 'ratio_7_6'
       assign image_height = 686
   endcase
+  if card_ratio contains 'ratio_' or card_ratio == 'custom'
+    capture card_numeric_ratio
+      render 'image-ratio-value', setting: card_ratio, fallback_ratio: 'auto', custom_width: settings.product_card_ratio_custom_width, custom_height: settings.product_card_ratio_custom_height
+    endcapture
+    assign card_numeric_parts = card_numeric_ratio | strip | split: '/'
+    assign card_numeric_ratio = card_numeric_parts[0] | plus: 0.0
+    if card_numeric_parts.size == 2
+      assign card_numeric_height = card_numeric_parts[1] | plus: 0.0
+      if card_numeric_height > 0
+        assign card_numeric_ratio = card_numeric_ratio | divided_by: card_numeric_height
+      endif
+    endif
+    if card_numeric_ratio > 0
+      assign image_height = image_width | divided_by: card_numeric_ratio | round
+    endif
+  endif
+
 
   assign card_class = 'product-card product-card--' | append: card_style
   assign card_class = card_class | append: ' product-card--ratio-' | append: card_ratio

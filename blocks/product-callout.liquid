@@ -186,7 +186,7 @@
   assign product_callout_content_padding_mobile = block.settings.content_padding_mobile | default: 24 | plus: 0
 
   assign product_callout_hotspot_icon_style = block.settings.hotspot_icon_style | default: 'plus'
-  unless product_callout_hotspot_icon_style == 'dot' or product_callout_hotspot_icon_style == 'plus' or product_callout_hotspot_icon_style == 'tag' or product_callout_hotspot_icon_style == 'bag'
+  unless product_callout_hotspot_icon_style == 'plus_ring' or product_callout_hotspot_icon_style == 'dot' or product_callout_hotspot_icon_style == 'plus' or product_callout_hotspot_icon_style == 'tag' or product_callout_hotspot_icon_style == 'bag'
     assign product_callout_hotspot_icon_style = 'plus'
   endunless
 
@@ -358,6 +358,7 @@
 {% endif %}
 {% render 'product-callout-runtime' %}
 
+{% # theme-check-disable ExcessiveSettingsCount %}
 {% schema %}
 {
   "name": "t:general.product_callout",
@@ -1125,6 +1126,10 @@
         {
           "value": "bag",
           "label": "t:options.product_callout_icon_style.bag"
+        },
+        {
+          "value": "plus_ring",
+          "label": "t:options.product_callout_icon_style.plus_ring"
         }
       ],
       "default": "plus"
@@ -1214,3 +1219,4 @@
   ]
 }
 {% endschema %}
+{% # theme-check-enable ExcessiveSettingsCount %}

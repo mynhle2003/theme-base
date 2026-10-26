@@ -277,6 +277,7 @@
       items_data_attributes: 'data-product-list-items',
       next_slide_preview: product_list_show_next_slide_preview,
       next_slide_preview_mobile: block.settings.show_next_slide_preview_on_mobile,
+      card_width_mobile: block.settings.card_width_mobile,
       carousel_id: product_list_carousel_id,
       aria_label: product_list_aria_label,
       previous_selector: '[data-product-list-previous]',
@@ -536,6 +537,18 @@
       "id": "show_next_slide_preview_on_mobile",
       "label": "t:labels.show_next_slide_preview_on_mobile",
       "default": false,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "range",
+      "id": "card_width_mobile",
+      "label": "Mobile card width",
+      "info": "Set to 0 to use the mobile columns setting.",
+      "min": 0,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 0,
       "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
     },
     {

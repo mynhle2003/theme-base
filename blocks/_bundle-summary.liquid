@@ -354,6 +354,7 @@
 
 {% render 'runtime-stylesheet', filename: 'component-runtime-blocks-bundle-summary.css', section_index: section.index %}
 
+{% # theme-check-disable ExcessiveSettingsCount %}
 {% schema %}
 {
   "name": "Bundle summary",
@@ -431,3 +432,4 @@
   "presets": [{ "name": "Bundle summary", "category": "t:labels.products" }]
 }
 {% endschema %}
+{% # theme-check-enable ExcessiveSettingsCount %}

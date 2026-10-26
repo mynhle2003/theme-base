@@ -14,7 +14,8 @@
   assign first_card_alt = first_card_article.title | default: 'Blog post'
 
   assign first_card_ratio_setting = block.settings.ratio | default: 'original'
-  unless first_card_ratio_setting == 'original' or first_card_ratio_setting == 'square' or first_card_ratio_setting == 'portrait' or first_card_ratio_setting == 'landscape' or first_card_ratio_setting == 'wide'
+  assign first_card_ratio_setting_options = 'original,square,portrait,landscape,wide,custom,ratio_1_1,ratio_4_5,ratio_3_4,ratio_2_3,ratio_9_16,ratio_16_9,ratio_3_2,ratio_4_3,ratio_5_4,ratio_6_7,ratio_7_6' | split: ','
+  unless first_card_ratio_setting_options contains first_card_ratio_setting
     assign first_card_ratio_setting = 'original'
   endunless
   assign first_card_media_layout = block.settings.media_layout | default: 'horizontal'
@@ -32,6 +33,18 @@
     when 'wide'
       assign first_card_ratio = '1.7778'
   endcase
+  capture first_card_ratio
+    render 'image-ratio-number', setting: first_card_ratio_setting, fallback: first_card_ratio
+  endcapture
+  assign first_card_ratio = first_card_ratio | strip
+  if first_card_ratio_setting == 'custom'
+    assign ratio_width = block.settings.ratio_custom_width | plus: 0
+    assign ratio_height = block.settings.ratio_custom_height | plus: 0
+    if ratio_width > 0 and ratio_height > 0
+      assign first_card_ratio = ratio_width | times: 1.0 | divided_by: ratio_height
+    endif
+  endif
+
 
   assign first_card_alignment = block.settings.alignment | default: 'left'
   unless first_card_alignment == 'left' or first_card_alignment == 'center' or first_card_alignment == 'right'
@@ -216,27 +229,65 @@
       "options": [
         {
           "value": "original",
-          "label": "Auto"
+          "label": "Original"
         },
         {
-          "value": "square",
-          "label": "Square"
+          "value": "ratio_1_1",
+          "label": "Square (1:1)"
         },
         {
-          "value": "portrait",
-          "label": "Portrait"
+          "value": "ratio_4_5",
+          "label": "Portrait (4:5)"
         },
         {
-          "value": "landscape",
-          "label": "Landscape"
+          "value": "ratio_3_4",
+          "label": "Portrait (3:4)"
         },
         {
-          "value": "wide",
-          "label": "Wide"
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
+        },
+        {
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.image_ratio.custom"
         }
       ],
       "default": "original",
       "visible_if": "{{ block.settings.media_layout != 'overlay' }}"
+    },
+    {
+      "type": "number",
+      "id": "ratio_custom_width",
+      "label": "W",
+      "default": 16,
+      "visible_if": "{{ block.settings.ratio == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "ratio_custom_height",
+      "label": "H",
+      "default": 9,
+      "visible_if": "{{ block.settings.ratio == 'custom' }}"
     },
     {
       "type": "select",
@@ -361,7 +412,52 @@
       "type": "select",
       "id": "corner_radius",
       "label": "t:labels.corner_radius",
-      "options": [{"value": "inherit", "label": "Inherit"}, {"value": "square", "label": "Square"}, {"value": "radius_2", "label": "t:options.radius_preset.size_2"}, {"value": "radius_4", "label": "t:options.radius_preset.size_4"}, {"value": "radius_6", "label": "t:options.radius_preset.size_6"}, {"value": "rounded", "label": "Rounded"}, {"value": "radius_8", "label": "t:options.radius_preset.size_8"}, {"value": "radius_12", "label": "t:options.radius_preset.size_12"}, {"value": "radius_16", "label": "t:options.radius_preset.size_16"}, {"value": "radius_24", "label": "t:options.radius_preset.size_24"}, {"value": "radius_32", "label": "t:options.radius_preset.size_32"}],
+      "options": [
+        {
+          "value": "inherit",
+          "label": "Inherit"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "radius_2",
+          "label": "t:options.radius_preset.size_2"
+        },
+        {
+          "value": "radius_4",
+          "label": "t:options.radius_preset.size_4"
+        },
+        {
+          "value": "radius_6",
+          "label": "t:options.radius_preset.size_6"
+        },
+        {
+          "value": "rounded",
+          "label": "Rounded"
+        },
+        {
+          "value": "radius_8",
+          "label": "t:options.radius_preset.size_8"
+        },
+        {
+          "value": "radius_12",
+          "label": "t:options.radius_preset.size_12"
+        },
+        {
+          "value": "radius_16",
+          "label": "t:options.radius_preset.size_16"
+        },
+        {
+          "value": "radius_24",
+          "label": "t:options.radius_preset.size_24"
+        },
+        {
+          "value": "radius_32",
+          "label": "t:options.radius_preset.size_32"
+        }
+      ],
       "default": "inherit",
       "visible_if": "{{ block.settings.media_layout != 'overlay' }}"
     },

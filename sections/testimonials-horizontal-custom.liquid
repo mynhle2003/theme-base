@@ -103,10 +103,18 @@
 {
   "name": "t:general.testimonials_horizontal_custom",
   "class": "section-testimonials-horizontal-custom",
-  "enabled_on": { "templates": ["*"] },
+  "enabled_on": {
+    "templates": [
+      "*"
+    ]
+  },
   "blocks": [
-    { "type": "@theme" },
-    { "type": "@app" }
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "@app"
+    }
   ],
   "settings": [
     {
@@ -118,9 +126,18 @@
       "id": "section_width",
       "label": "t:labels.section_width",
       "options": [
-        { "value": "page_width", "label": "t:options.section_width.page_width" },
-        { "value": "full_width", "label": "t:options.section_width.full_width" },
-        { "value": "full_width_no_padding", "label": "t:options.section_width.full_width_no_padding" }
+        {
+          "value": "page_width",
+          "label": "t:options.section_width.page_width"
+        },
+        {
+          "value": "full_width",
+          "label": "t:options.section_width.full_width"
+        },
+        {
+          "value": "full_width_no_padding",
+          "label": "t:options.section_width.full_width_no_padding"
+        }
       ],
       "default": "page_width"
     },
@@ -129,9 +146,18 @@
       "id": "alignment",
       "label": "t:labels.alignment",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "right", "label": "t:options.alignment.right" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
       ],
       "default": "center"
     },
@@ -146,9 +172,18 @@
       "id": "alignment_mobile",
       "label": "t:labels.alignment_mobile",
       "options": [
-        { "value": "left", "label": "t:options.alignment.left" },
-        { "value": "center", "label": "t:options.alignment.center" },
-        { "value": "right", "label": "t:options.alignment.right" }
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
       ],
       "default": "center",
       "visible_if": "{{ section.settings.customize_mobile_alignment }}"
@@ -293,14 +328,13 @@
           "settings": {
             "columns_desktop": "3",
             "columns_mobile": "1",
-            "gap_desktop": 56,
+            "gap_desktop": 40,
             "gap_mobile": 24,
             "width": "fill",
             "show_navigation_on_desktop": false,
             "show_pagination_on_desktop": false,
             "show_pagination_on_mobile": false,
             "autoplay": false,
-            "loop": false,
             "padding_top": 0,
             "padding_bottom": 0,
             "customize_mobile_padding": false
@@ -315,10 +349,10 @@
                 "gap_mobile": 12,
                 "height": "fill",
                 "appearance_type": "inherit",
-                "border_type": "none",
                 "corner_radius": "square",
                 "shadow": "none",
-                "customize_mobile_padding": false
+                "customize_mobile_padding": false,
+                "border_thickness": 0
               },
               "blocks": [
                 {
@@ -371,10 +405,10 @@
                 "gap_mobile": 12,
                 "height": "fill",
                 "appearance_type": "inherit",
-                "border_type": "none",
                 "corner_radius": "square",
                 "shadow": "none",
-                "customize_mobile_padding": false
+                "customize_mobile_padding": false,
+                "border_thickness": 0
               },
               "blocks": [
                 {
@@ -427,10 +461,10 @@
                 "gap_mobile": 12,
                 "height": "fill",
                 "appearance_type": "inherit",
-                "border_type": "none",
                 "corner_radius": "square",
                 "shadow": "none",
-                "customize_mobile_padding": false
+                "customize_mobile_padding": false,
+                "border_thickness": 0
               },
               "blocks": [
                 {

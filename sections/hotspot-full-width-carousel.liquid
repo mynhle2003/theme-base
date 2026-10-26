@@ -153,7 +153,7 @@
   endunless
 
   assign hotspot_carousel_navigation_style = section.settings.navigation_style | default: 'primary'
-  unless hotspot_carousel_navigation_style == 'primary' or hotspot_carousel_navigation_style == 'secondary' or hotspot_carousel_navigation_style == 'outline'
+  unless hotspot_carousel_navigation_style == 'icon_only' or hotspot_carousel_navigation_style == 'primary' or hotspot_carousel_navigation_style == 'secondary' or hotspot_carousel_navigation_style == 'outline'
     assign hotspot_carousel_navigation_style = 'primary'
   endunless
 
@@ -198,6 +198,7 @@
   <div
     class="hotspot-full-width-carousel {% if hotspot_carousel_controls_below %}hotspot-full-width-carousel--controls-below {% endif %}hotspot-full-width-carousel--width-{{ hotspot_carousel_width }} hotspot-full-width-carousel--desktop-{{ hotspot_carousel_desktop_height }} hotspot-full-width-carousel--mobile-{{ hotspot_carousel_mobile_height }} section-color-scope color-scheme {{ hotspot_carousel_scheme }}"
     style="
+      --hotspot-carousel-card-width-desktop: {{ section.settings.card_width_desktop | default: 0 }}px;
       --hotspot-carousel-padding-top: {{ hotspot_carousel_padding_top }}px;
       --hotspot-carousel-padding-bottom: {{ hotspot_carousel_padding_bottom }}px;
       {% if section.settings.customize_mobile_padding %}--hotspot-carousel-padding-top-mobile: {{ hotspot_carousel_padding_top_mobile }}px;--hotspot-carousel-padding-bottom-mobile: {{ hotspot_carousel_padding_bottom_mobile }}px;{% endif %}
@@ -206,6 +207,10 @@
       {% endif %}
     "
     data-hotspot-full-width-carousel
+    {% if section.settings.card_width_desktop > 0 %}data-carousel-card-width-desktop="{{ section.settings.card_width_desktop }}"{% endif %}
+    {% if section.settings.desktop_media_ratio == '16_9' %}data-desktop-media-ratio="16_9"{% endif %}
+    {% if section.settings.mobile_media_ratio == '7_5' %}data-mobile-media-ratio="7_5"{% endif %}
+    {% if section.settings.mobile_full_bleed %}data-mobile-full-bleed{% endif %}
     data-carousel-block
     data-transition="{{ hotspot_carousel_transition }}"
     data-show-next-slide-preview-on-desktop="{{ hotspot_carousel_show_next_slide_preview }}"
@@ -284,13 +289,13 @@
                 %}
               {% else %}
               {% if hotspot_carousel_show_arrows %}
-                <button class="btn btn--unstyled btn--icon swiper-nav-button hotspot-full-width-carousel__fraction-button" type="button" data-carousel-previous aria-label="{{ hotspot_carousel_previous_label | escape }}">
+                <button class="btn btn--unstyled btn--icon swiper-nav-button hotspot-full-width-carousel__fraction-button{% if hotspot_carousel_navigation_style == 'icon_only' %} swiper-nav-button--icon-only{% endif %}" type="button" data-carousel-previous aria-label="{{ hotspot_carousel_previous_label | escape }}">
                   {% render 'carousel-navigation-icon', icon: hotspot_carousel_navigation_icon, direction: 'previous' %}
                 </button>
               {% endif %}
               {{ hotspot_carousel_pagination }}
               {% if hotspot_carousel_show_arrows %}
-                <button class="btn btn--unstyled btn--icon swiper-nav-button hotspot-full-width-carousel__fraction-button" type="button" data-carousel-next aria-label="{{ hotspot_carousel_next_label | escape }}">
+                <button class="btn btn--unstyled btn--icon swiper-nav-button hotspot-full-width-carousel__fraction-button{% if hotspot_carousel_navigation_style == 'icon_only' %} swiper-nav-button--icon-only{% endif %}" type="button" data-carousel-next aria-label="{{ hotspot_carousel_next_label | escape }}">
                   {% render 'carousel-navigation-icon', icon: hotspot_carousel_navigation_icon, direction: 'next' %}
                 </button>
               {% endif %}
@@ -317,7 +322,7 @@
           {% if hotspot_carousel_has_multiple_slides and hotspot_carousel_show_pagination and hotspot_carousel_use_fraction %}
             <div class="hotspot-full-width-carousel__fraction-controls hotspot-full-width-carousel__fraction-controls--desktop-{{ hotspot_carousel_pagination_position_desktop }} hotspot-full-width-carousel__fraction-controls--mobile-{{ hotspot_carousel_pagination_position_mobile }} {{ hotspot_carousel_controls_scheme_class }}">
               {% if hotspot_carousel_show_arrows %}
-                <button class="btn btn--unstyled btn--icon swiper-nav-button hotspot-full-width-carousel__fraction-button" type="button" data-carousel-fraction-previous aria-label="{{ hotspot_carousel_previous_label | escape }}">
+                <button class="btn btn--unstyled btn--icon swiper-nav-button hotspot-full-width-carousel__fraction-button{% if hotspot_carousel_navigation_style == 'icon_only' %} swiper-nav-button--icon-only{% endif %}" type="button" data-carousel-fraction-previous aria-label="{{ hotspot_carousel_previous_label | escape }}">
                   {% render 'carousel-navigation-icon', icon: hotspot_carousel_navigation_icon, direction: 'previous' %}
                 </button>
               {% endif %}
@@ -325,7 +330,7 @@
                 <span data-carousel-fraction-current>1</span>/<span data-carousel-fraction-total>{{ hotspot_carousel_slide_count }}</span>
               </span>
               {% if hotspot_carousel_show_arrows %}
-                <button class="btn btn--unstyled btn--icon swiper-nav-button hotspot-full-width-carousel__fraction-button" type="button" data-carousel-fraction-next aria-label="{{ hotspot_carousel_next_label | escape }}">
+                <button class="btn btn--unstyled btn--icon swiper-nav-button hotspot-full-width-carousel__fraction-button{% if hotspot_carousel_navigation_style == 'icon_only' %} swiper-nav-button--icon-only{% endif %}" type="button" data-carousel-fraction-next aria-label="{{ hotspot_carousel_next_label | escape }}">
                   {% render 'carousel-navigation-icon', icon: hotspot_carousel_navigation_icon, direction: 'next' %}
                 </button>
               {% endif %}
@@ -530,6 +535,10 @@
         {
           "value": "outline",
           "label": "t:options.button_variant.outline"
+        },
+        {
+          "value": "icon_only",
+          "label": "t:options.button_variant.icon_only"
         }
       ],
       "default": "primary",
@@ -787,6 +796,55 @@
       "unit": "px",
       "default": 40,
       "visible_if": "{{ section.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "select",
+      "id": "mobile_media_ratio",
+      "label": "Mobile media ratio",
+      "options": [
+        {
+          "value": "height",
+          "label": "Use selected height"
+        },
+        {
+          "value": "7_5",
+          "label": "7:5"
+        }
+      ],
+      "default": "height"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_full_bleed",
+      "label": "Edge-to-edge media on mobile",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "card_width_desktop",
+      "label": "Desktop slide width",
+      "info": "Set to 0 to use the full container width.",
+      "min": 0,
+      "max": 1600,
+      "step": 16,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "desktop_media_ratio",
+      "label": "Desktop media ratio",
+      "options": [
+        {
+          "value": "height",
+          "label": "Use selected height"
+        },
+        {
+          "value": "16_9",
+          "label": "16:9"
+        }
+      ],
+      "default": "height"
     }
   ],
   "presets": [
@@ -794,55 +852,49 @@
       "name": "t:general.hotspot_carousel",
       "category": "t:general.banners",
       "settings": {
-        "width": "full",
-        "show_next_slide_preview_on_desktop": false,
-        "transition_style": "slide",
-        "desktop_height": "medium",
-        "mobile_height": "small",
+        "width": "page",
+        "show_next_slide_preview_on_desktop": true,
+        "desktop_height": "small",
+        "mobile_height": "extra_small",
         "show_arrows": true,
-        "navigation_style": "primary",
-        "navigation_icon": "arrow",
-        "navigation_behavior": "show_on_hover",
-        "show_pagination": true,
+        "navigation_position": "bottom",
+        "navigation_style": "icon_only",
+        "navigation_icon": "chevron",
+        "navigation_behavior": "always",
         "pagination_type": "bullets",
-        "pagination_position_desktop": "left",
-        "pagination_position_mobile": "center",
-        "aria_label": "Hotspot carousel",
-        "show_product_type": true,
-        "show_product_image": true,
-        "show_price": true,
-        "product_link_label": "View product",
+        "pagination_position_desktop": "center",
         "color_scheme": "scheme-1",
-        "padding_top": 40,
-        "padding_bottom": 40,
-        "customize_mobile_padding": false,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_top": 20,
+        "padding_bottom": 48,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48,
+        "show_pagination": true,
+        "pagination_position_mobile": "center",
+        "card_width_desktop": 1024,
+        "desktop_media_ratio": "16_9",
+        "mobile_media_ratio": "7_5",
+        "mobile_full_bleed": true,
+        "aria_label": "Shop the Look",
+        "product_link_label": ""
       },
       "blocks": [
         {
           "type": "header",
           "settings": {
-            "width": "fit",
             "alignment": "center",
-            "gap_desktop": 8,
-            "gap_mobile": 8,
+            "width": "fill",
             "padding_bottom": 40,
-            "padding_bottom_mobile": 40
+            "customize_mobile_padding": true,
+            "padding_bottom_mobile": 32
           },
           "blocks": [
-            {
-              "type": "eyebrow",
-              "settings": {
-                "text": "<p>SUBHEADING</p>"
-              }
-            },
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Hotspot carousel</p>",
+                "text": "<p>Shop the Look</p>",
                 "heading_size": "lg",
-                "html_tag": "h2"
+                "width": "fill"
               }
             }
           ]
@@ -850,42 +902,50 @@
         {
           "type": "product-callout",
           "settings": {
-            "editor_title": "Product callout 1",
-            "content_color_scheme": "scheme-3",
-            "desktop_image_position": "center center",
-            "mobile_image_position": "center center",
-            "hotspot_icon_style": "dot",
-            "hotspot_behavior": "click"
+            "image": "shopify://shop_images/aike-47018-7287-imgImage1.webp",
+            "show_overlay": false,
+            "desktop_height": "small",
+            "mobile_height": "extra_small",
+            "content_layout": "below",
+            "heading": "",
+            "text": "",
+            "button_label": "",
+            "hotspot_icon_style": "plus_ring",
+            "corner_radius": "radius_12",
+            "mobile_image": "shopify://shop_images/norden-hotspot-mobile-photo.avif"
           },
           "blocks": [
             {
               "type": "hotspot",
               "settings": {
-                "vertical_position": 50,
-                "horizontal_position": 22,
-                "customize_mobile_position": false,
-                "mobile_vertical_position": 50,
-                "mobile_horizontal_position": 22
+                "product": "indivi-2-5-seater-sofa",
+                "vertical_position": 55,
+                "horizontal_position": 67,
+                "customize_mobile_position": true,
+                "mobile_horizontal_position": 70,
+                "mobile_vertical_position": 58
               }
             },
             {
               "type": "hotspot",
               "settings": {
-                "vertical_position": 56,
-                "horizontal_position": 57,
-                "customize_mobile_position": false,
-                "mobile_vertical_position": 56,
-                "mobile_horizontal_position": 57
+                "product": "desk-lamp",
+                "vertical_position": 27,
+                "horizontal_position": 33,
+                "customize_mobile_position": true,
+                "mobile_horizontal_position": 30,
+                "mobile_vertical_position": 30
               }
             },
             {
               "type": "hotspot",
               "settings": {
-                "vertical_position": 73,
-                "horizontal_position": 77,
-                "customize_mobile_position": false,
-                "mobile_vertical_position": 73,
-                "mobile_horizontal_position": 77
+                "product": "sideboard-with-drop-down-section",
+                "vertical_position": 71,
+                "horizontal_position": 12,
+                "customize_mobile_position": true,
+                "mobile_horizontal_position": 12,
+                "mobile_vertical_position": 69
               }
             }
           ]
@@ -893,42 +953,40 @@
         {
           "type": "product-callout",
           "settings": {
-            "editor_title": "Product callout 2",
-            "content_color_scheme": "scheme-3",
-            "desktop_image_position": "center center",
-            "mobile_image_position": "center center",
-            "hotspot_icon_style": "dot",
-            "hotspot_behavior": "click"
+            "image": "shopify://shop_images/aike-47018-7287-imgImage2.webp",
+            "show_overlay": false,
+            "desktop_height": "small",
+            "mobile_height": "extra_small",
+            "content_layout": "below",
+            "heading": "",
+            "text": "",
+            "button_label": "",
+            "hotspot_icon_style": "plus_ring",
+            "corner_radius": "radius_12"
           },
           "blocks": [
             {
               "type": "hotspot",
               "settings": {
-                "vertical_position": 50,
-                "horizontal_position": 22,
-                "customize_mobile_position": false,
-                "mobile_vertical_position": 50,
-                "mobile_horizontal_position": 22
+                "product": "paddle-pendant",
+                "vertical_position": 20,
+                "horizontal_position": 50
               }
             },
             {
               "type": "hotspot",
               "settings": {
-                "vertical_position": 56,
-                "horizontal_position": 57,
-                "customize_mobile_position": false,
-                "mobile_vertical_position": 56,
-                "mobile_horizontal_position": 57
+                "product": "princeton-chair",
+                "vertical_position": 70,
+                "horizontal_position": 50
               }
             },
             {
               "type": "hotspot",
               "settings": {
-                "vertical_position": 73,
-                "horizontal_position": 77,
-                "customize_mobile_position": false,
-                "mobile_vertical_position": 73,
-                "mobile_horizontal_position": 77
+                "product": "cancun-coffee-table",
+                "vertical_position": 58,
+                "horizontal_position": 32
               }
             }
           ]
@@ -936,42 +994,40 @@
         {
           "type": "product-callout",
           "settings": {
-            "editor_title": "Product callout 3",
-            "content_color_scheme": "scheme-3",
-            "desktop_image_position": "center center",
-            "mobile_image_position": "center center",
-            "hotspot_icon_style": "dot",
-            "hotspot_behavior": "click"
+            "image": "shopify://shop_images/aike-47018-7287-imgImage.webp",
+            "show_overlay": false,
+            "desktop_height": "small",
+            "mobile_height": "extra_small",
+            "content_layout": "below",
+            "heading": "",
+            "text": "",
+            "button_label": "",
+            "hotspot_icon_style": "plus_ring",
+            "corner_radius": "radius_12"
           },
           "blocks": [
             {
               "type": "hotspot",
               "settings": {
-                "vertical_position": 50,
-                "horizontal_position": 22,
-                "customize_mobile_position": false,
-                "mobile_vertical_position": 50,
-                "mobile_horizontal_position": 22
+                "product": "element-bed-mounted-headboard",
+                "vertical_position": 61,
+                "horizontal_position": 28
               }
             },
             {
               "type": "hotspot",
               "settings": {
-                "vertical_position": 56,
-                "horizontal_position": 57,
-                "customize_mobile_position": false,
-                "mobile_vertical_position": 56,
-                "mobile_horizontal_position": 57
+                "product": "sideboard-with-drop-down-section",
+                "vertical_position": 86,
+                "horizontal_position": 53
               }
             },
             {
               "type": "hotspot",
               "settings": {
-                "vertical_position": 73,
-                "horizontal_position": 77,
-                "customize_mobile_position": false,
-                "mobile_vertical_position": 73,
-                "mobile_horizontal_position": 77
+                "product": "paddle-pendant",
+                "vertical_position": 46,
+                "horizontal_position": 57
               }
             }
           ]

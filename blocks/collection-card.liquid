@@ -20,6 +20,10 @@
   endif
   assign collection_card_scheme = collection_card_scheme | default: 'scheme-1' | handleize
   assign collection_card_placement = block.settings.placement | default: 'below_image'
+  assign collection_card_position = block.settings.position | default: 'bottom'
+  unless collection_card_position == 'top' or collection_card_position == 'center' or collection_card_position == 'bottom'
+    assign collection_card_position = 'bottom'
+  endunless
   assign collection_card_radius = 'var(--card-radius)'
   case block.settings.corner_radius
     when 'radius_2', 'radius_4', 'radius_6', 'radius_8', 'radius_12', 'radius_16', 'radius_24', 'radius_32'
@@ -58,7 +62,8 @@
   if collection_card_ratio_setting == 'original'
     assign collection_card_ratio_setting = 'auto'
   endif
-  unless collection_card_ratio_setting == 'auto' or collection_card_ratio_setting == 'square' or collection_card_ratio_setting == 'portrait' or collection_card_ratio_setting == 'landscape' or collection_card_ratio_setting == 'ratio_7_6' or collection_card_ratio_setting == 'ratio_6_7' or collection_card_ratio_setting == 'wide' or collection_card_ratio_setting == 'custom'
+  assign collection_card_ratio_setting_options = 'auto,square,portrait,landscape,ratio_7_6,ratio_6_7,wide,custom,original,ratio_1_1,ratio_4_5,ratio_3_4,ratio_2_3,ratio_9_16,ratio_16_9,ratio_3_2,ratio_4_3,ratio_5_4' | split: ','
+  unless collection_card_ratio_setting_options contains collection_card_ratio_setting
     assign collection_card_ratio_setting = 'auto'
   endunless
   assign collection_card_ratio = 'auto'
@@ -81,6 +86,18 @@
         assign collection_card_ratio = 1
       endif
   endcase
+  capture collection_card_ratio
+    render 'image-ratio-number', setting: collection_card_ratio_setting, fallback: collection_card_ratio
+  endcapture
+  assign collection_card_ratio = collection_card_ratio | strip
+  if collection_card_ratio_setting == 'custom'
+    assign ratio_width = block.settings.ratio_custom_width | plus: 0
+    assign ratio_height = block.settings.ratio_custom_height | plus: 0
+    if ratio_width > 0 and ratio_height > 0
+      assign collection_card_ratio = ratio_width | times: 1.0 | divided_by: ratio_height
+    endif
+  endif
+
   assign collection_card_gap_desktop = block.settings.gap_desktop | default: 4 | plus: 0
   assign collection_card_gap_mobile = block.settings.gap_mobile | default: collection_card_gap_desktop | plus: 0
   if collection_card_gap_desktop < 0 or collection_card_gap_desktop > 40
@@ -150,6 +167,7 @@
 <article
   class="collection-card-kernel collection-card-kernel--{{ collection_card_placement }} collection-card-kernel--{{ collection_card_ratio_setting }}{% if block.settings.hover_zoom %} collection-card-kernel--zoom media-hover-zoom{% endif %}{% if collection_card_is_placeholder %} collection-card-kernel--placeholder{% else %} collection-card-kernel--linked{% endif %}{% if request.design_mode %} collection-card-kernel--design-mode{% endif %}{% if block.settings.color_type == 'color_scheme' %} color-scheme section-color-scope {{ collection_card_scheme }}{% endif %}"
   data-collection-card
+  data-content-position="{{ collection_card_position }}"
   style="--collection-card-media-padding:{{ block.settings.media_padding | default: 0 }}px;--card-border:{{ block.settings.border_thickness | default: 0 }}px;--card-align:{{ block.settings.alignment | default: 'left' }};--collection-card-radius:{{ collection_card_radius }};--collection-card-shadow:{{ collection_card_shadow }};--collection-card-ratio:{{ collection_card_ratio }};{% if collection_card_padding_style != blank %}{{ collection_card_padding_style }}{% endif %}"
   {{ block.shopify_attributes }}
 >
@@ -209,47 +227,63 @@
       "label": "t:labels.image_ratio",
       "options": [
         {
-          "value": "auto",
-          "label": "t:options.image_ratio.auto"
+          "value": "original",
+          "label": "Original"
         },
         {
-          "value": "square",
-          "label": "t:options.image_ratio.square"
+          "value": "ratio_1_1",
+          "label": "Square (1:1)"
         },
         {
-          "value": "portrait",
-          "label": "t:options.image_ratio.portrait"
+          "value": "ratio_4_5",
+          "label": "Portrait (4:5)"
         },
         {
-          "value": "landscape",
-          "label": "t:options.image_ratio.landscape"
+          "value": "ratio_3_4",
+          "label": "Portrait (3:4)"
         },
         {
-          "value": "ratio_6_7",
-          "label": "Portrait (6:7)"
+          "value": "ratio_2_3",
+          "label": "Portrait (2:3)"
         },
         {
-          "value": "ratio_7_6",
-          "label": "t:options.image_ratio.ratio_7_6"
+          "value": "ratio_9_16",
+          "label": "Portrait (9:16)"
         },
         {
-          "value": "wide",
-          "label": "t:options.image_ratio.wide"
+          "value": "ratio_16_9",
+          "label": "Landscape (16:9)"
+        },
+        {
+          "value": "ratio_3_2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "ratio_4_3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "ratio_5_4",
+          "label": "Landscape (5:4)"
         },
         {
           "value": "custom",
           "label": "t:options.image_ratio.custom"
         }
       ],
-      "default": "auto"
+      "default": "original"
     },
     {
-      "type": "range",
-      "id": "ratio_custom",
-      "label": "t:labels.custom_image_ratio",
-      "min": 0.3,
-      "max": 3,
-      "step": 0.1,
+      "type": "number",
+      "id": "ratio_custom_width",
+      "label": "W",
+      "default": 1,
+      "visible_if": "{{ block.settings.ratio == 'custom' }}"
+    },
+    {
+      "type": "number",
+      "id": "ratio_custom_height",
+      "label": "H",
       "default": 1,
       "visible_if": "{{ block.settings.ratio == 'custom' }}"
     },
@@ -372,10 +406,45 @@
       "default": "below_image"
     },
     {
-      "type": "text_alignment",
+      "type": "select",
+      "id": "position",
+      "label": "Position",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "bottom",
+      "visible_if": "{{ block.settings.placement == 'on_image' }}"
+    },
+    {
+      "type": "select",
       "id": "alignment",
       "label": "t:labels.alignment",
-      "default": "left"
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
+      ]
     },
     {
       "type": "header",
