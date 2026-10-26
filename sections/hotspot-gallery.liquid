@@ -435,7 +435,7 @@
             "alignment": "left",
             "customize_mobile_alignment": true,
             "alignment_mobile": "left",
-            "gap_desktop": 16,
+            "gap_desktop": 12,
             "gap_mobile": 12,
             "max_width": 360
           },
@@ -443,7 +443,21 @@
           "id": "header",
           "blocks": [
             {
-              "type":  "eyebrow",
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "left",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "left",
+                "gap_desktop": 8,
+                "gap_mobile": 8,
+                "width": "fill",
+                "height": "fit",
+                "width_mobile": "fill"
+              },
+              "blocks": [
+                {
+                  "type": "eyebrow",
                   "settings": {
                     "animation_delay": 0,
                     "animation_type": "fade",
@@ -452,28 +466,29 @@
                     "icon": "square",
                     "show_background": false
                   }
-
-            },
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>This week’s highlights</p>",
-                "heading_size": "xl",
-                "html_tag": "h2",
-                "width": "fill"
-              ,
-                "animation_type": "slide-bottom",
-                "animation_delay": 50}
+                },
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>This week’s highlights</p>",
+                    "heading_size": "xl",
+                    "html_tag": "h2",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
+                  }
+                }
+              ]
             },
             {
               "type": "text",
               "settings": {
-                "text": "<p>Uncover the must-have items that are capturing the hearts of our shoppers this week, ensuring you stay comfortable during your workouts</p>",
+                "text": "<p>Uncover the must-have item that are capturing the hearts of our shoppers this week, ensuring you stay comfortable during your workouts</p>",
                 "text_size": "md",
-                "width": "fill"
-              ,
+                "width": "fill",
                 "animation_type": "fade",
-                "animation_delay": 100}
+                "animation_delay": 100
+              }
             }
           ]
         },
