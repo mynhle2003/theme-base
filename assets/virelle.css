@@ -402,9 +402,15 @@
   background-color: var(--timeline-list-inactive-color, var(--border-color));
   border-color: var(--timeline-list-inactive-color, var(--border-color));
 }
-/* Kinetra Timeline: one Figma rail treatment for all progress variants. */
-.section-timeline .timeline-list__navigation:is(.timeline-list__navigation--dots-with-progress, .timeline-list__navigation--progress, .timeline-list__navigation--progress-slider) .timeline-list__control > span {
+/* Kinetra Timeline: shared label and active-line treatment, including Tabs. */
+.section-timeline .timeline-list__navigation:is(.timeline-list__navigation--dots-with-progress, .timeline-list__navigation--progress, .timeline-list__navigation--progress-slider, .timeline-list__navigation--tabs) .timeline-list__control > span {
   font-size: var(--font-body-md);
+}
+.section-timeline .timeline-list__navigation-list::after {
+  background-color: var(--timeline-list-active-color, var(--heading-color));
+}
+.section-timeline .timeline-list__navigation--tabs .timeline-list__navigation-list::after {
+  height: 2px;
 }
 .section-timeline .timeline-list__navigation--dots-with-progress .timeline-list__control {
   gap: 12px;
