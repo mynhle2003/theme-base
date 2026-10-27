@@ -266,7 +266,8 @@
       "id": "auto_position_price",
       "label": "Auto position price",
       "default": false,
-      "info": "Places price beside the title when space allows."
+      "info": "Places price beside the title when space allows.",
+      "visible_if": "{{ block.settings.show_price }}"
     },
     {
       "type": "range",
@@ -276,7 +277,8 @@
       "max": 100,
       "step": 1,
       "default": 4,
-      "unit": "px"
+      "unit": "px",
+      "visible_if": "{{ block.settings.show_price }}"
     },
     {
       "type": "range",
@@ -286,7 +288,8 @@
       "max": 100,
       "step": 1,
       "default": 4,
-      "unit": "px"
+      "unit": "px",
+      "visible_if": "{{ block.settings.show_price }}"
     },
     {
       "type": "header",
@@ -316,7 +319,8 @@
           "label": "Tertiary"
         }
       ],
-      "default": "secondary"
+      "default": "secondary",
+      "visible_if": "{{ block.settings.show_add_to_cart }}"
     },
     {
       "type": "range",
@@ -388,7 +392,8 @@
       "max": 4,
       "step": 1,
       "default": 1,
-      "unit": "px"
+      "unit": "px",
+      "visible_if": "{{ block.settings.enable_boxed_layout }}"
     },
     {
       "type": "select",
@@ -416,13 +421,15 @@
           "label": "Pill"
         }
       ],
-      "default": "inherit"
+      "default": "inherit",
+      "visible_if": "{{ block.settings.enable_boxed_layout }}"
     },
     {
       "type": "checkbox",
       "id": "shadow",
       "label": "Use product card shadow",
-      "default": false
+      "default": false,
+      "visible_if": "{{ block.settings.enable_boxed_layout }}"
     },
     {
       "type": "color_scheme",
@@ -467,7 +474,8 @@
       "max": 100,
       "step": 1,
       "default": 16,
-      "unit": "px"
+      "unit": "px",
+      "visible_if": "{{ block.settings.enable_boxed_layout }}"
     },
     {
       "type": "range",
@@ -477,7 +485,8 @@
       "max": 100,
       "step": 1,
       "default": 12,
-      "unit": "px"
+      "unit": "px",
+      "visible_if": "{{ block.settings.enable_boxed_layout }}"
     },
     {
       "type": "range",
