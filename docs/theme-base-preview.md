@@ -1,5 +1,25 @@
 # Shopify preview cho repo base cá nhân
 
+Mỗi checkout phải chọn một draft riêng trên store. Khi chưa có cấu hình,
+`preview start` hiển thị các draft và hỏi nhập ID đúng trên store hoặc `new`
+để tạo draft riêng. Trong môi trường không tương tác, lệnh dừng và yêu cầu
+truyền lựa chọn rõ ràng:
+
+```sh
+node theme-base preview start --theme <ID>
+# Chỉ dùng khi chưa có draft riêng; tạo draft và upload code local
+node theme-base preview start --theme new
+```
+
+Lệnh kiểm tra ID tồn tại trên đúng store và chỉ nhận role `unpublished`.
+Theme live/development không được chọn. Nếu đã có draft cùng tên, lệnh yêu cầu
+chọn ID đó thay vì tạo trùng. Lựa chọn được lưu trong
+`.shopify/theme-base-preview/target.json` (Git ignore) và được kiểm tra lại khi
+chạy. Dùng `--theme <ID>` để đổi đích sau khi dừng phiên cũ.
+
+Supervisor luôn truyền `--theme <ID>`; không tự dùng development theme chung.
+Cổng local khác nhau không tách development theme mặc định của Shopify.
+
 Preview chạy theme của nhánh đang checkout trên store `layouthub-template-v2.myshopify.com`.
 Không cần đổi cổng thủ công: supervisor dò cổng trống trong dải `9300-9399`, tách
 khỏi cổng `9292` của repo team, rồi mở preview tại địa chỉ loopback `127.0.0.1`.
@@ -23,12 +43,7 @@ bằng `--store <store>` hoặc truyền đầy đủ domain, ví dụ
 Nếu gõ nhầm `lauyouthub-template-v2`, lệnh tự chuẩn hóa thành store chính thức
 `layouthub-template-v2.myshopify.com` và báo lại trước khi khởi động preview.
 Shopify CLI `theme dev` theo dõi checkout hiện tại và tự đồng bộ các thay đổi file
-lên unpublished theme riêng `Arche template (Minhle)`. Trước mỗi lần chạy/restart,
-supervisor tra danh sách theme, yêu cầu đúng một theme trùng tên và role
-`unpublished`, rồi truyền ID cụ thể qua `--theme`. Không tìm thấy, trùng tên hoặc
-theme đã publish thì dừng; không fallback sang development theme chung.
-Điều này tách Arche khỏi các phiên Elara/Essen dùng cùng store: cổng riêng chỉ tách
-HTTP server local, không tách development theme trên Shopify. Supervisor tự khởi động lại CLI sau khi tiến trình
+lên draft đã chọn của store. Supervisor tự khởi động lại CLI sau khi tiến trình
 bị thoát hoặc cổng bị mất; thời gian chờ tăng dần tối đa 60 giây khi lỗi lặp lại.
 Khi terminal `preview start` còn mở, launcher cũng tự khởi động lại supervisor nếu
 supervisor thoát bất thường. Phiên cũ được dọn theo process/store/cổng đã ghi trong
@@ -53,7 +68,7 @@ cũ. Hãy chạy `stop`, checkout nhánh muốn xem, rồi chạy `start` lại.
 
 Lệnh tự chọn cổng trống trong dải `9300-9399`, tránh cổng mặc định `9292` để có
 thể theo dõi riêng request của preview này. Lệnh dùng `--nodelete`, không chỉ định theme đang publish và không publish theme.
-Lệnh chỉ dùng unpublished theme Arche đã tồn tại trên store. Các file
+Chỉ lựa chọn `new` mới tạo draft riêng trên store. Các file
 preview được upload tới store nhưng file trong repo không bị thay đổi bởi thao tác
 này. Đảm bảo Shopify CLI đã đăng nhập tài khoản có quyền với store.
 

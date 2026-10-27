@@ -14,7 +14,6 @@ const STORE_ALIASES = new Map([
   // Correct the recurring transposition used in preview commands for this repo's store.
   ["lauyouthub-template-v2", DEFAULT_STORE],
 ]);
-const PREVIEW_THEME_NAME = "Arche template (Minhle)";
 const BASE_PORT = 9300;
 const LAST_PORT = 9399;
 const DIR = path.join(ROOT, ".shopify", "theme-base-preview");
@@ -56,6 +55,7 @@ function normalizeStore(value) {
 
 function parseStartArgs(args) {
   let store;
+  let themeId;
   for (let i = 0; i < args.length; i += 1) {
     if (args[i] === "--store") {
       if (store || !args[i + 1]) throw new Error("Dùng --store <store>.myshopify.com một lần.");
@@ -63,11 +63,17 @@ function parseStartArgs(args) {
     } else if (args[i].startsWith("--store=")) {
       if (store) throw new Error("Chỉ truyền --store một lần.");
       store = args[i].slice("--store=".length);
+    } else if (args[i] === "--theme" || args[i].startsWith("--theme=")) {
+      if (themeId !== undefined) throw new Error("Dùng --theme <ID|new> một lần.");
+      themeId = args[i] === "--theme" ? args[++i] : args[i].slice("--theme=".length);
+      if (!themeId || (themeId !== "new" && !/^[1-9]\d*$/.test(themeId))) {
+        throw new Error("Dùng --theme <ID|new>: ID phải là số nguyên dương.");
+      }
     } else {
       throw new Error(`Tùy chọn không hỗ trợ: ${args[i]}`);
     }
   }
-  return normalizeStore(store === undefined ? DEFAULT_STORE : store);
+  return { store: normalizeStore(store === undefined ? DEFAULT_STORE : store), themeId };
 }
 
 function readOwner() {
@@ -173,48 +179,6 @@ function clearShopifyFlagOverrides() {
   }
   if (storePassword) env.SHOPIFY_FLAG_STORE_PASSWORD = storePassword;
   return env;
-}
-
-function selectPreviewTheme(themes, name = PREVIEW_THEME_NAME) {
-  const matches = themes.filter((theme) => theme.name === name);
-  if (matches.length !== 1 || matches[0].role !== "unpublished" ||
-      !Number.isSafeInteger(matches[0].id) || matches[0].id <= 0) {
-    const error = new Error(`Cần đúng một unpublished theme tên "${name}" trên store; không dùng development theme chung hoặc live theme.`);
-    error.noRetry = true;
-    throw error;
-  }
-  return matches[0];
-}
-
-function listPreviewThemes(store) {
-  return new Promise((resolve, reject) => {
-    const cli = process.platform === "win32" ? resolveWindowsCli() : null;
-    const args = ["theme", "list", "--store", store, "--path", ROOT, "--json"];
-    const child = spawn(cli ? process.execPath : "shopify", cli ? [cli, ...args] : args, {
-      cwd: ROOT, env: clearShopifyFlagOverrides(), stdio: ["ignore", "pipe", "pipe"],
-    });
-    let output = "";
-    let errors = "";
-    child.stdout.setEncoding("utf8");
-    child.stderr.setEncoding("utf8");
-    child.stdout.on("data", (chunk) => { output += chunk; });
-    child.stderr.on("data", (chunk) => { errors += chunk; process.stderr.write(chunk); });
-    child.on("error", reject);
-    child.on("close", (code) => {
-      if (code !== 0) return reject(new Error(errors.trim() || "Không lấy được danh sách theme từ Shopify CLI."));
-      try {
-        const themes = JSON.parse(output);
-        if (!Array.isArray(themes)) throw new Error("Danh sách theme không hợp lệ.");
-        resolve(themes);
-      } catch (error) { reject(error); }
-    });
-  });
-}
-
-function previewDevArgs(store, port, themeId) {
-  if (!Number.isSafeInteger(themeId) || themeId <= 0) throw new Error("Thiếu ID theme preview đã kiểm tra.");
-  return ["theme", "dev", "--store", store, "--path", ROOT, "--theme", String(themeId),
-    "--host", "127.0.0.1", "--port", String(port), "--nodelete", "--open"];
 }
 
 function resolveWindowsCli() {
@@ -489,12 +453,107 @@ async function supervise(runtime) {
   }
 }
 
+function readTarget(store) {
+  const file = path.join(DIR, "target.json");
+  if (!fs.existsSync(file)) return null;
+  const target = JSON.parse(fs.readFileSync(file, "utf8"));
+  if (target.store !== store) return null;
+  if (!/^[1-9]\d*$/.test(String(target.themeId))) throw new Error(`ID theme không hợp lệ trong ${file}`);
+  return target;
+}
+
+function cliOutput(args) {
+  const cli = process.platform === "win32" ? resolveWindowsCli() : null;
+  const result = spawnSync(cli ? process.execPath : "shopify", cli ? [cli, ...args] : args, {
+    cwd: ROOT,
+    env: clearShopifyFlagOverrides(),
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "inherit"],
+    maxBuffer: 16 * 1024 * 1024,
+  });
+  if (result.error) throw result.error;
+  if (result.status !== 0) throw new Error("Shopify CLI thất bại; chưa khởi động preview. Kiểm tra quyền truy cập store và lỗi ở trên.");
+  return result.stdout.trim();
+}
+
+function listThemes(store) {
+  return JSON.parse(cliOutput(["theme", "list", "--store", store, "--json", "--no-input"]));
+}
+
+function validateTargetTheme(id, themes) {
+  if (!/^[1-9]\d*$/.test(String(id))) throw new Error("Nhập ID theme dạng số hoặc new để tạo draft riêng.");
+  const theme = themes.find((item) => String(item.id) === String(id));
+  if (!theme) throw new Error(`Theme ID ${id} không có trên store đã chọn.`);
+  if (theme.role !== "unpublished") throw new Error(`Theme ${id} có role ${theme.role}. Hãy chọn draft unpublished riêng để tránh ghi đè live/development theme.`);
+  return theme;
+}
+
+async function ensureTarget(store, selection) {
+  const themes = listThemes(store);
+  const saved = selection ? null : readTarget(store);
+  let id = selection || saved?.themeId;
+  if (!id) {
+    console.log(`Chọn theme preview cho ${ROOT} trên ${store}:`);
+    for (const theme of themes.filter((item) => item.role === "unpublished")) {
+      console.log(`  ${theme.id} — ${theme.name}`);
+    }
+    if (!process.stdin.isTTY) {
+      throw new Error("Chưa có theme đích. Hỏi người dùng ID đúng trên store hoặc chọn tạo draft riêng; sau đó chạy preview start --theme <ID|new>.");
+    }
+    const readline = require("node:readline/promises");
+    const prompt = readline.createInterface({ input: process.stdin, output: process.stdout });
+    try {
+      id = (await prompt.question("Nhập ID draft đúng trên store, hoặc new để tạo draft riêng: ")).trim();
+    } finally {
+      prompt.close();
+    }
+  }
+  let theme;
+  if (id === "new") {
+    const name = `${path.basename(ROOT)} local preview`;
+    const existing = themes.find((item) => item.name === name && item.role === "unpublished");
+    if (existing) throw new Error(`Đã có draft ${name}, ID ${existing.id}. Dùng --theme ${existing.id} để chọn rõ đích, tránh tạo trùng.`);
+    log(`Đang tạo draft riêng ${name} và upload code local; chờ Shopify CLI hoàn tất...`);
+    const output = cliOutput(["theme", "push", "--store", store, "--path", ROOT,
+      "--unpublished", "--theme", name, "--strict", "--json", "--no-input"]);
+    let records;
+    try { records = [JSON.parse(output)]; }
+    catch { records = output.split(/\r?\n/).flatMap((line) => {
+      try { return [JSON.parse(line)]; } catch { return []; }
+    });
+    }
+    theme = records.findLast((record) => record.theme)?.theme;
+    if (!theme || theme.role !== "unpublished") throw new Error("Không xác nhận được draft vừa tạo; kiểm tra theme list trước khi thử lại để tránh tạo trùng.");
+    validateTargetTheme(theme.id, listThemes(store));
+  } else {
+    theme = validateTargetTheme(id, themes);
+  }
+  const target = { store, themeId: String(theme.id), name: theme.name };
+  fs.mkdirSync(DIR, { recursive: true, mode: 0o700 });
+  const file = path.join(DIR, "target.json");
+  const temporary = `${file}.${process.pid}.tmp`;
+  fs.writeFileSync(temporary, `${JSON.stringify(target, null, 2)}\n`, { mode: 0o600 });
+  fs.renameSync(temporary, file);
+  log(`Đích preview: ${theme.name} (${theme.id}); store ${store}.`);
+}
+
+function previewDevArgs(store, port, themeId) {
+  if (!/^[1-9]\d*$/.test(String(themeId))) throw new Error("Thiếu ID theme preview đã kiểm tra.");
+  return ["theme", "dev", "--store", store, "--path", ROOT,
+    "--host", "127.0.0.1", "--port", String(port), "--nodelete", "--open", "--theme", String(themeId)];
+}
+
 async function run(store) {
   assertThemeRoot();
+  const target = readTarget(store);
+  if (!target) throw new Error("Chưa chọn theme. Chạy node theme-base preview start để chọn ID hoặc tạo draft riêng.");
+  const targetThemeId = String(target.themeId);
+  validateTargetTheme(targetThemeId, listThemes(store));
   const branch = currentBranch();
   if (!branch) throw new Error("Đang ở detached HEAD; hãy checkout nhánh cần preview.");
   let owner = await acquireLock(store);
-  let themeId;
+  owner = { ...owner, themeId: targetThemeId, themeName: target.name };
+  writeOwner(owner);
   let stopping = false;
   const requestStop = () => { stopping = true; };
   process.on("SIGTERM", requestStop);
@@ -535,24 +594,14 @@ async function run(store) {
       setEditorUrl,
       setLastError: saveLastError,
       guard,
-      verify: async () => {
+      verify: () => {
         guard();
         assertThemeRoot();
-        const theme = selectPreviewTheme(await listPreviewThemes(store));
-        guard();
-        if (stopping) return;
-        if (themeId && themeId !== theme.id) {
-          const error = new Error("ID theme preview đã đổi; dừng để tránh đồng bộ nhầm target.");
-          error.noRetry = true;
-          throw error;
-        }
-        themeId = theme.id;
-        owner = { ...owner, themeId, themeName: theme.name };
-        writeOwner(owner);
-        log(`Theme preview riêng: ${theme.name} (ID ${themeId}, unpublished).`);
+        try { validateTargetTheme(targetThemeId, listThemes(store)); }
+        catch (error) { error.noRetry = true; throw error; }
       },
       start: (port) => {
-        const args = previewDevArgs(store, port, themeId);
+        const args = previewDevArgs(store, port, targetThemeId);
         log(`Chạy shopify ${args.join(" ")}`);
         // npm's Windows .cmd shim cannot be spawned directly without a shell.
         const cli = process.platform === "win32" ? resolveWindowsCli() : null;
@@ -692,7 +741,7 @@ function createLogFollower(initialOffset) {
   };
 }
 
-async function start(store) {
+async function start(store, themeId) {
   assertThemeRoot();
   if (!currentBranch()) throw new Error("Đang ở detached HEAD; hãy checkout nhánh cần preview.");
   fs.mkdirSync(DIR, { recursive: true, mode: 0o700 });
@@ -701,6 +750,7 @@ async function start(store) {
     throw new Error(`Preview đã chạy tại http://127.0.0.1:${existing.port || "..."}/ cho ${existing.store}; dùng status hoặc stop.`);
   }
 
+  await ensureTarget(store, themeId);
   let storePassword = process.env.SHOPIFY_FLAG_STORE_PASSWORD || null;
   let supervisorPid = null;
   let interrupted = false;
@@ -831,7 +881,7 @@ async function status() {
   const cliState = owner.childPid ? (cliAlive ? `PID ${owner.childPid}` : "đã dừng") : "đang khởi động";
   log(`Supervisor: ${running ? `PID ${owner.pid}` : "đã dừng"}; Shopify CLI: ${cliState}.`);
   log(`Branch: ${owner.branch || "không rõ"}; store: ${owner.store || "không rõ"}.`);
-  log(`Theme: ${owner.themeName || "development theme chung (phiên cũ)"}; ID: ${owner.themeId || "chưa cố định"}.`);
+  log(`Theme: ${owner.themeName || "phiên cũ"}; ID: ${owner.themeId || "chưa cố định"}.`);
   log(`Preview: ${owner.port ? `http://127.0.0.1:${owner.port}/` : "chưa có cổng"}; cổng: ${open ? "đang mở" : "đang đóng"}.`);
   log(`${!running && !cliAlive ? "Theme Editor phiên trước" : "Theme Editor"}: ${editorUrl || "đang chờ Shopify CLI kết nối store"}.`);
   if (!running && cliAlive) {
@@ -889,19 +939,25 @@ async function stop() {
 function help() {
   console.log("Shopify theme preview cho repo base cá nhân\n\n" +
     "  node theme-base preview start\n" +
+    "  node theme-base preview start --theme <ID|new>\n" +
     `  node theme-base preview start --store ${DEFAULT_STORE}\n` +
     "  node theme-base preview status\n" +
     "  node theme-base preview logs\n" +
     "  node theme-base preview stop\n\n" +
     `Mặc định dùng store ${DEFAULT_STORE}.myshopify.com; tự chọn cổng trống trong dải ${BASE_PORT}-${LAST_PORT}, tách khỏi cổng mặc định 9292. ` +
+    "Chưa có theme đích: hỏi ID draft trên store hoặc new để tạo draft riêng. Không tự dùng development theme chung. " +
     "Start giữ terminal mở, hiện log liên tục và theo dõi thay đổi file; nhấn Ctrl+C để dừng preview.");
 }
 
 async function main(args) {
   const [action, ...rest] = args;
   if (!action || action === "help" || action === "--help" || action === "-h") return help();
-  if (action === "start") return start(parseStartArgs(rest));
-  if (action === "run") return run(parseStartArgs(rest));
+  if (action === "start" || action === "run") {
+    const options = parseStartArgs(rest);
+    if (action === "start") return start(options.store, options.themeId);
+    if (options.themeId) throw new Error("Dùng --theme với preview start.");
+    return run(options.store);
+  }
   if (rest.length) throw new Error(`${action} không nhận thêm tham số.`);
   if (action === "status") return status();
   if (action === "logs") return logs();
@@ -914,5 +970,4 @@ if (require.main === module) main(process.argv.slice(2)).catch((error) => {
   process.exitCode = 1;
 });
 
-module.exports = { processCommand, portBelongsToSupervisor, resolveWindowsCli, readOwner,
-  selectPreviewTheme, previewDevArgs };
+module.exports = { ensureTarget, previewDevArgs, processCommand, portBelongsToSupervisor, resolveWindowsCli, readOwner, parseStartArgs, readTarget, validateTargetTheme };
