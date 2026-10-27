@@ -1,6 +1,28 @@
-<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"f355527087585e3356a58e47b69a9115067a684e"} -->
+<!-- base-sync-state: {"repository":"https://github.com/Chieu2507/shopify-theme-base","branch":"dev","sha":"c242f2e07e2fee8a3aa5e272d2c06b912157ccd6"} -->
 
 # Base update history
+
+## 2026-10-27 — Update from upstream/dev
+
+- Repository: https://github.com/Chieu2507/shopify-theme-base
+- Branch: `upstream/dev`
+- Previous team commit: `f355527087585e3356a58e47b69a9115067a684e`
+- Updated through team commit: `c242f2e07e2fee8a3aa5e272d2c06b912157ccd6`
+- Team commits included: 2
+- Source changes:
+
+```text
+blocks/blog-card.liquid            |  1 -
+ blocks/first-card.liquid           |  1 -
+ blocks/gallery-header-group.liquid | 46 --------------------------------------
+ blocks/marquee-item.liquid         |  9 --------
+ 4 files changed, 57 deletions(-)
+```
+
+- Included team commits:
+  - `bf84825b47779d3ff3bd1f90ec2eb8ebdad68fd3` — fix(blocks): restrict article card and marquee child types
+  - `c242f2e07e2fee8a3aa5e272d2c06b912157ccd6` — fix(gallery): restrict header group child types
+
 
 ## 2026-10-16 — Update from upstream/dev
 
