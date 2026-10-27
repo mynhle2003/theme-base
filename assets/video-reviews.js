@@ -12,6 +12,7 @@ if (!customElements.get('video-reviews')) {
       this.controller = new AbortController();
       const options = { signal: this.controller.signal };
       this.cards = [...this.querySelectorAll('[data-video-review]')];
+      this.cards.forEach((card, index) => { card.dataset.reviewSource = String(index); });
       this.motion = window.matchMedia('(prefers-reduced-motion: reduce)');
       this.inView = false;
       this.editorSelected = false;
@@ -40,16 +41,26 @@ if (!customElements.get('video-reviews')) {
         wrapper.prepend(...before);
         wrapper.append(...after);
       }
+      this.allCards = [...wrapper.children];
       this.offset = this.clones.length ? this.cards.length : 0;
       this.pagination = this.querySelector('.swiper-pagination');
       this.buildPagination();
       this.swiper = createSwiperCarousel(this.viewport, {
+        loop: this.cards.length > 1,
+        loopAdditionalSlides: 0,
+        slidesPerGroup: 1,
+        threshold: 10,
+        // Videos are the swipe surface, not native focus/drag targets.
+        focusableElements: 'input, select, option, textarea, button, label',
+        preventClicks: true,
+        preventClicksPropagation: true,
         initialSlide: this.offset + Math.floor(this.cards.length / 2),
         slidesPerView: this.mobileSlidesPerView(),
         spaceBetween: Number(this.dataset.gapMobile) || 0,
         centeredSlides: true,
         watchOverflow: this.cards.length < 2,
         slideToClickedSlide: false,
+        a11y: { scrollOnFocus: false },
         speed: this.motion.matches ? 0 : 400,
         breakpoints: {
           768: { slidesPerView: Number(this.dataset.columns) || 5, spaceBetween: Number(this.dataset.gap) || 0 }
@@ -61,7 +72,7 @@ if (!customElements.get('video-reviews')) {
         return;
       }
       this.dataset.ready = '';
-      this.cards.forEach(card => {
+      this.allCards.forEach(card => {
         const video = card.querySelector('video');
         if (!video) return;
         video.controls = false;
@@ -69,17 +80,20 @@ if (!customElements.get('video-reviews')) {
         ['play', 'pause', 'volumechange', 'ended'].forEach(name => video.addEventListener(name, () => this.updateControls(card), options));
         this.updateControls(card);
       });
-      this.changeSlide = () => { this.closePopup(); this.updatePagination(); this.syncPlayback(); };
-      this.swiper.on('slideChangeTransitionEnd', () => {
-        const index = this.swiper.activeIndex;
-        if (this.offset && (index < this.offset || index >= this.offset * 2)) this.swiper.slideTo(this.offset + this.logicalIndex(), 0);
-        this.syncPlayback();
-      });
+      this.changeSlide = () => { this.closePopup(); this.updatePagination(); this.syncPlayback(); this.labelSlides?.(); };
       this.updatePagination();
       this.swiper.on('slideChange', this.changeSlide);
       this.labelSlides = () => {
         this.cards.forEach((card, i) => card.setAttribute('aria-label', `${i + 1} / ${this.cards.length}`));
-        this.clones.forEach(card => card.setAttribute('aria-hidden', 'true'));
+        this.clones.forEach(card => {
+          const active = card === this.swiper.slides[this.swiper.activeIndex];
+          card.setAttribute('aria-hidden', String(!active));
+          card.querySelectorAll('a, button').forEach(control => {
+            if (active) control.removeAttribute('tabindex');
+            else control.setAttribute('tabindex', '-1');
+          });
+          card.setAttribute('aria-label', `${Number(card.dataset.reviewSource) + 1} / ${this.cards.length}`);
+        });
       };
       this.labelSlides();
       this.swiper.on('slidesUpdated update resize', this.labelSlides);
@@ -95,13 +109,14 @@ if (!customElements.get('video-reviews')) {
         }
       }, options);
       this.addEventListener('focusin', event => {
+        if (!event.target.matches(':focus-visible')) return;
         const card = event.target.closest('[data-video-review]');
         const index = this.cards.indexOf(card);
-        if (index >= 0 && index !== this.logicalIndex()) this.swiper.slideTo(this.offset + index);
+        if (index >= 0 && index !== this.logicalIndex()) this.goToReview(index);
       }, options);
       document.addEventListener('click', event => {
         if (this.contains(event.target) && event.target.closest('[data-review-product]')) return;
-        if (this.openTrigger && !event.composedPath().includes(this.openTrigger.closest('[data-video-review]'))) { this.closePopup(); this.syncPlayback(); }
+        if (this.openTrigger && !event.composedPath().includes(this.openTrigger.closest('.video-review'))) { this.closePopup(); this.syncPlayback(); }
       }, options);
       document.addEventListener('visibilitychange', () => this.syncPlayback(), options);
       this.motion.addEventListener('change', () => {
@@ -117,7 +132,7 @@ if (!customElements.get('video-reviews')) {
         this.editorSelected = true;
         this.closePopup();
         const index = this.cards.indexOf(event.target.closest('[data-video-review]'));
-        if (index >= 0) this.swiper.slideTo(this.offset + index, 0);
+        if (index >= 0) this.goToReview(index, 0);
         this.syncPlayback();
       }, options);
       this.addEventListener('shopify:block:deselect', () => { this.editorSelected = false; this.syncPlayback(); }, options);
@@ -140,7 +155,21 @@ if (!customElements.get('video-reviews')) {
 
     logicalIndex() {
       const count = this.cards.length;
-      return count ? ((this.swiper.activeIndex - this.offset) % count + count) % count : 0;
+      return count ? Number(this.swiper.slides[this.swiper.activeIndex]?.dataset.reviewSource || 0) : 0;
+    }
+
+    goToReview(index, speed = this.swiper.params.speed) {
+      // Loop navigation must use stable real indices; DOM positions change
+      // while Swiper reorders its buffer during a gesture.
+      const count = this.cards.length;
+      const current = this.swiper.realIndex;
+      const candidates = this.allCards.map((card, realIndex) => ({ card, realIndex }))
+        .filter(({ card }) => Number(card.dataset.reviewSource) === index);
+      const distance = realIndex => Math.min(
+        Math.abs(realIndex - current), this.allCards.length - Math.abs(realIndex - current)
+      );
+      candidates.sort((a, b) => distance(a.realIndex) - distance(b.realIndex));
+      if (count && candidates.length) this.swiper.slideToLoop(candidates[0].realIndex, speed);
     }
 
     buildPagination() {
@@ -207,7 +236,7 @@ if (!customElements.get('video-reviews')) {
     }
 
     syncPlayback() {
-      this.cards?.forEach(card => {
+      this.allCards?.forEach(card => {
         const video = card.querySelector('video');
         if (!video) return;
         const active = card === this.swiper?.slides[this.swiper.activeIndex];
@@ -225,36 +254,45 @@ if (!customElements.get('video-reviews')) {
     closePopup(restoreFocus = false) {
       const trigger = this.openTrigger;
       if (!trigger) return;
-      const card = trigger.closest('[data-video-review]');
+      const card = trigger.closest('.video-review');
       card?.querySelectorAll('[data-review-popup]:not([hidden])').forEach(popup => { popup.hidden = true; popup.inert = true; });
       trigger.setAttribute('aria-expanded', 'false');
       const surface = card?.querySelector('.video-review__surface');
       if (surface) [...surface.children].forEach(child => { if (!child.hasAttribute('data-review-popup')) child.inert = false; });
+      if (this.popupOwner && this.openPopup) this.popupOwner.append(this.openPopup);
+      this.openPopup = null;
+      this.popupOwner = null;
       this.openTrigger = null;
-      if (restoreFocus && trigger?.isConnected) trigger.focus();
+      if (restoreFocus && trigger?.isConnected) trigger.focus({ preventScroll: true });
     }
 
     handleClick(event) {
+      if (!this.swiper || !this.swiper.allowClick || this.swiper.animating) return;
       const bullet = event.target.closest('[data-review-index]');
       if (bullet && this.contains(bullet)) {
-        this.swiper.slideTo(this.offset + Number(bullet.dataset.reviewIndex));
+        this.goToReview(Number(bullet.dataset.reviewIndex));
         return;
       }
       let trigger = event.target.closest('[data-review-product]');
       if (trigger && this.contains(trigger)) {
         // Keep modified clicks and the no-JS path as normal product links.
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-        const clone = trigger.closest('[data-review-source]');
-        if (clone) trigger = this.cards[Number(clone.dataset.reviewSource)]?.querySelectorAll('[data-review-product]')[Number(trigger.dataset.reviewProductIndex)];
-        if (!trigger) return;
-        const card = trigger.closest('[data-video-review]');
-        const popup = [...card.querySelectorAll('[data-review-popup]')].find(item => item.id === trigger.getAttribute('aria-controls'));
+        const card = trigger.closest('.video-review');
+        const source = this.cards[Number(card.dataset.reviewSource)];
+        const productIndex = [...card.querySelectorAll('[data-review-product]')].indexOf(trigger);
+        const originalTrigger = source?.querySelectorAll('[data-review-product]')[productIndex];
+        const popupId = originalTrigger?.getAttribute('aria-controls');
+        const popup = [...(source?.querySelectorAll('[data-review-popup]') || [])].find(item => item.id === popupId)
+          || (this.openPopup?.id === popupId ? this.openPopup : null);
         if (!popup) return;
         event.preventDefault();
         const wasOpen = !popup.hidden;
         this.closePopup();
-        this.swiper.slideTo(this.offset + this.cards.indexOf(card));
         if (!wasOpen) {
+          this.popupOwner = popup.parentElement;
+          this.openPopup = popup;
+          card.querySelector('.video-review__surface').append(popup);
+          trigger.setAttribute('aria-controls', popup.id);
           popup.hidden = false;
           popup.inert = false;
           trigger.setAttribute('aria-expanded', 'true');
@@ -277,20 +315,16 @@ if (!customElements.get('video-reviews')) {
       if (!control && event.target.closest('.video-review__media')) {
         control = event.target.closest('.video-review__surface')?.querySelector('[data-review-play]');
       }
-      const controlClone = control?.closest('[data-review-source]');
-      if (controlClone) {
-        const selector = control.hasAttribute('data-review-mute') ? '[data-review-mute]' : '[data-review-play]';
-        const original = this.cards[Number(controlClone.dataset.reviewSource)];
-        control = original?.querySelector(selector);
-        if (original) this.swiper.slideTo(this.offset + this.cards.indexOf(original));
-      }
-      const card = control?.closest('[data-video-review]');
+      const card = control?.closest('.video-review');
       const video = card?.querySelector('video');
       if (!video) return;
+      if (card !== this.swiper.slides[this.swiper.activeIndex]) {
+        this.goToReview(Number(card.dataset.reviewSource));
+        return;
+      }
       if (control.hasAttribute('data-review-mute')) video.muted = !video.muted;
       else if (video.paused) {
-        this.swiper.slideTo(this.offset + this.cards.indexOf(card));
-        this.cards.forEach(item => { if (item !== card) item.querySelector('video')?.pause(); });
+        this.allCards.forEach(item => { if (item !== card) item.querySelector('video')?.pause(); });
         this.userPaused.delete(video);
         video.play()?.catch(() => {});
       } else {
@@ -301,7 +335,7 @@ if (!customElements.get('video-reviews')) {
 
     disconnectedCallback() {
       this.closePopup();
-      this.cards?.forEach(card => card.querySelector('video')?.pause());
+      this.allCards?.forEach(card => card.querySelector('video')?.pause());
       this.controller?.abort();
       this.controller = null;
       this.intersection?.disconnect();
