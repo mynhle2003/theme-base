@@ -17,6 +17,8 @@
 {% liquid
   assign image_source = block.settings.image
   assign mobile_image_source = block.settings.mobile_image
+  assign image_fill_fallback_ratio = image_source.aspect_ratio | default: 1
+  assign image_fill_fallback_ratio_mobile = mobile_image_source.aspect_ratio | default: image_fill_fallback_ratio
 
   assign image_ratio_desktop_setting = block.settings.image_ratio_desktop | default: 'auto'
   capture image_ratio_desktop
@@ -172,6 +174,8 @@
     max_width_mobile: image_max_width_mobile
   %}
   --image-block-ratio: {{ image_ratio_desktop }};
+  --image-block-fill-fallback-ratio: {{ image_fill_fallback_ratio }};
+  --image-block-fill-fallback-ratio-mobile: {{ image_fill_fallback_ratio_mobile }};
   --image-block-image-height: {{ image_height_desktop }};
   --image-block-ratio-mobile: {{ image_ratio_mobile }};
   --image-block-image-height-mobile: {{ image_height_mobile }};
@@ -276,13 +280,15 @@
   /* Fill removes image intrinsic height from the row's sizing: sibling content
      or a definite parent height owns the frame. Auto remains intrinsic. */
   @media (min-width: 768px) {
-    .image-block--height-fill.image-block--fill-ratio { flex: 1 1 0; height: auto; }
+    /* Keep an intrinsic frame when the parent has no definite height. Flex
+       growth/shrink still lets a sized column own the final image height. */
+    .image-block--height-fill.image-block--fill-ratio { flex: 1 1 auto; height: auto; aspect-ratio: var(--image-block-fill-fallback-ratio, 1); }
     .image-block--height-fill { display: flex; height: 100%; min-height: 0; align-self: stretch; }
     .image-block--height-fill > .image-block__media { flex: 1 1 auto; height: auto; min-height: 0; }
     .image-block--height-fill .image-block__media > :is(img, picture, .image__placeholder) { position: absolute; inset: 0; height: 100%; }
   }
   @media (max-width: 767.98px) {
-    .image-block--height-fill-mobile.image-block--fill-ratio-mobile { flex: 1 1 0; height: auto; }
+    .image-block--height-fill-mobile.image-block--fill-ratio-mobile { flex: 1 1 auto; height: auto; aspect-ratio: var(--image-block-fill-fallback-ratio-mobile, var(--image-block-fill-fallback-ratio, 1)); }
     .image-block--height-fill-mobile { display: flex; height: 100%; min-height: 0; align-self: stretch; }
     .image-block--height-fill-mobile > .image-block__media { flex: 1 1 auto; height: auto; min-height: 0; }
     .image-block--height-fill-mobile .image-block__media > :is(img, picture, .image__placeholder) { position: absolute; inset: 0; height: 100%; }
