@@ -1,4 +1,4 @@
-<!-- theme-base-sync-state: {"sha":"de84ae60437b6369b61addd025dd75d1434706be"} -->
+<!-- theme-base-sync-state: {"sha":"9a38d07d8ce34ea2de2656a064dc98171b49c97f"} -->
 # Customization record: elara-theme
 
 Theme branch: `theme/elara-theme`
@@ -4172,3 +4172,30 @@ Approved retained-custom exceptions for this update: port only the shared mega-m
 See [migration plan](../product-card-collection-badge-migration.md). Existing status badges and product-page prefixed-tag behavior are retained. Current labels are mapped to verified collection membership in local settings_data.
 
 Validation: JSON/schema and actual Liquid fixture checks pass; Theme Check has no errors. Live desktop/mobile/Figma QA remains pending. No commit/push/deploy.
+
+
+### 2026-10-27 — Manual update from personal main
+
+- Previous main: `de84ae60437b6369b61addd025dd75d1434706be`.
+- Updated through main: `9a38d07d8ce34ea2de2656a064dc98171b49c97f`.
+- Main commits included: 4.
+- Source commits:
+  - `75a23d3b84a7b06242d1d0908415a18ddc98168f` — Update from Shopify for theme theme-base/main
+  - `6cf66c40a7838075cc59d0b11ca77a0b139bb112` — fix(preview): require a dedicated unpublished theme target
+  - `a49ad7479a75b9f3ed80b4e394ebae48f6907711` — fix(base): remove EComposer files absent from team base
+  - `9a38d07d8ce34ea2de2656a064dc98171b49c97f` — chore(base): update base with 2 upstream commits through c242f2e0
+- Applied: dedicated unpublished preview target selection and child allow-list restrictions for non-custom blocks. Existing settings, presets and saved compositions are retained.
+- Retained without changes because of custom implementation/dependencies:
+  - `blocks/blog-card.liquid`
+  - `blocks/first-card.liquid`
+- EComposer source additions and removals cancel out; no EComposer files or personal base history were imported.
+- Changed files:
+  - `blocks/gallery-header-group.liquid`
+  - `blocks/marquee-item.liquid`
+  - `docs/theme-base-preview.md`
+  - `scripts/theme-base-preview.cjs`
+- Update statistics (relative to checkout before this operation):
+  - `blocks/gallery-header-group.liquid`: 15 lines added, 177 lines removed.
+  - `blocks/marquee-item.liquid`: 13 lines added, 48 lines removed.
+  - `docs/theme-base-preview.md`: 0 lines added, 0 lines removed.
+  - `scripts/theme-base-preview.cjs`: 0 lines added, 0 lines removed.
