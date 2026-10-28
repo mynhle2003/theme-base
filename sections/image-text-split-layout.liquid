@@ -529,135 +529,122 @@
     {
       "name": "t:general.image_text_split_layout",
       "settings": {
-        "section_width": "full_width_no_padding",
-        "color_scheme": "scheme-1",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "customize_mobile_padding": false,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0,
+        "section_width": "page_width",
+        "direction": "vertical",
+        "position_horizontal": "center",
+        "horizontal_alignment": "left",
+        "customize_mobile_alignment": true,
+        "alignment_mobile": "left",
         "gap_desktop": 0,
         "gap_mobile": 0,
-        "direction": "horizontal",
-        "customize_mobile_alignment": true,
         "height": "fit",
-        "position_horizontal": "top",
-        "horizontal_alignment": "left",
-        "alignment_mobile": "left"
+        "color_scheme": "scheme-2",
+        "background_color": "#F6F0EC",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
         {
           "type": "group",
           "settings": {
             "direction": "horizontal",
-            "alignment": "left",
+            "customize_mobile_alignment": true,
+            "position_horizontal": "center",
+            "horizontal_alignment": "left",
             "alignment_mobile": "left",
             "width": "fill",
             "width_mobile": "fill",
-            "height": "fill",
-            "gap_desktop": 0,
+            "height": "fit",
+            "gap_desktop": 64,
             "gap_mobile": 0,
-            "border_type": "none",
-            "corner_radius": "square",
-            "shadow": "none",
-            "position_horizontal": "top",
-            "horizontal_alignment": "left",
-            "customize_mobile_alignment": true
+            "backdrop_blur": 0
           },
           "blocks": [
             {
-              "type": "image",
+              "type": "group",
               "settings": {
-                "image_ratio_desktop": "fill_height",
-                "image_ratio_mobile": "custom",
-                "width_desktop": "fill",
+                "direction": "vertical",
+                "alignment": "left",
+                "alignment_mobile": "left",
+                "width": "custom",
                 "width_mobile": "fill",
-                "corner_radius": "square",
-                "image_ratio_custom_width_mobile": 5,
-                "image_ratio_custom_height_mobile": 4
-              }
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "settings": {
-            "direction": "vertical",
-            "alignment": "center",
-            "alignment_mobile": "center",
-            "width": "fill",
-            "width_mobile": "fill",
-            "height": "fill",
-            "gap_desktop": 20,
-            "gap_mobile": 24,
-            "border_type": "none",
-            "corner_radius": "square",
-            "shadow": "none",
-            "padding_top": 64,
-            "padding_bottom": 64,
-            "padding_left": 64,
-            "padding_right": 64,
-            "customize_mobile_padding": true,
-            "padding_top_mobile": 56,
-            "padding_bottom_mobile": 56,
-            "padding_left_mobile": 20,
-            "padding_right_mobile": 20,
-            "position": "center"
-          },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Lighting Ridge Opals</p>",
-                "heading_size": "custom",
-                "html_tag": "h2",
-                "width": "fit",
-                "customize_mobile_size": true,
-                "width_mobile": "fit",
-                "padding_bottom": 20,
-                "customize_mobile_padding": true,
-                "padding_bottom_mobile": 12,
-                "custom_heading_size": 34,
-                "animation_type": "rotate-words",
-                "animation_delay": 50
-              }
-            },
-            {
-              "type": "image",
-              "settings": {
-                "image_ratio_desktop": "ratio_4_5",
-                "image_ratio_mobile": "ratio_4_5",
-                "width_desktop": "fill",
-                "width_mobile": "fill",
-                "corner_radius": "square",
-                "limit_width_desktop": true,
-                "max_width_desktop": 384,
-                "limit_width_mobile": true,
-                "max_width_mobile": 256,
-                "image_ratio_custom_width_desktop": 4,
-                "image_ratio_custom_height_desktop": 5,
-                "image_ratio_custom_width_mobile": 4,
-                "image_ratio_custom_height_mobile": 5,
-                "padding_left": 2,
-                "padding_right": 2,
-                "customize_mobile_padding": true,
-                "padding_left_mobile": 0,
-                "padding_right_mobile": 0
-              }
-            },
-            {
-              "type": "button",
-              "settings": {
-                "button_label": "SHOP NOW",
-                "button_style": "tertiary",
-                "show_icon": false,
-                "width": "fit",
-                "width_mobile": "fit",
+                "height": "fit",
+                "gap_desktop": 24,
+                "gap_mobile": 20,
+                "position": "center",
                 "padding_top": 0,
-                "customize_mobile_padding": false,
-                "padding_top_mobile": 0,
-                "animation_type": "slide-bottom",
-                "animation_delay": 150
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 32,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0,
+                "width_custom": 50,
+                "backdrop_blur": 0
+              },
+              "blocks": [
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>OUR STORY</p>",
+                    "animation_type": "slide-right",
+                    "animation_delay": 100
+                  }
+                },
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>SUSTAINABLE MATERIALS</p>",
+                    "heading_size": "lg",
+                    "html_tag": "h2",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 100
+                  }
+                },
+                {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Inspired by an endless summer and the languid summer afternoons spent by the sea, where the sun’s rays illuminate the evening sky. Magnolia is dreamy & carefree, she’s delicate and feminine, playful and angelic.</p>",
+                    "text_size": "md",
+                    "width": "fill",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 100
+                  }
+                },
+                {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "LEARN MORE",
+                    "button_style": "primary",
+                    "show_icon": false,
+                    "animation_type": "slide-bottom",
+                    "button_link": "shopify://pages/our-story-novaire",
+                    "animation_delay": 150
+                  }
+                }
+              ]
+            },
+            {
+              "type": "image",
+              "settings": {
+                "image": "shopify://shop_images/novaire-our-story.avif",
+                "show_image_first_mobile": true,
+                "image_ratio_desktop": "custom",
+                "image_ratio_custom_width_desktop": 6,
+                "image_ratio_custom_height_desktop": 5,
+                "image_ratio_mobile": "custom",
+                "image_ratio_custom_width_mobile": 6,
+                "image_ratio_custom_height_mobile": 5,
+                "width_desktop": "custom",
+                "width_mobile": "fill",
+                "corner_radius": "square",
+                "width_custom_desktop": 50
               }
             }
           ]

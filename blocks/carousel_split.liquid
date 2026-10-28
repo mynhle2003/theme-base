@@ -27,12 +27,9 @@
   {% endif %}
 {% endcapture %}
 <div class="testimonial-split-carousel" style="{{ carousel_style | strip }}" data-testimonial-split
-  data-transition="{{ transition }}" data-swiper-columns-desktop="1" data-swiper-columns-mobile="1"
-  data-swiper-gap-desktop="0" data-swiper-gap-mobile="0" data-swiper-pagination-desktop="false" data-swiper-pagination-mobile="false"
-  data-carousel-loop="{{ block.settings.loop }}" data-swiper-autoplay="{{ block.settings.autoplay }}"
-  data-swiper-autoplay-pause-on-hover="{{ block.settings.pause_on_hover }}" data-swiper-autoplay-delay="{{ delay }}"
+  {% render 'swiper-carousel-attributes', effect: transition, columns_desktop: 1, columns_mobile: 1, gap_desktop: 0, gap_mobile: 0, pagination_desktop: false, pagination_mobile: false, loop: block.settings.loop, autoplay: block.settings.autoplay, pause_on_hover: block.settings.pause_on_hover, autoplay_delay: delay %}
   {{ block.shopify_attributes }}>
-  {% render 'swiper-carousel', id: carousel_id, content: slides, root_class: 'testimonial-split-carousel__viewport', aria_label: carousel_label, autoplay: block.settings.autoplay, pause_on_hover: block.settings.pause_on_hover, autoplay_delay: delay, show_next_slide_preview: false, show_next_slide_preview_on_mobile: false %}
+  {% render 'swiper-carousel', layout: 'carousel', id: carousel_id, content: slides, root_class: 'testimonial-split-carousel__viewport', aria_label: carousel_label, autoplay: block.settings.autoplay, pause_on_hover: block.settings.pause_on_hover, autoplay_delay: delay, show_next_slide_preview: false, show_next_slide_preview_on_mobile: false %}
 </div>
 {% stylesheet %}
   .testimonial-split-carousel { width: 100%; min-width: 0; padding-block: var(--carousel-padding-top, 0px) var(--carousel-padding-bottom, 0px); }
@@ -203,7 +200,9 @@
                 {
                   "type": "eyebrow",
                   "settings": {
-                    "text": "<p>FROM THE PEOPLE</p>"
+                    "text": "<p>FROM THE PEOPLE</p>",
+                    "animation_delay": 100,
+                    "animation_type": "slide-right"
                   }
                 },
                 {
@@ -212,7 +211,9 @@
                     "source": "library",
                     "icon": "five-stars",
                     "icon_width": 88,
-                    "custom_mobile": false
+                    "custom_mobile": false,
+                    "animation_delay": 100,
+                    "animation_type": "scale"
                   }
                 },
                 {
@@ -221,7 +222,9 @@
                     "text": "<p>“The necklace looks amazing! Thank you so much for all of your help and outstanding customer service. What I love most is the attention to detail. Every gem sparkles beautifully honour”</p>",
                     "heading_size": "display",
                     "html_tag": "h3",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_delay": 100,
+                    "animation_type": "slide-bottom"
                   }
                 },
                 {
@@ -229,7 +232,9 @@
                   "settings": {
                     "text": "<p>— Madison P, London</p>",
                     "text_size": "sm",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_delay": 100,
+                    "animation_type": "slide-bottom"
                   }
                 }
               ]
@@ -295,7 +300,9 @@
                 {
                   "type": "eyebrow",
                   "settings": {
-                    "text": "<p>FROM THE PEOPLE</p>"
+                    "text": "<p>FROM THE PEOPLE</p>",
+                    "animation_delay": 100,
+                    "animation_type": "slide-right"
                   }
                 },
                 {
@@ -304,7 +311,9 @@
                     "source": "library",
                     "icon": "five-stars",
                     "icon_width": 88,
-                    "custom_mobile": false
+                    "custom_mobile": false,
+                    "animation_delay": 100,
+                    "animation_type": "scale"
                   }
                 },
                 {
@@ -313,7 +322,9 @@
                     "text": "<p>\"They created a gorgeous piece for me! I have so much of their jewelry so it was difficult, but they outdid themselves again with something totally different than anything I have!\"</p>",
                     "heading_size": "display",
                     "html_tag": "h3",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_delay": 100,
+                    "animation_type": "slide-bottom"
                   }
                 },
                 {
@@ -321,7 +332,9 @@
                   "settings": {
                     "text": "<p>— Rachel L, USA</p>",
                     "text_size": "sm",
-                    "width": "fill"
+                    "width": "fill",
+                    "animation_delay": 100,
+                    "animation_type": "slide-bottom"
                   }
                 }
               ]

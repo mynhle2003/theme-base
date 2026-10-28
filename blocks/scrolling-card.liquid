@@ -197,7 +197,7 @@
 {% stylesheet %}
   .scrolling-card {
     position: sticky;
-    top: calc(var(--header-sticky-height, 0px) + 1.6rem + var(--scrolling-card-offset-top, 0px));
+    top: var(--scrolling-card-sticky-top, calc(var(--header-sticky-height, 0px) + 1.6rem));
     z-index: 1;
     display: flex;
     align-items: var(--scrolling-card-position, center);
@@ -292,8 +292,22 @@
     }
   }
 
+  [data-scrolling-cards]:focus-within .scrolling-card {
+    position: relative;
+    top: auto;
+    transform: none;
+    opacity: 1;
+    will-change: auto;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .scrolling-card { transform: none !important; }
+    .scrolling-card {
+      position: relative;
+      top: auto;
+      transform: none !important;
+      opacity: 1;
+      will-change: auto;
+    }
   }
 {% endstylesheet %}
 
@@ -692,7 +706,7 @@
                 "show_background": true,
                 "corner_radius": "pill",
                 "animation_type": "slide-bottom",
-                "animation_delay": 50
+                "animation_delay": 100
               }
             },
             {
@@ -713,7 +727,7 @@
                 "html_tag": "h3",
                 "width": "fit",
                 "animation_type": "rotate-words",
-                "animation_delay": 50
+                "animation_delay": 100
               }
             },
             {

@@ -445,7 +445,7 @@
       } else if (item.matches('.header-menu')) {
         (logoPosition === 'left' ? centerColumn : leftColumn).append(item);
       } else if (mobile && item.matches('.header-search')) {
-        (logoPosition === 'center' ? leftColumn : rightColumn).append(item);
+        rightColumn.append(item);
       } else if (mobile && item.matches('.header-menu-toggle')) {
         (logoPosition === 'center' ? leftColumn : rightColumn).append(item);
       } else if (item.matches('.header-menu-toggle')) {

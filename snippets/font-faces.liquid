@@ -3,13 +3,14 @@
   @param {object} [body_font] - Primary font
   @param {object} [heading_font] - Heading font
   @param {object} [accent_font] - Accent font
-  @param {string} button_font_weight - Requested button weight or inherit
+  @param {object} [button_font] - Resolved button font variant
+  @param {object} [badge_font] - Resolved badge font variant
+  @param {object} [product_card_title_font] - Resolved card title font variant
 {% enddoc %}
 {%- capture font_faces -%}
-  {%- if button_font_weight != 'inherit' -%}
-    {%- if body_font != blank -%}{{- body_font | font_modify: 'weight', button_font_weight | font_face: font_display: 'swap' -}}<!-- font-face -->{%- endif -%}
-    {%- if heading_font != blank -%}{{- heading_font | font_modify: 'weight', button_font_weight | font_face: font_display: 'swap' -}}<!-- font-face -->{%- endif -%}
-  {%- endif -%}
+  {%- if button_font != blank -%}{{- button_font | font_face: font_display: 'swap' -}}<!-- font-face -->{%- endif -%}
+  {%- if badge_font != blank -%}{{- badge_font | font_face: font_display: 'swap' -}}<!-- font-face -->{%- endif -%}
+  {%- if product_card_title_font != blank -%}{{- product_card_title_font | font_face: font_display: 'swap' -}}<!-- font-face -->{%- endif -%}
   {%- # Loads font variants with display: swap. -%}
   {%- if body_font != blank -%}
     {{- body_font | font_face: font_display: 'swap' -}}<!-- font-face -->

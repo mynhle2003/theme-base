@@ -136,3 +136,53 @@
 @media (prefers-reduced-motion: reduce) {
   .product-sticky-add-to-cart { transition: none; }
 }
+
+/* Size-chart trigger: scoped to the product picker; overlay geometry remains
+   owned by component-overlay and its desktop/mobile settings. */
+.product-variant-picker .variant-picker__size-chart-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--body-color);
+  font-family: var(--variant-label-font-family, var(--font-body-family));
+  font-style: var(--variant-label-font-style, var(--font-body-style));
+  font-weight: var(--variant-label-font-weight, var(--font-body-weight));
+  font-size: var(--font-body-sm);
+  line-height: 1.5;
+  letter-spacing: var(--variant-label-letter-spacing, normal);
+}
+
+/* A single fixed underline in both states prevents a hover position jump.
+   Only scaleX/transform-origin animate, using tertiary's shared keyframes. */
+.variant-picker__size-chart-text {
+  position: relative;
+  text-decoration: none;
+}
+
+.product-variant-picker .variant-picker__size-chart-trigger {
+  text-decoration: none;
+}
+
+.variant-picker__size-chart-text::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: 0.05em;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: right center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .variant-picker__size-chart-trigger:is(:hover, :focus-visible) .variant-picker__size-chart-text::after {
+    animation: link-underline-hover calc(var(--button-motion-duration, var(--motion-duration-standard)) * 1.5) var(--motion-ease-standard) both;
+  }
+}
+
+.product-variant-picker .variant-picker__size-chart-icon {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+}

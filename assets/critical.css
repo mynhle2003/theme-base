@@ -297,13 +297,13 @@ svg {
   /* Images and SVG placeholders without a component hover owner still follow the global setting.
    * Clip the scaled image to its original bounds without changing its parent.
    * Hotspot images stay fixed so product markers remain anchored to the image. */
-  :where(img, svg.placeholder-svg, svg[class*="__placeholder"], svg.placeholder-image, .placeholder-image svg, svg.collection-page-links__image, svg.collection-banner__image, svg.header-mega-menu__banner-image, svg.main-collection__promotion-image):not(:where(.media-hover-zoom .media-hover-zoom__media :is(img, svg), .image-card--zoom .background-media :is(img, svg), .product-card__image > :is(img, svg), .product-card__secondary-image > :is(img, svg), .product-media-gallery[data-zoom='click_hover'] .product-media--image :is(img, svg), .product-media-lightbox__image, .site-logo__image, .product-card__placeholder svg, .gallery-image__media :is(img, svg), .section-hotspot :is(img, svg), .section-hotspot-gallery :is(img, svg), .section-hotspot-full-width-carousel :is(img, svg), [data-product-callout] :is(img, svg))) {
+  :where(img, svg.placeholder-svg, svg[class*="__placeholder"], svg.placeholder-image, .placeholder-image svg, svg.collection-page-links__image, svg.collection-banner__image, svg.header-mega-menu__banner-image, svg.main-collection__promotion-image):not(:where(.media-hover-zoom .media-hover-zoom__media :is(img, svg), .image-card--zoom .background-media :is(img, svg), .product-card__image > :is(img, svg), .product-card__secondary-image > :is(img, svg), .product-media-gallery[data-zoom='click_hover'] .product-media--image :is(img, svg), .product-media-lightbox__image, .site-logo__image, .product-card__placeholder svg, .gallery-image__media :is(img, svg), .section-hotspot :is(img, svg), .section-hotspot-gallery :is(img, svg), .section-hotspot-full-width-carousel :is(img, svg), [data-product-callout] :is(img, svg), .marquee--block :is(img, svg))) {
     scale: 1;
     clip-path: inset(0 round var(--media-radius, 0px));
     transition: scale var(--motion-duration-slow, 500ms) var(--motion-ease-standard, ease), clip-path var(--motion-duration-slow, 500ms) var(--motion-ease-standard, ease);
   }
 
-  :where(img, svg.placeholder-svg, svg[class*="__placeholder"], svg.placeholder-image, .placeholder-image svg, svg.collection-page-links__image, svg.collection-banner__image, svg.header-mega-menu__banner-image, svg.main-collection__promotion-image):not(:where(.media-hover-zoom .media-hover-zoom__media :is(img, svg), .image-card--zoom .background-media :is(img, svg), .product-card__image > :is(img, svg), .product-card__secondary-image > :is(img, svg), .product-media-gallery[data-zoom='click_hover'] .product-media--image :is(img, svg), .product-media-lightbox__image, .site-logo__image, .product-card__placeholder svg, .gallery-image__media :is(img, svg), .section-hotspot :is(img, svg), .section-hotspot-gallery :is(img, svg), .section-hotspot-full-width-carousel :is(img, svg), [data-product-callout] :is(img, svg))):hover {
+  :where(img, svg.placeholder-svg, svg[class*="__placeholder"], svg.placeholder-image, .placeholder-image svg, svg.collection-page-links__image, svg.collection-banner__image, svg.header-mega-menu__banner-image, svg.main-collection__promotion-image):not(:where(.media-hover-zoom .media-hover-zoom__media :is(img, svg), .image-card--zoom .background-media :is(img, svg), .product-card__image > :is(img, svg), .product-card__secondary-image > :is(img, svg), .product-media-gallery[data-zoom='click_hover'] .product-media--image :is(img, svg), .product-media-lightbox__image, .site-logo__image, .product-card__placeholder svg, .gallery-image__media :is(img, svg), .section-hotspot :is(img, svg), .section-hotspot-gallery :is(img, svg), .section-hotspot-full-width-carousel :is(img, svg), [data-product-callout] :is(img, svg), .marquee--block :is(img, svg))):hover {
     scale: var(--motion-image-zoom, 1);
     clip-path: inset(calc(50% - 50% / var(--motion-image-zoom, 1)) round var(--media-radius, 0px));
   }
@@ -814,7 +814,7 @@ dialog {
 
 .bottom-sheet,
 [data-bottom-sheet] {
-  border-radius: var(--bottom-sheet-radius);
+  border-radius: var(--bottom-sheet-radius) var(--bottom-sheet-radius) 0 0;
   background-color: var(--overlay-background-color);
   color: var(--overlay-text-color);
 }
@@ -901,6 +901,7 @@ dialog[data-overlay-motion='popup'][open]::backdrop {
 }
 
 .overlay__title,
+.component-overlay__title,
 .popover__title,
 .drawer__title,
 [data-overlay-title] {
@@ -945,48 +946,6 @@ h6 {
   color: var(--heading-color);
 }
 
-h1 {
-  font-size: var(--font-heading-h1);
-  line-height: var(--font-heading-h1-line-height);
-  letter-spacing: var(--font-heading-h1-letter-spacing);
-  text-transform: var(--font-heading-h1-text-transform);
-}
-
-h2 {
-  font-size: var(--font-heading-h2);
-  line-height: var(--font-heading-h2-line-height);
-  letter-spacing: var(--font-heading-h2-letter-spacing);
-  text-transform: var(--font-heading-h2-text-transform);
-}
-
-h3 {
-  font-size: var(--font-heading-h3);
-  line-height: var(--font-heading-h3-line-height);
-  letter-spacing: var(--font-heading-h3-letter-spacing);
-  text-transform: var(--font-heading-h3-text-transform);
-}
-
-h4 {
-  font-size: var(--font-heading-h4);
-  line-height: var(--font-heading-h4-line-height);
-  letter-spacing: var(--font-heading-h4-letter-spacing);
-  text-transform: var(--font-heading-h4-text-transform);
-}
-
-h5 {
-  font-size: var(--font-heading-h5);
-  line-height: var(--font-heading-h5-line-height);
-  letter-spacing: var(--font-heading-h5-letter-spacing);
-  text-transform: var(--font-heading-h5-text-transform);
-}
-
-h6 {
-  font-size: var(--font-heading-h6);
-  line-height: var(--font-heading-h6-line-height);
-  letter-spacing: var(--font-heading-h6-letter-spacing);
-  text-transform: var(--font-heading-h6-text-transform);
-}
-
 .heading-text {
   font-family: var(--font-heading-family);
   font-style: var(--font-heading-style);
@@ -995,94 +954,58 @@ h6 {
   color: var(--heading-color);
 }
 
-.heading-xs {
+h6,
+.heading-xs,
+.heading-h6 {
   font-size: var(--font-heading-xs);
   line-height: var(--font-heading-xs-line-height);
   letter-spacing: var(--font-heading-xs-letter-spacing);
   text-transform: var(--font-heading-xs-text-transform);
 }
 
-.heading-sm {
+h5,
+.heading-sm,
+.heading-h5 {
   font-size: var(--font-heading-sm);
   line-height: var(--font-heading-sm-line-height);
   letter-spacing: var(--font-heading-sm-letter-spacing);
   text-transform: var(--font-heading-sm-text-transform);
 }
 
-.heading-md {
+h4,
+.heading-md,
+.heading-h4 {
   font-size: var(--font-heading-md);
   line-height: var(--font-heading-md-line-height);
   letter-spacing: var(--font-heading-md-letter-spacing);
   text-transform: var(--font-heading-md-text-transform);
 }
 
-.heading-lg {
+h3,
+.heading-lg,
+.heading-h3 {
   font-size: var(--font-heading-lg);
   line-height: var(--font-heading-lg-line-height);
   letter-spacing: var(--font-heading-lg-letter-spacing);
   text-transform: var(--font-heading-lg-text-transform);
 }
 
-.heading-xl {
+h2,
+.heading-xl,
+.heading-h2 {
   font-size: var(--font-heading-xl);
   line-height: var(--font-heading-xl-line-height);
   letter-spacing: var(--font-heading-xl-letter-spacing);
   text-transform: var(--font-heading-xl-text-transform);
 }
 
-.heading-h1,
-h1.heading-display {
-  font-size: var(--font-heading-h1);
-  line-height: var(--font-heading-h1-line-height);
-  letter-spacing: var(--font-heading-h1-letter-spacing);
-  text-transform: var(--font-heading-h1-text-transform);
-}
-
-.heading-h2,
-h2.heading-display {
-  font-size: var(--font-heading-h2);
-  line-height: var(--font-heading-h2-line-height);
-  letter-spacing: var(--font-heading-h2-letter-spacing);
-  text-transform: var(--font-heading-h2-text-transform);
-}
-
-.heading-h3,
-h3.heading-display {
-  font-size: var(--font-heading-h3);
-  line-height: var(--font-heading-h3-line-height);
-  letter-spacing: var(--font-heading-h3-letter-spacing);
-  text-transform: var(--font-heading-h3-text-transform);
-}
-
-.heading-h4,
-h4.heading-display {
-  font-size: var(--font-heading-h4);
-  line-height: var(--font-heading-h4-line-height);
-  letter-spacing: var(--font-heading-h4-letter-spacing);
-  text-transform: var(--font-heading-h4-text-transform);
-}
-
-.heading-h5,
-h5.heading-display {
-  font-size: var(--font-heading-h5);
-  line-height: var(--font-heading-h5-line-height);
-  letter-spacing: var(--font-heading-h5-letter-spacing);
-  text-transform: var(--font-heading-h5-text-transform);
-}
-
-.heading-h6,
-h6.heading-display {
-  font-size: var(--font-heading-h6);
-  line-height: var(--font-heading-h6-line-height);
-  letter-spacing: var(--font-heading-h6-letter-spacing);
-  text-transform: var(--font-heading-h6-text-transform);
-}
-
-.heading-display {
-  font-size: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-  text-transform: inherit;
+h1,
+.heading-display,
+.heading-h1 {
+  font-size: var(--font-heading-display);
+  line-height: var(--font-heading-display-line-height);
+  letter-spacing: var(--font-heading-display-letter-spacing);
+  text-transform: var(--font-heading-display-text-transform);
 }
 
 .heading-custom {
@@ -1090,10 +1013,6 @@ h6.heading-display {
   line-height: var(--font-heading-custom-line-height);
   letter-spacing: var(--font-heading-custom-letter-spacing);
   text-transform: var(--font-heading-custom-text-transform);
-}
-
-.drawer__title.heading-custom {
-  font-size: var(--overlay-title-size);
 }
 
 .body-text,
@@ -1138,16 +1057,16 @@ h6.heading-display {
   font-weight: var(--font-accent-weight);
 }
 
-.tracking-tight { letter-spacing: -0.02em; }
-.tracking-normal { letter-spacing: 0em; }
-.tracking-relaxed { letter-spacing: 0.02em; }
+.tracking-tight { letter-spacing: var(--letter-spacing-tight); }
+.tracking-normal { letter-spacing: var(--letter-spacing-normal); }
+.tracking-relaxed { letter-spacing: var(--letter-spacing-relaxed); }
 
 .text-case-original { text-transform: none; }
 .text-case-uppercase { text-transform: uppercase; }
 
 .body-xs { font-size: var(--font-body-xs); }
 .body-sm { font-size: var(--font-body-sm); }
-.body-md { font-size: var(--font-body-md); }
+.body-md { font-size: var(--font-body-size); }
 .body-lg { font-size: var(--font-body-lg); }
 .body-xl { font-size: var(--font-body-xl); }
 .body-xxl { font-size: var(--font-body-xxl); }
@@ -1170,8 +1089,8 @@ h6.heading-display {
 
 .body-p3,
 .eyebrow-text {
-  font-family: var(--font-body-family);
-  font-style: var(--font-body-style);
+  font-family: var(--font-eyebrow-family);
+  font-style: var(--font-eyebrow-style);
   font-weight: var(--font-eyebrow-weight);
   font-size: var(--font-eyebrow-size);
   line-height: var(--font-eyebrow-line-height);
@@ -1197,7 +1116,7 @@ h6.heading-display {
   font-family: var(--font-body-family);
   font-style: var(--font-body-style);
   font-weight: var(--font-body-weight);
-  font-size: var(--font-body-md);
+  font-size: var(--font-body-size);
   line-height: var(--font-body-line-height);
   letter-spacing: var(--font-body-letter-spacing);
 }
@@ -1461,7 +1380,7 @@ input[type='submit'].btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--button-icon-gap, 5px);
   min-height: var(--button-height);
   padding: 0 var(--button-padding-inline-desktop);
   border: var(--button-border-width) solid var(--button-border);
@@ -1469,10 +1388,11 @@ input[type='submit'].btn {
   background: var(--button-background);
   color: var(--button-foreground);
   font-family: var(--button-font-family);
+  font-style: var(--button-font-style);
   font-size: var(--button-font-size);
   font-weight: var(--button-font-weight);
   letter-spacing: var(--button-letter-spacing);
-  line-height: 1;
+  line-height: var(--button-line-height, 1);
   text-align: center;
   text-decoration: none;
   text-transform: var(--button-text-case);
@@ -1542,6 +1462,7 @@ input[type='submit'].btn.btn--tertiary {
   --button-hover-border: var(--button-tertiary-hover-border);
   --button-hover-background: var(--button-tertiary-hover-background);
   --button-hover-foreground: var(--button-tertiary-hover-text);
+  line-height: var(--button-tertiary-line-height, var(--line-height-extra-loose));
   min-height: auto;
   padding: 0;
   border-width: 0;
@@ -1676,7 +1597,7 @@ button.btn.swiper-nav-button--outline:hover {
 }
 
 .btn__label--icon {
-  gap: 0.5rem;
+  gap: var(--button-icon-gap, 5px);
 }
 
 .btn__icon {
@@ -2058,24 +1979,24 @@ legend {
 
 .product-card__badges {
   position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
+  top: 12px;
+  left: 12px;
   z-index: var(--z-base, 10);
   display: flex;
   flex-wrap: wrap;
-  max-width: calc(100% - 1.5rem);
+  max-width: calc(100% - 24px);
   gap: 0.35rem;
 }
 
 .product-card__media-overlay {
   position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
+  top: 12px;
+  left: 12px;
   z-index: var(--z-base, 10);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  max-width: calc(100% - 1.5rem);
+  max-width: calc(100% - 24px);
   gap: 0.35rem;
 }
 
@@ -2092,11 +2013,7 @@ legend {
   min-height: 22px;
   padding: 2px 8px;
   border-width: 0;
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 1px;
   line-height: 1.5;
-  text-transform: uppercase;
 }
 
 .product-card__media .product-card__secondary-image {
@@ -2294,15 +2211,13 @@ legend {
 .product-card__title {
   min-width: 0;
   font-family: var(--product-card-title-font-family);
-  font-size: var(--product-card-title-size);
-  line-height: var(--font-heading-md-line-height);
-  letter-spacing: var(--font-heading-letter-spacing);
+  font-style: var(--product-card-title-font-style);
+  font-weight: var(--product-card-title-font-weight);
+  font-size: var(--product-card-title-font-size);
+  line-height: var(--product-card-title-line-height);
+  letter-spacing: var(--product-card-title-letter-spacing);
+  text-transform: var(--product-card-title-text-transform);
   color: var(--heading-color);
-  font-weight: var(--product-card-title-weight, 400);
-}
-
-.product-card--swatches-inline .product-card__title {
-  line-height: 1.5;
 }
 
 .product-card__title-link {
@@ -2338,24 +2253,10 @@ legend {
   color: color-mix(in srgb, var(--body-color) 70%, transparent);
 }
 
-.price.product-card__price {
+.product-card__price {
   width: 100%;
   justify-content: var(--product-card-content-alignment);
   text-align: var(--product-card-alignment);
-  --price-font-size: var(--product-card-price-size, 14px);
-  font-size: var(--price-font-size);
-  line-height: 1.5;
-}
-
-.product-card__price .price__compare-at {
-  font-size: 1em;
-  opacity: 1;
-}
-
-@media (max-width: 767px) {
-  .price.product-card__price {
-    --price-font-size: var(--product-card-price-size-mobile, 14px);
-  }
 }
 
 .product-card__swatches-variant-picker {
@@ -2886,6 +2787,8 @@ legend {
   background: var(--accent-color);
   color: var(--background-color);
   font-family: var(--badge-font-family);
+  font-style: var(--badge-font-style);
+  text-transform: var(--badge-text-transform);
   font-size: var(--badge-font-size);
   font-weight: var(--badge-font-weight);
   letter-spacing: var(--badge-letter-spacing);
@@ -2911,21 +2814,12 @@ legend {
   color: var(--background-color);
 }
 
-.product-card__badges .product-badge--manual {
-  background: var(--badge-collection-background);
-  color: var(--badge-collection-color);
-}
-
-.product-card__badges .product-badge--manual:nth-child(2 of .product-badge--manual) {
-  background: var(--badge-collection-secondary-background);
-  color: var(--badge-collection-secondary-color);
-}
-
 .price {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.5rem;
+  column-gap: var(--compare-at-price-spacing, 4px);
+  row-gap: 0;
   max-width: 100%;
   font-family: var(--price-font-family);
   font-style: var(--price-font-style);
@@ -2935,8 +2829,26 @@ legend {
   overflow-wrap: anywhere;
 }
 
+/* Card settings override only the shared price font contract in this context.
+ * Tracking inherits Body; sale/compare/unit styles remain owned by .price.
+ */
+.price--product-card {
+  --price-line-height: var(--product-card-price-line-height, var(--font-body-line-height));
+  letter-spacing: var(--product-card-price-letter-spacing, var(--font-body-letter-spacing, 0px));
+  --price-font-family: var(--product-card-price-font-family);
+  --price-font-style: var(--product-card-price-font-style);
+  --price-font-weight: var(--product-card-price-font-weight);
+  --price-font-size: var(--product-card-price-font-size);
+}
+
 .price__value {
   display: inline-block;
+}
+
+/* Regular product prices follow the active scheme heading role.
+ * Sale, compare-at and unit prices retain their separate color contracts. */
+.price > .price__current--regular {
+  color: var(--heading-color);
 }
 
 .price__current--sale {
@@ -2945,8 +2857,8 @@ legend {
 
 .price__compare-at {
   color: var(--price-compare-color);
-  font-size: 0.9em;
-  opacity: 0.72;
+  font-size: 1em;
+  opacity: 1;
 }
 
 .price__unit {
@@ -3076,7 +2988,8 @@ legend {
 
 .page-width {
   width: 100%;
-  max-width: var(--page-width);
+  /* Page width caps the content; responsive gutters sit outside that cap. */
+  max-width: calc(var(--page-width) + var(--page-margin-current) * 2);
   padding-inline: var(--page-margin-current);
   margin-inline: auto;
 }
@@ -3158,10 +3071,6 @@ legend {
     gap: var(--product-card-info-gap-mobile);
   }
 
-  .product-card__title {
-    font-size: var(--product-card-title-size-mobile);
-  }
-
   .product-card__swatches {
     --product-card-swatch-width: var(--product-card-swatch-width-mobile);
   }
@@ -3235,6 +3144,7 @@ legend {
 .component-overlay {
   --overlay-inset: var(--overlay-drawer-content-padding-desktop, 1.5rem);
   --overlay-drawer-inset: var(--overlay-drawer-padding-desktop, 0px);
+  --overlay-drawer-edge-radius: var(--overlay-drawer-edge-radius-desktop, 0px);
   position: fixed;
   z-index: var(--z-modal, 1000);
   inset: 0;
@@ -3289,12 +3199,14 @@ legend {
     height: calc(100dvh - var(--overlay-drawer-inset) - var(--overlay-drawer-inset));
     max-height: calc(100dvh - var(--overlay-drawer-inset) - var(--overlay-drawer-inset));
     margin: 0;
+    border-radius: var(--drawer-radius) var(--overlay-drawer-edge-radius) var(--overlay-drawer-edge-radius) var(--drawer-radius);
   }
 }
 @media (max-width: 767.98px) {
   .component-overlay {
     --overlay-inset: var(--overlay-drawer-content-padding-mobile, 1rem);
     --overlay-drawer-inset: var(--overlay-drawer-padding-mobile, 0px);
+    --overlay-drawer-edge-radius: 0px;
   }
   .component-overlay[data-mobile-layout='bottom_sheet'] .component-overlay__panel {
     position: absolute;
@@ -3310,9 +3222,11 @@ legend {
     height: calc(100dvh - var(--overlay-drawer-inset) - var(--overlay-drawer-inset));
     max-height: calc(100dvh - var(--overlay-drawer-inset) - var(--overlay-drawer-inset));
     margin: 0;
+    border-radius: 0;
   }
 }
 
+/* Announcement geometry is required before section CSS and its module load. */
 /* Reserve the server-rendered overlay header geometry before section CSS. */
 .section-header:has(.header-top[data-header-overlap-first-section]) {
   position: relative;
@@ -3662,4 +3576,24 @@ legend {
   flex: 0 0 auto;
   width: var(--header-action-icon-size);
   height: var(--header-action-icon-size);
+}
+
+.product-card__badges .product-badge {
+  --badge-padding: 2px 8px;
+
+  justify-content: center;
+  min-height: 22px;
+  border: 0;
+  line-height: 1.5;
+  letter-spacing: var(--badge-letter-spacing);
+  text-align: center;
+  text-transform: var(--badge-text-transform);
+}
+
+/* Pagination visibility follows the carousel's 768px breakpoint. */
+@media (min-width: 768px) {
+  [data-pagination-visible-desktop='false'] { display: none !important; }
+}
+@media (max-width: 767.98px) {
+  [data-pagination-visible-mobile='false'] { display: none !important; }
 }

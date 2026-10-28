@@ -1,0 +1,20 @@
+{% doc %}
+  Resolves Overlay Title size to the shared Heading 3–6 visual scale.
+  @param {string} [size] - Existing overlay_title_size choice
+{% enddoc %}
+{%- liquid
+  case size
+    when 'lg', 'md', 'sm', 'xs'
+      echo size
+    when 'heading_3'
+      echo 'lg'
+    when 'heading_4'
+      echo 'md'
+    when 'heading_5'
+      echo 'sm'
+    when 'heading_6'
+      echo 'xs'
+    else
+      echo 'md'
+  endcase
+-%}

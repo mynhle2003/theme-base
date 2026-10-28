@@ -86,7 +86,7 @@
       {% endfor %}
     {% endcapture %}
 
-    {% render 'swiper-carousel',
+    {% render 'swiper-carousel', layout: 'carousel',
       id: id,
       content: product_media_lightbox_content,
       root_class: 'product-media-lightbox__viewport',

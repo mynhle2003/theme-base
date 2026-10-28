@@ -20,47 +20,17 @@
   @param {number} [autoplay_delay] - Autoplay delay in milliseconds
 {% enddoc %}
 
+
 {% liquid
   assign carousel_layout = layout | default: 'carousel'
   unless carousel_layout == 'carousel' or carousel_layout == 'grid'
     assign carousel_layout = 'carousel'
   endunless
-
-  assign carousel_autoplay_enabled = false
-  if autoplay == true or autoplay == 'true'
-    assign carousel_autoplay_enabled = true
-  endif
-
-  assign carousel_pause_on_hover = true
-  if pause_on_hover == false or pause_on_hover == 'false'
-    assign carousel_pause_on_hover = false
-  endif
-
-  assign carousel_autoplay_delay = autoplay_delay | default: 4000 | plus: 0
-  if carousel_autoplay_delay < 1000 or carousel_autoplay_delay > 60000
-    assign carousel_autoplay_delay = 4000
-  endif
-
-  assign carousel_show_next_slide_preview = false
-  if show_next_slide_preview == true or show_next_slide_preview == 'true'
-    assign carousel_show_next_slide_preview = true
-  endif
-
-  assign carousel_show_next_slide_preview_on_mobile = false
-  if show_next_slide_preview_on_mobile == true or show_next_slide_preview_on_mobile == 'true'
-    assign carousel_show_next_slide_preview_on_mobile = true
-  endif
 %}
 
 <div
   class="swiper swiper-carousel--{{ carousel_layout }}{% if root_class != blank %} {{ root_class }}{% endif %}"
-  data-swiper-carousel
-  data-swiper-layout="{{ carousel_layout }}"
-  data-swiper-autoplay="{{ carousel_autoplay_enabled }}"
-  data-swiper-autoplay-pause-on-hover="{{ carousel_pause_on_hover }}"
-  data-swiper-autoplay-delay="{{ carousel_autoplay_delay }}"
-  data-swiper-next-slide-preview="{{ carousel_show_next_slide_preview }}"
-  data-swiper-next-slide-preview-mobile="{{ carousel_show_next_slide_preview_on_mobile }}"
+  {% render 'swiper-carousel-attributes', viewport: true, layout: carousel_layout, autoplay: autoplay, pause_on_hover: pause_on_hover, autoplay_delay: autoplay_delay, show_next_slide_preview: show_next_slide_preview, show_next_slide_preview_on_mobile: show_next_slide_preview_on_mobile %}
   {% if id != blank %}id="{{ id | escape }}"{% endif %}
   {% if aria_label != blank %}aria-label="{{ aria_label | escape }}"{% endif %}
   {% if root_attributes != blank %}{{ root_attributes }}{% endif %}

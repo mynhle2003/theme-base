@@ -61,7 +61,7 @@
   endunless
 
   assign carousel_pagination_type = block.settings.pagination_type | default: 'bullets'
-  unless carousel_pagination_type == 'progress_bar' or carousel_pagination_type == 'bullets'
+  unless carousel_pagination_type == 'progress_bar' or carousel_pagination_type == 'bullets' or carousel_pagination_type == 'dots'
     assign carousel_pagination_type = 'bullets'
   endunless
   assign carousel_pagination_desktop = true
@@ -161,7 +161,7 @@
       {% capture carousel_navigation_center_style %}
         {% if carousel_pagination_desktop %}
           {% assign carousel_pagination_size = 'var(--swiper-pagination-progressbar-size, 4px)' %}
-          {% if carousel_pagination_type == 'bullets' %}{% assign carousel_pagination_size = 'var(--swiper-pagination-bullet-size, 0.5rem)' %}{% endif %}
+          {% if carousel_pagination_type == 'bullets' or carousel_pagination_type == 'dots' %}{% assign carousel_pagination_size = 'var(--swiper-pagination-bullet-size, 0.5rem)' %}{% endif %}
           --swiper-navigation-center-offset: calc(({{ carousel_pagination_padding_desktop }}px + {{ carousel_pagination_size }}) / 2);
         {% endif %}
       {% endcapture %}
@@ -187,23 +187,15 @@
   class="carousel-block carousel-block--width-{{ carousel_width_mode }}"
   style="{{ carousel_style | strip }}"
   data-carousel-block
-  data-carousel-preview-mobile="{{ block.settings.show_next_slide_preview_on_mobile }}"
-  data-carousel-contained-preview="false"
-  data-carousel-preview-requested="{{ carousel_show_next_slide_preview }}"
-  data-swiper-columns-desktop="{{ carousel_columns_desktop }}"
-  data-swiper-columns-mobile="{{ carousel_columns_mobile }}"
-  data-swiper-gap-desktop="{{ carousel_gap_desktop }}"
-  data-swiper-gap-mobile="{{ carousel_gap_mobile }}"
-  data-swiper-pagination-type="{{ carousel_pagination_type }}"
-  data-swiper-pagination-desktop="{{ carousel_pagination_desktop }}"
-  data-swiper-pagination-mobile="{{ carousel_pagination_mobile }}"
-  data-swiper-autoplay="{{ carousel_autoplay }}"
-  data-swiper-autoplay-pause-on-hover="{{ carousel_pause_on_hover }}"
-  data-swiper-autoplay-delay="{{ carousel_speed | times: 1000 }}"
+  {% render 'swiper-carousel-attributes', preview_requested_mobile: block.settings.show_next_slide_preview_on_mobile %}
+  {% render 'swiper-carousel-attributes', contained_preview: false %}
+  {% render 'swiper-carousel-attributes', preview_requested: carousel_show_next_slide_preview %}
+  {% render 'swiper-carousel-attributes', loop: false, manual_loop: false, effect: 'slide', columns_desktop: carousel_columns_desktop, columns_mobile: carousel_columns_mobile, gap_desktop: carousel_gap_desktop, gap_mobile: carousel_gap_mobile, pagination_type: carousel_pagination_type, pagination_desktop: carousel_pagination_desktop, pagination_mobile: carousel_pagination_mobile %}
+  {% assign carousel_attribute_value_1 = carousel_speed | times: 1000 %}{% render 'swiper-carousel-attributes', autoplay: carousel_autoplay, pause_on_hover: carousel_pause_on_hover, autoplay_delay: carousel_attribute_value_1 %}
   {{ block.shopify_attributes }}
 >
   <div class="carousel-block__container swiper-carousel__container">
-    {% render 'swiper-carousel',
+    {% render 'swiper-carousel', layout: 'carousel',
       id: carousel_id,
       content: carousel_slides,
       root_class: 'carousel-block__viewport',
@@ -479,6 +471,10 @@
         {
           "value": "bullets",
           "label": "t:options.collection_pagination.bullets"
+        },
+        {
+          "value": "dots",
+          "label": "t:options.collection_pagination.dots"
         }
       ],
       "default": "bullets"
@@ -663,7 +659,7 @@
                 "customize_mobile_size": false,
                 "width_mobile": "fill",
                 "animation_type": "rotate-words",
-                "animation_delay": 50
+                "animation_delay": 100
               }
             },
             {
@@ -704,7 +700,7 @@
                 "customize_mobile_size": false,
                 "width_mobile": "fill",
                 "animation_type": "rotate-words",
-                "animation_delay": 50
+                "animation_delay": 100
               }
             },
             {
@@ -745,7 +741,7 @@
                 "customize_mobile_size": false,
                 "width_mobile": "fill",
                 "animation_type": "rotate-words",
-                "animation_delay": 50
+                "animation_delay": 100
               }
             },
             {
@@ -786,7 +782,7 @@
                 "customize_mobile_size": false,
                 "width_mobile": "fill",
                 "animation_type": "rotate-words",
-                "animation_delay": 50
+                "animation_delay": 100
               }
             },
             {
@@ -827,7 +823,7 @@
                 "customize_mobile_size": false,
                 "width_mobile": "fill",
                 "animation_type": "rotate-words",
-                "animation_delay": 50
+                "animation_delay": 100
               }
             },
             {

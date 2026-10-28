@@ -10,7 +10,7 @@
 
 {% liquid
   assign tab_layout_style = block.settings.style | default: 'underline'
-  unless tab_layout_style == 'underline' or tab_layout_style == 'button' or tab_layout_style == 'separator'
+  unless tab_layout_style == 'underline' or tab_layout_style == 'button' or tab_layout_style == 'outline'
     assign tab_layout_style = 'underline'
   endunless
 
@@ -151,7 +151,6 @@
 %}
 
 {% capture tab_layout_style_attribute %}
-  {% if tab_layout_style == 'separator' %}--tab-layout-separator: url('{{ 'malandra-tab-separator.svg' | asset_url }}');{% endif %}
   --tab-layout-gap-desktop: {{ tab_layout_gap_desktop }}px;
   --tab-layout-gap-mobile: {{ tab_layout_gap_mobile }}px;
   --tab-layout-font-family: {{ tab_layout_font_family }};
@@ -165,7 +164,7 @@
 {% assign tab_layout_style_attribute = tab_layout_style_attribute | strip %}
 
 <div
-  class="tab-layout tab-layout--{{ tab_layout_style }} tab-layout--active-{{ tab_layout_active_style }}"
+  class="tab-layout tab-layout--{{ tab_layout_style }} tab-layout--active-{{ tab_layout_active_style }}{% if tab_layout_style == 'outline' %} virelle-text-outline{% endif %}"
   data-tab-layout
   data-tab-layout-ready="false"
   data-vertical-layout="{{ tab_layout_vertical_layout }}"
@@ -437,24 +436,24 @@
     return attempt;
   };
 
-  const centerActiveTab = (state, trigger, animate = false) => {
+  const revealActiveTab = (state, trigger, animate = false) => {
     if (!state.navigation || !window.matchMedia?.('(max-width: 767.98px)').matches) return;
     window.cancelAnimationFrame(state.navigationFrame);
     state.navigationFrame = window.requestAnimationFrame(() => {
       state.navigationFrame = 0;
       if (instances.get(state.layout) !== state || !state.navigation.contains(trigger)) return;
-      if (animate && state.navigation.scrollWidth > state.navigation.clientWidth) state.centerNavigation = true;
-      if (state.centerNavigation) {
-        const width = state.navigation.clientWidth;
-        const first = state.entries[0]?.trigger.offsetWidth || 0;
-        const last = state.entries.at(-1)?.trigger.offsetWidth || 0;
-        state.navigation.style.setProperty('--tab-layout-scroll-start', `${Math.max(0, (width - first) / 2)}px`);
-        state.navigation.style.setProperty('--tab-layout-scroll-end', `${Math.max(0, (width - last) / 2)}px`);
-      }
       const viewport = state.navigation.getBoundingClientRect();
       const tab = trigger.getBoundingClientRect();
-      state.navigation.scrollBy({
-        left: tab.left + tab.width / 2 - viewport.left - viewport.width / 2,
+      const isEdgeTab = trigger === state.entries[0]?.trigger || trigger === state.entries.at(-1)?.trigger;
+      const left = !isEdgeTab
+        ? tab.left + tab.width / 2 - viewport.left - viewport.width / 2
+        : tab.left < viewport.left
+          ? tab.left - viewport.left
+          : tab.right > viewport.right
+            ? tab.right - viewport.right
+            : 0;
+      if (left) state.navigation.scrollBy({
+        left,
         behavior: animate && !prefersReducedMotion() ? 'smooth' : 'instant'
       });
     });
@@ -478,7 +477,7 @@
         previousEntry.panel.inert = true;
       }
       if (shouldFocus) selectedEntry.trigger.focus({ preventScroll: true });
-      centerActiveTab(state, selectedEntry.trigger, shouldAnimate);
+      revealActiveTab(state, selectedEntry.trigger, shouldAnimate);
       loadDeferredPanels(state);
       return;
     }
@@ -499,7 +498,7 @@
     updateViewAll(state, selectedEntry.trigger);
     updateExternalNavigation(state);
     if (shouldFocus) selectedEntry.trigger.focus({ preventScroll: true });
-    if (previousEntry !== selectedEntry || shouldAnimate) centerActiveTab(state, selectedEntry.trigger, shouldAnimate);
+    if (previousEntry !== selectedEntry || shouldAnimate) revealActiveTab(state, selectedEntry.trigger, shouldAnimate);
 
     if (shouldAnimate && previousEntry && previousEntry !== selectedEntry) {
       animatePanel(state, selectedEntry.panel);
@@ -536,7 +535,6 @@
       observer: null,
       navigationObserver: null,
       navigationFrame: 0,
-      centerNavigation: false,
       panelAnimation: null,
       panelAnimationFrame: 0,
       synchronizationQueued: false,
@@ -553,7 +551,7 @@
     if (typeof ResizeObserver !== 'undefined') {
       state.navigationObserver = new ResizeObserver(() => {
         const trigger = state.entries.find(entry => entry.trigger.getAttribute('aria-selected') === 'true')?.trigger;
-        if (trigger) centerActiveTab(state, trigger);
+        if (trigger) revealActiveTab(state, trigger);
       });
       state.navigationObserver.observe(navigation);
     }
@@ -701,18 +699,9 @@
       "id": "style",
       "label": "t:general.style",
       "options": [
-        {
-          "value": "underline",
-          "label": "t:options.tab_style.underline"
-        },
-        {
-          "value": "button",
-          "label": "t:options.tab_style.button"
-        },
-        {
-          "value": "separator",
-          "label": "t:options.tab_style.separator"
-        }
+        { "value": "underline", "label": "t:options.tab_style.underline" },
+        { "value": "button", "label": "t:options.tab_style.button" },
+        { "value": "outline", "label": "t:options.tab_style.outline" }
       ],
       "default": "underline"
     },
@@ -721,14 +710,8 @@
       "id": "active_style",
       "label": "t:labels.active_style",
       "options": [
-        {
-          "value": "primary",
-          "label": "t:options.tab_active_style.primary"
-        },
-        {
-          "value": "outline",
-          "label": "t:options.tab_active_style.outline"
-        }
+        { "value": "primary", "label": "t:options.tab_active_style.primary" },
+        { "value": "outline", "label": "t:options.tab_active_style.outline" }
       ],
       "default": "primary",
       "visible_if": "{{ block.settings.style == 'button' }}"
@@ -766,54 +749,24 @@
       "id": "font",
       "label": "t:labels.font",
       "options": [
-        {
-          "value": "body",
-          "label": "t:options.menu_font.body"
-        },
-        {
-          "value": "heading",
-          "label": "t:options.menu_font.heading"
-        },
-        {
-          "value": "accent",
-          "label": "t:options.menu_font.accent"
-        }
+        { "value": "body", "label": "t:options.menu_font.body" },
+        { "value": "heading", "label": "t:options.menu_font.heading" },
+        { "value": "accent", "label": "t:options.menu_font.accent" }
       ],
       "default": "body"
     },
     {
       "type": "select",
       "id": "heading_size",
-      "label": "t:labels.font_size",
+      "label": "t:labels.heading_size",
       "options": [
-        {
-          "value": "display",
-          "label": "t:options.heading_size.display"
-        },
-        {
-          "value": "xl",
-          "label": "t:options.heading_size.xl"
-        },
-        {
-          "value": "lg",
-          "label": "t:options.heading_size.lg"
-        },
-        {
-          "value": "md",
-          "label": "t:options.heading_size.md"
-        },
-        {
-          "value": "sm",
-          "label": "t:options.heading_size.sm"
-        },
-        {
-          "value": "xs",
-          "label": "t:options.heading_size.xs"
-        },
-        {
-          "value": "custom",
-          "label": "t:options.heading_size.custom"
-        }
+        { "value": "display", "label": "t:options.heading_size.display" },
+        { "value": "xl", "label": "t:options.heading_size.xl" },
+        { "value": "lg", "label": "t:options.heading_size.lg" },
+        { "value": "md", "label": "t:options.heading_size.md" },
+        { "value": "sm", "label": "t:options.heading_size.sm" },
+        { "value": "xs", "label": "t:options.heading_size.xs" },
+        { "value": "custom", "label": "t:options.heading_size.custom" }
       ],
       "default": "lg"
     },

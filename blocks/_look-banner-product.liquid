@@ -1,0 +1,221 @@
+{% doc %}
+  Product card and optional action for paired lifestyle banners; no hotspots.
+  @example
+  {% content_for 'block', type: '_look-banner-product', id: 'product-1' %}
+{% enddoc %}
+
+
+{% liquid
+  assign details_alignment = block.settings.details_alignment | default: 'center'
+  unless details_alignment == 'left' or details_alignment == 'center' or details_alignment == 'right'
+    assign details_alignment = 'center'
+  endunless
+  assign details_alignment_mobile = block.settings.details_alignment_mobile | default: details_alignment
+  unless details_alignment_mobile == 'left' or details_alignment_mobile == 'center' or details_alignment_mobile == 'right'
+    assign details_alignment_mobile = details_alignment
+  endunless
+  assign details_justify = 'center'
+  if details_alignment == 'left'
+    assign details_justify = 'start'
+  elsif details_alignment == 'right'
+    assign details_justify = 'end'
+  endif
+  assign details_justify_mobile = 'center'
+  if details_alignment_mobile == 'left'
+    assign details_justify_mobile = 'start'
+  elsif details_alignment_mobile == 'right'
+    assign details_justify_mobile = 'end'
+  endif
+  assign action_width = 'fit-content'
+  if block.settings.width == 'fill'
+    assign action_width = '100%'
+  endif
+  assign action_width_mobile = 'fit-content'
+  if block.settings.width_mobile == 'fill'
+    assign action_width_mobile = '100%'
+  endif
+  assign shop_the_look_product = block.settings.product
+  assign shop_the_look_product_id = blank
+  assign shop_the_look_product_url = blank
+  assign shop_the_look_has_product = false
+  if shop_the_look_product != blank
+    assign shop_the_look_product_id = shop_the_look_product.id | default: blank
+    assign shop_the_look_product_url = shop_the_look_product.url | default: blank
+    if shop_the_look_product_id != blank and shop_the_look_product_url != blank
+      assign shop_the_look_has_product = true
+    endif
+  endif
+  assign shop_the_look_product_placeholder = false
+  unless shop_the_look_has_product
+    assign shop_the_look_product_placeholder = true
+  endunless
+%}
+
+  <div
+    class="shop-the-look-product look-banner-product product-card-layout__item swiper-slide"
+    style="--look-details-align: {{ details_alignment }}; --look-details-align-mobile: {{ details_alignment_mobile }}; --look-details-justify: {{ details_justify }}; --look-details-justify-mobile: {{ details_justify_mobile }}; --look-action-width: {{ action_width }}; --look-action-width-mobile: {{ action_width_mobile }};"
+    {% if shop_the_look_has_product %}data-shop-the-look-product="{{ shop_the_look_product_id }}"{% else %}data-shop-the-look-product{% endif %}
+    data-shop-the-look-block-id="{{ block.id }}"
+    {{ block.shopify_attributes }}
+  >
+    {% capture look_product_action %}
+      {% if block.settings.show_product_button and shop_the_look_has_product %}
+        <a class="btn btn-primary btn--primary shop-the-look-product__action look-banner-product__action" href="{{ shop_the_look_product_url }}">{{ 'products.view_product' | t }}</a>
+      {% endif %}
+    {% endcapture %}
+    {% assign look_media_actions = true %}
+    {% if block.settings.show_product_button %}{% assign look_media_actions = false %}{% endif %}
+    {% render 'product-card',
+      product: shop_the_look_product,
+      placeholder: shop_the_look_product_placeholder,
+      footer_content: look_product_action,
+      show_media_actions: look_media_actions,
+      class: 'shop-the-look-product__card'
+    %}
+
+
+  </div>
+
+{% stylesheet %}
+  .look-banner-product { width: 100%; min-width: 0; }
+  .look-banner-product .product-card__content {
+    --product-card-alignment: var(--look-details-align, center);
+    --product-card-content-alignment: var(--look-details-justify, center);
+  }
+  .look-banner-product .product-card__swatches-variant-picker {
+    justify-self: var(--look-details-justify, center);
+  }
+  .look-banner-product .look-banner-product__action {
+    width: var(--look-action-width, fit-content);
+    max-width: 100%;
+    justify-self: var(--look-details-justify, center);
+  }
+  @media (max-width: 767.98px) {
+    .look-banner-product .product-card__content {
+      --product-card-alignment: var(--look-details-align-mobile, var(--look-details-align, center));
+      --product-card-content-alignment: var(--look-details-justify-mobile, var(--look-details-justify, center));
+    }
+    .look-banner-product .product-card__swatches-variant-picker {
+      justify-self: var(--look-details-justify-mobile, var(--look-details-justify, center));
+    }
+    .look-banner-product .look-banner-product__action {
+      width: var(--look-action-width-mobile, fit-content);
+      justify-self: var(--look-details-justify-mobile, var(--look-details-justify, center));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.product",
+  "tag": null,
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:labels.product"
+    },
+    {
+      "type": "header",
+      "content": "Details"
+    },
+    {
+      "type": "select",
+      "id": "details_alignment",
+      "label": "Desktop alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "details_alignment_mobile",
+      "label": "Mobile alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:options.alignment.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.alignment.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.alignment.right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "View product"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_button",
+      "label": "Show View product button",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:labels.width",
+      "options": [
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        }
+      ],
+      "default": "fit",
+      "visible_if": "{{ block.settings.show_product_button }}"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:labels.mobile_width",
+      "options": [
+        {
+          "value": "fit",
+          "label": "t:options.width.fit"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.width.fill"
+        }
+      ],
+      "default": "fit",
+      "visible_if": "{{ block.settings.show_product_button }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.product",
+      "category": "t:general.product",
+      "settings": {
+        "show_product_button": true,
+        "details_alignment": "center",
+        "details_alignment_mobile": "center",
+        "width": "fit",
+        "width_mobile": "fit"
+      }
+    }
+  ]
+}
+{% endschema %}

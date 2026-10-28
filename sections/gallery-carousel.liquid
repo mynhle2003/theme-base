@@ -115,7 +115,11 @@
   .gallery-carousel__content--horizontal > .gallery-header-group { flex: 1 1 0%; }
   .gallery-carousel__content--horizontal > .carousel-block--width-fill { flex: 1 1 0%; }
   .gallery-carousel__content--horizontal > .carousel-block--width-custom { flex: 0 1 var(--carousel-width); }
+  .gallery-carousel .gallery-image__tag { line-height: 1.5; }
   @media (max-width: 767.98px) {
+    .gallery-carousel .gallery-image__overlay { gap: 8px; }
+    .gallery-carousel .gallery-image__button,
+    .gallery-carousel .gallery-image__icon { width: 24px; height: 24px; }
     .gallery-carousel__spacing { padding-top: var(--gallery-carousel-section-padding-top-mobile, var(--gallery-carousel-section-padding-top, 0px)); padding-bottom: var(--gallery-carousel-section-padding-bottom-mobile, var(--gallery-carousel-section-padding-bottom, 0px)); }
     .gallery-carousel__content { align-items: var(--gallery-carousel-align-mobile, var(--gallery-carousel-align, flex-start)); gap: var(--gallery-carousel-content-gap-mobile, var(--gallery-carousel-content-gap, 32px)); }
     .gallery-carousel__content--horizontal.gallery-carousel__content--mobile-vertical { flex-direction: column; }
@@ -363,36 +367,43 @@
         "direction": "vertical",
         "position": "center",
         "horizontal_alignment": "space-between",
-        "alignment": "left",
+        "alignment": "center",
         "customize_mobile_alignment": true,
-        "alignment_mobile": "left",
-        "customize_mobile_gap": false,
-        "content_gap": 48,
-        "content_gap_mobile": 32
+        "alignment_mobile": "center",
+        "customize_mobile_gap": true,
+        "content_gap": 40,
+        "content_gap_mobile": 36,
+        "section_width": "full_width",
+        "padding_top": 80,
+        "padding_bottom": 64,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
         {
           "type": "gallery-header-group",
           "settings": {
-            "alignment": "left",
+            "alignment": "center",
             "gap": 8
           },
           "blocks": [
             {
               "type": "eyebrow",
               "settings": {
-                "text": "<p>Section TAG</p>",
-                "animation_type": "slide-bottom",
-                "animation_delay": 50
+                "text": "<p>#GLORIADRESS</p>",
+                "animation_type": "slide-right",
+                "animation_delay": 100
               }
             },
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Follow Us On Instagram</p>",
+                "text": "<p>LET’S GET SOCIAL</p>",
                 "html_tag": "h2",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
+                "animation_type": "slide-bottom",
+                "animation_delay": 100,
+                "heading_size": "lg"
               }
             }
           ]
@@ -400,17 +411,17 @@
         {
           "type": "carousel",
           "settings": {
-            "columns_desktop": "4",
+            "columns_desktop": "5",
             "columns_mobile": "1",
-            "gap_desktop": 24,
-            "gap_mobile": 16,
+            "gap_desktop": 16,
+            "gap_mobile": 12,
             "navigation_style": "primary",
             "navigation_icon": "chevron",
             "navigation_behavior": "show_on_hover",
             "pagination_type": "progress_bar",
-            "show_pagination_on_desktop": true,
-            "show_pagination_on_mobile": true,
-            "show_navigation_on_desktop": true,
+            "show_pagination_on_desktop": false,
+            "show_pagination_on_mobile": false,
+            "show_navigation_on_desktop": false,
             "show_next_slide_preview_on_desktop": false,
             "width": "fill",
             "custom_width": 50,
@@ -427,7 +438,7 @@
             "customize_mobile_padding": false,
             "padding_top_mobile": 0,
             "padding_bottom_mobile": 0,
-            "show_next_slide_preview_on_mobile": false
+            "show_next_slide_preview_on_mobile": true
           },
           "blocks": [
             {
@@ -435,12 +446,12 @@
               "settings": {
                 "gap_desktop": 0,
                 "gap_mobile": 0,
-                "direction": "vertical",
+                "direction": "horizontal",
                 "alignment": "left",
                 "position": "top",
                 "position_horizontal": "top",
                 "horizontal_alignment": "left",
-                "customize_mobile_alignment": true,
+                "customize_mobile_alignment": false,
                 "alignment_mobile": "left",
                 "height": "fit",
                 "border_thickness": 0,
@@ -462,10 +473,19 @@
               },
               "blocks": [
                 {
-                  "type": "gallery-item",
+                  "type": "gallery-image",
                   "settings": {
-                    "text": "@pam_sam",
-                    "social_network": "instagram"
+                    "image": "shopify://shop_images/novaire-social-brown.avif",
+                    "mobile_image": "shopify://shop_images/novaire-social-brown.avif",
+                    "alt_text": "Novaire summer style",
+                    "tag": "@pam_sam",
+                    "tag_font_size": "md",
+                    "social_network": "instagram",
+                    "social_url": "#",
+                    "social_background": "#FFFFFF00",
+                    "social_color": "#FFFFFF",
+                    "show_overlay": "hover",
+                    "overlay_background": "#00000033"
                   }
                 }
               ]
@@ -475,12 +495,12 @@
               "settings": {
                 "gap_desktop": 0,
                 "gap_mobile": 0,
-                "direction": "vertical",
+                "direction": "horizontal",
                 "alignment": "left",
                 "position": "top",
                 "position_horizontal": "top",
                 "horizontal_alignment": "left",
-                "customize_mobile_alignment": true,
+                "customize_mobile_alignment": false,
                 "alignment_mobile": "left",
                 "height": "fit",
                 "border_thickness": 0,
@@ -502,10 +522,19 @@
               },
               "blocks": [
                 {
-                  "type": "gallery-item",
+                  "type": "gallery-image",
                   "settings": {
-                    "text": "@pam_sam",
-                    "social_network": "instagram"
+                    "image": "shopify://shop_images/clare-social-2.png",
+                    "mobile_image": "shopify://shop_images/clare-social-2.png",
+                    "alt_text": "Novaire summer style",
+                    "tag": "@pam_sam",
+                    "tag_font_size": "md",
+                    "social_network": "instagram",
+                    "social_url": "#",
+                    "social_background": "#FFFFFF00",
+                    "social_color": "#FFFFFF",
+                    "show_overlay": "hover",
+                    "overlay_background": "#00000033"
                   }
                 }
               ]
@@ -515,12 +544,12 @@
               "settings": {
                 "gap_desktop": 0,
                 "gap_mobile": 0,
-                "direction": "vertical",
+                "direction": "horizontal",
                 "alignment": "left",
                 "position": "top",
                 "position_horizontal": "top",
                 "horizontal_alignment": "left",
-                "customize_mobile_alignment": true,
+                "customize_mobile_alignment": false,
                 "alignment_mobile": "left",
                 "height": "fit",
                 "border_thickness": 0,
@@ -542,10 +571,19 @@
               },
               "blocks": [
                 {
-                  "type": "gallery-item",
+                  "type": "gallery-image",
                   "settings": {
-                    "text": "@pam_sam",
-                    "social_network": "instagram"
+                    "image": "shopify://shop_images/novaire-social-green.avif",
+                    "mobile_image": "shopify://shop_images/novaire-social-green.avif",
+                    "alt_text": "Novaire summer style",
+                    "tag": "@pam_sam",
+                    "tag_font_size": "md",
+                    "social_network": "instagram",
+                    "social_url": "#",
+                    "social_background": "#FFFFFF00",
+                    "social_color": "#FFFFFF",
+                    "show_overlay": "hover",
+                    "overlay_background": "#00000033"
                   }
                 }
               ]
@@ -555,12 +593,12 @@
               "settings": {
                 "gap_desktop": 0,
                 "gap_mobile": 0,
-                "direction": "vertical",
+                "direction": "horizontal",
                 "alignment": "left",
                 "position": "top",
                 "position_horizontal": "top",
                 "horizontal_alignment": "left",
-                "customize_mobile_alignment": true,
+                "customize_mobile_alignment": false,
                 "alignment_mobile": "left",
                 "height": "fit",
                 "border_thickness": 0,
@@ -582,10 +620,68 @@
               },
               "blocks": [
                 {
-                  "type": "gallery-item",
+                  "type": "gallery-image",
                   "settings": {
-                    "text": "@pam_sam",
-                    "social_network": "instagram"
+                    "image": "shopify://shop_images/novaire-social-floral.avif",
+                    "mobile_image": "shopify://shop_images/novaire-social-floral.avif",
+                    "alt_text": "Novaire summer style",
+                    "tag": "@pam_sam",
+                    "tag_font_size": "md",
+                    "social_network": "instagram",
+                    "social_url": "#",
+                    "social_background": "#FFFFFF00",
+                    "social_color": "#FFFFFF",
+                    "show_overlay": "hover",
+                    "overlay_background": "#00000033"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "slide",
+              "settings": {
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "direction": "horizontal",
+                "alignment": "left",
+                "position": "top",
+                "position_horizontal": "top",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": false,
+                "alignment_mobile": "left",
+                "height": "fit",
+                "border_thickness": 0,
+                "corner_radius": "square",
+                "custom_radius": 20,
+                "shadow": "none",
+                "appearance_type": "inherit",
+                "color_scheme": "scheme-1",
+                "open_in_new_tab": false,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": false,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": [
+                {
+                  "type": "gallery-image",
+                  "settings": {
+                    "image": "shopify://shop_images/novaire-social-lucy.avif",
+                    "mobile_image": "shopify://shop_images/novaire-social-lucy.avif",
+                    "alt_text": "Novaire summer style",
+                    "tag": "@pam_sam",
+                    "tag_font_size": "md",
+                    "social_network": "instagram",
+                    "social_url": "#",
+                    "social_background": "#FFFFFF00",
+                    "social_color": "#FFFFFF",
+                    "show_overlay": "hover",
+                    "overlay_background": "#00000033"
                   }
                 }
               ]

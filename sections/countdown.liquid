@@ -227,6 +227,11 @@
     min-width: 0;
   }
 
+  .countdown-section .button-block__button.btn-tertiary {
+    display: flex;
+    --button-tertiary-underline-space: 2px;
+  }
+
   @media (max-width: 767.98px) {
     .countdown-section {
       padding-top: var(--countdown-section-padding-top-mobile, var(--countdown-section-padding-top, 16px));
@@ -605,7 +610,7 @@
   ],
   "presets": [
     {
-      "name": "Count down (Custom)",
+      "name": "t:general.countdown",
       "category": "t:general.content",
       "settings": {
         "section_width": "page_width",
@@ -618,30 +623,19 @@
         "alignment_mobile": "center",
         "gap_desktop": 0,
         "gap_mobile": 0,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-2",
         "boxed_color_scheme": "scheme-1",
         "boxed_padding_block": 70,
         "boxed_padding_inline": 50,
         "boxed_padding_block_mobile": 40,
         "boxed_padding_inline_mobile": 30,
-        "padding_top": 0,
-        "padding_bottom": 0,
+        "padding_top": 64,
+        "padding_bottom": 64,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
-        {
-          "type": "divider",
-          "settings": {
-            "style": "solid",
-            "thickness": "thin",
-            "color": "scheme",
-            "width": "full",
-            "desktop_spacing": 0,
-            "mobile_spacing": 0
-          }
-        },
         {
           "type": "group",
           "settings": {
@@ -653,13 +647,18 @@
             "width": "fill",
             "width_mobile": "fill",
             "height": "fit",
-            "gap_desktop": 36,
-            "gap_mobile": 36,
-            "padding_top": 64,
-            "padding_bottom": 64,
+            "gap_desktop": 40,
+            "gap_mobile": 20,
+            "padding_top": 0,
+            "padding_bottom": 0,
             "customize_mobile_padding": true,
-            "padding_top_mobile": 48,
-            "padding_bottom_mobile": 56
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "backdrop_blur": 0,
+            "padding_left": 21,
+            "padding_right": 21,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
           },
           "blocks": [
             {
@@ -668,10 +667,10 @@
                 "direction": "vertical",
                 "alignment": "left",
                 "alignment_mobile": "center",
-                "width": "fill",
+                "width": "custom",
                 "height": "fit",
-                "gap_desktop": 16,
-                "gap_mobile": 12,
+                "gap_desktop": 10,
+                "gap_mobile": 10,
                 "appearance_type": "inherit",
                 "border_type": "none",
                 "corner_radius": "square",
@@ -681,28 +680,60 @@
                 "max_width": 500,
                 "limit_width": true,
                 "width_mobile": "fill",
-                "limit_width_mobile": false
+                "limit_width_mobile": false,
+                "width_custom": 40,
+                "backdrop_blur": 0
               },
               "blocks": [
                 {
-                  "type": "heading",
+                  "type": "eyebrow",
                   "settings": {
-                    "text": "<p>Spring Sale</p>",
-                    "heading_size": "lg",
-                    "html_tag": "h2",
-                    "width": "fill",
-                    "animation_type": "rotate-words",
-                    "animation_delay": 50
+                    "text": "<p>SHOP BEFORE IT ENDS</p>",
+                    "show_background": false,
+                    "show_icon": false,
+                    "animation_delay": 100,
+                    "animation_type": "slide-right"
                   }
                 },
                 {
-                  "type": "text",
+                  "type": "heading",
                   "settings": {
-                    "text": "<p>Get 15% off on all products - limited time only!</p>",
-                    "text_size": "md",
+                    "text": "<p>SAVE 10% ON BESTSELLERS</p>",
+                    "heading_size": "xl",
+                    "html_tag": "h2",
                     "width": "fill",
                     "animation_type": "slide-bottom",
-                    "animation_delay": 100
+                    "animation_delay": 100,
+                    "custom_heading_size": 24,
+                    "max_width": 640,
+                    "customize_mobile_size": false,
+                    "width_mobile": "fit",
+                    "max_width_mobile": 480,
+                    "padding_top": 0,
+                    "padding_bottom": 18,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "customize_mobile_padding": true,
+                    "padding_top_mobile": 0,
+                    "padding_bottom_mobile": 0,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
+                  }
+                },
+                {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "SHOP THE SALE",
+                    "button_link": "shopify://collections/sale-novaire",
+                    "button_style": "tertiary",
+                    "button_open_in_new_tab": false,
+                    "show_icon": false,
+                    "width": "fit",
+                    "width_mobile": "fit",
+                    "customize_mobile_padding": false,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 150,
+                    "visibility": "desktop"
                   }
                 }
               ]
@@ -714,44 +745,32 @@
                 "show_background": false,
                 "corner_radius": "square",
                 "type": "recurring",
-                "number_size": "lg",
-                "label_size": "xs",
+                "number_size": "display",
+                "label_size": "md",
                 "color_type": "inherit",
                 "duration_hours": 64,
-                "duration_minutes": 23
+                "duration_minutes": 23,
+                "padding_bottom": 0,
+                "customize_mobile_padding": true,
+                "padding_bottom_mobile": 8,
+                "separator": "colon"
               }
             },
             {
-              "type": "group",
+              "type": "button",
               "settings": {
-                "direction": "vertical",
-                "alignment": "right",
-                "alignment_mobile": "center",
-                "width": "fill",
-                "limit_width": true,
-                "max_width": 500,
-                "width_mobile": "fill",
-                "limit_width_mobile": false,
-                "gap_desktop": 0,
-                "gap_mobile": 0
-              },
-              "blocks": [
-                {
-                  "type": "button",
-                  "settings": {
-                    "button_label": "Shop now",
-                    "button_link": "",
-                    "button_style": "primary",
-                    "button_open_in_new_tab": false,
-                    "show_icon": false,
-                    "width": "fit",
-                    "width_mobile": "fit",
-                    "customize_mobile_padding": false,
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 150
-                  }
-                }
-              ]
+                "button_label": "SHOP THE SALE",
+                "button_link": "shopify://collections/sale-novaire",
+                "button_style": "tertiary",
+                "button_open_in_new_tab": false,
+                "show_icon": false,
+                "width": "fit",
+                "width_mobile": "fit",
+                "customize_mobile_padding": false,
+                "animation_type": "slide-bottom",
+                "animation_delay": 150,
+                "visibility": "mobile"
+              }
             }
           ]
         }

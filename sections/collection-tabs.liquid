@@ -109,9 +109,7 @@
       data-controls-alignment="{{ collection_tabs_controls_alignment }}"
       data-layout-type="{{ collection_tabs_layout_type }}"
       data-autoplay="{{ collection_tabs_autoplay_enabled }}"
-      data-swiper-autoplay="{{ collection_tabs_autoplay_enabled }}"
-      data-swiper-autoplay-pause-on-hover="{{ collection_tabs_autoplay_pause_on_hover }}"
-      data-swiper-autoplay-delay="{{ collection_tabs_autoplay_delay }}"
+      {% render 'swiper-carousel-attributes', autoplay: collection_tabs_autoplay_enabled, pause_on_hover: collection_tabs_autoplay_pause_on_hover, autoplay_delay: collection_tabs_autoplay_delay %}
     >
       <div class="collection-tabs__controls" data-collection-tabs-controls>
         <div class="collection-tabs__controls-group">
@@ -399,7 +397,9 @@
   },
   "max_blocks": 8,
   "blocks": [
-    { "type": "collection-tab" }
+    {
+      "type": "collection-tab"
+    }
   ],
   "settings": [
     {
@@ -714,7 +714,14 @@
     {
       "type": "checkbox",
       "id": "show_pagination_on_desktop",
-      "label": "t:labels.show_pagination",
+      "label": "t:labels.show_pagination_on_desktop",
+      "default": true,
+      "visible_if": "{{ section.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_mobile",
+      "label": "t:labels.show_pagination_on_mobile",
       "default": true,
       "visible_if": "{{ section.settings.layout_type == 'carousel' }}"
     },
@@ -730,10 +737,14 @@
         {
           "value": "bullets",
           "label": "t:options.collection_pagination.bullets"
+        },
+        {
+          "value": "dots",
+          "label": "t:options.collection_pagination.dots"
         }
       ],
       "default": "progress_bar",
-      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop or section.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "range",
@@ -755,14 +766,14 @@
       "step": 1,
       "unit": "px",
       "default": 24,
-      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "checkbox",
       "id": "pagination_limit_width",
       "label": "t:labels.limit_width",
       "default": true,
-      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop and section.settings.pagination_type == 'progress_bar' }}"
+      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.pagination_type == 'progress_bar' and section.settings.show_pagination_on_desktop or section.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "range",
@@ -773,7 +784,7 @@
       "step": 10,
       "unit": "px",
       "default": 260,
-      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_pagination_on_desktop and section.settings.pagination_type == 'progress_bar' and section.settings.pagination_limit_width }}"
+      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.pagination_type == 'progress_bar' and section.settings.pagination_limit_width and section.settings.show_pagination_on_desktop or section.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "header",
@@ -873,35 +884,36 @@
       "name": "t:general.collection_tabs",
       "category": "t:general.collection",
       "settings": {
-        "section_width": "full_width",
+        "section_width": "page_width",
         "layout_direction": "vertical",
-        "tab_position": "right",
+        "tab_position": "center",
         "mobile_alignment": "left",
-        "gap_desktop": 48,
+        "gap_desktop": 40,
         "gap_mobile": 36,
-        "max_products": 8,
+        "max_products": 5,
         "layout_type": "carousel",
-        "columns_desktop": "3",
+        "columns_desktop": "4",
         "columns_mobile": "1",
         "show_next_slide_preview_on_desktop": false,
         "show_next_slide_preview_on_mobile": true,
-        "product_gap_desktop": 10,
-        "product_gap_mobile": 10,
+        "product_gap_desktop": 28,
+        "product_gap_mobile": 12,
         "show_navigation_on_desktop": true,
         "navigation_position": "inside",
-        "navigation_style": "primary",
+        "navigation_style": "secondary",
         "navigation_icon": "chevron",
         "navigation_behavior": "show_on_hover",
-        "show_pagination_on_desktop": true,
+        "show_pagination_on_desktop": false,
+        "show_pagination_on_mobile": false,
         "pagination_type": "progress_bar",
-        "pagination_top_padding_desktop": 40,
-        "pagination_top_padding_mobile": 32,
-        "pagination_limit_width": true,
-        "pagination_max_width": 450,
+        "pagination_top_padding_desktop": 48,
+        "pagination_top_padding_mobile": 36,
+        "pagination_limit_width": false,
+        "pagination_max_width": 260,
         "autoplay": false,
         "autoplay_pause_on_hover": true,
         "autoplay_speed": 4,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-collection-tabs",
         "padding_top": 80,
         "padding_bottom": 80,
         "customize_mobile_padding": true,
@@ -911,216 +923,118 @@
       "blocks": [
         {
           "type": "header",
-          "static": true,
           "settings": {
-            "width": "custom",
-            "alignment": "left",
+            "width": "fill",
+            "gap_desktop": 12,
+            "gap_mobile": 8,
             "inherit_alignment": false,
-            "gap_desktop": 16,
-            "gap_mobile": 12,
-            "max_width": 770,
-            "customize_mobile_size": true,
-            "width_mobile": "fill"
+            "alignment": "center",
+            "customize_mobile_alignment": true,
+            "alignment_mobile": "center"
           },
+          "id": "header",
+          "static": true,
           "blocks": [
             {
-              "type": "heading",
+              "type": "eyebrow",
               "settings": {
-                "text": "<p>Semi-Precious Birthstones</p>",
-                "heading_size": "lg",
-                "html_tag": "h2",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
-              }
-            },
-            {
-              "type": "text",
-              "settings": {
-                "text": "<p>The ultimate sentimental souvenir, made from 14k gold and semi-precious stones.</p>",
-                "text_size": "md",
-                "animation_type": "slide-bottom",
+                "text": "<p>NEW ARRIVALS</p>",
+                "show_background": false,
+                "show_icon": false,
+                "animation_type": "slide-right",
                 "animation_delay": 100
               }
             }
-          ],
-          "id": "header"
+          ]
         },
         {
           "type": "tab-layout",
-          "static": true,
           "settings": {
             "vertical_layout": false,
             "style": "underline",
             "active_style": "primary",
-            "gap_desktop": 32,
-            "gap_mobile": 32,
-            "font": "body",
-            "heading_size": "custom",
+            "gap_desktop": 36,
+            "gap_mobile": 36,
+            "font": "heading",
+            "heading_size": "lg",
             "custom_heading_size": 14
           },
-          "id": "tab-layout"
+          "id": "tab-layout",
+          "static": true
         },
         {
           "type": "collection-tab",
           "settings": {
-            "label": "RINGS",
-            "collection": "rings-malandra"
+            "label": "BEST SELLERS",
+            "collection": "bestsellers-novaire"
           },
           "blocks": [
             {
               "type": "product-card",
-              "static": true,
               "settings": {
                 "color_type": "inherit",
                 "color_scheme": "scheme-1"
               },
-              "id": "product-card"
-            },
-            {
-              "type": "promo-card",
-              "settings": {
-                "card_position": 1,
-                "show_on_top_mobile": true,
-                "media_type": "image",
-                "heading": "For Effortless Glow",
-                "text": "<p>Radiant, versatile, classic your everyday essential.</p>",
-                "content_alignment": "left",
-                "content_position": "bottom",
-                "heading_size": "md",
-                "text_size": "md",
-                "button_label": "SHOP NOW",
-                "card_link": "shopify://collections/rings-malandra",
-                "button_style": "primary",
-                "button_height": "inherit",
-                "show_icon": false,
-                "show_overlay": true,
-                "overlay_style": "gradient",
-                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0) 49.935%, rgba(50, 27, 3, 0.3) 84.685%)",
-                "color_scheme": "scheme-3",
-                "content_gap": 16,
-                "button_spacing": 24,
-                "padding_vertical": 36,
-                "padding_horizontal": 36,
-                "customize_mobile_padding": true,
-                "padding_vertical_mobile": 32,
-                "padding_horizontal_mobile": 28,
-                "show_on_top_desktop": true,
-                "image": "shopify://shop_images/malandra-rings-promo.avif",
-                "mobile_image": "shopify://shop_images/malandra-rings-promo.avif"
-              }
+              "id": "product-card",
+              "static": true
             }
           ]
         },
         {
           "type": "collection-tab",
           "settings": {
-            "label": "NECKLACES",
-            "collection": "everyday-necklaces-malandra"
+            "label": "NEW IN",
+            "collection": "new-in-novaire"
           },
           "blocks": [
             {
               "type": "product-card",
-              "static": true,
               "settings": {
                 "color_type": "inherit",
                 "color_scheme": "scheme-1"
               },
-              "id": "product-card"
-            },
-            {
-              "type": "promo-card",
-              "settings": {
-                "card_position": 1,
-                "show_on_top_mobile": true,
-                "media_type": "image",
-                "heading": "Golden Layers",
-                "text": "<p>Delicate chains and pendants, thoughtfully paired for your everyday story.</p>",
-                "content_alignment": "left",
-                "content_position": "bottom",
-                "heading_size": "md",
-                "text_size": "md",
-                "button_label": "SHOP NECKLACES",
-                "card_link": "shopify://collections/everyday-necklaces-malandra",
-                "button_style": "primary",
-                "button_height": "inherit",
-                "show_icon": false,
-                "show_overlay": true,
-                "overlay_style": "gradient",
-                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0) 49.935%, rgba(50, 27, 3, 0.3) 84.685%)",
-                "color_scheme": "scheme-3",
-                "content_gap": 16,
-                "button_spacing": 24,
-                "padding_vertical": 36,
-                "padding_horizontal": 36,
-                "customize_mobile_padding": true,
-                "padding_vertical_mobile": 32,
-                "padding_horizontal_mobile": 28,
-                "show_on_top_desktop": true,
-                "image": "shopify://shop_images/malandra-necklaces-promo.avif",
-                "mobile_image": "shopify://shop_images/malandra-necklaces-promo.avif"
-              }
+              "id": "product-card",
+              "static": true
             }
           ]
         },
         {
           "type": "collection-tab",
           "settings": {
-            "label": "EARRINGS",
-            "collection": "signature-earrings-malandra"
+            "label": "MIDI DRESSES",
+            "collection": "midi-dresses-novaire"
           },
           "blocks": [
             {
               "type": "product-card",
-              "static": true,
               "settings": {
                 "color_type": "inherit",
                 "color_scheme": "scheme-1"
               },
-              "id": "product-card"
-            },
-            {
-              "type": "promo-card",
-              "settings": {
-                "card_position": 1,
-                "show_on_top_mobile": true,
-                "media_type": "image",
-                "heading": "A Little Radiance",
-                "text": "<p>Sculptural hoops and delicate drops, the finishing touch for every day.</p>",
-                "content_alignment": "left",
-                "content_position": "bottom",
-                "heading_size": "md",
-                "text_size": "md",
-                "button_label": "SHOP EARRINGS",
-                "card_link": "shopify://collections/signature-earrings-malandra",
-                "button_style": "primary",
-                "button_height": "inherit",
-                "show_icon": false,
-                "show_overlay": true,
-                "overlay_style": "gradient",
-                "overlay_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0) 49.935%, rgba(50, 27, 3, 0.3) 84.685%)",
-                "color_scheme": "scheme-3",
-                "content_gap": 16,
-                "button_spacing": 24,
-                "padding_vertical": 36,
-                "padding_horizontal": 36,
-                "customize_mobile_padding": true,
-                "padding_vertical_mobile": 32,
-                "padding_horizontal_mobile": 28,
-                "show_on_top_desktop": true,
-                "image": "shopify://shop_images/malandra-earrings-promo.avif",
-                "mobile_image": "shopify://shop_images/malandra-earrings-promo.avif"
-              }
+              "id": "product-card",
+              "static": true
             }
           ]
         },
         {
           "type": "tabs-view-all-button",
-          "static": true,
           "settings": {
-            "button_label": "View all",
-            "hide_view_all_mobile": true
+            "button_label": "VIEW ALL",
+            "button_style": "tertiary",
+            "show_icon": false,
+            "icon": "arrow_right",
+            "icon_position": "after",
+            "icon_size": "inherit",
+            "icon_width": 20,
+            "width": "fit",
+            "width_mobile": "fill",
+            "customize_mobile_padding": true,
+            "hide_view_all_mobile": false,
+            "padding_top": 0,
+            "padding_top_mobile": 0
           },
-          "id": "collection-tabs-view-all"
+          "id": "collection-tabs-view-all",
+          "static": true
         }
       ]
     }

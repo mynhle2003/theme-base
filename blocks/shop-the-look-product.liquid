@@ -1,7 +1,7 @@
 {% doc %}
   Renders one product card in a Shop the look list.
 
-  This block owns the product and hotspot settings. The shared product-card
+  This block owns the product, optional product action and hotspot settings. The shared product-card
   snippet keeps card presentation aligned with collection and recommendation
   surfaces; the hidden hotspot source is moved to the section image by the
   parent Shop the look controller. Unassigned or unavailable products retain
@@ -35,9 +35,18 @@
     data-shop-the-look-block-id="{{ block.id }}"
     {{ block.shopify_attributes }}
   >
+    {% capture look_product_action %}
+      {% if block.settings.show_product_button and shop_the_look_has_product %}
+        <a class="btn btn-primary btn--primary shop-the-look-product__action" href="{{ shop_the_look_product_url }}">{{ 'products.view_product' | t }}</a>
+      {% endif %}
+    {% endcapture %}
+    {% assign look_media_actions = true %}
+    {% if block.settings.show_product_button %}{% assign look_media_actions = false %}{% endif %}
     {% render 'product-card',
       product: shop_the_look_product,
       placeholder: shop_the_look_product_placeholder,
+      footer_content: look_product_action,
+      show_media_actions: look_media_actions,
       class: 'shop-the-look-product__card'
     %}
 
@@ -99,6 +108,12 @@
       "type": "product",
       "id": "product",
       "label": "t:labels.product"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_button",
+      "label": "Show View product button",
+      "default": false
     },
     {
       "type": "checkbox",

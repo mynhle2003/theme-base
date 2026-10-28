@@ -392,8 +392,8 @@ if (!customElements.get('footer-scroll-reveal')) {
       "name": "t:general.footer",
       "settings": {
         "section_width": "page_width",
-        "gap_desktop": 56,
-        "gap_mobile": 40,
+        "gap_desktop": 80,
+        "gap_mobile": 20,
         "color_scheme": "scheme-2",
         "padding_top": 64,
         "padding_bottom": 64,
@@ -435,18 +435,19 @@ if (!customElements.get('footer-scroll-reveal')) {
                     {
                       "type": "heading",
                       "settings": {
-                        "text": "<p>Join our Community</p>",
+                        "text": "<p>GET REWARDED JUST FOR SHOPPING!</p>",
                         "heading_size": "md",
                         "html_tag": "h3",
                         "width": "fill",
                         "animation_type": "none",
-                        "animation_delay": 50
+                        "animation_delay": 50,
+                        "custom_heading_size": 16
                       }
                     },
                     {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Join our newsletter to stay up to date on features and releases.</p>",
+                        "text": "<p>Get an exclusive 10% off – Be the first to hear about exclusive drops, news and offers!</p>",
                         "text_size": "sm",
                         "width": "fill",
                         "animation_type": "none",
@@ -480,8 +481,8 @@ if (!customElements.get('footer-scroll-reveal')) {
                     {
                       "type": "email-signup",
                       "settings": {
-                        "form_layout": "input_with_button",
-                        "vertical_on_mobile": false,
+                        "form_layout": "horizontal",
+                        "vertical_on_mobile": true,
                         "enable_subscription_preferences": false,
                         "width_desktop": "fill",
                         "limit_width_desktop": false,
@@ -489,9 +490,9 @@ if (!customElements.get('footer-scroll-reveal')) {
                         "limit_width_mobile": false,
                         "field_height": "small",
                         "input_placeholder": "Enter your email",
-                        "button_label": "",
-                        "button_style": "tertiary",
-                        "show_icon": true,
+                        "button_label": "SUBSCRIBE",
+                        "button_style": "primary",
+                        "show_icon": false,
                         "icon": "send_malandra",
                         "icon_size": "custom",
                         "icon_width": 18,
@@ -499,13 +500,15 @@ if (!customElements.get('footer-scroll-reveal')) {
                         "padding_top": 0,
                         "padding_bottom": 0,
                         "padding_left": 0,
-                        "padding_right": 0
+                        "padding_right": 0,
+                        "gap_desktop": 10,
+                        "gap_mobile": 12
                       }
                     },
                     {
                       "type": "text",
                       "settings": {
-                        "text": "<p>By subscribing you agree to the <a href=\"/policies/terms-of-service\">Terms of Use</a> &amp; <a href=\"/policies/privacy-policy\">Privacy Policy.</a></p>",
+                        "text": "<p>By subscribing you agree to with our <a href=\"/policies/privacy-policy\">Privacy Policy</a> and provide consent to receive updates from our company.</p>",
                         "text_size": "xs",
                         "width": "fill",
                         "animation_type": "none",
@@ -590,16 +593,17 @@ if (!customElements.get('footer-scroll-reveal')) {
                         {
                           "type": "menu",
                           "settings": {
-                            "heading": "About Us",
+                            "heading": "CUSTOMER INFO",
                             "collapse_menu_on_mobile": true,
-                            "icon": "chevron",
+                            "icon": "plus",
                             "heading_gap": 16,
-                            "menu_gap": 16,
+                            "menu_gap": 14,
                             "heading_size": "sm",
-                            "html_tag": "h5",
+                            "html_tag": "h3",
                             "menu_size": "sm",
-                            "menu_color": "#181818",
-                            "menu": "elara-about-us"
+                            "menu_color": "#3A3A3A",
+                            "menu": "novaire-customer-info",
+                            "custom_heading_size": 14
                           }
                         }
                       ]
@@ -629,16 +633,17 @@ if (!customElements.get('footer-scroll-reveal')) {
                         {
                           "type": "menu",
                           "settings": {
-                            "heading": "Help",
+                            "heading": "INFORMATION",
                             "collapse_menu_on_mobile": true,
-                            "icon": "chevron",
+                            "icon": "plus",
                             "heading_gap": 16,
-                            "menu_gap": 16,
+                            "menu_gap": 14,
                             "heading_size": "sm",
-                            "html_tag": "h5",
+                            "html_tag": "h3",
                             "menu_size": "sm",
-                            "menu_color": "#181818",
-                            "menu": "elara-help"
+                            "menu_color": "#3A3A3A",
+                            "menu": "novaire-information",
+                            "custom_heading_size": 14
                           }
                         }
                       ]
@@ -668,16 +673,17 @@ if (!customElements.get('footer-scroll-reveal')) {
                         {
                           "type": "menu",
                           "settings": {
-                            "heading": "Shop Black Friday Sale",
+                            "heading": "ABOUT",
                             "collapse_menu_on_mobile": true,
-                            "icon": "chevron",
+                            "icon": "plus",
                             "heading_gap": 16,
-                            "menu_gap": 16,
+                            "menu_gap": 14,
                             "heading_size": "sm",
-                            "html_tag": "h5",
+                            "html_tag": "h3",
                             "menu_size": "sm",
-                            "menu_color": "#181818",
-                            "menu": "elara-shop-black-friday-sale"
+                            "menu_color": "#3A3A3A",
+                            "menu": "novaire-about",
+                            "custom_heading_size": 14
                           }
                         }
                       ]
@@ -710,15 +716,6 @@ if (!customElements.get('footer-scroll-reveal')) {
             "backdrop_blur": 0
           },
           "blocks": [
-            {
-              "type": "logo",
-              "settings": {
-                "style": "default",
-                "width": "fill",
-                "padding_top": 0,
-                "padding_bottom": 0
-              }
-            },
             {
               "type": "group",
               "settings": {
@@ -800,7 +797,7 @@ if (!customElements.get('footer-scroll-reveal')) {
                         {
                           "type": "text",
                           "settings": {
-                            "text": "<p>\u00a9 2025 LayoutHub. Powered by Shopify.</p>",
+                            "text": "<p>© 2025 LayoutHub. Powered by Shopify.</p>",
                             "text_size": "xs",
                             "width": "fit",
                             "animation_type": "none",

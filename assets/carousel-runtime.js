@@ -92,7 +92,7 @@ const createManualPagination = (pagination, swiper, manualLoop) => {
   if (!pagination || !manualLoop) return null;
 
   const type = pagination.dataset.paginationType;
-  if (type !== 'bullets' && type !== 'progress_bar') return null;
+  if (type !== 'bullets' && type !== 'dots' && type !== 'progress_bar') return null;
 
   const controller = new AbortController();
   const controlsId = swiper.el.id;

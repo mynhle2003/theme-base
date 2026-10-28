@@ -21,14 +21,14 @@
   <div class="container {{ container_width }}{% if section.settings.section_width == 'full_width_no_padding' %} promo-grid__no-padding{% endif %}">
     {% capture cards %}{% content_for 'blocks' %}{% endcapture %}
     {% if section.settings.carousel_mobile %}
-      {% capture attributes %}data-product-carousel data-layout="carousel" data-swiper-mobile-only="true" data-swiper-columns-mobile="{{ section.settings.columns_mobile }}" data-swiper-gap-mobile="{{ section.settings.gap_mobile }}"{% endcapture %}
+      {% capture attributes %}data-product-carousel data-layout="carousel" {% render 'swiper-carousel-attributes', mobile_only: true, columns_mobile: section.settings.columns_mobile, gap_mobile: section.settings.gap_mobile %}{% endcapture %}
       {% capture pagination_style %}
         {% if section.settings.pagination_thickness == 'thin' %}--swiper-pagination-progressbar-size:2px;{% endif %}
         --swiper-pagination-spacing-mobile:{{ section.settings.pagination_padding_mobile | default: 24 }}px;
         {% if section.settings.pagination_type == 'progress_bar' and section.settings.pagination_limit_width %}--swiper-pagination-width:min(100%, {{ section.settings.pagination_max_width | default: 260 }}px);{% endif %}
       {% endcapture %}
       {% capture pagination %}{% render 'swiper-pagination', show: section.settings.show_pagination_on_mobile, type: section.settings.pagination_type, style: pagination_style %}{% endcapture %}
-      {% render 'swiper-carousel', content: cards, root_class: 'promo-grid__carousel', wrapper_class: 'promo-grid__items', root_attributes: attributes, pagination: pagination, show_next_slide_preview_on_mobile: section.settings.show_next_slide_preview_on_mobile %}
+      {% render 'swiper-carousel', layout: 'carousel', content: cards, root_class: 'promo-grid__carousel', wrapper_class: 'promo-grid__items', root_attributes: attributes, pagination: pagination, show_next_slide_preview_on_mobile: section.settings.show_next_slide_preview_on_mobile %}
       <script type="module" src="{{ 'product-collection-carousel.js' | asset_url }}"></script>
       <script type="module" src="{{ 'promo-grid.js' | asset_url }}"></script>
     {% else %}<div class="promo-grid__items">{{ cards }}</div>{% endif %}
@@ -230,7 +230,7 @@
     {
       "type": "checkbox",
       "id": "show_pagination_on_mobile",
-      "label": "t:labels.show_pagination",
+      "label": "t:labels.show_pagination_on_mobile",
       "default": true,
       "visible_if": "{{ section.settings.carousel_mobile }}"
     },
@@ -246,6 +246,10 @@
         {
           "value": "bullets",
           "label": "t:options.collection_pagination.bullets"
+        },
+        {
+          "value": "dots",
+          "label": "t:options.collection_pagination.dots"
         }
       ],
       "default": "progress_bar",
@@ -371,148 +375,7 @@
       "visible_if": "{{ section.settings.customize_mobile_padding }}"
     }
   ],
-  "presets": [
-    {
-      "name": "Promo grid (custom)",
-      "category": "t:general.banners",
-      "settings": {
-        "columns_desktop": "3",
-        "columns_tablet": "2",
-        "columns_mobile": "1",
-        "padding_top": 50,
-        "padding_bottom": 50,
-        "gap_desktop": 24,
-        "gap_mobile": 16
-      },
-      "blocks": [
-        {
-          "type": "promo-card-custom",
-          "settings": {
-            "color_scheme": "scheme-3",
-            "position_desktop": "center_center",
-            "position_mobile": "center_center",
-            "padding_top": 32,
-            "padding_bottom": 32,
-            "padding_left": 32,
-            "padding_right": 32,
-            "corner_radius": "rounded",
-            "columns_wide": 2,
-            "rows_tall": 1
-          },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Collection</p>",
-                "heading_size": "md",
-                "html_tag": "h3"
-              }
-            }
-          ]
-        },
-        {
-          "type": "promo-card-custom",
-          "settings": {
-            "color_scheme": "scheme-3",
-            "position_desktop": "center_center",
-            "position_mobile": "center_center",
-            "padding_top": 32,
-            "padding_bottom": 32,
-            "padding_left": 32,
-            "padding_right": 32,
-            "corner_radius": "rounded",
-            "columns_wide": 1,
-            "rows_tall": 1
-          },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Collection</p>",
-                "heading_size": "md",
-                "html_tag": "h3"
-              }
-            }
-          ]
-        },
-        {
-          "type": "promo-card-custom",
-          "settings": {
-            "color_scheme": "scheme-3",
-            "position_desktop": "center_center",
-            "position_mobile": "center_center",
-            "padding_top": 32,
-            "padding_bottom": 32,
-            "padding_left": 32,
-            "padding_right": 32,
-            "corner_radius": "rounded",
-            "columns_wide": 1,
-            "rows_tall": 1
-          },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Collection</p>",
-                "heading_size": "md",
-                "html_tag": "h3"
-              }
-            }
-          ]
-        },
-        {
-          "type": "promo-card-custom",
-          "settings": {
-            "color_scheme": "scheme-3",
-            "position_desktop": "center_center",
-            "position_mobile": "center_center",
-            "padding_top": 32,
-            "padding_bottom": 32,
-            "padding_left": 32,
-            "padding_right": 32,
-            "corner_radius": "rounded",
-            "columns_wide": 1,
-            "rows_tall": 1
-          },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Collection</p>",
-                "heading_size": "md",
-                "html_tag": "h3"
-              }
-            }
-          ]
-        },
-        {
-          "type": "promo-card-custom",
-          "settings": {
-            "color_scheme": "scheme-3",
-            "position_desktop": "center_center",
-            "position_mobile": "center_center",
-            "padding_top": 32,
-            "padding_bottom": 32,
-            "padding_left": 32,
-            "padding_right": 32,
-            "corner_radius": "rounded",
-            "columns_wide": 1,
-            "rows_tall": 1
-          },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Collection</p>",
-                "heading_size": "md",
-                "html_tag": "h3"
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ],
+  "presets": [],
   "tag": "div",
   "max_blocks": 30
 }

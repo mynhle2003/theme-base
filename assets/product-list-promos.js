@@ -23,7 +23,6 @@ const initialize = (list) => {
     item.before(anchor);
     return { item, anchor, slide: item.classList.contains('swiper-slide') };
   });
-  const isCollectionTab = list.matches('[data-collection-tab-panel]');
   const query = window.matchMedia('(max-width: 767.98px)');
   let resetFrame = null;
   const update = () => {
@@ -34,7 +33,7 @@ const initialize = (list) => {
     entries.forEach(({ item, anchor, slide }) => {
       const onTop = query.matches
         ? item.querySelector('[data-promo-mobile-top="true"]')
-        : isCollectionTab && item.querySelector('[data-promo-desktop-top="true"]');
+        : item.querySelector('[data-promo-desktop-top="true"]');
       if (onTop) {
         clearDetachedSlideState(item);
         detached.push(item);
@@ -44,9 +43,7 @@ const initialize = (list) => {
         anchor.after(item);
       }
     });
-    if (isCollectionTab) {
-      list.dataset.promoDesktopDetached = String(!query.matches && host.children.length > 0);
-    }
+    list.dataset.promoDesktopDetached = String(!query.matches && host.children.length > 0);
     if (swiper && !swiper.destroyed) {
       swiper.update();
       const index = [...swiper.slides].indexOf(activeItem);

@@ -49,6 +49,8 @@
 %}
 
 {% capture scrolling_cards_style %}
+  --scrolling-cards-stack-gap: {{ section.settings.card_gap_desktop | default: 150 | at_least: 0 | at_most: 200 }}px;
+  --scrolling-cards-stack-gap-mobile: {{ section.settings.card_gap_mobile | default: 120 | at_least: 0 | at_most: 200 }}px;
   --scrolling-cards-header-gap: {{ scrolling_cards_gap_desktop }}px;
   --scrolling-cards-header-gap-mobile: {{ scrolling_cards_gap_mobile }}px;
   --section-padding-top: {{ scrolling_cards_padding_top }}px;
@@ -71,6 +73,7 @@
       <div
         class="scrolling-cards align-content"
         data-scrolling-cards
+        data-stack-effect="{{ section.settings.stack_effect | default: 'scale' }}"
         data-sticky-mobile="{{ section.settings.enable_sticky_mobile }}"
       >
         {% capture scrolling_cards_header_content %}{% content_for 'block', type: 'header', id: 'header' %}{% endcapture %}
@@ -197,10 +200,50 @@
       "visible_if": "{{ section.settings.section_width == 'custom' }}"
     },
     {
+      "type": "select",
+      "id": "stack_effect",
+      "label": "Stack transition",
+      "options": [
+        {
+          "value": "scale",
+          "label": "Scale"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        }
+      ],
+      "default": "scale"
+    },
+    {
       "type": "checkbox",
       "id": "enable_sticky_mobile",
       "label": "Enable sticky on mobile",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Card spacing"
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "label": "Desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "label": "Mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 120
     },
     {
       "type": "header",
@@ -294,137 +337,169 @@
       "name": "Scrolling cards",
       "category": "Media",
       "settings": {
-        "section_width": "page_width",
-        "enable_sticky_mobile": true,
-        "gap_desktop": 60,
-        "gap_mobile": 40,
-        "color_scheme": "scheme-1",
+        "section_width": "custom",
+        "stack_effect": "fade",
+        "enable_sticky_mobile": false,
+        "card_gap_desktop": 160,
+        "card_gap_mobile": 112,
+        "gap_desktop": 0,
+        "gap_mobile": 0,
+        "color_scheme": "scheme-2",
         "padding_top": 80,
-        "padding_bottom": 90,
+        "padding_bottom": 80,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 50,
-        "padding_bottom_mobile": 50
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56,
+        "custom_width": 1680
       },
       "blocks": [
         {
           "type": "header",
           "static": true,
           "settings": {
-            "width": "fit",
-            "alignment": "center",
-            "customize_mobile_alignment": true,
-            "alignment_mobile": "center",
-            "gap_desktop": 12,
-            "gap_mobile": 8
+            "gap_desktop": 0,
+            "gap_mobile": 0
           },
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Scrolling cards</p>",
-                "heading_size": "md",
-                "html_tag": "h2",
-                "width": "fit",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
-              }
-            }
-          ],
-          "id": "header"
+          "id": "header",
+          "blocks": []
         },
         {
           "type": "scrolling-card",
           "settings": {
             "direction": "horizontal",
-            "position": "top",
+            "position": "center",
             "alignment": "left",
             "vertical_on_mobile": true,
             "alignment_mobile": "left",
-            "gap_desktop": 50,
-            "gap_mobile": 40,
+            "gap_desktop": 64,
+            "gap_mobile": 0,
             "border_thickness": 0,
-            "corner_radius": "inherit",
+            "corner_radius": "square",
             "shadow": "none",
-            "background_media": "image",
-            "show_overlay": true,
-            "overlay_color": "#16070080",
-            "backdrop_blur": 30,
-            "color_scheme": "scheme-3",
-            "padding_top": 70,
-            "padding_bottom": 70,
-            "padding_left": 50,
-            "padding_right": 50,
+            "background_media": "none",
+            "show_overlay": false,
+            "backdrop_blur": 0,
+            "color_scheme": "scheme-2",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
             "customize_mobile_padding": true,
-            "padding_top_mobile": 40,
-            "padding_bottom_mobile": 30,
-            "padding_left_mobile": 16,
-            "padding_right_mobile": 16
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
           },
           "blocks": [
             {
               "type": "group",
               "settings": {
                 "direction": "vertical",
-                "alignment": "left",
                 "width": "fill",
-                "height": "fill",
-                "gap_desktop": 16,
-                "gap_mobile": 12,
-                "appearance_type": "inherit",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none"
+                "width_mobile": "fill",
+                "height": "fit",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "appearance_type": "inherit"
               },
               "blocks": [
                 {
-                  "type": "eyebrow",
+                  "type": "group",
                   "settings": {
-                    "text": "<p>Eyebrow</p>",
-                    "show_background": true,
-                    "corner_radius": "pill",
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 50
-                  }
-                },
-                {
-                  "type": "spacer",
-                  "settings": {
-                    "unit_desktop": "pixel",
-                    "size_desktop_px": 80,
-                    "show_on_mobile": true,
-                    "unit_mobile": "pixel",
-                    "size_mobile_px": 40
-                  }
-                },
-                {
-                  "type": "heading",
-                  "settings": {
-                    "text": "<p>Heading</p>",
-                    "heading_size": "md",
-                    "html_tag": "h3",
-                    "width": "fit",
-                    "animation_type": "rotate-words",
-                    "animation_delay": 50
-                  }
-                },
-                {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>",
-                    "text_size": "sm",
-                    "width": "custom",
-                    "max_width": 500,
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 100
-                  }
+                    "direction": "vertical",
+                    "alignment": "left",
+                    "alignment_mobile": "left",
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "gap_desktop": 24,
+                    "gap_mobile": 20,
+                    "position": "center",
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "padding_left": 64,
+                    "padding_right": 64,
+                    "customize_mobile_padding": true,
+                    "padding_top_mobile": 32,
+                    "padding_bottom_mobile": 0,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0,
+                    "backdrop_blur": 0
+                  },
+                  "blocks": [
+                    {
+                      "type": "eyebrow",
+                      "settings": {
+                        "text": "<p>OUR STORY</p>",
+                        "animation_type": "slide-right",
+                        "animation_delay": 100
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>SUSTAINABLE MATERIALS</p>",
+                        "heading_size": "xl",
+                        "html_tag": "h2",
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "custom_heading_size": 24,
+                        "max_width": 640,
+                        "customize_mobile_size": false,
+                        "width_mobile": "fit",
+                        "max_width_mobile": 480,
+                        "animation_delay": 100,
+                        "padding_top": 0,
+                        "padding_bottom": 0,
+                        "padding_left": 0,
+                        "padding_right": 0,
+                        "customize_mobile_padding": false,
+                        "padding_top_mobile": 0,
+                        "padding_bottom_mobile": 0,
+                        "padding_left_mobile": 0,
+                        "padding_right_mobile": 0
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Inspired by an endless summer and the languid summer afternoons spent by the sea, where the sun’s rays illuminate the evening sky. Magnolia is dreamy & carefree, she’s delicate and feminine, playful and angelic.</p>",
+                        "text_size": "md",
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 100
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "settings": {
+                        "button_label": "LEARN MORE",
+                        "button_style": "primary",
+                        "show_icon": false,
+                        "animation_type": "slide-bottom",
+                        "button_link": "shopify://pages/our-story-novaire",
+                        "animation_delay": 150
+                      }
+                    }
+                  ]
                 }
               ]
             },
             {
               "type": "image",
               "settings": {
-                "image_ratio_desktop": "ratio_4_3",
-                "image_ratio_mobile": "ratio_4_3",
+                "image": "shopify://shop_images/novaire-our-story.avif",
+                "show_image_first_mobile": true,
+                "image_ratio_desktop": "custom",
+                "image_ratio_custom_width_desktop": 6,
+                "image_ratio_custom_height_desktop": 5,
+                "image_ratio_mobile": "custom",
+                "image_ratio_custom_width_mobile": 6,
+                "image_ratio_custom_height_mobile": 5,
                 "width_desktop": "fill",
                 "width_mobile": "fill",
                 "corner_radius": "square"
@@ -436,195 +511,139 @@
           "type": "scrolling-card",
           "settings": {
             "direction": "horizontal",
-            "position": "top",
+            "position": "center",
             "alignment": "left",
             "vertical_on_mobile": true,
             "alignment_mobile": "left",
-            "gap_desktop": 50,
-            "gap_mobile": 40,
+            "gap_desktop": 64,
+            "gap_mobile": 0,
             "border_thickness": 0,
-            "corner_radius": "inherit",
+            "corner_radius": "square",
             "shadow": "none",
-            "background_media": "image",
-            "show_overlay": true,
-            "overlay_color": "#16070080",
-            "backdrop_blur": 30,
-            "color_scheme": "scheme-3",
-            "padding_top": 70,
-            "padding_bottom": 70,
-            "padding_left": 50,
-            "padding_right": 50,
+            "background_media": "none",
+            "show_overlay": false,
+            "backdrop_blur": 0,
+            "color_scheme": "scheme-2",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
             "customize_mobile_padding": true,
-            "padding_top_mobile": 40,
-            "padding_bottom_mobile": 30,
-            "padding_left_mobile": 16,
-            "padding_right_mobile": 16
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
           },
           "blocks": [
             {
               "type": "group",
               "settings": {
                 "direction": "vertical",
-                "alignment": "left",
                 "width": "fill",
-                "height": "fill",
-                "gap_desktop": 16,
-                "gap_mobile": 12,
-                "appearance_type": "inherit",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none"
-              },
-              "blocks": [
-                {
-                  "type": "eyebrow",
-                  "settings": {
-                    "text": "<p>Eyebrow</p>",
-                    "show_background": true,
-                    "corner_radius": "pill",
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 50
-                  }
-                },
-                {
-                  "type": "spacer",
-                  "settings": {
-                    "unit_desktop": "pixel",
-                    "size_desktop_px": 80,
-                    "show_on_mobile": true,
-                    "unit_mobile": "pixel",
-                    "size_mobile_px": 40
-                  }
-                },
-                {
-                  "type": "heading",
-                  "settings": {
-                    "text": "<p>Heading</p>",
-                    "heading_size": "md",
-                    "html_tag": "h3",
-                    "width": "fit",
-                    "animation_type": "rotate-words",
-                    "animation_delay": 50
-                  }
-                },
-                {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>",
-                    "text_size": "sm",
-                    "width": "custom",
-                    "max_width": 500,
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 100
-                  }
-                }
-              ]
-            },
-            {
-              "type": "image",
-              "settings": {
-                "image_ratio_desktop": "ratio_4_3",
-                "image_ratio_mobile": "ratio_4_3",
-                "width_desktop": "fill",
                 "width_mobile": "fill",
-                "corner_radius": "square"
-              }
-            }
-          ]
-        },
-        {
-          "type": "scrolling-card",
-          "settings": {
-            "direction": "horizontal",
-            "position": "top",
-            "alignment": "left",
-            "vertical_on_mobile": true,
-            "alignment_mobile": "left",
-            "gap_desktop": 50,
-            "gap_mobile": 40,
-            "border_thickness": 0,
-            "corner_radius": "inherit",
-            "shadow": "none",
-            "background_media": "image",
-            "show_overlay": true,
-            "overlay_color": "#16070080",
-            "backdrop_blur": 30,
-            "color_scheme": "scheme-3",
-            "padding_top": 70,
-            "padding_bottom": 70,
-            "padding_left": 50,
-            "padding_right": 50,
-            "customize_mobile_padding": true,
-            "padding_top_mobile": 40,
-            "padding_bottom_mobile": 30,
-            "padding_left_mobile": 16,
-            "padding_right_mobile": 16
-          },
-          "blocks": [
-            {
-              "type": "group",
-              "settings": {
-                "direction": "vertical",
-                "alignment": "left",
-                "width": "fill",
-                "height": "fill",
-                "gap_desktop": 16,
-                "gap_mobile": 12,
-                "appearance_type": "inherit",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none"
+                "height": "fit",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "appearance_type": "inherit"
               },
               "blocks": [
                 {
-                  "type": "eyebrow",
+                  "type": "group",
                   "settings": {
-                    "text": "<p>Eyebrow</p>",
-                    "show_background": true,
-                    "corner_radius": "pill",
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 50
-                  }
-                },
-                {
-                  "type": "spacer",
-                  "settings": {
-                    "unit_desktop": "pixel",
-                    "size_desktop_px": 80,
-                    "show_on_mobile": true,
-                    "unit_mobile": "pixel",
-                    "size_mobile_px": 40
-                  }
-                },
-                {
-                  "type": "heading",
-                  "settings": {
-                    "text": "<p>Heading</p>",
-                    "heading_size": "md",
-                    "html_tag": "h3",
-                    "width": "fit",
-                    "animation_type": "rotate-words",
-                    "animation_delay": 50
-                  }
-                },
-                {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Use this text to share information about your brand, describe products, or highlight announcements. You can also promote special offers or communicate important messages to customers.</p>",
-                    "text_size": "sm",
-                    "width": "custom",
-                    "max_width": 500,
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 100
-                  }
+                    "direction": "vertical",
+                    "alignment": "left",
+                    "alignment_mobile": "left",
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "gap_desktop": 24,
+                    "gap_mobile": 20,
+                    "position": "center",
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "padding_left": 64,
+                    "padding_right": 64,
+                    "customize_mobile_padding": true,
+                    "padding_top_mobile": 32,
+                    "padding_bottom_mobile": 0,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0,
+                    "backdrop_blur": 0
+                  },
+                  "blocks": [
+                    {
+                      "type": "eyebrow",
+                      "settings": {
+                        "text": "<p>OUR VALUE</p>",
+                        "animation_type": "slide-right",
+                        "animation_delay": 100
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "settings": {
+                        "text": "<p>VEGAN & CRUELTY-FREE</p>",
+                        "heading_size": "xl",
+                        "html_tag": "h2",
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "custom_heading_size": 24,
+                        "max_width": 640,
+                        "customize_mobile_size": false,
+                        "width_mobile": "fit",
+                        "max_width_mobile": 480,
+                        "animation_delay": 100,
+                        "padding_top": 0,
+                        "padding_bottom": 0,
+                        "padding_left": 0,
+                        "padding_right": 0,
+                        "customize_mobile_padding": false,
+                        "padding_top_mobile": 0,
+                        "padding_bottom_mobile": 0,
+                        "padding_left_mobile": 0,
+                        "padding_right_mobile": 0
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Choosing vegan is an important step, but it’s not the only one. How materials are collected and the methods used for processing can destroy environment and endanger the living things that inhabit that ecosystem.</p>",
+                        "text_size": "sm",
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 100
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "settings": {
+                        "button_label": "LEARN MORE",
+                        "button_style": "primary",
+                        "show_icon": false,
+                        "animation_type": "slide-bottom",
+                        "button_link": "shopify://pages/our-story-novaire",
+                        "animation_delay": 150
+                      }
+                    }
+                  ]
                 }
               ]
             },
             {
               "type": "image",
               "settings": {
-                "image_ratio_desktop": "ratio_4_3",
-                "image_ratio_mobile": "ratio_4_3",
+                "image": "shopify://shop_images/novaire-our-value.avif",
+                "show_image_first_mobile": true,
+                "image_ratio_desktop": "custom",
+                "image_ratio_custom_width_desktop": 6,
+                "image_ratio_custom_height_desktop": 5,
+                "image_ratio_mobile": "custom",
+                "image_ratio_custom_width_mobile": 6,
+                "image_ratio_custom_height_mobile": 5,
                 "width_desktop": "fill",
                 "width_mobile": "fill",
                 "corner_radius": "square"

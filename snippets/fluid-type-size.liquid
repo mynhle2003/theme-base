@@ -1,0 +1,17 @@
+{% doc %}
+  Emits a fluid font size between two viewport anchors, including reverse scales.
+  @param {number} start - Size at the first viewport
+  @param {number} end - Size at the second viewport
+  @param {number} from - First viewport in pixels
+  @param {number} to - Second viewport in pixels
+{% enddoc %}
+{%- liquid
+  assign lower = start | at_most: end
+  assign upper = start | at_least: end
+  assign viewport_span = to | minus: from | times: 1.0
+  assign slope = end | minus: start | divided_by: viewport_span
+  assign offset = slope | times: from
+  assign intercept = start | minus: offset
+  assign vw = slope | times: 100
+-%}
+clamp({{ lower }}px, {{ intercept }}px + {{ vw }}vw, {{ upper }}px)

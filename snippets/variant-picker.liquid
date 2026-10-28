@@ -20,7 +20,9 @@
   @param {number} [swatch_width_mobile_override] - Optional local mobile swatch width
   @param {string} [swatch_height_ratio_override] - Optional local CSS aspect ratio for swatches
   @param {boolean} [show_option_names] - Whether option legends remain visible
+  @param {boolean} [show_selected_value] - Whether the selected value is visible beside its option name; defaults to true
   @param {string} [size_chart_option_name] - Product option name that should expose the size guide
+  @param {boolean} [size_chart_icon] - Whether to render the size-chart ruler icon
   @param {page} [size_chart_page] - Page or dynamic page source rendered by the size guide
   @param {string} [size_chart_desktop_layout] - Desktop size guide presentation: popup or drawer
   @param {string} [size_chart_mobile_layout] - Mobile size guide presentation: bottom_sheet or drawer
@@ -112,6 +114,9 @@
   unless size_chart_desktop_layout == 'modal' or size_chart_desktop_layout == 'drawer'
     assign size_chart_desktop_layout = 'modal'
   endunless
+  if size_chart_desktop_layout == 'modal'
+    assign size_chart_desktop_layout = 'popup'
+  endif
   assign size_chart_mobile_layout = size_chart_mobile_layout | default: 'bottom_sheet'
   unless size_chart_mobile_layout == 'bottom_sheet' or size_chart_mobile_layout == 'drawer'
     assign size_chart_mobile_layout = 'bottom_sheet'
@@ -229,7 +234,7 @@
         <div class="variant-picker__option-header">
           {% if show_option_names %}
             <span class="variant-picker__label body-sm">
-              <span class="variant-picker__option-name">{{ product_option.name | escape }}</span><span class="variant-picker__selected-value" data-variant-selected-value>{% if selected_option_value != blank %}: {{ selected_option_value | escape }}{% endif %}</span>
+              <span class="variant-picker__option-name">{{ product_option.name | escape }}</span><span class="variant-picker__selected-value{% if show_selected_value == false %} visually-hidden{% endif %}" data-variant-selected-value>{% if selected_option_value != blank %}: {{ selected_option_value | escape }}{% endif %}</span>
             </span>
           {% endif %}
           {% if show_size_chart %}
@@ -241,7 +246,15 @@
               aria-expanded="false"
               data-size-chart-trigger
             >
-              {{ size_chart_label | escape }}
+              {% if size_chart_icon %}
+                <svg class="variant-picker__size-chart-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" focusable="false">
+                  <g transform="rotate(-45 9 9)" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="1" y="6" width="16" height="6" rx="1" />
+                    <path d="M4 6v3M7 6v2M10 6v3M13 6v2" />
+                  </g>
+                </svg>
+              {% endif %}
+              <span class="variant-picker__size-chart-text">{{ size_chart_label | escape }}</span>
             </button>
           {% endif %}
         </div>

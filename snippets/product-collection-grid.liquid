@@ -29,8 +29,10 @@
   @param {string} [aria_label] - Accessible name for the carousel
   @param {string} [previous_selector] - CSS selector for the previous control
   @param {string} [next_selector] - CSS selector for the next control
+  @param {boolean} [show_pagination_on_desktop] - Desktop pagination visibility
+  @param {boolean} [show_pagination_on_mobile] - Mobile pagination visibility
   @param {boolean} [show_pagination] - Whether to render Swiper pagination
-  @param {string} [pagination_type] - Progress bar or bullets pagination
+  @param {string} [pagination_type] - Progress bar, bullets, or dots pagination
   @param {string} [pagination_class] - Additional pagination classes
   @param {string} [pagination_style] - Inline pagination custom properties
   @param {boolean} [autoplay] - Whether the carousel auto-rotates
@@ -63,7 +65,7 @@
   endif
 
   assign product_collection_grid_pagination_type = pagination_type | default: 'bullets'
-  unless product_collection_grid_pagination_type == 'progress_bar' or product_collection_grid_pagination_type == 'bullets'
+  unless product_collection_grid_pagination_type == 'progress_bar' or product_collection_grid_pagination_type == 'bullets' or product_collection_grid_pagination_type == 'dots'
     assign product_collection_grid_pagination_type = 'bullets'
   endunless
 
@@ -246,13 +248,9 @@
       data-product-collection-grid
       data-layout="carousel"
       data-product-carousel
-      data-swiper-columns-desktop="{{ product_collection_grid_columns_desktop }}"
-      data-swiper-columns-mobile="{{ product_collection_grid_columns_mobile }}"
-      data-swiper-gap-desktop="{{ product_collection_grid_gap_horizontal }}"
-      data-swiper-gap-mobile="{{ product_collection_grid_gap_horizontal_mobile }}"
-      data-swiper-pagination-type="{{ product_collection_grid_pagination_type }}"
-      {% if previous_selector != blank %}data-swiper-previous-selector="{{ previous_selector | escape }}"{% endif %}
-      {% if next_selector != blank %}data-swiper-next-selector="{{ next_selector | escape }}"{% endif %}
+      {% render 'swiper-carousel-attributes', columns_desktop: product_collection_grid_columns_desktop, columns_mobile: product_collection_grid_columns_mobile, gap_desktop: product_collection_grid_gap_horizontal, gap_mobile: product_collection_grid_gap_horizontal_mobile, pagination_type: product_collection_grid_pagination_type %}
+      {% if previous_selector != blank %}{% assign carousel_attribute_value_1 = previous_selector %}{% render 'swiper-carousel-attributes', previous_selector: carousel_attribute_value_1 %}{% endif %}
+      {% if next_selector != blank %}{% assign carousel_attribute_value_2 = next_selector %}{% render 'swiper-carousel-attributes', next_selector: carousel_attribute_value_2 %}{% endif %}
       {% if items_data_attributes != blank %}{{ items_data_attributes }}{% endif %}
       {% if grid_attributes != blank %}{{ grid_attributes }}{% endif %}
       {% if product_collection_grid_style != blank %}style="{{ product_collection_grid_style }}"{% endif %}
@@ -268,13 +266,14 @@
         <div
           class="swiper-pagination{% if pagination_class != blank %} {{ pagination_class }}{% endif %}"
           data-product-collection-pagination
+          {% render 'pagination-visibility', desktop: show_pagination_on_desktop, mobile: show_pagination_on_mobile %}
           data-pagination-type="{{ product_collection_grid_pagination_type }}"
           {% if product_collection_grid_pagination_style != blank %}style="{{ product_collection_grid_pagination_style }}"{% endif %}
         ></div>
       {% endif %}
     {% endcapture %}
 
-    {% render 'swiper-carousel',
+    {% render 'swiper-carousel', layout: 'carousel',
       id: carousel_id,
       content: product_collection_grid_content,
       root_class: product_collection_grid_class,
@@ -292,11 +291,8 @@
       data-product-collection-grid
       data-layout="carousel"
       data-product-carousel
-      data-swiper-mobile-only="true"
-      data-swiper-columns-desktop="{{ product_collection_grid_columns_desktop }}"
-      data-swiper-columns-mobile="{{ product_collection_grid_columns_mobile }}"
-      data-swiper-gap-desktop="{{ product_collection_grid_gap_horizontal }}"
-      data-swiper-gap-mobile="{{ product_collection_grid_gap_horizontal_mobile }}"
+      {% render 'swiper-carousel-attributes', mobile_only: true %}
+      {% render 'swiper-carousel-attributes', columns_desktop: product_collection_grid_columns_desktop, columns_mobile: product_collection_grid_columns_mobile, gap_desktop: product_collection_grid_gap_horizontal, gap_mobile: product_collection_grid_gap_horizontal_mobile %}
       {% if items_data_attributes != blank %}{{ items_data_attributes }}{% endif %}
       {% if grid_attributes != blank %}{{ grid_attributes }}{% endif %}
       {% if product_collection_grid_style != blank %}style="{{ product_collection_grid_style }}"{% endif %}

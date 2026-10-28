@@ -1,0 +1,131 @@
+{% doc %}
+  @param {object} card_settings - Compact settings from a block
+  @param {string} [shopify_attributes] - Theme Editor attributes
+  Shared Compact product renderer. Uses shared title, money,
+  button and quick-add contracts. Adds the selected or first available variant directly.
+{% enddoc %}
+{% liquid
+  assign card_product = card_settings.product
+  assign card_variant = card_product.selected_or_first_available_variant
+  assign thumbnail_ratio = card_product.featured_image.aspect_ratio | default: 1
+  case card_settings.image_ratio
+    when 'custom'
+      capture thumbnail_ratio
+        render 'image-ratio-value', setting: 'custom', fallback_ratio: 'auto', custom_width: card_settings.image_ratio_custom_width, custom_height: card_settings.image_ratio_custom_height
+      endcapture
+      assign thumbnail_ratio = thumbnail_ratio | strip
+    when 'ratio_1_1'
+      assign thumbnail_ratio = '1 / 1'
+    when 'ratio_4_5'
+      assign thumbnail_ratio = '4 / 5'
+    when 'ratio_5_4'
+      assign thumbnail_ratio = '5 / 4'
+    when 'ratio_6_7'
+      assign thumbnail_ratio = '6 / 7'
+    when 'ratio_7_6'
+      assign thumbnail_ratio = '7 / 6'
+    when 'ratio_5_7'
+      assign thumbnail_ratio = '5 / 7'
+    when 'ratio_7_5'
+      assign thumbnail_ratio = '7 / 5'
+    when 'ratio_2_3'
+      assign thumbnail_ratio = '2 / 3'
+    when 'ratio_3_2'
+      assign thumbnail_ratio = '3 / 2'
+    when 'ratio_4_3'
+      assign thumbnail_ratio = '4 / 3'
+    when 'ratio_3_4'
+      assign thumbnail_ratio = '3 / 4'
+    when 'ratio_2_1'
+      assign thumbnail_ratio = '2 / 1'
+    when 'ratio_1_2'
+      assign thumbnail_ratio = '1 / 2'
+    when 'ratio_16_9'
+      assign thumbnail_ratio = '16 / 9'
+    when 'ratio_9_16'
+      assign thumbnail_ratio = '9 / 16'
+    when 'ratio_12_5'
+      assign thumbnail_ratio = '12 / 5'
+    when 'ratio_5_12'
+      assign thumbnail_ratio = '5 / 12'
+    when 'ratio_48_17'
+      assign thumbnail_ratio = '48 / 17'
+    when 'ratio_17_48'
+      assign thumbnail_ratio = '17 / 48'
+    when 'ratio_5_8'
+      assign thumbnail_ratio = '5 / 8'
+    when 'ratio_8_5'
+      assign thumbnail_ratio = '8 / 5'
+    when 'square'
+      assign thumbnail_ratio = '1'
+    when 'portrait'
+      assign thumbnail_ratio = '2 / 3'
+    when 'landscape'
+      assign thumbnail_ratio = '3 / 2'
+  endcase
+  assign card_radius = 'var(--card-radius)'
+  case card_settings.corner_radius
+    when 'square'
+      assign card_radius = 'var(--radius-square)'
+    when 'slightly_rounded'
+      assign card_radius = 'var(--radius-slight)'
+    when 'rounded'
+      assign card_radius = 'var(--radius-rounded)'
+    when 'pill'
+      assign card_radius = 'var(--radius-pill)'
+  endcase
+  assign compact_button_radius = 'var(--button-radius)'
+  case card_settings.button_corner_radius
+    when 'square'
+      assign compact_button_radius = 'var(--radius-square)'
+    when 'slightly_rounded'
+      assign compact_button_radius = 'var(--radius-slight)'
+    when 'rounded'
+      assign compact_button_radius = 'var(--radius-rounded)'
+    when 'pill'
+      assign compact_button_radius = 'var(--radius-pill)'
+  endcase
+  assign add_label = 'products.add_to_cart' | t
+  if card_product == blank or card_product.available == false
+    assign add_label = 'products.sold_out' | t
+  endif
+  assign accessible_label = add_label | append: ': ' | append: card_product.title
+  assign card_scheme = blank
+  if card_settings.color_scheme != blank
+    assign card_scheme = card_settings.color_scheme.id | default: card_settings.color_scheme | handleize
+  endif
+%}
+{% if card_product != blank or request.design_mode %}
+  <div
+    class="product-card-compact{% if card_settings.enable_boxed_layout %} product-card-compact--boxed{% endif %}{% if card_settings.auto_position_price %} product-card-compact--auto-price{% endif %}{% if card_settings.overlay %} product-card-compact--overlay{% endif %}{% if card_scheme != blank %} color-scheme {{ card_scheme }}{% endif %}"
+    style="--compact-button-radius: {{ compact_button_radius }}; --compact-thumbnail-width: {{ card_settings.thumbnail_width }}px; --compact-thumbnail-width-mobile: {{ card_settings.thumbnail_width_mobile }}px; --compact-thumbnail-ratio: {{ thumbnail_ratio }}; --compact-content-gap: {{ card_settings.content_gap }}px; --compact-content-gap-mobile: {{ card_settings.content_gap_mobile }}px; --compact-gap: {{ card_settings.gap }}px; --compact-gap-mobile: {{ card_settings.gap_mobile }}px; --compact-padding: {{ card_settings.padding }}px; --compact-padding-mobile: {{ card_settings.padding_mobile }}px; --compact-border-width: {{ card_settings.border_thickness }}px; --compact-radius: {{ card_radius }}; --compact-padding-top: {{ card_settings.padding_top }}px; --compact-padding-bottom: {{ card_settings.padding_bottom }}px;{% if card_settings.customize_mobile_padding %} --compact-padding-top-mobile: {{ card_settings.padding_top_mobile }}px; --compact-padding-bottom-mobile: {{ card_settings.padding_bottom_mobile }}px;{% endif %}{% if card_settings.limit_width %} --compact-max-width: {{ card_settings.max_width }}px;{% endif %}{% if card_settings.limit_width_mobile %} --compact-max-width-mobile: {{ card_settings.max_width_mobile }}px;{% endif %}{% if card_settings.overlay %} --compact-overlay-color: {{ card_settings.overlay_color }}; --compact-blur: {{ card_settings.backdrop_blur }}px;{% endif %}{% if card_settings.shadow %} --compact-shadow: var(--product-card-shadow);{% endif %}"
+    {{ shopify_attributes }}
+  >
+    <div class="product-card-compact__surface">
+      {% if card_product != blank %}<a class="product-card-compact__thumbnail" href="{{ card_product.url }}" aria-label="{{ card_product.title | escape }}">{% else %}<div class="product-card-compact__thumbnail">{% endif %}
+        {% if card_product.featured_image != blank %}
+          {{ card_product.featured_image | image_url: width: 320 | image_tag: loading: 'lazy', widths: '100, 140, 200, 320', sizes: '100px', alt: '' }}
+        {% else %}
+          {{ 'product-1' | placeholder_svg_tag: 'product-card-compact__placeholder' }}
+        {% endif %}
+      {% if card_product != blank %}</a>{% else %}</div>{% endif %}
+      <div class="product-card-compact__content">
+        {% render 'product-card-title', product: card_product, heading_tag: 'h3' %}
+        {% if card_settings.show_price %}{% render 'product-card-price', item: card_product, placeholder: true %}{% endif %}
+      </div>
+      {% if card_settings.show_add_to_cart %}
+        <div class="product-card-compact__action product-card__action" data-product-card-quick-add-overlay-wrapper>
+          {% if card_product == blank or card_product.available == false %}
+            {% render 'theme-button', label: add_label, aria_label: accessible_label, icon: 'cart', icon_only: true, disabled: true, variant: card_settings.button_style, class: 'product-card-compact__button' %}
+          {% else %}
+            <form action="{{ routes.cart_add_url }}" method="post" data-product-card-quick-add data-inventory-quantity="{{ card_variant.inventory_quantity }}" data-inventory-management="{{ card_variant.inventory_management }}" data-inventory-policy="{{ card_variant.inventory_policy }}">
+              <input type="hidden" name="id" value="{{ card_variant.id }}">
+              <input type="hidden" name="quantity" value="{{ card_variant.quantity_rule.min | default: 1 }}">
+              {% render 'theme-button', type: 'submit', label: add_label, aria_label: accessible_label, icon: 'cart', icon_only: true, loading_dots: true, variant: card_settings.button_style, class: 'product-card-compact__button product-card__quick-add-button' %}
+            </form>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}

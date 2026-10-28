@@ -1,0 +1,132 @@
+{% doc %}
+  Shared carousel attributes. Pass only options consumed by the owner runtime.
+  Required runtime attributes must be passed even without a schema option, using
+  a literal such as layout: 'carousel', columns_desktop: 1, or gap_desktop: 0.
+  Nil omits an unused attribute; false and zero remain explicit. Autoplay timing is only emitted
+  when autoplay is enabled. Fixed JS options (speed/effect/loop in specialized galleries)
+  remain runtime defaults and do not need DOM attributes.
+  @param {string} [autoplay_contract] - owner uses data-autoplay instead of data-swiper-autoplay
+  @param {boolean} [viewport] - Emit the Swiper viewport identity hook
+  @param {string} [layout] - data-swiper-layout
+  @param {number} [columns_desktop] - data-swiper-columns-desktop
+  @param {number} [columns_mobile] - data-swiper-columns-mobile
+  @param {number} [gap_desktop] - data-swiper-gap-desktop
+  @param {number} [gap_mobile] - data-swiper-gap-mobile
+  @param {string} [pagination_type] - data-swiper-pagination-type
+  @param {boolean} [pagination_desktop] - data-swiper-pagination-desktop
+  @param {boolean} [pagination_mobile] - data-swiper-pagination-mobile
+  @param {boolean} [mobile_only] - data-swiper-mobile-only
+  @param {string} [previous_selector] - data-swiper-previous-selector
+  @param {string} [next_selector] - data-swiper-next-selector
+  @param {boolean} [autoplay] - data-swiper-autoplay
+  @param {number} [autoplay_delay] - data-swiper-autoplay-delay
+  @param {boolean} [pause_on_hover] - data-swiper-autoplay-pause-on-hover
+  @param {boolean} [show_next_slide_preview] - data-swiper-next-slide-preview
+  @param {boolean} [show_next_slide_preview_on_mobile] - data-swiper-next-slide-preview-mobile
+  @param {boolean} [loop] - data-carousel-loop
+  @param {boolean} [manual_loop] - data-carousel-manual-loop
+  @param {string} [effect] - data-transition
+  @param {boolean} [desktop_preview] - data-show-next-slide-preview-on-desktop
+  @param {string} [timeline_effect] - data-timeline-transition
+  @param {boolean} [timeline_preview_desktop] - data-timeline-preview-desktop
+  @param {boolean} [timeline_preview_mobile] - data-timeline-preview-mobile
+  @param {number} [timeline_gap_desktop] - data-timeline-gap-desktop
+  @param {number} [timeline_gap_mobile] - data-timeline-gap-mobile
+  @param {number} [mobile_preview_percent] - data-mobile-preview-percent
+  @param {string} [mode] - data-carousel-mode
+  @param {string} [controls_style] - data-carousel-controls-style
+  @param {boolean} [preview_requested_mobile] - data-carousel-preview-mobile
+  @param {boolean} [contained_preview] - data-carousel-contained-preview
+  @param {boolean} [preview_requested] - data-carousel-preview-requested
+  @param {string} [timeline_position] - data-timeline-position
+  @param {boolean} [timeline_navigation_desktop] - data-timeline-navigation-desktop
+  @param {string} [desktop_layout] - data-desktop-layout
+  @param {string} [mobile_layout] - data-mobile-layout
+  @param {boolean} [mobile_show_pagination] - data-mobile-show-pagination
+{% enddoc %}
+{% liquid
+  if autoplay == true or autoplay == 'true'
+    assign normalized_autoplay_delay = autoplay_delay | default: 4000 | plus: 0
+    if normalized_autoplay_delay < 1000 or normalized_autoplay_delay > 60000
+      assign normalized_autoplay_delay = 4000
+    endif
+  endif
+%}
+{% if viewport %}data-swiper-carousel{% endif %}
+{% if layout != nil %}
+  {% liquid
+    assign value = layout
+    unless value == 'carousel' or value == 'grid'
+      assign value = 'carousel'
+    endunless
+  %}
+data-swiper-layout="{{ value | escape }}"
+{% endif %}
+{% if columns_desktop != nil %}data-swiper-columns-desktop="{{ columns_desktop | escape }}"{% endif %}
+{% if columns_mobile != nil %}data-swiper-columns-mobile="{{ columns_mobile | escape }}"{% endif %}
+{% if gap_desktop != nil %}data-swiper-gap-desktop="{{ gap_desktop | escape }}"{% endif %}
+{% if gap_mobile != nil %}data-swiper-gap-mobile="{{ gap_mobile | escape }}"{% endif %}
+{% if pagination_type != nil %}
+  {% liquid
+    assign value = pagination_type
+    unless value == 'progress_bar' or value == 'bullets' or value == 'dots' or value == 'numbers'
+      assign value = 'bullets'
+    endunless
+  %}
+data-swiper-pagination-type="{{ value | escape }}"
+{% endif %}
+{% if pagination_desktop != nil %}data-swiper-pagination-desktop="{{ pagination_desktop | escape }}"{% endif %}
+{% if pagination_mobile != nil %}data-swiper-pagination-mobile="{{ pagination_mobile | escape }}"{% endif %}
+{% if mobile_only != nil %}data-swiper-mobile-only="{{ mobile_only | escape }}"{% endif %}
+{% if previous_selector != nil %}data-swiper-previous-selector="{{ previous_selector | escape }}"{% endif %}
+{% if next_selector != nil %}data-swiper-next-selector="{{ next_selector | escape }}"{% endif %}
+{% if autoplay_contract == 'owner' %}
+  {% if autoplay != nil %}data-autoplay="{{ autoplay | escape }}"{% endif %}
+  {% if autoplay == true or autoplay == 'true' %}
+    {% if autoplay_delay != nil %}data-autoplay-delay="{{ normalized_autoplay_delay }}"{% endif %}
+    {% if pause_on_hover != nil %}data-pause-on-hover="{{ pause_on_hover | escape }}"{% endif %}
+  {% endif %}
+{% else %}
+{% if autoplay != nil %}data-swiper-autoplay="{{ autoplay | escape }}"{% endif %}
+{% if autoplay_delay != nil and autoplay == true or autoplay_delay != nil and autoplay == 'true' %}data-swiper-autoplay-delay="{{ normalized_autoplay_delay }}"{% endif %}
+{% if pause_on_hover != nil and autoplay == true or pause_on_hover != nil and autoplay == 'true' %}data-swiper-autoplay-pause-on-hover="{{ pause_on_hover | escape }}"{% endif %}
+{% endif %}
+{% if show_next_slide_preview != nil %}data-swiper-next-slide-preview="{{ show_next_slide_preview | escape }}"{% endif %}
+{% if show_next_slide_preview_on_mobile != nil %}data-swiper-next-slide-preview-mobile="{{ show_next_slide_preview_on_mobile | escape }}"{% endif %}
+{% if loop != nil %}data-carousel-loop="{{ loop | escape }}"{% endif %}
+{% if manual_loop != nil %}data-carousel-manual-loop="{{ manual_loop | escape }}"{% endif %}
+{% if effect != nil %}
+  {% liquid
+    assign value = effect
+    unless value == 'slide' or value == 'fade'
+      assign value = 'slide'
+    endunless
+  %}
+data-transition="{{ value | escape }}"
+{% endif %}
+{% if desktop_preview != nil %}data-show-next-slide-preview-on-desktop="{{ desktop_preview | escape }}"{% endif %}
+{% if timeline_effect != nil %}
+  {% liquid
+    assign value = timeline_effect
+    unless value == 'slide' or value == 'fade'
+      assign value = 'slide'
+    endunless
+  %}
+data-timeline-transition="{{ value | escape }}"
+{% endif %}
+{% if timeline_preview_desktop != nil %}data-timeline-preview-desktop="{{ timeline_preview_desktop | escape }}"{% endif %}
+{% if timeline_preview_mobile != nil %}data-timeline-preview-mobile="{{ timeline_preview_mobile | escape }}"{% endif %}
+{% if timeline_gap_desktop != nil %}data-timeline-gap-desktop="{{ timeline_gap_desktop | escape }}"{% endif %}
+{% if timeline_gap_mobile != nil %}data-timeline-gap-mobile="{{ timeline_gap_mobile | escape }}"{% endif %}
+
+{% if mobile_preview_percent != nil %}data-mobile-preview-percent="{{ mobile_preview_percent | escape }}"{% endif %}
+{% if mode != nil %}data-carousel-mode="{{ mode | escape }}"{% endif %}
+{% if controls_style != nil %}data-carousel-controls-style="{{ controls_style | escape }}"{% endif %}
+{% if preview_requested_mobile != nil %}data-carousel-preview-mobile="{{ preview_requested_mobile | escape }}"{% endif %}
+{% if contained_preview != nil %}data-carousel-contained-preview="{{ contained_preview | escape }}"{% endif %}
+{% if preview_requested != nil %}data-carousel-preview-requested="{{ preview_requested | escape }}"{% endif %}
+{% if timeline_position != nil %}data-timeline-position="{{ timeline_position | escape }}"{% endif %}
+{% if timeline_navigation_desktop != nil %}data-timeline-navigation-desktop="{{ timeline_navigation_desktop | escape }}"{% endif %}
+{% if desktop_layout != nil %}data-desktop-layout="{{ desktop_layout | escape }}"{% endif %}
+{% if mobile_layout != nil %}data-mobile-layout="{{ mobile_layout | escape }}"{% endif %}
+{% if mobile_show_pagination != nil %}data-mobile-show-pagination="{{ mobile_show_pagination | escape }}"{% endif %}

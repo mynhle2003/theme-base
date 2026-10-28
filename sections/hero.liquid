@@ -671,75 +671,114 @@
       "settings": {
         "width": "full",
         "layout": "classic",
-        "media_type": "video",
+        "media_type": "image",
+        "banner_image": "shopify://shop_images/novaire-hero-desktop.avif",
+        "mobile_banner_image": "shopify://shop_images/novaire-hero-mobile.avif",
+        "overlay": "#00000000",
+        "parallax_effect": "none",
         "desktop_height": "medium",
-        "mobile_height": "extra_small",
+        "mobile_height": "medium",
         "desktop_position": "center_center",
         "mobile_position": "center_center",
-        "content_width": "fill",
-        "desktop_gap": 48,
-        "mobile_gap": 36,
+        "content_width": "custom",
+        "content_max_width": 960,
+        "desktop_gap": 0,
+        "mobile_gap": 0,
         "content_color_scheme": "scheme-3",
-        "padding_top": 0,
-        "padding_bottom": 0,
+        "padding_top": 80,
+        "padding_bottom": 80,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 50,
-        "padding_bottom_mobile": 50,
-        "overlay": "#00000000",
-        "video": "shopify://files/videos/malandra-love-always-figma-compatible.mp4",
-        "mobile_video": "shopify://files/videos/malandra-love-always-figma-compatible.mp4"
+        "enable_sticky": true,
+        "padding_top_mobile": 80,
+        "padding_bottom_mobile": 80
       },
       "blocks": [
         {
-          "type": "header",
+          "type": "group",
           "settings": {
-            "width": "custom",
-            "max_width": 770,
-            "inherit_alignment": false,
+            "backdrop_blur": 0,
+            "direction": "vertical",
             "alignment": "center",
             "customize_mobile_alignment": true,
             "alignment_mobile": "center",
-            "customize_mobile_size": true,
+            "width": "fill",
             "width_mobile": "fill",
-            "gap_desktop": 16,
-            "gap_mobile": 10
+            "height": "fit",
+            "gap_desktop": 40,
+            "gap_mobile": 32,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
           },
           "blocks": [
             {
-              "type": "eyebrow",
+              "type": "header",
               "settings": {
-                "text": "<p>INTRODUCING</p>",
-                "show_background": false,
-                "show_icon": false,
-                "animation_type": "slide-bottom",
-                "color": "#FFFFFFCC",
-                "animation_delay": 50
-              }
+                "width": "fill",
+                "max_width": 840,
+                "inherit_alignment": false,
+                "alignment": "center",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "center",
+                "customize_mobile_size": true,
+                "width_mobile": "fill",
+                "gap_desktop": 16,
+                "gap_mobile": 16
+              },
+              "blocks": [
+                {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>NEW COLLECTION</p>",
+                    "animation_type": "slide-right",
+                    "animation_delay": 100
+                  }
+                },
+                {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>SUMMER &amp; BEYOND</p>",
+                    "heading_size": "display",
+                    "html_tag": "h1",
+                    "width": "fill",
+                    "animation_type": "rotate-words",
+                    "animation_delay": 100,
+                    "custom_heading_size": 24,
+                    "max_width": 640,
+                    "customize_mobile_size": false,
+                    "width_mobile": "fit",
+                    "max_width_mobile": 480,
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "customize_mobile_padding": false,
+                    "padding_top_mobile": 0,
+                    "padding_bottom_mobile": 0,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
+                  }
+                }
+              ]
             },
             {
-              "type": "heading",
+              "type": "button",
               "settings": {
-                "text": "<p>Love, Always</p>",
-                "heading_size": "xl",
-                "html_tag": "h2",
-                "width": "fill",
-                "animation_type": "rotate-words",
-                "text_color": "#FFFFFF",
-                "animation_delay": 50
+                "button_label": "SHOP NOW",
+                "button_style": "primary",
+                "show_icon": false,
+                "animation_type": "slide-bottom",
+                "animation_delay": 150,
+                "button_link": "shopify://collections/new-in-novaire"
               }
             }
           ]
-        },
-        {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop now",
-            "button_style": "primary",
-            "show_icon": false,
-            "animation_type": "slide-bottom",
-            "button_link": "shopify://collections/all",
-            "animation_delay": 150
-          }
         }
       ]
     }

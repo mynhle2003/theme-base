@@ -1395,6 +1395,7 @@
   .main-collection__filter-dialog:not(.is-sidebar) {
     --overlay-drawer-inset: var(--overlay-drawer-padding-desktop, 0px);
     --main-collection-filter-closed-translate: calc(-100% - var(--overlay-drawer-inset));
+    border-radius: var(--overlay-drawer-edge-radius-desktop, 0px) var(--drawer-radius) var(--drawer-radius) var(--overlay-drawer-edge-radius-desktop, 0px);
     position: fixed;
     inset: var(--overlay-drawer-inset) auto var(--overlay-drawer-inset) var(--overlay-drawer-inset);
     width: min(375px, calc(100vw - var(--overlay-drawer-inset)));

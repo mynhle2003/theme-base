@@ -1,4 +1,6 @@
 {% liquid
+  assign rich_text_gap = section.settings.gap | default: 24
+  assign rich_text_gap_mobile = section.settings.gap_mobile | default: rich_text_gap
   assign rich_text_alignment = 'start'
   case section.settings.alignment
     when 'center'
@@ -55,8 +57,8 @@
     wrap: 'nowrap',
     align_items: 'var(--flex-align, flex-start)',
     align_items_mobile: 'var(--flex-align-mobile, var(--flex-align, flex-start))',
-    gap_value: 'var(--layout-grid-gap, 1rem)',
-    gap_mobile_value: 'var(--layout-grid-gap, 1rem)'
+    gap: rich_text_gap,
+    gap_mobile: rich_text_gap_mobile
   %}
 {% endcapture %}
 {% assign rich_text_content_style = rich_text_content_style | strip %}
@@ -197,6 +199,26 @@
       "default": "page_width"
     },
     {
+      "type": "range",
+      "id": "gap",
+      "label": "t:labels.gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "t:labels.mobile_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
       "type": "text_alignment",
       "id": "alignment",
       "label": "t:labels.alignment",
@@ -294,37 +316,87 @@
       "name": "t:general.rich_text",
       "settings": {
         "section_width": "page_width",
-        "alignment": "left",
-        "customize_mobile_alignment": false,
-        "alignment_mobile": "left",
-        "color_scheme": "scheme-1",
-        "customize_mobile_padding": false
+        "alignment": "center",
+        "customize_mobile_alignment": true,
+        "alignment_mobile": "center",
+        "color_scheme": "scheme-2",
+        "background_color": "#F6F0EC",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56,
+        "gap": 16,
+        "gap_mobile": 16
       },
       "blocks": [
         {
           "type": "eyebrow",
-          "id": "eyebrow",
-          "static": true,
           "settings": {
-            "text": "<p>New arrivals</p>"
-          }
+            "text": "",
+            "animation_delay": 100,
+            "animation_type": "slide-right"
+          },
+          "static": true,
+          "id": "eyebrow"
         },
         {
           "type": "heading",
-          "id": "heading",
-          "static": true,
           "settings": {
-            "text": "<p>Build your base theme</p>",
-            "heading_size": "lg",
-            "html_tag": "h2"
-          }
+            "text": "<p>OVER 100 BRANDS OF DESIGNERS</p>",
+            "heading_size": "display",
+            "html_tag": "h2",
+            "width": "custom",
+            "custom_heading_size": 24,
+            "max_width": 830,
+            "customize_mobile_size": true,
+            "width_mobile": "fill",
+            "max_width_mobile": 480,
+            "animation_type": "slide-bottom",
+            "animation_delay": 100,
+            "padding_top": 0,
+            "padding_bottom": 4,
+            "padding_left": 0,
+            "padding_right": 0,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0,
+            "text_color": "#3A3A3A"
+          },
+          "static": true,
+          "id": "heading"
         },
         {
           "type": "text",
-          "id": "text",
-          "static": true,
           "settings": {
-            "text": "<p>Use this section to test the shared Section Kernel, global layout width, color scheme, background and responsive padding.</p>"
+            "text": "<p>From flowy floral midi dresses to sleek evening gowns, every piece is designed to express your individuality and confidence. Our collection brings together global designers who blend creativity, comfort, and style — so you can look and feel your best wherever you go. Find your next favorite look and make every day.</p>",
+            "text_size": "sm",
+            "width": "custom",
+            "max_width": 830,
+            "text_color": "#6C6C6C",
+            "padding_bottom": 16,
+            "customize_mobile_padding": true,
+            "padding_bottom_mobile": 8,
+            "customize_mobile_size": true,
+            "width_mobile": "fill",
+            "animation_delay": 100,
+            "animation_type": "slide-bottom"
+          },
+          "static": true,
+          "id": "text"
+        },
+        {
+          "type": "button",
+          "settings": {
+            "button_label": "DISCOVER MORE",
+            "button_style": "primary",
+            "show_icon": false,
+            "width": "fit",
+            "button_link": "shopify://pages/our-story-novaire",
+            "animation_delay": 150,
+            "animation_type": "slide-bottom"
           }
         }
       ]

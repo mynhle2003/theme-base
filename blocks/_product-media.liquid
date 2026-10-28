@@ -4,6 +4,10 @@
 {% enddoc %}
 
 {% liquid
+  assign media_navigation_style = block.settings.navigation_style | default: 'primary'
+  unless media_navigation_style == 'secondary'
+    assign media_navigation_style = 'primary'
+  endunless
   assign media_product = closest.product | default: product
   assign current_variant = media_product.selected_or_first_available_variant
   assign gallery_id = 'ProductMedia-' | append: section.id
@@ -45,7 +49,7 @@
   endif
 
   assign media_mobile_pagination_type = block.settings.mobile_pagination_type | default: 'bullets'
-  unless media_mobile_pagination_type == 'progress_bar' or media_mobile_pagination_type == 'bullets'
+  unless media_mobile_pagination_type == 'progress_bar' or media_mobile_pagination_type == 'bullets' or media_mobile_pagination_type == 'dots'
     assign media_mobile_pagination_type = 'bullets'
   endunless
 
@@ -200,9 +204,9 @@
   id="{{ gallery_id }}"
   class="media-gallery product-media-gallery motion-block product-media-gallery--desktop-{{ media_desktop_layout }} product-media-gallery--mobile-{{ media_mobile_layout }} product-media-gallery--radius-{{ media_container_radius }}{% if media_full_width %} product-media-gallery--mobile-full-width{% endif %}"
   data-product-media-gallery
-  data-desktop-layout="{{ media_desktop_layout }}"
-  data-mobile-layout="{{ media_mobile_layout }}"
-  data-mobile-show-pagination="{{ media_mobile_show_pagination }}"
+  {% render 'swiper-carousel-attributes', desktop_layout: media_desktop_layout %}
+  {% render 'swiper-carousel-attributes', mobile_layout: media_mobile_layout %}
+  {% render 'swiper-carousel-attributes', mobile_show_pagination: media_mobile_show_pagination %}
   data-zoom="{{ media_zoom }}"
   data-main-image-ratio="{{ media_main_image_ratio }}"
   data-block-animations="{{ media_block_motion_enabled }}"
@@ -253,7 +257,7 @@
         {% assign product_media_inline_pagination = blank %}
       {% endif %}
 
-      {% render 'swiper-carousel',
+      {% render 'swiper-carousel', layout: 'carousel',
         id: main_swiper_id,
         content: product_media_main_content,
         root_class: 'media-gallery__main product-media-gallery__main',
@@ -263,12 +267,12 @@
         show_next_slide_preview_on_mobile: media_mobile_show_next_slide
       %}
 
-        <div class="media-gallery__controls swiper-carousel__navigation--show_on_hover{% if media_controls_color_scheme != blank %} color-scheme {{ media_controls_color_scheme }}{% endif %}">
+        <div class="media-gallery__controls swiper-carousel__navigation--show_on_hover{% if media_controls_color_scheme != blank %} color-scheme {{ media_controls_color_scheme }}{% endif %}" data-navigation-style="{{ media_navigation_style }}">
           {% if media_product.media.size > 1 %}
-            <button class="media-gallery__navigation media-gallery__navigation--previous product-media-gallery__navigation product-media-gallery__navigation--previous btn btn-primary btn--primary btn--icon swiper-nav-button swiper-nav-button--prev" type="button" aria-label="{{ 'products.previous_media' | t | escape }}" data-product-media-previous>
+            <button class="media-gallery__navigation media-gallery__navigation--previous product-media-gallery__navigation product-media-gallery__navigation--previous btn btn-{{ media_navigation_style }} btn--{{ media_navigation_style }} btn--icon swiper-nav-button swiper-nav-button--prev" type="button" aria-label="{{ 'products.previous_media' | t | escape }}" data-product-media-previous>
               {% render 'carousel-navigation-icon', icon: 'chevron', direction: 'previous' %}
             </button>
-            <button class="media-gallery__navigation media-gallery__navigation--next product-media-gallery__navigation product-media-gallery__navigation--next btn btn-primary btn--primary btn--icon swiper-nav-button swiper-nav-button--next" type="button" aria-label="{{ 'products.next_media' | t | escape }}" data-product-media-next>
+            <button class="media-gallery__navigation media-gallery__navigation--next product-media-gallery__navigation product-media-gallery__navigation--next btn btn-{{ media_navigation_style }} btn--{{ media_navigation_style }} btn--icon swiper-nav-button swiper-nav-button--next" type="button" aria-label="{{ 'products.next_media' | t | escape }}" data-product-media-next>
               {% render 'carousel-navigation-icon', icon: 'chevron', direction: 'next' %}
             </button>
           {% endif %}
@@ -296,7 +300,7 @@
             {% endfor %}
           {% endcapture %}
 
-          {% render 'swiper-carousel',
+          {% render 'swiper-carousel', layout: 'carousel',
             id: thumbnail_swiper_id,
             content: product_media_thumbnail_content,
             root_class: 'media-gallery__thumbnails product-media-gallery__thumbnails',
@@ -543,7 +547,7 @@
     {
       "type": "checkbox",
       "id": "mobile_show_pagination",
-      "label": "t:labels.show_pagination",
+      "label": "t:labels.show_pagination_on_mobile",
       "default": true,
       "visible_if": "{{ block.settings.mobile_layout == 'slider' }}"
     },
@@ -559,6 +563,10 @@
         {
           "value": "bullets",
           "label": "t:options.collection_pagination.bullets"
+        },
+        {
+          "value": "dots",
+          "label": "t:options.collection_pagination.dots"
         }
       ],
       "default": "bullets",
@@ -657,6 +665,22 @@
       "step": 1,
       "unit": "px",
       "default": 10
+    },
+    {
+      "type": "select",
+      "id": "navigation_style",
+      "label": "Navigation style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:options.button_variant.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.button_variant.secondary"
+        }
+      ],
+      "default": "primary"
     }
   ]
 }

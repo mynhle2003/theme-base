@@ -504,7 +504,7 @@
 
 /* Malandra Featured product: quantity above the two full-width purchase actions. */
 .featured-product .product-buy-buttons__purchase {
-  --product-buy-quantity-max-width: 109px;
+  --product-buy-quantity-max-width: 144px;
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
 }
@@ -513,24 +513,27 @@
   gap: 8px;
 }
 
-.featured-product .variant-picker__option-header > .variant-picker__label,
-.featured-product .product-buy-buttons__quantity .form__label {
-  color: var(--heading-color);
-  font-family: var(--font-body-family);
-  font-size: 16px;
-  font-weight: 400;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
-  text-transform: none;
+
+
+/* Resolve this alias at the picker, after the body's input-style setting.
+   The root alias otherwise captures the root's zero input border width. */
+.featured-product .variant-picker {
+  --variant-border-width: var(--input-border-width);
 }
 
-.featured-product .variant-picker__option-header {
-  margin-block-end: 8px;
+/* Figma's equal-size tiles apply to radio buttons only. Dropdowns and
+   colour/image swatches keep their own settings and geometry. */
+.featured-product .variant-picker__button:not(.swatch__label) {
+  min-inline-size: calc(var(--variant-height) * 1.5);
+  padding-inline: calc(var(--button-padding-inline-desktop) * 0.5);
+  justify-content: center;
 }
 
-.featured-product .variant-picker__selected-value {
-  color: var(--body-color);
+@media (max-width: 767.98px) {
+  .featured-product .variant-picker__button:not(.swatch__label) {
+    min-inline-size: calc(var(--variant-height-mobile) * 1.5);
+    padding-inline: calc(var(--button-padding-inline-mobile) * 0.5);
+  }
 }
 
 .featured-product .product-buy-buttons__quantity-control {
@@ -576,9 +579,7 @@
 .featured-product .product-buy-buttons__add-to-cart .product-form__submit,
 .featured-product .product-buy-buttons__accelerated-checkout .shopify-payment-button__button--unbranded {
   min-height: 44px;
-  font-weight: 500;
   line-height: 1.5;
-  letter-spacing: 1px;
 }
 
 .product-buy-buttons__gift-card {
@@ -1008,4 +1009,29 @@ product-sticky-layout.product-information__layout > .product-details {
   .product-accordion__content {
     padding-block-end: var(--product-accordion-content-gap-mobile, var(--product-accordion-content-gap, 1rem));
   }
+}
+
+.product-buy-buttons__quantity-label {
+  font-family: var(--quantity-label-font-family, var(--font-body-family));
+  font-style: var(--quantity-label-font-style, var(--font-body-style));
+  font-weight: var(--quantity-label-font-weight, var(--font-body-weight));
+  font-size: var(--quantity-label-font-size, var(--font-body-sm));
+  letter-spacing: var(--quantity-label-letter-spacing, normal);
+}
+
+/* Novaire Featured product: option text follows its local heading role. */
+.section-featured-product .product-variant-picker {
+  --input-text-color: var(--heading-color);
+}
+
+/* Stretch the mask's diagonal to both corners at any option width.
+   A non-scaling stroke keeps the slash thin on long variant labels. */
+.featured-product .variant-picker__button--sold-out:not(.swatch__label) {
+  opacity: var(--button-disabled-opacity);
+}
+
+.featured-product .variant-picker__button--sold-out:not(.swatch__label)::after {
+  background: var(--input-text-color);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0 0L100 100' fill='none' stroke='black' stroke-width='1' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0 0L100 100' fill='none' stroke='black' stroke-width='1' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
 }

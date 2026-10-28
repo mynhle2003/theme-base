@@ -96,11 +96,12 @@ test('color presentation follows Swatches settings independently of the normal p
   assert.doesNotMatch(dropdown, /swatch-control/);
 });
 
-test('quantity renders escaped custom labels and hides blank labels with an accessible fallback', async () => {
-  const render = (label) => engine.parseAndRender(quantity, { block: { settings: { label } }, form_id: 'ProductForm', quantity_min: 1, quantity_step: 1 });
-  assert.match(await render('Amount & count'), /class="form__label" for="ProductForm-quantity">Amount &amp; count<\/label>/);
+test('quantity escapes labels, follows label visibility and retains an accessible fallback', async () => {
+  const render = (label, show_label = false) => engine.parseAndRender(quantity, { block: { settings: { label, show_label } }, form_id: 'ProductForm', quantity_min: 1, quantity_step: 1 });
+  assert.match(await render('Amount & count', true), /class="product-buy-buttons__quantity-label form__label" for="ProductForm-quantity">Amount &amp; count<\/label>/);
+  assert.match(await render('Amount & count'), /class="product-buy-buttons__quantity-label form__label visually-hidden" for="ProductForm-quantity">Amount &amp; count<\/label>/);
   for (const label of ['', '   ', undefined]) {
-    assert.match(await render(label), /class="form__label visually-hidden" for="ProductForm-quantity">accessibility.quantity<\/label>/);
+    assert.match(await render(label), /class="product-buy-buttons__quantity-label form__label visually-hidden" for="ProductForm-quantity">accessibility.quantity<\/label>/);
   }
 });
 

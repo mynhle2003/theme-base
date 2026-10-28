@@ -403,75 +403,79 @@
       "name": "t:general.shop_the_look",
       "category": "t:general.content",
       "settings": {
-        "section_width": "full_width_no_padding",
+        "section_width": "page_width",
         "media_position": "left",
         "mobile_media_position": "first",
-        "gap_desktop": 0,
-        "gap_mobile": 48,
-        "color_scheme": "scheme-4",
-        "padding_top": 0,
-        "padding_bottom": 0,
+        "gap_desktop": 80,
+        "gap_mobile": 40,
+        "color_scheme": "scheme-1",
+        "padding_top": 80,
+        "padding_bottom": 96,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 48
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
       },
       "blocks": [
         {
           "type": "_shop-the-look-image",
           "static": true,
           "settings": {
-            "alt_text": "Statement rings styled on a model\u2019s hand",
-            "image_ratio_desktop": "fill_height",
-            "image_ratio_mobile": "ratio_1_1",
+            "image": "shopify://shop_images/novaire-look-steele-lifestyle.avif",
+            "mobile_image": "shopify://shop_images/novaire-look-steele-lifestyle.avif",
+            "alt_text": "Steele floral puff sleeve midi dress styled for summer",
+            "image_ratio_desktop": "custom",
+            "image_ratio_mobile": "custom",
             "corner_radius": "square",
-            "image": "shopify://shop_images/malandra-shop-the-look.avif",
-            "mobile_image": "shopify://shop_images/malandra-shop-the-look.avif"
+            "image_ratio_custom_width_desktop": 6,
+            "image_ratio_custom_height_desktop": 7,
+            "image_ratio_custom_width_mobile": 6,
+            "image_ratio_custom_height_mobile": 7
           },
           "id": "image"
         },
         {
           "type": "header",
+          "static": true,
           "settings": {
             "width": "custom",
             "max_width": 770,
+            "customize_mobile_size": true,
+            "width_mobile": "fill",
             "inherit_alignment": false,
             "alignment": "center",
             "customize_mobile_alignment": true,
             "alignment_mobile": "center",
-            "customize_mobile_size": true,
-            "width_mobile": "fill",
             "gap_desktop": 8,
             "gap_mobile": 8,
             "padding_bottom": 40,
             "customize_mobile_padding": true,
-            "padding_bottom_mobile": 36
+            "padding_bottom_mobile": 28
           },
-          "static": true,
+          "id": "header",
           "blocks": [
             {
               "type": "eyebrow",
               "settings": {
-                "text": "<p>Shop the look</p>",
+                "text": "",
+                "color": "#636363",
                 "show_background": false,
                 "show_icon": false,
-                "animation_type": "slide-bottom",
-                "color": "#636363",
-                "animation_delay": 50
+                "animation_type": "slide-right",
+                "animation_delay": 100
               }
             },
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Statement Stacks</p>",
+                "text": "<p>SHOP THE LOOK</p>",
                 "heading_size": "lg",
                 "html_tag": "h2",
                 "width": "fill",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
+                "animation_type": "slide-bottom",
+                "animation_delay": 100
               }
             }
-          ],
-          "id": "header"
+          ]
         },
         {
           "type": "shop-the-look-products",
@@ -484,48 +488,37 @@
             "show_next_slide_preview_on_mobile": false,
             "product_gap_desktop": 20,
             "product_gap_mobile": 16,
-            "show_navigation_on_desktop": true,
+            "show_navigation_on_desktop": false,
             "navigation_position": "outside",
             "navigation_style": "primary",
             "navigation_icon": "chevron",
             "navigation_behavior": "show_on_hover",
             "show_pagination_on_desktop": true,
-            "pagination_type": "progress_bar",
-            "pagination_top_padding_desktop": 56,
+            "show_pagination_on_mobile": true,
+            "pagination_type": "bullets",
+            "pagination_top_padding_desktop": 28,
             "pagination_top_padding_mobile": 28,
-            "pagination_limit_width": true,
+            "pagination_limit_width": false,
             "pagination_max_width": 220,
             "autoplay": false,
             "autoplay_pause_on_hover": true,
             "autoplay_speed": 4
           },
+          "id": "product-list",
           "blocks": [
             {
               "type": "shop-the-look-product",
               "settings": {
-                "show_hotspot": true,
+                "product": "novaire-steele-puff-sleeve-midi-dress",
+                "show_hotspot": false,
                 "hotspot_horizontal": 45,
                 "hotspot_vertical": 53,
                 "customize_mobile_position": true,
                 "hotspot_horizontal_mobile": 44,
-                "hotspot_vertical_mobile": 54,
-                "product": "elara-tennis-eternity-stacking-ring"
-              }
-            },
-            {
-              "type": "shop-the-look-product",
-              "settings": {
-                "show_hotspot": true,
-                "hotspot_horizontal": 62,
-                "hotspot_vertical": 56,
-                "customize_mobile_position": true,
-                "hotspot_horizontal_mobile": 62,
-                "hotspot_vertical_mobile": 56,
-                "product": "elara-fine-diamond-signet-ring"
+                "hotspot_vertical_mobile": 54
               }
             }
-          ],
-          "id": "product-list"
+          ]
         }
       ]
     }

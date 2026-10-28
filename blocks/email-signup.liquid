@@ -393,7 +393,7 @@
     display: block;
     min-width: 0;
     color: var(--body-color);
-    background-color: var(--email-signup-background-color, var(--background-color));
+    background-color: transparent;
     --input-text-color: var(--body-color);
   }
 
@@ -420,7 +420,7 @@
   .email-signup-block .form__control--input:not([type='checkbox']):not([type='radio']):not([type='hidden']),
   .email-signup-block--layout-input_with_button .email-signup-block__input-wrap {
     border-radius: 0 !important;
-    background-color: var(--email-signup-background-color, var(--input-background-color));
+    background-color: var(--email-signup-background-color, var(--background-color));
   }
 
   .email-signup-block--layout-horizontal .form__fields {
@@ -452,7 +452,7 @@
     padding: 0.65rem 0.875rem;
     border: var(--input-border-width) solid var(--input-border-color);
     border-radius: var(--input-radius);
-    background-color: var(--email-signup-background-color, var(--input-background-color));
+    background-color: var(--email-signup-background-color, var(--background-color));
     color: var(--input-text-color);
     font-size: var(--form-input-font-size);
     transition: border-color var(--motion-duration-standard) var(--motion-ease-standard);
@@ -549,7 +549,7 @@
     border: 0;
     border-block-end: 1px solid var(--input-border-color);
     border-radius: 0;
-    background-color: var(--email-signup-background-color, transparent);
+    background-color: var(--email-signup-background-color, var(--background-color));
     box-shadow: none;
   }
 

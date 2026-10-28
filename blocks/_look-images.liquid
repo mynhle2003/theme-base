@@ -1,0 +1,16 @@
+{% doc %}
+  Ordered lifestyle images paired with the Shop the look product list.
+  @example
+  {% content_for 'block', type: '_look-images', id: 'images' %}
+{% enddoc %}
+<div class="look-images" data-look-images {{ block.shopify_attributes }}>
+  {% content_for 'blocks' %}
+</div>
+{% schema %}
+{
+  "name": "Images",
+  "tag": null,
+  "blocks": [{"type": "_shop-the-look-image"}],
+  "presets": [{"name": "Images", "blocks": [{"type": "_shop-the-look-image"}]}]
+}
+{% endschema %}

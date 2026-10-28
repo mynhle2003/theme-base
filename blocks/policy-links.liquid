@@ -70,6 +70,14 @@
             </li>
           {% endif %}
         {% endfor %}
+        {% if shop.privacy_policy.url != blank %}
+          <li class="policy-links-block__item">
+            <cookie-preferences data-shop-domain="{{ shop.permanent_domain | escape }}">
+              <a class="policy-links-block__link link-underline" data-underline="persistent" href="{{ shop.privacy_policy.url | escape }}#shopifyReshowConsentBanner">{{ 'policies.cookies_settings' | t }}</a>
+            </cookie-preferences>
+          </li>
+          <script src="{{ 'cookie-preferences.js' | asset_url }}" type="module"></script>
+        {% endif %}
       </ul>
     {% else %}
       <p class="policy-links-block__empty">{{ 'policies.no_policies' | t }}</p>

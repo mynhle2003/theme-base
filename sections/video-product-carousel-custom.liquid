@@ -288,7 +288,7 @@
       "name": "Video product carousel",
       "category": "t:general.media",
       "settings": {
-        "section_width": "page_width",
+        "section_width": "full_width",
         "alignment": "center",
         "content_gap": 48,
         "color_scheme": "scheme-1",
@@ -313,11 +313,20 @@
             {
               "type": "heading",
               "settings": {
-                "text": "<p>Your inspiration, our creation</p>",
+                "text": "<p>LOVED BY REAL PEOPLE</p>",
                 "heading_size": "lg",
                 "html_tag": "h2",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
+                "animation_type": "slide-bottom",
+                "animation_delay": 100
+              }
+            },
+            {
+              "type": "text",
+              "settings": {
+                "text": "<p>Hear what people are saying.</p>",
+                "text_size": "md",
+                "animation_type": "slide-bottom",
+                "animation_delay": 100
               }
             }
           ]
@@ -325,17 +334,17 @@
         {
           "type": "carousel",
           "settings": {
-            "columns_desktop": "4",
+            "columns_desktop": "5",
             "columns_mobile": "1",
-            "gap_desktop": 20,
+            "gap_desktop": 28,
             "gap_mobile": 16,
             "width": "fill",
             "show_next_slide_preview_on_mobile": true,
-            "show_navigation_on_desktop": true,
-            "show_pagination_on_desktop": false,
+            "show_navigation_on_desktop": false,
+            "show_pagination_on_desktop": true,
             "show_pagination_on_mobile": true,
-            "pagination_type": "progress_bar",
-            "pagination_padding_mobile": 36,
+            "pagination_type": "bullets",
+            "pagination_padding_mobile": 24,
             "autoplay": false,
             "navigation_style": "primary",
             "navigation_behavior": "show_on_hover",
@@ -343,7 +352,7 @@
             "custom_width": 50,
             "navigation_position": "outside",
             "navigation_icon": "arrow",
-            "pagination_padding_desktop": 40,
+            "pagination_padding_desktop": 32,
             "pagination_limit_width": false,
             "pagination_max_width": 200,
             "pause_on_hover": true,
@@ -360,8 +369,116 @@
               "settings": {
                 "direction": "vertical",
                 "alignment": "left",
-                "gap_desktop": 8,
-                "gap_mobile": 8,
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "height": "fit",
+                "position": "top",
+                "position_horizontal": "top",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "left",
+                "border_thickness": 0,
+                "corner_radius": "square",
+                "custom_radius": 20,
+                "shadow": "none",
+                "appearance_type": "inherit",
+                "color_scheme": "scheme-1",
+                "open_in_new_tab": false,
+                "padding_top": 40,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": [
+                {
+                  "type": "video",
+                  "settings": {
+                    "cover_image": "",
+                    "video": "shopify://files/videos/novaire-real-people-1.mp4",
+                    "use_cover_as_fallback": true,
+                    "video_source": "uploaded",
+                    "autoplay": false,
+                    "loop_video": true,
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "aspect_ratio_desktop": "ratio_4_5",
+                    "aspect_ratio_mobile": "ratio_2_3",
+                    "play_button_size_desktop": 44,
+                    "play_button_size_mobile": 40,
+                    "aspect_ratio_desktop_custom_width": 5,
+                    "aspect_ratio_desktop_custom_height": 7,
+                    "aspect_ratio_mobile_custom_width": 5,
+                    "aspect_ratio_mobile_custom_height": 7
+                  }
+                }
+              ]
+            },
+            {
+              "type": "slide",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
+                "height": "fit",
+                "position": "top",
+                "position_horizontal": "top",
+                "horizontal_alignment": "left",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "left",
+                "border_thickness": 0,
+                "corner_radius": "square",
+                "custom_radius": 20,
+                "shadow": "none",
+                "appearance_type": "inherit",
+                "color_scheme": "scheme-1",
+                "open_in_new_tab": false,
+                "padding_top": 40,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 0,
+                "padding_bottom_mobile": 0,
+                "padding_left_mobile": 0,
+                "padding_right_mobile": 0
+              },
+              "blocks": [
+                {
+                  "type": "video",
+                  "settings": {
+                    "cover_image": "",
+                    "video": "shopify://files/videos/novaire-real-people-2.mp4",
+                    "use_cover_as_fallback": true,
+                    "video_source": "uploaded",
+                    "autoplay": false,
+                    "loop_video": true,
+                    "width_desktop": "fill",
+                    "width_mobile": "fill",
+                    "aspect_ratio_desktop": "ratio_4_5",
+                    "aspect_ratio_mobile": "ratio_2_3",
+                    "play_button_size_desktop": 44,
+                    "play_button_size_mobile": 40,
+                    "aspect_ratio_desktop_custom_width": 5,
+                    "aspect_ratio_desktop_custom_height": 7,
+                    "aspect_ratio_mobile_custom_width": 5,
+                    "aspect_ratio_mobile_custom_height": 7
+                  }
+                }
+              ]
+            },
+            {
+              "type": "slide",
+              "settings": {
+                "direction": "vertical",
+                "alignment": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
                 "height": "fit",
                 "position": "top",
                 "position_horizontal": "top",
@@ -379,7 +496,7 @@
                 "padding_bottom": 0,
                 "padding_left": 0,
                 "padding_right": 0,
-                "customize_mobile_padding": false,
+                "customize_mobile_padding": true,
                 "padding_top_mobile": 0,
                 "padding_bottom_mobile": 0,
                 "padding_left_mobile": 0,
@@ -389,18 +506,18 @@
                 {
                   "type": "video",
                   "settings": {
-                    "cover_image": "shopify://shop_images/elara-inspiration-1.avif",
-                    "video": "shopify://files/videos/elara-inspiration-1.mp4",
+                    "cover_image": "",
+                    "video": "shopify://files/videos/novaire-real-people-3.mp4",
                     "use_cover_as_fallback": true,
                     "video_source": "uploaded",
                     "autoplay": true,
                     "loop_video": true,
                     "width_desktop": "fill",
                     "width_mobile": "fill",
-                    "aspect_ratio_desktop": "custom",
-                    "aspect_ratio_mobile": "custom",
-                    "play_button_size_desktop": 50,
-                    "play_button_size_mobile": 44,
+                    "aspect_ratio_desktop": "ratio_2_3",
+                    "aspect_ratio_mobile": "ratio_2_3",
+                    "play_button_size_desktop": 44,
+                    "play_button_size_mobile": 40,
                     "aspect_ratio_desktop_custom_width": 5,
                     "aspect_ratio_desktop_custom_height": 7,
                     "aspect_ratio_mobile_custom_width": 5,
@@ -410,7 +527,7 @@
                 {
                   "type": "product-card-compact",
                   "settings": {
-                    "product": "elara-curly-molten-mini-initial",
+                    "product": "novaire-coastal-caprice-maxi-dress-yellow",
                     "enable_boxed_layout": true,
                     "image_ratio": "ratio_1_1",
                     "thumbnail_width": 70,
@@ -421,7 +538,7 @@
                     "gap": 12,
                     "gap_mobile": 12,
                     "button_style": "primary",
-                    "padding": 16,
+                    "padding": 12,
                     "padding_mobile": 12
                   }
                 }
@@ -432,8 +549,8 @@
               "settings": {
                 "direction": "vertical",
                 "alignment": "left",
-                "gap_desktop": 8,
-                "gap_mobile": 8,
+                "gap_desktop": 0,
+                "gap_mobile": 0,
                 "height": "fit",
                 "position": "top",
                 "position_horizontal": "top",
@@ -447,11 +564,11 @@
                 "appearance_type": "inherit",
                 "color_scheme": "scheme-1",
                 "open_in_new_tab": false,
-                "padding_top": 0,
+                "padding_top": 40,
                 "padding_bottom": 0,
                 "padding_left": 0,
                 "padding_right": 0,
-                "customize_mobile_padding": false,
+                "customize_mobile_padding": true,
                 "padding_top_mobile": 0,
                 "padding_bottom_mobile": 0,
                 "padding_left_mobile": 0,
@@ -461,40 +578,22 @@
                 {
                   "type": "video",
                   "settings": {
-                    "cover_image": "shopify://shop_images/elara-inspiration-2.avif",
-                    "video": "shopify://files/videos/elara-inspiration-2.mp4",
+                    "cover_image": "",
+                    "video": "shopify://files/videos/novaire-real-people-4.mp4",
                     "use_cover_as_fallback": true,
                     "video_source": "uploaded",
-                    "autoplay": true,
+                    "autoplay": false,
                     "loop_video": true,
                     "width_desktop": "fill",
                     "width_mobile": "fill",
-                    "aspect_ratio_desktop": "custom",
-                    "aspect_ratio_mobile": "custom",
-                    "play_button_size_desktop": 50,
-                    "play_button_size_mobile": 44,
+                    "aspect_ratio_desktop": "ratio_4_5",
+                    "aspect_ratio_mobile": "ratio_2_3",
+                    "play_button_size_desktop": 44,
+                    "play_button_size_mobile": 40,
                     "aspect_ratio_desktop_custom_width": 5,
                     "aspect_ratio_desktop_custom_height": 7,
                     "aspect_ratio_mobile_custom_width": 5,
                     "aspect_ratio_mobile_custom_height": 7
-                  }
-                },
-                {
-                  "type": "product-card-compact",
-                  "settings": {
-                    "product": "elara-savi-triple-ridge-hoop-earrings",
-                    "enable_boxed_layout": true,
-                    "image_ratio": "ratio_1_1",
-                    "thumbnail_width": 70,
-                    "thumbnail_width_mobile": 50,
-                    "show_price": true,
-                    "content_gap": 4,
-                    "content_gap_mobile": 4,
-                    "gap": 12,
-                    "gap_mobile": 12,
-                    "button_style": "primary",
-                    "padding": 16,
-                    "padding_mobile": 12
                   }
                 }
               ]
@@ -504,8 +603,8 @@
               "settings": {
                 "direction": "vertical",
                 "alignment": "left",
-                "gap_desktop": 8,
-                "gap_mobile": 8,
+                "gap_desktop": 0,
+                "gap_mobile": 0,
                 "height": "fit",
                 "position": "top",
                 "position_horizontal": "top",
@@ -519,11 +618,11 @@
                 "appearance_type": "inherit",
                 "color_scheme": "scheme-1",
                 "open_in_new_tab": false,
-                "padding_top": 0,
+                "padding_top": 40,
                 "padding_bottom": 0,
                 "padding_left": 0,
                 "padding_right": 0,
-                "customize_mobile_padding": false,
+                "customize_mobile_padding": true,
                 "padding_top_mobile": 0,
                 "padding_bottom_mobile": 0,
                 "padding_left_mobile": 0,
@@ -533,112 +632,22 @@
                 {
                   "type": "video",
                   "settings": {
-                    "cover_image": "shopify://shop_images/elara-inspiration-3.avif",
-                    "video": "shopify://files/videos/elara-inspiration-3.mp4",
+                    "cover_image": "",
+                    "video": "shopify://files/videos/novaire-real-people-5.mp4",
                     "use_cover_as_fallback": true,
                     "video_source": "uploaded",
-                    "autoplay": true,
+                    "autoplay": false,
                     "loop_video": true,
                     "width_desktop": "fill",
                     "width_mobile": "fill",
-                    "aspect_ratio_desktop": "custom",
-                    "aspect_ratio_mobile": "custom",
-                    "play_button_size_desktop": 50,
-                    "play_button_size_mobile": 44,
+                    "aspect_ratio_desktop": "ratio_4_5",
+                    "aspect_ratio_mobile": "ratio_2_3",
+                    "play_button_size_desktop": 44,
+                    "play_button_size_mobile": 40,
                     "aspect_ratio_desktop_custom_width": 5,
                     "aspect_ratio_desktop_custom_height": 7,
                     "aspect_ratio_mobile_custom_width": 5,
                     "aspect_ratio_mobile_custom_height": 7
-                  }
-                },
-                {
-                  "type": "product-card-compact",
-                  "settings": {
-                    "product": "elara-tennis-eternity-stacking-ring",
-                    "enable_boxed_layout": true,
-                    "image_ratio": "ratio_1_1",
-                    "thumbnail_width": 70,
-                    "thumbnail_width_mobile": 50,
-                    "show_price": true,
-                    "content_gap": 4,
-                    "content_gap_mobile": 4,
-                    "gap": 12,
-                    "gap_mobile": 12,
-                    "button_style": "primary",
-                    "padding": 16,
-                    "padding_mobile": 12
-                  }
-                }
-              ]
-            },
-            {
-              "type": "slide",
-              "settings": {
-                "direction": "vertical",
-                "alignment": "left",
-                "gap_desktop": 8,
-                "gap_mobile": 8,
-                "height": "fit",
-                "position": "top",
-                "position_horizontal": "top",
-                "horizontal_alignment": "left",
-                "customize_mobile_alignment": true,
-                "alignment_mobile": "left",
-                "border_thickness": 0,
-                "corner_radius": "square",
-                "custom_radius": 20,
-                "shadow": "none",
-                "appearance_type": "inherit",
-                "color_scheme": "scheme-1",
-                "open_in_new_tab": false,
-                "padding_top": 0,
-                "padding_bottom": 0,
-                "padding_left": 0,
-                "padding_right": 0,
-                "customize_mobile_padding": false,
-                "padding_top_mobile": 0,
-                "padding_bottom_mobile": 0,
-                "padding_left_mobile": 0,
-                "padding_right_mobile": 0
-              },
-              "blocks": [
-                {
-                  "type": "video",
-                  "settings": {
-                    "cover_image": "shopify://shop_images/elara-inspiration-4.avif",
-                    "video": "shopify://files/videos/elara-inspiration-4.mp4",
-                    "use_cover_as_fallback": true,
-                    "video_source": "uploaded",
-                    "autoplay": true,
-                    "loop_video": true,
-                    "width_desktop": "fill",
-                    "width_mobile": "fill",
-                    "aspect_ratio_desktop": "custom",
-                    "aspect_ratio_mobile": "custom",
-                    "play_button_size_desktop": 50,
-                    "play_button_size_mobile": 44,
-                    "aspect_ratio_desktop_custom_width": 5,
-                    "aspect_ratio_desktop_custom_height": 7,
-                    "aspect_ratio_mobile_custom_width": 5,
-                    "aspect_ratio_mobile_custom_height": 7
-                  }
-                },
-                {
-                  "type": "product-card-compact",
-                  "settings": {
-                    "product": "elara-magma-gemstone-charm",
-                    "enable_boxed_layout": true,
-                    "image_ratio": "ratio_1_1",
-                    "thumbnail_width": 70,
-                    "thumbnail_width_mobile": 50,
-                    "show_price": true,
-                    "content_gap": 4,
-                    "content_gap_mobile": 4,
-                    "gap": 12,
-                    "gap_mobile": 12,
-                    "button_style": "primary",
-                    "padding": 16,
-                    "padding_mobile": 12
                   }
                 }
               ]

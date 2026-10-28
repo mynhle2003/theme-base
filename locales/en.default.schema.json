@@ -12,7 +12,7 @@
     "404": "Not found",
     "search_results": "Search results",
     "search_results_block": "Results",
-    "section_padding": "Padding",
+    "section_padding": "Section padding",
     "article": "Article",
     "appearance": "Appearance",
     "block": "Block",
@@ -77,10 +77,10 @@
     "content": "Content",
     "controls": "Controls",
     "custom_section": "Custom section",
-    "image_text_split_layout": "Image with text: split",
+    "image_text_split_layout": "Image text split layout",
     "item": "Item",
     "marquee": "Marquee",
-    "scrolling_text_images": "Text marquee (custom)",
+    "scrolling_text_images": "Scrolling Text Images",
     "animation": "Animation",
     "contact_form_custom": "Contact form (custom)",
     "contact_form": "Contact form",
@@ -240,7 +240,12 @@
     "accordion_options": "Accordion options",
     "scrolling_text_star_separator": "Scrolling Star Separator",
     "columns": "Columns",
-    "slide_block_link": "Block link"
+    "slide_block_link": "Block link",
+    "button_typography": "Button",
+    "badge_typography": "Badges",
+    "product_card_price": "Product card price",
+    "sold_out_badge": "Sold out badge",
+    "block_visibility": "Visibility"
   },
   "labels": {
     "media_corner_radius": "Media corner radius",
@@ -381,8 +386,8 @@
     "number_color": "Number color",
     "desktop_height": "Desktop height",
     "mobile_height": "Mobile height",
-    "desktop_tablet_horizontal_padding": "Desktop and tablet horizontal padding",
-    "mobile_horizontal_padding": "Mobile horizontal padding",
+    "desktop_tablet_horizontal_padding": "Desktop padding",
+    "mobile_horizontal_padding": "Mobile padding",
     "disabled_opacity": "Disabled opacity",
     "border_thickness": "Border thickness",
     "thickness": "Thickness",
@@ -490,7 +495,7 @@
     "enable_quick_view": "Enable quick view",
     "show_second_image_on_hover": "Show second image on hover",
     "show_sale_badge": "Show sale badge",
-    "show_tags": "Show Tags",
+    "show_tags": "Show tags",
     "show_sold_out_badge": "Show sold out badge",
     "display_sale_badge": "Display sale status",
     "display_sold_out_badge": "Display sold-out status",
@@ -707,7 +712,7 @@
     "text_style": "Text style",
     "text": "Text",
     "inventory_display": "Stock message",
-    "low_stock_threshold": "Low inventory threshold",
+    "low_stock_threshold": "Low-stock threshold",
     "show_tax_shipping_notice": "Show tax and delivery note",
     "show_option_names": "Show option names",
     "show_quantity_control": "Show quantity selector",
@@ -736,7 +741,19 @@
     "slide_custom_for_mobile": "Custom for mobile",
     "carousel_pagination_top_padding": "Top padding",
     "carousel_pagination_top_padding_mobile": "Top padding (mobile)",
-    "carousel_desktop_width": "Desktop width"
+    "carousel_desktop_width": "Desktop width",
+    "show_hotspot_product_information": "Show product information on hotspot",
+    "show_hotspot_product_information_on_mobile": "Show product information on mobile",
+    "outline_text": "Outline text",
+    "purchase_layout": "Quantity and Add to cart layout",
+    "role_accent": "Accent",
+    "buttons_and_inputs": "Buttons and inputs",
+    "inherit": "Default",
+    "eyebrow_color": "Eyebrow",
+    "font_weight": "Font weight",
+    "button_icon_gap": "Icon–label gap",
+    "block_visibility": "Show on",
+    "countdown_separator": "Separator"
   },
   "options": {
     "overlay_style": {
@@ -906,7 +923,8 @@
     },
     "collection_pagination": {
       "progress_bar": "Progress bar",
-      "bullets": "Bullets"
+      "bullets": "Bullets",
+      "dots": "Dots"
     },
     "timeline_pagination": {
       "dots": "Dots",
@@ -922,7 +940,8 @@
     "tab_style": {
       "underline": "Underline",
       "button": "Button",
-      "separator": "Separator"
+      "separator": "Separator",
+      "outline": "Outline"
     },
     "tab_active_style": {
       "primary": "Primary",
@@ -1029,7 +1048,8 @@
       "grid": "Gallery grid",
       "stacked": "Single-column stack",
       "stacked_thumbnails": "Stack + thumbnail rail",
-      "two_column_grid": "Mosaic (two columns)"
+      "two_column_grid": "Mosaic (two columns)",
+      "carousel_two_items": "Carousel 2 items (custom)"
     },
     "product_media_mobile_layout": {
       "thumbnails": "Thumb rail",
@@ -1109,7 +1129,8 @@
       "with_labels": "With labels",
       "numbers_only": "Numbers only",
       "inline": "Inline",
-      "inline_superscript": "Inline (superscript)"
+      "inline_superscript": "Inline (superscript)",
+      "with_labels_colon": "With labels and separators (custom)"
     },
     "countdown_type": {
       "fixed_time": "Fixed time",
@@ -1135,7 +1156,10 @@
       "tight": "Tight",
       "normal": "Normal",
       "relaxed": "Relaxed",
-      "loose": "Loose"
+      "loose": "Loose",
+      "tighter": "Tighter",
+      "extra_loose": "Extra loose",
+      "very_loose": "Very loose"
     },
     "letter_spacing": {
       "tight": "Tight",
@@ -1143,7 +1167,20 @@
       "relaxed": "Relaxed",
       "loose": "Loose",
       "reference": "1.2px",
-      "extra_loose": "Extra loose"
+      "extra_loose": "Extra loose",
+      "extra_tight": "Extra tight",
+      "super_tight": "Super tight",
+      "ultra_tight": "Ultra tight",
+      "tighter": "Tighter",
+      "ultra_loose": "Ultra loose",
+      "mega_loose": "Mega loose",
+      "open": "Open",
+      "wide": "Wide",
+      "extra_wide": "Extra wide",
+      "spacious": "Spacious",
+      "expanded": "Expanded",
+      "extra_expanded": "Extra expanded",
+      "maximum": "Maximum"
     },
     "product_card_style": {
       "standard": "Standard",
@@ -1377,7 +1414,8 @@
     "text_case": {
       "original": "Original",
       "uppercase": "Uppercase",
-      "capitalize": "Capitalize"
+      "capitalize": "Capitalize",
+      "lowercase": "Lowercase"
     },
     "color_role": {
       "scheme": "Scheme default",
@@ -1461,6 +1499,30 @@
       "none": "None",
       "image": "Image",
       "video": "Video"
+    },
+    "purchase_layout": {
+      "inline": "Inline",
+      "stacked": "Vertical (custom)"
+    },
+    "font_weight": {
+      "body": "Default",
+      "light": "Light",
+      "regular": "Regular",
+      "medium": "Medium",
+      "semibold": "Semibold",
+      "bold": "Bold"
+    },
+    "timeline_navigation_position": {
+      "content_bottom": "Bottom of content"
+    },
+    "block_visibility": {
+      "all": "All devices",
+      "desktop": "Desktop only",
+      "mobile": "Mobile only"
+    },
+    "countdown_separator": {
+      "line": "Vertical line",
+      "colon": "Colon (:)"
     }
   },
   "info": {
@@ -1487,7 +1549,7 @@
     "localization_manage_languages": "[Manage languages](https://admin.shopify.com/settings/languages)",
     "payment_icons": "Payment icons will appear once you set up payment methods.",
     "email_signup_subscription_preferences": "Customer selections will be saved in the \"Notes\" section of the customer profile.",
-    "heading_html_tag": "Choose the HTML tag that matches this content's role. Reserve H1–H6 for the document outline and use Paragraph for supporting copy.",
+    "heading_html_tag": "Use headings in order (H1 → H2 → H3) for better SEO and readability. If unsure, choose Paragraph.",
     "heading_text_color": "Clear the color to inherit the heading color from the active scheme.",
     "countdown_timezone": "The expiration date is calculated based on your store's primary timezone.",
     "countdown_end_time_format": "Use the format YYYY-MM-DD HH:MM (24-hour format). Example: 2025-12-25 18:00",
@@ -1537,5 +1599,48 @@
     "bottom_padding": "Bottom padding",
     "mobile_top_padding": "Mobile top padding",
     "mobile_bottom_padding": "Mobile bottom padding"
+  },
+  "custom_section": {
+    "page": "Page",
+    "full": "Full",
+    "full_no_padding": "Full (no padding)",
+    "auto": "Auto",
+    "full_screen": "Full screen",
+    "custom": "Custom",
+    "custom_height": "Custom height",
+    "divider": "Divider",
+    "show_top_divider": "Show top divider",
+    "show_bottom_divider": "Show bottom divider",
+    "full_width_divider": "Full-width divider",
+    "layout": "Layout",
+    "horizontal": "Horizontal",
+    "vertical": "Vertical",
+    "direction": "Direction",
+    "top": "Top",
+    "center": "Center",
+    "bottom": "Bottom",
+    "space_between": "Space between",
+    "position": "Position",
+    "left": "Left",
+    "right": "Right",
+    "alignment": "Alignment",
+    "vertical_on_mobile": "Vertical on mobile",
+    "enable_sticky_content": "Enable sticky content",
+    "gap": "Gap",
+    "none": "None",
+    "background": "Background",
+    "image": "Image",
+    "video": "Video",
+    "media": "Media",
+    "mobile_image_optional": "Mobile Image (optional)",
+    "overlay": "Overlay",
+    "overlay_color": "Overlay color",
+    "fixed": "Fixed",
+    "zoom": "Zoom",
+    "parallax_effect": "Parallax effect",
+    "color": "Color",
+    "desktop": "Desktop",
+    "mobile": "Mobile",
+    "section_height": "Section height"
   }
 }

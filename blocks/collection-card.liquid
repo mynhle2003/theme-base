@@ -119,9 +119,35 @@
       "default": "below_image"
     },
     {
-      "type": "text_alignment",
+      "type": "select",
+      "id": "position",
+      "label": "Position",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "bottom",
+      "visible_if": "{{ block.settings.placement == 'on_image' }}"
+    },
+    {
+      "type": "select",
       "id": "alignment",
       "label": "t:labels.alignment",
+      "options": [
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" },
+        { "value": "right", "label": "t:options.alignment.right" }
+      ],
       "default": "left"
     },
     {

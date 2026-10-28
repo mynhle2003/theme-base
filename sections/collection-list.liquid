@@ -306,115 +306,102 @@
       "category": "t:general.collections",
       "blocks": [
         {
-          "type": "header",
-          "settings": {
-            "width": "custom",
-            "max_width": 770,
-            "inherit_alignment": false,
-            "alignment": "center",
-            "customize_mobile_alignment": true,
-            "alignment_mobile": "center",
-            "customize_mobile_size": true,
-            "width_mobile": "fill",
-            "gap_desktop": 8,
-            "gap_mobile": 8
-          },
-          "static": true,
-          "blocks": [
-            {
-              "type": "heading",
-              "settings": {
-                "text": "<p>Shop By Category</p>",
-                "heading_size": "lg",
-                "html_tag": "h2",
-                "width": "fill",
-                "animation_type": "rotate-words",
-                "animation_delay": 50
-              }
-            }
-          ],
-          "id": "header"
-        },
-        {
           "type": "collection-list-items",
           "static": true,
           "settings": {
+            "collections": [
+              "weekend-outfit-novaire",
+              "midi-dresses-novaire",
+              "cavation-outfit-novaire"
+            ],
             "layout": "carousel",
             "columns_desktop": "3",
             "columns_mobile": "1",
             "show_next_slide_preview_on_desktop": false,
             "show_next_slide_preview_on_mobile": true,
-            "gap_desktop": 16,
-            "gap_mobile": 16,
-            "show_navigation_on_desktop": true,
+            "gap_desktop": 20,
+            "gap_mobile": 10,
+            "show_navigation_on_desktop": false,
+            "navigation_style": "primary",
+            "navigation_behavior": "show_on_hover",
             "show_pagination_on_desktop": false,
+            "show_pagination_on_mobile": false,
             "pagination_type": "progress_bar",
             "pagination_top_padding_desktop": 48,
             "pagination_top_padding_mobile": 36,
-            "autoplay": false,
-            "navigation_style": "primary",
-            "navigation_behavior": "show_on_hover",
-            "collections": [
-              "necklace-malandra",
-              "earrings-malandra",
-              "bracelet-malandra"
-            ]
+            "autoplay": false
           },
+          "id": "collection-list",
           "blocks": [
             {
               "type": "collection-card",
               "static": true,
               "settings": {
                 "ratio": "custom",
-                "placement": "below_image",
+                "ratio_custom_width": 6,
+                "ratio_custom_height": 7,
+                "placement": "on_image",
                 "alignment": "center",
-                "gap_desktop": 8,
-                "gap_mobile": 8,
-                "corner_radius": "square",
+                "gap_desktop": 24,
+                "gap_mobile": 24,
                 "border_thickness": 0,
+                "corner_radius": "square",
                 "shadow": "none",
                 "color_type": "color_scheme",
-                "color_scheme": "scheme-1",
-                "padding_top": 20,
-                "padding_bottom": 0,
-                "padding_left": 0,
-                "padding_right": 0,
-                "ratio_custom_width": 6,
-                "ratio_custom_height": 7
+                "color_scheme": "scheme-3",
+                "padding_top": 32,
+                "padding_bottom": 32,
+                "padding_left": 24,
+                "padding_right": 24,
+                "customize_mobile_padding": true,
+                "padding_top_mobile": 24,
+                "padding_bottom_mobile": 24,
+                "padding_left_mobile": 16,
+                "padding_right_mobile": 16,
+                "position": "center"
               },
+              "id": "collection-card",
               "blocks": [
                 {
                   "type": "collection-card-title",
+                  "id": "title",
                   "static": true,
                   "settings": {
-                    "show_product_count": true,
-                    "heading_size": "md",
+                    "title_suffix_to_hide": " Novaire",
+                    "show_product_count": false,
+                    "heading_size": "lg",
                     "html_tag": "h3",
                     "product_count_font": "body",
-                    "product_count_font_size": "xs",
-                    "title_suffix_to_hide": " Malandra"
-                  },
-                  "id": "title"
+                    "product_count_font_size": "xs"
+                  }
+                },
+                {
+                  "type": "collection-card-button",
+                  "settings": {
+                    "button_label": "SHOP NOW",
+                    "button_style": "primary",
+                    "show_icon": false,
+                    "width": "fit",
+                    "width_mobile": "fit"
+                  }
                 }
-              ],
-              "id": "collection-card"
+              ]
             }
-          ],
-          "id": "collection-list"
+          ]
         }
       ],
       "settings": {
         "section_width": "full_width",
         "desktop_alignment": "center",
         "mobile_alignment": "center",
-        "gap_desktop": 48,
-        "gap_mobile": 36,
+        "gap_desktop": 0,
+        "gap_mobile": 0,
         "background_media": "none",
         "color_scheme": "scheme-1",
-        "padding_top": 10,
+        "padding_top": 0,
         "padding_bottom": 80,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 10,
+        "padding_top_mobile": 0,
         "padding_bottom_mobile": 56
       }
     }

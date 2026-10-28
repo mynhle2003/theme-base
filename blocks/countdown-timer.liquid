@@ -286,8 +286,23 @@
       assign countdown_radius = 'var(--radius-pill)'
   endcase
 
+  assign countdown_separator = block.settings.separator | default: 'line'
+  unless countdown_separator == 'line' or countdown_separator == 'colon'
+    assign countdown_separator = 'line'
+  endunless
+
+  assign countdown_minutes_label = 'countdown.minutes' | t
+  assign countdown_seconds_label = 'countdown.seconds' | t
+  if countdown_style == 'with_separators'
+    assign countdown_minutes_label = 'countdown.minutes_full' | t
+    assign countdown_seconds_label = 'countdown.seconds_full' | t
+  endif
+
   assign countdown_style_class = countdown_style | replace: '_', '-'
   assign countdown_class = 'countdown-timer countdown-timer--style-' | append: countdown_style_class
+  if countdown_style == 'with_separators'
+    assign countdown_class = countdown_class | append: ' countdown-timer--separator-' | append: countdown_separator
+  endif
   if block.settings.show_background == false or block.settings.show_background == 'false'
     assign countdown_class = countdown_class | append: ' countdown-timer--no-background'
   endif
@@ -334,21 +349,21 @@
           <span class="countdown-timer__label" data-countdown-label>{{ 'countdown.hours' | t }}</span>
         {% endif %}
       </div>
-      <div class="countdown-timer__unit" data-countdown-unit="minutes" data-countdown-unit-label="{{ 'countdown.minutes' | t | escape }}">
+      <div class="countdown-timer__unit" data-countdown-unit="minutes" data-countdown-unit-label="{{ countdown_minutes_label | escape }}">
         <span class="countdown-timer__value" data-countdown-value="minutes">{{ countdown_minutes_display }}</span>
         {% if countdown_style != 'numbers_only' %}
-          <span class="countdown-timer__label" data-countdown-label>{{ 'countdown.minutes' | t }}</span>
+          <span class="countdown-timer__label" data-countdown-label>{{ countdown_minutes_label }}</span>
         {% endif %}
       </div>
-      <div class="countdown-timer__unit" data-countdown-unit="seconds" data-countdown-unit-label="{{ 'countdown.seconds' | t | escape }}">
+      <div class="countdown-timer__unit" data-countdown-unit="seconds" data-countdown-unit-label="{{ countdown_seconds_label | escape }}">
         <span class="countdown-timer__value" data-countdown-value="seconds">{{ countdown_seconds_display }}</span>
         {% if countdown_style != 'numbers_only' %}
-          <span class="countdown-timer__label" data-countdown-label>{{ 'countdown.seconds' | t }}</span>
+          <span class="countdown-timer__label" data-countdown-label>{{ countdown_seconds_label }}</span>
         {% endif %}
       </div>
     </div>
     <span class="countdown-timer__announcement visually-hidden" data-countdown-announcement aria-live="polite">
-      {{ countdown_days_display }} {{ 'countdown.days' | t }}, {{ countdown_hours_display }} {{ 'countdown.hours' | t }}, {{ countdown_minutes_display }} {{ 'countdown.minutes' | t }}, {{ countdown_seconds_display }} {{ 'countdown.seconds' | t }}
+      {{ countdown_days_display }} {{ 'countdown.days' | t }}, {{ countdown_hours_display }} {{ 'countdown.hours' | t }}, {{ countdown_minutes_display }} {{ countdown_minutes_label }}, {{ countdown_seconds_display }} {{ countdown_seconds_label }}
     </span>
   </countdown-timer>
 {% endif %}
@@ -468,7 +483,7 @@
 
   .countdown-timer--style-with-labels .countdown-timer__label {
     letter-spacing: 0.08em;
-    text-transform: uppercase;
+    text-transform: none;
   }
 
   .countdown-timer--style-inline .countdown-timer__label,
@@ -533,7 +548,7 @@
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 32px;
-    width: 480px;
+    width: 475px;
     max-width: 100%;
   }
 
@@ -543,7 +558,7 @@
     min-width: 0;
     min-height: 0;
     padding: 0;
-    gap: 10px;
+    gap: 8px;
   }
 
   .countdown-timer--style-with-separators .countdown-timer__unit + .countdown-timer__unit::before {
@@ -558,7 +573,24 @@
     margin-top: 0;
     color: var(--body-color);
     letter-spacing: normal;
-    text-transform: uppercase;
+    text-transform: none;
+  }
+
+  .countdown-timer--separator-colon .countdown-timer__unit + .countdown-timer__unit::before {
+    content: ':' / '';
+    inset-block: auto;
+    top: 50%;
+    inset-inline-start: -32px;
+    width: 32px;
+    transform: translateY(-50%);
+    border: 0;
+    text-align: center;
+    font-family: var(--font-heading-family);
+    font-size: var(--font-heading-md);
+    font-style: var(--font-heading-style);
+    font-weight: var(--font-heading-weight);
+    line-height: var(--font-heading-md-line-height);
+    letter-spacing: var(--font-heading-md-letter-spacing);
   }
 
   @media (max-width: 767.98px) {
@@ -782,6 +814,23 @@
         }
       ],
       "default": "with_labels"
+    },
+    {
+      "type": "select",
+      "id": "separator",
+      "label": "t:labels.countdown_separator",
+      "options": [
+        {
+          "value": "line",
+          "label": "t:options.countdown_separator.line"
+        },
+        {
+          "value": "colon",
+          "label": "t:options.countdown_separator.colon"
+        }
+      ],
+      "default": "line",
+      "visible_if": "{{ block.settings.style == 'with_separators' }}"
     },
     {
       "type": "checkbox",

@@ -23,9 +23,13 @@
   endunless
 
   assign menu_letter_spacing = block.settings.letter_spacing | default: 'normal'
-  unless menu_letter_spacing == 'tight' or menu_letter_spacing == 'normal' or menu_letter_spacing == 'relaxed'
+  assign menu_spacing_options = 'extra_tight,super_tight,ultra_tight,tighter,tight,normal,relaxed,loose,extra_loose,ultra_loose,open,wide,extra_wide,spacious,mega_loose,expanded,extra_expanded,maximum' | split: ','
+  unless menu_spacing_options contains menu_letter_spacing
     assign menu_letter_spacing = 'normal'
   endunless
+  capture menu_spacing_value
+    render 'typography-token', kind: 'spacing', value: menu_letter_spacing
+  endcapture
 
   assign menu_text_case = block.settings.text_case | default: 'original'
   unless menu_text_case == 'original' or menu_text_case == 'uppercase'
@@ -84,6 +88,7 @@
 
 {% capture menu_style %}
   {% if menu_gap != 24 %}--header-menu-gap: {{ menu_gap }}px;{% endif %}
+  --header-menu-letter-spacing: {{ menu_spacing_value | strip }};
   --header-menu-color: {{ menu_text_color }};
   --header-submenu-color: {{ submenu_text_color }};
 {% endcapture %}
@@ -261,6 +266,10 @@
   </aside>
 
 {% stylesheet %}
+  .header-menu, .header__mobile-drawer, .header-menu__submenu, .header-menu__tertiary {
+    letter-spacing: var(--header-menu-letter-spacing, var(--letter-spacing-normal));
+  }
+
   .header-menu {
     display: flex;
     flex: 0 1 auto;
@@ -317,6 +326,7 @@
   }
 
   .header-menu__summary {
+    gap: 4px;
     cursor: pointer;
     list-style: none;
   }
@@ -1266,6 +1276,22 @@
       "label": "t:labels.letter_spacing",
       "options": [
         {
+          "value": "extra_tight",
+          "label": "t:options.letter_spacing.extra_tight"
+        },
+        {
+          "value": "super_tight",
+          "label": "t:options.letter_spacing.super_tight"
+        },
+        {
+          "value": "ultra_tight",
+          "label": "t:options.letter_spacing.ultra_tight"
+        },
+        {
+          "value": "tighter",
+          "label": "t:options.letter_spacing.tighter"
+        },
+        {
           "value": "tight",
           "label": "t:options.letter_spacing.tight"
         },
@@ -1276,6 +1302,50 @@
         {
           "value": "relaxed",
           "label": "t:options.letter_spacing.relaxed"
+        },
+        {
+          "value": "loose",
+          "label": "t:options.letter_spacing.loose"
+        },
+        {
+          "value": "extra_loose",
+          "label": "t:options.letter_spacing.extra_loose"
+        },
+        {
+          "value": "ultra_loose",
+          "label": "t:options.letter_spacing.ultra_loose"
+        },
+        {
+          "value": "open",
+          "label": "t:options.letter_spacing.open"
+        },
+        {
+          "value": "wide",
+          "label": "t:options.letter_spacing.wide"
+        },
+        {
+          "value": "extra_wide",
+          "label": "t:options.letter_spacing.extra_wide"
+        },
+        {
+          "value": "spacious",
+          "label": "t:options.letter_spacing.spacious"
+        },
+        {
+          "value": "mega_loose",
+          "label": "t:options.letter_spacing.mega_loose"
+        },
+        {
+          "value": "expanded",
+          "label": "t:options.letter_spacing.expanded"
+        },
+        {
+          "value": "extra_expanded",
+          "label": "t:options.letter_spacing.extra_expanded"
+        },
+        {
+          "value": "maximum",
+          "label": "t:options.letter_spacing.maximum"
         }
       ],
       "default": "normal"

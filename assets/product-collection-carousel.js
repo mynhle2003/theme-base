@@ -31,7 +31,8 @@ const getMobileSlidesPerView = (carousel) => {
   // The preview is intended for a one-column mobile layout. Keep an explicit
   // two-column choice intact instead of silently replacing it with 1.2.
   if (columns === 1 && carousel.dataset.swiperNextSlidePreviewMobile === 'true') {
-    return 1.2;
+    const configured = 1 + toNumber(carousel.closest('[data-product-list]')?.dataset.mobilePreviewPercent, 20) / 100;
+    return Math.min(1.8, Math.max(1.1, configured));
   }
 
   return columns;

@@ -262,63 +262,75 @@
   "presets": [
     {
       "name": "t:general.press",
+      "category": "Trust & social proof",
       "settings": {
-        "max_width": 928,
+        "max_width": 1024,
         "alignment": "center",
-        "gap_desktop": 20,
-        "gap_mobile": 20,
+        "gap_desktop": 12,
+        "gap_mobile": 12,
         "color_scheme": "scheme-1",
         "padding_top": 40,
-        "padding_bottom": 80,
+        "padding_bottom": 32,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 10,
-        "padding_bottom_mobile": 56
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
       },
       "blocks": [
         {
-          "type": "eyebrow",
+          "type": "header",
           "settings": {
-            "text": "<p>IN THE PRESS</p>",
-            "animation_type": "slide-bottom",
-            "animation_delay": 50
-          }
+            "width": "fill",
+            "alignment": "center",
+            "gap_desktop": 8,
+            "gap_mobile": 8
+          },
+          "blocks": [
+            {
+              "type": "heading",
+              "settings": {
+                "text": "<p>Main Heading</p>",
+                "heading_size": "display",
+                "html_tag": "h2",
+                "width": "fit",
+                "animation_delay": 100,
+                "animation_type": "slide-bottom"
+              }
+            }
+          ]
         },
         {
           "type": "press-quotes",
+          "id": "quotes",
+          "static": true,
           "settings": {
-            "autoplay": false,
+            "autoplay": true,
             "pause_on_hover": true,
             "autoplay_speed": 4,
-            "image_spacing_desktop": 36,
-            "image_spacing_mobile": 32,
-            "image_gap_desktop": 32,
-            "image_gap_mobile": 32
+            "image_spacing_desktop": 32,
+            "image_spacing_mobile": 20,
+            "image_gap_desktop": 20,
+            "image_gap_mobile": 16
           },
           "blocks": [
             {
               "type": "press-item",
               "settings": {
-                "image_ratio": "custom",
+                "image_ratio": "original",
                 "corner_radius": "square",
-                "image_width_desktop": 120,
-                "image_width_mobile": 100,
-                "image": "shopify://shop_images/elara-press-mejuri-full-opacity.avif",
-                "alt_text": "Mejuri",
-                "image_ratio_custom_width": 2,
-                "image_ratio_custom_height": 1
+                "custom_corner_radius": 0,
+                "image_width_desktop": 100,
+                "image_width_mobile": 70
               },
               "blocks": [
                 {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>\"When designing this collection, we wanted to strike a balance between bold silhouettes and timeless proportions. The result is a series of rings that feel effortless, yet striking\"</p>",
-                    "heading_size": "md",
+                    "text": "<p>Maecenas ut porta dui, eu consequat nunc. In hac habitasse platea dictumst. Sed sollicitudin orci at sapien dignissim, rhoncus facilisis libero pretium. Aenean id dapibus risus. Etiam non rhoncus nunc, eu commodo nunc. Aliquam sit amet condimentum nunc, rhoncus tincidunt libero. In mollis, nulla non hendrerit faucibus, sem massa auctor nibh.</p>",
+                    "heading_size": "display",
                     "html_tag": "div",
                     "width": "fill",
-                    "customize_mobile_size": true,
-                    "width_mobile": "fill",
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 100
+                    "animation_delay": 100,
+                    "animation_type": "slide-bottom"
                   }
                 }
               ]
@@ -326,27 +338,22 @@
             {
               "type": "press-item",
               "settings": {
-                "image_ratio": "custom",
+                "image_ratio": "original",
                 "corner_radius": "square",
-                "image_width_desktop": 120,
-                "image_width_mobile": 100,
-                "image": "shopify://shop_images/elara-press-lagos-full-opacity.avif",
-                "alt_text": "Lagos",
-                "image_ratio_custom_width": 2,
-                "image_ratio_custom_height": 1
+                "custom_corner_radius": 0,
+                "image_width_desktop": 100,
+                "image_width_mobile": 70
               },
               "blocks": [
                 {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>\"When designing this collection, we wanted to strike a balance between bold silhouettes and timeless proportions. The result is a series of rings that feel effortless, yet striking\"</p>",
-                    "heading_size": "md",
+                    "text": "<p>Maecenas ut porta dui, eu consequat nunc. In hac habitasse platea dictumst. Sed sollicitudin orci at sapien dignissim, rhoncus facilisis libero pretium. Aenean id dapibus risus. Etiam non rhoncus nunc, eu commodo nunc. Aliquam sit amet condimentum nunc, rhoncus tincidunt libero. In mollis, nulla non hendrerit faucibus, sem massa auctor nibh.</p>",
+                    "heading_size": "display",
                     "html_tag": "div",
                     "width": "fill",
-                    "customize_mobile_size": true,
-                    "width_mobile": "fill",
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 100
+                    "animation_delay": 100,
+                    "animation_type": "slide-bottom"
                   }
                 }
               ]
@@ -354,93 +361,29 @@
             {
               "type": "press-item",
               "settings": {
-                "image_ratio": "custom",
+                "image_ratio": "original",
                 "corner_radius": "square",
-                "image_width_desktop": 120,
-                "image_width_mobile": 100,
-                "image": "shopify://shop_images/elara-press-pandora-full-opacity.avif",
-                "alt_text": "Pandora",
-                "image_ratio_custom_width": 2,
-                "image_ratio_custom_height": 1
+                "custom_corner_radius": 0,
+                "image_width_desktop": 100,
+                "image_width_mobile": 70
               },
               "blocks": [
                 {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>\"When designing this collection, we wanted to strike a balance between bold silhouettes and timeless proportions. The result is a series of rings that feel effortless, yet striking\"</p>",
-                    "heading_size": "md",
+                    "text": "<p>Maecenas ut porta dui, eu consequat nunc. In hac habitasse platea dictumst. Sed sollicitudin orci at sapien dignissim, rhoncus facilisis libero pretium. Aenean id dapibus risus. Etiam non rhoncus nunc, eu commodo nunc. Aliquam sit amet condimentum nunc, rhoncus tincidunt libero. In mollis, nulla non hendrerit faucibus, sem massa auctor nibh.</p>",
+                    "heading_size": "display",
                     "html_tag": "div",
                     "width": "fill",
-                    "customize_mobile_size": true,
-                    "width_mobile": "fill",
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 100
-                  }
-                }
-              ]
-            },
-            {
-              "type": "press-item",
-              "settings": {
-                "image_ratio": "custom",
-                "corner_radius": "square",
-                "image_width_desktop": 120,
-                "image_width_mobile": 100,
-                "image": "shopify://shop_images/elara-press-marie-claire-full-opacity.avif",
-                "alt_text": "Marie Claire",
-                "image_ratio_custom_width": 2,
-                "image_ratio_custom_height": 1
-              },
-              "blocks": [
-                {
-                  "type": "heading",
-                  "settings": {
-                    "text": "<p>\"When designing this collection, we wanted to strike a balance between bold silhouettes and timeless proportions. The result is a series of rings that feel effortless, yet striking\"</p>",
-                    "heading_size": "md",
-                    "html_tag": "div",
-                    "width": "fill",
-                    "customize_mobile_size": true,
-                    "width_mobile": "fill",
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 100
-                  }
-                }
-              ]
-            },
-            {
-              "type": "press-item",
-              "settings": {
-                "image_ratio": "custom",
-                "corner_radius": "square",
-                "image_width_desktop": 120,
-                "image_width_mobile": 100,
-                "image": "shopify://shop_images/elara-press-guess-full-opacity.avif",
-                "alt_text": "Guess",
-                "image_ratio_custom_width": 2,
-                "image_ratio_custom_height": 1
-              },
-              "blocks": [
-                {
-                  "type": "heading",
-                  "settings": {
-                    "text": "<p>\"When designing this collection, we wanted to strike a balance between bold silhouettes and timeless proportions. The result is a series of rings that feel effortless, yet striking\"</p>",
-                    "heading_size": "md",
-                    "html_tag": "div",
-                    "width": "fill",
-                    "customize_mobile_size": true,
-                    "width_mobile": "fill",
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 100
+                    "animation_delay": 100,
+                    "animation_type": "slide-bottom"
                   }
                 }
               ]
             }
-          ],
-          "static": true,
-          "id": "quotes"
+          ]
         }
-      ],
-      "category": "Trust & social proof"
+      ]
     }
   ]
 }

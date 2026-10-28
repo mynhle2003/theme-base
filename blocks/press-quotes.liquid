@@ -60,11 +60,8 @@
   class="press-quotes reveal-carousel"
   style="--press-quotes-image-spacing: {{ press_quotes_image_spacing_desktop }}px; --press-quotes-image-spacing-mobile: {{ press_quotes_image_spacing_mobile }}px; --press-quotes-image-gap: {{ press_quotes_image_gap_desktop }}px; --press-quotes-image-gap-mobile: {{ press_quotes_image_gap_mobile }}px;"
   data-carousel-block
-  data-carousel-mode="reveal"
-  data-carousel-loop="{{ press_quotes_loop }}"
-  data-swiper-autoplay="{{ press_quotes_autoplay }}"
-  data-swiper-autoplay-pause-on-hover="{{ press_quotes_pause_on_hover }}"
-  data-swiper-autoplay-delay="{{ press_quotes_delay }}"
+  {% render 'swiper-carousel-attributes', mode: 'reveal' %}
+  {% render 'swiper-carousel-attributes', loop: press_quotes_loop, autoplay: press_quotes_autoplay, pause_on_hover: press_quotes_pause_on_hover, autoplay_delay: press_quotes_delay %}
   {{ block.shopify_attributes }}
 >
   {% if press_quotes_item_count > 0 %}

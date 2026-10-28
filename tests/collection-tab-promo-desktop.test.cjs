@@ -59,10 +59,24 @@ test('legacy mobile-only promo remains in desktop slot and moves on mobile', () 
   f.query.matches = false; f.query.change(); assert.equal(f.item.parent, f.track);
 });
 
-test('Product list ignores desktop flag and retains its existing mobile behavior', () => {
-  const f = fixture({tab: false}); assert.equal(f.item.parent, f.track);
-  assert.equal(f.list.dataset.promoDesktopDetached, undefined);
+test('Product list detaches desktop promo and keeps mobile flag independent', () => {
+  const f = fixture({tab: false, mobile: false});
+  assert.equal(f.item.parent, f.host);
+  assert.equal(f.item.classList.contains('swiper-slide'), false);
+  assert.equal(f.list.dataset.promoDesktopDetached, 'true');
+  f.query.matches = true; f.query.change();
+  assert.equal(f.item.parent, f.track);
+  assert.equal(f.item.classList.contains('swiper-slide'), true);
+  assert.equal(f.list.dataset.promoDesktopDetached, 'false');
+  f.query.matches = false; f.query.change(); assert.equal(f.item.parent, f.host);
+});
+
+test('Product list with desktop flag off retains its configured slide position', () => {
+  const f = fixture({tab: false, desktop: false});
+  assert.equal(f.item.parent, f.track);
+  assert.equal(f.list.dataset.promoDesktopDetached, 'false');
   f.query.matches = true; f.query.change(); assert.equal(f.item.parent, f.host);
+  f.query.matches = false; f.query.change(); assert.equal(f.item.parent, f.track);
 });
 
 test('initialization is idempotent; unload restores original slot and allows reload', () => {

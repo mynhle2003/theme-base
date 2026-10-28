@@ -156,12 +156,12 @@
   data-overlay-media-format="{{ overlay_media_format }}"
   data-overlay-presentation="{{ overlay_media_presentation }}"
   data-overlay-media-width="{{ overlay_media_width }}"
-  data-desktop-layout="{{ overlay_media_desktop_layout }}"
-  data-mobile-layout="{{ overlay_media_mobile_layout }}"
+  {% render 'swiper-carousel-attributes', desktop_layout: overlay_media_desktop_layout %}
+  {% render 'swiper-carousel-attributes', mobile_layout: overlay_media_mobile_layout %}
   data-desktop-ratio="{{ overlay_media_desktop_ratio_setting }}"
   data-mobile-ratio="{{ overlay_media_mobile_ratio_setting }}"
   data-thumbnail-ratio="{{ overlay_media_thumbnail_ratio_setting }}"
-  data-mobile-show-pagination="{{ overlay_media_mobile_show_pagination }}"
+  {% render 'swiper-carousel-attributes', mobile_show_pagination: overlay_media_mobile_show_pagination %}
   data-zoom="{{ overlay_media_zoom }}"
   data-block-animations="{{ overlay_media_motion_enabled }}"
   data-current-variant-id="{{ overlay_current_variant.id | default: '' }}"
@@ -224,7 +224,7 @@
           {% endunless %}
         {% endcapture %}
 
-        {% render 'swiper-carousel',
+        {% render 'swiper-carousel', layout: 'carousel',
           id: overlay_media_main_id,
           content: overlay_media_main_content,
           root_class: 'media-gallery__main product-media-gallery__main',
@@ -281,7 +281,7 @@
             {% endfor %}
           {% endcapture %}
 
-          {% render 'swiper-carousel',
+          {% render 'swiper-carousel', layout: 'carousel',
             id: overlay_media_thumbnail_id,
             content: overlay_media_thumbnail_content,
             root_class: 'media-gallery__thumbnails product-media-gallery__thumbnails',

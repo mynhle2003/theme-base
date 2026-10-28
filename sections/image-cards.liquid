@@ -428,18 +428,18 @@
       "name": "t:general.image_cards",
       "category": "t:general.banners",
       "settings": {
-        "section_width": "full_width_no_padding",
+        "section_width": "full_width",
         "direction": "horizontal",
         "vertical_on_mobile": true,
         "height": "auto",
-        "gap_desktop": 16,
+        "gap_desktop": 28,
         "gap_mobile": 12,
         "color_scheme": "scheme-1",
         "padding_top": 0,
-        "padding_bottom": 16,
+        "padding_bottom": 80,
         "customize_mobile_padding": true,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 12
+        "padding_bottom_mobile": 56
       },
       "blocks": [
         {
@@ -447,58 +447,70 @@
           "settings": {
             "height_desktop": "ratio_5_4",
             "height_mobile": "ratio_5_4",
-            "position_desktop": "bottom_center",
-            "position_mobile": "bottom_center",
-            "color_scheme": "scheme-1",
-            "gap_desktop": 24,
-            "gap_mobile": 16,
+            "position_desktop": "center_center",
+            "position_mobile": "center_center",
+            "color_scheme": "scheme-3",
+            "gap_desktop": 32,
+            "gap_mobile": 20,
             "enable_sticky": false,
-            "padding_top": 56,
-            "padding_bottom": 56,
-            "padding_left": 56,
-            "padding_right": 56,
+            "padding_top": 24,
+            "padding_bottom": 24,
+            "padding_left": 16,
+            "padding_right": 16,
             "customize_mobile_padding": true,
-            "padding_top_mobile": 28,
-            "padding_bottom_mobile": 28,
-            "padding_left_mobile": 24,
-            "padding_right_mobile": 24,
-            "background_type": "image",
+            "padding_top_mobile": 16,
+            "padding_bottom_mobile": 16,
+            "padding_left_mobile": 16,
+            "padding_right_mobile": 16,
+            "image": "shopify://shop_images/novaire-accessories-banner.avif",
+            "mobile_image": "shopify://shop_images/novaire-accessories-banner.avif",
             "show_overlay": false,
-            "corner_radius": "square",
-            "image": "shopify://shop_images/malandra-opal-edits-earrings-desktop-crop.avif",
-            "mobile_image": "shopify://shop_images/malandra-opal-edits-earrings-mobile-crop.avif"
+            "background_type": "image"
           },
           "blocks": [
             {
               "type": "header",
               "settings": {
                 "width": "fill",
-                "alignment": "center",
                 "inherit_alignment": false,
-                "gap_desktop": 10,
-                "gap_mobile": 4
+                "alignment": "center",
+                "gap_desktop": 12,
+                "gap_mobile": 12
               },
               "blocks": [
                 {
                   "type": "eyebrow",
                   "settings": {
-                    "text": "<p>SALE UP TO 20%</p>",
+                    "text": "<p>NEW IN</p>",
                     "show_background": false,
                     "show_icon": false,
-                    "animation_type": "slide-bottom",
-                    "color": "#636363",
+                    "animation_type": "none",
                     "animation_delay": 50
                   }
                 },
                 {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>Arrow Drop Earrings</p>",
-                    "heading_size": "lg",
+                    "text": "<p>NEW ACCESSORIES</p>",
+                    "heading_size": "xl",
                     "html_tag": "h2",
                     "width": "fill",
-                    "animation_type": "rotate-words",
-                    "animation_delay": 50
+                    "animation_type": "none",
+                    "animation_delay": 50,
+                    "custom_heading_size": 24,
+                    "max_width": 640,
+                    "customize_mobile_size": false,
+                    "width_mobile": "fit",
+                    "max_width_mobile": 480,
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "customize_mobile_padding": false,
+                    "padding_top_mobile": 0,
+                    "padding_bottom_mobile": 0,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
                   }
                 }
               ]
@@ -506,11 +518,12 @@
             {
               "type": "button",
               "settings": {
-                "button_label": "Shop sale",
-                "button_style": "tertiary",
+                "button_label": "SHOP NEW IN",
+                "button_style": "primary",
                 "show_icon": false,
-                "animation_type": "slide-bottom",
-                "animation_delay": 150
+                "animation_type": "none",
+                "animation_delay": 150,
+                "button_link": "shopify://collections/new-in-novaire"
               }
             }
           ]
@@ -520,58 +533,67 @@
           "settings": {
             "height_desktop": "ratio_5_4",
             "height_mobile": "ratio_5_4",
-            "position_desktop": "bottom_center",
-            "position_mobile": "bottom_center",
-            "color_scheme": "scheme-1",
-            "gap_desktop": 24,
-            "gap_mobile": 16,
+            "position_desktop": "center_center",
+            "position_mobile": "center_center",
+            "color_scheme": "scheme-3",
+            "gap_desktop": 32,
+            "gap_mobile": 20,
             "enable_sticky": false,
-            "padding_top": 56,
-            "padding_bottom": 56,
-            "padding_left": 56,
-            "padding_right": 56,
+            "padding_top": 24,
+            "padding_bottom": 24,
+            "padding_left": 16,
+            "padding_right": 16,
             "customize_mobile_padding": true,
-            "padding_top_mobile": 28,
-            "padding_bottom_mobile": 28,
-            "padding_left_mobile": 24,
-            "padding_right_mobile": 24,
-            "background_type": "image",
+            "padding_top_mobile": 16,
+            "padding_bottom_mobile": 16,
+            "padding_left_mobile": 16,
+            "padding_right_mobile": 16,
+            "image": "shopify://shop_images/novaire-floral-banner.avif",
+            "mobile_image": "shopify://shop_images/novaire-floral-banner.avif",
             "show_overlay": false,
-            "corner_radius": "square",
-            "image": "shopify://shop_images/malandra-opal-edits-necklace-desktop-crop.avif",
-            "mobile_image": "shopify://shop_images/malandra-opal-edits-necklace-mobile-crop.avif"
+            "background_type": "image"
           },
           "blocks": [
             {
               "type": "header",
               "settings": {
                 "width": "fill",
-                "alignment": "center",
                 "inherit_alignment": false,
-                "gap_desktop": 10,
-                "gap_mobile": 4
+                "alignment": "center",
+                "gap_desktop": 12,
+                "gap_mobile": 12
               },
               "blocks": [
                 {
                   "type": "eyebrow",
                   "settings": {
-                    "text": "<p>NEW COLLECTION 2025</p>",
-                    "show_background": false,
-                    "show_icon": false,
-                    "animation_type": "slide-bottom",
-                    "color": "#636363",
-                    "animation_delay": 50
+                    "text": "<p>SALE OFF</p>",
+                    "animation_type": "none"
                   }
                 },
                 {
                   "type": "heading",
                   "settings": {
-                    "text": "<p>Lighting Ridge Opals</p>",
-                    "heading_size": "lg",
+                    "text": "<p>FLORAL DRESSES</p>",
+                    "heading_size": "xl",
                     "html_tag": "h2",
                     "width": "fill",
-                    "animation_type": "rotate-words",
-                    "animation_delay": 50
+                    "animation_type": "none",
+                    "animation_delay": 50,
+                    "custom_heading_size": 24,
+                    "max_width": 640,
+                    "customize_mobile_size": false,
+                    "width_mobile": "fit",
+                    "max_width_mobile": 480,
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "customize_mobile_padding": false,
+                    "padding_top_mobile": 0,
+                    "padding_bottom_mobile": 0,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
                   }
                 }
               ]
@@ -579,11 +601,12 @@
             {
               "type": "button",
               "settings": {
-                "button_label": "Shop now",
-                "button_style": "tertiary",
+                "button_label": "SHOP OCCATION",
+                "button_style": "primary",
                 "show_icon": false,
-                "animation_type": "slide-bottom",
-                "animation_delay": 150
+                "animation_type": "none",
+                "animation_delay": 150,
+                "button_link": "shopify://collections/cavation-outfit-novaire"
               }
             }
           ]

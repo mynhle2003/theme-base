@@ -10,6 +10,11 @@
 {% enddoc %}
 
 {% liquid
+  assign button_visibility = block.settings.visibility | default: 'all'
+  unless button_visibility == 'all' or button_visibility == 'desktop' or button_visibility == 'mobile'
+    assign button_visibility = 'all'
+  endunless
+
   assign button_label = block.settings.button_label | default: ''
   assign button_style = block.settings.button_style | default: 'primary'
   unless button_style == 'primary' or button_style == 'secondary' or button_style == 'tertiary'
@@ -63,6 +68,7 @@
 
   assign button_class = 'button-block size-style button-block--width-' | append: button_width
   assign button_class = button_class | append: ' button-block--width-mobile-' | append: button_width_mobile
+  assign button_class = button_class | append: ' button-block--visible-' | append: button_visibility
   if button_label == blank
     assign button_class = button_class | append: ' button-block--empty'
   endif
@@ -119,6 +125,18 @@
     padding-right: var(--button-block-padding-right, 0px);
     padding-bottom: var(--button-block-padding-bottom, 0px);
     padding-left: var(--button-block-padding-left, 0px);
+  }
+
+  @media (min-width: 768px) {
+    .button-block.button-block--visible-mobile {
+      display: none;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .button-block.button-block--visible-desktop {
+      display: none;
+    }
   }
 
   .button-block__button {
@@ -471,6 +489,30 @@
       "unit": "px",
       "default": 0,
       "visible_if": "{{ block.settings.customize_mobile_padding }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.block_visibility"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "t:labels.block_visibility",
+      "options": [
+        {
+          "value": "all",
+          "label": "t:options.block_visibility.all"
+        },
+        {
+          "value": "desktop",
+          "label": "t:options.block_visibility.desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "t:options.block_visibility.mobile"
+        }
+      ],
+      "default": "all"
     }
   ],
   "presets": [

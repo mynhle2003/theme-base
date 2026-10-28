@@ -1,3 +1,15 @@
+{% liquid
+  assign pagination_desktop = block.settings.show_pagination_on_desktop
+  assign pagination_mobile = block.settings.show_pagination_on_mobile
+  if pagination_mobile == nil
+    assign pagination_mobile = pagination_desktop
+  endif
+  assign pagination_any = false
+  if pagination_desktop or pagination_mobile
+    assign pagination_any = true
+  endif
+%}
+{% render 'product-list-promo-styles' %}
 {% doc %}
   Renders a responsive product collection using one static Product Card theme
   block for every product. The block owns the collection query, item count,
@@ -103,12 +115,12 @@
   endif
 
   assign product_list_pagination_type = block.settings.pagination_type | default: 'progress_bar'
-  unless product_list_pagination_type == 'progress_bar' or product_list_pagination_type == 'bullets'
+  unless product_list_pagination_type == 'progress_bar' or product_list_pagination_type == 'bullets' or product_list_pagination_type == 'dots'
     assign product_list_pagination_type = 'progress_bar'
   endunless
 
   assign product_list_pagination_size = 'var(--swiper-pagination-progressbar-size, 4px)'
-  if product_list_pagination_type == 'bullets'
+  if product_list_pagination_type == 'bullets' or product_list_pagination_type == 'dots'
     assign product_list_pagination_size = 'var(--swiper-pagination-bullet-size, 0.5rem)'
   endif
 
@@ -135,7 +147,7 @@
   assign product_list_show_pagination = false
   if product_list_layout == 'carousel'
     assign product_list_show_pagination = true
-    if block.settings.show_pagination_on_desktop == false or block.settings.show_pagination_on_desktop == 'false'
+    if pagination_any == false or pagination_any == 'false'
       assign product_list_show_pagination = false
     endif
   endif
@@ -166,6 +178,11 @@
   endunless
 %}
 
+{% capture product_list_promo_cards %}{% content_for 'blocks' %}{% endcapture %}
+{% liquid
+  assign product_list_actual_count = product_list_items.size | at_most: product_list_item_limit
+  assign product_list_last_position = product_list_actual_count | plus: 1
+%}
 {% capture product_list_items_content %}
   {% if product_list_items != blank %}
     {% for product_list_item in product_list_items limit: product_list_item_limit %}
@@ -177,11 +194,13 @@
           assign product_list_card_placeholder = true
         endif
       %}
+      {% render 'product-list-promo-items', cards: product_list_promo_cards, position: forloop.index, last_position: product_list_last_position, layout: product_list_layout %}
       <div class="{% if product_list_layout == 'carousel' %}swiper-slide {% endif %}product-collection-grid__item product-card-layout__item product-list__item">
         {% content_for 'block', type: 'product-card', id: 'product-card', product: product_list_card_product, closest.product: product_list_card_product, placeholder: product_list_card_placeholder %}
       </div>
     {% endfor %}
   {% endif %}
+  {% render 'product-list-promo-items', cards: product_list_promo_cards, position: product_list_last_position, last_position: product_list_last_position, layout: product_list_layout %}
 {% endcapture %}
 
 {% capture product_list_pagination_style %}
@@ -194,7 +213,7 @@
 {% assign product_list_pagination_style = product_list_pagination_style | strip %}
 
 {% capture product_list_navigation_center_style %}
-  {% if product_list_layout == 'carousel' and product_list_show_pagination and product_list_navigation_position != 'top' %}--swiper-navigation-center-offset: calc(({{ product_list_pagination_top_padding_desktop }}px + {{ product_list_pagination_size }}) / 2);{% endif %}
+  {% if product_list_layout == 'carousel' and product_list_show_pagination and product_list_navigation_position != 'top' and pagination_desktop %}--swiper-navigation-center-offset: calc(({{ product_list_pagination_top_padding_desktop }}px + {{ product_list_pagination_size }}) / 2);{% endif %}
 {% endcapture %}
 {% assign product_list_navigation_center_style = product_list_navigation_center_style | strip %}
 
@@ -226,6 +245,9 @@
 {% endcapture %}
 {% assign product_list_navigation_markup = product_list_navigation_markup | strip %}
 
+{% if product_list_promo_cards contains '<!--promo-card-slot:' %}
+  <script data-theme-module="{{ 'product-list-promos.js' | asset_url }}"></script>
+{% endif %}
 {% if product_list_layout == 'carousel' %}
   <script data-theme-module="{{ 'product-collection-carousel.js' | asset_url }}"></script>
 {% endif %}
@@ -233,11 +255,14 @@
 <div
   class="product-list section-list-layout__bridge"
   data-product-list
+  {% assign carousel_extra_option_1 = block.settings.mobile_preview_percent | default: 20 %}{% render 'swiper-carousel-attributes', mobile_preview_percent: carousel_extra_option_1 %}
+  style="--product-list-product-columns: {{ block.settings.columns_desktop | default: 4 }}; --product-list-product-gap: {{ product_list_gap_desktop }}px;{% if block.settings.promo_width_desktop > 0 %} --product-list-promo-width: {{ block.settings.promo_width_desktop | at_most: 60 }}%;{% endif %}{% if block.settings.promo_height_mobile > 0 %} --product-list-promo-height-mobile: {{ block.settings.promo_height_mobile | at_most: 1000 }}px;{% endif %}"
   {% if product_list_recommendations %}data-recommendation-intent="{{ block.settings.recommendation_type | default: 'related' }}" data-recommendation-limit="{{ product_list_max_products | at_most: 10 }}" data-recommendation-placeholder="{{ product_list_is_placeholder }}"{% endif %}
   data-layout="{{ product_list_layout }}"
   data-collection-url="{{ product_list_collection.url | escape }}"
   {{ block.shopify_attributes }}
 >
+  <div class="product-list__mobile-promos" data-product-list-mobile-promos></div>
   {% if product_list_navigation_position == 'top' %}{{ product_list_navigation_markup }}{% endif %}
   <div class="product-list__carousel section-list-layout__main swiper-carousel__container" data-product-list-carousel>
     {% render 'product-collection-grid',
@@ -263,6 +288,8 @@
       aria_label: product_list_aria_label,
       previous_selector: '[data-product-list-previous]',
       next_selector: '[data-product-list-next]',
+      show_pagination_on_desktop: pagination_desktop,
+      show_pagination_on_mobile: pagination_mobile,
       show_pagination: product_list_show_pagination,
       pagination_type: product_list_pagination_type,
       pagination_class: product_list_pagination_class,
@@ -281,6 +308,46 @@
   .product-list {
     width: 100%;
     min-width: 0;
+  }
+
+  @media (min-width: 768px) {
+    .product-list[data-promo-desktop-detached='true'],
+    .section-list-layout > .section-list-layout__body > .product-list[data-promo-desktop-detached='true'] {
+      display: grid;
+      flex: 0 0 100%;
+      order: 4;
+      position: relative;
+      grid-template-columns: var(--product-list-promo-width, calc((100% - var(--product-list-product-gap, 4px) * var(--product-list-product-columns, 4)) / (var(--product-list-product-columns, 4) + 1))) minmax(0, 1fr);
+      gap: var(--product-list-product-gap, 4px);
+      align-items: stretch;
+    }
+
+    .product-list[data-promo-desktop-detached='true'] > .product-list__mobile-promos {
+      min-width: 0;
+      margin-bottom: 0;
+    }
+
+    .product-list[data-promo-desktop-detached='true'] > .product-list__carousel {
+      position: sticky;
+      inset-block-start: var(--header-sticky-height, var(--header-height, 0px));
+      align-self: start;
+    }
+
+    .product-list[data-promo-desktop-detached='true'] > .product-list__mobile-promos .product-list__promo-item {
+      min-height: 300px;
+      height: 100%;
+    }
+
+    .product-list[data-promo-desktop-detached='true'] > .product-list__navigation--top {
+      position: absolute;
+      inset: auto 0 calc(100% + var(--section-list-gap, 32px)) auto;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .product-list > .product-list__mobile-promos .product-list__promo-item {
+      min-height: var(--product-list-promo-height-mobile, 360px);
+    }
   }
 
   .product-list__carousel {
@@ -342,6 +409,9 @@
   "name": "t:general.product_list",
   "tag": null,
   "blocks": [
+    {
+      "type": "promo-card"
+    },
     {
       "type": "product-card"
     }
@@ -598,7 +668,14 @@
     {
       "type": "checkbox",
       "id": "show_pagination_on_desktop",
-      "label": "t:labels.show_pagination",
+      "label": "t:labels.show_pagination_on_desktop",
+      "default": true,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_mobile",
+      "label": "t:labels.show_pagination_on_mobile",
       "default": true,
       "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
     },
@@ -614,10 +691,14 @@
         {
           "value": "bullets",
           "label": "t:options.collection_pagination.bullets"
+        },
+        {
+          "value": "dots",
+          "label": "t:options.collection_pagination.dots"
         }
       ],
       "default": "progress_bar",
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop or block.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "range",
@@ -639,14 +720,14 @@
       "step": 1,
       "unit": "px",
       "default": 24,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop }}"
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "checkbox",
       "id": "pagination_limit_width",
       "label": "t:labels.limit_width",
       "default": true,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop and block.settings.pagination_type == 'progress_bar' }}"
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.pagination_type == 'progress_bar' and block.settings.show_pagination_on_desktop or block.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "range",
@@ -657,7 +738,7 @@
       "step": 10,
       "unit": "px",
       "default": 260,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop and block.settings.pagination_type == 'progress_bar' and block.settings.pagination_limit_width }}"
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.pagination_type == 'progress_bar' and block.settings.pagination_limit_width and block.settings.show_pagination_on_desktop or block.settings.show_pagination_on_mobile }}"
     },
     {
       "type": "header",
@@ -688,6 +769,36 @@
       "unit": "s",
       "default": 4,
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.autoplay }}"
+    },
+    {
+      "type": "header",
+      "content": "Detached promotion card"
+    },
+    {
+      "type": "number",
+      "id": "promo_width_desktop",
+      "label": "Desktop promo width (%)",
+      "info": "0 uses the automatic column width. Applies when the promo is outside the carousel.",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "promo_height_mobile",
+      "label": "Mobile promo minimum height (px)",
+      "info": "0 uses the default height. Applies when the promo is above the carousel.",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_preview_percent",
+      "label": "Next slide preview on mobile",
+      "default": 20,
+      "visible_if": "{{ block.settings.show_next_slide_preview_on_mobile and block.settings.columns_mobile == '1' }}",
+      "min": 10,
+      "max": 80,
+      "step": 1,
+      "unit": "%",
+      "info": "Percentage of the next card to reveal with a one-column mobile carousel."
     }
   ],
   "presets": [
@@ -710,6 +821,7 @@
         "navigation_icon": "chevron",
         "navigation_behavior": "show_on_hover",
         "show_pagination_on_desktop": true,
+        "show_pagination_on_mobile": true,
         "pagination_type": "progress_bar",
         "pagination_top_padding_desktop": 50,
         "pagination_top_padding_mobile": 24,

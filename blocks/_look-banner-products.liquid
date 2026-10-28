@@ -1,0 +1,353 @@
+{% doc %}
+  Renders an editable Shop the look product list through the shared kernel.
+  @example
+  {% content_for 'block', type: '_look-banner-products', id: 'product-list' %}
+{% enddoc %}
+{% capture product_slides %}{% content_for 'blocks' %}{% endcapture %}
+{% render 'shop-the-look-products-render', block: block, content: product_slides %}
+
+{% schema %}
+{
+  "name": "t:general.product_list",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "_look-banner-product"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:general.layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_type",
+      "label": "t:labels.type",
+      "options": [
+        {
+          "value": "grid",
+          "label": "t:options.product_list_layout.grid"
+        },
+        {
+          "value": "carousel",
+          "label": "t:options.product_list_layout.carousel"
+        }
+      ],
+      "default": "carousel"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "t:labels.desktop_columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "t:labels.mobile_columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_next_slide_preview_on_desktop",
+      "label": "t:labels.show_next_slide_preview_on_desktop",
+      "default": false,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_next_slide_preview_on_mobile",
+      "label": "t:labels.show_next_slide_preview_on_mobile",
+      "default": false,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.products_gap"
+    },
+    {
+      "type": "range",
+      "id": "product_gap_desktop",
+      "label": "t:options.device.desktop",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "product_gap_mobile",
+      "label": "t:options.device.mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "t:general.navigation",
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation_on_desktop",
+      "label": "t:labels.show_navigation_on_desktop",
+      "default": true,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "select",
+      "id": "navigation_position",
+      "label": "t:labels.position",
+      "options": [
+        {
+          "value": "outside",
+          "label": "t:options.collection_navigation_position.outside"
+        },
+        {
+          "value": "inside",
+          "label": "t:options.collection_navigation_position.inside"
+        }
+      ],
+      "default": "outside",
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop }}"
+    },
+    {
+      "type": "select",
+      "id": "navigation_style",
+      "label": "t:labels.style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:options.button_variant.primary"
+        },
+        {
+          "value": "secondary",
+          "label": "t:options.button_variant.secondary"
+        },
+        {
+          "value": "outline",
+          "label": "t:options.button_variant.outline"
+        },
+        {
+          "value": "icon_only",
+          "label": "t:options.button_variant.icon_only"
+        }
+      ],
+      "default": "icon_only",
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop }}"
+    },
+    {
+      "type": "select",
+      "id": "navigation_icon",
+      "label": "t:labels.icon",
+      "options": [
+        {
+          "value": "chevron",
+          "label": "t:options.collection_navigation_icon.chevron"
+        },
+        {
+          "value": "arrow",
+          "label": "t:options.collection_navigation_icon.arrow"
+        },
+        {
+          "value": "long_arrow",
+          "label": "t:options.collection_navigation_icon.long_arrow"
+        }
+      ],
+      "default": "chevron",
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop }}"
+    },
+    {
+      "type": "select",
+      "id": "navigation_behavior",
+      "label": "t:labels.behavior",
+      "options": [
+        {
+          "value": "show_on_hover",
+          "label": "t:options.collection_navigation_behavior.show_on_hover"
+        },
+        {
+          "value": "always",
+          "label": "t:options.collection_navigation_behavior.always"
+        }
+      ],
+      "default": "always",
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_navigation_on_desktop }}"
+    },
+    {
+      "type": "header",
+      "content": "t:general.pagination",
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_desktop",
+      "label": "t:labels.show_pagination_on_desktop",
+      "default": true,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination_on_mobile",
+      "label": "t:labels.show_pagination_on_mobile",
+      "default": true,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "select",
+      "id": "pagination_type",
+      "label": "t:labels.type",
+      "options": [
+        {
+          "value": "progress_bar",
+          "label": "t:options.collection_pagination.progress_bar"
+        },
+        {
+          "value": "bullets",
+          "label": "t:options.collection_pagination.bullets"
+        },
+        {
+          "value": "dots",
+          "label": "t:options.collection_pagination.dots"
+        }
+      ],
+      "default": "progress_bar",
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop or block.settings.show_pagination_on_mobile }}"
+    },
+    {
+      "type": "range",
+      "id": "pagination_top_padding_desktop",
+      "label": "t:labels.pagination_desktop_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_desktop }}"
+    },
+    {
+      "type": "range",
+      "id": "pagination_top_padding_mobile",
+      "label": "t:labels.pagination_mobile_top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.show_pagination_on_mobile }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "pagination_limit_width",
+      "label": "t:labels.limit_width",
+      "default": true,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.pagination_type == 'progress_bar' and block.settings.show_pagination_on_desktop or block.settings.show_pagination_on_mobile }}"
+    },
+    {
+      "type": "range",
+      "id": "pagination_max_width",
+      "label": "t:labels.max_width",
+      "min": 100,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 260,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.pagination_type == 'progress_bar' and block.settings.pagination_limit_width and block.settings.show_pagination_on_desktop or block.settings.show_pagination_on_mobile }}"
+    },
+    {
+      "type": "header",
+      "content": "t:labels.autoplay",
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "t:labels.auto_rotate_slides",
+      "default": false,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay_pause_on_hover",
+      "label": "t:labels.pause_on_hover",
+      "default": true,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.autoplay }}"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "t:labels.speed",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 4,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.autoplay }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:general.product_list",
+      "category": "t:general.product",
+      "settings": {
+        "layout_type": "carousel",
+        "navigation_icon": "chevron",
+        "columns_desktop": "1",
+        "columns_mobile": "1",
+        "show_next_slide_preview_on_desktop": false,
+        "show_next_slide_preview_on_mobile": true,
+        "product_gap_desktop": 4,
+        "product_gap_mobile": 4,
+        "show_navigation_on_desktop": true,
+        "navigation_position": "outside",
+        "navigation_style": "primary",
+        "navigation_behavior": "show_on_hover",
+        "show_pagination_on_desktop": true,
+        "show_pagination_on_mobile": true,
+        "pagination_type": "progress_bar",
+        "pagination_top_padding_desktop": 50,
+        "pagination_top_padding_mobile": 24,
+        "pagination_limit_width": true,
+        "pagination_max_width": 260,
+        "autoplay": false,
+        "autoplay_pause_on_hover": true,
+        "autoplay_speed": 4
+      },
+      "blocks": [
+        {
+          "type": "_look-banner-product",
+          "settings": {}
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

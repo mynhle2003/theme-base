@@ -163,6 +163,7 @@
 
 .swiper > :is(
   .swiper-pagination[data-pagination-type='bullets'],
+  .swiper-pagination[data-pagination-type='dots'],
   .swiper-pagination.swiper-pagination-bullets
 ) {
   display: flex;
@@ -176,6 +177,7 @@
 
 .swiper > :is(
   .swiper-pagination[data-pagination-type='bullets'],
+  .swiper-pagination[data-pagination-type='dots'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet {
   position: relative;
@@ -205,10 +207,12 @@
 
 .swiper > :is(
   .swiper-pagination[data-pagination-type='bullets'],
+  .swiper-pagination[data-pagination-type='dots'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet::before,
 .swiper > :is(
   .swiper-pagination[data-pagination-type='bullets'],
+  .swiper-pagination[data-pagination-type='dots'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet::after {
   position: absolute;
@@ -229,6 +233,7 @@
 
 .swiper > :is(
   .swiper-pagination[data-pagination-type='bullets'],
+  .swiper-pagination[data-pagination-type='dots'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet::before {
   background: var(--swiper-pagination-bullet-inactive-color, color-mix(in srgb, var(--body-color) 30%, transparent));
@@ -236,6 +241,7 @@
 
 .swiper > :is(
   .swiper-pagination[data-pagination-type='bullets'],
+  .swiper-pagination[data-pagination-type='dots'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet::after {
   background: var(--swiper-pagination-color, var(--body-color));
@@ -247,6 +253,7 @@
 
 .swiper > :is(
   .swiper-pagination[data-pagination-type='bullets'],
+  .swiper-pagination[data-pagination-type='dots'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet-active {
   opacity: var(--swiper-pagination-bullet-opacity, 1);
@@ -256,10 +263,12 @@
 
 .swiper > :is(
   .swiper-pagination[data-pagination-type='bullets'],
+  .swiper-pagination[data-pagination-type='dots'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet-active::before,
 .swiper > :is(
   .swiper-pagination[data-pagination-type='bullets'],
+  .swiper-pagination[data-pagination-type='dots'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet-active::after {
   width: var(--swiper-pagination-bullet-active-width, var(--swiper-pagination-bullet-width, 32px));
@@ -268,6 +277,7 @@
 
 .swiper > :is(
   .swiper-pagination[data-pagination-type='bullets'],
+  .swiper-pagination[data-pagination-type='dots'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet-active::before {
   background: color-mix(in srgb, var(--swiper-pagination-color, var(--body-color)) 24%, transparent);
@@ -275,6 +285,7 @@
 
 .swiper > :is(
   .swiper-pagination[data-pagination-type='bullets'],
+  .swiper-pagination[data-pagination-type='dots'],
   .swiper-pagination.swiper-pagination-bullets
 ) .swiper-pagination-bullet-active::after {
   opacity: 1;
@@ -285,10 +296,12 @@
 @media (prefers-reduced-motion: reduce) {
   .swiper > :is(
     .swiper-pagination[data-pagination-type='bullets'],
+    .swiper-pagination[data-pagination-type='dots'],
     .swiper-pagination.swiper-pagination-bullets
   ) .swiper-pagination-bullet::before,
   .swiper > :is(
     .swiper-pagination[data-pagination-type='bullets'],
+    .swiper-pagination[data-pagination-type='dots'],
     .swiper-pagination.swiper-pagination-bullets
   ) .swiper-pagination-bullet::after {
     transition: none;
@@ -296,6 +309,7 @@
 
   .swiper[data-swiper-autoplay='true'] > :is(
     .swiper-pagination[data-pagination-type='bullets'],
+    .swiper-pagination[data-pagination-type='dots'],
     .swiper-pagination.swiper-pagination-bullets
   ) .swiper-pagination-bullet-active::after {
     animation: none;
@@ -382,3 +396,26 @@
 .swiper .swiper-pagination-progressbar[data-autoplay-clock] .rounded-progress-fill--vertical {
   clip-path: inset(0 0 var(--carousel-autoplay-remaining, 100%) 0 round var(--rounded-progress-radius, 0px));
 }
+
+/* Dots share bullet navigation, hit targets and lifecycle across every carousel. */
+.swiper-pagination[data-pagination-type='dots'] {
+  --swiper-pagination-bullet-width: 8px;
+  --swiper-pagination-bullet-height: 8px;
+  --swiper-pagination-bullet-active-width: 8px;
+  --swiper-pagination-bullet-active-height: 8px;
+  --swiper-pagination-bullet-hit-width: 24px;
+  --swiper-pagination-bullet-active-hit-width: 24px;
+  --swiper-pagination-bullet-hit-size: 24px;
+  --swiper-pagination-bullet-size: 8px;
+  --swiper-pagination-bullet-border-radius: 50%;
+  --swiper-pagination-bullet-gap: 0px;
+}
+
+/* Novaire Featured collection pagination: scheme-owned colors. */
+.section-featured-collection .swiper > .swiper-pagination--below[data-pagination-type='progress_bar'] {
+  --swiper-pagination-color: var(--heading-color);
+  --swiper-pagination-progressbar-bg-color: var(--border-color);
+  height: var(--swiper-pagination-progressbar-size, 2px);
+  border-radius: 10px;
+}
+.section-featured-collection .swiper-pagination-progressbar-fill { border-radius: 1px; }
