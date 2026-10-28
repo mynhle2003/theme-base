@@ -11,44 +11,20 @@
   "sections": {
     "hero": {
       "type": "hero",
-      "settings": {
-        "width": "full",
-        "layout": "classic",
-        "media_type": "image",
-        "banner_image": "shopify://shop_images/novaire-hero-desktop.avif",
-        "mobile_banner_image": "shopify://shop_images/novaire-hero-mobile.avif",
-        "overlay": "#00000000",
-        "parallax_effect": "none",
-        "desktop_height": "medium",
-        "mobile_height": "medium",
-        "desktop_position": "center_center",
-        "mobile_position": "center_center",
-        "content_width": "custom",
-        "content_max_width": 960,
-        "desktop_gap": 0,
-        "mobile_gap": 0,
-        "content_color_scheme": "scheme-3",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "customize_mobile_padding": true,
-        "enable_sticky": true,
-        "padding_top_mobile": 80,
-        "padding_bottom_mobile": 80
-      },
       "blocks": {
         "hero-content": {
           "type": "group",
           "settings": {
-            "backdrop_blur": 0,
             "direction": "vertical",
-            "alignment": "center",
             "customize_mobile_alignment": true,
+            "alignment": "center",
             "alignment_mobile": "center",
-            "width": "fill",
-            "width_mobile": "fill",
-            "height": "fit",
             "gap_desktop": 40,
             "gap_mobile": 32,
+            "width": "fill",
+            "height": "fit",
+            "width_mobile": "fill",
+            "backdrop_blur": 0,
             "padding_top": 0,
             "padding_bottom": 0,
             "padding_left": 0,
@@ -65,12 +41,12 @@
               "settings": {
                 "width": "fill",
                 "max_width": 840,
+                "customize_mobile_size": true,
+                "width_mobile": "fill",
                 "inherit_alignment": false,
                 "alignment": "center",
                 "customize_mobile_alignment": true,
                 "alignment_mobile": "center",
-                "customize_mobile_size": true,
-                "width_mobile": "fill",
                 "gap_desktop": 16,
                 "gap_mobile": 16
               },
@@ -80,15 +56,15 @@
                   "settings": {
                     "text": "<p>SUMMER &amp; BEYOND</p>",
                     "heading_size": "display",
+                    "custom_heading_size": 24,
                     "html_tag": "h1",
                     "width": "fill",
-                    "animation_type": "rotate-words",
-                    "animation_delay": 100,
-                    "custom_heading_size": 24,
                     "max_width": 640,
                     "customize_mobile_size": false,
                     "width_mobile": "fit",
                     "max_width_mobile": 480,
+                    "animation_type": "rotate-words",
+                    "animation_delay": 100,
                     "padding_top": 0,
                     "padding_bottom": 0,
                     "padding_left": 0,
@@ -118,11 +94,11 @@
               "type": "button",
               "settings": {
                 "button_label": "SHOP NOW",
+                "button_link": "shopify://collections/new-in-novaire",
                 "button_style": "primary",
                 "show_icon": false,
                 "animation_type": "slide-bottom",
-                "animation_delay": 150,
-                "button_link": "shopify://collections/new-in-novaire"
+                "animation_delay": 150
               }
             }
           },
@@ -134,52 +110,60 @@
       },
       "block_order": [
         "hero-content"
-      ]
+      ],
+      "settings": {
+        "width": "full",
+        "layout": "classic",
+        "media_type": "image",
+        "banner_image": "shopify://shop_images/novaire-hero-desktop.avif",
+        "mobile_banner_image": "shopify://shop_images/novaire-hero-mobile.avif",
+        "overlay": "#00000000",
+        "parallax_effect": "none",
+        "desktop_height": "medium",
+        "mobile_height": "medium",
+        "content_width": "custom",
+        "content_max_width": 960,
+        "enable_sticky": true,
+        "desktop_position": "center_center",
+        "mobile_position": "center_center",
+        "desktop_gap": 0,
+        "mobile_gap": 0,
+        "content_color_scheme": "scheme-3",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 80,
+        "padding_bottom_mobile": 80
+      }
     },
     "values_marquee": {
       "type": "custom-section",
-      "name": "Text marquee (custom)",
-      "settings": {
-        "section_width": "full_width_no_padding",
-        "alignment": "left",
-        "content_gap": 0,
-        "customize_mobile_gap": true,
-        "content_gap_mobile": 0,
-        "color_scheme": "scheme-marquee",
-        "background_color": "#FFFFFF",
-        "padding_top": 0,
-        "padding_bottom": 80,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 48,
-        "background": "none"
-      },
       "blocks": {
         "marquee-1": {
           "type": "marquee",
           "settings": {
-            "animation_direction": "backward",
-            "animation_speed": 0.6,
-            "gap_desktop": 60,
-            "gap_mobile": 60,
-            "padding_top": 0,
-            "padding_bottom": 0,
             "show_top_divider": false,
             "show_bottom_divider": false,
             "show_blurred_edges": false,
             "enable_parallax": false,
             "alignment": "center",
+            "animation_speed": 0.6,
+            "animation_direction": "backward",
+            "gap_desktop": 60,
+            "gap_mobile": 60,
             "width": "fill",
-            "color_type": "inherit"
+            "color_type": "inherit",
+            "padding_top": 0,
+            "padding_bottom": 0
           },
           "blocks": {
             "marquee-1-1": {
               "type": "_marquee-heading",
               "settings": {
                 "text": "SHOP NEW ARRIVALS",
+                "font": "heading",
                 "heading_size": "custom",
                 "custom_heading_size": 68,
-                "font": "heading",
                 "color_role": "heading",
                 "opacity": 100
               }
@@ -198,9 +182,9 @@
               "type": "_marquee-heading",
               "settings": {
                 "text": "NEW SEASON EDIT",
+                "font": "heading",
                 "heading_size": "custom",
                 "custom_heading_size": 68,
-                "font": "heading",
                 "color_role": "heading",
                 "opacity": 100
               }
@@ -208,20 +192,20 @@
             "marquee-1-4": {
               "type": "_marquee-image",
               "settings": {
+                "image": "shopify://shop_images/novaire-marquee-yellow-figma.avif",
                 "image_ratio": "ratio_4_3",
                 "width_custom_desktop": 100,
                 "width_custom_mobile": 100,
-                "corner_radius": "rounded",
-                "image": "shopify://shop_images/novaire-marquee-yellow-figma.avif"
+                "corner_radius": "rounded"
               }
             },
             "marquee-1-5": {
               "type": "_marquee-heading",
               "settings": {
                 "text": "NEWEST DESIGNS",
+                "font": "heading",
                 "heading_size": "custom",
                 "custom_heading_size": 68,
-                "font": "heading",
                 "color_role": "heading",
                 "opacity": 100
               }
@@ -238,59 +222,38 @@
       },
       "block_order": [
         "marquee-1"
-      ]
+      ],
+      "name": "Text marquee (custom)",
+      "settings": {
+        "section_width": "full_width_no_padding",
+        "alignment": "left",
+        "content_gap": 0,
+        "customize_mobile_gap": true,
+        "content_gap_mobile": 0,
+        "background": "none",
+        "color_scheme": "scheme-marquee",
+        "background_color": "#FFFFFF",
+        "padding_top": 0,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48
+      }
     },
     "collection_tabs": {
       "type": "collection-tabs",
-      "settings": {
-        "section_width": "page_width",
-        "layout_direction": "vertical",
-        "tab_position": "center",
-        "mobile_alignment": "left",
-        "gap_desktop": 40,
-        "gap_mobile": 36,
-        "max_products": 5,
-        "layout_type": "carousel",
-        "columns_desktop": "4",
-        "columns_mobile": "1",
-        "show_next_slide_preview_on_desktop": false,
-        "show_next_slide_preview_on_mobile": true,
-        "product_gap_desktop": 28,
-        "product_gap_mobile": 12,
-        "show_navigation_on_desktop": true,
-        "navigation_position": "inside",
-        "navigation_style": "secondary",
-        "navigation_icon": "chevron",
-        "navigation_behavior": "show_on_hover",
-        "show_pagination_on_desktop": false,
-        "show_pagination_on_mobile": false,
-        "pagination_type": "progress_bar",
-        "pagination_top_padding_desktop": 48,
-        "pagination_top_padding_mobile": 36,
-        "pagination_limit_width": false,
-        "pagination_max_width": 260,
-        "autoplay": false,
-        "autoplay_pause_on_hover": true,
-        "autoplay_speed": 4,
-        "color_scheme": "scheme-collection-tabs",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
-      },
       "blocks": {
         "header": {
           "type": "header",
           "static": true,
           "settings": {
             "width": "fill",
-            "gap_desktop": 12,
-            "gap_mobile": 8,
             "inherit_alignment": false,
             "alignment": "center",
             "customize_mobile_alignment": true,
-            "alignment_mobile": "center"
+            "alignment_mobile": "center",
+            "gap_desktop": 12,
+            "gap_mobile": 8
           },
           "blocks": {
             "eyebrow-1": {
@@ -388,10 +351,10 @@
             "icon_size": "inherit",
             "icon_width": 20,
             "width": "fit",
-            "width_mobile": "fill",
-            "customize_mobile_padding": true,
             "hide_view_all_mobile": false,
+            "width_mobile": "fill",
             "padding_top": 0,
+            "customize_mobile_padding": true,
             "padding_top_mobile": 0
           }
         }
@@ -400,13 +363,51 @@
         "collection-tab-3",
         "collection-tab-4",
         "collection-tab-5"
-      ]
+      ],
+      "settings": {
+        "section_width": "page_width",
+        "layout_direction": "vertical",
+        "tab_position": "center",
+        "mobile_alignment": "left",
+        "gap_desktop": 40,
+        "gap_mobile": 36,
+        "max_products": 5,
+        "layout_type": "carousel",
+        "columns_desktop": "4",
+        "columns_mobile": "1",
+        "show_next_slide_preview_on_desktop": false,
+        "show_next_slide_preview_on_mobile": true,
+        "product_gap_desktop": 28,
+        "product_gap_mobile": 12,
+        "show_navigation_on_desktop": true,
+        "navigation_position": "inside",
+        "navigation_style": "secondary",
+        "navigation_icon": "chevron",
+        "navigation_behavior": "show_on_hover",
+        "show_pagination_on_desktop": false,
+        "show_pagination_on_mobile": false,
+        "pagination_type": "progress_bar",
+        "pagination_top_padding_desktop": 48,
+        "pagination_top_padding_mobile": 36,
+        "pagination_limit_width": false,
+        "pagination_max_width": 260,
+        "autoplay": false,
+        "autoplay_pause_on_hover": true,
+        "autoplay_speed": 4,
+        "color_scheme": "scheme-collection-tabs",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      }
     },
     "categories": {
       "type": "collection-list",
       "blocks": {
         "header": {
           "type": "header",
+          "disabled": true,
           "static": true,
           "settings": {
             "width": "custom",
@@ -426,15 +427,15 @@
               "settings": {
                 "text": "<p>Shop By Category</p>",
                 "heading_size": "xl",
+                "custom_heading_size": 24,
                 "html_tag": "h2",
                 "width": "fill",
-                "animation_type": "slide-bottom",
-                "animation_delay": 100,
-                "custom_heading_size": 24,
                 "max_width": 640,
                 "customize_mobile_size": false,
                 "width_mobile": "fit",
                 "max_width_mobile": 480,
+                "animation_type": "slide-bottom",
+                "animation_delay": 100,
                 "padding_top": 0,
                 "padding_bottom": 0,
                 "padding_left": 0,
@@ -449,8 +450,7 @@
           },
           "block_order": [
             "heading-1"
-          ],
-          "disabled": true
+          ]
         },
         "collection-list": {
           "type": "collection-list-items",
@@ -487,6 +487,7 @@
                 "ratio_custom_width": 6,
                 "ratio_custom_height": 7,
                 "placement": "on_image",
+                "position": "center",
                 "alignment": "center",
                 "gap_desktop": 24,
                 "gap_mobile": 24,
@@ -503,8 +504,7 @@
                 "padding_top_mobile": 24,
                 "padding_bottom_mobile": 24,
                 "padding_left_mobile": 16,
-                "padding_right_mobile": 16,
-                "position": "center"
+                "padding_right_mobile": 16
               },
               "blocks": {
                 "title": {
@@ -597,15 +597,15 @@
               "settings": {
                 "text": "<p>SHOP THE LOOK</p>",
                 "heading_size": "xl",
+                "custom_heading_size": 30,
                 "html_tag": "h2",
                 "width": "fill",
-                "animation_type": "slide-bottom",
-                "animation_delay": 100,
-                "custom_heading_size": 30,
                 "max_width": 640,
                 "customize_mobile_size": false,
                 "width_mobile": "fit",
                 "max_width_mobile": 480,
+                "animation_type": "slide-bottom",
+                "animation_delay": 100,
                 "padding_top": 0,
                 "padding_bottom": 0,
                 "padding_left": 0,
@@ -655,9 +655,9 @@
               "type": "_look-banner-product",
               "settings": {
                 "product": "novaire-steele-puff-sleeve-midi-dress",
-                "show_product_button": true,
                 "details_alignment": "center",
                 "details_alignment_mobile": "center",
+                "show_product_button": true,
                 "width": "fit",
                 "width_mobile": "fit"
               }
@@ -666,9 +666,9 @@
               "type": "_look-banner-product",
               "settings": {
                 "product": "novaire-steele-puff-sleeve-midi-dress-blue",
-                "show_product_button": true,
                 "details_alignment": "center",
                 "details_alignment_mobile": "center",
+                "show_product_button": true,
                 "width": "fit",
                 "width_mobile": "fit"
               }
@@ -691,12 +691,12 @@
                 "mobile_image": "shopify://shop_images/novaire-look-steele-lifestyle.avif",
                 "alt_text": "Steele floral puff sleeve midi dress styled for summer",
                 "image_ratio_desktop": "custom",
-                "image_ratio_mobile": "custom",
-                "corner_radius": "square",
                 "image_ratio_custom_width_desktop": 6,
                 "image_ratio_custom_height_desktop": 7,
+                "image_ratio_mobile": "custom",
                 "image_ratio_custom_width_mobile": 6,
-                "image_ratio_custom_height_mobile": 7
+                "image_ratio_custom_height_mobile": 7,
+                "corner_radius": "square"
               }
             },
             "look-image-2": {
@@ -706,12 +706,12 @@
                 "mobile_image": "shopify://shop_images/novaire-steele-blue-lifestyle.avif",
                 "alt_text": "Woman wearing the Steele blue and white striped puff sleeve midi dress outdoors",
                 "image_ratio_desktop": "custom",
-                "image_ratio_mobile": "custom",
-                "corner_radius": "square",
                 "image_ratio_custom_width_desktop": 6,
                 "image_ratio_custom_height_desktop": 7,
+                "image_ratio_mobile": "custom",
                 "image_ratio_custom_width_mobile": 6,
-                "image_ratio_custom_height_mobile": 7
+                "image_ratio_custom_height_mobile": 7,
+                "corner_radius": "square"
               }
             }
           },
@@ -721,10 +721,13 @@
           ]
         }
       },
+      "name": "Shop the look: banners",
       "settings": {
         "section_width": "page_width",
         "media_position": "left",
         "mobile_media_position": "first",
+        "product_width_desktop": 384,
+        "product_width_mobile": 256,
         "gap_desktop": 40,
         "gap_mobile": 40,
         "color_scheme": "scheme-1",
@@ -732,40 +735,27 @@
         "padding_bottom": 96,
         "customize_mobile_padding": true,
         "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56,
-        "product_width_desktop": 384,
-        "product_width_mobile": 256
-      },
-      "name": "Shop the look: banners"
+        "padding_bottom_mobile": 56
+      }
     },
     "new_collections": {
       "type": "image-cards",
-      "settings": {
-        "section_width": "full_width",
-        "direction": "horizontal",
-        "vertical_on_mobile": true,
-        "height": "auto",
-        "gap_desktop": 28,
-        "gap_mobile": 12,
-        "color_scheme": "scheme-1",
-        "padding_top": 0,
-        "padding_bottom": 80,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 56
-      },
       "blocks": {
         "image-card-1": {
           "type": "image-card",
           "settings": {
+            "background_type": "image",
+            "image": "shopify://shop_images/novaire-accessories-banner.avif",
+            "mobile_image": "shopify://shop_images/novaire-accessories-banner.avif",
+            "show_overlay": false,
             "height_desktop": "ratio_5_4",
             "height_mobile": "ratio_5_4",
+            "enable_sticky": false,
             "position_desktop": "center_center",
             "position_mobile": "center_center",
-            "color_scheme": "scheme-3",
             "gap_desktop": 32,
             "gap_mobile": 20,
-            "enable_sticky": false,
+            "color_scheme": "scheme-3",
             "padding_top": 24,
             "padding_bottom": 24,
             "padding_left": 16,
@@ -774,11 +764,7 @@
             "padding_top_mobile": 16,
             "padding_bottom_mobile": 16,
             "padding_left_mobile": 16,
-            "padding_right_mobile": 16,
-            "image": "shopify://shop_images/novaire-accessories-banner.avif",
-            "mobile_image": "shopify://shop_images/novaire-accessories-banner.avif",
-            "show_overlay": false,
-            "background_type": "image"
+            "padding_right_mobile": 16
           },
           "blocks": {
             "header-1": {
@@ -806,15 +792,15 @@
                   "settings": {
                     "text": "<p>NEW ACCESSORIES</p>",
                     "heading_size": "xl",
+                    "custom_heading_size": 24,
                     "html_tag": "h2",
                     "width": "fill",
-                    "animation_type": "none",
-                    "animation_delay": 50,
-                    "custom_heading_size": 24,
                     "max_width": 640,
                     "customize_mobile_size": false,
                     "width_mobile": "fit",
                     "max_width_mobile": 480,
+                    "animation_type": "none",
+                    "animation_delay": 50,
                     "padding_top": 0,
                     "padding_bottom": 0,
                     "padding_left": 0,
@@ -836,11 +822,11 @@
               "type": "button",
               "settings": {
                 "button_label": "SHOP NEW IN",
+                "button_link": "shopify://collections/new-in-novaire",
                 "button_style": "primary",
                 "show_icon": false,
                 "animation_type": "none",
-                "animation_delay": 150,
-                "button_link": "shopify://collections/new-in-novaire"
+                "animation_delay": 150
               }
             }
           },
@@ -852,14 +838,18 @@
         "image-card-2": {
           "type": "image-card",
           "settings": {
+            "background_type": "image",
+            "image": "shopify://shop_images/novaire-floral-banner.avif",
+            "mobile_image": "shopify://shop_images/novaire-floral-banner.avif",
+            "show_overlay": false,
             "height_desktop": "ratio_5_4",
             "height_mobile": "ratio_5_4",
+            "enable_sticky": false,
             "position_desktop": "center_center",
             "position_mobile": "center_center",
-            "color_scheme": "scheme-3",
             "gap_desktop": 32,
             "gap_mobile": 20,
-            "enable_sticky": false,
+            "color_scheme": "scheme-3",
             "padding_top": 24,
             "padding_bottom": 24,
             "padding_left": 16,
@@ -868,11 +858,7 @@
             "padding_top_mobile": 16,
             "padding_bottom_mobile": 16,
             "padding_left_mobile": 16,
-            "padding_right_mobile": 16,
-            "image": "shopify://shop_images/novaire-floral-banner.avif",
-            "mobile_image": "shopify://shop_images/novaire-floral-banner.avif",
-            "show_overlay": false,
-            "background_type": "image"
+            "padding_right_mobile": 16
           },
           "blocks": {
             "header-2": {
@@ -897,15 +883,15 @@
                   "settings": {
                     "text": "<p>FLORAL DRESSES</p>",
                     "heading_size": "xl",
+                    "custom_heading_size": 24,
                     "html_tag": "h2",
                     "width": "fill",
-                    "animation_type": "none",
-                    "animation_delay": 50,
-                    "custom_heading_size": 24,
                     "max_width": 640,
                     "customize_mobile_size": false,
                     "width_mobile": "fit",
                     "max_width_mobile": 480,
+                    "animation_type": "none",
+                    "animation_delay": 50,
                     "padding_top": 0,
                     "padding_bottom": 0,
                     "padding_left": 0,
@@ -927,11 +913,11 @@
               "type": "button",
               "settings": {
                 "button_label": "SHOP OCCATION",
+                "button_link": "shopify://collections/cavation-outfit-novaire",
                 "button_style": "primary",
                 "show_icon": false,
                 "animation_type": "none",
-                "animation_delay": 150,
-                "button_link": "shopify://collections/cavation-outfit-novaire"
+                "animation_delay": 150
               }
             }
           },
@@ -944,10 +930,177 @@
       "block_order": [
         "image-card-1",
         "image-card-2"
-      ]
+      ],
+      "settings": {
+        "section_width": "full_width",
+        "height": "auto",
+        "direction": "horizontal",
+        "vertical_on_mobile": true,
+        "gap_desktop": 28,
+        "gap_mobile": 12,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56
+      }
     },
     "spring_sale": {
       "type": "countdown",
+      "blocks": {
+        "layout": {
+          "type": "group",
+          "settings": {
+            "direction": "horizontal",
+            "position_horizontal": "center",
+            "horizontal_alignment": "space-between",
+            "customize_mobile_alignment": true,
+            "alignment_mobile": "center",
+            "gap_desktop": 40,
+            "gap_mobile": 20,
+            "width": "fill",
+            "height": "fit",
+            "width_mobile": "fill",
+            "backdrop_blur": 0,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 21,
+            "padding_right": 21,
+            "customize_mobile_padding": true,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0,
+            "padding_left_mobile": 0,
+            "padding_right_mobile": 0
+          },
+          "blocks": {
+            "content": {
+              "type": "group",
+              "settings": {
+                "direction": "vertical",
+                "customize_mobile_alignment": true,
+                "alignment": "left",
+                "alignment_mobile": "center",
+                "gap_desktop": 10,
+                "gap_mobile": 10,
+                "width": "custom",
+                "width_custom": 40,
+                "limit_width": true,
+                "max_width": 500,
+                "height": "fit",
+                "width_mobile": "fill",
+                "limit_width_mobile": false,
+                "appearance_type": "inherit",
+                "border_type": "none",
+                "corner_radius": "square",
+                "shadow": "none",
+                "backdrop_blur": 0,
+                "customize_mobile_padding": false
+              },
+              "blocks": {
+                "heading-1": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>SAVE 10% ON BESTSELLERS</p>",
+                    "heading_size": "xl",
+                    "custom_heading_size": 24,
+                    "html_tag": "h2",
+                    "width": "fill",
+                    "max_width": 640,
+                    "customize_mobile_size": false,
+                    "width_mobile": "fit",
+                    "max_width_mobile": 480,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 100,
+                    "padding_top": 0,
+                    "padding_bottom": 18,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "customize_mobile_padding": true,
+                    "padding_top_mobile": 0,
+                    "padding_bottom_mobile": 0,
+                    "padding_left_mobile": 0,
+                    "padding_right_mobile": 0
+                  }
+                },
+                "eyebrow": {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>SHOP BEFORE IT ENDS</p>",
+                    "show_background": false,
+                    "show_icon": false,
+                    "animation_type": "slide-right",
+                    "animation_delay": 100
+                  }
+                },
+                "desktop-button": {
+                  "type": "button",
+                  "settings": {
+                    "button_label": "SHOP THE SALE",
+                    "button_link": "shopify://collections/sale-novaire",
+                    "button_open_in_new_tab": false,
+                    "button_style": "tertiary",
+                    "show_icon": false,
+                    "width": "fit",
+                    "width_mobile": "fit",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 150,
+                    "customize_mobile_padding": false,
+                    "visibility": "desktop"
+                  }
+                }
+              },
+              "block_order": [
+                "eyebrow",
+                "heading-1",
+                "desktop-button"
+              ]
+            },
+            "countdown": {
+              "type": "countdown-timer",
+              "settings": {
+                "style": "with_separators",
+                "separator": "colon",
+                "show_background": false,
+                "corner_radius": "square",
+                "type": "recurring",
+                "duration_hours": 64,
+                "duration_minutes": 23,
+                "number_size": "display",
+                "label_size": "md",
+                "color_type": "inherit",
+                "padding_bottom": 0,
+                "customize_mobile_padding": true,
+                "padding_bottom_mobile": 8
+              }
+            },
+            "mobile-button": {
+              "type": "button",
+              "settings": {
+                "button_label": "SHOP THE SALE",
+                "button_link": "shopify://collections/sale-novaire",
+                "button_open_in_new_tab": false,
+                "button_style": "tertiary",
+                "show_icon": false,
+                "width": "fit",
+                "width_mobile": "fit",
+                "animation_type": "slide-bottom",
+                "animation_delay": 150,
+                "customize_mobile_padding": false,
+                "visibility": "mobile"
+              }
+            }
+          },
+          "block_order": [
+            "content",
+            "countdown",
+            "mobile-button"
+          ]
+        }
+      },
+      "block_order": [
+        "layout"
+      ],
       "settings": {
         "section_width": "page_width",
         "enable_boxed_layout": false,
@@ -970,160 +1123,7 @@
         "customize_mobile_padding": true,
         "padding_top_mobile": 56,
         "padding_bottom_mobile": 56
-      },
-      "blocks": {
-        "layout": {
-          "type": "group",
-          "settings": {
-            "direction": "horizontal",
-            "position_horizontal": "center",
-            "horizontal_alignment": "space-between",
-            "customize_mobile_alignment": true,
-            "alignment_mobile": "center",
-            "width": "fill",
-            "width_mobile": "fill",
-            "height": "fit",
-            "gap_desktop": 40,
-            "gap_mobile": 20,
-            "padding_top": 0,
-            "padding_bottom": 0,
-            "customize_mobile_padding": true,
-            "padding_top_mobile": 0,
-            "padding_bottom_mobile": 0,
-            "backdrop_blur": 0,
-            "padding_left": 21,
-            "padding_right": 21,
-            "padding_left_mobile": 0,
-            "padding_right_mobile": 0
-          },
-          "blocks": {
-            "content": {
-              "type": "group",
-              "settings": {
-                "direction": "vertical",
-                "alignment": "left",
-                "alignment_mobile": "center",
-                "width": "custom",
-                "height": "fit",
-                "gap_desktop": 10,
-                "gap_mobile": 10,
-                "appearance_type": "inherit",
-                "border_type": "none",
-                "corner_radius": "square",
-                "shadow": "none",
-                "customize_mobile_padding": false,
-                "customize_mobile_alignment": true,
-                "max_width": 500,
-                "limit_width": true,
-                "width_mobile": "fill",
-                "limit_width_mobile": false,
-                "width_custom": 40,
-                "backdrop_blur": 0
-              },
-              "blocks": {
-                "heading-1": {
-                  "type": "heading",
-                  "settings": {
-                    "text": "<p>SAVE 10% ON BESTSELLERS</p>",
-                    "heading_size": "xl",
-                    "html_tag": "h2",
-                    "width": "fill",
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 100,
-                    "custom_heading_size": 24,
-                    "max_width": 640,
-                    "customize_mobile_size": false,
-                    "width_mobile": "fit",
-                    "max_width_mobile": 480,
-                    "padding_top": 0,
-                    "padding_bottom": 18,
-                    "padding_left": 0,
-                    "padding_right": 0,
-                    "customize_mobile_padding": true,
-                    "padding_top_mobile": 0,
-                    "padding_bottom_mobile": 0,
-                    "padding_left_mobile": 0,
-                    "padding_right_mobile": 0
-                  }
-                },
-                "eyebrow": {
-                  "type": "eyebrow",
-                  "settings": {
-                    "text": "<p>SHOP BEFORE IT ENDS</p>",
-                    "show_background": false,
-                    "show_icon": false,
-                    "animation_delay": 100,
-                    "animation_type": "slide-right"
-                  }
-                },
-                "desktop-button": {
-                  "type": "button",
-                  "settings": {
-                    "button_label": "SHOP THE SALE",
-                    "button_link": "shopify://collections/sale-novaire",
-                    "button_style": "tertiary",
-                    "button_open_in_new_tab": false,
-                    "show_icon": false,
-                    "width": "fit",
-                    "width_mobile": "fit",
-                    "customize_mobile_padding": false,
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 150,
-                    "visibility": "desktop"
-                  }
-                }
-              },
-              "block_order": [
-                "eyebrow",
-                "heading-1",
-                "desktop-button"
-              ]
-            },
-            "countdown": {
-              "type": "countdown-timer",
-              "settings": {
-                "style": "with_separators",
-                "show_background": false,
-                "corner_radius": "square",
-                "type": "recurring",
-                "number_size": "display",
-                "label_size": "md",
-                "color_type": "inherit",
-                "duration_hours": 64,
-                "duration_minutes": 23,
-                "padding_bottom": 0,
-                "customize_mobile_padding": true,
-                "padding_bottom_mobile": 8,
-                "separator": "colon"
-              }
-            },
-            "mobile-button": {
-              "type": "button",
-              "settings": {
-                "button_label": "SHOP THE SALE",
-                "button_link": "shopify://collections/sale-novaire",
-                "button_style": "tertiary",
-                "button_open_in_new_tab": false,
-                "show_icon": false,
-                "width": "fit",
-                "width_mobile": "fit",
-                "customize_mobile_padding": false,
-                "animation_type": "slide-bottom",
-                "animation_delay": 150,
-                "visibility": "mobile"
-              }
-            }
-          },
-          "block_order": [
-            "content",
-            "countdown",
-            "mobile-button"
-          ]
-        }
-      },
-      "block_order": [
-        "layout"
-      ]
+      }
     },
     "articles": {
       "type": "blog-posts",
@@ -1149,15 +1149,15 @@
               "settings": {
                 "text": "<p>BLOG POSTS</p>",
                 "heading_size": "xl",
+                "custom_heading_size": 24,
                 "html_tag": "h2",
                 "width": "fill",
-                "animation_type": "slide-bottom",
-                "animation_delay": 100,
-                "custom_heading_size": 24,
                 "max_width": 640,
                 "customize_mobile_size": false,
                 "width_mobile": "fit",
                 "max_width_mobile": 480,
+                "animation_type": "slide-bottom",
+                "animation_delay": 100,
                 "padding_top": 0,
                 "padding_bottom": 16,
                 "padding_left": 0,
@@ -1190,6 +1190,7 @@
           "static": true,
           "settings": {
             "button_label": "VIEW ALL",
+            "button_link": "shopify://blogs/novaire",
             "button_style": "solid",
             "show_icon": false,
             "icon": "arrow_up_right",
@@ -1199,8 +1200,7 @@
             "button_style_mobile": "solid",
             "button_height_mobile": "inherit",
             "full_width_mobile": false,
-            "show_icon_mobile": false,
-            "button_link": "shopify://blogs/novaire"
+            "show_icon_mobile": false
           }
         },
         "blog-list": {
@@ -1314,23 +1314,6 @@
     },
     "instagram": {
       "type": "gallery-carousel",
-      "settings": {
-        "direction": "vertical",
-        "position": "center",
-        "horizontal_alignment": "space-between",
-        "alignment": "center",
-        "customize_mobile_alignment": true,
-        "alignment_mobile": "center",
-        "customize_mobile_gap": true,
-        "content_gap": 40,
-        "content_gap_mobile": 36,
-        "section_width": "full_width",
-        "padding_top": 80,
-        "padding_bottom": 64,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
-      },
       "blocks": {
         "block-1": {
           "type": "gallery-header-group",
@@ -1351,16 +1334,16 @@
               "type": "heading",
               "settings": {
                 "text": "<p>LET’S GET SOCIAL</p>",
-                "html_tag": "h2",
-                "animation_type": "slide-bottom",
-                "animation_delay": 100,
                 "heading_size": "xl",
                 "custom_heading_size": 24,
+                "html_tag": "h2",
                 "width": "fill",
                 "max_width": 640,
                 "customize_mobile_size": false,
                 "width_mobile": "fit",
                 "max_width_mobile": 480,
+                "animation_type": "slide-bottom",
+                "animation_delay": 100,
                 "padding_top": 0,
                 "padding_bottom": 0,
                 "padding_left": 0,
@@ -1383,20 +1366,21 @@
           "settings": {
             "columns_desktop": "5",
             "columns_mobile": "1",
+            "show_next_slide_preview_on_desktop": false,
+            "show_next_slide_preview_on_mobile": true,
             "gap_desktop": 16,
             "gap_mobile": 12,
+            "width": "fill",
+            "custom_width": 50,
+            "show_navigation_on_desktop": false,
+            "navigation_position": "outside",
             "navigation_style": "primary",
             "navigation_icon": "chevron",
             "navigation_behavior": "show_on_hover",
             "pagination_type": "progress_bar",
             "show_pagination_on_desktop": false,
-            "show_pagination_on_mobile": false,
-            "show_navigation_on_desktop": false,
-            "show_next_slide_preview_on_desktop": false,
-            "width": "fill",
-            "custom_width": 50,
-            "navigation_position": "outside",
             "pagination_padding_desktop": 40,
+            "show_pagination_on_mobile": false,
             "pagination_padding_mobile": 30,
             "pagination_limit_width": false,
             "pagination_max_width": 200,
@@ -1407,15 +1391,12 @@
             "padding_bottom": 0,
             "customize_mobile_padding": false,
             "padding_top_mobile": 0,
-            "padding_bottom_mobile": 0,
-            "show_next_slide_preview_on_mobile": true
+            "padding_bottom_mobile": 0
           },
           "blocks": {
             "block-2-child-1": {
               "type": "slide",
               "settings": {
-                "gap_desktop": 0,
-                "gap_mobile": 0,
                 "direction": "horizontal",
                 "alignment": "left",
                 "position": "top",
@@ -1423,6 +1404,8 @@
                 "horizontal_alignment": "left",
                 "customize_mobile_alignment": false,
                 "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
                 "height": "fit",
                 "border_thickness": 0,
                 "corner_radius": "square",
@@ -1466,8 +1449,6 @@
             "block-2-child-2": {
               "type": "slide",
               "settings": {
-                "gap_desktop": 0,
-                "gap_mobile": 0,
                 "direction": "horizontal",
                 "alignment": "left",
                 "position": "top",
@@ -1475,6 +1456,8 @@
                 "horizontal_alignment": "left",
                 "customize_mobile_alignment": false,
                 "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
                 "height": "fit",
                 "border_thickness": 0,
                 "corner_radius": "square",
@@ -1518,8 +1501,6 @@
             "block-2-child-3": {
               "type": "slide",
               "settings": {
-                "gap_desktop": 0,
-                "gap_mobile": 0,
                 "direction": "horizontal",
                 "alignment": "left",
                 "position": "top",
@@ -1527,6 +1508,8 @@
                 "horizontal_alignment": "left",
                 "customize_mobile_alignment": false,
                 "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
                 "height": "fit",
                 "border_thickness": 0,
                 "corner_radius": "square",
@@ -1570,8 +1553,6 @@
             "block-2-child-4": {
               "type": "slide",
               "settings": {
-                "gap_desktop": 0,
-                "gap_mobile": 0,
                 "direction": "horizontal",
                 "alignment": "left",
                 "position": "top",
@@ -1579,6 +1560,8 @@
                 "horizontal_alignment": "left",
                 "customize_mobile_alignment": false,
                 "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
                 "height": "fit",
                 "border_thickness": 0,
                 "corner_radius": "square",
@@ -1622,8 +1605,6 @@
             "gallery-slide-5": {
               "type": "slide",
               "settings": {
-                "gap_desktop": 0,
-                "gap_mobile": 0,
                 "direction": "horizontal",
                 "alignment": "left",
                 "position": "top",
@@ -1631,6 +1612,8 @@
                 "horizontal_alignment": "left",
                 "customize_mobile_alignment": false,
                 "alignment_mobile": "left",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
                 "height": "fit",
                 "border_thickness": 0,
                 "corner_radius": "square",
@@ -1684,50 +1667,52 @@
       "block_order": [
         "block-1",
         "block-2"
-      ]
+      ],
+      "settings": {
+        "section_width": "full_width",
+        "direction": "vertical",
+        "position": "center",
+        "horizontal_alignment": "space-between",
+        "alignment": "center",
+        "customize_mobile_alignment": true,
+        "alignment_mobile": "center",
+        "content_gap": 40,
+        "customize_mobile_gap": true,
+        "content_gap_mobile": 36,
+        "padding_top": 80,
+        "padding_bottom": 64,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      }
     },
     "benefits": {
       "type": "custom-section",
-      "settings": {
-        "section_width": "page_width",
-        "alignment": "center",
-        "content_gap": 0,
-        "color_scheme": "scheme-1",
-        "padding_top": 10,
-        "padding_bottom": 64,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 10,
-        "padding_bottom_mobile": 44,
-        "direction": "vertical",
-        "height": "auto",
-        "customize_mobile_alignment": true,
-        "alignment_mobile": "center"
-      },
       "blocks": {
         "carousel-1": {
           "type": "carousel",
           "settings": {
             "columns_desktop": "4",
             "columns_mobile": "1",
-            "gap_desktop": 28,
-            "gap_mobile": 28,
-            "show_navigation_on_desktop": false,
-            "show_pagination_on_desktop": false,
-            "show_pagination_on_mobile": true,
-            "pagination_type": "dots",
-            "pagination_padding_desktop": 48,
-            "pagination_padding_mobile": 36,
-            "autoplay": false,
             "show_next_slide_preview_on_desktop": false,
             "show_next_slide_preview_on_mobile": false,
+            "gap_desktop": 28,
+            "gap_mobile": 28,
             "width": "fill",
             "custom_width": 50,
+            "show_navigation_on_desktop": false,
             "navigation_position": "outside",
             "navigation_style": "primary",
             "navigation_icon": "arrow",
             "navigation_behavior": "show_on_hover",
+            "pagination_type": "dots",
+            "show_pagination_on_desktop": false,
+            "pagination_padding_desktop": 48,
+            "show_pagination_on_mobile": true,
+            "pagination_padding_mobile": 36,
             "pagination_limit_width": false,
             "pagination_max_width": 200,
+            "autoplay": false,
             "pause_on_hover": true,
             "autoplay_speed": 4,
             "padding_top": 0,
@@ -1742,14 +1727,14 @@
               "settings": {
                 "direction": "vertical",
                 "alignment": "center",
-                "height": "fit",
-                "gap_desktop": 24,
-                "gap_mobile": 24,
-                "horizontal_alignment": "center",
-                "alignment_mobile": "center",
-                "customize_mobile_alignment": true,
                 "position": "top",
                 "position_horizontal": "top",
+                "horizontal_alignment": "center",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "center",
+                "gap_desktop": 24,
+                "gap_mobile": 24,
+                "height": "fit",
                 "border_thickness": 0,
                 "corner_radius": "square",
                 "custom_radius": 20,
@@ -1771,10 +1756,10 @@
                 "icon-1": {
                   "type": "icon",
                   "settings": {
-                    "icon": "paper-airplane",
-                    "icon_width": 36,
                     "source": "custom",
+                    "icon": "paper-airplane",
                     "custom_icon": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g clip-path=\"url(#clip0_47052_14508)\">\n<path d=\"M4.29153 20.4664C3.98162 20.6118 3.84488 20.9779 3.983 21.2907L5.3986 24.3296C5.46815 24.4809 5.59503 24.5987 5.75107 24.6569C5.81944 24.6817 5.89194 24.6945 5.96484 24.6945C6.05606 24.6953 6.1461 24.6758 6.22905 24.6381L16.9246 19.6424L15.9558 29.7716C15.9371 29.9709 16.014 30.167 16.1631 30.3002C16.632 30.6883 17.2164 30.9094 17.8244 30.9293C17.9921 30.9291 18.1587 30.908 18.3213 30.8666C19.1896 30.64 19.8628 29.8663 20.322 28.5449L24.531 16.0817L32.867 12.1932C35.3208 11.0483 36.5852 8.72683 35.7361 6.91481C35.2542 5.96773 34.3311 5.32346 33.2761 5.19717C32.1038 5.02025 30.9057 5.20466 29.841 5.72598L20.2212 10.2368L9.87829 6.19135C8.57578 5.70076 7.54417 5.71337 6.82071 6.23568C6.21368 6.73375 5.8683 7.48243 5.88308 8.26757C5.88938 8.46676 5.98967 8.65097 6.15359 8.76485L13.1181 13.5525L9.12961 15.44L2.44149 13.741C2.16744 13.6737 1.88215 13.7972 1.74325 14.0431L0.076242 17.0439C-0.0102508 17.2029 -0.0238453 17.3917 0.0390048 17.5615C0.101461 17.7315 0.234254 17.8661 0.403496 17.9311L5.35486 19.976L4.29153 20.4664ZM7.17259 7.95312C7.20963 7.68714 7.34419 7.445 7.55028 7.27359C7.90906 7.01549 8.56337 7.05332 9.43775 7.38038L18.6485 10.9729L14.4457 12.9358L7.17259 7.95312ZM1.51056 17.0378L2.60522 15.0938L9.04134 16.6916C9.18005 16.7267 9.32644 16.7135 9.45686 16.6542L30.3759 6.88348C31.2075 6.47328 32.1442 6.32394 33.0623 6.45555C33.7062 6.51486 34.2797 6.88644 34.5975 7.44953C35.1255 8.58221 34.0876 10.2368 32.3321 11.0546L25.0845 14.4523L25.525 13.1496C25.6363 12.8144 25.4545 12.4523 25.1193 12.3412C24.7838 12.2301 24.4219 12.4119 24.3108 12.7471L19.1328 28.1546C18.8245 29.0294 18.4407 29.5517 18.0129 29.6646C17.748 29.7156 17.4737 29.6636 17.2453 29.5202L18.5037 16.3078C18.5366 15.9605 18.2819 15.6522 17.9341 15.6193C17.5868 15.586 17.2784 15.8411 17.2453 16.1885L17.0505 18.2079L6.25407 23.2411L5.36747 21.3536L7.14126 20.5233C7.36961 20.4227 7.51679 20.1969 7.51679 19.9476C7.51679 19.6982 7.36961 19.4724 7.14126 19.3719L1.51056 17.0378Z\" fill=\"#3A3A3A\"/>\n</g>\n<defs>\n<clipPath id=\"clip0_47052_14508\">\n<rect width=\"36\" height=\"36\" fill=\"white\"/>\n</clipPath>\n</defs>\n</svg>",
+                    "icon_width": 36,
                     "icon_padding": 0,
                     "animation_type": "scale",
                     "animation_delay": 100
@@ -1785,12 +1770,12 @@
                   "settings": {
                     "width": "fill",
                     "max_width": 370,
+                    "customize_mobile_size": true,
+                    "width_mobile": "fill",
                     "inherit_alignment": false,
                     "alignment": "center",
                     "customize_mobile_alignment": true,
                     "alignment_mobile": "center",
-                    "customize_mobile_size": true,
-                    "width_mobile": "fill",
                     "gap_desktop": 16,
                     "gap_mobile": 16
                   },
@@ -1800,16 +1785,16 @@
                       "settings": {
                         "text": "<p>FREE EXPRESS SHIPPING</p>",
                         "heading_size": "custom",
-                        "html_tag": "h4",
-                        "width": "fill",
-                        "animation_type": "slide-bottom",
                         "custom_heading_size": 18,
+                        "html_tag": "h4",
                         "text_color": "#3a3a3a",
-                        "animation_delay": 100,
+                        "width": "fill",
                         "max_width": 640,
                         "customize_mobile_size": false,
                         "width_mobile": "fit",
                         "max_width_mobile": 480,
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 100,
                         "padding_top": 0,
                         "padding_bottom": 0,
                         "padding_left": 0,
@@ -1826,9 +1811,9 @@
                       "settings": {
                         "text": "<p>Enjoy free shipping on all Australian and New Zealand orders over $150</p>",
                         "text_size": "sm",
+                        "text_color": "#6c6c6c",
                         "width": "fill",
                         "animation_type": "slide-bottom",
-                        "text_color": "#6c6c6c",
                         "animation_delay": 100
                       }
                     }
@@ -1849,14 +1834,14 @@
               "settings": {
                 "direction": "vertical",
                 "alignment": "center",
-                "height": "fit",
-                "gap_desktop": 24,
-                "gap_mobile": 24,
-                "horizontal_alignment": "center",
-                "alignment_mobile": "center",
-                "customize_mobile_alignment": true,
                 "position": "top",
                 "position_horizontal": "top",
+                "horizontal_alignment": "center",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "center",
+                "gap_desktop": 24,
+                "gap_mobile": 24,
+                "height": "fit",
                 "border_thickness": 0,
                 "corner_radius": "square",
                 "custom_radius": 20,
@@ -1878,10 +1863,10 @@
                 "icon-1": {
                   "type": "icon",
                   "settings": {
-                    "icon": "cube",
-                    "icon_width": 36,
                     "source": "custom",
+                    "icon": "cube",
                     "custom_icon": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M4.8883 26.7096C2.90099 23.7463 1.98862 20.1486 2.32105 16.575C2.38912 15.7898 2.52637 14.9663 2.72774 14.1338C2.9128 13.4059 3.14455 12.705 3.41905 12.0469C4.2043 10.1068 5.36474 8.36419 6.8683 6.86625C8.1643 5.56519 9.64537 4.51838 11.271 3.75507C12.0186 3.40294 12.7971 3.10875 13.5857 2.88038C14.3079 2.66888 15.0291 2.51419 15.7299 2.41969C15.7552 2.41632 15.78 2.41125 15.8042 2.40394C19.8767 1.83356 23.9357 2.84044 27.2336 5.24232C27.5565 5.47632 27.8704 5.72269 28.1741 5.97975L26.9867 6.04331C26.6767 6.05963 26.4382 6.32456 26.4551 6.63507C26.4714 6.93544 26.7201 7.16775 27.0165 7.16775C27.0266 7.16775 27.0367 7.16775 27.0474 7.16719L29.5612 7.03275C29.6152 7.02994 29.6659 7.01025 29.7165 6.99169C29.73 6.98719 29.7446 6.98663 29.7576 6.981C29.7952 6.96356 29.8262 6.93713 29.8594 6.91181C29.8869 6.89156 29.9162 6.87525 29.9392 6.85106C29.9426 6.84769 29.9477 6.846 29.9511 6.84206C29.9685 6.82294 29.9752 6.79763 29.9893 6.77625C30.0146 6.73969 30.0399 6.70425 30.0562 6.66207C30.0664 6.63507 30.0669 6.6075 30.0731 6.57938C30.0816 6.54057 30.0967 6.50456 30.0967 6.4635C30.0967 6.45619 30.0928 6.44944 30.0922 6.44157C30.0922 6.43763 30.0939 6.43425 30.0939 6.43032L29.9505 3.92494C29.9331 3.615 29.6569 3.3765 29.3565 3.39563C29.0466 3.41363 28.8092 3.67913 28.8277 3.98963L28.8919 5.11463C28.5696 4.84294 28.2382 4.58025 27.8962 4.33275C24.3446 1.74582 19.9723 0.669753 15.582 1.29975C15.5595 1.30313 15.5376 1.30763 15.5156 1.31382C14.7799 1.41619 14.0256 1.57988 13.2729 1.80038C12.4292 2.04507 11.595 2.36007 10.7946 2.73694C9.05024 3.55538 7.46174 4.67756 6.07405 6.07088C4.46474 7.67513 3.22105 9.54319 2.38068 11.6194C2.08762 12.3231 1.83843 13.0757 1.63874 13.8632C1.42218 14.757 1.27537 15.6368 1.20337 16.4743C0.847866 20.3016 1.82549 24.1586 3.95737 27.3362C4.06537 27.4982 4.24368 27.5854 4.4248 27.5854C4.53224 27.5854 4.64137 27.5544 4.73755 27.4903C4.99574 27.3171 5.06437 26.9678 4.89112 26.7096H4.8883Z\" fill=\"#3A3A3A\"/>\n<path d=\"M31.2653 8.51045C31.0071 8.6837 30.9385 9.03301 31.1118 9.2912C33.0991 12.2544 34.0114 15.8522 33.679 19.4258C33.6109 20.211 33.4737 21.0345 33.2723 21.867C33.0873 22.5949 32.8555 23.2958 32.581 23.9539C31.7958 25.8939 30.6353 27.6366 29.1318 29.1345C27.8358 30.4356 26.3547 31.4824 24.7291 32.2457C23.9815 32.5978 23.203 32.892 22.4144 33.1204C21.6921 33.3319 20.971 33.4866 20.2701 33.5811C20.2448 33.5844 20.2201 33.5895 20.1959 33.5968C16.1217 34.1655 12.0644 33.1603 8.76644 30.7584C8.4385 30.5211 8.12688 30.2753 7.82538 30.0205L9.01338 29.9546C9.32388 29.9372 9.56181 29.6723 9.54381 29.3618C9.52694 29.0518 9.25525 28.8105 8.9515 28.8313L6.44106 28.9703C6.13056 28.9877 5.89263 29.2526 5.91063 29.5631L6.049 32.0736C6.06531 32.3734 6.31338 32.6051 6.60981 32.6051C6.6205 32.6051 6.63063 32.6051 6.64131 32.6046C6.95181 32.5877 7.18975 32.3222 7.17175 32.0117L7.10988 30.8884C7.42938 31.1578 7.75844 31.4183 8.10494 31.6691C10.9939 33.7729 14.4252 34.8782 17.9667 34.8782C18.7795 34.8782 19.5991 34.8197 20.4186 34.7021C20.4411 34.6988 20.4631 34.6943 20.485 34.6881C21.2207 34.5857 21.9751 34.422 22.7277 34.2015C23.5714 33.9568 24.4056 33.6418 25.2061 33.2649C26.9504 32.4465 28.5389 31.3243 29.9266 29.931C31.5359 28.3268 32.7796 26.4587 33.6199 24.3825C33.913 23.6788 34.1622 22.9262 34.3619 22.1387C34.5784 21.2449 34.7253 20.3651 34.7973 19.5276C35.1528 15.7003 34.1751 11.8433 32.0433 8.6657C31.8706 8.40751 31.5207 8.33776 31.2631 8.51214L31.2653 8.51045Z\" fill=\"#3A3A3A\"/>\n<path d=\"M27.0448 13.0103C27.0448 12.9484 27.0336 12.8921 27.0111 12.8415C27.0055 12.819 26.9998 12.8021 26.9886 12.7853C26.9661 12.729 26.9323 12.684 26.893 12.639C26.8873 12.6334 26.8817 12.6278 26.8705 12.6221C26.8423 12.5884 26.8086 12.5603 26.7692 12.5378L18.3092 7.6609C18.1405 7.55965 17.9211 7.55965 17.7467 7.6609L9.23047 12.5771C9.05609 12.6784 8.94922 12.864 8.94922 13.0609V22.6121C8.94922 22.6346 8.96047 22.6571 8.96047 22.6796C8.96609 22.719 8.97172 22.7584 8.98859 22.7978C8.99984 22.8315 9.01109 22.8596 9.03359 22.8878C9.05047 22.9215 9.06734 22.9496 9.09547 22.9778C9.11797 23.0059 9.14609 23.0284 9.17422 23.0509C9.19672 23.0678 9.20797 23.0903 9.23047 23.1015L17.6905 27.984C17.7017 27.9953 17.7186 27.9953 17.7298 28.0065C17.7467 28.0121 17.758 28.0178 17.7748 28.0234C17.8367 28.0459 17.9042 28.0628 17.9717 28.0628C18.0392 28.0628 18.1011 28.0459 18.1686 28.0234C18.1798 28.0178 18.1967 28.0121 18.208 28.0065C18.2248 28.0009 18.2361 27.9953 18.253 27.9896L26.7692 23.0678C26.7917 23.0565 26.803 23.034 26.8255 23.0171C26.8536 22.9946 26.8817 22.9778 26.9042 22.9496C26.9323 22.9215 26.9492 22.8878 26.9717 22.854C26.9886 22.8259 26.9998 22.7978 27.0111 22.764C27.028 22.7246 27.0336 22.6853 27.0392 22.6459C27.0392 22.6234 27.0505 22.6065 27.0505 22.5784V13.0271C27.0505 13.0215 27.0448 13.0159 27.0448 13.0103ZM18.028 8.79715L25.363 13.0271L22.5617 14.6471L15.2267 10.4115L18.028 8.79715ZM17.4092 26.5271L10.0742 22.2915V14.0396L17.4092 18.2696V26.5271ZM17.9661 17.2965L10.6367 13.0609L14.1017 11.064L21.4367 15.294L17.9661 17.2965ZM25.9255 22.2578L18.5342 26.5271V18.2696L21.9992 16.2671V17.8028C21.9992 18.1121 22.2467 18.3653 22.5617 18.3653C22.8711 18.3653 23.1242 18.1121 23.1242 17.8028V15.6203L25.9255 14.0003V22.2578Z\" fill=\"#3A3A3A\"/>\n</svg>",
+                    "icon_width": 36,
                     "icon_padding": 0,
                     "animation_type": "scale",
                     "animation_delay": 100
@@ -1892,12 +1877,12 @@
                   "settings": {
                     "width": "fill",
                     "max_width": 370,
+                    "customize_mobile_size": true,
+                    "width_mobile": "fill",
                     "inherit_alignment": false,
                     "alignment": "center",
                     "customize_mobile_alignment": true,
                     "alignment_mobile": "center",
-                    "customize_mobile_size": true,
-                    "width_mobile": "fill",
                     "gap_desktop": 16,
                     "gap_mobile": 16
                   },
@@ -1907,16 +1892,16 @@
                       "settings": {
                         "text": "<p>EASY RETURNS</p>",
                         "heading_size": "custom",
-                        "html_tag": "h4",
-                        "width": "fill",
-                        "animation_type": "slide-bottom",
                         "custom_heading_size": 18,
+                        "html_tag": "h4",
                         "text_color": "#3a3a3a",
-                        "animation_delay": 100,
+                        "width": "fill",
                         "max_width": 640,
                         "customize_mobile_size": false,
                         "width_mobile": "fit",
                         "max_width_mobile": 480,
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 100,
                         "padding_top": 0,
                         "padding_bottom": 0,
                         "padding_left": 0,
@@ -1933,9 +1918,9 @@
                       "settings": {
                         "text": "<p>Free return for 30 days for any order delivered in France quickly</p>",
                         "text_size": "sm",
+                        "text_color": "#6c6c6c",
                         "width": "fill",
                         "animation_type": "slide-bottom",
-                        "text_color": "#6c6c6c",
                         "animation_delay": 100
                       }
                     }
@@ -1956,14 +1941,14 @@
               "settings": {
                 "direction": "vertical",
                 "alignment": "center",
-                "height": "fit",
-                "gap_desktop": 24,
-                "gap_mobile": 24,
-                "horizontal_alignment": "center",
-                "alignment_mobile": "center",
-                "customize_mobile_alignment": true,
                 "position": "top",
                 "position_horizontal": "top",
+                "horizontal_alignment": "center",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "center",
+                "gap_desktop": 24,
+                "gap_mobile": 24,
+                "height": "fit",
                 "border_thickness": 0,
                 "corner_radius": "square",
                 "custom_radius": 20,
@@ -1985,10 +1970,10 @@
                 "icon-1": {
                   "type": "icon",
                   "settings": {
-                    "icon": "chat-bubble",
-                    "icon_width": 36,
                     "source": "custom",
+                    "icon": "chat-bubble",
                     "custom_icon": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g clip-path=\"url(#clip0_47052_14524)\">\n<path d=\"M5.9999 15.2781H13.7999C14.1317 15.2781 14.3999 15.0093 14.3999 14.6781C14.3999 14.3469 14.1317 14.0781 13.7999 14.0781H5.9999C5.6681 14.0781 5.3999 14.3469 5.3999 14.6781C5.3999 15.0093 5.6681 15.2781 5.9999 15.2781Z\" fill=\"#3A3A3A\"/>\n<path d=\"M21.5999 17.6787H5.9999C5.6681 17.6787 5.3999 17.9475 5.3999 18.2787C5.3999 18.6099 5.6681 18.8787 5.9999 18.8787H21.5999C21.9317 18.8787 22.1999 18.6099 22.1999 18.2787C22.1999 17.9475 21.9317 17.6787 21.5999 17.6787Z\" fill=\"#3A3A3A\"/>\n<path d=\"M21.5999 21.2783H5.9999C5.6681 21.2783 5.3999 21.5471 5.3999 21.8783C5.3999 22.2095 5.6681 22.4783 5.9999 22.4783H21.5999C21.9317 22.4783 22.1999 22.2095 22.1999 21.8783C22.1999 21.5471 21.9317 21.2783 21.5999 21.2783Z\" fill=\"#3A3A3A\"/>\n<path d=\"M32.4432 1.52052L11.958 1.47852C9.996 1.47852 8.4 3.07452 8.4 5.03652V8.11092L3.558 8.12112C1.596 8.12112 0 9.71711 0 11.6791V24.3637C0 26.3257 1.596 27.9211 3.558 27.9211H7.2V33.9211C7.2 34.1689 7.3524 34.3915 7.584 34.4809C7.6542 34.5079 7.7274 34.5211 7.8 34.5211C7.9656 34.5211 8.1282 34.4521 8.244 34.3249L14.0664 27.9199L24.042 27.8791C26.004 27.8791 27.6 26.2831 27.6 24.3217V24.2539L30.756 27.7255C30.8718 27.8527 31.0344 27.9217 31.2 27.9217C31.2726 27.9217 31.3458 27.9085 31.416 27.8815C31.6476 27.7921 31.8 27.5695 31.8 27.3217V21.3217H32.442C34.404 21.3217 36 19.7257 36 17.7643V5.07852C36 3.11712 34.4046 1.52112 32.4432 1.52052ZM26.4 24.3211C26.4 25.6213 25.3422 26.6785 24.0396 26.6785L13.7976 26.7205C13.6296 26.7211 13.4688 26.7925 13.356 26.9167L8.4 32.3689V27.3205C8.4 26.9893 8.1318 26.7205 7.8 26.7205H3.558C2.2578 26.7205 1.2 25.6627 1.2 24.3631V11.6785C1.2 10.3783 2.2578 9.32052 3.5592 9.32052L9 9.30911C9.0006 9.30911 9.0006 9.30911 9.0012 9.30911L24.042 9.27792C25.3422 9.27792 26.4 10.3357 26.4 11.6359V22.7005V24.3211ZM34.8 17.7631C34.8 19.0633 33.7422 20.1205 32.442 20.1205H31.2C30.8682 20.1205 30.6 20.3893 30.6 20.7205V25.7689L27.6 22.4689V11.6365C27.6 9.67452 26.004 8.07852 24.0408 8.07852L9.6 8.10791V5.03592C9.6 3.73572 10.6578 2.67792 11.9568 2.67792L32.4414 2.71992C32.442 2.71992 32.442 2.71992 32.4426 2.71992C33.7428 2.71992 34.8006 3.77772 34.8006 5.07792L34.8 17.7631Z\" fill=\"#3A3A3A\"/>\n</g>\n<defs>\n<clipPath id=\"clip0_47052_14524\">\n<rect width=\"36\" height=\"36\" fill=\"white\"/>\n</clipPath>\n</defs>\n</svg>",
+                    "icon_width": 36,
                     "icon_padding": 0,
                     "animation_type": "scale",
                     "animation_delay": 100
@@ -1999,12 +1984,12 @@
                   "settings": {
                     "width": "fill",
                     "max_width": 370,
+                    "customize_mobile_size": true,
+                    "width_mobile": "fill",
                     "inherit_alignment": false,
                     "alignment": "center",
                     "customize_mobile_alignment": true,
                     "alignment_mobile": "center",
-                    "customize_mobile_size": true,
-                    "width_mobile": "fill",
                     "gap_desktop": 16,
                     "gap_mobile": 16
                   },
@@ -2014,16 +1999,16 @@
                       "settings": {
                         "text": "<p>CUSTOMER SERVICE</p>",
                         "heading_size": "custom",
-                        "html_tag": "h4",
-                        "width": "fill",
-                        "animation_type": "slide-bottom",
                         "custom_heading_size": 18,
+                        "html_tag": "h4",
                         "text_color": "#3a3a3a",
-                        "animation_delay": 100,
+                        "width": "fill",
                         "max_width": 640,
                         "customize_mobile_size": false,
                         "width_mobile": "fit",
                         "max_width_mobile": 480,
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 100,
                         "padding_top": 0,
                         "padding_bottom": 0,
                         "padding_left": 0,
@@ -2040,9 +2025,9 @@
                       "settings": {
                         "text": "<p>Our dedicated customer service team is always ready to assist with care</p>",
                         "text_size": "sm",
+                        "text_color": "#6c6c6c",
                         "width": "fill",
                         "animation_type": "slide-bottom",
-                        "text_color": "#6c6c6c",
                         "animation_delay": 100
                       }
                     }
@@ -2063,14 +2048,14 @@
               "settings": {
                 "direction": "vertical",
                 "alignment": "center",
-                "height": "fit",
-                "gap_desktop": 24,
-                "gap_mobile": 24,
-                "horizontal_alignment": "center",
-                "alignment_mobile": "center",
-                "customize_mobile_alignment": true,
                 "position": "top",
                 "position_horizontal": "top",
+                "horizontal_alignment": "center",
+                "customize_mobile_alignment": true,
+                "alignment_mobile": "center",
+                "gap_desktop": 24,
+                "gap_mobile": 24,
+                "height": "fit",
                 "border_thickness": 0,
                 "corner_radius": "square",
                 "custom_radius": 20,
@@ -2092,10 +2077,10 @@
                 "icon-1": {
                   "type": "icon",
                   "settings": {
-                    "icon": "shield-check",
-                    "icon_width": 36,
                     "source": "custom",
+                    "icon": "shield-check",
                     "custom_icon": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M33.6679 7.11756L27.2393 4.54614C27.0858 4.48462 26.9145 4.48462 26.761 4.54614L20.3324 7.11756C20.2133 7.16532 20.1111 7.24767 20.0392 7.35399C19.9672 7.46032 19.9287 7.58575 19.9287 7.71414V14.3587C19.932 15.5796 20.2498 16.7791 20.8512 17.8415C21.4527 18.904 22.3177 19.7936 23.3629 20.4247L26.6697 22.4086C26.7695 22.4684 26.8838 22.5 27.0001 22.5C27.1165 22.5 27.2307 22.4684 27.3306 22.4086L30.2144 20.678V27.878C30.2141 28.1575 30.1029 28.4255 29.9053 28.6231C29.7076 28.8208 29.4397 28.9319 29.1601 28.9323H4.26871C3.9892 28.9319 3.72124 28.8208 3.52359 28.6231C3.32595 28.4255 3.21477 28.1575 3.21443 27.878V13.4999H18.0001C18.1706 13.4999 18.3342 13.4321 18.4547 13.3116C18.5753 13.191 18.643 13.0275 18.643 12.857C18.643 12.6865 18.5753 12.523 18.4547 12.4024C18.3342 12.2819 18.1706 12.2141 18.0001 12.2141H3.21443V10.697C3.21477 10.4175 3.32595 10.1495 3.52359 9.95188C3.72124 9.75423 3.9892 9.64305 4.26871 9.64271H18.0001C18.1706 9.64271 18.3342 9.57498 18.4547 9.45442C18.5753 9.33386 18.643 9.17035 18.643 8.99985C18.643 8.82935 18.5753 8.66584 18.4547 8.54528C18.3342 8.42472 18.1706 8.35699 18.0001 8.35699H4.26871C3.64821 8.35733 3.05322 8.60398 2.61446 9.04274C2.1757 9.4815 1.92905 10.0765 1.92871 10.697V27.8741C1.92905 28.4946 2.1757 29.0896 2.61446 29.5284C3.05322 29.9672 3.64821 30.2138 4.26871 30.2141H29.1601C29.7806 30.2138 30.3756 29.9672 30.8144 29.5284C31.2532 29.0896 31.4998 28.4946 31.5001 27.8741V19.7999C32.301 19.1359 32.9463 18.3043 33.3906 17.3637C33.8349 16.4231 34.0674 15.3964 34.0716 14.3561V7.71414C34.0715 7.58575 34.0331 7.46032 33.9611 7.35399C33.8892 7.24767 33.787 7.16532 33.6679 7.11756ZM32.7859 14.3587C32.7832 15.3577 32.5232 16.3392 32.0309 17.2085C31.5386 18.0777 30.8307 18.8055 29.9753 19.3216L27.0001 21.1074L24.025 19.3216C23.1696 18.8055 22.4616 18.0777 21.9693 17.2085C21.4771 16.3392 21.2171 15.3577 21.2144 14.3587V8.14871L27.0001 5.83442L32.7859 8.14871V14.3587Z\" fill=\"black\"/>\n<path d=\"M24.884 12.5123C24.8243 12.4525 24.7534 12.4051 24.6754 12.3727C24.5974 12.3403 24.5138 12.3236 24.4293 12.3235C24.3448 12.3235 24.2612 12.3401 24.1831 12.3723C24.1051 12.4046 24.0341 12.4519 23.9744 12.5116C23.9146 12.5713 23.8672 12.6422 23.8348 12.7202C23.8024 12.7982 23.7857 12.8818 23.7856 12.9663C23.7856 13.0508 23.8022 13.1344 23.8344 13.2125C23.8667 13.2905 23.914 13.3615 23.9737 13.4213L25.6889 15.1351C25.8094 15.2556 25.9729 15.3233 26.1434 15.3233C26.3138 15.3233 26.4773 15.2556 26.5979 15.1351L30.0269 11.7061C30.1474 11.5854 30.2151 11.4218 30.2149 11.2512C30.2148 11.0806 30.1469 10.917 30.0262 10.7965C29.9055 10.6759 29.7419 10.6083 29.5713 10.6084C29.4007 10.6085 29.2371 10.6764 29.1166 10.7971L26.1427 13.7723L24.884 12.5123Z\" fill=\"black\"/>\n<path d=\"M6.4285 25.0713C6.25801 25.0713 6.09449 25.139 5.97393 25.2596C5.85337 25.3801 5.78564 25.5436 5.78564 25.7141C5.78564 25.8846 5.85337 26.0482 5.97393 26.1687C6.09449 26.2893 6.25801 26.357 6.4285 26.357H11.5714C11.7419 26.357 11.9054 26.2893 12.0259 26.1687C12.1465 26.0482 12.2142 25.8846 12.2142 25.7141C12.2142 25.5436 12.1465 25.3801 12.0259 25.2596C11.9054 25.139 11.7419 25.0713 11.5714 25.0713H6.4285Z\" fill=\"black\"/>\n</svg>",
+                    "icon_width": 36,
                     "icon_padding": 0,
                     "animation_type": "scale",
                     "animation_delay": 100
@@ -2106,12 +2091,12 @@
                   "settings": {
                     "width": "fill",
                     "max_width": 370,
+                    "customize_mobile_size": true,
+                    "width_mobile": "fill",
                     "inherit_alignment": false,
                     "alignment": "center",
                     "customize_mobile_alignment": true,
                     "alignment_mobile": "center",
-                    "customize_mobile_size": true,
-                    "width_mobile": "fill",
                     "gap_desktop": 16,
                     "gap_mobile": 16
                   },
@@ -2121,16 +2106,16 @@
                       "settings": {
                         "text": "<p>SECURE PAYMENT</p>",
                         "heading_size": "custom",
-                        "html_tag": "h4",
-                        "width": "fill",
-                        "animation_type": "slide-bottom",
                         "custom_heading_size": 18,
+                        "html_tag": "h4",
                         "text_color": "#3a3a3a",
-                        "animation_delay": 100,
+                        "width": "fill",
                         "max_width": 640,
                         "customize_mobile_size": false,
                         "width_mobile": "fit",
                         "max_width_mobile": 480,
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 100,
                         "padding_top": 0,
                         "padding_bottom": 0,
                         "padding_left": 0,
@@ -2147,9 +2132,9 @@
                       "settings": {
                         "text": "<p>Take advantage of a payment in 3x without fees from $100 of purchase</p>",
                         "text_size": "sm",
+                        "text_color": "#6c6c6c",
                         "width": "fill",
                         "animation_type": "slide-bottom",
-                        "text_color": "#6c6c6c",
                         "animation_delay": 100
                       }
                     }
@@ -2177,39 +2162,32 @@
       "block_order": [
         "carousel-1"
       ],
-      "name": "Icon width text (custom)"
+      "name": "Icon width text (custom)",
+      "settings": {
+        "section_width": "page_width",
+        "height": "auto",
+        "direction": "vertical",
+        "alignment": "center",
+        "customize_mobile_alignment": true,
+        "alignment_mobile": "center",
+        "content_gap": 0,
+        "color_scheme": "scheme-1",
+        "padding_top": 10,
+        "padding_bottom": 64,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 44
+      }
     },
     "founder_testimonials": {
       "type": "video-with-products",
-      "settings": {
-        "section_width": "full_width",
-        "alignment": "center",
-        "color_scheme": "scheme-1",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56,
-        "columns_desktop": "5",
-        "columns_mobile": "2",
-        "gap_desktop": 28,
-        "gap_mobile": 16,
-        "show_navigation_on_desktop": false,
-        "show_pagination_on_desktop": true,
-        "show_pagination_on_mobile": true,
-        "pagination_type": "dots",
-        "pagination_padding_desktop": 32,
-        "pagination_padding_mobile": 32,
-        "autoplay_video": true,
-        "emphasize_active": true,
-        "autoplay": false
-      },
       "blocks": {
         "header": {
           "type": "header",
+          "static": true,
           "settings": {
-            "inherit_alignment": true,
             "width": "fill",
+            "inherit_alignment": true,
             "gap_desktop": 8,
             "gap_mobile": 8,
             "padding_bottom": 48,
@@ -2222,15 +2200,15 @@
               "settings": {
                 "text": "<p>LOVED BY REAL PEOPLE</p>",
                 "heading_size": "xl",
-                "html_tag": "h2",
-                "animation_type": "slide-bottom",
-                "animation_delay": 100,
                 "custom_heading_size": 24,
+                "html_tag": "h2",
                 "width": "fill",
                 "max_width": 640,
                 "customize_mobile_size": false,
                 "width_mobile": "fit",
                 "max_width_mobile": 480,
+                "animation_type": "slide-bottom",
+                "animation_delay": 100,
                 "padding_top": 0,
                 "padding_bottom": 0,
                 "padding_left": 0,
@@ -2255,13 +2233,13 @@
           "block_order": [
             "heading-2",
             "real-people-copy"
-          ],
-          "static": true
+          ]
         },
         "video-1": {
           "type": "_video-review",
           "settings": {
             "video": "shopify://files/videos/novaire-real-people-1.mp4",
+            "product": "novaire-ivory-halter-skirt-set",
             "enable_boxed_layout": true,
             "image_ratio": "ratio_4_5",
             "thumbnail_width": 48,
@@ -2288,14 +2266,14 @@
             "padding_mobile": 8,
             "padding_top": 0,
             "padding_bottom": 0,
-            "customize_mobile_padding": false,
-            "product": "novaire-ivory-halter-skirt-set"
+            "customize_mobile_padding": false
           }
         },
         "video-2": {
           "type": "_video-review",
           "settings": {
             "video": "shopify://files/videos/novaire-real-people-2.mp4",
+            "product": "novaire-scarlet-floral-shorts-set",
             "enable_boxed_layout": true,
             "image_ratio": "ratio_4_5",
             "thumbnail_width": 48,
@@ -2322,14 +2300,14 @@
             "padding_mobile": 8,
             "padding_top": 0,
             "padding_bottom": 0,
-            "customize_mobile_padding": false,
-            "product": "novaire-scarlet-floral-shorts-set"
+            "customize_mobile_padding": false
           }
         },
         "video-3": {
           "type": "_video-review",
           "settings": {
             "video": "shopify://files/videos/novaire-real-people-3.mp4",
+            "product": "novaire-coastal-caprice-maxi-dress-yellow",
             "enable_boxed_layout": true,
             "image_ratio": "ratio_4_5",
             "thumbnail_width": 48,
@@ -2356,14 +2334,14 @@
             "padding_mobile": 8,
             "padding_top": 0,
             "padding_bottom": 0,
-            "customize_mobile_padding": false,
-            "product": "novaire-coastal-caprice-maxi-dress-yellow"
+            "customize_mobile_padding": false
           }
         },
         "video-4": {
           "type": "_video-review",
           "settings": {
             "video": "shopify://files/videos/novaire-real-people-4.mp4",
+            "product": "novaire-romilly-mini-dress-yellow",
             "enable_boxed_layout": true,
             "image_ratio": "ratio_4_5",
             "thumbnail_width": 48,
@@ -2390,14 +2368,14 @@
             "padding_mobile": 8,
             "padding_top": 0,
             "padding_bottom": 0,
-            "customize_mobile_padding": false,
-            "product": "novaire-romilly-mini-dress-yellow"
+            "customize_mobile_padding": false
           }
         },
         "video-5": {
           "type": "_video-review",
           "settings": {
             "video": "shopify://files/videos/novaire-real-people-5.mp4",
+            "product": "novaire-pink-garden-tiered-maxi-dress",
             "enable_boxed_layout": true,
             "image_ratio": "ratio_4_5",
             "thumbnail_width": 48,
@@ -2424,8 +2402,7 @@
             "padding_mobile": 8,
             "padding_top": 0,
             "padding_bottom": 0,
-            "customize_mobile_padding": false,
-            "product": "novaire-pink-garden-tiered-maxi-dress"
+            "customize_mobile_padding": false
           }
         }
       },
@@ -2435,37 +2412,48 @@
         "video-3",
         "video-4",
         "video-5"
-      ]
-    },
-    "featured_collection": {
-      "type": "featured-collection",
+      ],
       "settings": {
-        "section_width": "page_width",
-        "desktop_alignment": "left",
-        "mobile_alignment": "left",
-        "gap_desktop": 48,
-        "gap_mobile": 40,
-        "color_scheme": "scheme-featured-collection",
+        "section_width": "full_width",
+        "alignment": "center",
+        "columns_desktop": "5",
+        "columns_mobile": "2",
+        "gap_desktop": 28,
+        "gap_mobile": 16,
+        "emphasize_active": true,
+        "autoplay_video": true,
+        "show_navigation_on_desktop": false,
+        "show_pagination_on_desktop": true,
+        "show_pagination_on_mobile": true,
+        "pagination_type": "dots",
+        "pagination_padding_desktop": 32,
+        "pagination_padding_mobile": 32,
+        "autoplay": false,
+        "color_scheme": "scheme-1",
         "padding_top": 80,
         "padding_bottom": 80,
         "customize_mobile_padding": true,
         "padding_top_mobile": 56,
         "padding_bottom_mobile": 56
-      },
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
       "blocks": {
         "header": {
           "type": "header",
+          "static": true,
           "settings": {
             "width": "fill",
-            "alignment": "left",
-            "inherit_alignment": true,
-            "gap_desktop": 16,
-            "gap_mobile": 12,
             "max_width": 770,
             "customize_mobile_size": true,
             "width_mobile": "fill",
+            "inherit_alignment": true,
+            "alignment": "left",
             "customize_mobile_alignment": true,
-            "alignment_mobile": "left"
+            "alignment_mobile": "left",
+            "gap_desktop": 16,
+            "gap_mobile": 12
           },
           "blocks": {
             "trends-title": {
@@ -2473,14 +2461,14 @@
               "settings": {
                 "text": "<p>SHOP THE TRENDS</p>",
                 "heading_size": "xl",
-                "html_tag": "h2",
-                "animation_type": "slide-bottom",
                 "custom_heading_size": 24,
+                "html_tag": "h2",
                 "width": "fill",
                 "max_width": 640,
                 "customize_mobile_size": false,
                 "width_mobile": "fit",
                 "max_width_mobile": 480,
+                "animation_type": "slide-bottom",
                 "animation_delay": 100,
                 "padding_top": 0,
                 "padding_bottom": 0,
@@ -2506,19 +2494,19 @@
           "block_order": [
             "trends-title",
             "trends-copy"
-          ],
-          "static": true
+          ]
         },
         "featured-collection-view-all": {
           "type": "view-all-button",
-          "static": true,
           "disabled": true,
+          "static": true,
           "settings": {
             "button_label": "View all"
           }
         },
         "product-list": {
           "type": "product-list",
+          "static": true,
           "settings": {
             "collection": "trends-novaire",
             "max_products": 4,
@@ -2592,47 +2580,45 @@
           },
           "block_order": [
             "summer-sale"
-          ],
-          "static": true
+          ]
         }
       },
-      "block_order": []
-    },
-    "brands_intro": {
-      "type": "rich-text",
       "settings": {
         "section_width": "page_width",
-        "alignment": "center",
-        "customize_mobile_alignment": true,
-        "alignment_mobile": "center",
-        "color_scheme": "scheme-2",
-        "background_color": "#F6F0EC",
+        "desktop_alignment": "left",
+        "mobile_alignment": "left",
+        "gap_desktop": 48,
+        "gap_mobile": 40,
+        "color_scheme": "scheme-featured-collection",
         "padding_top": 80,
         "padding_bottom": 80,
         "customize_mobile_padding": true,
         "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56,
-        "gap": 16,
-        "gap_mobile": 16
-      },
+        "padding_bottom_mobile": 56
+      }
+    },
+    "brands_intro": {
+      "type": "rich-text",
       "blocks": {
         "eyebrow": {
           "type": "eyebrow",
+          "static": true,
           "settings": {
             "text": "",
-            "animation_delay": 100,
-            "animation_type": "slide-right"
-          },
-          "static": true
+            "animation_type": "slide-right",
+            "animation_delay": 100
+          }
         },
         "heading": {
           "type": "heading",
+          "static": true,
           "settings": {
             "text": "<p>OVER 100 BRANDS OF DESIGNERS</p>",
             "heading_size": "display",
-            "html_tag": "h2",
-            "width": "custom",
             "custom_heading_size": 24,
+            "html_tag": "h2",
+            "text_color": "#3A3A3A",
+            "width": "custom",
             "max_width": 830,
             "customize_mobile_size": true,
             "width_mobile": "fill",
@@ -2647,66 +2633,61 @@
             "padding_top_mobile": 0,
             "padding_bottom_mobile": 0,
             "padding_left_mobile": 0,
-            "padding_right_mobile": 0,
-            "text_color": "#3A3A3A"
-          },
-          "static": true
+            "padding_right_mobile": 0
+          }
         },
         "text": {
           "type": "text",
+          "static": true,
           "settings": {
             "text": "<p>From flowy floral midi dresses to sleek evening gowns, every piece is designed to express your individuality and confidence. Our collection brings together global designers who blend creativity, comfort, and style — so you can look and feel your best wherever you go. Find your next favorite look and make every day.</p>",
             "text_size": "sm",
+            "text_color": "#6C6C6C",
             "width": "custom",
             "max_width": 830,
-            "text_color": "#6C6C6C",
-            "padding_bottom": 16,
-            "customize_mobile_padding": true,
-            "padding_bottom_mobile": 8,
             "customize_mobile_size": true,
             "width_mobile": "fill",
+            "animation_type": "slide-bottom",
             "animation_delay": 100,
-            "animation_type": "slide-bottom"
-          },
-          "static": true
+            "padding_bottom": 16,
+            "customize_mobile_padding": true,
+            "padding_bottom_mobile": 8
+          }
         },
         "discover": {
           "type": "button",
           "settings": {
             "button_label": "DISCOVER MORE",
+            "button_link": "shopify://pages/our-story-novaire",
             "button_style": "primary",
             "show_icon": false,
             "width": "fit",
-            "button_link": "shopify://pages/our-story-novaire",
-            "animation_delay": 150,
-            "animation_type": "slide-bottom"
+            "animation_type": "slide-bottom",
+            "animation_delay": 150
           }
         }
       },
       "block_order": [
         "discover"
-      ]
-    },
-    "press_logos": {
-      "type": "custom-section",
+      ],
       "settings": {
         "section_width": "page_width",
-        "direction": "vertical",
+        "gap": 16,
+        "gap_mobile": 16,
         "alignment": "center",
         "customize_mobile_alignment": true,
         "alignment_mobile": "center",
-        "content_gap": 24,
-        "customize_mobile_gap": true,
-        "content_gap_mobile": 20,
-        "padding_top": 20,
+        "color_scheme": "scheme-2",
+        "background_color": "#F6F0EC",
+        "padding_top": 80,
         "padding_bottom": 80,
         "customize_mobile_padding": true,
-        "padding_top_mobile": 10,
-        "padding_bottom_mobile": 56,
-        "color_scheme": "scheme-1",
-        "background": "none",
-        "show_overlay": false
-      },
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      }
+    },
+    "press_logos": {
+      "type": "custom-section",
       "blocks": {
         "press-heading": {
           "type": "eyebrow",
@@ -2722,27 +2703,27 @@
             "direction": "vertical",
             "alignment": "center",
             "alignment_mobile": "center",
+            "gap_desktop": 0,
+            "gap_mobile": 0,
             "width": "fill",
-            "width_mobile": "fill",
             "limit_width": true,
             "max_width": 1120,
             "height": "fit",
-            "gap_desktop": 0,
-            "gap_mobile": 0
+            "width_mobile": "fill"
           },
           "blocks": {
             "marquee": {
               "type": "marquee",
               "settings": {
-                "animation_direction": "backward",
-                "animation_speed": 0.3,
-                "gap_desktop": 0,
-                "gap_mobile": 0,
                 "show_top_divider": false,
                 "show_bottom_divider": false,
                 "show_blurred_edges": false,
                 "enable_parallax": false,
                 "alignment": "center",
+                "animation_speed": 0.3,
+                "animation_direction": "backward",
+                "gap_desktop": 0,
+                "gap_mobile": 0,
                 "width": "fill",
                 "color_type": "inherit",
                 "padding_top": 0,
@@ -2829,46 +2810,50 @@
         "press-heading",
         "logos"
       ],
-      "name": "Text marquee (custom)"
+      "name": "Text marquee (custom)",
+      "settings": {
+        "section_width": "page_width",
+        "direction": "vertical",
+        "alignment": "center",
+        "customize_mobile_alignment": true,
+        "alignment_mobile": "center",
+        "content_gap": 24,
+        "customize_mobile_gap": true,
+        "content_gap_mobile": 20,
+        "background": "none",
+        "show_overlay": false,
+        "color_scheme": "scheme-1",
+        "padding_top": 20,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 56
+      }
     },
     "featured_product": {
       "type": "featured-product",
-      "settings": {
-        "sticky_content": true,
-        "width": "page",
-        "media_width": "balanced",
-        "gap": 64,
-        "gap_mobile": 40,
-        "color_scheme": "scheme-1",
-        "padding_top": 40,
-        "padding_bottom": 80,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 56,
-        "product": "novaire-romilly-mini-dress-yellow"
-      },
       "blocks": {
         "product-media": {
           "type": "_product-media",
           "static": true,
           "settings": {
-            "navigation_style": "secondary",
+            "main_image_ratio": "custom",
+            "main_image_ratio_custom_width": 6,
+            "main_image_ratio_custom_height": 7,
             "desktop_layout": "left_thumbnails",
-            "mobile_layout": "thumbnails",
-            "full_width_media": false,
-            "autoplay": false,
-            "loop_video": false,
-            "zoom": "open_lightbox",
-            "gap": 16,
-            "gap_mobile": 8,
             "bottom_thumbnail_width": 80,
             "thumbnail_ratio": "ratio_4_5",
+            "mobile_layout": "thumbnails",
+            "thumbnail_width_mobile": 64,
             "mobile_show_pagination": false,
             "mobile_pagination_type": "bullets",
-            "main_image_ratio": "custom",
-            "thumbnail_width_mobile": 64,
-            "main_image_ratio_custom_width": 6,
-            "main_image_ratio_custom_height": 7
+            "full_width_media": false,
+            "zoom": "open_lightbox",
+            "autoplay": false,
+            "loop_video": false,
+            "gap": 16,
+            "gap_mobile": 8,
+            "navigation_style": "secondary"
           }
         },
         "product-details": {
@@ -2903,11 +2888,11 @@
                 "direction": "vertical",
                 "alignment": "left",
                 "alignment_mobile": "left",
-                "width": "fill",
-                "width_mobile": "fill",
-                "height": "fit",
                 "gap_desktop": 8,
                 "gap_mobile": 8,
+                "width": "fill",
+                "height": "fit",
+                "width_mobile": "fill",
                 "border_type": "none",
                 "corner_radius": "square",
                 "shadow": "none"
@@ -2924,11 +2909,11 @@
                 "product-price-5": {
                   "type": "product-price",
                   "settings": {
+                    "font": "body",
                     "font_size": "lg",
+                    "letter_spacing": "normal",
                     "show_sale_badge": false,
                     "show_tax_shipping_notice": false,
-                    "font": "body",
-                    "letter_spacing": "normal",
                     "padding_top": 0,
                     "padding_bottom": 0,
                     "padding_left": 0,
@@ -2962,14 +2947,15 @@
             "product-description-14": {
               "type": "product-description",
               "settings": {
-                "text_size": "sm",
-                "height_limit": "none"
+                "height_limit": "none",
+                "text_size": "sm"
               }
             },
             "product-variant-picker-16": {
               "type": "product-variant-picker",
               "settings": {
                 "show_option_names": true,
+                "show_selected_value": false,
                 "font": "body",
                 "font_size": "md",
                 "letter_spacing": "normal",
@@ -2977,6 +2963,7 @@
                 "input_font_size": "sm",
                 "input_letter_spacing": "normal",
                 "size_chart_option_name": "Size",
+                "size_chart_page": "size-guide",
                 "size_chart_desktop_layout": "modal",
                 "size_chart_width": 600,
                 "size_chart_mobile_layout": "bottom_sheet",
@@ -2988,9 +2975,7 @@
                 "padding_top_mobile": 0,
                 "padding_bottom_mobile": 0,
                 "padding_left_mobile": 0,
-                "padding_right_mobile": 0,
-                "show_selected_value": false,
-                "size_chart_page": "size-guide"
+                "padding_right_mobile": 0
               }
             },
             "product-buy-buttons-17": {
@@ -3003,33 +2988,33 @@
               "blocks": {
                 "quantity": {
                   "type": "product-buy-quantity",
+                  "static": true,
                   "settings": {
-                    "label": "Quantity",
-                    "style": "custom",
                     "show_label": true,
                     "font": "body",
                     "font_size": "md",
                     "letter_spacing": "normal",
+                    "label": "Quantity",
+                    "style": "custom",
                     "border_thickness": 1,
                     "corner_radius": 0
-                  },
-                  "static": true
+                  }
                 },
                 "add-to-cart": {
                   "type": "product-buy-add-to-cart",
+                  "static": true,
                   "settings": {
-                    "style": "secondary",
-                    "show_price": false
-                  },
-                  "static": true
+                    "show_price": false,
+                    "style": "secondary"
+                  }
                 },
                 "accelerated-checkout": {
                   "type": "product-buy-accelerated-checkout",
+                  "disabled": true,
+                  "static": true,
                   "settings": {
                     "style": "primary"
-                  },
-                  "static": true,
-                  "disabled": true
+                  }
                 }
               },
               "block_order": []
@@ -3043,26 +3028,23 @@
           ]
         }
       },
-      "block_order": []
+      "settings": {
+        "product": "novaire-romilly-mini-dress-yellow",
+        "sticky_content": true,
+        "width": "page",
+        "media_width": "balanced",
+        "gap": 64,
+        "gap_mobile": 40,
+        "color_scheme": "scheme-1",
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 56
+      }
     },
     "scrolling_cards": {
       "type": "scrolling-cards",
-      "settings": {
-        "section_width": "custom",
-        "stack_effect": "fade",
-        "enable_sticky_mobile": false,
-        "card_gap_desktop": 160,
-        "card_gap_mobile": 112,
-        "gap_desktop": 0,
-        "gap_mobile": 0,
-        "color_scheme": "scheme-2",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "customize_mobile_padding": true,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56,
-        "custom_width": 1680
-      },
       "blocks": {
         "header": {
           "type": "header",
@@ -3105,16 +3087,16 @@
               "type": "group",
               "settings": {
                 "direction": "vertical",
-                "width": "fill",
-                "width_mobile": "fill",
-                "height": "fit",
                 "gap_desktop": 0,
                 "gap_mobile": 0,
+                "width": "fill",
+                "height": "fit",
+                "width_mobile": "fill",
+                "appearance_type": "inherit",
                 "padding_top": 0,
                 "padding_bottom": 0,
                 "padding_left": 0,
-                "padding_right": 0,
-                "appearance_type": "inherit"
+                "padding_right": 0
               },
               "blocks": {
                 "content": {
@@ -3122,13 +3104,14 @@
                   "settings": {
                     "direction": "vertical",
                     "alignment": "left",
+                    "position": "center",
                     "alignment_mobile": "left",
-                    "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fit",
                     "gap_desktop": 24,
                     "gap_mobile": 20,
-                    "position": "center",
+                    "width": "fill",
+                    "height": "fit",
+                    "width_mobile": "fill",
+                    "backdrop_blur": 0,
                     "padding_top": 0,
                     "padding_bottom": 0,
                     "padding_left": 64,
@@ -3137,8 +3120,7 @@
                     "padding_top_mobile": 32,
                     "padding_bottom_mobile": 0,
                     "padding_left_mobile": 0,
-                    "padding_right_mobile": 0,
-                    "backdrop_blur": 0
+                    "padding_right_mobile": 0
                   },
                   "blocks": {
                     "eyebrow": {
@@ -3154,14 +3136,14 @@
                       "settings": {
                         "text": "<p>SUSTAINABLE MATERIALS</p>",
                         "heading_size": "xl",
+                        "custom_heading_size": 24,
                         "html_tag": "h2",
                         "width": "fill",
-                        "animation_type": "slide-bottom",
-                        "custom_heading_size": 24,
                         "max_width": 640,
                         "customize_mobile_size": false,
                         "width_mobile": "fit",
                         "max_width_mobile": 480,
+                        "animation_type": "slide-bottom",
                         "animation_delay": 100,
                         "padding_top": 0,
                         "padding_bottom": 0,
@@ -3188,10 +3170,10 @@
                       "type": "button",
                       "settings": {
                         "button_label": "LEARN MORE",
+                        "button_link": "shopify://pages/our-story-novaire",
                         "button_style": "primary",
                         "show_icon": false,
                         "animation_type": "slide-bottom",
-                        "button_link": "shopify://pages/our-story-novaire",
                         "animation_delay": 150
                       }
                     }
@@ -3216,10 +3198,10 @@
                 "image_ratio_desktop": "custom",
                 "image_ratio_custom_width_desktop": 6,
                 "image_ratio_custom_height_desktop": 5,
+                "width_desktop": "fill",
                 "image_ratio_mobile": "custom",
                 "image_ratio_custom_width_mobile": 6,
                 "image_ratio_custom_height_mobile": 5,
-                "width_desktop": "fill",
                 "width_mobile": "fill",
                 "corner_radius": "square"
               }
@@ -3262,16 +3244,16 @@
               "type": "group",
               "settings": {
                 "direction": "vertical",
-                "width": "fill",
-                "width_mobile": "fill",
-                "height": "fit",
                 "gap_desktop": 0,
                 "gap_mobile": 0,
+                "width": "fill",
+                "height": "fit",
+                "width_mobile": "fill",
+                "appearance_type": "inherit",
                 "padding_top": 0,
                 "padding_bottom": 0,
                 "padding_left": 0,
-                "padding_right": 0,
-                "appearance_type": "inherit"
+                "padding_right": 0
               },
               "blocks": {
                 "content": {
@@ -3279,13 +3261,14 @@
                   "settings": {
                     "direction": "vertical",
                     "alignment": "left",
+                    "position": "center",
                     "alignment_mobile": "left",
-                    "width": "fill",
-                    "width_mobile": "fill",
-                    "height": "fit",
                     "gap_desktop": 24,
                     "gap_mobile": 20,
-                    "position": "center",
+                    "width": "fill",
+                    "height": "fit",
+                    "width_mobile": "fill",
+                    "backdrop_blur": 0,
                     "padding_top": 0,
                     "padding_bottom": 0,
                     "padding_left": 64,
@@ -3294,8 +3277,7 @@
                     "padding_top_mobile": 32,
                     "padding_bottom_mobile": 0,
                     "padding_left_mobile": 0,
-                    "padding_right_mobile": 0,
-                    "backdrop_blur": 0
+                    "padding_right_mobile": 0
                   },
                   "blocks": {
                     "eyebrow": {
@@ -3311,14 +3293,14 @@
                       "settings": {
                         "text": "<p>VEGAN & CRUELTY-FREE</p>",
                         "heading_size": "xl",
+                        "custom_heading_size": 24,
                         "html_tag": "h2",
                         "width": "fill",
-                        "animation_type": "slide-bottom",
-                        "custom_heading_size": 24,
                         "max_width": 640,
                         "customize_mobile_size": false,
                         "width_mobile": "fit",
                         "max_width_mobile": 480,
+                        "animation_type": "slide-bottom",
                         "animation_delay": 100,
                         "padding_top": 0,
                         "padding_bottom": 0,
@@ -3345,10 +3327,10 @@
                       "type": "button",
                       "settings": {
                         "button_label": "LEARN MORE",
+                        "button_link": "shopify://pages/our-story-novaire",
                         "button_style": "primary",
                         "show_icon": false,
                         "animation_type": "slide-bottom",
-                        "button_link": "shopify://pages/our-story-novaire",
                         "animation_delay": 150
                       }
                     }
@@ -3373,10 +3355,10 @@
                 "image_ratio_desktop": "custom",
                 "image_ratio_custom_width_desktop": 6,
                 "image_ratio_custom_height_desktop": 5,
+                "width_desktop": "fill",
                 "image_ratio_mobile": "custom",
                 "image_ratio_custom_width_mobile": 6,
                 "image_ratio_custom_height_mobile": 5,
-                "width_desktop": "fill",
                 "width_mobile": "fill",
                 "corner_radius": "square"
               }
@@ -3391,7 +3373,23 @@
       "block_order": [
         "our_story",
         "our_value"
-      ]
+      ],
+      "settings": {
+        "section_width": "custom",
+        "custom_width": 1680,
+        "stack_effect": "fade",
+        "enable_sticky_mobile": false,
+        "card_gap_desktop": 160,
+        "card_gap_mobile": 112,
+        "gap_desktop": 0,
+        "gap_mobile": 0,
+        "color_scheme": "scheme-2",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "customize_mobile_padding": true,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      }
     }
   },
   "order": [
