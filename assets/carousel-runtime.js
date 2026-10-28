@@ -768,8 +768,6 @@ document.addEventListener('shopify:block:select', (event) => {
   state.swiper.slideTo(index, duration);
 });
 
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => initializeRoot(), { once: true });
-else initializeRoot();
 
 return initializeRoot;
 };

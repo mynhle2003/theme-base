@@ -150,15 +150,6 @@
       load(script);
       return;
     }
-    try {
-      const existing = modules.get(moduleURL(script));
-      if (existing) {
-        load(script);
-        return;
-      }
-    } catch {
-      // Validate and report in load(), without throwing out of scan().
-    }
     // Markers are siblings of their component. Their parent can be a
     // display:contents layout slot (featured collection on desktop), which
     // has no box for IntersectionObserver to intersect. Find a boxed ancestor.

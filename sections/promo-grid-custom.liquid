@@ -29,7 +29,7 @@
       {% endcapture %}
       {% capture pagination %}{% render 'swiper-pagination', show: section.settings.show_pagination_on_mobile, type: section.settings.pagination_type, style: pagination_style %}{% endcapture %}
       {% render 'swiper-carousel', layout: 'carousel', content: cards, root_class: 'promo-grid__carousel', wrapper_class: 'promo-grid__items', root_attributes: attributes, pagination: pagination, show_next_slide_preview_on_mobile: section.settings.show_next_slide_preview_on_mobile %}
-      <script type="module" src="{{ 'product-collection-carousel.js' | asset_url }}"></script>
+      <script data-theme-module="{{ 'product-collection-carousel.js' | asset_url }}"></script>
       <script type="module" src="{{ 'promo-grid.js' | asset_url }}"></script>
     {% else %}<div class="promo-grid__items">{{ cards }}</div>{% endif %}
   </div>

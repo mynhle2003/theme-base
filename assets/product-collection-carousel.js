@@ -213,8 +213,3 @@ document.addEventListener('shopify:section:load', (event) => initializeRoot(even
 document.addEventListener('shopify:section:select', (event) => initializeRoot(event.target));
 document.addEventListener('shopify:section:unload', (event) => destroyRoot(event.target));
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => initializeRoot(), { once: true });
-} else {
-  initializeRoot();
-}
