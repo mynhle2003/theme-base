@@ -212,4 +212,3 @@ const destroyRoot = (root) => {
 document.addEventListener('shopify:section:load', (event) => initializeRoot(event.target));
 document.addEventListener('shopify:section:select', (event) => initializeRoot(event.target));
 document.addEventListener('shopify:section:unload', (event) => destroyRoot(event.target));
-
