@@ -52,9 +52,16 @@
     if image_alt == blank
       assign image_alt = image.alt
     endif
+    assign image_alt = image_alt | default: ''
 
     assign image_widths = widths | default: blank
     assign image_sizes = sizes | default: blank
+    if loading == 'lazy' and image_sizes != blank
+      assign image_sizes_prefix = image_sizes | slice: 0, 4
+      unless image_sizes_prefix == 'auto'
+        assign image_sizes = 'auto, ' | append: image_sizes
+      endunless
+    endif
   endif
 
   if url != blank
