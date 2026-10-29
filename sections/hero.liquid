@@ -129,10 +129,11 @@
           {% if section.settings.mobile_banner_image != blank %}
             <source
               media="(max-width: 767.98px)"
-              srcset="{{ section.settings.mobile_banner_image | image_url: width: 1200 }}"
+              srcset="{{ section.settings.mobile_banner_image | image_url: width: 375 }} 375w, {{ section.settings.mobile_banner_image | image_url: width: 550 }} 550w, {{ section.settings.mobile_banner_image | image_url: width: 750 }} 750w, {{ section.settings.mobile_banner_image | image_url: width: 1100 }} 1100w"
+              sizes="100vw"
             >
           {% endif %}
-          {{ section.settings.banner_image | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 2000, 2400', sizes: '100vw', alt: '' }}
+          {{ section.settings.banner_image | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 2000, 2400', sizes: '100vw', loading: 'eager', fetchpriority: 'high', alt: '' }}
         </picture>
       {% else %}
         {{ 'lifestyle-1' | placeholder_svg_tag: 'hero__placeholder' }}
