@@ -1,4 +1,8 @@
 {% liquid
+  assign section_background_loading = 'lazy'
+  if section.index <= 2
+    assign section_background_loading = 'eager'
+  endif
   assign section_width = section.settings.section_width | default: 'page_width'
   assign container_width = 'page-width'
   assign container_no_padding = false
@@ -90,7 +94,7 @@
   >
     {% if section.settings.background_image != blank %}
       <div class="gallery-carousel__background" aria-hidden="true">
-        {{ section.settings.background_image | image_url: width: 2400 | image_tag: class: 'background-media-paint' }}
+        {{ section.settings.background_image | image_url: width: 2400 | image_tag: widths: '480, 750, 1100, 1500, 2000, 2400', sizes: '100vw', loading: section_background_loading, alt: '', class: 'background-media-paint' }}
       </div>
     {% endif %}
     <div class="container {{ container_width }} gallery-carousel__container{% if container_no_padding %} gallery-carousel__container--no-padding{% endif %}">
