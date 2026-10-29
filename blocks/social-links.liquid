@@ -32,7 +32,7 @@
   endif
 %}
 
-{{ 'component-social-links.css' | asset_url | stylesheet_tag }}
+{% render 'component-stylesheet', filename: 'component-social-links.css', section_index: section.index %}
 
 <div
   class="social-links-block{% if request.design_mode %} social-links-block--editor{% endif %}"
