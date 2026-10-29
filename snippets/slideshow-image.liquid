@@ -20,7 +20,7 @@
 {% liquid
   assign mobile_artwork = mobile_image | default: image
   assign native_mobile_artwork = false
-  if mobile_image != blank and mobile_artwork.width <= 750 and mobile_artwork.src contains '.webp'
+  if mobile_image != blank and mobile_artwork.width <= 750 and mobile_artwork.src contains '.webp' and request.page_type != 'index'
     comment
       Small dedicated mobile uploads are already encoded for this viewport.
       Preserve their compressed native file instead of CDN recompression.
@@ -31,6 +31,10 @@
   assign frame_height = mobile_height | default: 0 | plus: 0
   assign mobile_cover_width = frame_height | times: mobile_artwork.aspect_ratio
   assign mobile_focal_point = mobile_artwork.presentation.focal_point | default: '50.0% 50.0%'
+  assign mobile_crop_density_cap = 3
+  if request.page_type == 'index' and request.design_mode != true
+    assign mobile_crop_density_cap = 1.25
+  endif
   assign crop_mobile_panorama = false
   if frame_height > 0 and mobile_cover_width > 768
     if mobile_focal_point == '50.0% 50.0%' or mobile_focal_point == '50% 50%'
@@ -52,7 +56,7 @@
   endcapture
   capture narrow_srcset
     if crop_mobile_panorama
-      assign available_density = mobile_artwork.height | times: 1.0 | divided_by: frame_height | at_most: 3
+      assign available_density = mobile_artwork.height | times: 1.0 | divided_by: frame_height | at_most: mobile_crop_density_cap
       for density in (1..3)
         assign crop_density = density | at_most: available_density
         assign crop_width = 480 | times: crop_density | round
@@ -72,7 +76,7 @@
   endcapture
   capture mobile_srcset
     if crop_mobile_panorama
-      assign available_density = mobile_artwork.height | times: 1.0 | divided_by: frame_height | at_most: 3
+      assign available_density = mobile_artwork.height | times: 1.0 | divided_by: frame_height | at_most: mobile_crop_density_cap
       for density in (1..3)
         assign crop_density = density | at_most: available_density
         assign crop_width = 768 | times: crop_density | round
@@ -100,14 +104,8 @@
       echo ' 550w, '
       echo mobile_artwork | image_url: width: 750
       echo ' 750w, '
-      echo mobile_artwork | image_url: width: 1100
-      echo ' 1100w, '
-      echo mobile_artwork | image_url: width: 1500
-      echo ' 1500w, '
-      echo mobile_artwork | image_url: width: 2000
-      echo ' 2000w, '
-      echo mobile_artwork | image_url: width: 2400
-      echo ' 2400w'
+      echo mobile_artwork | image_url: width: 750
+      echo ' 750w'
     endif
   endcapture
   assign mobile_sizes = mobile_image_sizes | default: '100vw'
