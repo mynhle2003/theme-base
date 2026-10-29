@@ -15,6 +15,7 @@
   @param {string} [loading] - eager for the first visible slide, otherwise lazy
   @param {string} [fetchpriority] - high only for the first visible slide
   @param {boolean} [preload] - Output hints instead of the picture
+  @param {boolean} [defer] - Hold non-active slide sources until the slide is activated
 {% enddoc %}
 {% liquid
   assign mobile_artwork = mobile_image | default: image
@@ -129,6 +130,18 @@
   {% endif %}
   <link rel="preload" as="image" imagesrcset="{{ desktop_srcset | strip | escape }}" imagesizes="{{ image_sizes | escape }}" media="{{ desktop_media }}" fetchpriority="high">
 {% else %}
+  {% if defer %}
+    <picture data-slideshow-deferred-media>
+      {% if crop_mobile_panorama %}
+        <source media="(max-width: 479.98px)" data-srcset="{{ narrow_srcset | strip | escape }}">
+        <source media="(max-width: 767.98px)" data-srcset="{{ mobile_srcset | strip | escape }}">
+      {% else %}
+        <source media="(max-width: 767.98px)" data-srcset="{{ mobile_srcset | strip | escape }}" sizes="{{ mobile_sizes | strip | escape }}">
+      {% endif %}
+      {% capture deferred_image_markup %}{{ image | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 2000, 2400', sizes: image_sizes, loading: 'lazy', fetchpriority: fetchpriority, alt: '' }}{% endcapture %}
+      {{ deferred_image_markup | replace: ' srcset="', ' data-srcset="' | replace: ' src="', ' data-src="' | replace: ' loading="lazy"', ' loading="lazy" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="' }}
+    </picture>
+  {% else %}
   <picture>
     {% if crop_mobile_panorama %}
       <source media="(max-width: 479.98px)" srcset="{{ narrow_srcset | strip | escape }}">
@@ -138,4 +151,5 @@
     {% endif %}
     {{ image | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 2000, 2400', sizes: image_sizes, loading: loading, fetchpriority: fetchpriority, alt: '' }}
   </picture>
+  {% endif %}
 {% endif %}

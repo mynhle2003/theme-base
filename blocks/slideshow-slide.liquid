@@ -42,9 +42,12 @@
   endcase
   assign slide_image_sizes = '100vw'
   assign slide_mobile_image_sizes = blank
+  assign slide_image_deferred = false
   if section.blocks.first != blank and section.blocks.first.id == block.id
     assign slide_image_loading = 'eager'
     assign slide_image_fetchpriority = 'high'
+  elsif request.design_mode == false
+    assign slide_image_deferred = true
   endif
 %}
 
@@ -84,7 +87,7 @@
         {% if slide_media_type == 'video' and block.settings.video != blank %}
           {{ block.settings.video | video_tag: image_size: '2400x', autoplay: true, loop: true, muted: true, controls: false, playsinline: true, class: 'slideshow-slide__video' }}
         {% elsif block.settings.image != blank %}
-          {% render 'slideshow-image', image: block.settings.image, mobile_image: block.settings.mobile_image, mobile_height: slide_mobile_height, sizes: slide_image_sizes, mobile_image_sizes: slide_mobile_image_sizes, loading: slide_image_loading, fetchpriority: slide_image_fetchpriority %}
+          {% render 'slideshow-image', image: block.settings.image, mobile_image: block.settings.mobile_image, mobile_height: slide_mobile_height, sizes: slide_image_sizes, mobile_image_sizes: slide_mobile_image_sizes, loading: slide_image_loading, fetchpriority: slide_image_fetchpriority, defer: slide_image_deferred %}
         {% else %}
           {{ 'lifestyle-1' | placeholder_svg_tag: 'hero__placeholder' }}
         {% endif %}

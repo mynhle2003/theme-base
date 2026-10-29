@@ -8,6 +8,25 @@ const isVisible = (element) => element.getClientRects().length > 0;
 const slideSelector = '[data-slideshow-slide]';
 const controlSchemeEvents = ['activeIndexChange', 'slideChangeTransitionEnd', 'update', 'resize'];
 
+const hydrateSlideMedia = (slide) => {
+  slide?.querySelectorAll?.('[data-slideshow-deferred-media]').forEach((picture) => {
+    picture.querySelectorAll('source[data-srcset]').forEach((source) => {
+      source.setAttribute('srcset', source.dataset.srcset);
+      source.removeAttribute('data-srcset');
+    });
+    const image = picture.querySelector('img[data-src], img[data-srcset]');
+    if (image?.dataset.srcset) {
+      image.setAttribute('srcset', image.dataset.srcset);
+      image.removeAttribute('data-srcset');
+    }
+    if (image?.dataset.src) {
+      image.setAttribute('src', image.dataset.src);
+      image.removeAttribute('data-src');
+    }
+    picture.removeAttribute('data-slideshow-deferred-media');
+  });
+};
+
 const createSlideClone = (slide, sourceIndex, position) => {
   const clone = slide.cloneNode(true);
   clone.removeAttribute('id');
@@ -475,7 +494,10 @@ const init = (root) => {
     swiper.on('slideChangeTransitionStart', manualLoop.clearReset);
   }
   const syncControlScheme = () => updateControlScheme(root, swiper);
+  const hydrateActiveSlide = () => hydrateSlideMedia(swiper.slides?.[swiper.activeIndex]);
   controlSchemeEvents.forEach((eventName) => swiper.on(eventName, syncControlScheme));
+  swiper.on('activeIndexChange', hydrateActiveSlide);
+  hydrateActiveSlide();
   syncControlScheme();
   const navigationController = bindNavigation(root, swiper);
   const autoplayController = autoplay ? startAutoplay(root, swiper, manualLoop) : null;
@@ -490,7 +512,7 @@ const init = (root) => {
   const updateLockedState = () => root.classList.toggle('slideshow--single-slide', Boolean(swiper.isLocked));
   swiper.on('lock unlock update resize', updateLockedState);
   updateLockedState();
-  states.set(root, { carousel, swiper, scheduleParallax, frame, autoplayController, navigationController, updateLockedState, manualLoop, customPagination, syncControlScheme });
+  states.set(root, { carousel, swiper, scheduleParallax, frame, autoplayController, navigationController, updateLockedState, manualLoop, customPagination, syncControlScheme, hydrateActiveSlide });
 };
 
 const destroy = (root) => {
@@ -507,6 +529,7 @@ const destroy = (root) => {
     state.manualLoop.destroy();
   }
   controlSchemeEvents.forEach((eventName) => state.swiper.off(eventName, state.syncControlScheme));
+  state.swiper.off('activeIndexChange', state.hydrateActiveSlide);
   state.swiper.off('lock unlock update resize', state.updateLockedState);
   destroySwiperCarousel(state.swiper);
   states.delete(root);
