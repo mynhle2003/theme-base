@@ -224,7 +224,48 @@
       "type": "select",
       "id": "corner_radius",
       "label": "t:labels.corner_radius",
-      "options": [{"value": "square", "label": "t:options.radius_preset.square"}, {"value": "radius_2", "label": "t:options.radius_preset.size_2"}, {"value": "slightly_rounded", "label": "t:options.radius_preset.slightly_rounded"}, {"value": "radius_4", "label": "t:options.radius_preset.size_4"}, {"value": "radius_6", "label": "t:options.radius_preset.size_6"}, {"value": "rounded", "label": "t:options.radius_preset.rounded"}, {"value": "radius_8", "label": "t:options.radius_preset.size_8"}, {"value": "radius_12", "label": "t:options.radius_preset.size_12"}, {"value": "radius_16", "label": "t:options.radius_preset.size_16"}, {"value": "radius_24", "label": "t:options.radius_preset.size_24"}, {"value": "radius_32", "label": "t:options.radius_preset.size_32"}, {"value": "pill", "label": "t:options.radius_preset.pill"}],
+      "options": [
+        {
+          "value": "square",
+          "label": "t:options.radius_preset.square"
+        },
+        {
+          "value": "radius_2",
+          "label": "t:options.radius_preset.size_2"
+        },
+        {
+          "value": "slightly_rounded",
+          "label": "t:options.radius_preset.slightly_rounded"
+        },
+        {
+          "value": "radius_6",
+          "label": "t:options.radius_preset.size_6"
+        },
+        {
+          "value": "rounded",
+          "label": "t:options.radius_preset.rounded"
+        },
+        {
+          "value": "radius_12",
+          "label": "t:options.radius_preset.size_12"
+        },
+        {
+          "value": "radius_16",
+          "label": "t:options.radius_preset.size_16"
+        },
+        {
+          "value": "radius_24",
+          "label": "t:options.radius_preset.size_24"
+        },
+        {
+          "value": "radius_32",
+          "label": "t:options.radius_preset.size_32"
+        },
+        {
+          "value": "pill",
+          "label": "t:options.radius_preset.pill"
+        }
+      ],
       "default": "rounded",
       "visible_if": "{{ section.settings.enable_boxed_layout }}"
     },
@@ -376,7 +417,9 @@
                 "image_ratio_custom_width_mobile": 6,
                 "image_ratio_custom_height_mobile": 7,
                 "corner_radius": "custom",
-                "custom_corner_radius": 4
+                "custom_corner_radius": 4,
+                "animation_type": "fade",
+                "animation_delay": 0
               }
             },
             {
@@ -414,7 +457,9 @@
                         "heading_size": "xl",
                         "html_tag": "h2",
                         "width": "fill",
-                        "width_mobile": "fill"
+                        "width_mobile": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50
                       }
                     },
                     {
@@ -423,7 +468,9 @@
                         "text": "<p>Engineered for athletes who demand more from every stride. STRIDEO merges advanced geometry, responsive cushioning, and aerodynamic design to deliver effortless speed and all-day stability from track intensity to urban movement.</p>",
                         "text_size": "md",
                         "width": "fill",
-                        "width_mobile": "fill"
+                        "width_mobile": "fill",
+                        "animation_type": "fade",
+                        "animation_delay": 100
                       }
                     }
                   ]
@@ -434,7 +481,9 @@
                     "button_label": "Shop now",
                     "button_link": "shopify://collections/all",
                     "button_style": "primary",
-                    "show_icon": false
+                    "show_icon": false,
+                    "animation_type": "fade",
+                    "animation_delay": 150
                   }
                 }
               ]
@@ -458,7 +507,9 @@
                 "image_ratio_custom_width_mobile": 6,
                 "image_ratio_custom_height_mobile": 7,
                 "corner_radius": "custom",
-                "custom_corner_radius": 4
+                "custom_corner_radius": 4,
+                "animation_type": "fade",
+                "animation_delay": 0
               }
             },
             {
@@ -496,7 +547,9 @@
                         "heading_size": "xl",
                         "html_tag": "h2",
                         "width": "fill",
-                        "width_mobile": "fill"
+                        "width_mobile": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50
                       }
                     },
                     {
@@ -505,7 +558,9 @@
                         "text": "<p>Engineered for athletes who demand more from every stride. STRIDEO merges advanced geometry, responsive cushioning, and aerodynamic design to deliver effortless speed and all-day stability from track intensity to urban movement.</p>",
                         "text_size": "md",
                         "width": "fill",
-                        "width_mobile": "fill"
+                        "width_mobile": "fill",
+                        "animation_type": "fade",
+                        "animation_delay": 100
                       }
                     }
                   ]
@@ -516,7 +571,9 @@
                     "button_label": "Shop now",
                     "button_link": "shopify://collections/all",
                     "button_style": "primary",
-                    "show_icon": false
+                    "show_icon": false,
+                    "animation_type": "fade",
+                    "animation_delay": 150
                   }
                 }
               ]
@@ -540,7 +597,9 @@
                 "image_ratio_custom_width_mobile": 6,
                 "image_ratio_custom_height_mobile": 7,
                 "corner_radius": "custom",
-                "custom_corner_radius": 4
+                "custom_corner_radius": 4,
+                "animation_type": "fade",
+                "animation_delay": 0
               }
             },
             {
@@ -578,7 +637,9 @@
                         "heading_size": "xl",
                         "html_tag": "h2",
                         "width": "fill",
-                        "width_mobile": "fill"
+                        "width_mobile": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50
                       }
                     },
                     {
@@ -587,7 +648,9 @@
                         "text": "<p>Engineered for athletes who demand more from every stride. STRIDEO merges advanced geometry, responsive cushioning, and aerodynamic design to deliver effortless speed and all-day stability from track intensity to urban movement.</p>",
                         "text_size": "md",
                         "width": "fill",
-                        "width_mobile": "fill"
+                        "width_mobile": "fill",
+                        "animation_type": "fade",
+                        "animation_delay": 100
                       }
                     }
                   ]
@@ -598,7 +661,9 @@
                     "button_label": "Shop now",
                     "button_link": "shopify://collections/all",
                     "button_style": "primary",
-                    "show_icon": false
+                    "show_icon": false,
+                    "animation_type": "fade",
+                    "animation_delay": 150
                   }
                 }
               ]

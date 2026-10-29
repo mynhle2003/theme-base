@@ -319,7 +319,8 @@
           "show_overlay": true,
           "overlay_style": "solid",
           "overlay_color": "#0000001A",
-          "corner_radius": "radius_12",
+          "corner_radius": "custom",
+          "custom_corner_radius": 12,
           "color_scheme": "scheme-4",
           "padding_top": 40,
           "padding_bottom": 40,
@@ -344,7 +345,9 @@
           {
             "type": "eyebrow",
             "settings": {
-              "text": "<p>Living Room</p>"
+              "text": "<p>Living Room</p>",
+              "animation_type": "fade",
+              "animation_delay": 0
             }
           },
           {
@@ -353,7 +356,9 @@
               "text": "<p>The Everyday Comfort Sofa</p>",
               "heading_size": "xl",
               "width": "fill",
-              "html_tag": "h2"
+              "html_tag": "h2",
+              "animation_type": "slide-bottom",
+              "animation_delay": 50
             }
           },
           {
@@ -361,7 +366,9 @@
             "settings": {
               "button_label": "Shop Now",
               "button_link": "/collections/living-room-norden",
-              "button_style": "primary"
+              "button_style": "primary",
+              "animation_type": "fade",
+              "animation_delay": 150
             }
           }
         ]

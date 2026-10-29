@@ -92,9 +92,15 @@
     "settings": { "section_width": "page_width", "alignment": "left", "content_gap": 40, "customize_mobile_gap": true, "content_gap_mobile": 32, "color_scheme": "scheme-1", "customize_mobile_padding": false },
     "blocks": [
       { "type": "gallery-header-group", "blocks": [
-        { "type": "eyebrow", "settings": { "text": "<p>Section TAG</p>" } },
-        { "type": "heading", "settings": { "text": "<p>Follow Us On Instagram</p>", "html_tag": "h2" } },
-        { "type": "text", "settings": { "text": "<p>@pam_sam</p>" } }
+        { "type": "eyebrow", "settings": { "text": "<p>Section TAG</p>",
+                                                                          "animation_type": "fade",
+                                                                          "animation_delay": 0 } },
+        { "type": "heading", "settings": { "text": "<p>Follow Us On Instagram</p>", "html_tag": "h2",
+                                                                                                       "animation_type": "slide-bottom",
+                                                                                                       "animation_delay": 50 } },
+        { "type": "text", "settings": { "text": "<p>@pam_sam</p>",
+                                                                    "animation_type": "fade",
+                                                                    "animation_delay": 100 } }
       ] },
       { "type": "gallery-grid", "settings": { "columns_desktop": 4, "columns_mobile": "1", "gap": 32, "gap_mobile": 24, "width": "fill" }, "blocks": [
         { "type": "gallery-image", "settings": { "tag": "@pam_sam", "social_network": "instagram", "show_overlay": "always" } },

@@ -9,4 +9,15 @@ for(const v of values){const block={settings:{corner_radius:'radius_'+v}};const 
 }
 });
 test('thumbnail presets respect square and full modes',async()=>{const src=stripShopifyMetadata(fs.readFileSync('blocks/collection-thumbnail.liquid','utf8')).replace(/{%\s*content_for[^%]*%}/g,'');for(const v of values){const html=await engine().parseAndRender(src,{block:{settings:{}},section:{settings:{image_corner_radius:'radius_'+v}}});assert.ok(html.includes('--collection-thumbnail-radius:var(--radius-'+v+')'));}});
-test('global presets bind every radius setting to its corresponding token',async()=>{const schema=JSON.parse(fs.readFileSync('config/settings_schema.json','utf8'));const ss=schema.flatMap(g=>g.settings||[]).filter(s=>s.type==='select'&&s.options?.some(o=>o.value==='radius_12'));const src=stripShopifyMetadata(fs.readFileSync('snippets/css-variables.liquid','utf8')).replace(/{%\s*style\s*%}|{%\s*endstyle\s*%}/g,'');for(const v of values){const settings=Object.fromEntries(ss.map(s=>[s.id,'radius_'+v]));const html=await engine().parseAndRender(src,{settings});for(const prop of ['button-radius','icon-button-radius','input-radius','media-radius','card-radius','drawer-radius','bottom-sheet-radius','badge-radius','navigation-radius','variant-radius','swatch-radius','tag-radius'])assert.match(html,new RegExp('--'+prop+':\\s*var\\(--radius-'+v+'\\)'),prop);}});
+test('global canonical presets bind to the shared semantic radius tokens', async () => {
+  const schema = JSON.parse(fs.readFileSync('config/settings_schema.json', 'utf8'));
+  const controls = schema.flatMap(g => g.settings || []).filter(s => s.type === 'select' && s.id.includes('radius') && s.options?.some(o => o.value === 'rounded'));
+  const source = ['snippets/css-variables.liquid', 'snippets/css-variables-controls.liquid'].map(file => stripShopifyMetadata(fs.readFileSync(file, 'utf8'))).join('\n').replace(/{%\s*style\s*%}|{%\s*endstyle\s*%}/g, '');
+  for (const value of ['square', 'rounded']) {
+    const settings = Object.fromEntries(controls.map(s => [s.id, value]));
+    const html = await engine().parseAndRender(source, { settings });
+    for (const property of ['button-radius', 'input-radius', 'media-radius', 'card-radius', 'drawer-radius', 'bottom-sheet-radius', 'badge-radius', 'navigation-radius', 'variant-radius', 'swatch-radius', 'tag-radius']) {
+      assert.match(html, new RegExp('--' + property + ':\\s*var\\(--radius-' + value + '\\)'), property);
+    }
+  }
+});

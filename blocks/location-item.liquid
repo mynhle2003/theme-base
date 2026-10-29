@@ -63,9 +63,15 @@
       "category": "t:general.content",
       "settings": { "gap_desktop": 8, "gap_mobile": 8, "padding_top": 16, "padding_right": 32, "padding_bottom": 16, "padding_left": 32, "image_alt": "Store location" },
       "blocks": [
-        { "type": "heading", "settings": { "text": "<p>Store location</p>", "heading_size": "sm", "html_tag": "h4" } },
-        { "type": "text", "settings": { "text": "<p>123 Sample St, Sydney NSW 2000 AU</p>", "text_size": "sm" } },
-        { "type": "button", "settings": { "button_label": "Get directions", "button_style": "tertiary", "show_icon": false, "icon": "arrow", "icon_position": "after", "width": "fit" } }
+        { "type": "heading", "settings": { "text": "<p>Store location</p>", "heading_size": "sm", "html_tag": "h4",
+                                                                                                                     "animation_type": "slide-bottom",
+                                                                                                                     "animation_delay": 50 } },
+        { "type": "text", "settings": { "text": "<p>123 Sample St, Sydney NSW 2000 AU</p>", "text_size": "sm",
+                                                                                                                "animation_type": "fade",
+                                                                                                                "animation_delay": 100 } },
+        { "type": "button", "settings": { "button_label": "Get directions", "button_style": "tertiary", "show_icon": false, "icon": "arrow", "icon_position": "after", "width": "fit",
+                                                                                                                                                                                        "animation_type": "fade",
+                                                                                                                                                                                        "animation_delay": 150 } }
       ]
     }
   ]

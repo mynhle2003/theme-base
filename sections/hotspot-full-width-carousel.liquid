@@ -1,27 +1,24 @@
-{% comment %}
-  Theme Block types/settings are not reliably exposed to the parent section,
-  and editor-generated IDs do not identify the block type. Render each block
-  once, then use the callout's own marker to separate slides from the header.
-{% endcomment %}
+{% capture hotspot_carousel_blocks %}{% content_for 'blocks' %}{% endcapture %}
 {% liquid
   assign hotspot_carousel_header = ''
   assign hotspot_carousel_slides = ''
   assign hotspot_carousel_product_callout_count = 0
-%}
-{% for hotspot_carousel_block in section.blocks %}
-  {% capture hotspot_carousel_block_markup %}
-    {% render hotspot_carousel_block %}
-  {% endcapture %}
-  {% liquid
-    assign hotspot_carousel_block_markup = hotspot_carousel_block_markup | strip
-    if hotspot_carousel_block_markup contains 'data-product-callout-carousel="true"'
-      assign hotspot_carousel_slides = hotspot_carousel_slides | append: hotspot_carousel_block_markup
+  assign hotspot_carousel_fragments = hotspot_carousel_blocks | split: '<!--hotspot-carousel-slide-start-->'
+  for hotspot_carousel_fragment in hotspot_carousel_fragments
+    if hotspot_carousel_fragment contains '<!--hotspot-carousel-slide-end-->'
+      assign hotspot_carousel_parts = hotspot_carousel_fragment | split: '<!--hotspot-carousel-slide-end-->'
+      assign hotspot_carousel_slide = hotspot_carousel_parts | first
+      assign hotspot_carousel_slides = hotspot_carousel_slides | append: hotspot_carousel_slide
       assign hotspot_carousel_product_callout_count = hotspot_carousel_product_callout_count | plus: 1
+      if hotspot_carousel_parts.size > 1
+        assign hotspot_carousel_remainder = hotspot_carousel_parts | last
+        assign hotspot_carousel_header = hotspot_carousel_header | append: hotspot_carousel_remainder
+      endif
     else
-      assign hotspot_carousel_header = hotspot_carousel_header | append: hotspot_carousel_block_markup
+      assign hotspot_carousel_header = hotspot_carousel_header | append: hotspot_carousel_fragment
     endif
-  %}
-{% endfor %}
+  endfor
+%}
 
 {% liquid
   assign hotspot_carousel_width = section.settings.width | default: 'full'
@@ -894,7 +891,9 @@
               "settings": {
                 "text": "<p>Shop the Look</p>",
                 "heading_size": "lg",
-                "width": "fill"
+                "width": "fill",
+                "animation_type": "slide-bottom",
+                "animation_delay": 50
               }
             }
           ]
@@ -911,7 +910,8 @@
             "text": "",
             "button_label": "",
             "hotspot_icon_style": "plus_ring",
-            "corner_radius": "radius_12",
+            "corner_radius": "custom",
+            "custom_corner_radius": 12,
             "mobile_image": "shopify://shop_images/norden-hotspot-mobile-photo.avif"
           },
           "blocks": [
@@ -962,7 +962,8 @@
             "text": "",
             "button_label": "",
             "hotspot_icon_style": "plus_ring",
-            "corner_radius": "radius_12"
+            "corner_radius": "custom",
+            "custom_corner_radius": 12
           },
           "blocks": [
             {
@@ -1003,7 +1004,8 @@
             "text": "",
             "button_label": "",
             "hotspot_icon_style": "plus_ring",
-            "corner_radius": "radius_12"
+            "corner_radius": "custom",
+            "custom_corner_radius": 12
           },
           "blocks": [
             {

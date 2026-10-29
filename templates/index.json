@@ -38,7 +38,7 @@
                   "type": "eyebrow",
                   "settings": {
                     "text": "<p>Effortlessly</p>",
-                    "animation_type": "slide-bottom",
+                    "animation_type": "fade",
                     "animation_delay": 0
                   }
                 },
@@ -50,7 +50,7 @@
                     "html_tag": "h1",
                     "width": "fill",
                     "animation_type": "slide-bottom",
-                    "animation_delay": 0
+                    "animation_delay": 50
                   }
                 }
               },
@@ -65,8 +65,8 @@
                 "button_label": "Shop The Look",
                 "button_link": "/collections/aike-best-sellers",
                 "button_style": "primary",
-                "animation_type": "slide-bottom",
-                "animation_delay": 0
+                "animation_type": "fade",
+                "animation_delay": 150
               }
             }
           },
@@ -112,7 +112,7 @@
                   "type": "eyebrow",
                   "settings": {
                     "text": "<p>Thoughtfully Made</p>",
-                    "animation_type": "slide-bottom",
+                    "animation_type": "fade",
                     "animation_delay": 0
                   }
                 },
@@ -124,7 +124,7 @@
                     "html_tag": "h2",
                     "width": "fill",
                     "animation_type": "slide-bottom",
-                    "animation_delay": 0
+                    "animation_delay": 50
                   }
                 }
               },
@@ -139,8 +139,8 @@
                 "button_label": "Explore Bedroom",
                 "button_link": "/products/element-bed-mounted-headboard",
                 "button_style": "primary",
-                "animation_type": "slide-bottom",
-                "animation_delay": 0
+                "animation_type": "fade",
+                "animation_delay": 150
               }
             }
           },
@@ -203,7 +203,7 @@
                 "heading_size": "lg",
                 "width": "fill",
                 "animation_type": "slide-bottom",
-                "animation_delay": 0
+                "animation_delay": 50
               }
             }
           },
@@ -486,7 +486,7 @@
       ],
       "settings": {
         "section_width": "full_width",
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-qa-marquee",
         "padding_top": 20,
         "padding_bottom": 20,
         "customize_mobile_padding": true,
@@ -522,20 +522,21 @@
             "show_overlay": true,
             "overlay_style": "solid",
             "overlay_color": "#0000001A",
-            "corner_radius": "radius_12",
+            "corner_radius": "custom",
+            "custom_corner_radius": 12,
             "color_scheme": "scheme-4",
             "padding_top": 40,
             "padding_bottom": 40,
             "padding_left": 40,
             "padding_right": 40,
             "customize_mobile_padding": true,
-            "padding_top_mobile": 24,
-            "padding_bottom_mobile": 24,
-            "padding_left_mobile": 24,
-            "padding_right_mobile": 24,
+            "padding_top_mobile": 32,
+            "padding_bottom_mobile": 32,
+            "padding_left_mobile": 28,
+            "padding_right_mobile": 28,
             "enable_sticky": false,
-            "gap_desktop": 20,
-            "gap_mobile": 20,
+            "gap_desktop": 24,
+            "gap_mobile": 24,
             "image_ratio_desktop": "custom",
             "image_ratio_custom_width_desktop": 784,
             "image_ratio_custom_height_desktop": 928,
@@ -544,33 +545,56 @@
             "image_ratio_custom_height_mobile": 482
           },
           "blocks": {
-            "eyebrow": {
-              "type": "eyebrow",
+            "copy": {
+              "type": "group",
               "settings": {
-                "text": "<p>Living Room</p>"
-              }
-            },
-            "heading": {
-              "type": "heading",
-              "settings": {
-                "text": "<p>The Everyday Comfort Sofa</p>",
-                "heading_size": "xl",
+                "alignment": "left",
+                "alignment_mobile": "left",
+                "gap_desktop": 12,
+                "gap_mobile": 12,
                 "width": "fill",
-                "html_tag": "h2"
-              }
+                "width_mobile": "fill",
+                "height": "fit"
+              },
+              "blocks": {
+                "eyebrow": {
+                  "type": "eyebrow",
+                  "settings": {
+                    "text": "<p>Living Room</p>",
+                    "animation_type": "fade",
+                    "animation_delay": 0
+                  }
+                },
+                "heading": {
+                  "type": "heading",
+                  "settings": {
+                    "text": "<p>The Everyday Comfort Sofa</p>",
+                    "heading_size": "xl",
+                    "width": "fill",
+                    "html_tag": "h2",
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 50
+                  }
+                }
+              },
+              "block_order": [
+                "eyebrow",
+                "heading"
+              ]
             },
             "button": {
               "type": "button",
               "settings": {
                 "button_label": "Shop Now",
                 "button_link": "/collections/living-room-norden",
-                "button_style": "primary"
+                "button_style": "primary",
+                "animation_type": "fade",
+                "animation_delay": 150
               }
             }
           },
           "block_order": [
-            "eyebrow",
-            "heading",
+            "copy",
             "button"
           ]
         },
@@ -626,7 +650,7 @@
                 "heading_size": "lg",
                 "width": "fill",
                 "animation_type": "slide-bottom",
-                "animation_delay": 0
+                "animation_delay": 50
               }
             }
           },
@@ -706,7 +730,8 @@
             "text": "",
             "button_label": "",
             "hotspot_icon_style": "plus_ring",
-            "corner_radius": "radius_12"
+            "corner_radius": "custom",
+            "custom_corner_radius": 12
           },
           "blocks": {
             "point0": {
@@ -752,7 +777,8 @@
             "text": "",
             "button_label": "",
             "hotspot_icon_style": "plus_ring",
-            "corner_radius": "radius_12",
+            "corner_radius": "custom",
+            "custom_corner_radius": 12,
             "mobile_image": "shopify://shop_images/norden-hotspot-mobile-photo.avif"
           },
           "blocks": {
@@ -808,7 +834,8 @@
             "text": "",
             "button_label": "",
             "hotspot_icon_style": "plus_ring",
-            "corner_radius": "radius_12"
+            "corner_radius": "custom",
+            "custom_corner_radius": 12
           },
           "blocks": {
             "point0": {
@@ -857,7 +884,9 @@
               "settings": {
                 "text": "<p>Shop the Look</p>",
                 "heading_size": "lg",
-                "width": "fill"
+                "width": "fill",
+                "animation_type": "slide-bottom",
+                "animation_delay": 50
               }
             }
           },
@@ -951,7 +980,9 @@
                     "eyebrow": {
                       "type": "eyebrow",
                       "settings": {
-                        "text": "<p>Outdoor Collection</p>"
+                        "text": "<p>Outdoor Collection</p>",
+                        "animation_type": "fade",
+                        "animation_delay": 0
                       }
                     },
                     "heading": {
@@ -959,7 +990,9 @@
                       "settings": {
                         "text": "<p>Outdoor Furniture</p>",
                         "heading_size": "xl",
-                        "width": "fill"
+                        "width": "fill",
+                        "animation_type": "slide-bottom",
+                        "animation_delay": 50
                       }
                     }
                   },
@@ -973,7 +1006,9 @@
                   "settings": {
                     "button_label": "Go To Collection",
                     "button_link": "/collections/outdoor-norden",
-                    "button_style": "primary"
+                    "button_style": "primary",
+                    "animation_type": "fade",
+                    "animation_delay": 150
                   }
                 }
               },
@@ -1088,7 +1123,7 @@
                 "heading_size": "lg",
                 "width": "fill",
                 "animation_type": "slide-bottom",
-                "animation_delay": 0
+                "animation_delay": 50
               }
             }
           },
@@ -1179,7 +1214,8 @@
                     "image": "shopify://shop_images/aike-47021-7780-imgImage.webp",
                     "width_desktop": "fill",
                     "width_mobile": "fill",
-                    "corner_radius": "radius_12",
+                    "corner_radius": "custom",
+                    "custom_corner_radius": 12,
                     "animation_type": "fade",
                     "animation_delay": 0
                   }
@@ -1226,7 +1262,7 @@
                         "heading_size": "xl",
                         "width": "fill",
                         "animation_type": "slide-bottom",
-                        "animation_delay": 0
+                        "animation_delay": 50
                       }
                     },
                     "text": {
@@ -1235,8 +1271,8 @@
                         "text": "<p>We believe your home shouldn’t cost the Earth. Shop our range of ethically sourced, low-impact furniture and enjoy timeless design with a clear conscience.</p>",
                         "text_size": "md",
                         "width": "fill",
-                        "animation_type": "slide-bottom",
-                        "animation_delay": 0
+                        "animation_type": "fade",
+                        "animation_delay": 100
                       }
                     }
                   },
@@ -1271,7 +1307,7 @@
                         "width": "fill",
                         "height": "fit",
                         "width_mobile": "fill",
-                        "animation_type": "slide-bottom",
+                        "animation_type": "none",
                         "animation_delay": 0
                       },
                       "blocks": {
@@ -1312,7 +1348,7 @@
                                 "heading_size": "xs",
                                 "width": "fill",
                                 "animation_type": "slide-bottom",
-                                "animation_delay": 0
+                                "animation_delay": 50
                               }
                             },
                             "text": {
@@ -1321,8 +1357,8 @@
                                 "text": "<p>Each item is handcrafted by skilled artisans, reflecting our dedication to craftsmanship.</p>",
                                 "text_size": "md",
                                 "width": "fill",
-                                "animation_type": "slide-bottom",
-                                "animation_delay": 0
+                                "animation_type": "fade",
+                                "animation_delay": 100
                               }
                             }
                           },
@@ -1347,7 +1383,7 @@
                         "width": "fill",
                         "height": "fit",
                         "width_mobile": "fill",
-                        "animation_type": "slide-bottom",
+                        "animation_type": "none",
                         "animation_delay": 0
                       },
                       "blocks": {
@@ -1388,7 +1424,7 @@
                                 "heading_size": "xs",
                                 "width": "fill",
                                 "animation_type": "slide-bottom",
-                                "animation_delay": 0
+                                "animation_delay": 50
                               }
                             },
                             "text": {
@@ -1397,8 +1433,8 @@
                                 "text": "<p>Invest in pieces you can feel good about. Sustainable quality is built into every single design.</p>",
                                 "text_size": "md",
                                 "width": "fill",
-                                "animation_type": "slide-bottom",
-                                "animation_delay": 0
+                                "animation_type": "fade",
+                                "animation_delay": 100
                               }
                             }
                           },
@@ -1425,8 +1461,8 @@
                     "button_label": "Read About Us",
                     "button_link": "/pages/about-us",
                     "button_style": "primary",
-                    "animation_type": "slide-bottom",
-                    "animation_delay": 0
+                    "animation_type": "fade",
+                    "animation_delay": 150
                   }
                 }
               },
@@ -1679,7 +1715,8 @@
                     "image": "shopify://shop_images/norden-wishbone-lifestyle.avif",
                     "height_desktop": "custom",
                     "height_mobile": "custom",
-                    "corner_radius": "radius_12",
+                    "corner_radius": "custom",
+                    "custom_corner_radius": 12,
                     "position_desktop": "bottom_center",
                     "position_mobile": "bottom_center",
                     "padding_top": 10,
@@ -1696,7 +1733,9 @@
                     "image_ratio_custom_width_desktop": 6,
                     "image_ratio_custom_height_desktop": 7,
                     "image_ratio_custom_width_mobile": 6,
-                    "image_ratio_custom_height_mobile": 7
+                    "image_ratio_custom_height_mobile": 7,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 0
                   },
                   "blocks": {
                     "product-wrap": {
@@ -1710,7 +1749,8 @@
                         "padding_bottom": 12,
                         "padding_left": 12,
                         "padding_right": 12,
-                        "corner_radius": "radius_12",
+                        "corner_radius": "custom",
+                        "custom_corner_radius": 12,
                         "height": "fit",
                         "height_mobile": "fit"
                       },
@@ -1762,7 +1802,8 @@
                     "image": "shopify://shop_images/norden-desk-lamp-lifestyle.avif",
                     "height_desktop": "custom",
                     "height_mobile": "custom",
-                    "corner_radius": "radius_12",
+                    "corner_radius": "custom",
+                    "custom_corner_radius": 12,
                     "position_desktop": "bottom_center",
                     "position_mobile": "bottom_center",
                     "padding_top": 10,
@@ -1779,7 +1820,9 @@
                     "image_ratio_custom_width_desktop": 6,
                     "image_ratio_custom_height_desktop": 7,
                     "image_ratio_custom_width_mobile": 6,
-                    "image_ratio_custom_height_mobile": 7
+                    "image_ratio_custom_height_mobile": 7,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 0
                   },
                   "blocks": {
                     "product-wrap": {
@@ -1793,7 +1836,8 @@
                         "padding_bottom": 12,
                         "padding_left": 12,
                         "padding_right": 12,
-                        "corner_radius": "radius_12",
+                        "corner_radius": "custom",
+                        "custom_corner_radius": 12,
                         "height": "fit",
                         "height_mobile": "fit"
                       },
@@ -1845,7 +1889,8 @@
                     "image": "shopify://shop_images/norden-figma-console-scene.avif",
                     "height_desktop": "custom",
                     "height_mobile": "custom",
-                    "corner_radius": "radius_12",
+                    "corner_radius": "custom",
+                    "custom_corner_radius": 12,
                     "position_desktop": "bottom_center",
                     "position_mobile": "bottom_center",
                     "padding_top": 10,
@@ -1862,7 +1907,9 @@
                     "image_ratio_custom_width_desktop": 6,
                     "image_ratio_custom_height_desktop": 7,
                     "image_ratio_custom_width_mobile": 6,
-                    "image_ratio_custom_height_mobile": 7
+                    "image_ratio_custom_height_mobile": 7,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 0
                   },
                   "blocks": {
                     "product-wrap": {
@@ -1876,7 +1923,8 @@
                         "padding_bottom": 12,
                         "padding_left": 12,
                         "padding_right": 12,
-                        "corner_radius": "radius_12",
+                        "corner_radius": "custom",
+                        "custom_corner_radius": 12,
                         "height": "fit",
                         "height_mobile": "fit"
                       },
@@ -1928,7 +1976,8 @@
                     "image": "shopify://shop_images/norden-seoul-chair-lifestyle.avif",
                     "height_desktop": "custom",
                     "height_mobile": "custom",
-                    "corner_radius": "radius_12",
+                    "corner_radius": "custom",
+                    "custom_corner_radius": 12,
                     "position_desktop": "bottom_center",
                     "position_mobile": "bottom_center",
                     "padding_top": 10,
@@ -1945,7 +1994,9 @@
                     "image_ratio_custom_width_desktop": 6,
                     "image_ratio_custom_height_desktop": 7,
                     "image_ratio_custom_width_mobile": 6,
-                    "image_ratio_custom_height_mobile": 7
+                    "image_ratio_custom_height_mobile": 7,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 0
                   },
                   "blocks": {
                     "product-wrap": {
@@ -1959,7 +2010,8 @@
                         "padding_bottom": 12,
                         "padding_left": 12,
                         "padding_right": 12,
-                        "corner_radius": "radius_12",
+                        "corner_radius": "custom",
+                        "custom_corner_radius": 12,
                         "height": "fit",
                         "height_mobile": "fit"
                       },
@@ -2030,7 +2082,7 @@
             "alignment": "left",
             "alignment_mobile": "left",
             "gap_desktop": 36,
-            "gap_mobile": 32,
+            "gap_mobile": 36,
             "width": "fill",
             "limit_width": true,
             "max_width": 450,
@@ -2295,7 +2347,7 @@
                     "image": "shopify://shop_images/norden-follow-us.avif",
                     "height_desktop": "fill",
                     "height_mobile": "fixed",
-                    "corner_radius": "radius_8",
+                    "corner_radius": "rounded",
                     "position_desktop": "center_left",
                     "position_mobile": "center_left",
                     "padding_left": 32,
@@ -2315,7 +2367,9 @@
                     "padding_top_mobile": 32,
                     "padding_bottom_mobile": 32,
                     "gap_desktop": 24,
-                    "gap_mobile": 24
+                    "gap_mobile": 24,
+                    "animation_type": "slide-bottom",
+                    "animation_delay": 0
                   },
                   "blocks": {
                     "header": {
@@ -2396,7 +2450,9 @@
                     "image_ratio_custom_width_mobile": 6,
                     "image_ratio_custom_height_mobile": 7,
                     "width_mobile": "fill",
-                    "corner_radius": "radius_8"
+                    "corner_radius": "rounded",
+                    "animation_type": "fade",
+                    "animation_delay": 0
                   }
                 },
                 "image1": {
@@ -2411,7 +2467,9 @@
                     "image_ratio_custom_width_mobile": 6,
                     "image_ratio_custom_height_mobile": 7,
                     "width_mobile": "fill",
-                    "corner_radius": "radius_8"
+                    "corner_radius": "rounded",
+                    "animation_type": "scale",
+                    "animation_delay": 0
                   }
                 },
                 "image2": {
@@ -2426,7 +2484,9 @@
                     "image_ratio_custom_width_mobile": 6,
                     "image_ratio_custom_height_mobile": 7,
                     "width_mobile": "fill",
-                    "corner_radius": "radius_8"
+                    "corner_radius": "rounded",
+                    "animation_type": "fade",
+                    "animation_delay": 0
                   }
                 }
               },
@@ -2511,7 +2571,7 @@
                         "image_ratio_mobile": "ratio_1_1",
                         "width_mobile": "fixed",
                         "width_fixed_mobile": 28,
-                        "animation_type": "none",
+                        "animation_type": "fade",
                         "animation_delay": 0
                       }
                     },
@@ -2535,8 +2595,8 @@
                             "text": "<p>Check your order status</p>",
                             "heading_size": "xs",
                             "width": "fill",
-                            "animation_type": "none",
-                            "animation_delay": 0
+                            "animation_type": "slide-bottom",
+                            "animation_delay": 50
                           }
                         },
                         "text": {
@@ -2545,8 +2605,8 @@
                             "text": "<p>Updates & tracking</p>",
                             "text_size": "md",
                             "width": "fill",
-                            "animation_type": "none",
-                            "animation_delay": 0
+                            "animation_type": "fade",
+                            "animation_delay": 100
                           }
                         }
                       },
@@ -2604,7 +2664,7 @@
                         "image_ratio_mobile": "ratio_1_1",
                         "width_mobile": "fixed",
                         "width_fixed_mobile": 28,
-                        "animation_type": "none",
+                        "animation_type": "fade",
                         "animation_delay": 0
                       }
                     },
@@ -2628,8 +2688,8 @@
                             "text": "<p>Returns & exchanges</p>",
                             "heading_size": "xs",
                             "width": "fill",
-                            "animation_type": "none",
-                            "animation_delay": 0
+                            "animation_type": "slide-bottom",
+                            "animation_delay": 50
                           }
                         },
                         "text": {
@@ -2638,8 +2698,8 @@
                             "text": "<p>All you need to know</p>",
                             "text_size": "md",
                             "width": "fill",
-                            "animation_type": "none",
-                            "animation_delay": 0
+                            "animation_type": "fade",
+                            "animation_delay": 100
                           }
                         }
                       },
@@ -2697,7 +2757,7 @@
                         "image_ratio_mobile": "ratio_1_1",
                         "width_mobile": "fixed",
                         "width_fixed_mobile": 28,
-                        "animation_type": "none",
+                        "animation_type": "fade",
                         "animation_delay": 0
                       }
                     },
@@ -2721,8 +2781,8 @@
                             "text": "<p>Secure payment</p>",
                             "heading_size": "xs",
                             "width": "fill",
-                            "animation_type": "none",
-                            "animation_delay": 0
+                            "animation_type": "slide-bottom",
+                            "animation_delay": 50
                           }
                         },
                         "text": {
@@ -2731,8 +2791,8 @@
                             "text": "<p>Your privacy is our priority</p>",
                             "text_size": "md",
                             "width": "fill",
-                            "animation_type": "none",
-                            "animation_delay": 0
+                            "animation_type": "fade",
+                            "animation_delay": 100
                           }
                         }
                       },
@@ -2790,7 +2850,7 @@
                         "image_ratio_mobile": "ratio_1_1",
                         "width_mobile": "fixed",
                         "width_fixed_mobile": 28,
-                        "animation_type": "none",
+                        "animation_type": "fade",
                         "animation_delay": 0
                       }
                     },
@@ -2814,8 +2874,8 @@
                             "text": "<p>Visit our support center</p>",
                             "heading_size": "xs",
                             "width": "fill",
-                            "animation_type": "none",
-                            "animation_delay": 0
+                            "animation_type": "slide-bottom",
+                            "animation_delay": 50
                           }
                         },
                         "text": {
@@ -2824,8 +2884,8 @@
                             "text": "<p>Expert help & advice</p>",
                             "text_size": "md",
                             "width": "fill",
-                            "animation_type": "none",
-                            "animation_delay": 0
+                            "animation_type": "fade",
+                            "animation_delay": 100
                           }
                         }
                       },
@@ -2936,7 +2996,8 @@
                 "position": "center",
                 "alignment": "center",
                 "media_corner_radius": "radius_16",
-                "corner_radius": "radius_16",
+                "corner_radius": "custom",
+                "custom_corner_radius": 16,
                 "color_type": "color_scheme",
                 "color_scheme": "scheme-4",
                 "padding_top": 24,

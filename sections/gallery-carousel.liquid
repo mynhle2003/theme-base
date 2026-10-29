@@ -176,8 +176,12 @@
       },
       "blocks": [
         { "type": "gallery-header-group", "settings": { "alignment": "left", "gap": 8 }, "blocks": [
-          { "type": "eyebrow", "settings": { "text": "<p>Section TAG</p>" } },
-          { "type": "heading", "settings": { "text": "<p>Follow Us On Instagram</p>", "html_tag": "h2" } }
+          { "type": "eyebrow", "settings": { "text": "<p>Section TAG</p>",
+                                                                            "animation_type": "fade",
+                                                                            "animation_delay": 0 } },
+          { "type": "heading", "settings": { "text": "<p>Follow Us On Instagram</p>", "html_tag": "h2",
+                                                                                                         "animation_type": "slide-bottom",
+                                                                                                         "animation_delay": 50 } }
         ] },
         { "type": "carousel", "settings": { "columns_desktop": "4", "columns_mobile": "1", "gap_desktop": 24, "gap_mobile": 16, "navigation_style": "secondary", "navigation_icon": "chevron", "navigation_behavior": "always", "pagination_type": "progress_bar", "show_pagination_on_desktop": true, "show_pagination_on_mobile": true }, "blocks": [
           { "type": "slide", "settings": { "gap_desktop": 0, "gap_mobile": 0 }, "blocks": [ { "type": "gallery-item", "settings": { "text": "@pam_sam", "social_network": "instagram" } } ] },

@@ -109,8 +109,10 @@
     overflow: auto;
     padding: 0.75rem;
     border-radius: var(--drawer-radius);
-    background: var(--background-color);
-    box-shadow: 0 0.75rem 1.5rem color-mix(in srgb, var(--shadow-color) 15%, transparent);
+    background: var(--button-primary-background);
+    color: var(--button-primary-text);
+    border: 1px solid color-mix(in srgb, var(--background-color) 25%, transparent);
+    box-shadow: 0 0.5rem 1.25rem color-mix(in srgb, var(--background-color) 20%, transparent);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -188,6 +190,16 @@
 
   :where(.header-localization, .header-localization__overlay-body) :where(.header-localization__country-option, .header-localization__language-option):is(:hover, :focus-visible, .is-selected) {
     background-color: color-mix(in srgb, var(--body-color) 8%, transparent);
+  }
+
+  .header-localization__panel :where(.header-localization__country-option, .header-localization__language-option):is(:hover, :focus-visible, .is-selected) {
+    background-color: color-mix(in srgb, var(--button-primary-text) 18%, var(--button-primary-background));
+    color: var(--button-primary-text);
+  }
+
+  .header-localization__panel :where(.header-localization__country-option, .header-localization__language-option):focus-visible {
+    outline: 2px solid var(--button-primary-text);
+    outline-offset: -2px;
   }
 
   .header-localization__country-name,
