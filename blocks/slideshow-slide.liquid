@@ -101,12 +101,7 @@
           {% if slide_media_2_type == 'video' and block.settings.video_2 != blank %}
             {{ block.settings.video_2 | video_tag: image_size: '2400x', autoplay: true, loop: true, muted: true, controls: false, playsinline: true, class: 'slideshow-slide__video' }}
           {% elsif block.settings.image_2 != blank %}
-            <picture>
-              {% if block.settings.mobile_image_2 != blank %}
-                <source media="(max-width: 767.98px)" sizes="100vw" srcset="{{ block.settings.mobile_image_2 | image_url: width: 375 }} 375w, {{ block.settings.mobile_image_2 | image_url: width: 550 }} 550w, {{ block.settings.mobile_image_2 | image_url: width: 750 }} 750w, {{ block.settings.mobile_image_2 | image_url: width: 1100 }} 1100w, {{ block.settings.mobile_image_2 | image_url: width: 1500 }} 1500w">
-              {% endif %}
-              {{ block.settings.image_2 | image_url: width: 2400 | image_tag: widths: '750, 1100, 1500, 2000, 2400', sizes: '50vw', loading: slide_image_loading, fetchpriority: slide_image_fetchpriority, alt: '' }}
-            </picture>
+            {% render 'slideshow-image', image: block.settings.image_2, mobile_image: block.settings.mobile_image_2, mobile_height: slide_mobile_height, sizes: '50vw', mobile_image_sizes: '100vw', loading: slide_image_loading, fetchpriority: slide_image_fetchpriority, defer: slide_image_deferred %}
           {% else %}
             {{ 'lifestyle-2' | placeholder_svg_tag: 'hero__placeholder' }}
           {% endif %}
