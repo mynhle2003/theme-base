@@ -137,24 +137,51 @@
     };
     const scan = () => {
       const cards = [...root.querySelectorAll(cardSelector)].filter(card => !card.closest(`${excluded}, .slideshow, dialog`));
-      const rows = new Map(cards.map(card => [card, (card.closest('.product-collection-grid__item, .blog-list__item, .swiper-slide') || card).getBoundingClientRect().top]));
+      const cardSet = new Set(cards);
       const intros = [...root.querySelectorAll('[data-block-animation]')].filter(element => !element.closest(cardSelector) && active(element));
-      const staggers = new Map(cards.map(card => {
+      const introSet = new Set(intros);
+
+      // Group cards by their nearest list and visual row once per scan. The
+      // previous implementation re-ran closest()/filter() for every card,
+      // which made animation setup quadratic on large product grids.
+      const rowsByList = new Map();
+      const cardMetadata = cards.map(card => {
         const list = card.closest(listSelector);
-        if (!list) return [card, 0];
-        const row = cards.filter(other => other.closest(listSelector) === list && Math.abs(rows.get(other) - rows.get(card)) < 8);
-        const introDelay = Math.max(0, ...intros.filter(element => element.compareDocumentPosition(card) & Node.DOCUMENT_POSITION_FOLLOWING).map(element => Number(element.dataset.animationDelay) || 0));
-        return [card, Math.min(900, introDelay + 150 + Math.max(0, row.indexOf(card)) * 75)];
-      }));
+        const top = (card.closest('.product-collection-grid__item, .blog-list__item, .swiper-slide') || card).getBoundingClientRect().top;
+        const metadata = { card, list, top, rowIndex: 0 };
+        if (list) {
+          const rows = rowsByList.get(list) || [];
+          let row = rows.find(candidate => Math.abs(candidate.top - top) < 8);
+          if (!row) {
+            row = { top, cards: [] };
+            rows.push(row);
+          }
+          metadata.rowIndex = row.cards.length;
+          row.cards.push(card);
+          rowsByList.set(list, rows);
+        }
+        return metadata;
+      });
       cards.forEach(card => {
         card.dataset.componentReveal = '';
-        card.dataset.animationStagger = String(staggers.get(card));
       });
+      const introDelaysBefore = new Map();
+      let maxIntroDelay = 0;
+      const candidates = [...root.querySelectorAll(selector)];
+      candidates.forEach(element => {
+        if (introSet.has(element)) maxIntroDelay = Math.max(maxIntroDelay, Number(element.dataset.animationDelay) || 0);
+        if (cardSet.has(element)) introDelaysBefore.set(element, maxIntroDelay);
+      });
+      const staggers = new Map(cardMetadata.map(({ card, list, rowIndex }) => {
+        if (!list) return [card, 0];
+        const introDelay = introDelaysBefore.get(card) || 0;
+        return [card, Math.min(900, introDelay + 150 + rowIndex * 75)];
+      }));
+      cards.forEach(card => { card.dataset.animationStagger = String(staggers.get(card)); });
       // Read visibility in one pass before splitting words or writing classes.
       // Alternating each block's layout reads and animation writes forces a
       // fresh document layout for every block during storefront startup.
       const motion = enabled();
-      const candidates = [...root.querySelectorAll(selector)];
       const visible = new Set(candidates.filter(element => active(element) && inView(element)));
       nodes.forEach((state, element) => { if (!root.contains(element) || !element.matches(selector)) remove(element); });
       candidates.forEach(element => {

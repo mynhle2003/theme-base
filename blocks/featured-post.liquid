@@ -13,6 +13,12 @@
 {% if block.settings.shadow == 'small' %}{% assign featured_shadow = '0 2px 8px rgb(0 0 0 / 0.12)' %}{% elsif block.settings.shadow == 'medium' %}{% assign featured_shadow = '0 8px 24px rgb(0 0 0 / 0.16)' %}{% endif %}
 {% assign featured_content_align = 'start' %}
 {% if block.settings.alignment == 'center' %}{% assign featured_content_align = 'center' %}{% elsif block.settings.alignment == 'right' %}{% assign featured_content_align = 'end' %}{% endif %}
+{% assign featured_image_loading = 'lazy' %}
+{% assign featured_image_priority = 'auto' %}
+{% if section.index == 1 %}
+  {% assign featured_image_loading = 'eager' %}
+  {% assign featured_image_priority = 'high' %}
+{% endif %}
 {% if featured_article %}
   <article
     class="blog-featured-post blog-featured-post--height-{{ block.settings.height | default: 'large' }} {% if block.settings.color_type == 'color_scheme' %}section-color-scope {{ block.settings.color_scheme | default: 'scheme-2' }}{% endif %}"
@@ -21,7 +27,7 @@
   >
     {% if featured_article.image %}
       <a class="blog-featured-post__media" href="{{ featured_article.url }}" aria-label="{{ featured_article.title | escape }}">
-        {{ featured_article.image | image_url: width: 1600 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '(max-width: 767.98px) calc(100vw - 32px), 50vw' }}
+        {{ featured_article.image | image_url: width: 1600 | image_tag: loading: featured_image_loading, fetchpriority: featured_image_priority, sizes: '(max-width: 767.98px) calc(100vw - 32px), 50vw' }}
       </a>
     {% endif %}
     <div class="blog-featured-post__content" style="--blog-card-padding-top: {{ block.settings.padding_top }}px; --blog-card-padding-bottom: {{ block.settings.padding_bottom }}px; --blog-card-padding-left: {{ block.settings.padding_left }}px; --blog-card-padding-right: {{ block.settings.padding_right }}px; --text-align-default: {{ block.settings.alignment }}; --blog-featured-content-align: {{ featured_content_align }}; --blog-card-align: {{ block.settings.alignment }}; --blog-card-align-flex: {{ featured_content_align }};">
