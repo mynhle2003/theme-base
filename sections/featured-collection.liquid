@@ -116,6 +116,26 @@
       max-width: 100%;
     }
 
+    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='center'] {
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: stretch;
+    }
+
+    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='center'] > .featured-collection__header {
+      flex: initial;
+    }
+
+    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='center'] > .featured-collection__products > .section-list-layout__bridge > .section-list-layout__navigation {
+      order: 2;
+      align-self: center;
+    }
+
+    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='center'] > .featured-collection__products > .section-list-layout__bridge > .section-list-layout__main,
+    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='center'] > .featured-collection__additional-blocks {
+      flex: initial;
+    }
+
     .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='left'],
     .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='right'] {
       display: flex;
