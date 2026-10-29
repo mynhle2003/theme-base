@@ -1,4 +1,4 @@
-{{ 'component-testimonial-item.css' | asset_url | stylesheet_tag }}
+{% render 'component-stylesheet', filename: 'component-testimonial-item.css', section_index: section.index %}
 {% capture content %}{% content_for 'blocks' %}{% endcapture %}
 {% render 'testimonial-item', block: block, content: content %}
 

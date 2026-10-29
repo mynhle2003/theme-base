@@ -3,7 +3,7 @@
   renderer and Group/Heading/Text/Image/Icon kernels; its preset recreates
   the owning section's card layout when a merchant adds a new review.
 {% enddoc %}
-{{ 'component-testimonial-item.css' | asset_url | stylesheet_tag }}
+{% render 'component-stylesheet', filename: 'component-testimonial-item.css', section_index: section.index %}
 {% capture content %}{% content_for 'blocks' %}{% endcapture %}
 {% render 'testimonial-item', block: block, content: content, composition_card: true %}
 
