@@ -9,10 +9,16 @@
   elsif block.settings.width == 'page'
     assign article_image_sizes = '(max-width: 767.98px) calc(100vw - 32px), min(100vw, ' | append: settings.page_width | append: 'px)'
   endif
+  assign article_image_loading = 'lazy'
+  assign article_image_priority = 'auto'
+  if section.index == 1
+    assign article_image_loading = 'eager'
+    assign article_image_priority = 'high'
+  endif
 %}
 {% if article.image %}
   <div class="article-featured-image article-featured-image--{{ block.settings.width | default: 'default' }} article-featured-image--height-{{ block.settings.height | default: 'adapt' }}" style="--article-image-padding-top: {{ block.settings.padding_top }}px; --article-image-padding-bottom: {{ block.settings.padding_bottom }}px; --article-image-padding-left: {{ block.settings.padding_left | default: 24 }}px; --article-image-padding-right: {{ block.settings.padding_right | default: 24 }}px; {% if block.settings.custom_mobile_padding %}--article-image-padding-top-mobile: {{ block.settings.padding_top_mobile }}px;{% endif %} {% if block.settings.custom_mobile_padding %}--article-image-padding-bottom-mobile: {{ block.settings.padding_bottom_mobile }}px;{% endif %}" {{ block.shopify_attributes }}>
-    {{ article.image | image_url: width: 1600 | image_tag: loading: 'eager', sizes: article_image_sizes }}
+    {{ article.image | image_url: width: 1600 | image_tag: loading: article_image_loading, fetchpriority: article_image_priority, sizes: article_image_sizes }}
   </div>
 {% elsif request.design_mode %}
   <div class="article-featured-image__empty" {{ block.shopify_attributes }}>{{ 'blog.featured_image_empty' | t }}</div>
