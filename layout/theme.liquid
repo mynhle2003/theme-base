@@ -49,7 +49,9 @@
     {% if request.design_mode or content_for_layout contains 'swiper' %}
       {% render 'swiper-stylesheet' %}
     {% endif %}
-    <script src="{{ 'block-animations.js' | asset_url }}" defer></script>
+    {% if request.design_mode or settings.motion_block_animations %}
+      <script src="{{ 'block-animations.js' | asset_url }}" defer></script>
+    {% endif %}
     <script src="{{ 'header.js' | asset_url }}" defer></script>
     <script src="{{ 'theme-module-loader.js' | asset_url }}" defer></script>
     {% if content_for_layout contains 'data-accordion-details' %}
