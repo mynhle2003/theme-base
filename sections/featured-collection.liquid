@@ -116,11 +116,43 @@
       max-width: 100%;
     }
 
-    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='left'] > .featured-collection__header,
-    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='right'] > .featured-collection__header {
-      flex: 1 1 0;
-      width: auto;
+    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='left'],
+    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='right'] {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) max-content;
+      column-gap: var(--section-list-gap, 32px);
+      row-gap: var(--section-list-gap, 32px);
+      align-items: end;
+    }
+
+    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='left'] > .featured-collection__header {
+      grid-column: 1;
+      width: 100%;
       min-width: 0;
+    }
+
+    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='right'] > .featured-collection__header {
+      grid-column: 2;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='left'] > .featured-collection__products > .section-list-layout__bridge > .section-list-layout__navigation {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='right'] > .featured-collection__products > .section-list-layout__bridge > .section-list-layout__navigation {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='left'] > .featured-collection__products > .section-list-layout__bridge > .section-list-layout__main,
+    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='right'] > .featured-collection__products > .section-list-layout__bridge > .section-list-layout__main,
+    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='left'] > .featured-collection__additional-blocks,
+    .featured-collection__container:has(.product-list__navigation--top)[data-desktop-alignment='right'] > .featured-collection__additional-blocks {
+      grid-column: 1 / -1;
+      width: 100%;
     }
   }
 
