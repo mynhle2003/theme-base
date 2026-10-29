@@ -256,7 +256,7 @@
   class="product-list section-list-layout__bridge"
   data-product-list
   {% assign carousel_extra_option_1 = block.settings.mobile_preview_percent | default: 20 %}{% render 'swiper-carousel-attributes', mobile_preview_percent: carousel_extra_option_1 %}
-  style="--product-list-product-columns: {{ block.settings.columns_desktop | default: 4 }}; --product-list-product-gap: {{ product_list_gap_desktop }}px;{% if block.settings.promo_width_desktop > 0 %} --product-list-promo-width: {{ block.settings.promo_width_desktop | at_most: 60 }}%;{% endif %}{% if block.settings.promo_height_mobile > 0 %} --product-list-promo-height-mobile: {{ block.settings.promo_height_mobile | at_most: 1000 }}px;{% endif %}"
+  style="--product-list-product-columns: {{ block.settings.columns_desktop | default: 4 }}; --product-list-product-gap: {{ product_list_gap_desktop }}px;"
   {% if product_list_recommendations %}data-recommendation-intent="{{ block.settings.recommendation_type | default: 'related' }}" data-recommendation-limit="{{ product_list_max_products | at_most: 10 }}" data-recommendation-placeholder="{{ product_list_is_placeholder }}"{% endif %}
   data-layout="{{ product_list_layout }}"
   data-collection-url="{{ product_list_collection.url | escape }}"
@@ -317,7 +317,7 @@
       flex: 0 0 100%;
       order: 4;
       position: relative;
-      grid-template-columns: var(--product-list-promo-width, calc((100% - var(--product-list-product-gap, 4px) * var(--product-list-product-columns, 4)) / (var(--product-list-product-columns, 4) + 1))) minmax(0, 1fr);
+      grid-template-columns: calc((100% - var(--product-list-product-gap, 4px) * var(--product-list-product-columns, 4)) / (var(--product-list-product-columns, 4) + 1)) minmax(0, 1fr);
       gap: var(--product-list-product-gap, 4px);
       align-items: stretch;
     }
@@ -325,6 +325,7 @@
     .product-list[data-promo-desktop-detached='true'] > .product-list__mobile-promos {
       min-width: 0;
       margin-bottom: 0;
+      align-self: start;
     }
 
     .product-list[data-promo-desktop-detached='true'] > .product-list__carousel {
@@ -334,19 +335,12 @@
     }
 
     .product-list[data-promo-desktop-detached='true'] > .product-list__mobile-promos .product-list__promo-item {
-      min-height: 300px;
-      height: 100%;
+      align-self: start;
     }
 
     .product-list[data-promo-desktop-detached='true'] > .product-list__navigation--top {
       position: absolute;
       inset: auto 0 calc(100% + var(--section-list-gap, 32px)) auto;
-    }
-  }
-
-  @media (max-width: 767.98px) {
-    .product-list > .product-list__mobile-promos .product-list__promo-item {
-      min-height: var(--product-list-promo-height-mobile, 360px);
     }
   }
 
@@ -769,24 +763,6 @@
       "unit": "s",
       "default": 4,
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.autoplay }}"
-    },
-    {
-      "type": "header",
-      "content": "Detached promotion card"
-    },
-    {
-      "type": "number",
-      "id": "promo_width_desktop",
-      "label": "Desktop promo width (%)",
-      "info": "0 uses the automatic column width. Applies when the promo is outside the carousel.",
-      "default": 0
-    },
-    {
-      "type": "number",
-      "id": "promo_height_mobile",
-      "label": "Mobile promo minimum height (px)",
-      "info": "0 uses the default height. Applies when the promo is above the carousel.",
-      "default": 0
     },
     {
       "type": "range",
