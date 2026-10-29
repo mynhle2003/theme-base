@@ -37,7 +37,7 @@
     <div class="media collections-with-tabs__media" style="--collections-with-tabs-panel-ratio: {{ image_ratio }}">
       <div class="media__inner{% if item_image == blank %} placeholder-image{% endif %}">
         {% if item_image != blank %}
-          {{ item_image | image_url: width: 1600 | image_tag: widths: '480, 720, 960, 1200, 1600', sizes: '(max-width: 767px) 100vw, 50vw', alt: item_title, loading: 'lazy' }}
+          {{ item_image | image_url: width: 960 | image_tag: widths: '320, 480, 640, 800, 960', sizes: '(max-width: 767px) 100vw, 50vw', alt: item_title, loading: 'lazy' }}
         {% else %}
           {{ 'collection-1' | placeholder_svg_tag: 'collections-with-tabs__placeholder' }}
         {% endif %}

@@ -70,7 +70,7 @@
     </div>
   </div>
 </div>
-{% stylesheet %}
+{% style %}
   .look-carousel {
     padding-top: var(--shop-the-look-padding-top, 0px);
     padding-bottom: var(--shop-the-look-padding-bottom, 0px);
@@ -123,7 +123,7 @@
     .look-carousel .shop-the-look-product__action { margin-top: 24px; }
   }
   @media (prefers-reduced-motion: reduce) { .look-images[data-ready] > .image-block { transition: none; } }
-{% endstylesheet %}
+{% endstyle %}
 {% javascript %}
 (() => {
   const instances = new WeakMap();
