@@ -57,11 +57,11 @@
 custom-cursor[data-component-overlay-cursor] {
   position: fixed;
   z-index: calc(var(--z-modal, 1000) + 1);
-  top: var(--cursor-y, -100px);
-  left: var(--cursor-x, -100px);
+  top: 0;
+  left: 0;
   display: flex;
-  width: 0;
-  height: 0;
+  width: 6.4rem;
+  height: 6.4rem;
   align-items: center;
   justify-content: center;
   overflow: hidden;
@@ -69,13 +69,12 @@ custom-cursor[data-component-overlay-cursor] {
   color: var(--color-cursor-text);
   pointer-events: none;
   background-color: var(--color-cursor-background);
-  transform: translate(-50%, -50%);
-  transition: width .2s ease, height .2s ease;
-  will-change: width, height;
+  transform: translate3d(var(--cursor-x, -100px), var(--cursor-y, -100px), 0) translate(-50%, -50%) scale(0);
+  transition: transform .2s ease;
+  will-change: transform;
 }
 custom-cursor[data-component-overlay-cursor].active {
-  width: 6.4rem;
-  height: 6.4rem;
+  transform: translate3d(var(--cursor-x, -100px), var(--cursor-y, -100px), 0) translate(-50%, -50%) scale(1);
 }
 custom-cursor[data-component-overlay-cursor] svg {
   flex: none;
