@@ -17,7 +17,6 @@
   const editor = Boolean(window.Shopify?.designMode);
   const enabled = () => !reduced.matches && getComputedStyle(document.documentElement).getPropertyValue('--motion-block-animations').trim() !== '0';
   const types = new Set(['fade', 'scale', 'slide-left', 'slide-right', 'slide-bottom', 'rotate-words']);
-  const pendingSelections = new Map();
   const active = element => {
     if (!element.isConnected || !element.getClientRects().length || element.closest('[hidden], [aria-hidden="true"], [inert]')) return false;
     const slide = element.closest('.slideshow__swiper .swiper-slide');
@@ -108,19 +107,19 @@
         state.animations.forEach(animation => animation.finished.then(() => animation.cancel()).catch(() => {}));
       } catch { stop(state); }
     };
-    const refresh = (element, force = false) => {
+    const refresh = element => {
       const state = nodes.get(element);
       if (!state) return;
       stop(state); state.played = false;
       if (!enabled()) { reveal(element, true); return; }
       element.classList.add('reveal-pending');
-      if (!force && !active(element)) return;
+      if (!active(element)) return;
       if (!editor) { reveal(element); return; }
       // Let the editor finish its settings render before restarting the effect.
       // A subsequent Type/Delay change cancels this pending refresh.
       state.refreshTimer = setTimeout(() => {
         state.refreshTimer = null;
-        reveal(element, false, force ? { active: true, motion: enabled() } : null);
+        reveal(element);
       }, 20);
     };
     const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
@@ -198,24 +197,15 @@
         });
       });
     });
-    const previewSelection = event => {
-      let matched = false;
+    const preserveSelection = event => {
       nodes.forEach((state, element) => {
         if (!event.target.contains(element) && !element.contains(event.target)) return;
-        matched = true;
-        // The editor reselects the block after a settings render. Preview its
-        // chosen effect instead of cancelling it and marking it as played.
-        refresh(element, true);
+        // Selecting an existing block must not replay its entrance effect.
+        // Keep the current visual state and only expose a still-pending node.
+        stop(state);
+        state.played = false;
+        reveal(element, true);
       });
-      // A block settings render can replace the target node before the
-      // MutationObserver callback runs. Scan once so the selection reaches the
-      // newly rendered animation node instead of the stale node map.
-      if (!matched) {
-        scan();
-        nodes.forEach((state, element) => {
-          if (event.target.contains(element) || element.contains(event.target)) refresh(element, true);
-        });
-      }
     };
     const options = { signal: events.signal };
     let resizeFrame;
@@ -223,6 +213,8 @@
       cancelAnimationFrame(resizeFrame);
       resizeFrame = requestAnimationFrame(scan);
     }, options);
+    root.addEventListener('shopify:block:select', preserveSelection, options);
+    root.addEventListener('shopify:section:select', preserveSelection, options);
     root.addEventListener('focusin', event => {
       nodes.forEach((state, element) => {
         if (element.contains(event.target)) { stop(state); state.played = false; reveal(element, true); }
@@ -233,10 +225,7 @@
     }), options);
     scan();
     mutations.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden', 'aria-hidden', 'inert', 'class', 'data-block-animation', 'data-animation-delay'] });
-    return {
-      previewSelection,
-      destroy() { cancelAnimationFrame(resizeFrame); events.abort(); mutations.disconnect(); observer?.disconnect(); nodes.forEach((state, element) => remove(element)); }
-    };
+    return { destroy() { cancelAnimationFrame(resizeFrame); events.abort(); mutations.disconnect(); observer?.disconnect(); nodes.forEach((state, element) => remove(element)); } };
   };
   // Prepare offscreen entrances shortly before they are needed. Scanning every
   // section at startup measures card rows and splits heading text below the fold.
@@ -246,16 +235,7 @@
   const initialize = root => {
     sectionObserver?.unobserve(root);
     if (controllers.has(root)) return;
-    const controller = createController(root);
-    controllers.set(root, controller);
-    const pending = pendingSelections.get(root.id);
-    if (pending) {
-      pendingSelections.delete(root.id);
-      const target = pending.target?.isConnected
-        ? pending.target
-        : (pending.blockId ? document.getElementById(pending.blockId) : root);
-      if (target && (target === root || root.contains(target))) controller.previewSelection({ target });
-    }
+    controllers.set(root, createController(root));
   };
   document.querySelectorAll('.shopify-section').forEach(root => {
     if (!sectionObserver) { initialize(root); return; }
@@ -273,18 +253,6 @@
     controllers.delete(event.target);
     initialize(event.target);
   });
-  const handleEditorSelection = event => {
-    const root = event.target?.closest?.('.shopify-section') || (event.target?.matches?.('.shopify-section') ? event.target : null);
-    if (!root) return;
-    const controller = controllers.get(root);
-    if (controller) {
-      controller.previewSelection(event);
-      return;
-    }
-    pendingSelections.set(root.id, { target: event.target, blockId: event.detail?.blockId });
-  };
-  document.addEventListener('shopify:block:select', handleEditorSelection);
-  document.addEventListener('shopify:section:select', handleEditorSelection);
   document.addEventListener('shopify:section:unload', event => {
     sectionObserver?.unobserve(event.target);
     controllers.get(event.target)?.destroy();
