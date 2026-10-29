@@ -52,14 +52,18 @@
     <script src="{{ 'block-animations.js' | asset_url }}" defer></script>
     <script src="{{ 'header.js' | asset_url }}" defer></script>
     <script src="{{ 'theme-module-loader.js' | asset_url }}" defer></script>
-    <script src="{{ 'accordion-details.js' | asset_url }}" defer></script>
+    {% if content_for_layout contains 'data-accordion-details' %}
+      <script src="{{ 'accordion-details.js' | asset_url }}" defer></script>
+    {% endif %}
     {% if content_for_layout contains 'data-product-card-swatch' %}
       <script src="{{ 'product-card-variants.js' | asset_url }}" defer></script>
     {% endif %}
     {% if content_for_layout contains 'data-view-all-button' %}
       <script src="{{ 'resource-view-all.js' | asset_url }}" defer></script>
     {% endif %}
-    <script src="{{ 'share.js' | asset_url }}" defer></script>
+    {% if content_for_layout contains 'data-share' %}
+      <script src="{{ 'share.js' | asset_url }}" defer></script>
+    {% endif %}
     <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
     {% if content_for_layout contains 'data-scroll-to' %}
       <script src="{{ 'scroll-to.js' | asset_url }}" defer></script>
