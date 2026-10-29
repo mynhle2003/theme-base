@@ -92,16 +92,20 @@ const createPageWidthLoop = (carousel, slideCount) => {
 const updateParallax = (root) => {
   if (reducedMotion()) return;
   if (!root.querySelector(`${slideSelector}[data-parallax]:not([data-parallax="none"])`)) return;
+  const updates = [];
   root.querySelectorAll(`.swiper-wrapper > ${slideSelector}`).forEach((slide) => {
     const media = slide.querySelector('[data-slideshow-media]');
     const effect = slide.dataset.parallax;
     if (!media || !effect || effect === 'none') return;
     const bounds = slide.getBoundingClientRect();
     const progress = Math.max(-1, Math.min(1, ((window.innerHeight / 2) - (bounds.top + (bounds.height / 2))) / Math.max(bounds.height, 1)));
-    if (effect === 'vertical') media.style.transform = `translate3d(0, ${Math.round(progress * 32)}px, 0) scale(1.08)`;
-    if (effect === 'horizontal') media.style.transform = `translate3d(${Math.round(progress * 32)}px, 0, 0) scale(1.08)`;
-    if (effect === 'zoom') media.style.transform = `scale(${(1.04 + Math.abs(progress) * 0.08).toFixed(3)})`;
+    let transform = '';
+    if (effect === 'vertical') transform = `translate3d(0, ${Math.round(progress * 32)}px, 0) scale(1.08)`;
+    if (effect === 'horizontal') transform = `translate3d(${Math.round(progress * 32)}px, 0, 0) scale(1.08)`;
+    if (effect === 'zoom') transform = `scale(${(1.04 + Math.abs(progress) * 0.08).toFixed(3)})`;
+    if (transform) updates.push({ media, transform });
   });
+  updates.forEach(({ media, transform }) => { media.style.transform = transform; });
 };
 
 const usesCircularPagination = (root, type) => type === 'numbers' ||
