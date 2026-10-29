@@ -91,6 +91,7 @@ const createPageWidthLoop = (carousel, slideCount) => {
 
 const updateParallax = (root) => {
   if (reducedMotion()) return;
+  if (!root.querySelector(`${slideSelector}[data-parallax]:not([data-parallax="none"])`)) return;
   root.querySelectorAll(`.swiper-wrapper > ${slideSelector}`).forEach((slide) => {
     const media = slide.querySelector('[data-slideshow-media]');
     const effect = slide.dataset.parallax;
@@ -495,6 +496,7 @@ const init = (root) => {
   }
   const syncControlScheme = () => updateControlScheme(root, swiper);
   const hydrateActiveSlide = () => hydrateSlideMedia(swiper.slides?.[swiper.activeIndex]);
+  const hasParallax = Boolean(root.querySelector(`${slideSelector}[data-parallax]:not([data-parallax="none"])`));
   controlSchemeEvents.forEach((eventName) => swiper.on(eventName, syncControlScheme));
   swiper.on('activeIndexChange', hydrateActiveSlide);
   hydrateActiveSlide();
@@ -506,9 +508,11 @@ const init = (root) => {
     if (frame) return;
     frame = window.requestAnimationFrame(() => { frame = 0; updateParallax(root); });
   };
-  window.addEventListener('scroll', scheduleParallax, { passive: true });
-  swiper.on('slideChangeTransitionEnd', scheduleParallax);
-  scheduleParallax();
+  if (hasParallax) {
+    window.addEventListener('scroll', scheduleParallax, { passive: true });
+    swiper.on('slideChangeTransitionEnd', scheduleParallax);
+    scheduleParallax();
+  }
   const updateLockedState = () => root.classList.toggle('slideshow--single-slide', Boolean(swiper.isLocked));
   swiper.on('lock unlock update resize', updateLockedState);
   updateLockedState();
