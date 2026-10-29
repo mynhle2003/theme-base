@@ -108,19 +108,19 @@
         state.animations.forEach(animation => animation.finished.then(() => animation.cancel()).catch(() => {}));
       } catch { stop(state); }
     };
-    const refresh = element => {
+    const refresh = (element, force = false) => {
       const state = nodes.get(element);
       if (!state) return;
       stop(state); state.played = false;
       if (!enabled()) { reveal(element, true); return; }
       element.classList.add('reveal-pending');
-      if (!active(element)) return;
+      if (!force && !active(element)) return;
       if (!editor) { reveal(element); return; }
       // Let the editor finish its settings render before restarting the effect.
       // A subsequent Type/Delay change cancels this pending refresh.
       state.refreshTimer = setTimeout(() => {
         state.refreshTimer = null;
-        reveal(element);
+        reveal(element, false, force ? { active: true, motion: enabled() } : null);
       }, 20);
     };
     const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
@@ -199,12 +199,23 @@
       });
     });
     const previewSelection = event => {
+      let matched = false;
       nodes.forEach((state, element) => {
         if (!event.target.contains(element) && !element.contains(event.target)) return;
+        matched = true;
         // The editor reselects the block after a settings render. Preview its
         // chosen effect instead of cancelling it and marking it as played.
-        refresh(element);
+        refresh(element, true);
       });
+      // A block settings render can replace the target node before the
+      // MutationObserver callback runs. Scan once so the selection reaches the
+      // newly rendered animation node instead of the stale node map.
+      if (!matched) {
+        scan();
+        nodes.forEach((state, element) => {
+          if (event.target.contains(element) || element.contains(event.target)) refresh(element, true);
+        });
+      }
     };
     const options = { signal: events.signal };
     let resizeFrame;
