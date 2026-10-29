@@ -111,10 +111,6 @@
   assign cart_drawer_recommendation_icon_data = cart_drawer_recommendation_icon | escape
 %}
 
-{% if section.settings.show_recommendations %}
-  <script type="module" src="{{ 'cart-drawer-recommendations.js' | asset_url }}"></script>
-{% endif %}
-
 {% render 'deferred-stylesheet', filename: 'cart-drawer.css' %}
 
 <div
@@ -128,6 +124,7 @@
   scroll-lock
   aria-hidden="true"
   role="dialog"
+  {% if section.settings.show_recommendations %}data-cart-drawer-recommendations-src="{{ 'cart-drawer-recommendations.js' | asset_url }}"{% endif %}
   aria-modal="true"
   aria-label="{{ cart_drawer_title | escape }}"
   aria-labelledby="CartDrawerHeading"

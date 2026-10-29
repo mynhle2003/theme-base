@@ -19,6 +19,17 @@
     cartRevision: 0,
   };
 
+  const loadRecommendationsRuntime = (drawer) => {
+    const source = drawer?.dataset.cartDrawerRecommendationsSrc;
+    if (!source) return Promise.resolve();
+    if (!window.__cartDrawerRecommendationsRuntime) {
+      window.__cartDrawerRecommendationsRuntime = import(source).catch((error) => {
+        console.error('[Cart drawer] Failed to load recommendations', error);
+      });
+    }
+    return window.__cartDrawerRecommendationsRuntime;
+  };
+
   const getDrawer = (root = document) => {
     if (!root) return null;
     if (root.matches?.('[data-cart-drawer]')) return root;
@@ -838,6 +849,7 @@
     drawer.classList.remove('is-closing');
     drawer.classList.add('is-open');
     state.overlay?.open({ opener, focus: !state.editorSelected, restoreFocus: !state.editorSelected });
+    loadRecommendationsRuntime(drawer);
     document.dispatchEvent(new CustomEvent('cart-drawer:open', { detail: { drawer } }));
     if (refreshCart) refresh().catch(() => {});
   };
