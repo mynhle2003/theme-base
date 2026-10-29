@@ -32,7 +32,6 @@
   @param {boolean} [timeline_preview_mobile] - data-timeline-preview-mobile
   @param {number} [timeline_gap_desktop] - data-timeline-gap-desktop
   @param {number} [timeline_gap_mobile] - data-timeline-gap-mobile
-  @param {number} [mobile_preview_percent] - data-mobile-preview-percent
   @param {string} [mode] - data-carousel-mode
   @param {string} [controls_style] - data-carousel-controls-style
   @param {boolean} [preview_requested_mobile] - data-carousel-preview-mobile
@@ -119,7 +118,6 @@ data-timeline-transition="{{ value | escape }}"
 {% if timeline_gap_desktop != nil %}data-timeline-gap-desktop="{{ timeline_gap_desktop | escape }}"{% endif %}
 {% if timeline_gap_mobile != nil %}data-timeline-gap-mobile="{{ timeline_gap_mobile | escape }}"{% endif %}
 
-{% if mobile_preview_percent != nil %}data-mobile-preview-percent="{{ mobile_preview_percent | escape }}"{% endif %}
 {% if mode != nil %}data-carousel-mode="{{ mode | escape }}"{% endif %}
 {% if controls_style != nil %}data-carousel-controls-style="{{ controls_style | escape }}"{% endif %}
 {% if preview_requested_mobile != nil %}data-carousel-preview-mobile="{{ preview_requested_mobile | escape }}"{% endif %}

@@ -255,7 +255,6 @@
 <div
   class="product-list section-list-layout__bridge"
   data-product-list
-  {% assign carousel_extra_option_1 = block.settings.mobile_preview_percent | default: 20 %}{% render 'swiper-carousel-attributes', mobile_preview_percent: carousel_extra_option_1 %}
   style="--product-list-product-columns: {{ block.settings.columns_desktop | default: 4 }}; --product-list-product-gap: {{ product_list_gap_desktop }}px;"
   {% if product_list_recommendations %}data-recommendation-intent="{{ block.settings.recommendation_type | default: 'related' }}" data-recommendation-limit="{{ product_list_max_products | at_most: 10 }}" data-recommendation-placeholder="{{ product_list_is_placeholder }}"{% endif %}
   data-layout="{{ product_list_layout }}"
@@ -283,7 +282,7 @@
       item_class: 'product-list__item',
       items_data_attributes: 'data-product-list-items',
       next_slide_preview: product_list_show_next_slide_preview,
-      next_slide_preview_on_mobile: block.settings.show_next_slide_preview_on_mobile,
+      next_slide_preview_on_mobile: true,
       carousel_id: product_list_carousel_id,
       aria_label: product_list_aria_label,
       previous_selector: '[data-product-list-previous]',
@@ -531,13 +530,6 @@
       "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
     },
     {
-      "type": "checkbox",
-      "id": "show_next_slide_preview_on_mobile",
-      "label": "t:labels.show_next_slide_preview_on_mobile",
-      "default": false,
-      "visible_if": "{{ block.settings.layout_type == 'carousel' }}"
-    },
-    {
       "type": "header",
       "content": "t:general.products_gap"
     },
@@ -767,18 +759,6 @@
       "default": 4,
       "visible_if": "{{ block.settings.layout_type == 'carousel' and block.settings.autoplay }}"
     },
-    {
-      "type": "range",
-      "id": "mobile_preview_percent",
-      "label": "Next slide preview on mobile",
-      "default": 20,
-      "visible_if": "{{ block.settings.show_next_slide_preview_on_mobile and block.settings.columns_mobile == '1' }}",
-      "min": 10,
-      "max": 80,
-      "step": 1,
-      "unit": "%",
-      "info": "Percentage of the next card to reveal with a one-column mobile carousel."
-    }
   ],
   "presets": [
     {
@@ -791,7 +771,6 @@
         "columns_desktop": "4",
         "columns_mobile": "1",
         "show_next_slide_preview_on_desktop": false,
-        "show_next_slide_preview_on_mobile": false,
         "product_gap_desktop": 4,
         "product_gap_mobile": 4,
         "show_navigation_on_desktop": true,

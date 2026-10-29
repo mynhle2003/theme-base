@@ -4,6 +4,7 @@ import { bindSwiperAutoplay, createSwiperCarousel, destroySwiperCarousel, observ
 const instances = new WeakMap();
 const carouselSelector = '[data-product-carousel][data-layout="carousel"]';
 const desktopBreakpoint = 768;
+const mobilePreviewPercent = 20;
 
 const toNumber = (value, fallback) => {
   const number = Number(value);
@@ -31,7 +32,7 @@ const getMobileSlidesPerView = (carousel) => {
   // The preview is intended for a one-column mobile layout. Keep an explicit
   // two-column choice intact instead of silently replacing it with 1.2.
   if (columns === 1 && carousel.dataset.swiperNextSlidePreviewMobile === 'true') {
-    const configured = 1 + toNumber(carousel.closest('[data-product-list]')?.dataset.mobilePreviewPercent, 20) / 100;
+    const configured = 1 + mobilePreviewPercent / 100;
     return Math.min(1.8, Math.max(1.1, configured));
   }
 
