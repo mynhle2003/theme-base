@@ -159,7 +159,6 @@
         // Stagger within the visible row; later rows must not inherit a long list-wide wait.
         // Measure the layout item so an in-flight card transform cannot change its row.
         const rowTop = element => (element.closest('.product-collection-grid__item') || element.closest('.blog-list__item, .swiper-slide') || element).getBoundingClientRect().top;
-        // Stagger within the visible row; later rows must not inherit a long list-wide wait.
         const top = rowTop(card);
         const row = siblings.filter(sibling => Math.abs(rowTop(sibling) - top) < 8);
         // Section headings lead the cards. Explicit merchant delay is an offset,
