@@ -31,9 +31,14 @@
 
   assign featured_collection_product_list_block = section.blocks | where: 'type', 'product-list' | first
   assign featured_collection_collection = blank
+  assign featured_collection_product_list_navigation_position = 'inside'
   if featured_collection_product_list_block != blank
     assign featured_collection_collection = featured_collection_product_list_block.settings.collection
+    assign featured_collection_product_list_navigation_position = featured_collection_product_list_block.settings.navigation_position | default: 'inside'
   endif
+  unless featured_collection_product_list_navigation_position == 'inside' or featured_collection_product_list_navigation_position == 'outside' or featured_collection_product_list_navigation_position == 'top'
+    assign featured_collection_product_list_navigation_position = 'inside'
+  endunless
 
   assign featured_collection_display_limit = featured_collection_product_list_block.settings.max_products | default: 6 | plus: 0
   if featured_collection_display_limit < 1 or featured_collection_display_limit > 24
@@ -74,6 +79,7 @@
     data-featured-collection
     data-desktop-alignment="{{ featured_collection_desktop_alignment }}"
     data-mobile-alignment="{{ featured_collection_mobile_alignment }}"
+    data-product-list-navigation-position="{{ featured_collection_product_list_navigation_position }}"
   >
     {% capture featured_collection_header_content %}{% content_for 'block', type: 'header', id: 'header' %}{% endcapture %}
     {% render 'section-content-slot', content: featured_collection_header_content, class: 'featured-collection__header section-list-layout__header' %}
@@ -100,6 +106,54 @@
   .featured-collection__container {
     --section-list-gap: var(--featured-collection-gap-desktop, 32px);
     --section-list-gap-mobile: var(--featured-collection-gap-mobile, 24px);
+  }
+
+  @media (min-width: 768px) {
+    /* Top navigation shares the heading row without changing other list sections. */
+    .featured-collection__container[data-product-list-navigation-position='top'] {
+      align-items: flex-end;
+    }
+
+    .featured-collection__container[data-product-list-navigation-position='top'] > .featured-collection__header {
+      min-width: 0;
+    }
+
+    .featured-collection__container[data-product-list-navigation-position='top'] > .featured-collection__header > .block-header {
+      max-width: 100%;
+    }
+
+    .featured-collection__container[data-product-list-navigation-position='top'][data-desktop-alignment='center'] {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .featured-collection__container[data-product-list-navigation-position='top'][data-desktop-alignment='center'] > .featured-collection__header {
+      flex: 0 1 auto;
+      width: auto;
+    }
+
+    .featured-collection__container[data-product-list-navigation-position='top'][data-desktop-alignment='center'] > .featured-collection__header > .block-header {
+      width: fit-content;
+    }
+
+    .featured-collection__container[data-product-list-navigation-position='top'][data-desktop-alignment='center'] > .featured-collection__body > .section-list-layout__bridge > .section-list-layout__navigation {
+      order: 2;
+      align-self: center;
+    }
+
+    .featured-collection__container[data-product-list-navigation-position='top'][data-desktop-alignment='center'] > .featured-collection__body > .section-list-layout__bridge > .section-list-layout__main,
+    .featured-collection__container[data-product-list-navigation-position='top'][data-desktop-alignment='center'] > .featured-collection__additional-blocks {
+      flex: 0 0 100%;
+    }
+
+    .featured-collection__container[data-product-list-navigation-position='top'][data-desktop-alignment='left'] > .featured-collection__header,
+    .featured-collection__container[data-product-list-navigation-position='top'][data-desktop-alignment='right'] > .featured-collection__header {
+      flex: 1 1 0;
+      width: auto;
+      min-width: 0;
+    }
   }
 
   @media (max-width: 767.98px) {
