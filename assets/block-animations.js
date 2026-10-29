@@ -55,7 +55,9 @@
     const events = new AbortController();
     const stop = state => {
       if (state.refreshTimer != null) clearTimeout(state.refreshTimer);
+      if (state.wordAnimationFrame != null) cancelAnimationFrame(state.wordAnimationFrame);
       state.refreshTimer = null;
+      state.wordAnimationFrame = null;
       state.animations.forEach(animation => animation.cancel()); state.animations = [];
       state.element.classList.remove('reveal-words-ready');
       state.element.classList.remove('reveal-words-animated');
@@ -95,9 +97,12 @@
         if (state.type === 'rotate-words') {
           element.style.setProperty('--block-animation-delay', `${delay}ms`);
           element.classList.add('reveal-words-ready');
-          // Commit the reset state so the same CSS animation can replay.
-          void element.offsetWidth;
-          element.classList.add('reveal-words-animated');
+          // Commit the reset state on the next frame. This preserves the
+          // replayable CSS animation without forcing a synchronous layout.
+          state.wordAnimationFrame = requestAnimationFrame(() => {
+            state.wordAnimationFrame = null;
+            if (nodes.get(element) === state && element.isConnected) element.classList.add('reveal-words-animated');
+          });
         } else {
           const to = { opacity: 1 };
           if (endTransforms[state.type]) to.transform = endTransforms[state.type];
@@ -199,7 +204,7 @@
         if (nodes.get(element)?.configuration === configuration) return;
         remove(element);
         if (type === 'rotate-words') splitWords(element);
-        nodes.set(element, { element, type, component, configuration, played: false, animations: [], refreshTimer: null });
+        nodes.set(element, { element, type, component, configuration, played: false, animations: [], refreshTimer: null, wordAnimationFrame: null });
         if (skipInitialAnimations || !motion || !observer || typeof element.animate !== 'function' || element.contains(document.activeElement)) { reveal(element, true); return; }
         element.classList.add('reveal-pending');
         element.dataset.animationInitialized = 'true';
