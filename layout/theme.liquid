@@ -101,8 +101,10 @@
       Theme Editor groups follow Header, Template, Footer, Overlay order.{% endcomment %}
     {% sections 'overlay-group' %}
     {% render 'component-overlay-cursor' %}
-    {% if request.page_type == 'product' %}{% section 'recently-viewed-card' %}{% endif %}
-    <script src="{{ 'recently-viewed.js' | asset_url }}" defer></script>
+    {% if request.page_type == 'product' %}
+      {% section 'recently-viewed-card' %}
+      <script src="{{ 'recently-viewed.js' | asset_url }}" defer></script>
+    {% endif %}
     <script src="{{ 'search-suggestions.js' | asset_url }}" defer></script>
   </body>
 </html>
