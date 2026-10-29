@@ -17,6 +17,7 @@
   const editor = Boolean(window.Shopify?.designMode);
   const enabled = () => !reduced.matches && getComputedStyle(document.documentElement).getPropertyValue('--motion-block-animations').trim() !== '0';
   const types = new Set(['fade', 'scale', 'slide-left', 'slide-right', 'slide-bottom', 'rotate-words']);
+  const pendingSelections = new Map();
   const active = element => {
     if (!element.isConnected || !element.getClientRects().length || element.closest('[hidden], [aria-hidden="true"], [inert]')) return false;
     const slide = element.closest('.slideshow__swiper .swiper-slide');
@@ -211,8 +212,6 @@
       cancelAnimationFrame(resizeFrame);
       resizeFrame = requestAnimationFrame(scan);
     }, options);
-    root.addEventListener('shopify:block:select', previewSelection, options);
-    root.addEventListener('shopify:section:select', previewSelection, options);
     root.addEventListener('focusin', event => {
       nodes.forEach((state, element) => {
         if (element.contains(event.target)) { stop(state); state.played = false; reveal(element, true); }
@@ -223,7 +222,10 @@
     }), options);
     scan();
     mutations.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden', 'aria-hidden', 'inert', 'class', 'data-block-animation', 'data-animation-delay'] });
-    return { destroy() { cancelAnimationFrame(resizeFrame); events.abort(); mutations.disconnect(); observer?.disconnect(); nodes.forEach((state, element) => remove(element)); } };
+    return {
+      previewSelection,
+      destroy() { cancelAnimationFrame(resizeFrame); events.abort(); mutations.disconnect(); observer?.disconnect(); nodes.forEach((state, element) => remove(element)); }
+    };
   };
   // Prepare offscreen entrances shortly before they are needed. Scanning every
   // section at startup measures card rows and splits heading text below the fold.
@@ -233,7 +235,16 @@
   const initialize = root => {
     sectionObserver?.unobserve(root);
     if (controllers.has(root)) return;
-    controllers.set(root, createController(root));
+    const controller = createController(root);
+    controllers.set(root, controller);
+    const pending = pendingSelections.get(root.id);
+    if (pending) {
+      pendingSelections.delete(root.id);
+      const target = pending.target?.isConnected
+        ? pending.target
+        : (pending.blockId ? document.getElementById(pending.blockId) : root);
+      if (target && (target === root || root.contains(target))) controller.previewSelection({ target });
+    }
   };
   document.querySelectorAll('.shopify-section').forEach(root => {
     if (!sectionObserver) { initialize(root); return; }
@@ -251,6 +262,18 @@
     controllers.delete(event.target);
     initialize(event.target);
   });
+  const handleEditorSelection = event => {
+    const root = event.target?.closest?.('.shopify-section') || (event.target?.matches?.('.shopify-section') ? event.target : null);
+    if (!root) return;
+    const controller = controllers.get(root);
+    if (controller) {
+      controller.previewSelection(event);
+      return;
+    }
+    pendingSelections.set(root.id, { target: event.target, blockId: event.detail?.blockId });
+  };
+  document.addEventListener('shopify:block:select', handleEditorSelection);
+  document.addEventListener('shopify:section:select', handleEditorSelection);
   document.addEventListener('shopify:section:unload', event => {
     sectionObserver?.unobserve(event.target);
     controllers.get(event.target)?.destroy();
